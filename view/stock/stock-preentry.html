@@ -5,29 +5,22 @@
                 <div class="form-box">
                     <div class="layui-form-item form-left">
                         <div class="table-form-item layui-input-inline">
-                            <input type="text" name="id" placeholder="货物ID" autocomplete="off" class="layui-input">
+                            <input type="text" name="orderno" placeholder="订单号" autocomplete="off" class="layui-input">
                         </div>
                         <div class="table-form-item layui-input-inline">
-                            <input type="text" name="packing" placeholder="包装" autocomplete="off" class="layui-input">
+                            <input type="text" name="cargoowner" placeholder="货权人" autocomplete="off" class="layui-input">
                         </div>
                         <div class="table-form-item layui-input-inline">
-                            <input type="text" name="barcode" placeholder="条码" autocomplete="off" class="layui-input">
+                            <input type="text" name="depotname" placeholder="仓库名称" autocomplete="off" class="layui-input">
                         </div>
                         <div class="table-form-item layui-input-inline">
-                            <select name="varieties" xm-select="select-varieties">
-                                <option value="">品种</option>
-                                <option value="红木1">红木1</option>
-                                <option value="红木2">红木2</option>
-                            </select>
+                            <input type="text" name="origin" placeholder="产地" autocomplete="off" class="layui-input">
                         </div>
                         <div class="table-form-item layui-input-inline">
-                            <input type="text" name="level" placeholder="等级" autocomplete="off" class="layui-input">
+                            <input type="text" name="supplier" placeholder="供应商" autocomplete="off" class="layui-input">
                         </div>
                         <div class="table-form-item layui-input-inline">
-                            <input type="text" name="spec" placeholder="规格" autocomplete="off" class="layui-input">
-                        </div>
-                        <div class="table-form-item layui-input-inline">
-                            <input type="text" name="length" placeholder="长度" autocomplete="off" class="layui-input">
+                            <input type="text" name="billloading" placeholder="提运单" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-form-item form-right">
@@ -152,9 +145,20 @@
                         title: '件数（包）',
                         sort: true
                     }, {
+                        field: 'origin',
+                        title: '产地',
+                        sort: true
+                    }, {
+                        field: 'supplier',
+                        title: '供应商',
+                        sort: true
+                    }, {
                         field: 'volume',
                         title: '码单数量（m³）',
                         sort: true
+                    }, {
+                        field: 'estimatedate',
+                        title: '预计出库时间'
                     }, {
                         field: 'createdate',
                         title: '创建日期',
@@ -163,9 +167,6 @@
                         field: 'createuser',
                         title: '创建人',
                         sort: true
-                    }, {
-                        field: 'estimatedate',
-                        title: '预计出库时间'
                     }
                 ]
             ],
@@ -294,12 +295,13 @@
         $("#dowmTemp").attr("href",ilbstockImportTemp);
         
         //点击导入跳转页面
-        $("#toImport").bind('onclick',function(e){
+        $("#toImport").on('click',function(e){
             
         });
         
         //点击导出
-        $("#toExport").bind('onclick',function(e){
+        $("#toExport").on('click',function(e){
+            console.log(tableCondition);
             window.location.href = ilbstockExportUrl
         });
         
