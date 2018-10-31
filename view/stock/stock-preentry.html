@@ -71,21 +71,14 @@
         </div>
     </div>
 </div>
-
-<script type="text/html" id="statusTpl">
-    {{#  if(d.status == -1){ }}
-        已删除
-    {{#  } else if(d.status == 0) { }}
-        正常
-    {{#  } }} 
-</script>
 <script>
-    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects'], function() {
+    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate'], function() {
         var element = layui.element;
         var form = layui.form;
         var $ = layui.jquery;
         var table = layui.table;
         var formSelects = layui.formSelects;
+        var laytpl = layui.laytpl;
         var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 103); //内容区域所需减去的高度
 
         var eaitLayer; //编辑-弹层
@@ -141,28 +134,23 @@
                         title: '单号',
                         sort: true
                     }, {
-                        field: 'varieties',
+                        field: 'cargoowner',
                         title: '货权人',
                         sort: true
                     }, {
-                        field: 'levels',
+                        field: 'depotname',
                         title: '仓库名称',
                         sort: true
                     }, {
-                        field: 'spec',
+                        field: 'billloading',
                         title: '提运单',
-                        sort: true
-                    },
-                    {
-                        field: 'code',
-                        title: '原始编码',
-                        sort: true
-                    }, {
-                        field: 'containernum',
-                        title: '件数（包）',
                         sort: true
                     }, {
                         field: 'num',
+                        title: '件数（包）',
+                        sort: true
+                    }, {
+                        field: 'volume',
                         title: '码单数量（m³）',
                         sort: true
                     }, {
@@ -170,13 +158,12 @@
                         title: '创建日期',
                         sort: true
                     }, {
-                        field: 'person',
-                        title: '操作员',
+                        field: 'createuser',
+                        title: '创建人',
                         sort: true
                     }, {
-                        field: 'status',
-                        title: '状态',
-                        templet: '#statusTpl'
+                        field: 'estimatedate',
+                        title: '预计出库时间'
                     }
                 ]
             ],
@@ -210,15 +197,14 @@
             } else if (checkStatus.data.length > 1) {
                 layer.msg("请选择需要编辑的单条信息");
             } else {
-                var currData = checkStatus.data[0];
-                console.log(currData);
+                window.currData = checkStatus.data[0]; //全局对象存储当前选中行数据
                 $.get('view/form/form-1.html', {}, function(str) {
                     eaitLayer = layer.open({
                         title: '编辑',
                         type: 1,
                         content: str, //注意，如果str是object，那么需要字符拼接。
                         resize: false,
-                        area: ['600px', 'auto'],
+                        area: ['800px', 'auto'],
                     });
                 });
             }
@@ -226,7 +212,25 @@
 
         form.on('submit(editForm)', function(data) {
             //编辑提交
-            layer.close(eaitLayer); //关闭
+            layer.confirm('确认提交修改', {
+                icon: 3,
+                title: '提示'
+            }, function(index) {
+                data.field.orderno = window.currData.orderno; //防止单号被篡改
+                data.field.origin = window.currData.origin; //
+                data.field.supplier = window.currData.supplier; //
+                rowDataApi(preEntryUpdate, data.field, function(data) {
+                    layer.close(index);
+                    layer.close(eaitLayer); //关闭
+                    // 刷新表格
+                    tableIns.reload({
+                        page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                    });
+                })
+            })
+
             return false;
         });
 
@@ -246,7 +250,7 @@
                         rowId.push(v.orderno);
                     });
                     //调删除接口
-                    deleteRowData(preEntryDelete, {
+                    rowDataApi(preEntryDelete, {
                         "ids": rowId
                     }, function(data) {
                         // 删除所选行成功
@@ -264,8 +268,8 @@
             }
         });
 
-        //删除行数据
-        function deleteRowData(url, data, funSuc, funErr) {
+        //增删行数据
+        function rowDataApi(url, data, funSuc, funErr) {
             $.ajax({
                 url: url,
                 type: "get",

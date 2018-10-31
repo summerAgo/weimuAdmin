@@ -1,25 +1,61 @@
-<script id="demo" type="text/html">
+<div id="formEditView"></div>
+<script id="formTle" type="text/html">
     <div class="edit-layer">
-        <form class="layui-form" action="">
+        <form class="layui-form" action="formEdit">
             <div class="layui-form-item">
-                <label class="layui-form-label">输入框</label>
+                <label class="layui-form-label">单号</label>
                 <div class="layui-input-block">
-                    <input type="text" name="title" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                    <input type="text" value="{{d.orderno}}" required lay-verify="required" autocomplete="off" class="layui-input" disabled>
                 </div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label">输入框</label>
+                <label class="layui-form-label">货权人</label>
                 <div class="layui-input-block">
-                    <input type="text" name="title" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                    <input type="text" name="cargoowner" value="{{d.cargoowner}}" required lay-verify="required" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
-                <label class="layui-form-label">输入框</label>
+                <label class="layui-form-label">仓库名称</label>
                 <div class="layui-input-block">
-                    <input type="text" name="title" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                    <input type="text" name="depotname" value="{{d.depotname}}" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
                 </div>
             </div>
-
+            <div class="layui-form-item">
+                <label class="layui-form-label">预计出库时间</label>
+                <div class="layui-input-block">
+                    <input type="text" name="estimatedatestr" value="{{d.estimatedate}}" id="estimatedate" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">提运单</label>
+                <div class="layui-input-block">
+                    <input type="text" name="billloading" value="{{d.billloading}}" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">件数（包）</label>
+                <div class="layui-input-block">
+                    <input type="text" name="num" value="{{d.num}}" required lay-verify="required|number" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">重量（立方）</label>
+                <div class="layui-input-block">
+                    <input type="text" name="volume" value="{{d.volume}}" required lay-verify="required|number" placeholder="请输入标题" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">创建人</label>
+                <div class="layui-input-block">
+                    <input type="text" value="{{d.createuser}}" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input" disabled>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">创建日期</label>
+                <div class="layui-input-block">
+                    <input type="text" value="{{d.createdate}}" required lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input" disabled>
+                </div>
+            </div>
             <div class="layui-form-item">
                 <div class="layui-input-block">
                     <button class="layui-btn" lay-submit lay-filter="editForm">立即提交</button>
@@ -30,8 +66,40 @@
     </div>
 </script>
 <style scoped>
-    .edit-layer{width:500px; margin:20px auto 0;}
+    .edit-layer {
+        width: 500px;
+        margin: 20px auto 0;
+    }
+
+    .layui-form-label {
+        width: 100px;
+    }
+
+    .layui-input-block {
+        margin-left: 130px;
+    }
 </style>
 <script>
-    
+    layui.use(['laytpl', 'laydate'], function() {
+        var laytpl = layui.laytpl;
+        var laydate = layui.laydate;
+        console.log(window.currData)
+        var data = window.currData; //所选行数据
+        var getTpl = formTle.innerHTML,
+            view = document.getElementById('formEditView');
+        laytpl(getTpl).render(data, function(html) {
+            view.innerHTML = html;
+        });
+
+        //日期时间选择器
+        laydate.render({
+            elem: '#estimatedate',
+            type: 'datetime',
+            min:0,
+            change:function(val){
+                console.log(val);
+            }
+        });
+
+    });
 </script>

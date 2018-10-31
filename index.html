@@ -60,15 +60,18 @@
                     <li class="layui-nav-item layui-nav-itemed">
                         <a href="javascript:;"><i class="iconfont icon-cangkuguanli"></i> 库存管理</a>
                         <dl class="layui-nav-child">
-                            <dd class="layui-this"><a href="#!stock-search">库存信息</a></dd>
-                            <dd><a href="#!stock-preentry">预入库</a></dd>
+                            <dd class="layui-this"><a href="#!ilbstock-info">库存信息</a></dd>
+                            <dd class="layui-this"><a href="#!ilbstock-abnormal">异常调整</a></dd>
+                            <dd class="layui-this"><a href="#!ilbstock-inventory">盘点记录</a></dd>
                         </dl>
                     </li>
                     <li class="layui-nav-item">
                         <a href="javascript:;"><i class="iconfont icon-churukuguanli"></i> 出入库管理</a>
                         <dl class="layui-nav-child">
-                            <dd><a href="javascript:;">选项1</a></dd>
-                            <dd><a href="javascript:;">选项2</a></dd>
+                            <dd><a href="#!stock-preentry">预入库</a></dd>
+                            <dd><a href="#!stock-out">出库记录</a></dd>
+                            <dd><a href="#!stock-enter">入库记录</a></dd>
+                            <dd><a href="#!stock-shipments">出货申请</a></dd>
                         </dl>
                     </li>
                     <li class="layui-nav-item">
@@ -144,17 +147,17 @@
                 ['home', function() {
                     container.load('/view/home/home.html');
                 }],
-                ['stock-search', function() {
-                    container.load('/view/stock/stock-search.html');
-                }],
                 ['stock-preentry', function() {
                     container.load('/view/stock/stock-preentry.html');
                 }],
-                ['base-info', function() {
-                    container.load('/view/base/base-info.html');
+                ['stock-out', function() {
+                    container.load('/view/stock/stock-out.html');
                 }],
-                ['menu', function() {
-                    container.load('/view/menu/menu.html');
+                ['stock-enter', function() {
+                    container.load('/view/stock/stock-enter.html');
+                }],
+                ['stock-shipments', function() {
+                    container.load('/view/stock/stock-shipments.html');
                 }]
             ])
 
