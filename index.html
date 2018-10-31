@@ -158,11 +158,20 @@
                 }],
                 ['stock-shipments', function() {
                     container.load('/view/stock/stock-shipments.html');
+                }],
+                ['ilbstock-info', function() {
+                    container.load('/view/ilbstock/ilbstock-info.html');
+                }],
+                ['ilbstock-abnormal', function() {
+                    container.load('/view/ilbstock/ilbstock-abnormal.html');
+                }],
+                ['ilbstock-inventory', function() {
+                    container.load('/view/ilbstock/ilbstock-inventory.html');
                 }]
             ])
 
             Q.init({
-                index: 'stock-search',
+                index: 'home',
                 pop: function(vid) {
                     // hash改变执行
                     var thehash = $(".index-side a").attr("href").replace(/#!/, '');
