@@ -82,6 +82,7 @@
         var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 103); //内容区域所需减去的高度
 
         var eaitLayer; //编辑-弹层
+        var tableCondition;//表格查询条件
 
         form.render(); //重置表单渲染
         formSelects.render(); //下拉选项
@@ -98,6 +99,7 @@
                     paramSearch[key] = data.field[key]
                 }
             }
+            tableCondition = paramSearch;
             tableIns.reload({
                 where: paramSearch, //接口参数
                 page: {
