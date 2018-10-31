@@ -1,0 +1,176 @@
+<div class="table-page">
+        <div class="table-page-header">
+            <div class="table-page-form">
+                <form class="layui-form" action="">
+                    <div class="form-box">
+                        <div class="layui-form-item form-left">
+                            <div class="table-form-item layui-input-inline">
+                                <input type="text" name="id" placeholder="货物ID" autocomplete="off" class="layui-input">
+                            </div>
+                            <div class="table-form-item layui-input-inline">
+                                <input type="text" name="packing" placeholder="包装" autocomplete="off" class="layui-input">
+                            </div>
+                            <div class="table-form-item layui-input-inline">
+                                <input type="text" name="barcode" placeholder="条码" autocomplete="off" class="layui-input">
+                            </div>
+                            <div class="table-form-item layui-input-inline">
+                                <select name="varieties" xm-select="select-varieties">
+                                    <option value="">品种</option>
+                                    <option value="红木1">红木1</option>
+                                    <option value="红木2">红木2</option>
+                                </select>
+                            </div>
+                            <div class="table-form-item layui-input-inline">
+                                <input type="text" name="level" placeholder="等级" autocomplete="off" class="layui-input">
+                            </div>
+                            <div class="table-form-item layui-input-inline">
+                                <input type="text" name="spec" placeholder="规格" autocomplete="off" class="layui-input">
+                            </div>
+                            <div class="table-form-item layui-input-inline">
+                                <input type="text" name="length" placeholder="长度" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-form-item form-right">
+                            <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="searchForm">
+                                <i class="iconfont icon-sousuo"></i> <span>查询</span>
+                            </button>
+                            <button type="reset" class="layui-btn layui-btn-primary"> <i class="layui-icon layui-icon-refresh"></i></button>
+                        </div>
+                    </div>
+                </form>
+    
+            </div>
+        </div>
+        <div class="table-content">
+            <div class="table-content-title">
+                <div class="table-tools">
+                    <ul class="layui-nav" lay-filter="talbe-tools">
+                        <li class="layui-nav-item">
+                            <a href="javascript:;">导出数据</a>
+                        </li>
+                        <li class="layui-nav-item">
+                            <a href="javascript:;">打印</a>
+                        </li>
+                    </ul>
+                    <!-- <ul class="layui-layout-right">
+                        <li><a href="javascript:;" class="editBtn">编辑</a></li>
+                    </ul> -->
+                </div>
+            </div>
+            <div class="table-content-main">
+                <table class="layui-hide" id="tableContainer" lay-filter="tableContainer"></table>
+            </div>
+        </div>
+    </div>
+    <script>
+        layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate'], function() {
+            var element = layui.element;
+            var form = layui.form;
+            var $ = layui.jquery;
+            var table = layui.table;
+            var formSelects = layui.formSelects;
+            var laytpl = layui.laytpl;
+            var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 103); //内容区域所需减去的高度
+    
+            var eaitLayer; //编辑-弹层
+    
+            form.render(); //重置表单渲染
+            formSelects.render(); //下拉选项
+            element.render('talbe-tools'); //表格工具栏
+            formSelects.btns(['select', 'remove'], {
+                show: 'name'
+            });
+    
+            form.on('submit(searchForm)', function(data) {
+                var paramSearch = {};
+                for (var key in data.field) {
+                    //参数赋值
+                    if (data.field[key] != "") {
+                        paramSearch[key] = data.field[key]
+                    }
+                }
+                tableIns.reload({
+                    where: paramSearch, //接口参数
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                });
+                return false;
+            });
+    
+            var tableIns = table.render({
+                elem: '#tableContainer',
+                height: 'full-' + tableTopHeight,
+                url: preEntry,
+                parseData: function(res) { //res 即为原始返回的数据
+                    if (res.status !== 0) res.status = 0;
+                    return {
+                        "code": res.status, //解析接口状态
+                        "msg": res.message, //解析提示文本
+                        "count": res.count, //解析数据长度
+                        "data": res.data //解析数据列表
+                    }
+                },
+                request: {
+                    pageName: 'offset', //页码的参数名称，默认：page
+                    limitName: 'limit' //每页数据量的参数名，默认：limit
+                },
+                cols: [
+                    [ //标题栏
+                        {
+                            type: 'checkbox'
+                        },
+                        {
+                            field: 'orderno',
+                            title: '单号',
+                            sort: true
+                        }, {
+                            field: 'cargoowner',
+                            title: '货权人',
+                            sort: true
+                        }, {
+                            field: 'depotname',
+                            title: '仓库名称',
+                            sort: true
+                        }, {
+                            field: 'billloading',
+                            title: '提运单',
+                            sort: true
+                        }, {
+                            field: 'num',
+                            title: '件数（包）',
+                            sort: true
+                        }, {
+                            field: 'volume',
+                            title: '码单数量（m³）',
+                            sort: true
+                        }, {
+                            field: 'createdate',
+                            title: '创建日期',
+                            sort: true
+                        }, {
+                            field: 'createuser',
+                            title: '创建人',
+                            sort: true
+                        }, {
+                            field: 'estimatedate',
+                            title: '预计出库时间'
+                        }
+                    ]
+                ],
+                even: true,
+                page: true, //是否显示分页
+                limits: [10, 20, 30, 40, 50],
+                limit: 10, //每页默认显示的数量
+                done: function(res, curr, count) {
+                    var addtableBtn = '<div class="rightBotBtn">合计总库存数量<span>0</span>㎡ 总库存估价金额：<span> </span>(RMB)</div>';
+                    $(".layui-table-page").append(addtableBtn);
+                },
+                text: {
+                    none: "无匹配数据"
+                },
+                loading: true
+            });
+    
+        });
+    </script>

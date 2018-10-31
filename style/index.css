@@ -78,8 +78,8 @@
 .table-tools .layui-nav{height:30px; background:transparent; }
 .table-tools .layui-nav .layui-nav-item{border-right:1px solid #979797}
 .table-tools .layui-nav .layui-nav-item a{color:#1e262f; height:50px; vertical-align: middle; line-height: 30px; font-size:15px; height:30px;}
-.table-tools .layui-nav .layui-nav-item:nth-child(2){padding:0 20px 0 0;}
-.table-tools .layui-nav .layui-nav-item:nth-child(2) a{position: relative;}
+.table-tools .layui-nav .layui-nav-item.item-more{padding:0 20px 0 0;}
+.table-tools .layui-nav .layui-nav-item.item-more a{position: relative;}
 .table-tools .layui-nav-bar{display:none;}
 .table-tools .layui-nav-child{top:45px;}
 .table-tools .layui-nav .layui-nav-more{border-top-color:#1e262f}
