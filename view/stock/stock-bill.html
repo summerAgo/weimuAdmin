@@ -6,18 +6,23 @@
                     预入库订单号：507230226812502016
                 </blockquote> -->
                 <div class="form-box">
-                        <div class="table-form-item layui-input-inline">
-                            <input type="text" name="id" placeholder="货权人" autocomplete="off" class="layui-input" lay-verify="required">
+                    <div class="layui-form-item form-left">
+                        <div class="table-form-item layui-input-inline table-form-item-btn">
+                            <button class="layui-btn" lay-submit lay-filter="addGoodsForm">添加货物信息</button>
                         </div>
                         <div class="table-form-item layui-input-inline">
-                            <input type="text" name="packing" placeholder="仓库名称" autocomplete="off" class="layui-input" lay-verify="required">
+                            <input type="text" name="cargoowner" placeholder="货权人" autocomplete="off" class="layui-input" lay-verify="required">
                         </div>
                         <div class="table-form-item layui-input-inline">
-                            <input type="text" name="barcode" placeholder="产地" autocomplete="off" class="layui-input" lay-verify="required">
+                            <input type="text" name="depotname" placeholder="仓库名称" autocomplete="off" class="layui-input" lay-verify="required">
                         </div>
                         <div class="table-form-item layui-input-inline">
-                            <input type="text" name="level" placeholder="供应商" autocomplete="off" class="layui-input" lay-verify="required">
+                            <input type="text" name="origin" placeholder="产地" autocomplete="off" class="layui-input" lay-verify="required">
                         </div>
+                        <div class="table-form-item layui-input-inline">
+                            <input type="text" name="supplier" placeholder="供应商" autocomplete="off" class="layui-input" lay-verify="required">
+                        </div>
+                    </div>
                 </div>
             </form>
 
@@ -27,9 +32,6 @@
         <div class="table-content-title">
             <div class="table-tools">
                 <ul class="layui-nav" lay-filter="talbe-tools">
-                    <li class="layui-nav-item">
-                        <a href="javascript:;">新建预入库单</a>
-                    </li>
                     <li class="layui-nav-item item-more">
                         <a href="javascript:;">数据导入导出</a>
                         <dl class="layui-nav-child">
@@ -53,7 +55,9 @@
     </div>
 </div>
 <style scoped>
-    .form-box{justify-content:space-around;}
+    .table-page-form .table-form-item.table-form-item-btn {
+        width: 140px;
+    }
 </style>
 <script>
     layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate'], function() {
@@ -66,6 +70,7 @@
         var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 103); //内容区域所需减去的高度
 
         var addLayer; //添加-弹层
+        window.billBaseInfo; //库单基本信息：货权人-仓库名称等
 
         form.render(); //重置表单渲染
         formSelects.render(); //下拉选项
@@ -75,13 +80,16 @@
         });
 
         form.on('submit(addGoodsForm)', function(data) {
-            addLayer = layer.open({
-                title: '编辑',
-                type: 1,
-                content: $("#goodsBody"), //注意，如果str是object，那么需要字符拼接。
-                resize: false,
-                area: ['800px', 'auto'],
-            });
+            window.billBaseInfo = data.field;
+            $.get('view/form/form-goods.html', {}, function(str) {
+                    eaitLayer = layer.open({
+                        title: '添加货物信息',
+                        type: 1,
+                        content: str, //注意，如果str是object，那么需要字符拼接。
+                        resize: false,
+                        area: ['800px', 'auto'],
+                    });
+                });
             return false;
         });
 
