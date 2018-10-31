@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <title>维木仓储管理后台</title>
+    <link rel="stylesheet" href="../../layui/css/layui.css">
+    <link rel="stylesheet" href="style/login.css">
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body class="layui-layout-body">
+    <div class="layui-fluid container">
+        <div class="layui-row">
+            <div class="layui-col-xs12 layui-col-sm12 layui-col-md12 layui-col-lg3 layui-col-lg-offset8">
+                <div class="login-container">
+                    <div class="login-header">
+                        <div class="login-logo"></div>
+                        <div class="login-slogin">
+                            <h3>维木智能仓管系统</h3>
+                            <small>V·M-V 1.0.2</small>
+                        </div>
+                    </div>
+                    <form class="layui-form" action="">
+                        <div class="layui-form-item login-item">
+                            <label class="layui-form-label"><i class="layui-icon layui-icon-username"></i></label>
+                            <input type="text" name="username" value="admin" required lay-verify="required" placeholder="用户ID" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="layui-form-item login-item">
+                            <label class="layui-form-label"><i class="layui-icon layui-icon-password"></i></label>
+                            <input type="password" name="password" value="123456" required lay-verify="required" placeholder="登录密码" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="layui-form-item login-item">
+                            <label class="layui-form-label"><i class="layui-icon layui-icon-vercode"></i></label>
+                            <div class="layui-input-block-left">
+                                <input type="text" name="verify" required lay-verify="required|gVerify" placeholder="验证码" autocomplete="off" class="layui-input" maxlength="4">
+                            </div>
+                            <div class="layui-form-mid layui-word-aux">
+                                <div id="v_container"></div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="formLogin" id="login_button">登录</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+    <script src="../../layui/layui.js"></script>
+    <script src="../../js/common.js"></script>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/gVerify.js"></script>
+    <script>
+        // if(sessionStorage.getItem('userInfo')){
+        //     history.replaceState({},'index',"http://192.168.10.216:8000/");
+        //     window.location.href = "http://192.168.10.216:8000/";
+        // }
+
+        layui.use(['form', 'jquery', 'element', 'layer'], function() {
+            var form = layui.form;
+            var $ = layui.jquery;
+            var verifyCode = new GVerify("v_container");
+            //监听提交
+            form.on('submit(formLogin)', function(data) {
+                $.ajax({
+                    url: loginUrl,
+                    type: "get",
+                    data: data.field,
+                    success: function(data) {
+                        if (data.status == 0) {
+                            layer.msg("登录成功");
+                            setCookie("SESSION_NAME", data.SESSION_NAME,"h12");
+                            setCookie("userInfo", JSON.stringify(data.data),"h12");
+                            history.replaceState({},'index',"http://192.168.10.216:8000/");
+                            window.location.href = "http://192.168.10.216:8000/";
+                        } else {
+                            layer.msg(data.msg);
+                        }
+                    },
+                    error: function(data) {
+                        layer.msg(data.msg);
+                    }
+                });
+                return false;
+            });
+
+            form.verify({
+                gVerify: function(value, item) {
+                    var res = verifyCode.validate(value);
+                    if (!res) {
+                        return '验证码错误';
+                    }
+                }
+            })
+
+        });
+    </script>
+</body>
+
+</html>

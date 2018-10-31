@@ -1,0 +1,136 @@
+<div class="table-page">
+    <div class="table-page-header">
+        <div class="table-page-title">
+            <h3>库存查询条件</h3>
+        </div>
+        <div class="table-page-form">
+            <form class="layui-form" action="">
+                <div class="layui-form-item">
+                    <div class="table-form-item layui-input-inline">
+                        <select name="searchType">
+                            <option value="">全部</option>
+                            <option value="varieties">品种</option>
+                            <option value="level">等级</option>
+                            <option value="spec">规格</option>
+                        </select>
+                    </div>
+                    <div class="table-form-item layui-input-inline">
+                        <input type="text" name="searchValue" placeholder="货物ID" autocomplete="off" class="layui-input">
+                    </div>
+                    <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="searchForm">
+                        <i class="iconfont icon-sousuo"></i> <span>查询</span>
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+    <div class="table-content">
+        <div class="table-content-title">
+            <h3>库存信息列表</h3>
+            <ul class="table-menu">
+                <li><i class="iconfont icon-tianjia"></i>添加货物</li>
+                <li class="importBtn"><i class="iconfont icon-daoru"></i>导入</li>
+                <li class="exportBtn"><i class="iconfont icon-daochu"></i>导出</li>
+            </ul>
+        </div>
+        <div class="table-content-main">
+            <table class="layui-hide" id="tableContainer"></table>
+        </div>
+    </div>
+</div>
+
+<script>
+    layui.use(['form', 'jquery', 'element', 'layer', 'table'], function() {
+        var form = layui.form;
+        var $ = layui.jquery;
+        var table = layui.table;
+        var tableTopHeight = parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + 130;
+
+        form.render(); //重置表单渲染
+        form.on('submit(searchForm)', function(data) {
+            var paramSearch = {};
+            paramSearch[data.field.searchType] = data.field.searchValue; //查询参数
+            if (data.field.searchType == "reset") {
+                paramSearch = {};
+            }
+            tableIns.reload({
+                where: paramSearch, //接口参数
+                page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+            });
+            return false;
+        });
+
+        var tableIns = table.render({
+            elem: '#tableContainer',
+            height: 'full-' + tableTopHeight,
+            url: commonBaseUrl,
+            id:"tableContainer",
+            parseData: function(res) { //res 即为原始返回的数据
+                if (res.status !== 0) res.status = 0;
+                return {
+                    "code": res.status, //解析接口状态
+                    "msg": res.message, //解析提示文本
+                    "count": res.count, //解析数据长度
+                    "data": res.data //解析数据列表
+                }
+            },
+            request: {
+                pageName: 'offset', //页码的参数名称，默认：page
+                limitName: 'limit' //每页数据量的参数名，默认：limit
+            },
+            cols: [
+                [ //标题栏
+                    {
+                        field: 'id',
+                        title: 'ID',
+                        sort: true
+                    }, {
+                        field: 'varieties',
+                        title: '品种',
+                    }, {
+                        field: 'level',
+                        title: '等级',
+                    }, {
+                        field: 'remarks',
+                        title: '备注',
+                    },
+                    {
+                        field: 'id',
+                        title: 'ID',
+                        sort: true
+                    }, {
+                        field: 'varieties',
+                        title: '品种',
+                    }, {
+                        field: 'level',
+                        title: '等级',
+                    }, {
+                        field: 'remarks',
+                        title: '备注',
+                    }
+                ]
+            ],
+            even: true,
+            page: true, //是否显示分页
+            limits: [10, 20, 30, 40, 50],
+            limit: 10, //每页默认显示的数量
+            done: function(res, curr, count) {
+
+            },
+            text: {
+                none: "无匹配数据"
+            }
+        });
+
+        $(".importBtn").click(function(){
+
+        });
+        
+        $(".exportBtn").click(function(){
+            console.log(tableIns);
+        });
+    });
+</script>

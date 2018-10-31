@@ -1,0 +1,280 @@
+<div class="table-page">
+    <div class="table-page-header">
+        <div class="table-page-form">
+            <form class="layui-form" action="">
+                <div class="form-box">
+                    <div class="layui-form-item form-left">
+                        <div class="table-form-item layui-input-inline">
+                            <input type="text" name="id" placeholder="货物ID" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <input type="text" name="packing" placeholder="包装" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <input type="text" name="barcode" placeholder="条码" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <select name="varieties" xm-select="select-varieties">
+                                <option value="">品种</option>
+                                <option value="红木1">红木1</option>
+                                <option value="红木2">红木2</option>
+                            </select>
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <input type="text" name="level" placeholder="等级" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <input type="text" name="spec" placeholder="规格" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <input type="text" name="length" placeholder="长度" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item form-right">
+                        <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="searchForm">
+                            <i class="iconfont icon-sousuo"></i> <span>查询</span>
+                        </button>
+                        <button type="reset" class="layui-btn layui-btn-primary"> <i class="layui-icon layui-icon-refresh"></i></button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+    <div class="table-content">
+        <div class="table-content-title">
+            <div class="table-tools">
+                <ul class="layui-nav" lay-filter="talbe-tools">
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">新建预入库单</a>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">数据导入导出</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="javascript:;">下载模板</a></dd>
+                            <dd><a href="javascript:;">导入数据</a></dd>
+                            <dd><a href="javascript:;">导出数据</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">打印</a>
+                    </li>
+                </ul>
+                <ul class="layui-layout-right">
+                    <li><a href="javascript:;" class="editBtn">编辑</a></li>
+                    <li><a href="javascript:;" class="deleteBtn">删除</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="table-content-main">
+            <table class="layui-hide" id="tableContainer" lay-filter="tableContainer"></table>
+        </div>
+    </div>
+</div>
+
+<script type="text/html" id="statusTpl">
+    {{#  if(d.status == -1){ }}
+        已删除
+    {{#  } else if(d.status == 0) { }}
+        正常
+    {{#  } }} 
+</script>
+<script>
+    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects'], function() {
+        var element = layui.element;
+        var form = layui.form;
+        var $ = layui.jquery;
+        var table = layui.table;
+        var formSelects = layui.formSelects;
+        var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 103); //内容区域所需减去的高度
+
+        var eaitLayer; //编辑-弹层
+
+        form.render(); //重置表单渲染
+        formSelects.render(); //下拉选项
+        element.render('talbe-tools'); //表格工具栏
+        formSelects.btns(['select', 'remove'], {
+            show: 'name'
+        });
+
+        form.on('submit(searchForm)', function(data) {
+            var paramSearch = {};
+            for (var key in data.field) {
+                //参数赋值
+                if (data.field[key] != "") {
+                    paramSearch[key] = data.field[key]
+                }
+            }
+            tableIns.reload({
+                where: paramSearch, //接口参数
+                page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+            });
+            return false;
+        });
+
+        var tableIns = table.render({
+            elem: '#tableContainer',
+            height: 'full-' + tableTopHeight,
+            url: preEntry,
+            parseData: function(res) { //res 即为原始返回的数据
+                if (res.status !== 0) res.status = 0;
+                return {
+                    "code": res.status, //解析接口状态
+                    "msg": res.message, //解析提示文本
+                    "count": res.count, //解析数据长度
+                    "data": res.data //解析数据列表
+                }
+            },
+            request: {
+                pageName: 'offset', //页码的参数名称，默认：page
+                limitName: 'limit' //每页数据量的参数名，默认：limit
+            },
+            cols: [
+                [ //标题栏
+                    {
+                        type: 'checkbox'
+                    },
+                    {
+                        field: 'orderno',
+                        title: '单号',
+                        sort: true
+                    }, {
+                        field: 'varieties',
+                        title: '货权人',
+                        sort: true
+                    }, {
+                        field: 'levels',
+                        title: '仓库名称',
+                        sort: true
+                    }, {
+                        field: 'spec',
+                        title: '提运单',
+                        sort: true
+                    },
+                    {
+                        field: 'code',
+                        title: '原始编码',
+                        sort: true
+                    }, {
+                        field: 'containernum',
+                        title: '件数（包）',
+                        sort: true
+                    }, {
+                        field: 'num',
+                        title: '码单数量（m³）',
+                        sort: true
+                    }, {
+                        field: 'createdate',
+                        title: '创建日期',
+                        sort: true
+                    }, {
+                        field: 'person',
+                        title: '操作员',
+                        sort: true
+                    }, {
+                        field: 'status',
+                        title: '状态',
+                        templet: '#statusTpl'
+                    }
+                ]
+            ],
+            even: true,
+            page: true, //是否显示分页
+            limits: [10, 20, 30, 40, 50],
+            limit: 10, //每页默认显示的数量
+            done: function(res, curr, count) {
+                var addtableBtn = '<div class="rightBotBtn">已经选择<span>0</span>个商品 <a href="javascript:;" class="layui-btn layui-btn-sm submissionBtn">入库</a></div>';
+                $(".layui-table-page").append(addtableBtn);
+                $(".submissionBtn").click(function() {
+                    layer.msg("提交申请");
+                })
+            },
+            text: {
+                none: "无匹配数据"
+            },
+            loading: true
+        });
+
+        //监听锁定操作
+        table.on('checkbox(tableContainer)', function(obj) {
+            var checkStatus = table.checkStatus('tableContainer'); //表格选中状态
+            $(".rightBotBtn span").html(checkStatus.data.length); //当前选中了多少商品
+        });
+
+        $(".editBtn").click(function() {
+            var checkStatus = table.checkStatus('tableContainer');
+            if (checkStatus.data.length < 1) {
+                layer.msg("请选择需要编辑的信息");
+            } else if (checkStatus.data.length > 1) {
+                layer.msg("请选择需要编辑的单条信息");
+            } else {
+                var currData = checkStatus.data[0];
+                console.log(currData);
+                $.get('view/form/form-1.html', {}, function(str) {
+                    eaitLayer = layer.open({
+                        title: '编辑',
+                        type: 1,
+                        content: str, //注意，如果str是object，那么需要字符拼接。
+                        resize: false,
+                        area: ['600px', 'auto'],
+                    });
+                });
+            }
+        });
+
+        form.on('submit(editForm)', function(data) {
+            //编辑提交
+            layer.close(eaitLayer); //关闭
+            return false;
+        });
+
+
+        $(".deleteBtn").click(function() {
+            var checkStatus = table.checkStatus('tableContainer');
+            if (checkStatus.data.length < 1) {
+                layer.msg("请选择需要删除的信息");
+            } else {
+                layer.confirm('是否确认删除此条信息', {
+                    icon: 3,
+                    title: '提示'
+                }, function(index) {
+                    var rowId = [];
+                    $.each(checkStatus.data, function(i, v) {
+                        //获取所选行数ID
+                        rowId.push(v.orderno);
+                    });
+                    //调删除接口
+                    deleteRowData(preEntryDelete, {
+                        "ids": rowId
+                    }, function(data) {
+                        // 删除所选行成功
+                        layer.close(index);
+                        // 刷新表格
+                        tableIns.reload({
+                            page: {
+                                curr: 1 //重新从第 1 页开始
+                            }
+                        });
+                        layer.msg(data.msg);
+                    });
+
+                });
+            }
+        });
+
+        //删除行数据
+        function deleteRowData(url, data, funSuc, funErr) {
+            $.ajax({
+                url: url,
+                type: "get",
+                data: data,
+                traditional: true,
+                success: funSuc,
+                error: funErr
+            })
+        };
+
+    });
+</script>

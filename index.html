@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <title>维木智能仓管系统</title>
+    <link rel="stylesheet" href="layui/css/layui.css">
+    <link rel="stylesheet" href="js/layui-mod/formSelects-v4.css">
+    <link rel="stylesheet" href="style/iconfont/iconfont.css">
+    <link rel="stylesheet" href="style/index.css">
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body class="layui-layout-body">
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header index-header">
+            <div class="layui-logo">维木智能仓管系统</div>
+            <!-- 头部区域（可配合layui已有的水平导航） -->
+            <!-- <ul class="layui-nav layui-layout-left">
+                <li>
+                    <div class="header-seacherBox">
+                        <input type="text" placeholder="请输入关键词搜索，如货物ID、品种...">
+                        <span class="seacherBtn"><i class="iconfont icon-sousuo"></i></span>
+                    </div>
+                </li>
+            </ul> -->
+            <ul class="layui-nav layui-layout-right">
+                <!-- <li class="layui-nav-item">
+                    <a href="javascript:;" class="msgtips"><i class="iconfont icon-lingdang"></i><span class="msgcount">9</span></a>
+                </li> -->
+                <li class="layui-nav-item">
+                    <a href="javascript:;">
+                        <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                        超级管理员
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;" class="signOutBtn">退出登录</a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+
+        <div class="layui-side index-side">
+            <div class="layui-side-scroll">
+                <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+                <ul class="layui-nav layui-nav-tree" lay-filter="index-side" lay-shrink="all">
+                    <!-- 侧边导航: <ul class="layui-nav layui-nav-tree layui-nav-side"> -->
+                    <li class="layui-nav-item">
+                        <a href="#!home"><i class="iconfont icon-cangkuguanli"></i> 数据统计</a>
+                    </li>
+                    <li class="layui-nav-item layui-nav-itemed">
+                        <a href="javascript:;"><i class="iconfont icon-cangkuguanli"></i> 库存管理</a>
+                        <dl class="layui-nav-child">
+                            <dd class="layui-this"><a href="#!stock-search">库存信息</a></dd>
+                            <dd><a href="#!stock-preentry">预入库</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;"><i class="iconfont icon-churukuguanli"></i> 出入库管理</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="javascript:;">选项1</a></dd>
+                            <dd><a href="javascript:;">选项2</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;"><i class="iconfont icon-renyuanguanli"></i> 人员管理</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="javascript:;">选项1</a></dd>
+                            <dd><a href="javascript:;">选项2</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;"><i class="iconfont icon-jichushuju"></i> 基础数据</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="#!base-info">货物信息管理</a></dd>
+                            <dd><a href="javascript:;">选项2</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;"><i class="iconfont icon-xitongweihu"></i> 系统维护</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="javascript:;">选项1</a></dd>
+                            <dd><a href="javascript:;">选项2</a></dd>
+                        </dl>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;"><i class="iconfont icon-fengkongguanli"></i> 风控管理</a>
+                        <dl class="layui-nav-child">
+                            <dd><a href="javascript:;">选项1</a></dd>
+                            <dd><a href="javascript:;">选项2</a></dd>
+                        </dl>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="layui-body">
+            <!-- 内容主体区域 -->
+            <div class="content-header">
+                <div class="layui-tab nav-tabs" lay-filter="nav-tabs" lay-allowClose="true">
+                    <ul class="layui-tab-title">
+                        <li lay-id="home" class="nav-tabs-home">首页</li>
+                    </ul>
+                </div>
+                <div class="refresh"><i class="layui-icon layui-icon-refresh"></i> 刷新</div>
+            </div>
+            <div class="content-body"></div>
+        </div>
+    </div>
+    <script src="js/q.js"></script>
+    <script src="layui/layui.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/common.js"></script>
+    <script>
+        //JavaScript代码区域
+        if (!getCookie('SESSION_NAME')) {
+            //判断是否已登录
+            window.location.href = "http://192.168.10.216:8000/view/login/login.html";
+        }
+
+        layui.config({
+            base: 'js/layui-mod/' //此处路径请自行处理, 可以使用绝对路径
+        }).extend({
+            formSelects: 'formSelects-v4'
+        });
+
+        layui.use(['jquery', 'element', 'layer'], function() {
+            var element = layui.element,
+                $ = layui.$;
+            var container = $('.content-body'); //页面容器
+            var userInfo = JSON.parse(getCookie('userInfo')); //获取session中用户信息
+
+            Q.reg([
+                //注册页面
+                ['home', function() {
+                    container.load('/view/home/home.html');
+                }],
+                ['stock-search', function() {
+                    container.load('/view/stock/stock-search.html');
+                }],
+                ['stock-preentry', function() {
+                    container.load('/view/stock/stock-preentry.html');
+                }],
+                ['base-info', function() {
+                    container.load('/view/base/base-info.html');
+                }],
+                ['menu', function() {
+                    container.load('/view/menu/menu.html');
+                }]
+            ])
+
+            Q.init({
+                index: 'stock-search',
+                pop: function(vid) {
+                    // hash改变执行
+                    var thehash = $(".index-side a").attr("href").replace(/#!/, '');
+                    var dom;
+                    if (dom = $('.layui-nav dd.layui-this')) {
+                        dom.removeClass("layui-this");
+                        dom.parents("li.layui-nav-item").removeClass("layui-nav-itemed");
+                    }
+                    if (dom = $('.layui-nav a[href="#!' + vid + '"]')) {
+                        dom.parent("dd").addClass("layui-this");
+                        dom.parents("li.layui-nav-item").addClass("layui-nav-itemed");
+
+                        if ($(".layui-tab-title li[lay-id]").length <= 0) {
+                            element.tabAdd('nav-tabs', {
+                                title: dom.html(),
+                                id: vid
+                            });
+                        } else {
+                            var isData = false;
+                            $.each($(".layui-tab-title li[lay-id]"), function() {
+                                if ($(this).attr("lay-id") == vid) {
+                                    isData = true;
+                                }
+                            })
+                            if (isData == false) {
+                                element.tabAdd('nav-tabs', {
+                                    title: dom.html(),
+                                    id: vid
+                                });
+                            }
+                        }
+                        element.tabChange('nav-tabs', vid);
+                    }
+                }
+            });
+
+            //获取hash来切换选项卡，假设当前地址的hash为lay-id对应的值
+            
+            // var layid = location.hash.replace(/#!/, '');
+            // element.tabChange('nav-tabs', layid);
+
+            //监听Tab切换，以改变地址hash值
+            element.on('tab(nav-tabs)', function() {
+                location.hash = '#!' + this.getAttribute('lay-id');
+            });
+
+            $(".header-seacherBox input").focus(function() {
+                //头部搜索框获取焦点变亮
+                $(".header-seacherBox").addClass('opacity1');
+            }).blur(function() {
+                if ($(this).val() == "") {
+                    $(".header-seacherBox").removeClass('opacity1');
+                }
+            })
+
+            $(".signOutBtn").click(signOut); //退出登录
+
+            function signOut() {
+                //退出登录
+                delCookie("userInfo");
+                delCookie("SESSION_NAME");
+                history.replaceState({}, 'login', "http://192.168.10.216:8000/view/login/login.html");
+                window.location.href = "http://192.168.10.216:8000/view/login/login.html";
+            }
+
+        });
+    </script>
+</body>
+
+</html>

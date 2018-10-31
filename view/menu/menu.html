@@ -1,0 +1,59 @@
+<script id="demo" type="text/html">
+    <h3>{{ d.title }}</h3>
+    <ul>
+    {{#  layui.each(d.list, function(index, item){ }}
+      <li>
+        <span>{{ item.modname }}</span>
+        <span>{{ item.alias }}：</span>
+        <span>{{ item.site || '' }}</span>
+      </li>
+    {{#  }); }}
+    {{#  if(d.list.length === 0){ }}
+      无数据
+    {{#  } }}
+    </ul>
+    <ul class="layui-nav layui-nav-tree" lay-filter="test">
+        <li class="layui-nav-item layui-nav-itemed">
+            <a class="" href="javascript:;">所有商品</a>
+            <dl class="layui-nav-child">
+                <dd><a href="javascript:;">列表一</a></dd>
+                <dd><a href="javascript:;">列表二</a></dd>
+                <dd><a href="javascript:;">列表三</a></dd>
+                <dd><a href="">超链接</a></dd>
+            </dl>
+        </li>
+        <li class="layui-nav-item">
+            <a href="javascript:;">解决方案</a>
+            <dl class="layui-nav-child">
+                <dd><a href="javascript:;">列表一</a></dd>
+                <dd><a href="javascript:;">列表二</a></dd>
+                <dd><a href="">超链接</a></dd>
+            </dl>
+        </li>
+    </ul>
+</script>
+
+<div id="view"></div>
+
+<script>
+    layui.use('laytpl', function() {
+        var laytpl = layui.laytpl;
+        var data = { //数据
+            "title": "Layui常用模块",
+            "list": [{
+                "modname": "弹层",
+                "alias": "layer",
+                "site": "layer.layui.com"
+            }, {
+                "modname": "表单",
+                "alias": "form"
+            }]
+        }
+        var getTpl = demo.innerHTML,
+            view = document.getElementById('view');
+        laytpl(getTpl).render(data, function(html) {
+            view.innerHTML = html;
+        });
+
+    });
+</script>
