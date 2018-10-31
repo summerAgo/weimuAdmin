@@ -51,9 +51,9 @@
                     <li class="layui-nav-item item-more">
                         <a href="javascript:;">数据导入导出</a>
                         <dl class="layui-nav-child">
-                            <dd><a href="javascript:;">下载模板</a></dd>
-                            <dd><a href="javascript:;">导入数据</a></dd>
-                            <dd><a href="javascript:;">导出数据</a></dd>
+                            <dd><a id="dowmTemp" href="javascript:;">下载模板</a></dd>
+                            <dd><a id="toImport" href="javascript:;">导入数据</a></dd>
+                            <dd><a id="toExport" href="javascript:;">导出数据</a></dd>
                         </dl>
                     </li>
                     <li class="layui-nav-item">
@@ -172,6 +172,10 @@
             limits: [10, 20, 30, 40, 50],
             limit: 10, //每页默认显示的数量
             done: function(res, curr, count) {
+
+                console.log(res);
+                console.log(curr);
+                console.log(count);
                 var addtableBtn = '<div class="rightBotBtn">已经选择<span>0</span>个商品 <a href="javascript:;" class="layui-btn layui-btn-sm submissionBtn">入库</a></div>';
                 $(".layui-table-page").append(addtableBtn);
                 $(".submissionBtn").click(function() {
