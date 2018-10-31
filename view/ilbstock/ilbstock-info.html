@@ -5,29 +5,51 @@
                     <div class="form-box">
                         <div class="layui-form-item form-left">
                             <div class="table-form-item layui-input-inline">
-                                <input type="text" name="id" placeholder="货物ID" autocomplete="off" class="layui-input">
+                                <input type="text" name="orderno" placeholder="订单号" autocomplete="off" class="layui-input">
                             </div>
                             <div class="table-form-item layui-input-inline">
-                                <input type="text" name="packing" placeholder="包装" autocomplete="off" class="layui-input">
-                            </div>
-                            <div class="table-form-item layui-input-inline">
-                                <input type="text" name="barcode" placeholder="条码" autocomplete="off" class="layui-input">
+                                <input type="text" name="code" placeholder="包号" autocomplete="off" class="layui-input">
                             </div>
                             <div class="table-form-item layui-input-inline">
                                 <select name="varieties" xm-select="select-varieties">
                                     <option value="">品种</option>
-                                    <option value="红木1">红木1</option>
-                                    <option value="红木2">红木2</option>
+                                    <option value="红木">红木</option>
+                                    <option value="黄木">黄木</option>
+                                    <option value="紫木">紫木</option>
                                 </select>
                             </div>
                             <div class="table-form-item layui-input-inline">
-                                <input type="text" name="level" placeholder="等级" autocomplete="off" class="layui-input">
+                                <select name="levels" xm-select="select-varieties">
+                                    <option value="">等级</option>
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+                                    <option value="C">C</option>
+                                </select>
                             </div>
                             <div class="table-form-item layui-input-inline">
-                                <input type="text" name="spec" placeholder="规格" autocomplete="off" class="layui-input">
+                                <select name="spec" xm-select="select-varieties">
+                                    <option value="">规格</option>
+                                    <option value="10*10">10*10</option>
+                                    <option value="10*20">10*20</option>
+                                    <option value="20*10">20*10</option>
+                                    <option value="20*20">20*20</option>
+                                    <option value="20*30">20*30</option>
+                                </select>
                             </div>
                             <div class="table-form-item layui-input-inline">
-                                <input type="text" name="length" placeholder="长度" autocomplete="off" class="layui-input">
+                                <input type="text" name="containernum" placeholder="货柜号" autocomplete="off" class="layui-input">
+                            </div>
+                            <div class="table-form-item layui-input-inline">
+                                <input type="text" name="origin" placeholder="产地" autocomplete="off" class="layui-input">
+                            </div>
+                            <div class="table-form-item layui-input-inline">
+                                <input type="text" name="brand" placeholder="品牌" autocomplete="off" class="layui-input">
+                            </div>
+                            <div class="table-form-item layui-input-inline">
+                                <input type="text" name="billloading" placeholder="提运单" autocomplete="off" class="layui-input">
+                            </div>
+                            <div class="table-form-item layui-input-inline">
+                                <input type="text" name="person" placeholder="负责人" autocomplete="off" class="layui-input">
                             </div>
                         </div>
                         <div class="layui-form-item form-right">
@@ -46,7 +68,7 @@
                 <div class="table-tools">
                     <ul class="layui-nav" lay-filter="talbe-tools">
                         <li class="layui-nav-item">
-                            <a href="javascript:;">导出数据</a>
+                            <a id="toExport" href="javascript:;">导出数据</a>
                         </li>
                         <li class="layui-nav-item">
                             <a href="javascript:;">打印</a>
@@ -101,14 +123,16 @@
             var tableIns = table.render({
                 elem: '#tableContainer',
                 height: 'full-' + tableTopHeight,
-                url: preEntry,
+                url: ilbstockList,
                 parseData: function(res) { //res 即为原始返回的数据
                     if (res.status !== 0) res.status = 0;
                     return {
                         "code": res.status, //解析接口状态
                         "msg": res.message, //解析提示文本
                         "count": res.count, //解析数据长度
-                        "data": res.data //解析数据列表
+                        "data": res.data, //解析数据列表
+                        "aprice": res.aprice, //解析数据列表
+                        "znum": res.znum //解析数据列表
                     }
                 },
                 request: {
@@ -119,42 +143,78 @@
                     [ //标题栏
                         {
                             type: 'checkbox'
-                        },
-                        {
+                        }, {
                             field: 'orderno',
-                            title: '单号',
+                            title: '订单号',
                             sort: true
                         }, {
-                            field: 'cargoowner',
-                            title: '货权人',
+                            field: 'code',
+                            title: '包号',
                             sort: true
                         }, {
-                            field: 'depotname',
-                            title: '仓库名称',
+                            field: 'varieties',
+                            title: '品种',
+                            sort: true
+                        }, {
+                            field: 'levels',
+                            title: '等级',
+                            sort: true
+                        }, {
+                            field: 'spec',
+                            title: '规格',
+                            sort: true
+                        }, {
+                            field: 'aprice',
+                            title: '评估价',
+                            sort: true
+                        }, {
+                            field: 'chang',
+                            title: '长度',
+                            sort: true
+                        }, {
+                            field: 'num',
+                            title: '数量/立方',
+                            sort: true
+                        }, {
+                            field: 'actualnum',
+                            title: '实际数量/立方',
+                            sort: true
+                        }, {
+                            field: 'containernum',
+                            title: '货柜号',
+                            sort: true
+                        }, {
+                            field: 'origin',
+                            title: '产地',
+                            sort: true
+                        }, {
+                            field: 'brand',
+                            title: '品牌',
                             sort: true
                         }, {
                             field: 'billloading',
                             title: '提运单',
                             sort: true
                         }, {
-                            field: 'num',
-                            title: '件数（包）',
+                            field: 'person',
+                            title: '负责人',
                             sort: true
                         }, {
-                            field: 'volume',
-                            title: '码单数量（m³）',
+                            field: 'remarks',
+                            title: '备注',
                             sort: true
                         }, {
-                            field: 'createdate',
-                            title: '创建日期',
+                            field: 'depotid',
+                            title: '仓库',
                             sort: true
                         }, {
                             field: 'createuser',
                             title: '创建人',
                             sort: true
                         }, {
-                            field: 'estimatedate',
-                            title: '预计出库时间'
+                            field: 'createdate',
+                            title: '创建日期',
+                            sort: true
                         }
                     ]
                 ],
@@ -163,7 +223,8 @@
                 limits: [10, 20, 30, 40, 50],
                 limit: 10, //每页默认显示的数量
                 done: function(res, curr, count) {
-                    var addtableBtn = '<div class="rightBotBtn">合计总库存数量<span>0</span>㎡ 总库存估价金额：<span> </span>(RMB)</div>';
+                    console.log(res);
+                    var addtableBtn = '<div class="rightBotBtn">合计总库存数量<span>'+res.znum+'</span>㎡ 总库存估价金额：<span>'+res.aprice+'</span>(RMB)</div>';
                     $(".layui-table-page").append(addtableBtn);
                 },
                 text: {
@@ -171,6 +232,10 @@
                 },
                 loading: true
             });
-    
+            
+            //点击导出
+            $("#toExport").on('click',function(e){
+                window.location.href = ilbstockExportUrl
+            });
         });
     </script>
