@@ -51,9 +51,9 @@
                     <li class="layui-nav-item item-more">
                         <a href="javascript:;">数据导入导出</a>
                         <dl class="layui-nav-child">
-                            <dd><a href="javascript:;">下载模板</a></dd>
-                            <dd><a href="javascript:;">导入数据</a></dd>
-                            <dd><a href="javascript:;">导出数据</a></dd>
+                            <dd><a id="dowmTemp" href="javascript:;">下载模板</a></dd>
+                            <dd><a id="toImport" href="javascript:;">导入数据</a></dd>
+                            <dd><a id="toExport" href="javascript:;">导出数据</a></dd>
                         </dl>
                     </li>
                     <li class="layui-nav-item">
@@ -82,7 +82,6 @@
         var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 103); //内容区域所需减去的高度
 
         var eaitLayer; //编辑-弹层
-        var tableCondition;//表格查询条件
 
         form.render(); //重置表单渲染
         formSelects.render(); //下拉选项
@@ -99,7 +98,6 @@
                     paramSearch[key] = data.field[key]
                 }
             }
-            tableCondition = paramSearch;
             tableIns.reload({
                 where: paramSearch, //接口参数
                 page: {
@@ -174,6 +172,10 @@
             limits: [10, 20, 30, 40, 50],
             limit: 10, //每页默认显示的数量
             done: function(res, curr, count) {
+
+                console.log(res);
+                console.log(curr);
+                console.log(count);
                 var addtableBtn = '<div class="rightBotBtn">已经选择<span>0</span>个商品 <a href="javascript:;" class="layui-btn layui-btn-sm submissionBtn">入库</a></div>';
                 $(".layui-table-page").append(addtableBtn);
                 $(".submissionBtn").click(function() {
@@ -286,6 +288,18 @@
                 error: funErr
             })
         };
-
+        //变更下载模板链接
+        $("#dowmTemp").attr("href",ilbstockImportTemp);
+        
+        //点击导入跳转页面
+        $("#toImport").bind('onclick',function(e){
+            
+        });
+        
+        //点击导出
+        $("#toExport").bind('onclick',function(e){
+            window.location.href = ilbstockExportUrl
+        });
+        
     });
 </script>
