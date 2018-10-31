@@ -288,6 +288,18 @@
                 error: funErr
             })
         };
-
+        //变更下载模板链接
+        $("#dowmTemp").attr("href",ilbstockImportTemp);
+        
+        //点击导入跳转页面
+        $("#toImport").bind('onclick',function(e){
+            
+        });
+        
+        //点击导出
+        $("#toExport").bind('onclick',function(e){
+            window.location.href = ilbstockExportUrl
+        });
+        
     });
 </script>
