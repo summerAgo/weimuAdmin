@@ -1,17 +1,51 @@
 <div id="formImportView"></div>
-<script id="formTle" type="text/html">
-    <div class="edit-layer">
-        <form class="layui-form" action="">
-            
-            <div class="layui-form-item">
-                <div class="layui-input-block">
-                    <button class="layui-btn" lay-submit lay-filter="importForm">立即提交</button>
-                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+<!-- <script id="formTle" type="text/html"> -->
+<div class="edit-layer">
+    <fieldset class="layui-elem-field">
+        <legend>请完善以下数据，完成最终的预入库操作</legend>
+        <div class="layui-field-box">
+            <form class="layui-form layui-form-pane" action="">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">货权人</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="person" placeholder="货权人" autocomplete="off" class="layui-input" lay-verify="required">
+                    </div>
                 </div>
-            </div>
-        </form>
-    </div>
-</script>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">仓库名称</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="depotid" placeholder="仓库名称" autocomplete="off" class="layui-input" lay-verify="required">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">产地</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="origin" placeholder="产地" autocomplete="off" class="layui-input" lay-verify="required">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">供应商</label>
+                    <div class="layui-input-block">
+                        <input type="text" name="" placeholder="供应商" autocomplete="off" class="layui-input" lay-verify="required">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <button type="button" class="layui-btn layui-btn-primary layui-btn-fluid" id="importAddBtn" lay-verify="required"><i class="layui-icon"></i>点击添加需上传文件（只允许上传后缀为xls，xlsx，xlsm的文件）</button>
+                    <input type="hidden" id="img_url" name="img" value=""/>
+                    <!-- <input type="file" name="file" placeholder="点击添加需上传文件（只允许上传后缀为xls，xlsx，xlsm的文件）" autocomplete="off" class="layui-input" lay-verify="required" id="importAddBtn"> -->
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-input-block">
+                        <button class="layui-btn" lay-submit lay-filter="importForm">立即提交</button>
+                        <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </fieldset>
+
+</div>
+<!-- </script> -->
 <style scoped>
     .edit-layer {
         width: 500px;
@@ -27,14 +61,40 @@
     }
 </style>
 <script>
-    layui.use(['laytpl', 'laydate'], function() {
-        var laytpl = layui.laytpl;
-        var laydate = layui.laydate;
+    layui.use(['upload', 'form', 'jquery'], function() {
+        var upload = layui.upload;
+        var form = layui.form;
+        var $ = layui.jquery;
 
-        var getTpl = formTle.innerHTML,
-            view = document.getElementById('formImportView');
-        laytpl(getTpl).render(data, function(html) {
-            view.innerHTML = html;
+        function getParam() {
+            var data = {};
+            data.person = $("input[name='person']").val(); //货权人
+            data.depotid = $("input[name='depotid']").val(); //仓库名称
+            data.origin = $("input[name='origin']").val(); //产地
+            return data;
+        }
+        var uploadInst = upload.render({ //允许上传的文件后缀
+            elem: '#importAddBtn',
+            url: ilbstockImportUrl,
+            auto: false,
+            bindAction: '#importForm',
+            data: getParam,
+            multiple: false,
+            accept: 'file', //普通文件
+            exts: 'xls|xlsx|xlsm|xlt|xltx|xltm', //只允许上传压缩文件
+            done: function(res) {
+                console.log(res)
+            },
+            before: function(obj) {
+                console.log(obj)
+                debugger
+            }
         });
+
+        form.on('submit(importForm)', function(data) {
+            uploadInst.upload();
+            return false;
+        });
+
     });
 </script>

@@ -14,6 +14,7 @@ var ilbstockExportUrl = pathUrl + "lb/ilbstock/exportExcel"; //导出
 var ilbstockImportTemp = pathUrl + "template/预入库导入.xlsx"; //导入模板
 // 出入库
 var preEntry = pathUrl + "order/warehousing/list";//预入库
+var preEntryAdd = pathUrl + "order/warehousing/add";//预入库新增
 var preEntryDelete = pathUrl + "order/warehousing/delete";//预入库删除
 var preEntryUpdate = pathUrl + "order/warehousing/update";//预入库编辑
 var preEntrygetByOrderno = pathUrl + "order/warehousing/getByOrderno";//预入库单详情
