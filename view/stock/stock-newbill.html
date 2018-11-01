@@ -261,7 +261,7 @@
             alert(2345);
             var basedata = window.billBaseInfo;
             console.log(basedata);
-            if(tableData.length > 0 && basedata.length > 0){
+            if(tableData.length > 0 && null != basedata){
                 
                 var dataarr = [];
                 //第一步，先去除已在后台存在的数据
@@ -276,7 +276,7 @@
                 //第二步，提交到后台
                 $.ajax({
                     url: preEntryAdd,
-                    type: "post",
+                    type: "get",
                     data: {
                         lblist:dataarr,
                         cargoowner:basedata.cargoowner,
