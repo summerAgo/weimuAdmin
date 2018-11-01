@@ -2,13 +2,13 @@
     <div class="table-page-header">
         <div class="table-page-form">
             <form class="layui-form" action="">
-                <!-- <blockquote class="layui-elem-quote">
+                <blockquote class="layui-elem-quote">
                     预入库订单号：507230226812502016
-                </blockquote> -->
+                </blockquote>
                 <div class="form-box">
                     <div class="layui-form-item form-left">
                         <div class="table-form-item layui-input-inline table-form-item-btn">
-                            <button class="layui-btn" lay-submit lay-filter="addGoodsForm">添加货物信息</button>
+                            <button class="layui-btn" lay-submit lay-filter="addGoodsBtn">添加货物信息</button>
                         </div>
                         <div class="table-form-item layui-input-inline">
                             <input type="text" name="cargoowner" placeholder="货权人" autocomplete="off" class="layui-input" lay-verify="required">
@@ -79,10 +79,10 @@
             show: 'name'
         });
 
-        form.on('submit(addGoodsForm)', function(data) {
+        form.on('submit(addGoodsBtn)', function(data) {
             window.billBaseInfo = data.field;
             $.get('view/form/form-goods.html', {}, function(str) {
-                    eaitLayer = layer.open({
+                addLayer = layer.open({
                         title: '添加货物信息',
                         type: 1,
                         content: str, //注意，如果str是object，那么需要字符拼接。
@@ -92,7 +92,25 @@
                 });
             return false;
         });
-
+        
+        form.on('submit(addGoodsForm)', function(data) {
+            layer.confirm('确认提交修改', {
+                icon: 3,
+                title: '提示'
+            }, function(index) {
+                rowDataApi(preEntryUpdate, data.field, function(data) {
+                    layer.close(index);
+                    layer.close(addLayer); //关闭
+                    // 刷新表格
+                    tableIns.reload({
+                        page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                    });
+                })
+            })
+            return false;
+        });
         var tableIns = table.render({
             elem: '#tableContainer',
             height: 'full-' + tableTopHeight,
