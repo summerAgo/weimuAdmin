@@ -77,8 +77,8 @@
                     <li class="layui-nav-item">
                         <a href="javascript:;"><i class="iconfont icon-renyuanguanli"></i> 人员管理</a>
                         <dl class="layui-nav-child">
-                            <dd><a href="javascript:;">选项1</a></dd>
-                            <dd><a href="javascript:;">选项2</a></dd>
+                            <dd><a href="#!user-info">用户管理</a></dd>
+                            <dd><a href="#!user-permission">角色管理</a></dd>
                         </dl>
                     </li>
                     <li class="layui-nav-item">
@@ -165,8 +165,8 @@
                 ['ilbstock-abnormal', function() {
                     container.load('/view/ilbstock/ilbstock-abnormal.html');
                 }],
-                ['ilbstock-inventory', function() {
-                    container.load('/view/ilbstock/ilbstock-inventory.html');
+                ['user-info', function() {
+                    container.load('/view/user/user-info.html');
                 }]
             ])
 
