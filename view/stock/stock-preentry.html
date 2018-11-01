@@ -65,13 +65,14 @@
     </div>
 </div>
 <script>
-    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate'], function() {
+    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate','upload'], function() {
         var element = layui.element;
         var form = layui.form;
         var $ = layui.jquery;
         var table = layui.table;
         var formSelects = layui.formSelects;
         var laytpl = layui.laytpl;
+        var upload = layui.upload;
         var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 103); //内容区域所需减去的高度
 
         var eaitLayer; //编辑-弹层
@@ -293,35 +294,28 @@
         $("#toImport").on('click', function(e) {
             $.get("view/form/form-import.html", {}, function(str) {
                 importLayer = layer.open({
-                    title: '预入库数据完善',
+                    title: '文件上传',
                     type: 1,
                     content: str, //注意，如果str是object，那么需要字符拼接。
                     area: ['800px', 'auto'],
                 });
+                var uploadInst = upload.render({ //上传实例
+                    elem: '#importAddBtn',
+                    url: ilbstockImportUrl,
+                    multiple: false,
+                    accept: 'file', //普通文件
+                    exts: 'xls|xlsx|xlsm|xlt|xltx|xltm', //只允许上传后缀
+                    done: function(res) {
+                        if(res.status == 0){
+                            layer.msg("上传成功")
+                            layer.close(importLayer);
+                        }else{
+                            layer.msg(res.msg)
+                        }
+                    }
+                });
             })
         });
-
-        form.on('submit(importForm)', function(data) {
-            $.ajax({
-                type: 'POST',
-                url: ilbstockImportUrl,
-                data: data.field, //往后台发送的是data.field，即一个{name：value}的数据结构
-                async: true,
-                success: function(data) {
-                    if (data.status == 0) {
-                        layer.close(importLayer);
-                    } else {
-                        layer.msg("上传失败请选择正确的文件", {
-                            icon: 2,
-                            time: 1000
-                        });
-                    }
-                }
-            });
-            return false;
-        });
-
-
         //点击导出
         $("#toExport").on('click', function(e) {
             window.location.href = ilbstockExportUrl

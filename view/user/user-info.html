@@ -7,7 +7,7 @@
                         <div class="table-form-item layui-input-inline">
                             <input type="text" name="username" placeholder="用户名" autocomplete="off" class="layui-input">
                         </div>
-                  
+
                     </div>
                     <div class="layui-form-item form-right">
                         <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="searchForm">
@@ -25,7 +25,7 @@
             <div class="table-tools">
                 <ul class="layui-nav" lay-filter="talbe-tools">
                     <li class="layui-nav-item">
-						<a href="javascript:;" class="creatUser">添加用户</a>                      
+                        <a href="javascript:;" class="creatUser">添加用户</a>
                     </li>
                     <li class="layui-nav-item item-more">
                         <a href="javascript:;">数据导入导出</a>
@@ -61,7 +61,7 @@
         var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 103); //内容区域所需减去的高度
 
         var eaitLayer; //编辑-弹层
-        window.billBaseInfo; 
+        window.billBaseInfo;
         form.render(); //重置表单渲染
         formSelects.render(); //下拉选项
         element.render('talbe-tools'); //表格工具栏
@@ -70,7 +70,7 @@
         });
 
         form.on('submit(searchForm)', function(data) {
-			window.billBaseInfo = data.field;
+            window.billBaseInfo = data.field;
             var paramSearch = {};
             for (var key in data.field) {
                 //参数赋值
@@ -113,7 +113,7 @@
                         field: 'id',
                         title: 'ID',
                         sort: true
-                    },  {
+                    }, {
                         field: 'username',
                         title: '用户名',
                         sort: true
@@ -244,29 +244,29 @@
                 });
             }
         });
-        
 
-		
-		
-//弹出添加用户
-         $(".creatUser").click(function() {
-			 
-			 $.get('view/user/user-add.html', {}, function(str) {
-			 	eaitLayer = layer.open({
-			 		title: '添加用户',
-			 		type: 1,
-			 		content: str, 
-			 		resize: false,
-			 		area: ['800px', 'auto'],
-			 	});
-			 
-	
+
+
+
+        //弹出添加用户
+        $(".creatUser").click(function() {
+
+            $.get('view/user/user-add.html', {}, function(str) {
+                eaitLayer = layer.open({
+                    title: '添加用户',
+                    type: 1,
+                    content: str,
+                    resize: false,
+                    area: ['800px', 'auto'],
+                });
+
+
+            });
         });
-  });
-//弹出添加用户 end		
-		
-		
-		
+        //弹出添加用户 end		
+
+
+
         //增删行数据
         function rowDataApi(url, data, funSuc, funErr) {
             $.ajax({
@@ -279,17 +279,17 @@
             })
         };
         //变更下载模板链接
-        $("#dowmTemp").attr("href",ilbstockImportTemp);
-        
+        $("#dowmTemp").attr("href", ilbstockImportTemp);
+
         //点击导入跳转页面
-        $("#toImport").on('click',function(e){
-            
+        $("#toImport").on('click', function(e) {
+
         });
-        
+
         //点击导出
-        $("#toExport").on('click',function(e){
+        $("#toExport").on('click', function(e) {
             window.location.href = ilbstockExportUrl
         });
-        
+
     });
 </script>
