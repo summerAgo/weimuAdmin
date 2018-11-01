@@ -270,6 +270,9 @@
                         dataarr.push(bean);
                     }
                 }
+
+                var arr = JSON.stringify(dataarr);
+                console.log(typeof arr);
                 //第二步，提交到后台
                 $.ajax({
                     url: preEntryAdd,
@@ -277,7 +280,7 @@
                     dataType: "json",
                     contentType: "application/json",
                     data: {
-                        lblist: JSON.stringify(dataarr),
+                        lbarr: arr,
                         cargoowner: basedata.cargoowner,
                         depotname: basedata.depotname,
                         origin: basedata.origin,
