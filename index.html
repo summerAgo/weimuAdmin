@@ -127,7 +127,7 @@
         //JavaScript代码区域
         if (!getCookie('SESSION_NAME')) {
             //判断是否已登录
-            window.location.href = "http://192.168.10.216:8000/view/login/login.html";
+            window.location.href = localhost+"/view/login/login.html";
         }
 
         layui.config({
@@ -232,8 +232,8 @@
                 //退出登录
                 delCookie("userInfo");
                 delCookie("SESSION_NAME");
-                history.replaceState({}, 'login', localhost+":8000/view/login/login.html");
-                window.location.href = localhost+":8000/view/login/login.html";
+                history.replaceState({}, 'login', localhost + "/view/login/login.html");
+                window.location.href = localhost + "/view/login/login.html";
             }
 
         });
