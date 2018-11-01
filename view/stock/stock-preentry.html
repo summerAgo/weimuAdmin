@@ -173,10 +173,6 @@
             limits: [10, 20, 30, 40, 50],
             limit: 10, //每页默认显示的数量
             done: function(res, curr, count) {
-
-                console.log(res);
-                console.log(curr);
-                console.log(count);
                 var addtableBtn = '<div class="rightBotBtn">已经选择<span>0</span>个商品 <a href="javascript:;" class="layui-btn layui-btn-sm submissionBtn">入库</a></div>';
                 $(".layui-table-page").append(addtableBtn);
                 $(".submissionBtn").click(function() {
