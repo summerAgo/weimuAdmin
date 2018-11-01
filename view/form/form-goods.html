@@ -1,7 +1,27 @@
 <div id="formAddGoodsView"></div>
 <script id="formTle" type="text/html">
 <div class="addGoods-layer">
-    <form class="layui-form" action="formAddGoods">
+    <blockquote class="layui-elem-quote">
+        <ul class="layer-title">
+            <li>
+                <small>货权人</small>
+                <h3>{{d.cargoowner}}</h3>
+            </li>
+            <li>
+                <small>仓库名称</small>
+                <h3>{{d.depotname}}</h3>
+            </li>
+            <li>
+                <small>产地</small>
+                <h3>{{d.origin}}</h3>
+            </li>
+            <li>
+                <small>供应商</small>
+                <h3>{{d.supplier}}</h3>
+            </li>
+        </ul>
+    </blockquote>
+    <form class="layui-form layui-form-pane" action="formAddGoods">
         <div class="layui-form-item">
             <label class="layui-form-label">包号 <span class="layui-badge-dot"></span></label>
             <div class="layui-input-block">
@@ -73,16 +93,21 @@
 </script>
 <style scoped>
     .addGoods-layer {
-        width: 500px;
+        width: 700px;
         margin: 20px auto 0;
     }
 
-    .layui-form-label {
-        width: 100px;
+    .layui-form-pane .layui-form-label {
+        width: 130px;
     }
 
-    .layui-input-block {
+    .layui-form-pane .layui-input-block {
         margin-left: 130px;
+    }
+
+    .layer-title {
+        display: flex;
+        justify-content: space-around
     }
 </style>
 <script>

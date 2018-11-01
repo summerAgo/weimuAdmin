@@ -83,8 +83,8 @@
                             layer.msg("登录成功");
                             setCookie("SESSION_NAME", data.SESSION_NAME,"h12");
                             setCookie("userInfo", JSON.stringify(data.data),"h12");
-                            history.replaceState({},'index',"http://192.168.10.216:8000/");
-                            window.location.href = "http://192.168.10.216:8000/";
+                            history.replaceState({},'index',localhost+":8000/");
+                            window.location.href = localhost+":8000/";
                         } else {
                             layer.msg(data.msg);
                         }
