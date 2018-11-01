@@ -289,7 +289,7 @@
         $("#dowmTemp").attr("href", ilbstockImportTemp);
 
         //导入
-        var importLayer;//导入弹窗
+        var importLayer; //导入弹窗
         $("#toImport").on('click', function(e) {
             $.get("view/form/form-import.html", {}, function(str) {
                 importLayer = layer.open({
@@ -300,7 +300,26 @@
                 });
             })
         });
-        
+
+        form.on('submit(importForm)', function(data) {
+            $.ajax({
+                type: 'POST',
+                url: ilbstockImportUrl,
+                data: data.field, //往后台发送的是data.field，即一个{name：value}的数据结构
+                async: true,
+                success: function(data) {
+                    if (data.status == 0) {
+                        layer.close(importLayer);
+                    } else {
+                        layer.msg("上传失败请选择正确的文件", {
+                            icon: 2,
+                            time: 1000
+                        });
+                    }
+                }
+            });
+            return false;
+        });
 
 
         //点击导出

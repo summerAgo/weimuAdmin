@@ -30,9 +30,9 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <button type="button" class="layui-btn layui-btn-primary layui-btn-fluid" id="importAddBtn"><i class="layui-icon"></i>点击添加需上传文件（只允许上传后缀为xls，xlsx，xlsm的文件）</button>
-                    <input type="hidden" id="import_url" name="file" lay-verify="upVerify">
-                    <!-- <input type="file" name="file" placeholder="点击添加需上传文件（只允许上传后缀为xls，xlsx，xlsm的文件）" autocomplete="off" class="layui-input" lay-verify="required" id="importAddBtn"> -->
+                    <!-- <button type="button" class="layui-btn layui-btn-primary layui-btn-fluid" id="importAddBtn"><i class="layui-icon"></i>点击添加需上传文件（只允许上传后缀为xls，xlsx，xlsm的文件）</button>
+                    <input type="hidden" id="import_url" name="file" lay-verify="upVerify"> -->
+                    <input type="file" name="file" placeholder="点击添加需上传文件（只允许上传后缀为xls，xlsx，xlsm的文件）" autocomplete="off" class="layui-input" lay-verify="required" id="importAddBtn">
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-input-block">
@@ -73,52 +73,19 @@
                 }
             }
         });
-        var uploadInst = upload.render({ //允许上传的文件后缀
-            elem: '#importAddBtn',
-            url: ilbstockImportUrl,
-            auto: false,
-            multiple: false,
-            accept: 'file', //普通文件
-            exts: 'xls|xlsx|xlsm|xlt|xltx|xltm', //只允许上传压缩文件
-            done: function(res) {
-                console.log(res)
-                document.getElementById("import_url").value = res.url;
-            }
-        });
+        // var uploadInst = upload.render({ //允许上传的文件后缀
+        //     elem: '#importAddBtn',
+        //     url: ilbstockImportUrl,
+        //     auto: false,
+        //     multiple: false,
+        //     accept: 'file', //普通文件
+        //     exts: 'xls|xlsx|xlsm|xlt|xltx|xltm', //只允许上传压缩文件
+        //     done: function(res) {
+        //         console.log(res)
+        //         document.getElementById("import_url").value = res.url;
+        //     }
+        // });
 
-        form.on('submit(importForm)', function(data) {
-            $.ajax({
-                type: 'POST',
-                url: /*[[@{/sys_seller/add}]]*/ '',
-                dataType: 'json',
-                data: data.field, //往后台发送的是data.field，即一个{name：value}的数据结构
-                async: true,
-                success: function(result) {
-                    if (result.code == 0) {
-                        layer.msg('保存成功', {
-                            icon: 1,
-                            time: 1000
-                        });
-                        setTimeout(function() {
-                            self.location = /*[[@{/sys_seller/find}]]*/ '';
-                        }, 800);
-                    } else {
-                        layer.msg('保存失败！' + result.msg, {
-                            icon: 2,
-                            time: 1000
-                        });
-                    }
-                },
-                error: function(result, type) {
-                    layer.msg('保存失败！', {
-                        icon: 2,
-                        time: 1000
-                    });
-                }
-            });
-        });
-        uploadInst.upload();
-        return false;
 
     });
 </script>
