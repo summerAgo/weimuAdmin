@@ -98,16 +98,19 @@
                 icon: 3,
                 title: '提示'
             }, function(index) {
-                rowDataApi(preEntryUpdate, data.field, function(data) {
-                    layer.close(index);
-                    layer.close(addLayer); //关闭
-                    // 刷新表格
-                    tableIns.reload({
-                        page: {
-                            curr: 1 //重新从第 1 页开始
-                        }
-                    });
-                })
+                console.log(index);
+                console.log(data);
+
+                // rowDataApi(preEntryUpdate, data.field, function(data) {
+                //     layer.close(index);
+                //     layer.close(addLayer); //关闭
+                //     // 刷新表格
+                //     tableIns.reload({
+                //         page: {
+                //             curr: 1 //重新从第 1 页开始
+                //         }
+                //     });
+                // })
             })
             return false;
         });
@@ -134,28 +137,56 @@
                         type: 'checkbox'
                     },
                     {
-                        field: 'orderno',
-                        title: '单号',
+                        field: 'code',
+                        title: '包号',
                         sort: true
                     }, {
-                        field: 'cargoowner',
-                        title: '货权人',
+                        field: 'varieties',
+                        title: '品种',
                         sort: true
                     }, {
-                        field: 'depotname',
-                        title: '仓库名称',
+                        field: 'levels',
+                        title: '等级',
+                        sort: true
+                    }, {
+                        field: 'spec',
+                        title: '规格',
+                        sort: true
+                    }, {
+                        field: 'pprice',
+                        title: '采购价',
+                        sort: true
+                    }, {
+                        field: 'num',
+                        title: '数量（m³）',
+                        sort: true
+                    }, {
+                        field: 'actualnum',
+                        title: '实际数量（m³）',
+                        sort: true
+                    } , {
+                        field: 'containernum',
+                        title: '货柜号',
+                        sort: true
+                    }, {
+                        field: 'origin',
+                        title: '产地',
+                        sort: true
+                    }, {
+                        field: 'brand',
+                        title: '品牌',
                         sort: true
                     }, {
                         field: 'billloading',
                         title: '提运单',
                         sort: true
                     }, {
-                        field: 'num',
-                        title: '件数（包）',
+                        field: 'person',
+                        title: '负责人',
                         sort: true
                     }, {
-                        field: 'volume',
-                        title: '码单数量（m³）',
+                        field: 'estimatedate',
+                        title: '预计出库时间',
                         sort: true
                     }, {
                         field: 'createdate',
@@ -165,9 +196,6 @@
                         field: 'createuser',
                         title: '创建人',
                         sort: true
-                    }, {
-                        field: 'estimatedate',
-                        title: '预计出库时间'
                     }
                 ]
             ],
@@ -239,28 +267,6 @@
             })
         };
 
-        // 获取货物列表
-        function getGoodsList(url,number){
-            //url:接口地址 number:单号
-            var objList;
-            var sessionList;
-            $.get(url,{"orderno":number},function(data){
-                //获取服务器货物列表
-                sessionList = data.data;
-            })
-            var localList = localStorage.setItem("key","value");
-            if(localList){
-                objList = localList;
-                $.extend(objList, sessionList);
-            }
-            // else if(localList.userId == userInfo.userId){}//对比本地数据归属用户
-            return objList;
-        }
-
-        // 本地货物列表存储
-        function localSaveGoodsList(list){
-            
-        }
 
     });
 </script>
