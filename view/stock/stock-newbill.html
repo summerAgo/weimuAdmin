@@ -83,16 +83,16 @@
             window.billBaseInfo = data.field;
             $.get('view/form/form-goods.html', {}, function(str) {
                 addLayer = layer.open({
-                        title: '添加货物信息',
-                        type: 1,
-                        content: str, //注意，如果str是object，那么需要字符拼接。
-                        resize: false,
-                        area: ['800px', 'auto'],
-                    });
+                    title: '添加货物信息',
+                    type: 1,
+                    content: str, //注意，如果str是object，那么需要字符拼接。
+                    resize: false,
+                    area: ['800px', 'auto'],
                 });
+            });
             return false;
         });
-        
+
         form.on('submit(addGoodsForm)', function(data) {
             layer.confirm('确认提交？', {
                 icon: 3,
@@ -103,7 +103,7 @@
                 $(".rightBotBtn span").html(tableData.length); //当前选中了多少商品
 
                 tableIns.reload({
-                    data:tableData,
+                    data: tableData,
                     page: {
                         curr: 1 //重新从第 1 页开始
                     }
@@ -114,13 +114,13 @@
             })
             return false;
         });
-        
+
         var tableData = [];
 
         var tableIns = table.render({
             elem: '#tableContainer',
             height: 'full-' + tableTopHeight,
-            data:tableData,
+            data: tableData,
             cols: [
                 [ //标题栏
                     {
@@ -154,7 +154,7 @@
                         field: 'actualnum',
                         title: '实际数量（m³）',
                         sort: true
-                    } , {
+                    }, {
                         field: 'containernum',
                         title: '货柜号',
                         sort: true
@@ -195,7 +195,7 @@
             limit: 15, //每页默认显示的数量
             done: function(res, curr, count) {
                 var addtableBtn = '<div class="rightBotBtn">已新增<span>0</span>个货物 <a href="javascript:;" class="layui-btn layui-btn-primary layui-btn-sm subCancelBtn">取消</a><a href="javascript:;" class="layui-btn layui-btn-sm subConfirmBtn">确认</a></div>';
-                
+
                 $(".layui-table-page").append(addtableBtn);
 
                 $(".subConfirmBtn").click(subConfun);
@@ -255,47 +255,42 @@
                 error: funErr
             })
         };
-        
+
         //点击确定
-        function subConfun(){
-            alert(2345);
+        function subConfun() {
             var basedata = window.billBaseInfo;
             console.log(basedata);
-            if(tableData.length > 0 && null != basedata){
-                
+            if (tableData.length > 0 && null != basedata) {
+
                 var dataarr = [];
                 //第一步，先去除已在后台存在的数据
-                for(var i=0;i<tableData.length;i++){
+                for (var i = 0; i < tableData.length; i++) {
                     var bean = tableData[i];
-                    if(undefined == bean.id || null == bean.id){
+                    if (undefined == bean.id || null == bean.id) {
                         dataarr.push(bean);
                     }
-                } 
-                
-                
+                }
                 //第二步，提交到后台
                 $.ajax({
                     url: preEntryAdd,
                     type: "get",
+                    dataType: "json",
+                    contentType: "application/json",
                     data: {
-                        lblist:dataarr,
-                        cargoowner:basedata.cargoowner,
-                        depotname:basedata.depotname,
-                        origin:basedata.origin,
-                        supplier:basedata.supplier
+                        lblist: JSON.stringify(dataarr),
+                        cargoowner: basedata.cargoowner,
+                        depotname: basedata.depotname,
+                        origin: basedata.origin,
+                        supplier: basedata.supplier
                     },
                     traditional: true,
-                    success: function (data){
+                    success: function(data) {
                         console.log("成功");
                         console.log(data);
                     },
-                    error: function (){}
+                    error: function() {}
                 })
-
-
             }
         }
-        
-
     });
 </script>
