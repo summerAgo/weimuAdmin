@@ -1,0 +1,40 @@
+<div id="formImportView"></div>
+<script id="formTle" type="text/html">
+    <div class="edit-layer">
+        <form class="layui-form" action="">
+            
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="importForm">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</script>
+<style scoped>
+    .edit-layer {
+        width: 500px;
+        margin: 20px auto 0;
+    }
+
+    .layui-form-label {
+        width: 100px;
+    }
+
+    .layui-input-block {
+        margin-left: 130px;
+    }
+</style>
+<script>
+    layui.use(['laytpl', 'laydate'], function() {
+        var laytpl = layui.laytpl;
+        var laydate = layui.laydate;
+
+        var getTpl = formTle.innerHTML,
+            view = document.getElementById('formImportView');
+        laytpl(getTpl).render(data, function(html) {
+            view.innerHTML = html;
+        });
+    });
+</script>

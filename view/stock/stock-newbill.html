@@ -114,23 +114,13 @@
             })
             return false;
         });
+        
+        var talbeData = [{"orderno":"507230226799919104","offset":0,"num":191,"origin":"杨家场地9","createdate":"2018-10-31 20:33:12","updadate":"2018-10-31 20:33:12","cargoowner":"杨乐9xx","estimatedate":"2018-11-08 00:00:00","billloading":"杨家提运单9xx","volume":91,"depotname":"杨家仓库9xx","supplier":"杨家供应9","limit":10,"status":0},{"volume":13,"depotname":"杨家仓库13","orderno":"507230226841862144","offset":0,"num":23,"origin":"杨家场地13","supplier":"杨家供应13","limit":10,"createdate":"2018-10-31 16:31:50","cargoowner":"杨乐13","billloading":"杨家提运单13","status":0},{"volume":14,"depotname":"杨家仓库14","orderno":"507230226858639360","offset":0,"num":24,"origin":"杨家场地14","supplier":"杨家供应14","limit":10,"createdate":"2018-10-31 16:31:50","cargoowner":"杨乐14","billloading":"杨家提运单14","status":0},{"volume":15,"depotname":"杨家仓库15","orderno":"507230226871222272","offset":0,"num":25,"origin":"杨家场地15","supplier":"杨家供应15","limit":10,"createdate":"2018-10-31 16:31:50","cargoowner":"杨乐15","billloading":"杨家提运单15","status":0},{"volume":16,"depotname":"杨家仓库16","orderno":"507230226879610880","offset":0,"num":26,"origin":"杨家场地16","supplier":"杨家供应16","limit":10,"createdate":"2018-10-31 16:31:50","cargoowner":"杨乐16","billloading":"杨家提运单16","status":0},{"volume":17,"depotname":"杨家仓库17","orderno":"507230226892193792","offset":0,"num":27,"origin":"杨家场地17","supplier":"杨家供应17","limit":10,"createdate":"2018-10-31 16:31:50","cargoowner":"杨乐17","billloading":"杨家提运单17","status":0},{"volume":18,"depotname":"杨家仓库18","orderno":"507230226900582400","offset":0,"num":28,"origin":"杨家场地18","supplier":"杨家供应18","limit":10,"createdate":"2018-10-31 16:31:50","cargoowner":"杨乐18","billloading":"杨家提运单18","status":0},{"volume":19,"depotname":"杨家仓库19","orderno":"507230226913165312","offset":0,"num":29,"origin":"杨家场地19","supplier":"杨家供应19","limit":10,"createdate":"2018-10-31 16:31:50","cargoowner":"杨乐19","billloading":"杨家提运单19","status":0},{"volume":20,"depotname":"杨家仓库20","orderno":"507230226934136832","offset":0,"num":30,"origin":"杨家场地20","supplier":"杨家供应20","limit":10,"createdate":"2018-10-31 16:31:50","cargoowner":"杨乐20","billloading":"杨家提运单20","status":0},{"volume":21,"depotname":"杨家仓库21","orderno":"507230226946719744","offset":0,"num":31,"origin":"杨家场地21","supplier":"杨家供应21","limit":10,"createdate":"2018-10-31 16:31:50","cargoowner":"杨乐21","billloading":"杨家提运单21","status":0},{"volume":22,"depotname":"杨家仓库22","orderno":"507230226955108352","offset":0,"num":32,"origin":"杨家场地22","supplier":"杨家供应22","limit":10,"createdate":"2018-10-31 16:31:50","cargoowner":"杨乐22","billloading":"杨家提运单22","status":0},{"volume":23,"depotname":"杨家仓库23","orderno":"507230226963496960","offset":0,"num":33,"origin":"杨家场地23","supplier":"杨家供应23","limit":10,"createdate":"2018-10-31 16:31:50","cargoowner":"杨乐23","billloading":"杨家提运单23","status":0},{"volume":24,"depotname":"杨家仓库24","orderno":"507230226971885568","offset":0,"num":34,"origin":"杨家场地24","supplier":"杨家供应24","limit":10,"createdate":"2018-10-31 16:31:50","cargoowner":"杨乐24","billloading":"杨家提运单24","status":0},{"volume":25,"depotname":"杨家仓库25","orderno":"507230226984468480","offset":0,"num":35,"origin":"杨家场地25","supplier":"杨家供应25","limit":10,"createdate":"2018-10-31 16:31:50","cargoowner":"杨乐25","billloading":"杨家提运单25","status":0},{"volume":26,"depotname":"杨家仓库26","orderno":"507230227001245696","offset":0,"num":36,"origin":"杨家场地26","supplier":"杨家供应26","limit":10,"createdate":"2018-10-31 16:31:50","cargoowner":"杨乐26","billloading":"杨家提运单26","status":0}]
+
         var tableIns = table.render({
             elem: '#tableContainer',
             height: 'full-' + tableTopHeight,
-            url: preEntry,
-            parseData: function(res) { //res 即为原始返回的数据
-                if (res.status !== 0) res.status = 0;
-                return {
-                    "code": res.status, //解析接口状态
-                    "msg": res.message, //解析提示文本
-                    "count": res.count, //解析数据长度
-                    "data": res.data //解析数据列表
-                }
-            },
-            request: {
-                pageName: 'offset', //页码的参数名称，默认：page
-                limitName: 'limit' //每页数据量的参数名，默认：limit
-            },
+            data:talbeData,
             cols: [
                 [ //标题栏
                     {

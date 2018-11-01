@@ -268,8 +268,8 @@
                 });
             }
         });
-        
-        $(".creatBillBtn").click(function(){
+
+        $(".creatBillBtn").click(function() {
             //新建预入库单
             var container = $('.content-body'); //页面容器
             container.load('/view/stock/stock-newbill.html');
@@ -286,17 +286,28 @@
             })
         };
         //变更下载模板链接
-        $("#dowmTemp").attr("href",ilbstockImportTemp);
-        
-        //点击导入跳转页面
-        $("#toImport").on('click',function(e){
-            
+        $("#dowmTemp").attr("href", ilbstockImportTemp);
+
+        //导入
+        var importLayer;//导入弹窗
+        $("#toImport").on('click', function(e) {
+            $.get("view/form/form-import.html", {}, function(str) {
+                importLayer = layer.open({
+                    title: '预入库数据完善',
+                    type: 1,
+                    content: str, //注意，如果str是object，那么需要字符拼接。
+                    resize: false,
+                    area: ['800px', 'auto'],
+                });
+            })
         });
         
+
+
         //点击导出
-        $("#toExport").on('click',function(e){
+        $("#toExport").on('click', function(e) {
             window.location.href = ilbstockExportUrl
         });
-        
+
     });
 </script>
