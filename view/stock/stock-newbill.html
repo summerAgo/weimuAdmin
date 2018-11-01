@@ -149,7 +149,8 @@
                     }, {
                         field: 'num',
                         title: '数量（m³）',
-                        sort: true
+                        sort: true,
+                        edit:"txt"
                     }, {
                         field: 'actualnum',
                         title: '实际数量（m³）',
@@ -206,11 +207,11 @@
             loading: true
         });
 
-        //监听锁定操作
-        // table.on('checkbox(tableContainer)', function(obj) {
-        //     var checkStatus = table.checkStatus('tableContainer'); //表格选中状态
-        //     $(".rightBotBtn span").html(checkStatus.data.length); //当前选中了多少商品
-        // });
+        table.on('edit(tableContainer)', function(obj) { //注：edit是固定事件名，test是table原始容器的属性 lay-filter="对应的值"
+            console.log(obj.value); //得到修改后的值
+            console.log(obj.field); //当前编辑的字段名
+            console.log(obj.data); //所在行的所有相关数据  
+        });
 
         $(".deleteBtn").click(function() {
             var checkStatus = table.checkStatus('tableContainer');
