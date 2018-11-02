@@ -1,21 +1,8 @@
 <div class="table-page">
     <div class="table-page-header">
         <div class="table-page-form">
-            <blockquote class="layui-elem-quote">
-                <ul class="layer-title">
-                    <li>
-                        <small>入库订单号</small>
-                        <h3>{{d.origin}}</h3>
-                    </li>
-                    <li>
-                        <small>货权人</small>
-                        <h3>{{d.cargoowner}}</h3>
-                    </li>
-                    <li>
-                        <small>仓库名称</small>
-                        <h3>{{d.depotname}}</h3>
-                    </li>
-                </ul>
+            <blockquote class="layui-elem-quote" id="details-title">
+
             </blockquote>
         </div>
     </div>
@@ -37,6 +24,26 @@
         </div>
     </div>
 </div>
+<script id="detailsTle" type="text/html">
+<ul class="layer-title">
+    <li>
+        <small>入库订单号</small>
+        <h3>{{d.orderno}}</h3>
+    </li>
+    <li>
+        <small>货权人</small>
+        <h3>{{d.cargoowner}}</h3>
+    </li>
+    <li>
+        <small>仓库名称</small>
+        <h3>{{d.depotname}}</h3>
+    </li>
+    <li>
+        <small>出库时间</small>
+        <h3>{{d.outdate}}</h3>
+    </li>
+</ul>
+</script>
 <style scoped>
     .layer-title {
         display: flex;
@@ -46,7 +53,10 @@
     .layer-title small {
         font-size: 14px;
     }
-    .table-page h3{padding-left:0;}
+
+    .table-page h3 {
+        padding-left: 0;
+    }
 </style>
 <script>
     layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'upload'], function() {
@@ -56,24 +66,27 @@
         var table = layui.table;
         var formSelects = layui.formSelects;
         var laytpl = layui.laytpl;
-        var upload = layui.upload;
-        var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 103); //内容区域所需减去的高度
-        var tableData;
-        var addLayer; //添加-弹层
         
-        $.get()
-
-        form.render(); //重置表单渲染
-        formSelects.render(); //下拉选项
-        element.render('talbe-tools'); //表格工具栏
-        formSelects.btns(['select', 'remove'], {
-            show: 'name'
+        var stockHistoryDetails = JSON.parse(sessionStorage.getItem('stockHistoryDetails'));//获取所选择记录详情
+        if(!stockHistoryDetails){
+            //判断是否存在，不存在跳转到首页
+            history.replaceState(null, null, "#!home");
+            $(".nav-tabs li").last().remove();
+            return false;
+        }
+        // 渲染title的内容
+        var getTpl = detailsTle.innerHTML,
+            view = document.getElementById('details-title');
+        laytpl(getTpl).render(stockHistoryDetails.data, function(html) {
+            view.innerHTML = html;
         });
+        
+        var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 103); //内容区域所需减去的高度
 
         var tableIns = table.render({
             elem: '#tableContainer',
             height: 'full-' + tableTopHeight,
-            data: tableData,
+            data: stockHistoryDetails.stocklist,
             cols: [
                 [ //标题栏
                     {

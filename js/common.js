@@ -1,6 +1,5 @@
-window.stockHistoryDetails;//出入库记录单号下详情数据;
 window.currData;//页面中当前选中行数据；
-window.billBaseInfo; //库单基本信息：货权人-仓库名称等;
+window.billBaseInfo; //预入库单基本信息：货权人-仓库名称等;
 
 //存cookie
 function setCookie(name, value, time) {
