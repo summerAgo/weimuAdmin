@@ -211,6 +211,12 @@
                         }
                         element.tabChange('nav-tabs', vid);
                     }
+
+                    $.each($(".nav-tabs li"), function(i, v) {
+                        if ($(this).attr("lay-id") == "stock-historyDetails") {
+                            $(this).text("记录详情");
+                        }
+                    })
                 }
             });
 
