@@ -71,6 +71,7 @@
         var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 103); //内容区域所需减去的高度
         var tableData = [];
         var addLayer; //添加-弹层
+        window.billBaseInfo; //库单基本信息：货权人-仓库名称等
 
         form.render(); //重置表单渲染
         formSelects.render(); //下拉选项

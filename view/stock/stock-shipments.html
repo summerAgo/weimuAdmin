@@ -39,11 +39,17 @@
             <div class="table-tools">
                 <ul class="layui-nav" lay-filter="talbe-tools">
                     <li class="layui-nav-item">
-                        <a href="javascript:;" class="creatOutBtn">新建预入库单</a>
+                        <a href="javascript:;" class="creatBillBtn">新建预入库单</a>
                     </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;" id="toExport">导出数据</a>
-                    </li>
+                    <!-- <li class="layui-nav-item item-more">
+                            <a href="javascript:;">数据导入导出</a>
+                            <dl class="layui-nav-child">
+                                <dd><a id="dowmTemp" href="javascript:;">下载模板</a></dd>
+                                <dd><a id="toImport" href="javascript:;">导入数据</a></dd>
+                                <dd><a id="toExport" href="javascript:;">导出数据</a></dd>
+                            </dl>
+                        </li> -->
+
                     <li class="layui-nav-item">
                         <a href="javascript:;">打印</a>
                     </li>
@@ -102,7 +108,7 @@
         var tableIns = table.render({
             elem: '#tableContainer',
             height: 'full-' + tableTopHeight,
-            url: outTreasury,
+            url: preEntry,
             parseData: function(res) { //res 即为原始返回的数据
                 if (res.status !== 0) res.status = 0;
                 return {
@@ -169,8 +175,8 @@
             ],
             even: true,
             page: true, //是否显示分页
-            limits: [15, 20, 30, 40, 50],
-            limit: 15, //每页默认显示的数量
+            limits: [10, 20, 30, 40, 50],
+            limit: 10, //每页默认显示的数量
             done: function(res, curr, count) {
                 var addtableBtn = '<div class="rightBotBtn">已经选择<span>0</span>个商品 <a href="javascript:;" class="layui-btn layui-btn-sm submissionBtn">入库</a></div>';
                 $(".layui-table-page").append(addtableBtn);
@@ -263,15 +269,16 @@
                         });
                         layer.msg(data.msg);
                     });
+
                 });
             }
         });
 
-        $(".creatOutBtn").click(function() {
-            //新建出库单
-            layer.msg("新建出库单");
+        $(".creatBillBtn").click(function() {
+            //新建预入库单
+            var container = $('.content-body'); //页面容器
+            container.load('/view/stock/stock-newbill.html');
         });
-
         //增删行数据
         function rowDataApi(url, data, funSuc, funErr) {
             $.ajax({
@@ -283,6 +290,5 @@
                 error: funErr
             })
         };
-
     });
 </script>

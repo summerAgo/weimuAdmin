@@ -65,7 +65,7 @@
     </div>
 </div>
 <script>
-    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'upload'], function() {
+    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate','upload'], function() {
         var element = layui.element;
         var form = layui.form;
         var $ = layui.jquery;
@@ -144,9 +144,20 @@
                         title: '件数（包）',
                         sort: true
                     }, {
+                        field: 'origin',
+                        title: '产地',
+                        sort: true
+                    }, {
+                        field: 'supplier',
+                        title: '供应商',
+                        sort: true
+                    }, {
                         field: 'volume',
                         title: '码单数量（m³）',
                         sort: true
+                    }, {
+                        field: 'estimatedate',
+                        title: '预计出库时间'
                     }, {
                         field: 'createdate',
                         title: '创建日期',
@@ -165,39 +176,9 @@
             done: function(res, curr, count) {
                 var addtableBtn = '<div class="rightBotBtn">已经选择<span>0</span>个商品 <a href="javascript:;" class="layui-btn layui-btn-sm submissionBtn">入库</a></div>';
                 $(".layui-table-page").append(addtableBtn);
-                $(".submissionBtn").on('click', function() {
-                    var checkStatus = table.checkStatus('tableContainer');
-                    var data = checkStatus.data;
-
-                    if (data.length < 1) {
-                        layer.msg("请选择需要入库的信息");
-                    } else {
-                        layer.confirm('确认提交入库', {
-                            icon: 3,
-                            title: '提示'
-                        }, function(index) {
-                            layer.close(index);
-                            var orderno = [];
-                            for (var i = 0; i < data.length; i++) {
-                                orderno.push(data[i].orderno);
-                            }
-                            rowDataApi(preEntryexamineStock, {
-                                ids: orderno
-                            }, function(datas) {
-                                console.log(datas);
-                                //入库成功
-                                layer.msg("入库成功");
-                                // 刷新表格
-                                tableIns.reload({
-                                    page: {
-                                        curr: 1 //重新从第 1 页开始
-                                    }
-                                });
-                            })
-                        })
-
-                    }
-                });
+                $(".submissionBtn").click(function() {
+                    layer.msg("提交申请");
+                })
             },
             text: {
                 none: "无匹配数据"
@@ -305,19 +286,7 @@
                 error: funErr
             })
         };
+        
 
-
-        function submissionfun() {
-
-            // $.ajax({
-            //     url: url,
-            //     type: "get",
-            //     data: data,
-            //     traditional: true,
-            //     success: function (datas){
-
-            //     }
-            // })
-        }
     });
 </script>
