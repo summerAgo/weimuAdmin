@@ -70,8 +70,8 @@
                         <dl class="layui-nav-child">
                             <dd><a href="#!stock-shipments">出货申请</a></dd>
                             <dd><a href="#!stock-preentry">预入库</a></dd>
-                            <dd><a href="#!stock-out">出库记录</a></dd>
-                            <dd><a href="#!stock-enter">入库记录</a></dd>
+                            <dd><a href="#!stock-outHistory">出库记录</a></dd>
+                            <dd><a href="#!stock-enterHistory">入库记录</a></dd>
                         </dl>
                     </li>
                     <li class="layui-nav-item">
@@ -79,8 +79,8 @@
                         <dl class="layui-nav-child">
                             <dd><a href="#!user-list">用户管理</a></dd>
                             <dd><a href="#!role-list">角色管理</a></dd>
-							 <dd><a href="#!menu-list">菜单管理</a></dd>
-							  <dd><a href="#!button-list">角色管理</a></dd>
+                            <dd><a href="#!menu-list">菜单管理</a></dd>
+                            <dd><a href="#!button-list">角色管理</a></dd>
                         </dl>
                     </li>
                     <li class="layui-nav-item">
@@ -152,11 +152,17 @@
                 ['stock-preentry', function() {
                     container.load('/view/stock/stock-preentry.html');
                 }],
-                ['stock-out', function() {
-                    container.load('/view/stock/stock-out.html');
+                ['stock-outHistory', function() {
+                    container.load('/view/stock/stock-outHistory.html');
                 }],
-                ['stock-enter', function() {
-                    container.load('/view/stock/stock-enter.html');
+                ['stock-enterHistory', function() {
+                    container.load('/view/stock/stock-enterHistory.html');
+                }],
+                ['stock-shipments', function() {
+                    container.load('/view/stock/stock-shipments.html');
+                }],
+                ['stock-historyDetails', function() {
+                    container.load('/view/stock/stock-historyDetails.html');
                 }],
                 ['stock-shipments', function() {
                     container.load('/view/stock/stock-shipments.html');
@@ -218,7 +224,13 @@
                             }
                         }
                         element.tabChange('nav-tabs', vid);
+
                     }
+                    $.each($(".nav-tabs li"), function(i, v) {
+                        if ($(this).attr("lay-id") == "stock-historyDetails") {
+                            $(this).text("记录详情");
+                        }
+                    })
                 }
             });
 
