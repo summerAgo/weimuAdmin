@@ -35,9 +35,9 @@
                     <li class="layui-nav-item item-more">
                         <a href="javascript:;">数据导入导出</a>
                         <dl class="layui-nav-child">
-                            <dd><a href="javascript:;">下载模板</a></dd>
-                            <dd><a href="javascript:;">导入数据</a></dd>
-                            <dd><a href="javascript:;">导出数据</a></dd>
+                            <dd><a id="dowmTemp" href="javascript:;">下载模板</a></dd>
+                            <dd><a id="toImport" href="javascript:;">导入数据</a></dd>
+                            <dd><a id="toExport" href="javascript:;">导出数据</a></dd>
                         </dl>
                     </li>
                     <li class="layui-nav-item">
@@ -68,7 +68,7 @@
         var formSelects = layui.formSelects;
         var laytpl = layui.laytpl;
         var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 103); //内容区域所需减去的高度
-
+        var tableData = [];
         var addLayer; //添加-弹层
         window.billBaseInfo; //库单基本信息：货权人-仓库名称等
 
@@ -114,8 +114,6 @@
             })
             return false;
         });
-
-        var tableData = [];
 
         var tableIns = table.render({
             elem: '#tableContainer',
@@ -210,6 +208,12 @@
         table.on('edit(tableContainer)', function(obj) { //注：edit是固定事件名，test是table原始容器的属性 lay-filter="对应的值"
             console.log(obj.value); //得到修改后的值
             console.log(obj.field); //当前编辑的字段名
+            var field = obj.field;
+            if(field == 'num' ){
+
+
+
+            }
             console.log(obj.data); //所在行的所有相关数据  
         });
 
@@ -296,5 +300,42 @@
                 })
             }
         }
+
+
+        //变更下载模板链接
+        $("#dowmTemp").attr("href", ilbstockImportTemp);
+
+        //导入
+        var importLayer; //导入弹窗
+        $("#toImport").on('click', function(e) {
+            $.get("view/form/form-import.html", {}, function(str) {
+                importLayer = layer.open({
+                    title: '文件上传',
+                    type: 1,
+                    content: str, //注意，如果str是object，那么需要字符拼接。
+                    area: ['800px', 'auto'],
+                });
+                var uploadInst = upload.render({ //上传实例
+                    elem: '#importAddBtn',
+                    url: ilbstockImportUrl,
+                    multiple: false,
+                    accept: 'file', //普通文件
+                    exts: 'xls|xlsx|xlsm|xlt|xltx|xltm', //只允许上传后缀
+                    done: function(res) {
+                        if(res.status == 0){
+                            layer.msg("上传成功")
+                            layer.close(importLayer);
+                        }else{
+                            layer.msg(res.msg)
+                        }
+                    }
+                });
+            })
+        });
+        //点击导出
+        $("#toExport").on('click', function(e) {
+            window.location.href = ilbstockExportUrl
+        });
+        
     });
 </script>

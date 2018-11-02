@@ -41,14 +41,14 @@
                     <li class="layui-nav-item">
                         <a href="javascript:;" class="creatBillBtn">新建预入库单</a>
                     </li>
-                    <li class="layui-nav-item item-more">
+                    <!-- <li class="layui-nav-item item-more">
                         <a href="javascript:;">数据导入导出</a>
                         <dl class="layui-nav-child">
                             <dd><a id="dowmTemp" href="javascript:;">下载模板</a></dd>
                             <dd><a id="toImport" href="javascript:;">导入数据</a></dd>
                             <dd><a id="toExport" href="javascript:;">导出数据</a></dd>
                         </dl>
-                    </li>
+                    </li> -->
                     <li class="layui-nav-item">
                         <a href="javascript:;">打印</a>
                     </li>
@@ -286,40 +286,7 @@
                 error: funErr
             })
         };
-        //变更下载模板链接
-        $("#dowmTemp").attr("href", ilbstockImportTemp);
-
-        //导入
-        var importLayer; //导入弹窗
-        $("#toImport").on('click', function(e) {
-            $.get("view/form/form-import.html", {}, function(str) {
-                importLayer = layer.open({
-                    title: '文件上传',
-                    type: 1,
-                    content: str, //注意，如果str是object，那么需要字符拼接。
-                    area: ['800px', 'auto'],
-                });
-                var uploadInst = upload.render({ //上传实例
-                    elem: '#importAddBtn',
-                    url: ilbstockImportUrl,
-                    multiple: false,
-                    accept: 'file', //普通文件
-                    exts: 'xls|xlsx|xlsm|xlt|xltx|xltm', //只允许上传后缀
-                    done: function(res) {
-                        if(res.status == 0){
-                            layer.msg("上传成功")
-                            layer.close(importLayer);
-                        }else{
-                            layer.msg(res.msg)
-                        }
-                    }
-                });
-            })
-        });
-        //点击导出
-        $("#toExport").on('click', function(e) {
-            window.location.href = ilbstockExportUrl
-        });
+        
 
     });
 </script>
