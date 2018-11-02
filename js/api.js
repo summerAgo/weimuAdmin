@@ -1,6 +1,6 @@
 var localport = ":8000";//本地端口
 var localhost = "http://192.168.10.216" + localport;//本地
-var pathUrl = "http://192.168.10.201:8080/storage-web/"; //?username=admin&password=123456
+var pathUrl = "http://192.168.10.201:80/storage-web/"; //?username=admin&password=123456
 var loginUrl = pathUrl + "sys/login"; //登录
 //基础货物公共信息
 var commonBaseUrl = pathUrl + "c/goodsbasics/list"; //查询货物
@@ -19,8 +19,11 @@ var preEntryDelete = pathUrl + "order/warehousing/delete";//预入库删除
 var preEntryUpdate = pathUrl + "order/warehousing/update";//预入库编辑
 var preEntrygetByOrderno = pathUrl + "order/warehousing/getByOrderno";//预入库单详情
 var preEntryexamineStock = pathUrl + "order/warehousing/examineStock";//预入库单审核为库存
+var entryHistory = preEntry + "?ishistory=1";//入库记录
 
 var outTreasury = pathUrl + "order/outtreasury/list";//出库
+var outTreasuryAdd = pathUrl + "order/outtreasury/add";//增加出货申请
+var outHistory = outTreasury + "?ishistory=1";//出库记录
 
 // 用户管理
 var userList = pathUrl + "sys/list";//用户列表
