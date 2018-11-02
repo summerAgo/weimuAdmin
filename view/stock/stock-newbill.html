@@ -60,13 +60,14 @@
     }
 </style>
 <script>
-    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate'], function() {
+    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate','upload'], function() {
         var element = layui.element;
         var form = layui.form;
         var $ = layui.jquery;
         var table = layui.table;
         var formSelects = layui.formSelects;
         var laytpl = layui.laytpl;
+        var upload = layui.upload;
         var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 103); //内容区域所需减去的高度
         var tableData = [];
         var addLayer; //添加-弹层
