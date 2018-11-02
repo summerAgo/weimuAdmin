@@ -5,7 +5,7 @@
                 <div class="form-box">
                     <div class="layui-form-item form-left">
                         <div class="table-form-item layui-input-inline">
-                            <input type="text" name="username" placeholder="用户名" autocomplete="off" class="layui-input">
+                            <input type="text" name="rolename" placeholder="按钮名称" autocomplete="off" class="layui-input">
                         </div>
 
                     </div>
@@ -13,7 +13,7 @@
                         <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="searchForm">
                             <i class="iconfont icon-sousuo"></i> <span>查询</span>
                         </button>
-                        <button type="reset" class="layui-btn layui-btn-primary" id="allRefresh"> <i class="layui-icon layui-icon-refresh"></i></button>
+                        <!--<button type="reset" class="layui-btn layui-btn-primary"> <i class="layui-icon layui-icon-refresh"></i></button>-->
                     </div>
                 </div>
             </form>
@@ -25,10 +25,7 @@
             <div class="table-tools">
                 <ul class="layui-nav" lay-filter="talbe-tools">
                     <li class="layui-nav-item">
-                        <a href="javascript:;" class="creatUser">添加用户</a>
-                    </li>
-					<li class="layui-nav-item">
-                        <a href="javascript:;" id="resetPas" >重置密码</a>
+                        <a href="javascript:;"  id="creatRole">添加按钮</a>
                     </li>
                     <!--<li class="layui-nav-item item-more">
                         <a href="javascript:;">数据导入导出</a>
@@ -92,7 +89,7 @@
         var tableIns = table.render({
             elem: '#tableContainer',
             height: 'full-' + tableTopHeight,
-            url: userList,
+            url: buttonList,
             parseData: function(res) { //res 即为原始返回的数据
                 if (res.status !== 0) res.status = 0;
                 return {
@@ -116,32 +113,16 @@
                         title: 'ID',
                         sort: true
                     }, {
-                        field: 'username',
-                        title: '用户名',
+                        field: 'bname',
+                        title: '按钮名称',
                         sort: true
                     }, {
-                        field: 'password',
-                        title: '密码',
+                        field: 'sort',
+                        title: '排序',
                         sort: true
                     }, {
-                        field: 'usertype',
-                        title: '用户类型',
-                        sort: true
-                    }, {
-                        field: 'createuser',
-                        title: '创建人',
-                        sort: true
-                    }, {
-                        field: 'createdate',
-                        title: '创建时间',
-                        sort: true
-                    }, {
-                        field: 'updauser',
-                        title: '修改人',
-                        sort: true
-                    }, {
-                        field: 'updadate',
-                        title: '修改时间',
+                        field: 'url',
+                        title: '链接地址',
                         sort: true
                     }
                 ]
@@ -151,11 +132,9 @@
             limits: [10, 20, 30, 40, 50],
             limit: 10, //每页默认显示的数量
             done: function(res, curr, count) {
-                var addtableBtn = '<div class="rightBotBtn">已经选择<span>0</span>个商品 <a href="javascript:;" class="layui-btn layui-btn-sm submissionBtn">入库</a></div>';
+                var addtableBtn = '<div class="rightBotBtn">已经选择<span>0</span>个数据</div>';
                 $(".layui-table-page").append(addtableBtn);
-                $(".submissionBtn").click(function() {
-                    layer.msg("提交申请");
-                })
+                
             },
             text: {
                 none: "无匹配数据"
@@ -166,7 +145,7 @@
         //监听锁定操作
         table.on('checkbox(tableContainer)', function(obj) {
             var checkStatus = table.checkStatus('tableContainer'); //表格选中状态
-            $(".rightBotBtn span").html(checkStatus.data.length); //当前选中了多少商品
+            $(".rightBotBtn span").html(checkStatus.data.length); //当前选中了多少条数据
         });
 
         $(".editBtn").click(function() {
@@ -178,7 +157,7 @@
                 layer.msg("请选择需要编辑的单条信息");
             } else {
                 window.currData = checkStatus.data[0]; //全局对象存储当前选中行数据
-                $.get('view/user/user-add.html', {}, function(str) {
+                $.get('view/button/button-add.html', {}, function(str) {
                     eaitLayer = layer.open({
                         title: '编辑',
                         type: 1,
@@ -189,90 +168,7 @@
                 });
             }
         });
-		
-		$("#resetPas").click(function (){
-			//编辑
-            var checkStatus = table.checkStatus('tableContainer');
-            if (checkStatus.data.length < 1) {
-                layer.msg("请选择需要重置的信息");
-            } else if (checkStatus.data.length > 1) {
-                layer.msg("请选择需要重置的单条信息");
-            } else {
-                window.currData = checkStatus.data[0]; //全局对象存储当前选中行数据
-				$.get('view/user/user-resetPassword.html', {}, function(str) {
-                    eaitLayer = layer.open({
-                        title: '重置密码',
-                        type: 1,
-                        content: str, //注意，如果str是object，那么需要字符拼接。
-                        resize: false,
-                        area: ['800px', 'auto'],
-                    });
-                });
-				
-                
-            }
-		});
-		
-		 //重置用户密码表单提交
-        form.on('submit(resSubmit)', function(data) {
-			alert(">>>>>>>>>>>>>>>>>>>>>>>>>>>");
-			var userData = window.currData;
-            layer.confirm("重置密码", {
-                icon: 3,
-                title: '提示'
-            }, function(index) {
-				$.ajax({
-                    cache: true,
-                    type: "get",
-                    url: userPas,
-                    data: data.field,
-                    async: false,
-                    error: function(request) {
-                        layer.msg('重置失败');
-                        return;
-                    },
-                    success: function(data) {
-                        layer.close(eaitLayer);
-                        layer.msg('重置成功');
-                    }
-                });
-            })
-            return false;
-        });
-		
-		
-		
-		$("#allRefresh").click(function (){
-			// 刷新表格
-			tableIns.reload({
-				page: {
-					curr: 1 //重新从第 1 页开始
-				}
-			});
-		});
 
-        form.on('submit(editForm)', function(data) {
-            //编辑提交
-            layer.confirm('确认提交修改', {
-                icon: 3,
-                title: '提示'
-            }, function(index) {
-                data.field.orderno = window.currData.orderno; //防止单号被篡改
-                data.field.origin = window.currData.origin; //
-                data.field.supplier = window.currData.supplier; //
-                rowDataApi(preEntryUpdate, data.field, function(data) {
-                    layer.close(index);
-                    layer.close(eaitLayer); //关闭
-                    // 刷新表格
-                    tableIns.reload({
-                        page: {
-                            curr: 1 //重新从第 1 页开始
-                        }
-                    });
-                })
-            })
-            return false;
-        });
 
         $(".deleteBtn").click(function() {
             //删除
@@ -290,7 +186,7 @@
                         rowId.push(v.id);
                     });
                     //调删除接口
-                    rowDataApi(userDel, {
+                    rowDataApi(buttonDel, {
                         "ids": rowId
                     }, function(data) {
                         // 删除所选行成功
@@ -307,12 +203,12 @@
             }
         });
 
-        //弹出添加用户
-        $(".creatUser").click(function() {
+        //弹出添加角色
+        $("#creatRole").click(function() {
 			 window.currData = null;
-            $.get('view/user/user-add.html', {}, function(str) {
+            $.get('view/button/button-add.html', {}, function(str) {
                 eaitLayer = layer.open({
-                    title: '添加用户',
+                    title: '添加按钮',
                     type: 1,
                     content: str,
                     resize: false,
@@ -321,18 +217,17 @@
             });
         });
 
-        //添加用户表单提交
+        //添加角色表单提交
         form.on('submit(addSubmit)', function(data) {
 			var userData = window.currData;
 			var title="";
 			var userUrl="";
-			if(data.field.id !=null && data.field.id !=""){
+			if(userData !=null){
 				title = '确认提交修改';
-				userUrl = userUpdate;
+				userUrl = buttonUpdate;
 			}else {
 				title = '确认添加'
-				userUrl = userAdd;
-				data.field.id =null;
+				userUrl = buttonAdd;
 			}
             layer.confirm(title, {
                 icon: 3,
@@ -351,7 +246,7 @@
                     success: function(data) {
                         layer.close(eaitLayer);
                         layer.msg('提交成功');
-						// 刷新表格
+						 // 刷新表格
                         tableIns.reload({
                             page: {
                                 curr: 1 //重新从第 1 页开始
