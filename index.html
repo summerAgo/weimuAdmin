@@ -70,8 +70,8 @@
                         <dl class="layui-nav-child">
                             <dd><a href="#!stock-shipments">出货申请</a></dd>
                             <dd><a href="#!stock-preentry">预入库</a></dd>
-                            <dd><a href="#!stock-out">出库记录</a></dd>
-                            <dd><a href="#!stock-enter">入库记录</a></dd>
+                            <dd><a href="#!stock-outHistory">出库记录</a></dd>
+                            <dd><a href="#!stock-enterHistory">入库记录</a></dd>
                         </dl>
                     </li>
                     <li class="layui-nav-item">
@@ -150,11 +150,11 @@
                 ['stock-preentry', function() {
                     container.load('/view/stock/stock-preentry.html');
                 }],
-                ['stock-out', function() {
-                    container.load('/view/stock/stock-out.html');
+                ['stock-outHistory', function() {
+                    container.load('/view/stock/stock-outHistory.html');
                 }],
-                ['stock-enter', function() {
-                    container.load('/view/stock/stock-enter.html');
+                ['stock-enterHistory', function() {
+                    container.load('/view/stock/stock-enterHistory.html');
                 }],
                 ['stock-shipments', function() {
                     container.load('/view/stock/stock-shipments.html');
