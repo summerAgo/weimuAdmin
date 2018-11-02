@@ -1,5 +1,5 @@
 var localport = ":8000";//本地端口
-var localhost = "http://127.0.0.1" + localport;//本地
+var localhost = "http://192.168.10.216" + localport;//本地
 var pathUrl = "http://192.168.10.201:8080/storage-web/"; //?username=admin&password=123456
 var loginUrl = pathUrl + "sys/login"; //登录
 //基础货物公共信息
@@ -19,3 +19,6 @@ var preEntryDelete = pathUrl + "order/warehousing/delete";//预入库删除
 var preEntryUpdate = pathUrl + "order/warehousing/update";//预入库编辑
 var preEntrygetByOrderno = pathUrl + "order/warehousing/getByOrderno";//预入库单详情
 var outTreasury = pathUrl + "order/outtreasury/";//出库
+// 用户管理
+var userList = pathUrl + "sys/list";//用户列表
+var userAdd = pathUrl + "sys/add";//添加用户

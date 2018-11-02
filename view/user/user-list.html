@@ -59,9 +59,9 @@
         var formSelects = layui.formSelects;
         var laytpl = layui.laytpl;
         var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 103); //内容区域所需减去的高度
-    
+
         var eaitLayer; //编辑-弹层
-        window.billBaseInfo;
+
         form.render(); //重置表单渲染
         formSelects.render(); //下拉选项
         element.render('talbe-tools'); //表格工具栏
@@ -70,7 +70,6 @@
         });
 
         form.on('submit(searchForm)', function(data) {
-            window.billBaseInfo = data.field;
             var paramSearch = {};
             for (var key in data.field) {
                 //参数赋值
@@ -90,7 +89,7 @@
         var tableIns = table.render({
             elem: '#tableContainer',
             height: 'full-' + tableTopHeight,
-            url: userInfo,
+            url: userList,
             parseData: function(res) { //res 即为原始返回的数据
                 if (res.status !== 0) res.status = 0;
                 return {
@@ -240,17 +239,12 @@
                         });
                         layer.msg(data.msg);
                     });
-
                 });
             }
         });
 
-
-
-
         //弹出添加用户
         $(".creatUser").click(function() {
-
             $.get('view/user/user-add.html', {}, function(str) {
                 eaitLayer = layer.open({
                     title: '添加用户',
@@ -259,13 +253,33 @@
                     resize: false,
                     area: ['800px', 'auto'],
                 });
-
-
             });
         });
-        //弹出添加用户 end		
 
-
+        //添加用户表单提交
+        form.on('submit(addSubmit)', function(data) {
+            layer.confirm('确认提交修改', {
+                icon: 3,
+                title: '提示'
+            }, function(index) {
+                $.ajax({
+                    cache: true,
+                    type: "get",
+                    url: userAdd,
+                    data: data.field,
+                    async: false,
+                    error: function(request) {
+                        layer.msg('提交失败');
+                        return;
+                    },
+                    success: function(data) {
+                        layer.close(eaitLayer);
+                        layer.msg('提交成功');
+                    }
+                });
+            })
+            return false;
+        });
 
         //增删行数据
         function rowDataApi(url, data, funSuc, funErr) {
@@ -280,11 +294,6 @@
         };
         //变更下载模板链接
         $("#dowmTemp").attr("href", ilbstockImportTemp);
-
-        //点击导入跳转页面
-        $("#toImport").on('click', function(e) {
-
-        });
 
         //点击导出
         $("#toExport").on('click', function(e) {
