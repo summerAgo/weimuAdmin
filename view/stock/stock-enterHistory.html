@@ -174,7 +174,12 @@
         table.on('row(tableContainer)', function(obj) {
             console.log(obj.tr) //得到当前行元素对象
             console.log(obj.data) //得到当前行数据
-            location.hash = "#!stock-historyDetails";
+            $.get(preEntrygetByOrderno,{orderno:obj.data.orderno},function(data){
+                // console.log(data);
+                data.type = "entryHistory";
+                location.hash = "#!stock-historyDetails/" + data.data.orderno;
+                sessionStorage.setItem('stockHistoryDetails', JSON.stringify(data));
+            })
         });
     });
 </script>
