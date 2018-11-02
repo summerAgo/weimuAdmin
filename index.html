@@ -159,6 +159,9 @@
                 ['stock-shipments', function() {
                     container.load('/view/stock/stock-shipments.html');
                 }],
+                ['stock-historyDetails', function() {
+                    container.load('/view/stock/stock-historyDetails.html');
+                }],
                 ['ilbstock-info', function() {
                     container.load('/view/ilbstock/ilbstock-info.html');
                 }],
@@ -177,7 +180,7 @@
                 index: 'home',
                 pop: function(vid) {
                     // hash改变执行
-                    var thehash = $(".index-side a").attr("href").replace(/#!/, '');
+                    console.log("地址改变");
                     var dom;
                     if (dom = $('.layui-nav dd.layui-this')) {
                         dom.removeClass("layui-this");
@@ -238,7 +241,6 @@
                 history.replaceState({}, 'login', localhost + "/view/login/login.html");
                 window.location.href = localhost + "/view/login/login.html";
             }
-
         });
     </script>
 </body>
