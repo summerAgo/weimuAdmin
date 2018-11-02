@@ -127,7 +127,7 @@
         //JavaScript代码区域
         if (!getCookie('SESSION_NAME')) {
             //判断是否已登录
-            window.location.href = localhost+"/view/login/login.html";
+            window.location.href = localhost + "/view/login/login.html";
         }
 
         layui.config({
@@ -164,6 +164,9 @@
                 }],
                 ['ilbstock-abnormal', function() {
                     container.load('/view/ilbstock/ilbstock-abnormal.html');
+                }],
+                ['ilbstock-inventory', function() {
+                    container.load('/view/ilbstock/ilbstock-inventory.html');
                 }],
                 ['user-info', function() {
                     container.load('/view/user/user-info.html');

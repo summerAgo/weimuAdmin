@@ -83,8 +83,8 @@
                             layer.msg("登录成功");
                             setCookie("SESSION_NAME", data.SESSION_NAME,"h12");
                             setCookie("userInfo", JSON.stringify(data.data),"h12");
-                            history.replaceState({},'index',localhost);
-                            window.location.href = localhost;
+                            history.replaceState({},'index',localhost);//修改浏览器地址
+                            window.location.href = localhost;//跳转首页
                         } else {
                             layer.msg(data.msg);
                         }
