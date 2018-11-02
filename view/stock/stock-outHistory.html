@@ -21,6 +21,8 @@
                         </div>
                         <div class="table-form-item layui-input-inline">
                             <input type="text" name="billloading" placeholder="提运单" autocomplete="off" class="layui-input">
+                            <input type="text" name="ishistory" hidden value="1">
+                            <!-- 隐藏域 ishistory：1 历史记录 -->
                         </div>
                     </div>
                     <div class="layui-form-item form-right">
@@ -39,21 +41,11 @@
             <div class="table-tools">
                 <ul class="layui-nav" lay-filter="talbe-tools">
                     <li class="layui-nav-item">
-                        <a href="javascript:;" class="creatOutBtn">新建预入库单</a>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;" id="toExport">导出数据</a>
+                        <a id="toExport" href="javascript:;">导出数据</a>
                     </li>
                     <li class="layui-nav-item">
                         <a href="javascript:;">打印</a>
                     </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;">重新获取申请单</a>
-                    </li>
-                </ul>
-                <ul class="layui-layout-right">
-                    <li><a href="javascript:;" class="editBtn">编辑</a></li>
-                    <li><a href="javascript:;" class="deleteBtn">删除</a></li>
                 </ul>
             </div>
         </div>
@@ -102,7 +94,7 @@
         var tableIns = table.render({
             elem: '#tableContainer',
             height: 'full-' + tableTopHeight,
-            url: outTreasury,
+            url: preEntry+"?ishistory=1",
             parseData: function(res) { //res 即为原始返回的数据
                 if (res.status !== 0) res.status = 0;
                 return {
@@ -169,120 +161,16 @@
             ],
             even: true,
             page: true, //是否显示分页
-            limits: [15, 20, 30, 40, 50],
-            limit: 15, //每页默认显示的数量
+            limits: [10, 20, 30, 40, 50],
+            limit: 10, //每页默认显示的数量
             done: function(res, curr, count) {
-                var addtableBtn = '<div class="rightBotBtn">已经选择<span>0</span>个商品 <a href="javascript:;" class="layui-btn layui-btn-sm submissionBtn">入库</a></div>';
-                $(".layui-table-page").append(addtableBtn);
-                $(".submissionBtn").click(function() {
-                    layer.msg("提交申请");
-                })
+                
             },
             text: {
                 none: "无匹配数据"
             },
             loading: true
         });
-
-        //监听锁定操作
-        table.on('checkbox(tableContainer)', function(obj) {
-            var checkStatus = table.checkStatus('tableContainer'); //表格选中状态
-            $(".rightBotBtn span").html(checkStatus.data.length); //当前选中了多少商品
-        });
-
-        $(".editBtn").click(function() {
-            //编辑
-            var checkStatus = table.checkStatus('tableContainer');
-            if (checkStatus.data.length < 1) {
-                layer.msg("请选择需要编辑的信息");
-            } else if (checkStatus.data.length > 1) {
-                layer.msg("请选择需要编辑的单条信息");
-            } else {
-                window.currData = checkStatus.data[0]; //全局对象存储当前选中行数据
-                $.get('view/form/form-1.html', {}, function(str) {
-                    eaitLayer = layer.open({
-                        title: '编辑',
-                        type: 1,
-                        content: str, //注意，如果str是object，那么需要字符拼接。
-                        resize: false,
-                        area: ['800px', 'auto'],
-                    });
-                });
-            }
-        });
-
-        form.on('submit(editForm)', function(data) {
-            //编辑提交
-            layer.confirm('确认提交修改', {
-                icon: 3,
-                title: '提示'
-            }, function(index) {
-                data.field.orderno = window.currData.orderno; //防止单号被篡改
-                data.field.origin = window.currData.origin; //
-                data.field.supplier = window.currData.supplier; //
-                rowDataApi(preEntryUpdate, data.field, function(data) {
-                    layer.close(index);
-                    layer.close(eaitLayer); //关闭
-                    // 刷新表格
-                    tableIns.reload({
-                        page: {
-                            curr: 1 //重新从第 1 页开始
-                        }
-                    });
-                })
-            })
-            return false;
-        });
-
-        $(".deleteBtn").click(function() {
-            //删除
-            var checkStatus = table.checkStatus('tableContainer');
-            if (checkStatus.data.length < 1) {
-                layer.msg("请选择需要删除的信息");
-            } else {
-                layer.confirm('是否确认删除此条信息', {
-                    icon: 3,
-                    title: '提示'
-                }, function(index) {
-                    var rowId = [];
-                    $.each(checkStatus.data, function(i, v) {
-                        //获取所选行数ID
-                        rowId.push(v.orderno);
-                    });
-                    //调删除接口
-                    rowDataApi(preEntryDelete, {
-                        "ids": rowId
-                    }, function(data) {
-                        // 删除所选行成功
-                        layer.close(index);
-                        // 刷新表格
-                        tableIns.reload({
-                            page: {
-                                curr: 1 //重新从第 1 页开始
-                            }
-                        });
-                        layer.msg(data.msg);
-                    });
-                });
-            }
-        });
-
-        $(".creatOutBtn").click(function() {
-            //新建出库单
-            layer.msg("新建出库单");
-        });
-
-        //增删行数据
-        function rowDataApi(url, data, funSuc, funErr) {
-            $.ajax({
-                url: url,
-                type: "get",
-                data: data,
-                traditional: true,
-                success: funSuc,
-                error: funErr
-            })
-        };
 
     });
 </script>
