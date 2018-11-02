@@ -18,8 +18,13 @@ var preEntryAdd = pathUrl + "order/warehousing/add";//预入库新增
 var preEntryDelete = pathUrl + "order/warehousing/delete";//预入库删除
 var preEntryUpdate = pathUrl + "order/warehousing/update";//预入库编辑
 var preEntrygetByOrderno = pathUrl + "order/warehousing/getByOrderno";//预入库单详情
+<<<<<<< HEAD
 
 var outTreasury = pathUrl + "order/outtreasury/list";//出库
+=======
+var preEntryexamineStock = pathUrl + "order/warehousing/examineStock";//预入库单审核为库存
+var outTreasury = pathUrl + "order/outtreasury/";//出库
+>>>>>>> c25453654786a1c5c4f98644bed5f176f23c352c
 // 用户管理
 var userList = pathUrl + "sys/list";//用户列表
 var userAdd = pathUrl + "sys/add";//添加用户
