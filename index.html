@@ -78,7 +78,9 @@
                         <a href="javascript:;"><i class="iconfont icon-renyuanguanli"></i> 人员管理</a>
                         <dl class="layui-nav-child">
                             <dd><a href="#!user-list">用户管理</a></dd>
-                            <dd><a href="#!user-permission">角色管理</a></dd>
+                            <dd><a href="#!role-list">角色管理</a></dd>
+							 <dd><a href="#!menu-list">菜单管理</a></dd>
+							  <dd><a href="#!button-list">角色管理</a></dd>
                         </dl>
                     </li>
                     <li class="layui-nav-item">
@@ -170,6 +172,15 @@
                 }],
                 ['user-list', function() {
                     container.load('/view/user/user-list.html');
+                }],
+                ['role-list', function() {
+                    container.load('/view/role/role-list.html');
+                }],
+                ['menu-list', function() {
+                    container.load('/view/menu/menu-list.html');
+                }],
+                ['button-list', function() {
+                    container.load('/view/button/button-list.html');
                 }]
             ])
 
