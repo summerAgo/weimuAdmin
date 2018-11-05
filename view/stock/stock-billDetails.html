@@ -25,45 +25,28 @@
     </div>
 </div>
 <script id="detailsTle" type="text/html">
-    {{# if(d.type === "outBill"){}}
-    <ul class="layer-title">
-        <li>
-            <small>出货申请订单号</small>
-            <h3>{{d.data.orderno}}</h3>
-        </li>
-        <li>
-            <small>货权人</small>
-            <h3>{{d.data.cargoowner}}</h3>
-        </li>
-        <li>
-            <small>仓库名称</small>
-            <h3>{{d.data.depotname}}</h3>
-        </li>
-    </ul>
-    {{#  } else{ }}
-    <ul class="layer-title">
-        <li>
-            {{# if(d.type === "outHistory"){}}
-            <small>出库订单号</small>
-            {{#  } else{ }}
-            <small>入库订单号</small>
-            {{#  } }}
-            <h3>{{d.data.orderno}}</h3>
-        </li>
-        <li>
-            <small>货权人</small>
-            <h3>{{d.data.cargoowner}}</h3>
-        </li>
-        <li>
-            <small>仓库名称</small>
-            <h3>{{d.data.depotname}}</h3>
-        </li>
-        {{# if(d.data.outdate){}}
-        <li>
-            <small>出库时间</small>
-            <h3>{{d.data.outdate}}</h3>
-        </li>
+<ul class="layer-title">
+    <li>
+        {{# if(d.type === "outHistory"){}}
+        <small>出库订单号</small>
+        {{#  } else{ }}
+        <small>入库订单号</small>
         {{#  } }}
+        <h3>{{d.data.orderno}}</h3>
+    </li>
+    <li>
+        <small>货权人</small>
+        <h3>{{d.data.cargoowner}}</h3>
+    </li>
+    <li>
+        <small>仓库名称</small>
+        <h3>{{d.data.depotname}}</h3>
+    </li>
+    {{# if(d.data.outdate){}}
+    <li>
+        <small>出库时间</small>
+        <h3>{{d.data.outdate}}</h3>
+    </li>
     {{#  } }}
 </ul>
 </script>

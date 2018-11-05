@@ -1,0 +1,175 @@
+<div class="table-page">
+    <div class="table-page-header">
+        <div class="table-page-form">
+            <blockquote class="layui-elem-quote" id="details-title">
+                <ul class="layer-title">
+                    <li>
+                        <small>货权人</small>
+                        <div class="layui-input-inline">
+                            <input type="text" name="title" required lay-verify="required" placeholder="请选择货权人" autocomplete="off" class="layui-input">
+                        </div>
+                    </li>
+                    <li>
+                        <small>仓库名称</small>
+                        <div class="layui-input-inline">
+                            <input type="text" name="title" required lay-verify="required" placeholder="请选择仓库名称" autocomplete="off" class="layui-input">
+                        </div>
+                    </li>
+                    <li>
+                        <small>预计出库时间</small>
+                        <div class="layui-input-inline">
+                            <input type="text" name="title" required lay-verify="required" placeholder="请选择预计出库时间" autocomplete="off" class="layui-input">
+                        </div>
+                    </li>
+                </ul>
+            </blockquote>
+        </div>
+    </div>
+    <div class="table-content">
+        <div class="table-content-title">
+            <div class="table-tools">
+                <ul class="layui-nav" lay-filter="talbe-tools">
+                    <li class="layui-nav-item">
+                        <a href="javascript:;" id="addGoodsBtn">从库存添加货物</a>
+                    </li>
+                </ul>
+                <ul class="layui-layout-right">
+                    <li><a href="javascript:;" class="editBtn">编辑</a></li>
+                    <li><a href="javascript:;" class="deleteBtn">移除</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="table-content-main">
+            <table class="layui-hide" id="tableContainer-addOutBill" lay-filter="tableContainer-addOutBill"></table>
+        </div>
+    </div>
+</div>
+<style scoped>
+    .layui-elem-quote {
+        margin-bottom: 0
+    }
+
+    .layer-title {
+        display: flex;
+        justify-content: space-around
+    }
+
+    .layer-title small {
+        font-size: 14px;
+    }
+
+    .table-page h3 {
+        padding-left: 0;
+    }
+</style>
+<script>
+    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'upload'], function() {
+        var element = layui.element;
+        var form = layui.form;
+        var $ = layui.jquery;
+        var table = layui.table;
+        var formSelects = layui.formSelects;
+        var laytpl = layui.laytpl;
+        var upload = layui.upload;
+        var layer = layui.layer;
+        var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 103); //内容区域所需减去的高度
+        
+        var goodsListLayer;//货物列表弹窗
+
+        var tableIns = table.render({
+            elem: '#tableContainer-addOutBill',
+            height: 'full-' + tableTopHeight,
+            url: preEntry,
+            parseData: function(res) { //res 即为原始返回的数据
+                if (res.status !== 0) res.status = 0;
+                return {
+                    "code": res.status, //解析接口状态
+                    "msg": res.message, //解析提示文本
+                    "count": res.count, //解析数据长度
+                    "data": res.data //解析数据列表
+                }
+            },
+            request: {
+                pageName: 'offset', //页码的参数名称，默认：page
+                limitName: 'limit' //每页数据量的参数名，默认：limit
+            },
+            cols: [
+                [ //标题栏
+                    {
+                        type: 'checkbox'
+                    },
+                    {
+                        field: 'orderno',
+                        title: '单号',
+                        sort: true
+                    }, {
+                        field: 'cargoowner',
+                        title: '货权人',
+                        sort: true
+                    }, {
+                        field: 'depotname',
+                        title: '仓库名称',
+                        sort: true
+                    }, {
+                        field: 'billloading',
+                        title: '提运单',
+                        sort: true
+                    }, {
+                        field: 'num',
+                        title: '件数（包）',
+                        sort: true
+                    }, {
+                        field: 'origin',
+                        title: '产地',
+                        sort: true
+                    }, {
+                        field: 'supplier',
+                        title: '供应商',
+                        sort: true
+                    }, {
+                        field: 'volume',
+                        title: '码单数量（m³）',
+                        sort: true
+                    }, {
+                        field: 'estimatedate',
+                        title: '预计出库时间'
+                    }, {
+                        field: 'createdate',
+                        title: '创建日期',
+                        sort: true
+                    }, {
+                        field: 'createuser',
+                        title: '创建人',
+                        sort: true
+                    }
+                ]
+            ],
+            even: true,
+            page: true, //是否显示分页
+            limits: [10, 20, 30, 40, 50],
+            limit: 10, //每页默认显示的数量
+            done: function(res, curr, count) {
+                var addtableBtn = '<div class="rightBotBtn">共添加<span>' + count + '</span>个商品 <a href="javascript:;" class="layui-btn layui-btn-sm submissionBtn">新建</a></div>';
+                $("#tableContainer-addOutBill").siblings().find(".layui-table-page").append(addtableBtn);
+                $(".submissionBtn").click(function() {
+                    layer.msg("提交申请");
+                })
+            },
+            text: {
+                none: "无匹配数据"
+            },
+            loading: true
+        });
+
+        $("#addGoodsBtn").click(function() {
+            $.get('view/stock/stock-goodsList.html', {}, function(str) {
+                goodsListLayer = layer.open({
+                    title: '库存货物列表',
+                    type: 1,
+                    content: str, //注意，如果str是object，那么需要字符拼接。
+                    area: ['80%', 'auto'],
+                });
+            });
+        });
+    });
+</script>
