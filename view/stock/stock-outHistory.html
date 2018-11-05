@@ -176,7 +176,7 @@
             // console.log(obj.data) //得到当前行数据
             $.get(outHistoryOrderno,{orderno:obj.data.orderno},function(data){
                 console.log(data);
-                location.hash = "#!stock-historyDetails/" + data.data.orderno;
+                location.hash = "#!stock-historyDetails/";
                 sessionStorage.setItem('stockHistoryDetails', JSON.stringify(data));
             })
         });
