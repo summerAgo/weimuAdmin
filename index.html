@@ -164,6 +164,9 @@
                 ['stock-outBill', function() {
                     container.load('/view/stock/stock-outBill.html');
                 }],
+                ['stock-addOutBill', function() {
+                    container.load('/view/stock/stock-addOutBill.html');
+                }],
                 ['ilbstock-info', function() {
                     container.load('/view/ilbstock/ilbstock-info.html');
                 }],
@@ -203,7 +206,7 @@
 
                         if ($(".layui-tab-title li[lay-id]").length <= 0) {
                             element.tabAdd('nav-tabs', {
-                                title: dom.html()||"单号详情",
+                                title: dom.html() || "单号详情",
                                 id: vid
                             });
                         } else {
@@ -214,8 +217,14 @@
                                 }
                             })
                             if (isData == false) {
+                                var title;
+                                if (vid == "stock-addOutBill") {
+                                    title = "新建出货申请单";
+                                } else if (vid == "stock-billDetails") {
+                                    title = "库单详情";
+                                }
                                 element.tabAdd('nav-tabs', {
-                                    title: dom.html()||"单号详情",
+                                    title: dom.html() || title,
                                     id: vid
                                 });
                             }
@@ -252,9 +261,10 @@
                 window.location.href = localhost + "/view/login/login.html";
             }
 
-            
+
 
         });
     </script>
 </body>
+
 </html>

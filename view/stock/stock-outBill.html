@@ -39,7 +39,7 @@
             <div class="table-tools">
                 <ul class="layui-nav" lay-filter="talbe-tools">
                     <li class="layui-nav-item">
-                        <a href="javascript:;" class="creatBillBtn">新建预入库单</a>
+                        <a href="javascript:;" class="creatBillBtn">新建申请出库单</a>
                     </li>
                     <!-- <li class="layui-nav-item item-more">
                             <a href="javascript:;">数据导入导出</a>
@@ -294,7 +294,9 @@
         table.on('row(tableContainer)', function(obj) {
             // console.log(obj.tr) //得到当前行元素对象
             // console.log(obj.data) //得到当前行数据
-            $.get(preEntrygetByOrderno,{orderno:obj.data.orderno},function(data){
+            $.get(preEntrygetByOrderno, {
+                orderno: obj.data.orderno
+            }, function(data) {
                 // console.log(data);
                 data.type = "outBill";
                 location.hash = "#!stock-billDetails/";
@@ -302,5 +304,9 @@
             })
         });
 
+
+        $(".creatBillBtn").click(function() {
+            location.hash = "#!stock-addOutBill/";
+        })
     });
 </script>
