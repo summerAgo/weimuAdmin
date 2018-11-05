@@ -206,7 +206,7 @@
 
                         if ($(".layui-tab-title li[lay-id]").length <= 0) {
                             element.tabAdd('nav-tabs', {
-                                title: dom.html(),
+                                title: dom.html()||"记录详情",
                                 id: vid
                             });
                         } else {
@@ -218,19 +218,13 @@
                             })
                             if (isData == false) {
                                 element.tabAdd('nav-tabs', {
-                                    title: dom.html(),
+                                    title: dom.html()||"记录详情",
                                     id: vid
                                 });
                             }
                         }
                         element.tabChange('nav-tabs', vid);
-
                     }
-                    $.each($(".nav-tabs li"), function(i, v) {
-                        if ($(this).attr("lay-id") == "stock-historyDetails") {
-                            $(this).text("记录详情");
-                        }
-                    })
                 }
             });
 

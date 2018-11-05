@@ -60,7 +60,7 @@
             </div>
         </div>
         <div class="table-content-main">
-            <table class="layui-hide" id="tableContainer" lay-filter="tableContainer"></table>
+            <table class="layui-hide" id="tableContainer-preentry" lay-filter="tableContainer-preentry"></table>
         </div>
     </div>
 </div>
@@ -102,7 +102,7 @@
         });
 
         var tableIns = table.render({
-            elem: '#tableContainer',
+            elem: '#tableContainer-preentry',
             height: 'full-' + tableTopHeight,
             url: preEntry,
             parseData: function(res) { //res 即为原始返回的数据
@@ -187,14 +187,14 @@
         });
 
         //监听锁定操作
-        table.on('checkbox(tableContainer)', function(obj) {
-            var checkStatus = table.checkStatus('tableContainer'); //表格选中状态
+        table.on('checkbox(tableContainer-preentry)', function(obj) {
+            var checkStatus = table.checkStatus('tableContainer-preentry'); //表格选中状态
             $(".rightBotBtn span").html(checkStatus.data.length); //当前选中了多少商品
         });
 
         $(".editBtn").click(function() {
             //编辑
-            var checkStatus = table.checkStatus('tableContainer');
+            var checkStatus = table.checkStatus('tableContainer-preentry');
             if (checkStatus.data.length < 1) {
                 layer.msg("请选择需要编辑的信息");
             } else if (checkStatus.data.length > 1) {
@@ -238,7 +238,7 @@
 
         $(".deleteBtn").click(function() {
             //删除
-            var checkStatus = table.checkStatus('tableContainer');
+            var checkStatus = table.checkStatus('tableContainer-preentry');
             if (checkStatus.data.length < 1) {
                 layer.msg("请选择需要删除的信息");
             } else {
