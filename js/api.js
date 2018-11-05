@@ -1,6 +1,6 @@
 var localport = ":8000";//本地端口
-var localhost = "http://192.168.10.216" + localport;//本地
-var pathUrl = "http://192.168.10.201:8080/storage-web/"; //?username=admin&password=123456
+var localhost = "http://127.0.0.1" + localport;//本地
+var pathUrl = "http://192.168.10.201:80/storage-web/"; //?username=admin&password=123456
 var loginUrl = pathUrl + "sys/login"; //登录
 //基础货物公共信息
 var commonBaseUrl = pathUrl + "c/goodsbasics/list"; //查询货物
@@ -20,6 +20,7 @@ var preEntryUpdate = pathUrl + "order/warehousing/update";//预入库编辑
 var preEntrygetByOrderno = pathUrl + "order/warehousing/getByOrderno?ish=1";//预入库单详情 ish:获取单号所有信息
 var preEntryexamineStock = pathUrl + "order/warehousing/examineStock";//预入库单审核为库存
 var entryHistory = preEntry + "?ishistory=1";//入库记录
+var getOrdernoDetails =  pathUrl + "order/outtreasury/getOrdernoDetails" //库存中查询货物 （仓库：depotid 货权人：ownerid）
 
 var outTreasury = pathUrl + "order/outtreasury/list";//出库
 var outTreasuryAdd = pathUrl + "order/outtreasury/add";//增加出货申请
@@ -27,10 +28,16 @@ var outHistory = outTreasury + "?ishistory=1";//出库记录
 var outHistoryOrderno = pathUrl + "order/outtreasury/getByOrderno?ish=1";//出库详情 ish:获取单号所有信息
 var outRemove = pathUrl + "order/outtreasury/remove";//出货申请详情商品移除
 // 仓库管理
-var depotList = pathUrl + "basics/depot/list";//角色列表
-var depotAdd = pathUrl + "basics/depot/add";//添加角色
-var depotUpdate = pathUrl + "basics/depot/update";//修改角色
-var depotDel = pathUrl + "basics/depot/delete";//删除角色
+var depotList = pathUrl + "basics/depot/list";//仓库列表
+var depotAdd = pathUrl + "basics/depot/add";//添加仓库
+var depotUpdate = pathUrl + "basics/depot/update";//修改仓库
+var depotDel = pathUrl + "basics/depot/delete";//删除仓库
+
+
+var positionList = pathUrl + "basics/position/list";//库位列表
+var positionAdd = pathUrl + "basics/position/add";//添加库位
+var positionUpdate = pathUrl + "basics/position/update";//修改库位
+var positionDel = pathUrl + "basics/position/delete";//删除库位
 // 用户管理
 var userList = pathUrl + "sys/list";//用户列表
 var userAdd = pathUrl + "sys/add";//添加用户
@@ -59,3 +66,4 @@ var buttonDel = pathUrl + "sys/button/deleteMany";//删除按钮
 //下拉列表
 var ownerDropdown = pathUrl + "user/owner/dropdown";//货权人下拉
 var depotDropdown =  pathUrl + "basics/depot/dropdown";//仓库下拉： 货权人id(ownerid)
+var positionDropdown = pathUrl + "basics/position/dropdown";//库位列表 depotid：根据仓库ID返回

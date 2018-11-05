@@ -1,0 +1,73 @@
+<div id="depotView"></div>
+<script id="depotTle" type="text/html">
+    <form class="layui-form layui-form-pane" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">编号</label>
+        <div class="layui-input-block">
+            <input type="text" name="code" placeholder="编号" value="{{d.code || ''}}" autocomplete="off" class="layui-input" lay-verify="required">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">仓库名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="name" placeholder="仓库名称" value="{{d.name || ''}}" autocomplete="off" class="layui-input" lay-verify="required">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">货权人</label>
+        <div class="layui-input-block">
+            <input type="text" name="ownerid" placeholder="货权人" value="{{d.ownername || ''}}" autocomplete="off" class="layui-input" lay-verify="required">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">地址</label>
+        <div class="layui-input-block">
+            <input type="text" name="address" placeholder="地址" value="{{d.address || ''}}" autocomplete="off" class="layui-input" lay-verify="required">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">仓库类型</label>
+        <div class="layui-input-block">
+            <input type="text" name="type" placeholder="仓库类型" value="{{d.type || ''}}" autocomplete="off" class="layui-input" lay-verify="required">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">备注</label>
+        <div class="layui-input-block">
+            <input type="text" name="remarks" placeholder="备注" value="{{d.remarks || ''}}" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="addDepotForm">
+            <i class="layui-icon layui-icon-ok"></i> <span>提交</span>
+        </button>
+    </div>
+</form>
+</script>
+<style scoped>
+    .layui-form {
+        width: 600px;
+        margin: 10px auto;
+    }
+</style>
+<script>
+    layui.use(['form', 'jquery', 'element', 'layer', 'formSelects', 'laytpl', 'laydate'], function() {
+        var element = layui.element;
+        var form = layui.form;
+        var $ = layui.jquery;
+        var formSelects = layui.formSelects;
+        var laytpl = layui.laytpl;
+        
+        var dataType = JSON.parse(sessionStorage.getItem('depotCheck')) || {};//获取本地所选仓库信息，判断是否为修改
+        console.log(dataType)
+        // 渲染模板的内容
+        var getTpl = depotTle.innerHTML,
+            view = document.getElementById('depotView');
+        laytpl(getTpl).render(dataType, function(html) {
+            view.innerHTML = html;
+        });
+        
+        
+
+    });
+</script>

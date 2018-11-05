@@ -190,9 +190,12 @@
                 }],
                 ['depot-list', function() {
                     container.load('/view/depot/depot-list.html');
+                }],
+                ['depot-position', function() {
+                    container.load('/view/depot/depot-position.html');
                 }]
             ])
-            
+
             Q.init({
                 index: 'home',
                 pop: function(vid) {
@@ -225,6 +228,8 @@
                                     title = "新建出货申请单";
                                 } else if (vid == "stock-billDetails") {
                                     title = "库单详情";
+                                } else if (vid == "depot-position") {
+                                    title = "库位详情";
                                 }
                                 element.tabAdd('nav-tabs', {
                                     title: dom.html() || title,
