@@ -203,7 +203,7 @@
 
                         if ($(".layui-tab-title li[lay-id]").length <= 0) {
                             element.tabAdd('nav-tabs', {
-                                title: dom.html()||"记录详情",
+                                title: dom.html()||"单号详情",
                                 id: vid
                             });
                         } else {
@@ -215,7 +215,7 @@
                             })
                             if (isData == false) {
                                 element.tabAdd('nav-tabs', {
-                                    title: dom.html()||"记录详情",
+                                    title: dom.html()||"单号详情",
                                     id: vid
                                 });
                             }
@@ -244,7 +244,6 @@
             })
 
             $(".signOutBtn").click(signOut); //退出登录
-
             function signOut() {
                 //退出登录
                 delCookie("userInfo");
@@ -253,8 +252,9 @@
                 window.location.href = localhost + "/view/login/login.html";
             }
 
+            
+
         });
     </script>
 </body>
-
 </html>
