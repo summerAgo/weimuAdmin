@@ -25,28 +25,45 @@
     </div>
 </div>
 <script id="detailsTle" type="text/html">
+    {{# if(d.type === "outBill"){}}
     <ul class="layer-title">
-    <li>
-        {{# if(d.outdate){}}
-        <small>出库订单号</small>
-        {{#  } else { }}
-        <small>入库订单号</small>
-        {{#  } }}  
-        <h3>{{d.orderno}}</h3>
-    </li>
-    <li>
-        <small>货权人</small>
-        <h3>{{d.cargoowner}}</h3>
-    </li>
-    <li>
-        <small>仓库名称</small>
-        <h3>{{d.depotname}}</h3>
-    </li>
-    {{# if(d.outdate){}}
-    <li>
-        <small>出库时间</small>
-        <h3>{{d.outdate}}</h3>
-    </li>
+        <li>
+            <small>出货申请订单号</small>
+            <h3>{{d.data.orderno}}</h3>
+        </li>
+        <li>
+            <small>货权人</small>
+            <h3>{{d.data.cargoowner}}</h3>
+        </li>
+        <li>
+            <small>仓库名称</small>
+            <h3>{{d.data.depotname}}</h3>
+        </li>
+    </ul>
+    {{#  } else{ }}
+    <ul class="layer-title">
+        <li>
+            {{# if(d.type === "outHistory"){}}
+            <small>出库订单号</small>
+            {{#  } else{ }}
+            <small>入库订单号</small>
+            {{#  } }}
+            <h3>{{d.data.orderno}}</h3>
+        </li>
+        <li>
+            <small>货权人</small>
+            <h3>{{d.data.cargoowner}}</h3>
+        </li>
+        <li>
+            <small>仓库名称</small>
+            <h3>{{d.data.depotname}}</h3>
+        </li>
+        {{# if(d.data.outdate){}}
+        <li>
+            <small>出库时间</small>
+            <h3>{{d.data.outdate}}</h3>
+        </li>
+        {{#  } }}
     {{#  } }}
 </ul>
 </script>
@@ -78,6 +95,7 @@
         var laytpl = layui.laytpl;
 
         var billDetails = JSON.parse(sessionStorage.getItem('billDetails')); //获取所选择记录详情
+        console.log(billDetails)
         if (!billDetails) {
             //判断是否存在，不存在跳转到首页
             history.replaceState(null, null, "#!home");
@@ -87,7 +105,7 @@
         // 渲染title的内容
         var getTpl = detailsTle.innerHTML,
             view = document.getElementById('details-title');
-        laytpl(getTpl).render(billDetails.data, function(html) {
+        laytpl(getTpl).render(billDetails, function(html) {
             view.innerHTML = html;
         });
         // 出库详情表格字段
