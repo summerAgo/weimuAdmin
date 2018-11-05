@@ -1,0 +1,161 @@
+<div class="table-page">
+    <div class="table-page-header">
+        <div class="table-page-form">
+            <form class="layui-form" action="">
+                <div class="form-box">
+                    <div class="layui-form-item form-left">
+                        <div class="table-form-item layui-input-inline">
+                            <input type="text" name="orderno" placeholder="仓库名称" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <input type="text" name="cargoowner" placeholder="仓库编号" autocomplete="off" class="layui-input">
+                        </div>
+                    </div>
+                    <div class="layui-form-item form-right">
+                        <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="searchForm">
+                            <i class="iconfont icon-sousuo"></i> <span>查询</span>
+                        </button>
+                        <button type="reset" class="layui-btn layui-btn-primary"> <i class="layui-icon layui-icon-refresh"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="table-content">
+        <div class="table-content-title">
+            <div class="table-tools">
+                <ul class="layui-nav" lay-filter="talbe-tools">
+                    <li class="layui-nav-item">
+                        <a href="javascript:;" class="addDepotBtn">新增仓库</a>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a id="toExport" href="javascript:;">导出数据</a>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">添加仓库</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="table-content-main">
+            <table class="layui-hide" id="tableContainer-depotList" lay-filter="tableContainer-depotList"></table>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'upload'], function() {
+        var element = layui.element;
+        var form = layui.form;
+        var $ = layui.jquery;
+        var table = layui.table;
+        var formSelects = layui.formSelects;
+        var laytpl = layui.laytpl;
+        var upload = layui.upload;
+        var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 103); //内容区域所需减去的高度
+
+        var addDepotLayer; //编辑-弹层
+
+        form.render(); //重置表单渲染
+        formSelects.render(); //下拉选项
+        element.render('talbe-tools'); //表格工具栏
+        formSelects.btns(['select', 'remove'], {
+            show: 'name'
+        });
+
+        form.on('submit(searchForm)', function(data) {
+            var paramSearch = {};
+            for (var key in data.field) {
+                //参数赋值
+                if (data.field[key] != "") {
+                    paramSearch[key] = data.field[key]
+                }
+            }
+            tableIns.reload({
+                where: paramSearch, //接口参数
+                page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+            });
+            return false;
+        });
+
+        var tableIns = table.render({
+            elem: '#tableContainer-depotList',
+            height: 'full-' + tableTopHeight,
+            url: depotList,
+            parseData: function(res) { //res 即为原始返回的数据
+                if (res.status !== 0) res.status = 0;
+                return {
+                    "code": res.status, //解析接口状态
+                    "msg": res.message, //解析提示文本
+                    "count": res.count, //解析数据长度
+                    "data": res.data //解析数据列表
+                }
+            },
+            request: {
+                pageName: 'offset', //页码的参数名称，默认：page
+                limitName: 'limit' //每页数据量的参数名，默认：limit
+            },
+            cols: [
+                [ //标题栏
+                    {
+                        type: 'checkbox'
+                    },
+                    {
+                        field: 'name',
+                        title: '仓库名称',
+                        sort: true
+                    }, {
+                        field: 'code',
+                        title: '编号',
+                        sort: true
+                    }, {
+                        field: 'ownername',
+                        title: '货权人',
+                        sort: true
+                    }, {
+                        field: 'address',
+                        title: '地址',
+                        sort: true
+                    }, {
+                        field: 'type',
+                        title: '仓库类型',
+                        sort: true
+                    }, {
+                        field: 'remarks',
+                        title: '备注',
+                        sort: true
+                    }
+                ]
+            ],
+            even: true,
+            page: true, //是否显示分页
+            limits: [10, 20, 30, 40, 50],
+            limit: 10, //每页默认显示的数量
+            done: function(res, curr, count) {
+
+            },
+            text: {
+                none: "无匹配数据"
+            },
+            loading: true
+        });
+        
+        table.on('row(tableContainer-depotList)', function(obj) {
+            // console.log(obj.tr) //得到当前行元素对象
+            // console.log(obj.data) //得到当前行数据
+            $.get(outHistoryOrderno, {
+                orderno: obj.data.orderno
+            }, function(data) {
+                // console.log(data);
+                data.type = "outHistory";
+                location.hash = "#!stock-billDetails/";
+                sessionStorage.setItem('billDetails', JSON.stringify(data));
+            })
+        });
+
+        $(".addDepotBtn").click(function(){
+            
+        });
+    });
+</script>

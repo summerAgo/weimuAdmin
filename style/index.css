@@ -118,4 +118,8 @@
 .form-right {flex:0 0 270px;display: flex;align-items: center}
 .form-box .layui-input{border-radius: 5px; height:34px;}
 
-/*  */
+/* trr-container */
+.trr-container{display:flex}
+#tree-nav{flex:0 0 190px; overflow: auto}
+.trr-container .table-content{flex:1 0 auto; border-left:1px solid #d9d9d9; overflow: auto}
+body .layui-tree-skin-shihuang .layui-tree-branch{color: #15a45b;}
