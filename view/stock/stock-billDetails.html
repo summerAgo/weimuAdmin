@@ -27,7 +27,11 @@
 <script id="detailsTle" type="text/html">
     <ul class="layer-title">
     <li>
+        {{# if(d.outdate){}}
+        <small>出库订单号</small>
+        {{#  } else { }}
         <small>入库订单号</small>
+        {{#  } }}  
         <h3>{{d.orderno}}</h3>
     </li>
     <li>
@@ -43,7 +47,7 @@
         <small>出库时间</small>
         <h3>{{d.outdate}}</h3>
     </li>
-    {{#  } }} 
+    {{#  } }}
 </ul>
 </script>
 <style scoped>
@@ -73,8 +77,8 @@
         var formSelects = layui.formSelects;
         var laytpl = layui.laytpl;
 
-        var stockHistoryDetails = JSON.parse(sessionStorage.getItem('stockHistoryDetails')); //获取所选择记录详情
-        if (!stockHistoryDetails) {
+        var billDetails = JSON.parse(sessionStorage.getItem('billDetails')); //获取所选择记录详情
+        if (!billDetails) {
             //判断是否存在，不存在跳转到首页
             history.replaceState(null, null, "#!home");
             $(".nav-tabs li").last().remove();
@@ -83,7 +87,7 @@
         // 渲染title的内容
         var getTpl = detailsTle.innerHTML,
             view = document.getElementById('details-title');
-        laytpl(getTpl).render(stockHistoryDetails.data, function(html) {
+        laytpl(getTpl).render(billDetails.data, function(html) {
             view.innerHTML = html;
         });
         // 出库详情表格字段
@@ -92,7 +96,7 @@
         var entryCols = [{field:"code",title:"包号",sort:true},{field:"varieties",title:"品种",sort:true},{field:"spec",title:"规格",sort:true},{field:"levels",title:"等级",sort:true},{field:"chang",title:"长度",sort:true,edit:"txt"},{field:"brand",title:"品牌",sort:true},{field:"origin",title:"产地",sort:true},{field:"num",title:"数量（m³）",sort:true},{field:"positionid",title:"库位",sort:true},{field:"updauser",title:"操作员",sort:true},{field:"billloading",title:"提运单",sort:true},{field:"containernum",title:"货柜号/批次号",sort:true}];
 
         var tableClos;//表格字段赋值
-        if(stockHistoryDetails.type == "outHistory"){
+        if(billDetails.type == "outHistory"){
             tableClos = outCols;
         }else{
             tableClos = entryCols;
@@ -103,7 +107,7 @@
         var tableIns = table.render({
             elem: '#tableContainer',
             height: 'full-' + tableTopHeight,
-            data: stockHistoryDetails.stocklist,
+            data: billDetails.stocklist,
             cols: [
                 tableClos
             ],
@@ -112,7 +116,7 @@
             limits: [15, 20, 30, 40, 50],
             limit: 15, //每页默认显示的数量
             done: function(res, curr, count) {
-                var addtableBtn = '<div class="rightBotBtn">合计： 件数<span>' + stockHistoryDetails.znum + '</span>包 数量：<span>' + stockHistoryDetails.cube + '</span>m³</div>';
+                var addtableBtn = '<div class="rightBotBtn">合计： 件数<span>' + billDetails.znum + '</span>包 数量：<span>' + billDetails.cube + '</span>m³</div>';
                 $(".layui-table-page").append(addtableBtn);
             },
             text: {

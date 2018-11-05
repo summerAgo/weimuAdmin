@@ -177,7 +177,7 @@
             $.get(outHistoryOrderno,{orderno:obj.data.orderno},function(data){
                 console.log(data);
                 location.hash = "#!stock-billDetails/";
-                sessionStorage.setItem('stockHistoryDetails', JSON.stringify(data));
+                sessionStorage.setItem('billDetails', JSON.stringify(data));
             })
         });
     });
