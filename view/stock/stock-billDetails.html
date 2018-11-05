@@ -25,53 +25,28 @@
     </div>
 </div>
 <script id="detailsTle" type="text/html">
-    {{# if(d.type === "outBill"){}}
-    <ul class="layer-title">
-        <li>
-            <small>出货申请订单号</small>
-            <h3>{{d.data.orderno}}</h3>
-        </li>
-        <li>
-            <small>货权人</small>
-            <h3>{{d.data.cargoowner}}</h3>
-        </li>
-        <li>
-            <small>仓库名称</small>
-            <h3>{{d.data.depotname}}</h3>
-        </li>
-        <li>
-            <small>预计出库时间</small>
-            <h3>{{d.data.depotname}}</h3>
-        </li>
-        <li>
-            <small>状态</small>
-            <h3>{{d.data.depotname}}</h3>
-        </li>
-    </ul>
-    {{#  } else{ }}
-    <ul class="layer-title">
-        <li>
-            {{# if(d.type === "outHistory"){}}
-            <small>出库订单号</small>
-            {{#  } else{ }}
-            <small>入库订单号</small>
-            {{#  } }}
-            <h3>{{d.data.orderno}}</h3>
-        </li>
-        <li>
-            <small>货权人</small>
-            <h3>{{d.data.cargoowner}}</h3>
-        </li>
-        <li>
-            <small>仓库名称</small>
-            <h3>{{d.data.depotname}}</h3>
-        </li>
-        {{# if(d.data.outdate){}}
-        <li>
-            <small>出库时间</small>
-            <h3>{{d.data.outdate}}</h3>
-        </li>
+<ul class="layer-title">
+    <li>
+        {{# if(d.type === "outHistory"){}}
+        <small>出库订单号</small>
+        {{#  } else{ }}
+        <small>入库订单号</small>
         {{#  } }}
+        <h3>{{d.data.orderno}}</h3>
+    </li>
+    <li>
+        <small>货权人</small>
+        <h3>{{d.data.cargoowner}}</h3>
+    </li>
+    <li>
+        <small>仓库名称</small>
+        <h3>{{d.data.depotname}}</h3>
+    </li>
+    {{# if(d.data.outdate){}}
+    <li>
+        <small>出库时间</small>
+        <h3>{{d.data.outdate}}</h3>
+    </li>
     {{#  } }}
 </ul>
 </script>
@@ -119,8 +94,6 @@
         // 出库详情表格字段
         var outCols = [{field:"code",title:"包号",sort:true},{field:"varieties",title:"品种",sort:true},{field:"spec",title:"规格",sort:true},{field:"levels",title:"等级",sort:true},{field:"chang",title:"长度",sort:true,edit:"txt"},{field:"brand",title:"品牌",sort:true},{field:"origin",title:"产地",sort:true},{field:"actualnum",title:"实际数量（m³）",sort:true},{field:"updauser",title:"操作员",sort:true},{field:"billloading",title:"提运单",sort:true},{field:"containernum",title:"货柜号/批次号",sort:true}];
         // 入库详情表格字段
-        var entryCols = [{field:"code",title:"包号",sort:true},{field:"varieties",title:"品种",sort:true},{field:"spec",title:"规格",sort:true},{field:"levels",title:"等级",sort:true},{field:"chang",title:"长度",sort:true,edit:"txt"},{field:"brand",title:"品牌",sort:true},{field:"origin",title:"产地",sort:true},{field:"num",title:"数量（m³）",sort:true},{field:"positionid",title:"库位",sort:true},{field:"updauser",title:"操作员",sort:true},{field:"billloading",title:"提运单",sort:true},{field:"containernum",title:"货柜号/批次号",sort:true}];
-        // 出库申请表格字段
         var entryCols = [{field:"code",title:"包号",sort:true},{field:"varieties",title:"品种",sort:true},{field:"spec",title:"规格",sort:true},{field:"levels",title:"等级",sort:true},{field:"chang",title:"长度",sort:true,edit:"txt"},{field:"brand",title:"品牌",sort:true},{field:"origin",title:"产地",sort:true},{field:"num",title:"数量（m³）",sort:true},{field:"positionid",title:"库位",sort:true},{field:"updauser",title:"操作员",sort:true},{field:"billloading",title:"提运单",sort:true},{field:"containernum",title:"货柜号/批次号",sort:true}];
 
         var tableClos;//表格字段赋值
