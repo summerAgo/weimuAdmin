@@ -90,6 +90,7 @@
                     area: ['800px', 'auto'],
                 });
             });
+            form.render();
             return false;
         });
 
@@ -213,22 +214,22 @@
         //页面初始化
         $(function(){
 
+            //根据订单号下拉订单数据
             var orderno = sessionStorage.getItem('newbill_orderno');
             console.log("orderno:"+orderno);
             if('null' != orderno){
                 $(".layui-elem-quote").html("预入库订单号："+orderno);
                     $.get(preEntrygetByOrderno, {orderno:orderno}, function(data) {
-                        console.log(data)
-                        console.log(data.stocklist == null);
-                        tableData = data.stocklist;
-
-                        tableIns.reload({
-                            data: tableData,
-                            page: {
-                                curr: 1 //重新从第 1 页开始
-                            }
-                        });
-
+                        
+                        if(data.stocklist != null){
+                            tableData = data.stocklist;
+                            tableIns.reload({
+                                data: tableData,
+                                page: {
+                                    curr: 1 //重新从第 1 页开始
+                                }
+                            });
+                        }
                     })
             }
         })
