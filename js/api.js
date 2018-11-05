@@ -25,6 +25,8 @@ var outTreasury = pathUrl + "order/outtreasury/list";//出库
 var outTreasuryAdd = pathUrl + "order/outtreasury/add";//增加出货申请
 var outHistory = outTreasury + "?ishistory=1";//出库记录
 var outHistoryOrderno = pathUrl + "order/outtreasury/getByOrderno?ish=1";//出库详情 ish:获取单号所有信息
+var outRemove = pathUrl + "order/outtreasury/remove";//出货申请详情商品移除
+
 // 用户管理
 var userList = pathUrl + "sys/list";//用户列表
 var userAdd = pathUrl + "sys/add";//添加用户
