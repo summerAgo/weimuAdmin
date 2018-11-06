@@ -3,13 +3,13 @@
         <div class="tree-box">
             <div class="tree-header">
                 <div class="layui-btn-group">
-                    <button class="layui-btn layui-btn-sm layui-btn-primary">
+                    <button class="layui-btn layui-btn-sm layui-btn-primary" id="addins">
                         <i class="layui-icon">&#xe654;</i>
                     </button>
-                    <button class="layui-btn layui-btn-sm layui-btn-primary">
+                    <button class="layui-btn layui-btn-sm layui-btn-primary" id="updins">
                         <i class="layui-icon">&#xe642;</i>
                     </button>
-                    <button class="layui-btn layui-btn-sm layui-btn-primary">
+                    <button class="layui-btn layui-btn-sm layui-btn-primary" id="delins">
                         <i class="layui-icon">&#xe640;</i>
                     </button>
                 </div>
@@ -22,8 +22,12 @@
                     <form class="layui-form" action="">
                         <div class="form-box">
                             <div class="layui-form-item form-left">
+                                    <div class="table-form-item layui-input-inline">
+                                            <p id ="titleIns">全部</p>
+                                        </div>
                                 <div class="table-form-item layui-input-inline">
                                     <input type="text" name="username" placeholder="用户名" autocomplete="off" class="layui-input">
+                                    <input type="hidden" name="instid" id="instid" value=""  autocomplete="off" class="layui-input">
                                 </div>
 
                             </div>
@@ -142,27 +146,15 @@
                         sort: true
                     }, {
                         field: 'password',
-                        title: '密码',
+                        title: '联系电话',
                         sort: true
                     }, {
                         field: 'usertype',
                         title: '用户类型',
                         sort: true
                     }, {
-                        field: 'createuser',
-                        title: '创建人',
-                        sort: true
-                    }, {
-                        field: 'createdate',
-                        title: '创建时间',
-                        sort: true
-                    }, {
-                        field: 'updauser',
-                        title: '修改人',
-                        sort: true
-                    }, {
-                        field: 'updadate',
-                        title: '修改时间',
+                        field: 'stattus',
+                        title: '状态',
                         sort: true
                     }
                 ]
@@ -330,7 +322,9 @@
 
         //弹出添加用户
         $(".creatUser").click(function() {
-            window.currData = null;
+            var  data ={};
+            data["instid"] = menuIns.id;
+            window.currData = data;
             $.get('view/user/user-add.html', {}, function(str) {
                 eaitLayer = layer.open({
                     title: '添加用户',
@@ -403,7 +397,61 @@
             window.location.href = ilbstockExportUrl
         });
 
-        var treeData = [ //节点
+
+        
+        listIns();
+        //用户类型菜单树
+        function listIns(){
+            var data={"utype":0};//0是用户类型
+            rowDataApi(listInstitution, data, function(res){
+                var insData = res.data;
+                var val=[];
+                for(var i=0;i<insData.length;i++){
+                    if(insData[i].pid == 0){
+                        val.push(insData[i]);
+                    }
+                }
+                insList = val;
+                var treeData = [];
+                console.log(treeData)
+                var number = 0;
+                for(var i=0;i<val.length;i++){
+                    var map = {};
+                    map["name"]= val[i].name;
+                    map["id"]= val[i].id;
+                    map["pid"]= val[i].pid;
+                    map["spread"]= true;
+                    var children =[];
+                    for(var j=0;j<insData.length;j++){
+                        if(val[i].id == insData[j].pid){
+                            var son = {};
+                            son["name"]=insData[j].name;
+                            son["id"]=insData[j].id;
+                            son["pid"]=insData[j].pid;
+                            children.push(son);
+                            number++;
+                            if(number ==1){
+                                menuIns = son;
+                            }
+                        }
+                        
+                    }
+                    map["children"]= children;
+                    treeData.push(map);
+                }
+                console.log(treeData);
+                layui.tree({
+                    elem: '#tree-nav',
+                    nodes: treeData,
+                    showCheckbox: true,
+                    click: resTable
+                });
+            }, function (res){
+                //失败
+            })
+        }
+
+       /* var treeData = [ //节点
             {
                 name: '常用文件夹',
                 id: 1,
@@ -437,18 +485,134 @@
             nodes: treeData,
             showCheckbox: true,
             click: resTable
-        });
+        });*/
 
+
+        var insList=[];//用户类型顶级目录
+        var menuIns={};//用户类型被点击的数据
         // 根据菜单刷新表格
         function resTable(d) {
             console.log(d)
-            if (d.id == "something") {
+            menuIns = d;
+            if(menuIns.pid != 0){
+                // 刷新表格
+                $("#instid").val(menuIns.id);
+                $("#titleIns").html(menuIns.name);
                 tableIns.reload({
+                    where:{"instid":menuIns.id},
                     page: {
                         curr: 1 //重新从第 1 页开始
                     }
                 });
             }
         }
+
+        //添加用户类型
+        $("#addins").click(function(){
+            var data = {};
+            data["insList"]=insList;
+            window.currData = data;
+            $.get('view/user/institution-add.html', {}, function(str) {
+                eaitLayer = layer.open({
+                    title: '添加用户类型',
+                    type: 1,
+                    content: str,
+                    resize: false,
+                    area: ['800px', '45%'],
+                });
+            });
+        });
+        //修改用户类型
+        $("#updins").click(function(){
+            var data = menuIns;
+            data["insList"]=insList;
+            window.currData = data; //全局对象存储当前选中行数据
+            $.get('view/user/institution-add.html', {}, function(str) {
+                eaitLayer = layer.open({
+                    title: '修用户类型',
+                    type: 1,
+                    content: str, //注意，如果str是object，那么需要字符拼接。
+                    resize: false,
+                    area: ['800px', '45%'],
+                });
+            });
+        });
+        //删除用户类型
+        $("#delins").click(function(){
+
+            if(!menuIns.id){
+                layer.msg('请选择一条数据');
+                return;
+            }
+
+            var ids =[];
+            ids.push(menuIns.id);
+            var data={"ids":ids.toString()};
+
+            layer.confirm("是否删除类型", {
+                icon: 3,
+                title: '提示'
+            }, function(index) {
+                $.ajax({
+                    cache: true,
+                    type: "get",
+                    url: delInstitution,
+                    data: data,
+                    async: false,
+                    error: function(request) {
+                        layer.msg('提交失败');
+                        return;
+                    },
+                    success: function(data) {
+                        layer.close(eaitLayer);
+                        layer.msg('提交成功');
+                        listIns();
+                    }
+                });
+            })
+            return false;
+        });
+
+
+
+
+        form.on('submit(addInsSubmit)', function(data) {
+            var title = "";
+            var url ="";
+            //编辑提交
+            if (data.field.id != null && data.field.id != "") {
+                title = '确认提交修改';
+                userUrl = updInstitution;
+            } else {
+                title = '确认添加'
+                userUrl = addInstitution;
+                data.field.id = null;
+            }
+            layer.confirm(title, {
+                icon: 3,
+                title: '提示'
+            }, function(index) {
+                $.ajax({
+                    cache: true,
+                    type: "get",
+                    url: userUrl,
+                    data: data.field,
+                    async: false,
+                    error: function(request) {
+                        layer.msg('提交失败');
+                        return;
+                    },
+                    success: function(data) {
+                        layer.close(eaitLayer);
+                        layer.msg('提交成功');
+                        listIns();
+                    }
+                });
+            })
+            return false;
+        });
+         
+
+
     });
 </script>
