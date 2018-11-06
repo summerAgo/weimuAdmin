@@ -35,8 +35,7 @@
                     </li>
                 </ul>
                 <ul class="layui-layout-right">
-                    <li><a href="javascript:;" class="editBtn">编辑</a></li>
-                    <li><a href="javascript:;" class="deleteBtn">移除</a></li>
+                    <li><a href="javascript:;" id="deleteGoods" class="deleteBtn">移除</a></li>
                 </ul>
             </div>
         </div>
@@ -127,11 +126,11 @@
                         title: '单号',
                         sort: true
                     }, {
-                        field: 'cargoowner',
+                        field: 'ownerid',
                         title: '货权人',
                         sort: true
                     }, {
-                        field: 'depotname',
+                        field: 'depotid',
                         title: '仓库名称',
                         sort: true
                     }, {
@@ -152,11 +151,8 @@
                         sort: true
                     }, {
                         field: 'volume',
-                        title: '码单数量（m³）',
+                        title: '数量（m³）',
                         sort: true
-                    }, {
-                        field: 'estimatedate',
-                        title: '预计出库时间'
                     }, {
                         field: 'createdate',
                         title: '创建日期',
@@ -173,7 +169,7 @@
             limits: [10, 20, 30, 40, 50],
             limit: 10, //每页默认显示的数量
             done: function(res, curr, count) {
-                var addtableBtn = '<div class="rightBotBtn">共添加<span>' + count + '</span>个商品 <a href="javascript:;" class="layui-btn layui-btn-sm submissionBtn">新建</a></div>';
+                var addtableBtn = '<div class="rightBotBtn">共添加<span>' + count + '</span>个商品 <a href="javascript:;" class="layui-btn layui-btn-sm submissionBtn">保存</a></div>';
                 $("#tableContainer-addOutBill").siblings().find(".layui-table-page").append(addtableBtn);
                 $(".submissionBtn").click(function() {
 					
@@ -209,9 +205,14 @@
 						"ownerid":cargoowner,
 						"depotid":depotname,
 						"outdateString":estimatedate,
-						"ids":ids
+						"ids":ids.toString()
 					}
 					
+					var outBill = sessionStorage.getItem('addOutBill');
+					if(outBill != null){
+						var array = JSON.parse(outBill);
+						preData["orderno"]= array.orderno;
+					}
 					
 					$.ajax({
 						cache: true,
@@ -247,16 +248,38 @@
 		preList();
 		//获取初始数据
 		function preList(){
+			var outBill = sessionStorage.getItem('addOutBill');
+			console.log(outBill);
+			var array = JSON.parse(outBill);
+			console.log(array);
+			var data={};
+			if(outBill == null){
+				formSelects.undisabled('cargoownerOne');//启用
+				formSelects.undisabled('depotnameOne');//启用
+				ownerDrop(null,null);
+			}else{
+				data["outorderno"]=array.orderno;
+				data["ownerid"]=array.ownerid;
+				data["depotid"]=array.depotid;
+				$("#estimatedate").val(array.outdate);
+				formSelects.disabled('cargoownerOne');//禁用
+				formSelects.disabled('depotnameOne');//禁用
+
+				ownerDrop(array.ownerid,array.depotid);
+			}
+			
+			
 			$.ajax({
 				cache: true,
 				type: "get",
-				url: preEntry,
+				url: outHistoryOrderno,
+				data:data,
 				async: false,
 				success: function(res) {
 					if(res.status == 0){
-						tableData = res.data;
+						tableData = res.stocklist;
 						tableIns.reload({
-							data:res.data,
+							data:res.stocklist,
 							page: {
 								curr: 1 //重新从第 1 页开始
 							}
@@ -268,9 +291,9 @@
 		}
 		
 		
-		ownerDrop();
+		
 		//货权人下拉
-		function ownerDrop(){
+		function ownerDrop(ownerid,depotid){
 			$.ajax({
 				cache: true,
 				type: "get",
@@ -279,13 +302,16 @@
 				success: function(res) {
 					if(res.status == 0){
 						var ownerDropList=[];
-						depotDrop(res.data[0].id);
 						for(var i=0;i< res.data.length;i++){
 							var map={};
 							map["name"]=res.data[i].name;
 							map["value"]=res.data[i].id;
-							if(i == 0){
+							if(ownerid !=null && ownerid == res.data[i].id){
 								map["selected"]="selected";
+								depotDrop(res.data[0].id,depotid);
+							}else if(ownerid ==null && i == 0){
+								map["selected"]="selected";
+								depotDrop(res.data[0].id,null);
 							}
 							ownerDropList.push(map);
 						}
@@ -309,12 +335,12 @@
             //val:          当前select点击的值
             //isAdd:        当前操作选中or取消
             //isDisabled:   当前选项是否是disabled
-			depotDrop(val.value);
+			depotDrop(val.value,null);
         });
 		
 		
 		//仓库下拉： 货权人id(ownerid)
-		function depotDrop(ownerid){
+		function depotDrop(ownerid,nerid){
 			var data ={
 				"ownerid":ownerid
 			};
@@ -332,7 +358,9 @@
 							var map={};
 							map["name"]=res.data[i].name;
 							map["value"]=res.data[i].id;
-							if(i == 0){
+							if(nerid != null && nerid == res.data[i].id){
+								map["selected"]="selected";
+							}else if(nerid == null && i == 0){
 								map["selected"]="selected";
 							}
 							depotDropList.push(map);
@@ -349,6 +377,34 @@
 		}
 		
 		
+		//移除货物
+		$("#deleteGoods").click(function(){
+			 //移除
+			 var checkStatus = table.checkStatus('tableContainer-addOutBill');
+            if (checkStatus.data.length < 1) {
+                layer.msg("请选择需要移除的信息");
+            } else {
+					for(var i=0;i<checkStatus.data.length;i++){
+						for(var j=0;j<tableData.length;j++){
+							console.log(checkStatus.data[i]);
+							console.log( tableData[j]);
+							if(checkStatus.data[i].orderno == tableData[j].orderno){
+								console.log(1);
+								tableData.splice(j,1)
+								console.log(2);
+								break;
+							}
+						}
+					}
+					tableIns.reload({
+						data:tableData,
+						page: {
+							curr: 1 //重新从第 1 页开始
+						}
+					});
+
+			}
+		});
 		
 		
 		
@@ -394,11 +450,31 @@
 					where:{"ownerid":cargoowner,"depotid":depotname},
 					parseData: function(res) { //res 即为原始返回的数据
 						if (res.status !== 0) res.status = 0;
+						var resData = res.data;
+
+						for(var i = 0;i<resData.length;i++){
+							var k =0;
+							if(tableData != null){
+								for(var j=0;j<tableData.length;j++){
+									if(resData[i].id == tableData[j].id){
+										k=1;
+									}
+								}
+							}
+							if(k == 0){
+								resData[i]["LAY_CHECKED"]=false;
+							}else{
+								resData[i]["LAY_CHECKED"]=true;
+							}
+							
+						}
+						console.log(resData);
+						console.log(tableData);
 						return {
 							"code": res.status, //解析接口状态
 							"msg": res.message, //解析提示文本
 							"count": res.count, //解析数据长度
-							"data": res.data, //解析数据列表
+							"data": resData, //解析数据列表
 							"aprice": res.aprice, //解析数据列表
 							"znum": res.znum //解析数据列表
 						}
@@ -411,7 +487,7 @@
 					cols: [
 						[ //标题栏
 							{
-								type: 'checkbox'
+								type: 'checkbox',
 							}, {
 								field: 'orderno',
 								title: '订单号',
