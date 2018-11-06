@@ -1,5 +1,5 @@
 var localport = ":8000";//本地端口
-var localhost = "http://127.0.0.1" + localport;//本地
+var localhost = "http://192.168.10.216" + localport;//本地
 var pathUrl = "http://192.168.10.201:80/storage-web/"; //?username=admin&password=123456
 var loginUrl = pathUrl + "sys/login"; //登录
 //基础货物公共信息
@@ -32,7 +32,6 @@ var depotList = pathUrl + "basics/depot/list";//仓库列表
 var depotAdd = pathUrl + "basics/depot/add";//添加仓库
 var depotUpdate = pathUrl + "basics/depot/update";//修改仓库
 var depotDel = pathUrl + "basics/depot/delete";//删除仓库
-
 
 var positionList = pathUrl + "basics/position/list";//库位列表
 var positionAdd = pathUrl + "basics/position/add";//添加库位

@@ -120,6 +120,7 @@
 
 /* trr-container */
 .trr-container{display:flex}
-#tree-nav{flex:0 0 190px; overflow: auto}
-.trr-container .table-content{flex:1 0 auto; border-left:1px solid #d9d9d9; overflow: auto}
+.tree-box{flex:0 0 190px; overflow: auto}
+.trr-container .table-content{flex:1 1 auto; border-left:1px solid #d9d9d9; overflow: auto}
+.tree-header{display:flex; background:#d9d9d9}
 body .layui-tree-skin-shihuang .layui-tree-branch{color: #15a45b;}
