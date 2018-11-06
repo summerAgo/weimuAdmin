@@ -9,7 +9,8 @@
             <label class="layui-form-label">用户名</label>
             <div class="layui-input-block">
                 <input type="text" id="username" name="username" lay-verify="required" placeholder="必填项,请输入用户名" class="layui-input"  value="{{# if(d.username){}} {{d.username}} {{# }}}">
-				<input type="hidden" id="id" name="id"   value="{{# if(d.id){}} {{d.id}} {{# }}}">
+                <input type="hidden" id="id" name="id"   value="{{# if(d.id){}} {{d.id}} {{# }}}">
+                <input type="hidden" name="instid" value="{{d.instid}} " autocomplete="off" class="layui-input">
             </div>
 
         </div>
@@ -153,7 +154,7 @@
         var laytpl = layui.laytpl;
         var laydate = layui.laydate;
         var  data= window.currData;
-		if(data!=null){//不是空就是编辑
+		if(data!=null && data.id){//不是空就是编辑
 			var getTpl = formUser.innerHTML,
 			view = document.getElementById('formEditView');
 			laytpl(getTpl).render(data, function(html) {
@@ -162,7 +163,7 @@
 		}else{
 			var getTpl = formUser.innerHTML,
 			view = document.getElementById('formEditView');
-			var dataOff={};
+			var dataOff=data;
 			laytpl(getTpl).render(dataOff, function(html) {
 				view.innerHTML = html;
 			});
