@@ -1,26 +1,6 @@
 <div id="formAddGoodsView"></div>
 <script id="formTle" type="text/html">
 <div class="addGoods-layer">
-    <blockquote class="layui-elem-quote">
-        <ul class="layer-title">
-            <li>
-                <small>货权人</small>
-                <h3>{{d.cargoowner}}</h3>
-            </li>
-            <li>
-                <small>仓库名称</small>
-                <h3>{{d.depotname}}</h3>
-            </li>
-            <li>
-                <small>产地</small>
-                <h3>{{d.origin}}</h3>
-            </li>
-            <li>
-                <small>供应商</small>
-                <h3>{{d.supplier}}</h3>
-            </li>
-        </ul>
-    </blockquote>
     <form class="layui-form layui-form-pane" action="">
         <div class="layui-form-item">
             <label class="layui-form-label">包号 <span class="layui-badge-dot"></span></label>
@@ -120,8 +100,7 @@
     layui.use(['laytpl', 'laydate'], function() {
         var laytpl = layui.laytpl;
         var laydate = layui.laydate;
-        console.log(window.billBaseInfo)
-        var data = window.billBaseInfo; //所选行数据
+        var data = {}; //所选行数据
         var getTpl = formTle.innerHTML,
             view = document.getElementById('formAddGoodsView');
         laytpl(getTpl).render(data, function(html) {
