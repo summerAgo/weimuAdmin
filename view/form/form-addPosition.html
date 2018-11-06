@@ -1,4 +1,4 @@
-<div id="depotView"></div>
+<div id="positionView"></div>
 <script id="depotTle" type="text/html">
     <form class="layui-form layui-form-pane" action="">
     <div class="layui-form-item">
@@ -8,15 +8,15 @@
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">仓库名称</label>
-        <div class="layui-input-block">
-            <input type="text" name="name" placeholder="仓库名称" value="{{d.name || ''}}" autocomplete="off" class="layui-input" lay-verify="required">
+        <label class="layui-form-label">库位名称</label>
+        <div class="layui-input-block"> 
+            <input type="text" name="name" placeholder="库位名称" value="{{d.name || ''}}" autocomplete="off" class="layui-input" lay-verify="required">
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">货权人</label>
+        <label class="layui-form-label">面积</label>
         <div class="layui-input-block">
-            <input type="text" name="ownerid" placeholder="货权人" value="{{d.ownerid || ''}}" autocomplete="off" class="layui-input" lay-verify="required">
+            <input type="text" name="acreage" placeholder="面积" value="{{d.acreage || ''}}" autocomplete="off" class="layui-input" lay-verify="required">
         </div>
     </div>
     <div class="layui-form-item">
@@ -26,9 +26,9 @@
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label">仓库类型</label>
+        <label class="layui-form-label">负责人</label>
         <div class="layui-input-block">
-            <input type="text" name="type" placeholder="仓库类型" value="{{d.type || ''}}" autocomplete="off" class="layui-input" lay-verify="required">
+            <input type="text" name="person" placeholder="负责人" value="{{d.person || ''}}" autocomplete="off" class="layui-input" lay-verify="required">
         </div>
     </div>
     <div class="layui-form-item">
@@ -38,7 +38,7 @@
         </div>
     </div>
     <div class="layui-form-item">
-        <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="addDepotForm">
+        <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="addPositionForm">
             <i class="layui-icon layui-icon-ok"></i> <span>提交</span>
         </button>
     </div>
@@ -58,11 +58,11 @@
         var formSelects = layui.formSelects;
         var laytpl = layui.laytpl;
         
-        var dataType = JSON.parse(sessionStorage.getItem('depotCheck')) || {};//获取本地所选仓库信息，判断是否为修改
+        var dataType = JSON.parse(sessionStorage.getItem('positionCheck')) || {};//获取本地所选仓库信息，判断是否为修改
         console.log(dataType)
         // 渲染模板的内容
         var getTpl = depotTle.innerHTML,
-            view = document.getElementById('depotView');
+            view = document.getElementById('positionView');
         laytpl(getTpl).render(dataType, function(html) {
             view.innerHTML = html;
         });

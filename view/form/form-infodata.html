@@ -1,0 +1,61 @@
+<div id="depotView"></div>
+<script id="depotTle" type="text/html">
+    <form class="layui-form layui-form-pane infodata_form" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">类型标识</label>
+        <div class="layui-input-block">
+            <input type="hidden" name="id" value="{{d.id || ''}}">
+            <input type="text" name="code" placeholder="类型标识" value="{{d.code || ''}}" autocomplete="off" class="layui-input" lay-verify="required">
+        </div>
+    </div>
+    <div class="layui-form-item">
+            <label class="layui-form-label">父级类型标识</label>
+            <div class="layui-input-block">
+                <input type="text" name="pcode" placeholder="类型标识" value="{{d.pcode || ''}}" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="name" placeholder="名称" value="{{d.name || ''}}" autocomplete="off" class="layui-input" lay-verify="required">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">备注</label>
+        <div class="layui-input-block">
+            <input type="text" name="remarks" placeholder="备注" value="{{d.remarks || ''}}" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="addinfodataForm">
+            <i class="layui-icon layui-icon-ok"></i> <span>提交</span>
+        </button>
+    </div>
+</form>
+</script>
+<style scoped>
+    .layui-form {
+        width: 600px;
+        margin: 10px auto;
+    }
+</style>
+<script>
+    layui.use(['form', 'jquery', 'element', 'layer', 'formSelects', 'laytpl', 'laydate'], function() {
+        var element = layui.element;
+        var form = layui.form;
+        var $ = layui.jquery;
+        var formSelects = layui.formSelects;
+        var laytpl = layui.laytpl;
+        
+        var dataType = JSON.parse(sessionStorage.getItem('base_infodata_data')) || {};//判断是否为修改
+        // 渲染模板的内容
+        var getTpl = depotTle.innerHTML,
+            view = document.getElementById('depotView');
+        laytpl(getTpl).render(dataType, function(html) {
+            view.innerHTML = html;
+        });
+        
+        
+
+    });
+</script>

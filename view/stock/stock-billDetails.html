@@ -20,7 +20,7 @@
             </div>
         </div>
         <div class="table-content-main">
-            <table class="layui-hide" id="tableContainer" lay-filter="tableContainer"></table>
+            <table class="layui-hide" id="tableContainer_billDetails" lay-filter="tableContainer_billDetails"></table>
         </div>
     </div>
 </div>
@@ -36,11 +36,11 @@
     </li>
     <li>
         <small>货权人</small>
-        <h3>{{d.data.cargoowner}}</h3>
+        <h3>{{d.data.ownerid}}</h3>
     </li>
     <li>
         <small>仓库名称</small>
-        <h3>{{d.data.depotname}}</h3>
+        <h3>{{d.data.depotid}}</h3>
     </li>
     {{# if(d.data.outdate){}}
     <li>
@@ -106,7 +106,7 @@
         var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 103); //内容区域所需减去的高度
 
         var tableIns = table.render({
-            elem: '#tableContainer',
+            elem: '#tableContainer_billDetails',
             height: 'full-' + tableTopHeight,
             data: billDetails.stocklist,
             cols: [
