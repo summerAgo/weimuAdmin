@@ -1,0 +1,83 @@
+<div id="formEditView"></div>
+
+
+<script id="formUser" type="text/html">
+<div class="useradd layui-form">
+
+    <form>
+        <div class="layui-form-item">
+            <label class="layui-form-label">角色</label>
+            <div class="layui-input-block">
+                <input type="hidden" id="userid" name="userid"   value="{{# if(d.id){}} {{d.id}} {{# }}}">
+                <select name="roleid" lay-verify="required">
+                    {{#  layui.each(d.rolelist, function(index, item){ }}
+						 <option {{# if(d.pid && d.pid == item.id ){}} selected {{# }}} value="{{item.id}}">{{ item.rolename }}</option>
+					{{#  }); }}
+                </select>
+            </div>
+        </div>
+		
+
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit="" type="submit" lay-filter="roleSubmit">保存提交</button>
+            </div>
+        </div>
+    </form>
+
+</div>
+</script>
+
+<style scoped>
+    .useradd {
+        padding-right: 30px;
+        padding-top: 30px;
+    }
+</style>
+
+<script>
+    layui.use(['form', 'jquery', 'element', 'layer', 'laytpl', 'laydate'], function() {
+        var element = layui.element;
+        var form = layui.form;
+        var $ = layui.jquery;
+        var laytpl = layui.laytpl;
+        var laydate = layui.laydate;
+        var  data= window.currData;
+		if(data!=null && data.id){//不是空就是编辑
+			var getTpl = formUser.innerHTML,
+            view = document.getElementById('formEditView');
+            $.ajax({
+                cache: true,
+                type: "get",
+                url: roledown,
+                async: false,
+                error: function(request) {
+                    layer.msg('重置失败');
+                    return;
+                },
+                success: function(res) {
+                    data["rolelist"] = res.data;
+                    laytpl(getTpl).render(data, function(html) {
+            	view.innerHTML = html;
+        	});
+                }
+            });
+			
+		}
+		
+        form.render(); //重置表单渲染
+
+        //日期时间选择器
+        laydate.render({
+            elem: '#birthday',
+            type: 'datetime',
+            max: 0,
+            change: function(val) {
+                console.log(val);
+            }
+        });
+
+
+    });
+</script>
