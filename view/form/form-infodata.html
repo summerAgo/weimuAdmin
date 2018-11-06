@@ -5,15 +5,20 @@
         <label class="layui-form-label">类型标识</label>
         <div class="layui-input-block">
             <input type="hidden" name="id" value="{{d.id || ''}}">
-            <input type="text" name="code" placeholder="类型标识" value="{{d.code || ''}}"  autocomplete="off" class="layui-input">
+            <!-- <input type="text" name="code" placeholder="类型标识" value="{{d.code || ''}}"  autocomplete="off" class="layui-input"> -->
+                <select name="code" xm-select="select-varieties">
+                    <option value="VTS">品种</option>
+                    <option value="GUG">规格</option>
+                    <option value="LEL">等级</option>
+                </select>
         </div>
     </div>
-    <div class="layui-form-item">
+    <!-- <div class="layui-form-item">
             <label class="layui-form-label">父级类型标识</label>
             <div class="layui-input-block">
                 <input type="text" name="pcode" placeholder="类型标识" value="{{d.pcode || ''}}" autocomplete="off" class="layui-input">
             </div>
-        </div>
+        </div> -->
     <div class="layui-form-item">
         <label class="layui-form-label">名称</label>
         <div class="layui-input-block">

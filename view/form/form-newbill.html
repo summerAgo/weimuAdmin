@@ -211,30 +211,26 @@
         });
 
         //页面初始化
-        $(function() {
+        //根据订单号下拉订单数据
+        var orderno = sessionStorage.getItem('newbill_orderno');
+        console.log("orderno:" + orderno);
+        if ('null' != orderno) {
+            $(".layui-elem-quote").html("预入库订单号：" + orderno);
+            $.get(preEntrygetByOrderno, {
+                orderno: orderno
+            }, function(data) {
 
-            //根据订单号下拉订单数据
-            var orderno = sessionStorage.getItem('newbill_orderno');
-            console.log("orderno:" + orderno);
-            if ('null' != orderno) {
-                $(".layui-elem-quote").html("预入库订单号：" + orderno);
-                $.get(preEntrygetByOrderno, {
-                    orderno: orderno
-                }, function(data) {
-
-                    if (data.stocklist != null) {
-                        tableData = data.stocklist;
-                        tableIns.reload({
-                            data: tableData,
-                            page: {
-                                curr: 1 //重新从第 1 页开始
-                            }
-                        });
-                    }
-                })
-            }
-        })
-
+                if (data.stocklist != null) {
+                    tableData = data.stocklist;
+                    tableIns.reload({
+                        data: tableData,
+                        page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                    });
+                }
+            })
+        }
 
         $(".deleteBtn").click(function() {
             var checkStatus = table.checkStatus('tableContainer-from');
@@ -323,20 +319,23 @@
             $.ajax({
                 url: preEntryAdd,
                 type: "POST",
-                dataType: "json",
-                contentType: "application/json",
+                //dataType: "json",
+                //contentType: "application/json",
                 data: {
                     lbarr: arr.toString(),
                     ownerid: cargoowner,
                     depotid: depotname,
                     origin: origin,
-                    supplierid: supplier
+                    supplierid: supplier,
+                    orderno:orderno
                 },
                 traditional: true,
                 success: function(data) {
                     console.log(data);
                     layer.msg("提交成功");
                     layer.close(addLayer);
+                    //刷新当前列表
+                    
                 },
                 error: function() {}
             })

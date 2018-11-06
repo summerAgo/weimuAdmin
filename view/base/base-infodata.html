@@ -110,11 +110,19 @@
                     {
                         field: 'code',
                         title: '类型标识',
-                        sort: true
-                    }, {
-                        field: 'pcode',
-                        title: '父级',
-                        sort: true
+                        sort: true,
+                        templet:function(d){
+                            if(d.code == 'VTS'){
+                                return '品种';
+                            }
+                            if(d.code == 'GUG'){
+                                return '规格';
+                            }
+                            if(d.code == 'LEL'){
+                                return '等级';
+                            }
+                            return '';
+                        }
                     }, {
                         field: 'name',
                         title: '名称',
@@ -203,10 +211,7 @@
             if(undefined == id || '' == id){
                 url = basicsInfoAdd
             }
-            
-            console.log(undefined == id);
-            console.log(null == id);
-            console.log('' == id);
+
             $.get(url, fromdata, function(data) {
                 sessionStorage.removeItem('base_infodata_data');      
                 layer.close(addLayer); //关闭

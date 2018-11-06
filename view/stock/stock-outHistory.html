@@ -81,7 +81,7 @@
                     paramSearch[key] = data.field[key]
                 }
             }
-            tableIns.reload({
+            tableInss.reload({
                 where: paramSearch, //接口参数
                 page: {
                     curr: 1 //重新从第 1 页开始
@@ -90,10 +90,10 @@
             return false;
         });
 
-        var tableIns = table.render({
+        var tableInss = table.render({
             elem: '#tableContainer',
             height: 'full-' + tableTopHeight,
-            url: outHistory,
+            url: outHistoryOrderno,
             parseData: function(res) { //res 即为原始返回的数据
                 if (res.status !== 0) res.status = 0;
                 return {
@@ -119,16 +119,12 @@
                         style: 'cursor: pointer;',
                         sort: true
                     }, {
-                        field: 'cargoowner',
+                        field: 'ownerid',
                         title: '货权人',
                         sort: true
                     }, {
-                        field: 'depotname',
+                        field: 'depotid',
                         title: '仓库名称',
-                        sort: true
-                    }, {
-                        field: 'billloading',
-                        title: '提运单',
                         sort: true
                     }, {
                         field: 'num',
@@ -139,7 +135,7 @@
                         title: '产地',
                         sort: true
                     }, {
-                        field: 'supplier',
+                        field: 'supplierid',
                         title: '供应商',
                         sort: true
                     }, {
@@ -147,7 +143,7 @@
                         title: '码单数量（m³）',
                         sort: true
                     }, {
-                        field: 'estimatedate',
+                        field: 'outdate',
                         title: '预计出库时间'
                     }, {
                         field: 'createdate',
