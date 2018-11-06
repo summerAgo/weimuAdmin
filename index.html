@@ -90,6 +90,7 @@
                             <dd><a href="#!base-infodata">基础信息设置管理</a></dd>
                             <dd><a href="#!owner-list">客户管理</a></dd>
                             <dd><a href="#!depot-list">仓库信息管理</a></dd>
+                            <dd><a href="#!supplier-list">供应商管理</a></dd>
                         </dl>
                     </li>
                     <li class="layui-nav-item">
@@ -205,6 +206,9 @@
                 }],
                 ['owner-list', function() {
                     container.load('/view/base/owner-list.html');
+                }],
+                ['supplier-list', function() {
+                    container.load('/view/base/supplier-list.html');
                 }]
             ])
 

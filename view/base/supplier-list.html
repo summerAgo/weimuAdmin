@@ -1,0 +1,546 @@
+<div class="table-page">
+    <div class="trr-container">
+        <div class="tree-box">
+            <div class="tree-header">
+                <div class="layui-btn-group">
+                    <button class="layui-btn layui-btn-sm layui-btn-primary" id="addins">
+                        <i class="layui-icon">&#xe654;</i>
+                    </button>
+                    <button class="layui-btn layui-btn-sm layui-btn-primary" id="updins">
+                        <i class="layui-icon">&#xe642;</i>
+                    </button>
+                    <button class="layui-btn layui-btn-sm layui-btn-primary" id="delins">
+                        <i class="layui-icon">&#xe640;</i>
+                    </button>
+                </div>
+            </div>
+            <div id="tree-nav"></div>
+        </div>
+        <div class="table-content">
+            <div class="table-page-header">
+                <div class="table-page-form">
+                    <form class="layui-form" action="">
+                        <div class="form-box">
+                            <div class="layui-form-item form-left">
+                                <div class="table-form-item layui-input-inline">
+                                    <p id="titleIns">全部</p>
+                                </div>
+                                <div class="table-form-item layui-input-inline">
+                                    <input type="text" name="name" placeholder="名称" autocomplete="off" class="layui-input">
+                                    <input type="hidden" name="instid" id="instid" value="" autocomplete="off" class="layui-input">
+                                </div>
+
+                            </div>
+                            <div class="layui-form-item form-right">
+                                <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="searchForm">
+                                    <i class="iconfont icon-sousuo"></i> <span>查询</span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+            <div class="table-content">
+                <div class="table-content-title">
+                    <div class="table-tools">
+                        <ul class="layui-nav" lay-filter="talbe-tools">
+                            <li class="layui-nav-item">
+                                <a href="javascript:;" class="creatUser">添加货权人</a>
+                            </li>
+                        </ul>
+                        <ul class="layui-layout-right">
+                            <li><a href="javascript:;" class="editBtn">编辑</a></li>
+                            <li><a href="javascript:;" class="deleteBtn">删除</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="table-content-main">
+                    <table class="layui-hide" id="tableContainer-userlist" lay-filter="tableContainer-userlist"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'tree', 'eleTree'], function() {
+        var element = layui.element;
+        var form = layui.form;
+        var $ = layui.jquery;
+        var table = layui.table;
+        var formSelects = layui.formSelects;
+        var laytpl = layui.laytpl;
+        var eleTree = layui.eleTree;
+        var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 103); //内容区域所需减去的高度
+
+        var eaitLayer; //编辑-弹层
+
+        form.render(); //重置表单渲染
+        formSelects.render(); //下拉选项
+        element.render('talbe-tools'); //表格工具栏
+        formSelects.btns(['select', 'remove'], {
+            show: 'name'
+        });
+
+        form.on('submit(searchForm)', function(data) {
+            var paramSearch = {};
+            for (var key in data.field) {
+                //参数赋值
+                if (data.field[key] != "") {
+                    paramSearch[key] = data.field[key]
+                }
+            }
+            tableIns.reload({
+                where: paramSearch, //接口参数
+                page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+            });
+            return false;
+        });
+
+        var tableIns = table.render({
+            elem: '#tableContainer-userlist',
+            height: 'full-' + tableTopHeight,
+            url: listOwner,
+            parseData: function(res) { //res 即为原始返回的数据
+                if (res.status !== 0) res.status = 0;
+                return {
+                    "code": res.status, //解析接口状态
+                    "msg": res.message, //解析提示文本
+                    "count": res.count, //解析数据长度
+                    "data": res.data //解析数据列表
+                }
+            },
+            request: {
+                pageName: 'offset', //页码的参数名称，默认：page
+                limitName: 'limit' //每页数据量的参数名，默认：limit
+            },
+            cols: [
+                [ //标题栏
+                    {
+                        type: 'checkbox'
+                    },
+                    {
+                        field: 'id',
+                        title: 'ID',
+                        sort: true
+                    }, {
+                        field: 'name',
+                        title: '名称',
+                        sort: true
+                    }, {
+                        field: 'mnemoniccode',
+                        title: '助记码',
+                        sort: true
+                    }, {
+                        field: 'instid',
+                        title: '功能设置类型ID',
+                        sort: true
+                    }, {
+                        field: 'contacts',
+                        title: '联系人',
+                        sort: true
+                    }, {
+                        field: 'person',
+                        title: '业务员',
+                        sort: true
+                    }, {
+                        field: 'fkperson',
+                        title: '风控人员',
+                        sort: true
+                    }, {
+                        field: 'stockmoney',
+                        title: '库存金额',
+                        sort: true
+                    }, {
+                        field: 'financingmoney',
+                        title: '融资金额',
+                        sort: true
+                    }
+                ]
+            ],
+            even: true,
+            page: true, //是否显示分页
+            limits: [10, 20, 30, 40, 50],
+            limit: 10, //每页默认显示的数量
+            done: function(res, curr, count) {
+                var addtableBtn = '<div class="rightBotBtn">已经选择<span>0</span>个商品 </div>';
+                $(".layui-table-page").append(addtableBtn);
+            },
+            text: {
+                none: "无匹配数据"
+            },
+            loading: true
+        });
+
+        //监听锁定操作
+        table.on('checkbox(tableContainer-userlist)', function(obj) {
+            var checkStatus = table.checkStatus('tableContainer-userlist'); //表格选中状态
+            $(".rightBotBtn span").html(checkStatus.data.length); //当前选中了多少商品
+        });
+
+        $(".editBtn").click(function() {
+            //编辑
+            var checkStatus = table.checkStatus('tableContainer-userlist');
+            if (checkStatus.data.length < 1) {
+                layer.msg("请选择需要编辑的信息");
+            } else if (checkStatus.data.length > 1) {
+                layer.msg("请选择需要编辑的单条信息");
+            } else {
+                var data = checkStatus.data[0];
+                data["instid"] = menuIns.id;
+                window.currData = data; //全局对象存储当前选中行数据
+                $.get('view/base/supplier-add.html', {}, function(str) {
+                    eaitLayer = layer.open({
+                        title: '编辑',
+                        type: 1,
+                        content: str, //注意，如果str是object，那么需要字符拼接。
+                        resize: false,
+                        area: ['800px', 'auto'],
+                    });
+                });
+            }
+        });
+
+
+
+
+        $("#allRefresh").click(function() {
+            // 刷新表格
+            tableIns.reload({
+                page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+            });
+        });
+
+
+        $(".deleteBtn").click(function() {
+            //删除
+            var checkStatus = table.checkStatus('tableContainer-userlist');
+            if (checkStatus.data.length < 1) {
+                layer.msg("请选择需要删除的信息");
+            } else {
+                layer.confirm('是否确认删除此条信息', {
+                    icon: 3,
+                    title: '提示'
+                }, function(index) {
+                    var rowId = [];
+                    $.each(checkStatus.data, function(i, v) {
+                        //获取所选行数ID
+                        rowId.push(v.id);
+                    });
+                    //调删除接口
+                    rowDataApi(delOwner, {
+                        "ids": rowId
+                    }, function(data) {
+                        // 删除所选行成功
+                        layer.close(index);
+                        // 刷新表格
+                        tableIns.reload({
+                            page: {
+                                curr: 1 //重新从第 1 页开始
+                            }
+                        });
+                        layer.msg(data.msg);
+                    });
+                });
+            }
+        });
+
+        //弹出添加货权人
+        $(".creatUser").click(function() {
+            var data = {};
+            data["instid"] = menuIns.id;
+            window.currData = data;
+            $.get('view/base/supplier-add.html', {}, function(str) {
+                eaitLayer = layer.open({
+                    title: '添加加货权人',
+                    type: 1,
+                    content: str,
+                    resize: false,
+                    area: ['800px', 'auto'],
+                });
+            });
+        });
+
+        //添加加货权人表单提交
+        form.on('submit(addSubmit)', function(data) {
+            var userData = window.currData;
+            var title = "";
+            var userUrl = "";
+            if (data.field.id != null && data.field.id != "") {
+                title = '确认提交修改';
+                userUrl = updOwner;
+            } else {
+                title = '确认添加'
+                userUrl = addOwner;
+                data.field.id = null;
+            }
+            layer.confirm(title, {
+                icon: 3,
+                title: '提示'
+            }, function(index) {
+                $.ajax({
+                    cache: true,
+                    type: "get",
+                    url: userUrl,
+                    data: data.field,
+                    async: false,
+                    error: function(request) {
+                        layer.msg('提交失败');
+                        return;
+                    },
+                    success: function(data) {
+                        layer.close(eaitLayer);
+                        layer.msg('提交成功');
+                        // 刷新表格
+                        tableIns.reload({
+                            page: {
+                                curr: 1 //重新从第 1 页开始
+                            }
+                        });
+                    }
+                });
+            })
+            return false;
+        });
+
+        //增删行数据
+        function rowDataApi(url, data, funSuc, funErr) {
+            $.ajax({
+                url: url,
+                type: "get",
+                data: data,
+                traditional: true,
+                success: funSuc,
+                error: funErr
+            })
+        };
+
+        listIns();
+        //用户类型菜单树
+        function listIns() {
+            var data = {
+                "utype": 1
+            }; //1是货权人类型
+            rowDataApi(listInstitution, data, function(res) {
+                var insData = res.data;
+                var val = [];
+                for (var i = 0; i < insData.length; i++) {
+                    if (insData[i].pid == 0) {
+                        val.push(insData[i]);
+                    }
+                }
+                insList = val;
+                var treeData = [];
+                console.log(treeData)
+                var number = 0;
+                for (var i = 0; i < val.length; i++) {
+                    var map = {};
+                    map["name"] = val[i].name;
+                    map["id"] = val[i].id;
+                    map["pid"] = val[i].pid;
+                    map["spread"] = true;
+                    var children = [];
+                    for (var j = 0; j < insData.length; j++) {
+                        if (val[i].id == insData[j].pid) {
+                            var son = {};
+                            son["name"] = insData[j].name;
+                            son["id"] = insData[j].id;
+                            son["pid"] = insData[j].pid;
+                            children.push(son);
+                            number++;
+                            if (number == 1) {
+                                menuIns = son;
+                            }
+                        }
+
+                    }
+                    map["children"] = children;
+                    treeData.push(map);
+                }
+                console.log(treeData);
+                layui.tree({
+                    elem: '#tree-nav',
+                    nodes: treeData,
+                    showCheckbox: true,
+                    click: resTable
+                });
+            }, function(res) {
+                //失败
+            })
+        }
+
+        /* var treeData = [ //节点
+             {
+                 name: '常用文件夹',
+                 id: 1,
+                 spread: true,
+                 children: [{
+                     name: '所有未读',
+                     id: 11
+                 }, {
+                     name: '置顶邮件',
+                     id: 12
+                 }, {
+                     name: '标签邮件',
+                     id: 13
+                 }]
+             }, {
+                 name: '我的邮箱',
+                 id: 2,
+                 spread: true,
+                 children: [{
+                     name: 'QQ邮箱',
+                     id: 21
+                 }, {
+                     name: '阿里云邮',
+                     id: 22
+                 }]
+             }
+         ];
+         // 树形菜单
+         layui.tree({
+             elem: '#tree-nav',
+             nodes: treeData,
+             showCheckbox: true,
+             click: resTable
+         });*/
+
+
+        var insList = []; //用户类型顶级目录
+        var menuIns = {}; //用户类型被点击的数据
+        // 根据菜单刷新表格
+        function resTable(d) {
+            console.log(d)
+            menuIns = d;
+            if (menuIns.pid != 0) {
+                // 刷新表格
+                $("#instid").val(menuIns.id);
+                $("#titleIns").html(menuIns.name);
+                tableIns.reload({
+                    where: {
+                        "instid": menuIns.id
+                    },
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                });
+            }
+        }
+
+        //添加用户类型
+        $("#addins").click(function() {
+            var data = {};
+            data["insList"] = insList;
+            data["utype"] = 1;
+            window.currData = data;
+            $.get('view/user/institution-add.html', {}, function(str) {
+                eaitLayer = layer.open({
+                    title: '添加用户类型',
+                    type: 1,
+                    content: str,
+                    resize: false,
+                    area: ['800px', '45%'],
+                });
+            });
+        });
+        //修改用户类型
+        $("#updins").click(function() {
+            var data = menuIns;
+            data["insList"] = insList;
+            data["utype"] = 1;
+            window.currData = data; //全局对象存储当前选中行数据
+            $.get('view/user/institution-add.html', {}, function(str) {
+                eaitLayer = layer.open({
+                    title: '修用户类型',
+                    type: 1,
+                    content: str, //注意，如果str是object，那么需要字符拼接。
+                    resize: false,
+                    area: ['800px', '45%'],
+                });
+            });
+        });
+        //删除用户类型
+        $("#delins").click(function() {
+
+            if (!menuIns.id) {
+                layer.msg('请选择一条数据');
+                return;
+            }
+
+            var ids = [];
+            ids.push(menuIns.id);
+            var data = {
+                "ids": ids.toString()
+            };
+
+            layer.confirm("是否删除类型", {
+                icon: 3,
+                title: '提示'
+            }, function(index) {
+                $.ajax({
+                    cache: true,
+                    type: "get",
+                    url: delInstitution,
+                    data: data,
+                    async: false,
+                    error: function(request) {
+                        layer.msg('提交失败');
+                        return;
+                    },
+                    success: function(data) {
+                        layer.close(eaitLayer);
+                        layer.msg('提交成功');
+                        listIns();
+                    }
+                });
+            })
+            return false;
+        });
+
+
+
+
+        form.on('submit(addInsSubmit)', function(data) {
+            var title = "";
+            var url = "";
+            //编辑提交
+            if (data.field.id != null && data.field.id != "") {
+                title = '确认提交修改';
+                userUrl = updInstitution;
+            } else {
+                title = '确认添加'
+                userUrl = addInstitution;
+                data.field.id = null;
+            }
+            layer.confirm(title, {
+                icon: 3,
+                title: '提示'
+            }, function(index) {
+                $.ajax({
+                    cache: true,
+                    type: "get",
+                    url: userUrl,
+                    data: data.field,
+                    async: false,
+                    error: function(request) {
+                        layer.msg('提交失败');
+                        return;
+                    },
+                    success: function(data) {
+                        layer.close(eaitLayer);
+                        layer.msg('提交成功');
+                        listIns();
+                    }
+                });
+            })
+            return false;
+        });
+
+
+
+    });
+</script>
