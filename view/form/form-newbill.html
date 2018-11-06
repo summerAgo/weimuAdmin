@@ -11,16 +11,16 @@
                             <button class="layui-btn" lay-submit lay-filter="addGoodsBtn">添加货物信息</button>
                         </div>
                         <div class="table-form-item layui-input-inline">
-                            <input type="text" name="cargoowner" placeholder="货权人" autocomplete="off" class="layui-input">
+                            <input type="text" name="ownerid" placeholder="货权人" autocomplete="off" class="layui-input">
                         </div>
                         <div class="table-form-item layui-input-inline">
-                            <input type="text" name="depotname" placeholder="仓库名称" autocomplete="off" class="layui-input">
+                            <input type="text" name="depotid" placeholder="仓库名称" autocomplete="off" class="layui-input">
                         </div>
                         <div class="table-form-item layui-input-inline">
                             <input type="text" name="origin" placeholder="产地" autocomplete="off" class="layui-input">
                         </div>
                         <div class="table-form-item layui-input-inline">
-                            <input type="text" name="supplier" placeholder="供应商" autocomplete="off" class="layui-input">
+                            <input type="text" name="supplierid" placeholder="供应商" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                 </div>
@@ -282,10 +282,10 @@
         //点击入库
         function subConfun() {
             //先判断头部4个选项是否已填
-            var cargoowner = $("input[name='cargoowner']").val();
-            var depotname = $("input[name='depotname']").val();
+            var cargoowner = $("input[name='ownerid']").val();
+            var depotname = $("input[name='depotid']").val();
             var origin = $("input[name='origin']").val();
-            var supplier = $("input[name='supplier']").val();
+            var supplier = $("input[name='supplierid']").val();
             console.log(cargoowner);
             if(null == cargoowner || cargoowner.length < 1){
                 layer.msg("请填写货权人");
