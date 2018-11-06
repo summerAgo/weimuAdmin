@@ -1,5 +1,5 @@
 var localport = ":8000";//本地端口
-var localhost = "http://192.168.10.216" + localport;//本地
+var localhost = "http://127.0.0.1" + localport;//本地
 var pathUrl = "http://192.168.10.201:80/storage-web/"; //?username=admin&password=123456
 var loginUrl = pathUrl + "sys/login"; //登录
 //基础货物公共信息
@@ -22,11 +22,13 @@ var preEntryexamineStock = pathUrl + "order/warehousing/examineStock";//预入�
 var entryHistory = preEntry + "?ishistory=1";//入库记录
 var getOrdernoDetails =  pathUrl + "order/outtreasury/getOrdernoDetails" //库存中查询货物 （仓库：depotid 货权人：ownerid）
 
-var outTreasury = pathUrl + "order/outtreasury/list";//出库
 var outTreasuryAdd = pathUrl + "order/outtreasury/add";//增加出货申请
 var outHistory = outTreasury + "?ishistory=1";//出库记录
 var outHistoryOrderno = pathUrl + "order/outtreasury/getByOrderno?ish=1";//出库详情 ish:获取单号所有信息
 var outRemove = pathUrl + "order/outtreasury/remove";//出货申请详情商品移除
+var outStock = pathUrl + "order/outtreasury/outStock";//审核通过出库
+var outTreasuryDelete = pathUrl + "order/outtreasury/delete";//出库删除
+var outTreasury = pathUrl + "order/outtreasury/list";//出库列表
 // 仓库管理
 var depotList = pathUrl + "basics/depot/list";//仓库列表
 var depotAdd = pathUrl + "basics/depot/add";//添加仓库
