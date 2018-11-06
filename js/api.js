@@ -80,4 +80,17 @@ var basicsInfocode = pathUrl + "basics/info/isSelectByCode";//判断code是否�
 var listInstitution = pathUrl +"basics/institution/list";//查询分类
 var addInstitution = pathUrl +"basics/institution/add";//添加分类
 var updInstitution = pathUrl +"basics/institution/update";//修改分类
-var delInstitution = pathUrl +"basics/institution/deleteMany";//查询分类 
+var delInstitution = pathUrl +"basics/institution/deleteMany";//查询分类
+
+
+var userAuthority = pathUrl + "sys/user/setAuthority";//设置用户对应角色(userid 角色id roleid[]菜单数组)
+
+var roledown = pathUrl + "sys/role/dropdown";//角色列表所有
+var menudown = pathUrl + "sys/menu/dropdown";//菜单列表所有
+
+//客户
+var listOwner = pathUrl +"user/owner/list";//查询客户
+var addOwner = pathUrl +"user/owner/add";//添加客户
+var updOwner = pathUrl +"user/owner/update";//修改客户
+var delOwner = pathUrl +"user/owner/deleteMany";//删除客户
+var dropOwner = pathUrl +"user/owner/dropdown";//查询客户所有
