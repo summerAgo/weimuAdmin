@@ -28,7 +28,7 @@
                         <a href="javascript:;"  id="creatRole">添加角色</a>
                     </li>
 					 <li class="layui-nav-item">
-                        <a href="javascript:;"  >设置角色权限</a>
+                        <a href="javascript:;" id="roleAuthority" >设置角色权限</a>
                     </li>
                     <!--<li class="layui-nav-item item-more">
                         <a href="javascript:;">数据导入导出</a>
@@ -49,7 +49,7 @@
             </div>
         </div>
         <div class="table-content-main">
-            <table class="layui-hide" id="tableContainer" lay-filter="tableContainer"></table>
+            <table class="layui-hide" id="tableContainerRole" lay-filter="tableContainerRole"></table>
         </div>
     </div>
 </div>
@@ -90,7 +90,7 @@
         });
 
         var tableIns = table.render({
-            elem: '#tableContainer',
+            elem: '#tableContainerRole',
             height: 'full-' + tableTopHeight,
             url: roleList,
             parseData: function(res) { //res 即为原始返回的数据
@@ -146,14 +146,14 @@
         });
 
         //监听锁定操作
-        table.on('checkbox(tableContainer)', function(obj) {
-            var checkStatus = table.checkStatus('tableContainer'); //表格选中状态
+        table.on('checkbox(tableContainerRole)', function(obj) {
+            var checkStatus = table.checkStatus('tableContainerRole'); //表格选中状态
             $(".rightBotBtn span").html(checkStatus.data.length); //当前选中了多少条数据
         });
 
         $(".editBtn").click(function() {
             //编辑
-            var checkStatus = table.checkStatus('tableContainer');
+            var checkStatus = table.checkStatus('tableContainerRole');
             if (checkStatus.data.length < 1) {
                 layer.msg("请选择需要编辑的信息");
             } else if (checkStatus.data.length > 1) {
@@ -175,7 +175,7 @@
 
         $(".deleteBtn").click(function() {
             //删除
-            var checkStatus = table.checkStatus('tableContainer');
+            var checkStatus = table.checkStatus('tableContainerRole');
             if (checkStatus.data.length < 1) {
                 layer.msg("请选择需要删除的信息");
             } else {
@@ -218,6 +218,29 @@
                     area: ['800px', 'auto'],
                 });
             });
+        });
+
+
+         //设置角色权限
+         $("#roleAuthority").click(function() {
+            var checkStatus = table.checkStatus('tableContainerRole');
+            if (checkStatus.data.length < 1) {
+                layer.msg("请选择需要要设置的角色");
+            }else if(checkStatus.data.length > 1){
+                layer.msg("请选择需要1条数据");
+            } else {
+                window.currData = checkStatus.data;
+                $.get('view/role/role-power.html', {}, function(str) {
+                    eaitLayer = layer.open({
+                        title: '设置角色权限',
+                        type: 1,
+                        content: str,
+                        resize: false,
+                        area: ['800px', 'auto'],
+                    });
+                });
+            }
+			
         });
 
         //添加角色表单提交
