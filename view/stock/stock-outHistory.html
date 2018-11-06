@@ -115,6 +115,8 @@
                     {
                         field: 'orderno',
                         title: '单号',
+                        event: 'click',
+                        style: 'cursor: pointer;',
                         sort: true
                     }, {
                         field: 'cargoowner',
@@ -171,15 +173,17 @@
             loading: true
         });
 
-        table.on('row(tableContainer)', function(obj) {
+        table.on('tool(tableContainer)', function(obj) {
             // console.log(obj.tr) //得到当前行元素对象
             // console.log(obj.data) //得到当前行数据
-            $.get(outHistoryOrderno,{orderno:obj.data.orderno},function(data){
-                // console.log(data);
-                data.type = "outHistory";
-                location.hash = "#!stock-billDetails/";
-                sessionStorage.setItem('billDetails', JSON.stringify(data));
-            })
+            if (obj.event === 'click') {
+                $.get(outHistoryOrderno,{orderno:obj.data.orderno},function(data){
+                    // console.log(data);
+                    data.type = "outHistory";
+                    location.hash = "#!stock-billDetails/";
+                    sessionStorage.setItem('billDetails', JSON.stringify(data));
+                })
+            }
         });
     });
 </script>

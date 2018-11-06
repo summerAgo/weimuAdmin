@@ -5,10 +5,10 @@
                 <div class="form-box">
                     <div class="layui-form-item form-left">
                         <div class="table-form-item layui-input-inline">
-                            <input type="text" name="orderno" placeholder="仓库名称" autocomplete="off" class="layui-input">
+                            <input type="text" name="name" placeholder="库位名称" autocomplete="off" class="layui-input">
                         </div>
                         <div class="table-form-item layui-input-inline">
-                            <input type="text" name="cargoowner" placeholder="仓库编号" autocomplete="off" class="layui-input">
+                            <input type="text" name="code" placeholder="库位编号" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-form-item form-right">
@@ -26,11 +26,11 @@
             <div class="table-tools">
                 <ul class="layui-nav" lay-filter="talbe-tools">
                     <li class="layui-nav-item">
-                        <a href="javascript:;" class="addDepotBtn">新增仓库</a>
+                        <a href="javascript:;" class="addPositionBtn">新增库位</a>
                     </li>
-                    <li class="layui-nav-item">
+                    <!-- <li class="layui-nav-item">
                         <a id="toExport" href="javascript:;">导出数据</a>
-                    </li>
+                    </li> -->
                 </ul>
                 <ul class="layui-layout-right">
                     <li><a href="javascript:;" class="changeBtn">修改</a></li>
@@ -39,7 +39,7 @@
             </div>
         </div>
         <div class="table-content-main">
-            <table class="layui-hide" id="tableContainer-depotList" lay-filter="tableContainer-depotList"></table>
+            <table class="layui-hide" id="tableContainer-positionList" lay-filter="tableContainer-positionList"></table>
         </div>
     </div>
 </div>
@@ -54,7 +54,21 @@
         var upload = layui.upload;
         var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 103); //内容区域所需减去的高度
 
-        var addDepotLayer; //编辑-弹层
+        var addPositionLayer; //编辑-弹层
+        
+        //仓库ID
+        var depid = null;
+        //先获取到仓库信息,如果为空则异常
+        var depotPosition = JSON.parse(sessionStorage.getItem('depotPosition'));
+        
+        if(null != depotPosition){
+            
+            depid = depotPosition.id;
+            console.log("depid:"+depid);
+        }else{
+            //提示报错。异常
+        }
+
 
         form.render(); //重置表单渲染
         formSelects.render(); //下拉选项
@@ -81,9 +95,10 @@
         });
 
         var tableIns = table.render({
-            elem: '#tableContainer-depotList',
+            elem: '#tableContainer-positionList',
             height: 'full-' + tableTopHeight,
-            url: depotList,
+            url: positionList,
+            where:{'depotid':depid},
             parseData: function(res) { //res 即为原始返回的数据
                 if (res.status !== 0) res.status = 0;
                 return {
@@ -104,30 +119,37 @@
                     },
                     {
                         field: 'name',
-                        title: '仓库名称',
-                        event: 'click',
-                        style: 'cursor: pointer;',
+                        title: '库位名称',
                         sort: true
                     }, {
                         field: 'code',
-                        title: '编号',
+                        title: '库位编号',
                         sort: true
                     }, {
-                        field: 'ownername',
-                        title: '货权人',
+                        field: 'acreage',
+                        title: '面积',
                         sort: true
                     }, {
                         field: 'address',
                         title: '地址',
                         sort: true
                     }, {
-                        field: 'type',
-                        title: '仓库类型',
+                        field: 'person',
+                        title: '负责人',
                         sort: true
                     }, {
                         field: 'remarks',
                         title: '备注',
                         sort: true
+                    },{
+                        field: 'status',
+                        title: '状态',
+                        templet:function(d){
+                            if(d.status == 0){
+                                return '正常';
+                            }
+                            return '已删除';
+                        }
                     }
                 ]
             ],
@@ -144,12 +166,12 @@
             loading: true
         });
 
-        $(".addDepotBtn").click(function() {
+        $(".addPositionBtn").click(function() {
             // 打开添加弹窗
-            sessionStorage.removeItem('depotCheck'); //点击新建仓库删除本地存储所选仓库信息
-            $.get('view/form/form-addDepot.html', {}, function(str) {
-                addDepotLayer = layer.open({
-                    title: '添加仓库',
+            sessionStorage.removeItem('positionCheck'); //点击新建仓库删除本地存储所选仓库信息
+            $.get('view/form/form-addPosition.html', {}, function(str) {
+                addPositionLayer = layer.open({
+                    title: '添加库位',
                     type: 1,
                     content: str, //注意，如果str是object，那么需要字符拼接。
                     resize: false,
@@ -158,29 +180,32 @@
             });
         });
 
-        form.on('submit(addDepotForm)', function(data) {
-            var dataType = JSON.parse(sessionStorage.getItem('depotCheck')); //获取本地所选仓库信息，判断是否为修改
+        form.on('submit(addPositionForm)', function(data) {
+            var dataType = JSON.parse(sessionStorage.getItem('positionCheck')); //获取本地所选仓库信息，判断是否为修改
             var url;
-            var msg = "新建仓库成功";
-            if (dataType.type) {
+            var msg = "新建库位成功";
+            if (dataType) {
                 //如果是修改
-                url = depotUpdate;
+                url = positionUpdate;
                 data.field.id = dataType.id
-                msg = "修改仓库成功";
+                msg = "修改仓位成功";
             } else {
-                url = depotAdd;
+                url = positionAdd;
             }
+            data.field['depotid'] = depid;
+
+            console.log(data)
 
             $.get(url, data.field, function(json) {
                 if (json.status == 0) {
-                    sessionStorage.removeItem('depotCheck'); //操作成功删除本地存储
+                    sessionStorage.removeItem('positionCheck'); //操作成功删除本地存储
                     tableIns.reload({
                         page: {
                             curr: 1 //重新从第 1 页开始
                         }
                     });
                     layer.msg(msg);
-                    layer.close(addDepotLayer);
+                    layer.close(addPositionLayer);
                 } else {
                     layer.msg("提交异常");
                 }
@@ -190,15 +215,15 @@
 
         $(".changeBtn").click(function() {
             //修改
-            var checkStatus = table.checkStatus('tableContainer-depotList');
+            var checkStatus = table.checkStatus('tableContainer-positionList');
             if (checkStatus.data.length < 1) {
                 layer.msg("请选择需要编辑的信息");
             } else if (checkStatus.data.length > 1) {
                 layer.msg("请选择需要编辑的单条信息");
             } else {
-                sessionStorage.setItem('depotCheck', JSON.stringify(checkStatus.data[0])); //将所选仓库信息存储到本地作为回显
-                $.get('view/form/form-addDepot.html', {}, function(str) {
-                    eaitLayer = layer.open({
+                sessionStorage.setItem('positionCheck', JSON.stringify(checkStatus.data[0])); //将所选仓库信息存储到本地作为回显
+                $.get('view/form/form-addPosition.html', {}, function(str) {
+                    addPositionLayer = layer.open({
                         title: '修改',
                         type: 1,
                         content: str, //注意，如果str是object，那么需要字符拼接。
@@ -211,7 +236,7 @@
 
         $(".deleteBtn").click(function() {
             // 删除
-            var checkStatus = table.checkStatus('tableContainer-depotList');
+            var checkStatus = table.checkStatus('tableContainer-positionList');
             if (checkStatus.data.length < 1) {
                 layer.msg("请选择需要删除的信息");
             } else {
@@ -225,7 +250,7 @@
                         rowId.push(v.id);
                     });
                     //调删除接口
-                    rowDataApi(depotDel, {
+                    rowDataApi(positionDel, {
                         "ids": rowId
                     }, function(data) {
                         // 删除所选行成功
@@ -240,22 +265,6 @@
                     });
                 });
             }
-        });
-
-        table.on('tool(tableContainer-depotList)', function(obj) {
-            //监听单元格点击事件
-            var data = obj.data;
-            if (obj.event === 'click') {
-                $.get(outHistoryOrderno, {
-                    orderno: obj.data.depotid
-                }, function(data) {
-                    // console.log(data);
-                    data.type = "depotPosition";
-                    location.hash = "#!depot-position/";
-                    sessionStorage.setItem('depotPosition', JSON.stringify(data)); //将当前仓库的库位信息存储在本地
-                })
-            }
-
         });
 
         //增删行数据
