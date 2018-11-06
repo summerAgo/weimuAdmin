@@ -6,7 +6,7 @@
                     <!-- 预入库订单号：507230226812502016 -->
                 </blockquote>
                 <div class="form-box">
-                    <div class="layui-form-item form-left">
+                    <div class="layui-form-item form-left form-newbill">
                         <div class="table-form-item layui-input-inline table-form-item-btn">
                             <button class="layui-btn" lay-submit lay-filter="addGoodsBtn">添加货物信息</button>
                         </div>
@@ -60,7 +60,7 @@
     }
 </style>
 <script>
-    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate','upload'], function() {
+    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'upload'], function() {
         var element = layui.element;
         var form = layui.form;
         var $ = layui.jquery;
@@ -97,15 +97,15 @@
         form.on('submit(addGoodsForm)', function(data) {
             tableData.push(data.field);
 
-                $(".rightBotBtn span").html(tableData.length); //当前选中了多少商品
+            $(".rightBotBtn span").html(tableData.length); //当前选中了多少商品
 
-                tableIns.reload({
-                    data: tableData,
-                    page: {
-                        curr: 1 //重新从第 1 页开始
-                    }
-                });
-                layer.close(addLayer); //关闭
+            tableIns.reload({
+                data: tableData,
+                page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+            });
+            layer.close(addLayer); //关闭
             return false;
         });
 
@@ -146,7 +146,7 @@
                         field: 'actualnum',
                         title: '实际数量（m³）',
                         sort: true,
-                        edit:"txt"
+                        edit: "txt"
                     }, {
                         field: 'containernum',
                         title: '货柜号',
@@ -205,32 +205,34 @@
             console.log(obj.value); //得到修改后的值
             console.log(obj.field); //当前编辑的字段名
             var field = obj.field;
-            if(field == 'num' ){
+            if (field == 'num') {
 
             }
             console.log(obj.data); //所在行的所有相关数据  
         });
 
         //页面初始化
-        $(function(){
+        $(function() {
 
             //根据订单号下拉订单数据
             var orderno = sessionStorage.getItem('newbill_orderno');
-            console.log("orderno:"+orderno);
-            if('null' != orderno){
-                $(".layui-elem-quote").html("预入库订单号："+orderno);
-                    $.get(preEntrygetByOrderno, {orderno:orderno}, function(data) {
-                        
-                        if(data.stocklist != null){
-                            tableData = data.stocklist;
-                            tableIns.reload({
-                                data: tableData,
-                                page: {
-                                    curr: 1 //重新从第 1 页开始
-                                }
-                            });
-                        }
-                    })
+            console.log("orderno:" + orderno);
+            if ('null' != orderno) {
+                $(".layui-elem-quote").html("预入库订单号：" + orderno);
+                $.get(preEntrygetByOrderno, {
+                    orderno: orderno
+                }, function(data) {
+
+                    if (data.stocklist != null) {
+                        tableData = data.stocklist;
+                        tableIns.reload({
+                            data: tableData,
+                            page: {
+                                curr: 1 //重新从第 1 页开始
+                            }
+                        });
+                    }
+                })
             }
         })
 
@@ -282,24 +284,25 @@
         //点击入库
         function subConfun() {
             //先判断头部4个选项是否已填
-            var cargoowner = $("input[name='cargoowner']").val();
-            var depotname = $("input[name='depotname']").val();
-            var origin = $("input[name='origin']").val();
-            var supplier = $("input[name='supplier']").val();
-            console.log(cargoowner);
-            if(null == cargoowner || cargoowner.length < 1){
+            var formName = $(".form-newbill");
+            var cargoowner = formName.find("input[name='cargoowner']").val();
+            var depotname = formName.find("input[name='depotname']").val();
+            var origin = formName.find("input[name='origin']").val();
+            var supplier = formName.find("input[name='supplier']").val();
+
+            if (null == cargoowner || cargoowner.length < 1) {
                 layer.msg("请填写货权人");
                 return;
             }
-            if(null == depotname || depotname.length < 1){
+            if (null == depotname || depotname.length < 1) {
                 layer.msg("请填写仓库名称");
                 return;
             }
-            if(null == origin || origin.length < 1){
+            if (null == origin || origin.length < 1) {
                 layer.msg("请填写产地");
                 return;
             }
-            if(null == supplier || supplier.length < 1){
+            if (null == supplier || supplier.length < 1) {
                 layer.msg("请填写供应商");
                 return;
             }
@@ -362,10 +365,10 @@
                     accept: 'file', //普通文件
                     exts: 'xls|xlsx|xlsm|xlt|xltx|xltm', //只允许上传后缀
                     done: function(res) {
-                        if(res.status == 0){
+                        if (res.status == 0) {
                             layer.msg("上传成功")
                             layer.close(importLayer);
-                        }else{
+                        } else {
                             layer.msg(res.msg)
                         }
                     }
@@ -376,6 +379,6 @@
         $("#toExport").on('click', function(e) {
             window.location.href = ilbstockExportUrl
         });
-        
+
     });
 </script>
