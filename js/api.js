@@ -76,3 +76,8 @@ var basicsInfoList = pathUrl + "basics/info/list"; //查询
 var basicsInfogetCodeList = pathUrl + "basics/info/getCodeList"; //根据code查询接口
 var basicsInfocode = pathUrl + "basics/info/isSelectByCode";//判断code是否存在
 
+//用户分类
+var listInstitution = pathUrl +"basics/institution/list";//查询分类
+var addInstitution = pathUrl +"basics/institution/add";//添加分类
+var updInstitution = pathUrl +"basics/institution/update";//修改分类
+var delInstitution = pathUrl +"basics/institution/deleteMany";//查询分类
