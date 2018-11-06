@@ -74,3 +74,5 @@ var basicsInfoDelete = pathUrl + "basics/info/delete";
 var basicsInfoUpdate = pathUrl + "basics/info/update"; 
 var basicsInfoList = pathUrl + "basics/info/list"; //查询
 var basicsInfogetCodeList = pathUrl + "basics/info/getCodeList"; //根据code查询接口
+var basicsInfocode = pathUrl + "basics/info/isSelectByCode";//判断code是否存在
+

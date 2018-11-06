@@ -5,7 +5,7 @@
         <label class="layui-form-label">类型标识</label>
         <div class="layui-input-block">
             <input type="hidden" name="id" value="{{d.id || ''}}">
-            <input type="text" name="code" placeholder="类型标识" value="{{d.code || ''}}" autocomplete="off" class="layui-input" lay-verify="required">
+            <input type="text" name="code" placeholder="类型标识" value="{{d.code || ''}}"  autocomplete="off" class="layui-input" onchange="">
         </div>
     </div>
     <div class="layui-form-item">
@@ -53,8 +53,35 @@
             view = document.getElementById('depotView');
         laytpl(getTpl).render(dataType, function(html) {
             view.innerHTML = html;
+        }); 
+
+        form.verify({
+            iscode: function(value, item){ //value：表单的值、item：表单的DOM对象
+                console.log(value);
+                if(value.length > 2){
+                    $.ajax({
+                        url:basicsInfocode,
+                        async:false,
+                        data:{'code':value},
+                        success:function(data){
+                            if(data.status != 0){
+                                return 'code已存在，请重新输入';
+                            }
+                        }
+                    });
+                }
+                console.log(2)
+                // if(!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)){
+                //     return '用户名不能有特殊字符';
+                // }
+                // if(/(^\_)|(\__)|(\_+$)/.test(value)){
+                //     return '用户名首尾不能出现下划线\'_\'';
+                // }
+                // if(/^\d+\d+\d$/.test(value)){
+                //     return '用户名不能全为数字';
+                // }
+            } 
         });
-        
         
 
     });

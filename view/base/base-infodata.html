@@ -199,9 +199,11 @@
             //var fromdataarr = $(".infodata_form").serializeArray();
             var id = data.field.id;
             var url = basicsInfoUpdate;
+            //debugger; 
             if(undefined == id || '' == id){
                 url = basicsInfoAdd
             }
+            
             console.log(undefined == id);
             console.log(null == id);
             console.log('' == id);
@@ -215,6 +217,7 @@
                     }
                 });
             })
+            
             return false;
         });
 
