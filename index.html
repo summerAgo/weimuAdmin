@@ -81,13 +81,14 @@
                             <dd><a href="#!role-list">角色管理</a></dd>
                             <dd><a href="#!menu-list">菜单管理</a></dd>
                             <dd><a href="#!button-list">角色管理</a></dd>
+                            <dd><a href=" ">按钮管理</a></dd>
                         </dl>
                     </li>
                     <li class="layui-nav-item">
                         <a href="javascript:;"><i class="iconfont icon-jichushuju"></i> 基础数据</a>
                         <dl class="layui-nav-child">
                             <dd><a href="#!base-infodata">基础信息设置管理</a></dd>
-                            <dd><a href="#!base-info">货物信息管理</a></dd>
+                            <dd><a href="#!owner-list">客户管理</a></dd>
                             <dd><a href="#!depot-list">仓库信息管理</a></dd>
                         </dl>
                     </li>
@@ -201,6 +202,9 @@
                 }],
                 ['base-infodata', function() {
                     container.load('/view/base/base-infodata.html');
+                }],
+                ['owner-list', function() {
+                    container.load('/view/base/owner-list.html');
                 }]
             ])
 
