@@ -94,3 +94,10 @@ var addOwner = pathUrl +"user/owner/add";//添加客户
 var updOwner = pathUrl +"user/owner/update";//修改客户
 var delOwner = pathUrl +"user/owner/deleteMany";//删除客户
 var dropOwner = pathUrl +"user/owner/dropdown";//查询客户所有
+
+//供应商
+var listSupplier = pathUrl +"basics/supplier/list";//查询客户
+var addSupplier = pathUrl +"basics/supplier/add";//添加客户
+var updSupplier = pathUrl +"basics/supplier/update";//修改客户
+var delSupplier = pathUrl +"basics/supplier/deleteMany";//删除客户
+var dropSupplier = pathUrl +"basics/supplier/dropdown";//查询客户所有
