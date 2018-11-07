@@ -93,7 +93,7 @@
         var tableInss = table.render({
             elem: '#tableContainer',
             height: 'full-' + tableTopHeight,
-            url: outHistoryOrderno,
+            url: outHistory,
             parseData: function(res) { //res 即为原始返回的数据
                 if (res.status !== 0) res.status = 0;
                 return {
@@ -116,11 +116,11 @@
                         style: 'cursor: pointer;',
                         sort: true
                     }, {
-                        field: 'ownerid',
+                        field: 'ownername',
                         title: '货权人',
                         sort: true
                     }, {
-                        field: 'depotid',
+                        field: 'depname',
                         title: '仓库名称',
                         sort: true
                     }, {
@@ -132,12 +132,12 @@
                         title: '产地',
                         sort: true
                     }, {
-                        field: 'supplierid',
+                        field: 'suppliername',
                         title: '供应商',
                         sort: true
                     }, {
                         field: 'volume',
-                        title: '码单数量（m³）',
+                        title: '数量（m³）',
                         sort: true
                     }, {
                         field: 'outdate',

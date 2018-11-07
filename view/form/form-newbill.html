@@ -212,9 +212,13 @@
 
         //页面初始化
         //根据订单号下拉订单数据
-        var orderno = sessionStorage.getItem('newbill_orderno');
-        console.log("orderno:" + orderno);
-        if ('null' != orderno) {
+        var orderno = null;
+        var ordernojson = sessionStorage.getItem('newbill_orderno');
+        console.log("orderno:" + ordernojson);
+        if (null != ordernojson && 'null' != ordernojson && ordernojson.length > 0) {
+            orderno = JSON.parse(ordernojson).orderno;
+            //console.log("orderno:" + orderno.orderno);
+
             $(".layui-elem-quote").html("预入库订单号：" + orderno);
             $.get(preEntrygetByOrderno, {
                 orderno: orderno

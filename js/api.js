@@ -23,7 +23,7 @@ var entryHistory = preEntry + "?ishistory=1";//入库记录
 var getOrdernoDetails =  pathUrl + "order/outtreasury/getOrdernoDetails" //库存中查询货物 （仓库：depotid 货权人：ownerid）
 
 var outTreasuryAdd = pathUrl + "order/outtreasury/add";//增加出货申请
-var outHistory = outTreasury + "?ishistory=1";//出库记录
+var outHistory = pathUrl + "order/outtreasury/list?ishistory=1";//出库记录
 var outHistoryOrderno = pathUrl + "order/outtreasury/getByOrderno?ish=1";//出库详情 ish:获取单号所有信息
 var outRemove = pathUrl + "order/outtreasury/remove";//出货申请详情商品移除
 var outStock = pathUrl + "order/outtreasury/outStock";//审核通过出库
