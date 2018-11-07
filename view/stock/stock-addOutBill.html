@@ -84,8 +84,6 @@
         var goodsListLayer;//货物列表弹窗
 		var tableData = [];
 		
-		 
-		
         var tableIns = table.render({
             elem: '#tableContainer-addOutBill',
             height: 'full-' + tableTopHeight,
@@ -120,11 +118,6 @@
                 [ //标题栏
                     {
                         type: 'checkbox',
-                    },
-                    {
-                        field: 'orderno',
-                        title: '单号',
-                        sort: true
                     }, {
                         field: 'ownerid',
                         title: '货权人',
@@ -249,9 +242,9 @@
 		//获取初始数据
 		function preList(){
 			var outBill = sessionStorage.getItem('addOutBill');
-			console.log(outBill);
+			// console.log(outBill);
 			var array = JSON.parse(outBill);
-			console.log(array);
+			// console.log(array);
 			var data={};
 			if(outBill == null){
 				formSelects.undisabled('cargoownerOne');//启用
@@ -315,7 +308,7 @@
 							}
 							ownerDropList.push(map);
 						}
-						console.log(ownerDropList);
+						// console.log(ownerDropList);
 						layui.formSelects.data('cargoownerOne', 'local', {
 							arr: ownerDropList
 						});
@@ -365,7 +358,7 @@
 							}
 							depotDropList.push(map);
 						}
-						console.log(depotDropList);
+						// console.log(depotDropList);
 						layui.formSelects.data('depotnameOne', 'local', {
 							arr: depotDropList
 						});
