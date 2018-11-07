@@ -178,7 +178,7 @@
             limits: [15, 20, 30, 40, 50],
             limit: 15, //每页默认显示的数量
             done: function(res, curr, count) {
-                var addtableBtn = '<div class="rightBotBtn">已新增<span>0</span>个货物 <a href="javascript:;" class="layui-btn layui-btn-primary layui-btn-sm subCancelBtn">取消</a><a href="javascript:;" class="layui-btn layui-btn-sm subConfirmBtn">确认</a></div>';
+                var addtableBtn = '<div class="rightBotBtn">已新增<span>' + count + '</span>个货物 <a href="javascript:;" class="layui-btn layui-btn-primary layui-btn-sm subCancelBtn">取消</a><a href="javascript:;" class="layui-btn layui-btn-sm subConfirmBtn">确认</a></div>';
 
                 $("#tableContainer-from").siblings(".layui-form ").find(".layui-table-page").append(addtableBtn);
 
@@ -202,7 +202,6 @@
             console.log(obj.data); //所在行的所有相关数据  
         });
 
-        //
         var orderno = sessionStorage.getItem('newbill_orderno');
         if(orderno){
             $(".layui-elem-quote").html("预入库订单号：" + orderno.orderno);
@@ -210,7 +209,7 @@
             $(".form-newbill input[name='depotid']").val(orderno.depotid).attr('disabled',true);
             $(".form-newbill input[name='origin']").val(orderno.origin).attr('disabled',true);
             $(".form-newbill input[name='supplierid']").val(orderno.supplierid).attr('disabled',true);
-
+            
             //如果订单号存在，则下拉该订单货物列表
             $.get(preEntrygetByOrderno, {
                 orderno: orderno.orderno
@@ -231,7 +230,6 @@
         $(".deleteBtn").click(function() {
             var checkStatus = table.checkStatus('tableContainer-from');
             console.log(checkStatus.data)
-            return false;
             if (checkStatus.data.length < 1) {
                 layer.msg("请选择需要删除的信息");
             } else {
@@ -337,13 +335,10 @@
                     layer.msg("提交成功");
                     layer.close(addLayer);
                     //刷新当前列表
-                    
                 },
                 error: function() {}
             })
-
         }
-
 
         //变更下载模板链接
         $("#dowmTemp").attr("href", ilbstockImportTemp);
