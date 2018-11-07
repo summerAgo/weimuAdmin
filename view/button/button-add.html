@@ -9,7 +9,8 @@
             <label class="layui-form-label">按钮名称</label>
             <div class="layui-input-block">
                 <input type="text" id="bname" name="bname" lay-verify="required" placeholder="必填项,请输入用户名" class="layui-input"  value="{{# if(d.bname){}} {{d.bname}} {{# }}}">
-				<input type="hidden" id="id" name="id"   value="{{# if(d.id){}} {{d.id}} {{# }}}">
+                <input type="hidden" id="id" name="id"   value="{{# if(d.id){}} {{d.id}} {{# }}}">
+                <input type="hidden" id="menuid" name="menuid"   value="{{# if(d.menuid){}} {{d.menuid}} {{# }}}">
             </div>
 
         </div>

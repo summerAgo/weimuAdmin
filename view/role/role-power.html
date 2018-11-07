@@ -1,3 +1,4 @@
+<form class="layui-form">
 <div class="role-power">
     <div class="layui-fluid">
         <div class="layui-row">
@@ -6,7 +7,7 @@
                     <legend>权限设置</legend>
                 </fieldset>
                 <!-- 此扩展能递归渲染一个权限树，点击深层次节点，父级节点中没有被选中的节点会被自动选中，单独点击父节点，子节点会全部 选中/去选中 -->
-                <form class="layui-form">
+                <!-- <form class="layui-form">-->
                     <div class="layui-form-item">
                         <label class="layui-form-label">选择权限</label>
                         <div class="layui-input-block">
@@ -19,109 +20,208 @@
                         <button class="layui-btn layui-btn-primary" type="reset">重置</button>
                     </div>
                 </div> -->
-                </form>
+                <!-- </form>-->
             </div>
             <div class="layui-col-md5 layui-col-md-offset1">
                 <fieldset class="layui-elem-field layui-field-title">
                     <legend>基本信息 - 用户列表</legend>
-                    <div class="layui-field-box">
-                        <form class="layui-form">
-                            <div class="layui-form-item">
-                                <label class="layui-form-label">复选框</label>
-                                <div class="layui-input-block">
-                                    <input type="checkbox" name="zzz" lay-skin="switch" lay-text="开启|关闭">
-                                </div>
-                            </div>
-                            <div class="layui-form-item">
-                                <label class="layui-form-label">复选框</label>
-                                <div class="layui-input-block">
-                                    <input type="checkbox" name="zzz" lay-skin="switch" lay-text="开启|关闭">
-                                </div>
-                            </div>
-                            <div class="layui-form-item">
-                                <label class="layui-form-label">复选框</label>
-                                <div class="layui-input-block">
-                                    <input type="checkbox" name="zzz" lay-skin="switch" lay-text="开启|关闭">
-                                </div>
-                            </div>
-                            <div class="layui-form-item">
-                                <label class="layui-form-label">复选框</label>
-                                <div class="layui-input-block">
-                                    <input type="checkbox" name="zzz" lay-skin="switch" lay-text="开启|关闭">
-                                </div>
-                            </div>
-                            <div class="layui-form-item">
-                                <label class="layui-form-label">复选框</label>
-                                <div class="layui-input-block">
-                                    <input type="checkbox" name="zzz" lay-skin="switch" lay-text="开启|关闭">
-                                </div>
-                            </div>
-                            <div class="layui-form-item">
-                                <label class="layui-form-label">复选框</label>
-                                <div class="layui-input-block">
-                                    <input type="checkbox" name="zzz" lay-skin="switch" lay-text="开启|关闭">
-                                </div>
-                            </div>
-                            <div class="layui-form-item">
-                                <div class="layui-input-block">
-                                    <button class="layui-btn" lay-submit="" type="submit" lay-filter="roleSubmit">保存提交</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+                    <div id="formEditView"></div>
                 </fieldset>
             </div>
         </div>
     </div>
 </div>
+<script id="formUserRole" type="text/html">
+    <div class="layui-field-box">
+            <div class="layui-form-item">
+                <label class="layui-form-label">复选框</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" name="zzz"  checked  lay-skin="switch" lay-text="开启|关闭">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">复选框</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" name="zzz" lay-skin="switch" lay-text="开启|关闭">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">复选框</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" name="zzz" lay-skin="switch" lay-text="开启|关闭">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">复选框</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" name="zzz" lay-skin="switch" lay-text="开启|关闭">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">复选框</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" name="zzz" lay-skin="switch" lay-text="开启|关闭">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">复选框</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" name="zzz" lay-skin="switch" lay-text="开启|关闭">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit="" type="submit" lay-filter="roleSubmit">保存提交</button>
+                </div>
+            </div>
+    </div>
+</script>
 <script type="text/javascript">
-    layui.use(['jquery', 'authtree', 'form', 'layer'], function () {
+    layui.use(['jquery', 'authtree', 'form', 'layer', 'element',  'laytpl', 'laydate'] , function () {
         var $ = layui.jquery;
         var authtree = layui.authtree;
         var form = layui.form;
+        var laytpl = layui.laytpl;
         var layer = layui.layer;
-        // 初始化
+        var data=window.currData;
+        var getTpl = formUserRole.innerHTML,
+		view = document.getElementById('formEditView');
+        laytpl(getTpl).render(data, function(html) {
+            	view.innerHTML = html;
+        });
+
+        // 初始化(查询所有的菜单)
         $.ajax({
-            url: 'tree.json',
+            //url: 'tree.json',
+            url:menuAll,
             dataType: 'json',
             success: function (data) {
-                // 渲染时传入渲染目标ID，树形结构数据（具体结构看样例，checked表示默认选中），以及input表单的名字
-                authtree.render('#LAY-auth-tree-index', data.data.trees, {
-                    inputname: 'authids[]',
-                    layfilter: 'lay-check-auth',
-                    // ,autoclose: false
-                    // ,autochecked: false
-                    // ,openchecked: true
-                    // ,openall: true
-                    autowidth: true
-                });
+                 var roleAut= window.currData;
+                 var roleData={"roleid":roleAut.id};
+                 //查询角色的权限
+                 allMuneAuthority(roleData,function(res){
+                     var allMenu = data.data;
+                     var ant = [] ;
+                     if(res.status == 0){
+                        ant = res.data;
+                     }
+                     var trees =[];
+                     for(var i=0;i<allMenu.length;i++){//组装数据树
+                         if(allMenu[i].pid == 0){
+                            var map = {};
+                            map["name"]=allMenu[i].name
+                            map["value"]=allMenu[i].id;
+                            for(var j=0;j<ant.length;j++){
+                                if(allMenu[i].id == ant[j].id){
+                                    map["checked"]=true;
+                                    break;
+                                }
+                            }
+                            var list =[];
+                            for(var k=0;k<allMenu.length;k++){
+                                if(allMenu[i].id == allMenu[k].pid){
+                                    var mapTwo = {};
+                                    mapTwo["name"]=allMenu[k].name
+                                    mapTwo["value"]=allMenu[k].id;
+                                    for(var h=0;h<ant.length;h++){
+                                        if(allMenu[i].id == ant[h].id){
+                                            mapTwo["checked"]=true;
+                                            break;
+                                        }
+                                    }
+                                    list.push(mapTwo);
+                                }
+                            }
+                            if(list.length > 0){
+                                map["list"]=list;
+                            }
+                            trees.push(map);
+                         }
+                     }
+                     console.log(trees);
+                      // 渲染时传入渲染目标ID，树形结构数据（具体结构看样例，checked表示默认选中），以及input表单的名字
+                    authtree.render('#LAY-auth-tree-index', trees, {
+                        inputname: 'authids[]',
+                        layfilter: 'lay-check-auth',
+                        // ,autoclose: false
+                        // ,autochecked: false
+                        // ,openchecked: true
+                        // ,openall: true
+                        autowidth: true
+                    });
 
-                // 使用 authtree.on() 不会有冒泡延迟
-                authtree.on('change(lay-check-auth)', function (data) {
-                    console.log('监听 authtree 触发事件数据', data);
-                    // 获取所有节点
-                    var all = authtree.getAll('#LAY-auth-tree-index');
-                    console.log('all', all);
-                    // 获取所有已选中节点
-                    var checked = authtree.getChecked('#LAY-auth-tree-index');
-                    console.log('checked', checked);
-                    // 获取所有未选中节点
-                    var notchecked = authtree.getNotChecked('#LAY-auth-tree-index');
-                    console.log('notchecked', notchecked);
-                    // 获取选中的叶子节点
-                    var leaf = authtree.getLeaf('#LAY-auth-tree-index');
-                    console.log('leaf', leaf);
-                    // 获取最新选中
-                    var lastChecked = authtree.getLastChecked('#LAY-auth-tree-index');
-                    console.log('lastChecked', lastChecked);
-                    // 获取最新取消
-                    var lastNotChecked = authtree.getLastNotChecked('#LAY-auth-tree-index');
-                    console.log('lastNotChecked', lastNotChecked);
-                });
-                authtree.on('deptChange(lay-check-auth)', function (data) {
-                    console.log('监听到显示层数改变', data);
-                });
+
+                 });
+
+                
             }
         });
+
+        
+        //查询角色权限
+        function allMuneAuthority(data,success){
+            $.ajax({
+            //url: 'tree.json',
+            url:rolegetAuthority,
+            data:data,
+            dataType: 'json',
+            success: success
+            });
+        } 
+
+
+
+        // 使用 authtree.on() 不会有冒泡延迟
+        authtree.on('change(lay-check-auth)', function (data) {
+            console.log('监听 authtree 触发事件数据', data);
+            // 获取所有节点
+            var all = authtree.getAll('#LAY-auth-tree-index');
+            console.log('all', all);
+            // 获取所有已选中节点
+            var checked = authtree.getChecked('#LAY-auth-tree-index');
+            console.log('checked', checked);
+            // 获取所有未选中节点
+            var notchecked = authtree.getNotChecked('#LAY-auth-tree-index');
+            console.log('notchecked', notchecked);
+            // 获取选中的叶子节点
+            var leaf = authtree.getLeaf('#LAY-auth-tree-index');
+            console.log('leaf', leaf);
+            // 获取最新选中
+            var lastChecked = authtree.getLastChecked('#LAY-auth-tree-index');
+            console.log('lastChecked', lastChecked);
+            // 获取最新取消
+            var lastNotChecked = authtree.getLastNotChecked('#LAY-auth-tree-index');
+            console.log('lastNotChecked', lastNotChecked);
+        });
+        authtree.on('deptChange(lay-check-auth)', function (data) {
+            console.log('监听到显示层数改变', data);
+        });
+
+
+        //查询按钮下面的按钮(menuid菜单id)
+        function allbutton(menuid){
+            $.ajax({
+            //url: 'tree.json',
+            url:menuAll,
+            dataType: 'json',
+            success: function (data) {
+                 var roleData={"menuid":menuid};
+                 //查询按钮权限
+                 allButtonAuthority(roleData,function(res){
+
+                 });
+            }});
+        }
+
+        //查询按钮权限
+        function allButtonAuthority(data,success){
+            $.ajax({
+            url:menugetAuthority,
+            data:data,
+            dataType: 'json',
+            success: success
+            });
+        } 
+        
     });
 </script>

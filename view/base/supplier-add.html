@@ -6,88 +6,47 @@
 
     <form>
         <div class="layui-form-item">
+            <label class="layui-form-label">类型</label>
+            <div class="layui-input-block">
+                <select name="instid"  lay-verify="required" placeholder="必填项,请输入用户类型" xm-select="instidSelect" xm-select-radio="" ></select>
+            </div>
+        </div>
+        <div class="layui-form-item">
             <label class="layui-form-label">名称</label>
             <div class="layui-input-block">
                 <input type="text" id="name" name="name" lay-verify="required" placeholder="必填项,请输入货权人名" class="layui-input"  value="{{# if(d.name){}} {{d.name}} {{# }}}">
                 <input type="hidden" id="id" name="id"   value="{{# if(d.id){}} {{d.id}} {{# }}}">
-                <input type="hidden" name="instid" value="{{d.instid}} " autocomplete="off" class="layui-input">
             </div>
 
         </div>
 
         <div class="layui-form-item">
-            <label class="layui-form-label">助记码</label>
+            <label class="layui-form-label">员工ID</label>
             <div class="layui-input-block">
-                <input type="text" id="mnemoniccode" name="mnemoniccode" placeholder="选填" value="{{# if(d.mnemoniccode){}} {{d.mnemoniccode}} {{# }}}" class="layui-input">
+                <input type="text" id="personid" name="personid" placeholder="选填" value="{{# if(d.personid){}} {{d.personid}} {{# }}}" class="layui-input">
             </div>
         </div>
 
         <div class="layui-form-item">
-            <label class="layui-form-label">功能设置类型ID</label>
+            <label class="layui-form-label">货权人ID</label>
             <div class="layui-input-block">
-                <input type="text" id="instid" name="instid" placeholder="选填" value="{{# if(d.instid){}} {{d.instid}} {{# }}}" class="layui-input">
+                <input type="text" id="ownerid" name="ownerid" placeholder="选填" value="{{# if(d.ownerid){}} {{d.ownerid}} {{# }}}" class="layui-input">
             </div>
         </div>
 
-
         <div class="layui-form-item">
-            <label class="layui-form-label">联系人</label>
-            <div class="layui-input-block">
-                <input type="text" id="contacts" name="contacts" placeholder="选填" value="{{# if(d.contacts){}} {{d.contacts}} {{# }}}" class="layui-input">
-            </div>
-        </div>
-
-
-        <div class="layui-form-item">
-            <label class="layui-form-label">手机号</label>
+            <label class="layui-form-label">电话</label>
             <div class="layui-input-block">
                 <input type="text" id="phone" name="phone" placeholder="选填" value="{{# if(d.phone){}} {{d.phone}} {{# }}}" class="layui-input">
             </div>
         </div>
 
-
         <div class="layui-form-item">
-            <label class="layui-form-label">业务员</label>
-            <div class="layui-input-block">
-                <input type="text" id="person" name="person" placeholder="选填" value="{{# if(d.person){}} {{d.person}} {{# }}}" class="layui-input">
+                <label class="layui-form-label">备注</label>
+                <div class="layui-input-block">
+                    <input type="text" id="remarks" name="remarks" placeholder="选填" value="{{# if(d.remarks){}} {{d.remarks}} {{# }}}" class="layui-input">
+                </div>
             </div>
-        </div>
-
-        <div class="layui-form-item">
-            <label class="layui-form-label">风控人员</label>
-            <div class="layui-input-block">
-                <input type="text" id="fkperson" name="fkperson" placeholder="选填" value="{{# if(d.fkperson){}} {{d.fkperson}} {{# }}}" class="layui-input">
-            </div>
-        </div>
-
-
-        <div class="layui-form-item">
-            <label class="layui-form-label">库存金额</label>
-            <div class="layui-input-block">
-                <input type="text" id="stockmoney" name="stockmoney" placeholder="选填" value="{{# if(d.stockmoney){}} {{d.stockmoney}} {{# }}}" class="layui-input">
-            </div>
-        </div>
-
-        <div class="layui-form-item">
-            <label class="layui-form-label">融资金额</label>
-            <div class="layui-input-block">
-                <input type="text" id="financingmoney" name="financingmoney" placeholder="选填" value="{{# if(d.financingmoney){}} {{d.financingmoney}} {{# }}}" class="layui-input">
-            </div>
-        </div>
-
-        <div class="layui-form-item">
-            <label class="layui-form-label">风控备注</label>
-            <div class="layui-input-block">
-                <input type="text" id="fkremarks" name="fkremarks" placeholder="选填" value="{{# if(d.fkremarks){}} {{d.fkremarks}} {{# }}}" class="layui-input">
-            </div>
-        </div>
-
-        <div class="layui-form-item">
-            <label class="layui-form-label">备注</label>
-            <div class="layui-input-block">
-                <input type="text" id="remarks" name="remarks" placeholder="选填" value="{{# if(d.remarks){}} {{d.remarks}} {{# }}}" class="layui-input">
-            </div>
-        </div>
 		
         
         <div class="layui-form-item">
@@ -141,6 +100,47 @@
                 console.log(val);
             }
         });
+
+        addinstidSel(data.inaAllList,data.instid);
+        function  addinstidSel(inaAllList,instid){
+            var arr=[];
+            var number="";
+            for(var i=0;i<inaAllList.length;i++){
+                if(inaAllList[i].pid == 0){
+                    var map ={};
+                    map["name"] = inaAllList[i].name;
+                    map["value"] = inaAllList[i].id;
+                    var children =[];
+                    
+                    for(var j=0;j<inaAllList.length;j++){
+                        if(inaAllList[i].id == inaAllList[j].pid){
+                            var maptwo ={};
+                            maptwo["name"] = inaAllList[j].name;
+                            maptwo["value"] = inaAllList[j].id;
+                            children.push(maptwo);
+                            if(inaAllList[j].id == instid){
+                                number =inaAllList[j].pid +"/";
+                            }
+                        }
+                    }
+                    map["children"] = children;
+                    arr.push(map);
+                }
+
+            }
+            console.log(arr);
+            layui.formSelects.data('instidSelect', 'local', {
+                arr: arr,
+                linkage: true
+            });
+            if(number.length == 0){
+                number =instid+"/";
+            }else{
+                number =number +instid;
+            }
+            console.log(number);
+            layui.formSelects.value('instidSelect', [number]);
+        }
 
 
     });

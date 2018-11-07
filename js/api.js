@@ -1,5 +1,5 @@
 var localport = ":8000";//本地端口
-var localhost = "http://192.168.10.216" + localport;//本地
+var localhost = "http://192.168.10.101" + localport;//本地
 var pathUrl = "http://192.168.10.201:80/storage-web/"; //?username=admin&password=123456
 var loginUrl = pathUrl + "sys/login"; //登录
 //基础货物公共信息
@@ -58,7 +58,7 @@ var menuAdd = pathUrl + "sys/menu/add";//添加菜单
 var menuUpdate = pathUrl + "sys/menu/update";//修改菜单
 var menuDel = pathUrl + "sys/menu/deleteMany";//删除菜单
 var menuAuthority = pathUrl + "sys/menu/setAuthority";//设置菜单对应按钮(menuid 菜单id        butId[]按钮数组)
-var menuAll = pathUrl + "sys/menu/droplist";//查询所有
+
 //按钮
 var buttonList = pathUrl + "sys/button/list";//按钮列表
 var buttonAdd = pathUrl + "sys/button/add";//添加按钮
@@ -101,3 +101,12 @@ var addSupplier = pathUrl +"basics/supplier/add";//添加客户
 var updSupplier = pathUrl +"basics/supplier/update";//修改客户
 var delSupplier = pathUrl +"basics/supplier/deleteMany";//删除客户
 var dropSupplier = pathUrl +"basics/supplier/dropdown";//查询客户所有
+
+
+
+var menuAll = pathUrl + "sys/menu/dropdown";//查询所有
+
+var buttonAllList = pathUrl + "sys/button/dropdown";//查询按钮所有的
+
+var rolegetAuthority = pathUrl + "sys/role/getAuthority";//查询角色对应菜单(roleid 角色id)]
+var menugetAuthority = pathUrl + "sys/menu/getAuthority";//查询菜单对应按钮(menuid 菜单id)

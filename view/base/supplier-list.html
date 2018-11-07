@@ -390,7 +390,7 @@
         $("#addins").click(function() {
             var data = {};
             data["insList"] = insList;
-            data["utype"] = 1;
+            data["utype"] = 2;
             window.currData = data;
             $.get('view/user/institution-add.html', {}, function(str) {
                 eaitLayer = layer.open({
@@ -406,7 +406,7 @@
         $("#updins").click(function() {
             var data = menuIns;
             data["insList"] = insList;
-            data["utype"] = 1;
+            data["utype"] = 2;
             window.currData = data; //全局对象存储当前选中行数据
             $.get('view/user/institution-add.html', {}, function(str) {
                 eaitLayer = layer.open({

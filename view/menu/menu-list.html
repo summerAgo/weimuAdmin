@@ -46,7 +46,7 @@
             </div>
         </div>
         <div class="table-content-main">
-            <table class="layui-hide" id="tableContainer" lay-filter="tableContainer"></table>
+            <table class="layui-hide" id="tableContainerMenu" lay-filter="tableContainerMenu"></table>
         </div>
     </div>
 </div>
@@ -88,7 +88,7 @@
 	
 		
         var tableIns = table.render({
-            elem: '#tableContainer',
+            elem: '#tableContainerMenu',
             height: 'full-' + tableTopHeight,
             url: menuList,
             parseData: function(res) { //res 即为原始返回的数据
@@ -112,10 +112,12 @@
                     {
                         field: 'id',
                         title: 'ID',
+                        event: 'click',
                         sort: true
                     }, {
                         field: 'name',
                         title: '菜单名称',
+                        event: 'click',
                         sort: true
                     }, {
                         field: 'sort',
@@ -148,14 +150,14 @@
         });
 
         //监听锁定操作
-        table.on('checkbox(tableContainer)', function(obj) {
-            var checkStatus = table.checkStatus('tableContainer'); //表格选中状态
+        table.on('checkbox(tableContainerMenu)', function(obj) {
+            var checkStatus = table.checkStatus('tableContainerMenu'); //表格选中状态
             $(".rightBotBtn span").html(checkStatus.data.length); //当前选中了多少条数据
         });
 
         $(".editBtn").click(function() {
             //编辑
-            var checkStatus = table.checkStatus('tableContainer');
+            var checkStatus = table.checkStatus('tableContainerMenu');
             if (checkStatus.data.length < 1) {
                 layer.msg("请选择需要编辑的信息");
             } else if (checkStatus.data.length > 1) {
@@ -193,7 +195,7 @@
 
         $(".deleteBtn").click(function() {
             //删除
-            var checkStatus = table.checkStatus('tableContainer');
+            var checkStatus = table.checkStatus('tableContainerMenu');
             if (checkStatus.data.length < 1) {
                 layer.msg("请选择需要删除的信息");
             } else {
@@ -226,7 +228,7 @@
 
         //弹出添加角色
         $("#creatRole").click(function() {
-			var checkStatus = table.checkStatus('tableContainer');
+			var checkStatus = table.checkStatus('tableContainerMenu');
 			var currData={}
 			console.log(currData.menulist);
 			$.ajax({
@@ -249,7 +251,7 @@
                     type: 1,
                     content: str,
                     resize: false,
-                    area: ['800px', 'auto'],
+                    area: ['800px', '60%'],
                 });
             });
         });
@@ -312,6 +314,16 @@
         //点击导出
         $("#toExport").on('click', function(e) {
             window.location.href = ilbstockExportUrl
+        });
+
+
+        table.on('tool(tableContainerMenu)', function(obj) {
+            //监听单元格点击事件
+            var data = obj.data;
+            if (obj.event === 'click') {
+                location.hash = "#!button-list/";
+                sessionStorage.setItem('buttonData', JSON.stringify(data));
+            }
         });
 
     });
