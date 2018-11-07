@@ -344,7 +344,6 @@
 
         function tankuang() {
             $.get('view/form/form-newbill.html', {}, function(str) {
-
                 eaitLayer = layer.open({
                     title: '查看',
                     type: 1,
@@ -359,8 +358,21 @@
                         });
                     }
                 });
-
             })
         }
+
+        function dayin() {
+            var winhtml = $(".table-content").html(); //需打印的数据源(包括html)
+            var Width = window.innerWidth;
+            var Height = window.innerHeight;
+            //弹出准备打印窗口
+            var wind = window.open('', '打印', 'height=' + Height + ', width=' + Width + ', top=100, left=100, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no');
+            //将需打印的内容放在准备打印窗口中
+            wind.document.body.innerHTML = winhtml;
+            //开始打印
+            wind.print();
+            return false;
+        }
+        
     });
 </script>
