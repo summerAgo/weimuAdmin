@@ -204,15 +204,15 @@
 
         //页面初始化
         //根据订单号下拉订单数据
-        var orderno = JSON.parse(sessionStorage.getItem('newbill_orderno'));
-        console.log("orderno:" + orderno);
-        if (orderno) {
-            $(".layui-elem-quote").html("预入库订单号：" + orderno.orderno);
-            $(".form-newbill input[name='ownerid']").val(orderno.ownerid).attr('disabled',true);
-            $(".form-newbill input[name='depotid']").val(orderno.depotid).attr('disabled',true);
-            $(".form-newbill input[name='origin']").val(orderno.origin).attr('disabled',true);
-            $(".form-newbill input[name='supplierid']").val(orderno.supplierid).attr('disabled',true);
 
+        var orderno = null;
+        var ordernojson = sessionStorage.getItem('newbill_orderno');
+        console.log("orderno:" + ordernojson);
+        if (null != ordernojson && 'null' != ordernojson && ordernojson.length > 0) {
+            orderno = JSON.parse(ordernojson).orderno;
+            //console.log("orderno:" + orderno.orderno);
+
+            $(".layui-elem-quote").html("预入库订单号：" + orderno);
             $.get(preEntrygetByOrderno, {
                 orderno: orderno.orderno
             }, function(data) {

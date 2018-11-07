@@ -191,6 +191,7 @@
             } else {
                 var data = checkStatus.data[0];
                 data["instid"] = menuIns.id;
+                data["inaAllList"]=inaAllList;
                 window.currData = data; //全局对象存储当前选中行数据
                 $.get('view/user/user-add.html', {}, function(str) {
                     eaitLayer = layer.open({
@@ -385,6 +386,7 @@
         $(".creatUser").click(function() {
             var data = {};
             data["instid"] = menuIns.id;
+            data["inaAllList"]=inaAllList;
             window.currData = data;
             $.get('view/user/user-add.html', {}, function(str) {
                 eaitLayer = layer.open({
@@ -410,6 +412,12 @@
                 userUrl = userAdd;
                 data.field.id = null;
             }
+            var instid =data.field.instid.split("/");
+            var ints = instid[instid.length-1];
+            if(ints == ""){
+                ints = instid[0];
+            }
+            data.field.instid=ints;
             layer.confirm(title, {
                 icon: 3,
                 title: '提示'
@@ -469,9 +477,10 @@
             }; //0是用户类型
             rowDataApi(listInstitution, data, function(res) {
                 var insData = res.data;
-                var val = [];
-                for (var i = 0; i < insData.length; i++) {
-                    if (insData[i].pid == 0) {
+                inaAllList = insData;
+                var val=[];
+                for(var i=0;i<insData.length;i++){
+                    if(insData[i].pid == 0){
                         val.push(insData[i]);
                     }
                 }
@@ -516,59 +525,61 @@
             })
         }
 
-        /* var treeData = [ //节点
-             {
-                 name: '常用文件夹',
-                 id: 1,
-                 spread: true,
-                 children: [{
-                     name: '所有未读',
-                     id: 11
-                 }, {
-                     name: '置顶邮件',
-                     id: 12
-                 }, {
-                     name: '标签邮件',
-                     id: 13
-                 }]
-             }, {
-                 name: '我的邮箱',
-                 id: 2,
-                 spread: true,
-                 children: [{
-                     name: 'QQ邮箱',
-                     id: 21
-                 }, {
-                     name: '阿里云邮',
-                     id: 22
-                 }]
-             }
-         ];
-         // 树形菜单
-         layui.tree({
-             elem: '#tree-nav',
-             nodes: treeData,
-             showCheckbox: true,
-             click: resTable
-         });*/
+       /* var treeData = [ //节点
+            {
+                name: '常用文件夹',
+                id: 1,
+                spread: true,
+                children: [{
+                    name: '所有未读',
+                    id: 11
+                }, {
+                    name: '置顶邮件',
+                    id: 12
+                }, {
+                    name: '标签邮件',
+                    id: 13
+                }]
+            }, {
+                name: '我的邮箱',
+                id: 2,
+                spread: true,
+                children: [{
+                    name: 'QQ邮箱',
+                    id: 21
+                }, {
+                    name: '阿里云邮',
+                    id: 22
+                }]
+            }
+        ];
+        // 树形菜单
+        layui.tree({
+            elem: '#tree-nav',
+            nodes: treeData,
+            showCheckbox: true,
+            click: resTable
+        });*/
+
+
+        var insList=[];//用户类型顶级目录
+        var inaAllList=[];//用户类型所有的数据
+        var menuIns={};//用户类型被点击的数据
 
         // 根据菜单刷新表格
         function resTable(d) {
             // console.log(d)
             menuIns = d;
-            if (menuIns.pid != 0) {
-                // 刷新表格
-                $("#instid").val(menuIns.id);
-                $("#titleIns").html(menuIns.name);
-                tableIns.reload({
-                    where: {
-                        "instid": menuIns.id
-                    },
-                    page: {
-                        curr: 1 //重新从第 1 页开始
-                    }
-                });
-            }
+            // 刷新表格
+            $("#instid").val(menuIns.id);
+            $("#titleIns").html(menuIns.name);
+            tableIns.reload({
+                where:{"instid":menuIns.id},
+                page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+            });
+
         }
 
         //添加用户类型

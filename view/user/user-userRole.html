@@ -9,7 +9,7 @@
             <label class="layui-form-label">角色</label>
             <div class="layui-input-block">
                 <input type="hidden" id="userid" name="userid"   value="{{# if(d.id){}} {{d.id}} {{# }}}">
-                <select name="roleid" lay-verify="required">
+                <select name="roleid" lay-verify="required" >
                     {{#  layui.each(d.rolelist, function(index, item){ }}
 						 <option {{# if(d.pid && d.pid == item.id ){}} selected {{# }}} value="{{item.id}}">{{ item.rolename }}</option>
 					{{#  }); }}
