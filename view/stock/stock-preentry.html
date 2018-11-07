@@ -256,8 +256,6 @@
             return false;
         });
 
-
-
         form.on('submit(editForm)', function(data) {
             //编辑提交
             layer.confirm('确认提交修改', {
@@ -353,6 +351,13 @@
                     content: str, //注意，如果str是object，那么需要字符拼接。
                     resize: false,
                     area: ['1100px', 'auto'],
+                    end: function() {
+                        tableIns.reload({
+                            page: {
+                                curr: 1 //重新从第 1 页开始
+                            }
+                        });
+                    }
                 });
 
             })

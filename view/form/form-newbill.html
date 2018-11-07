@@ -114,9 +114,9 @@
             data: tableData,
             cols: [
                 [ //标题栏
-                    {
-                        type: 'checkbox'
-                    },
+                    // {
+                    //     type: 'checkbox'
+                    // },
                     {
                         field: 'code',
                         title: '包号',
@@ -183,6 +183,9 @@
                 $("#tableContainer-from").siblings(".layui-form ").find(".layui-table-page").append(addtableBtn);
 
                 $(".subConfirmBtn").click(subConfun);
+                $(".subCancelBtn").click(function(){
+                    layer.closeAll();
+                })
                 console.log(res)
                 // console.log(curr)
             },
@@ -315,20 +318,27 @@
             }
 
             var arr = JSON.stringify(dataarr);
-            console.log(typeof arr);
             //第二步，提交到后台
+            var num;
+            if(!orderno){
+                num = "";
+            }else{
+                num = orderno.orderno;
+            }
+            console.log(num)
             $.ajax({
                 url: preEntryAdd,
                 type: "POST",
                 //dataType: "json",
                 //contentType: "application/json",
+                async:false,
                 data: {
                     lbarr: arr.toString(),
                     ownerid: cargoowner,
                     depotid: depotname,
                     origin: origin,
                     supplierid: supplier,
-                    orderstr:orderno.orderno
+                    orderstr:num
                 },
                 traditional: true,
                 success: function(data) {
