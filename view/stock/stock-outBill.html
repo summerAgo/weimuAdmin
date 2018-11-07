@@ -316,8 +316,6 @@
             })
         };
 
-
-
         table.on('tool(tableContainers)', function(obj) {
             //监听单元格点击事件
             var data = obj.data;
@@ -326,7 +324,6 @@
                 sessionStorage.setItem('addOutBill', JSON.stringify(data));
             }
         });
-
 
         $(".creatBillBtn").click(function() {
             location.hash = "#!stock-addOutBill/";
