@@ -290,7 +290,6 @@
 
         //重置用户密码表单提交
         form.on('submit(resSubmit)', function(data) {
-            alert(">>>>>>>>>>>>>>>>>>>>>>>>>>>");
             var userData = window.currData;
             layer.confirm("重置密码", {
                 icon: 3,
@@ -561,7 +560,6 @@
             click: resTable
         });*/
 
-
         var insList=[];//用户类型顶级目录
         var inaAllList=[];//用户类型所有的数据
         var menuIns={};//用户类型被点击的数据
@@ -579,7 +577,6 @@
                     curr: 1 //重新从第 1 页开始
                 }
             });
-
         }
 
         //添加用户类型
@@ -652,9 +649,6 @@
             return false;
         });
 
-
-
-
         form.on('submit(addInsSubmit)', function(data) {
             var title = "";
             var url = "";
@@ -690,5 +684,6 @@
             })
             return false;
         });
+
     });
 </script>
