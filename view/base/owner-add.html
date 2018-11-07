@@ -6,11 +6,17 @@
 
     <form>
         <div class="layui-form-item">
+            <label class="layui-form-label">类型</label>
+            <div class="layui-input-block">
+                <select name="instid"  lay-verify="required" placeholder="必填项,请输入用户类型" xm-select="instidSelect" xm-select-radio="" ></select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
             <label class="layui-form-label">名称</label>
             <div class="layui-input-block">
                 <input type="text" id="name" name="name" lay-verify="required" placeholder="必填项,请输入货权人名" class="layui-input"  value="{{# if(d.name){}} {{d.name}} {{# }}}">
                 <input type="hidden" id="id" name="id"   value="{{# if(d.id){}} {{d.id}} {{# }}}">
-                <input type="hidden" name="instid" value="{{d.instid}} " autocomplete="off" class="layui-input">
             </div>
 
         </div>
@@ -19,13 +25,6 @@
             <label class="layui-form-label">助记码</label>
             <div class="layui-input-block">
                 <input type="text" id="mnemoniccode" name="mnemoniccode" placeholder="选填" value="{{# if(d.mnemoniccode){}} {{d.mnemoniccode}} {{# }}}" class="layui-input">
-            </div>
-        </div>
-
-        <div class="layui-form-item">
-            <label class="layui-form-label">功能设置类型ID</label>
-            <div class="layui-input-block">
-                <input type="text" id="instid" name="instid" placeholder="选填" value="{{# if(d.instid){}} {{d.instid}} {{# }}}" class="layui-input">
             </div>
         </div>
 
@@ -141,6 +140,48 @@
                 console.log(val);
             }
         });
+
+
+        addinstidSel(data.inaAllList,data.instid);
+        function  addinstidSel(inaAllList,instid){
+            var arr=[];
+            var number="";
+            for(var i=0;i<inaAllList.length;i++){
+                if(inaAllList[i].pid == 0){
+                    var map ={};
+                    map["name"] = inaAllList[i].name;
+                    map["value"] = inaAllList[i].id;
+                    var children =[];
+                    
+                    for(var j=0;j<inaAllList.length;j++){
+                        if(inaAllList[i].id == inaAllList[j].pid){
+                            var maptwo ={};
+                            maptwo["name"] = inaAllList[j].name;
+                            maptwo["value"] = inaAllList[j].id;
+                            children.push(maptwo);
+                            if(inaAllList[j].id == instid){
+                                number =inaAllList[j].pid +"/";
+                            }
+                        }
+                    }
+                    map["children"] = children;
+                    arr.push(map);
+                }
+
+            }
+            console.log(arr);
+            layui.formSelects.data('instidSelect', 'local', {
+                arr: arr,
+                linkage: true
+            });
+            if(number.length == 0){
+                number =instid+"/";
+            }else{
+                number =number +instid;
+            }
+            console.log(number);
+            layui.formSelects.value('instidSelect', [number]);
+        }
 
 
     });

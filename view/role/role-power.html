@@ -26,41 +26,47 @@
                     <legend>基本信息 - 用户列表</legend>
                     <div class="layui-field-box">
                         <form class="layui-form">
-                                <div class="layui-form-item">
-                                        <label class="layui-form-label">复选框</label>
-                                        <div class="layui-input-block">
-                                            <input type="checkbox" name="zzz" lay-skin="switch" lay-text="开启|关闭">
-                                        </div>
-                                    </div>
-                                    <div class="layui-form-item">
-                                        <label class="layui-form-label">复选框</label>
-                                        <div class="layui-input-block">
-                                            <input type="checkbox" name="zzz" lay-skin="switch" lay-text="开启|关闭">
-                                        </div>
-                                    </div>
-                                    <div class="layui-form-item">
-                                        <label class="layui-form-label">复选框</label>
-                                        <div class="layui-input-block">
-                                            <input type="checkbox" name="zzz" lay-skin="switch" lay-text="开启|关闭">
-                                        </div>
-                                    </div><div class="layui-form-item">
-                                            <label class="layui-form-label">复选框</label>
-                                            <div class="layui-input-block">
-                                                <input type="checkbox" name="zzz" lay-skin="switch" lay-text="开启|关闭">
-                                            </div>
-                                        </div>
-                                        <div class="layui-form-item">
-                                            <label class="layui-form-label">复选框</label>
-                                            <div class="layui-input-block">
-                                                <input type="checkbox" name="zzz" lay-skin="switch" lay-text="开启|关闭">
-                                            </div>
-                                        </div>
-                                        <div class="layui-form-item">
-                                            <label class="layui-form-label">复选框</label>
-                                            <div class="layui-input-block">
-                                                <input type="checkbox" name="zzz" lay-skin="switch" lay-text="开启|关闭">
-                                            </div>
-                                        </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">复选框</label>
+                                <div class="layui-input-block">
+                                    <input type="checkbox" name="zzz" lay-skin="switch" lay-text="开启|关闭">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">复选框</label>
+                                <div class="layui-input-block">
+                                    <input type="checkbox" name="zzz" lay-skin="switch" lay-text="开启|关闭">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">复选框</label>
+                                <div class="layui-input-block">
+                                    <input type="checkbox" name="zzz" lay-skin="switch" lay-text="开启|关闭">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">复选框</label>
+                                <div class="layui-input-block">
+                                    <input type="checkbox" name="zzz" lay-skin="switch" lay-text="开启|关闭">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">复选框</label>
+                                <div class="layui-input-block">
+                                    <input type="checkbox" name="zzz" lay-skin="switch" lay-text="开启|关闭">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label">复选框</label>
+                                <div class="layui-input-block">
+                                    <input type="checkbox" name="zzz" lay-skin="switch" lay-text="开启|关闭">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <div class="layui-input-block">
+                                    <button class="layui-btn" lay-submit="" type="submit" lay-filter="roleSubmit">保存提交</button>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </fieldset>
@@ -69,7 +75,7 @@
     </div>
 </div>
 <script type="text/javascript">
-    layui.use(['jquery', 'authtree', 'form', 'layer'], function() {
+    layui.use(['jquery', 'authtree', 'form', 'layer'], function () {
         var $ = layui.jquery;
         var authtree = layui.authtree;
         var form = layui.form;
@@ -78,7 +84,7 @@
         $.ajax({
             url: 'tree.json',
             dataType: 'json',
-            success: function(data) {
+            success: function (data) {
                 // 渲染时传入渲染目标ID，树形结构数据（具体结构看样例，checked表示默认选中），以及input表单的名字
                 authtree.render('#LAY-auth-tree-index', data.data.trees, {
                     inputname: 'authids[]',
@@ -91,7 +97,7 @@
                 });
 
                 // 使用 authtree.on() 不会有冒泡延迟
-                authtree.on('change(lay-check-auth)', function(data) {
+                authtree.on('change(lay-check-auth)', function (data) {
                     console.log('监听 authtree 触发事件数据', data);
                     // 获取所有节点
                     var all = authtree.getAll('#LAY-auth-tree-index');
@@ -112,7 +118,7 @@
                     var lastNotChecked = authtree.getLastNotChecked('#LAY-auth-tree-index');
                     console.log('lastNotChecked', lastNotChecked);
                 });
-                authtree.on('deptChange(lay-check-auth)', function(data) {
+                authtree.on('deptChange(lay-check-auth)', function (data) {
                     console.log('监听到显示层数改变', data);
                 });
             }
