@@ -1,4 +1,5 @@
 <form class="layui-form">
+        
 <div class="role-power">
     <div class="layui-fluid">
         <div class="layui-row">
@@ -7,20 +8,12 @@
                     <legend>权限设置</legend>
                 </fieldset>
                 <!-- 此扩展能递归渲染一个权限树，点击深层次节点，父级节点中没有被选中的节点会被自动选中，单独点击父节点，子节点会全部 选中/去选中 -->
-                <!-- <form class="layui-form">-->
                     <div class="layui-form-item">
                         <label class="layui-form-label">选择权限</label>
                         <div class="layui-input-block">
-                            <div id="LAY-auth-tree-index"></div>
+                            <div class=" ele1" lay-filter="treeData"></div>
                         </div>
                     </div>
-                    <!-- <div class="layui-form-item">
-                    <div class="layui-input-block">
-                        <button class="layui-btn" type="submit" lay-submit lay-filter="LAY-auth-tree-submit">提交</button>
-                        <button class="layui-btn layui-btn-primary" type="reset">重置</button>
-                    </div>
-                </div> -->
-                <!-- </form>-->
             </div>
             <div class="layui-col-md5 layui-col-md-offset1">
                 <fieldset class="layui-elem-field layui-field-title">
@@ -77,9 +70,10 @@
     </div>
 </script>
 <script type="text/javascript">
-    layui.use(['jquery', 'authtree', 'form', 'layer', 'element',  'laytpl', 'laydate'] , function () {
+    layui.use(['jquery', 'authtree', 'form', 'layer', 'element',  'laytpl', 'laydate',"eleTree"] , function () {
         var $ = layui.jquery;
         var authtree = layui.authtree;
+        var eleTree = layui.eleTree;
         var form = layui.form;
         var laytpl = layui.laytpl;
         var layer = layui.layer;
@@ -89,7 +83,7 @@
         laytpl(getTpl).render(dataall, function(html) {
             	view.innerHTML = html;
         });
-
+        form.render(); //重置表单渲染
         // 初始化(查询所有的菜单)
         $.ajax({
             //url: 'tree.json',
@@ -106,10 +100,11 @@
                         ant = res.data;
                      }
                      var trees =[];
-                     for(var i=0;i<allMenu.length;i++){//组装数据树
+
+                    for(var i=0;i<allMenu.length;i++){//组装数据树
                          if(allMenu[i].pid == 0){
                             var map = {};
-                            map["name"]=allMenu[i].name
+                            map["label"]=allMenu[i].name
                             map["value"]=allMenu[i].id;
                             for(var j=0;j<ant.length;j++){
                                 if(allMenu[i].id == ant[j].id){
@@ -121,7 +116,7 @@
                             for(var k=0;k<allMenu.length;k++){
                                 if(allMenu[i].id == allMenu[k].pid){
                                     var mapTwo = {};
-                                    mapTwo["name"]=allMenu[k].name
+                                    mapTwo["label"]=allMenu[k].name
                                     mapTwo["value"]=allMenu[k].id;
                                     for(var h=0;h<ant.length;h++){
                                         if(allMenu[i].id == ant[h].id){
@@ -133,22 +128,20 @@
                                 }
                             }
                             if(list.length > 0){
-                                map["list"]=list;
+                                map["children"]=list;
                             }
                             trees.push(map);
                          }
                      }
-                     console.log(trees);
-                      // 渲染时传入渲染目标ID，树形结构数据（具体结构看样例，checked表示默认选中），以及input表单的名字
-                    authtree.render('#LAY-auth-tree-index', trees, {
-                        inputname: 'authids[]',
-                        layfilter: 'lay-check-auth',
-                        // ,autoclose: false
-                        // ,autochecked: false
-                        // ,openchecked: true
-                        // ,openall: true
-                        autowidth: true
+                     eleTree.render({
+                        elem: '.ele1',
+                        data: trees,
+                        showCheckbox: true,
+                        drag: false,
+                        accordion: true
                     });
+
+
                     allButtonData(function (res){//查询所有的按钮
                         allbutData = res.data;
                     });
@@ -160,6 +153,29 @@
                 
             }
         });
+
+        eleTree.on("add(treeData)",function(data) {
+            console.log(0);
+            console.log(data);
+            // 若后台修改，则重新获取后台数据，然后重载
+            // eleTree.reload(".ele1", {where: {data: JSON.stringify(data.data)}})
+        })
+        eleTree.on("edit(treeData)",function(data) {
+            console.log(1);
+            console.log(data);
+        })
+        eleTree.on("remove(treeData)",function(data) {
+            console.log(2);
+            console.log(data);
+        })
+        eleTree.on("toggleSlide(treeData)",function(data) {
+            console.log(3);
+            console.log(data);
+        })
+        eleTree.on("checkbox(treeData)",function(data) {
+            console.log(4);
+            console.log(data);
+        })
 
         
         //查询角色权限
