@@ -22,12 +22,12 @@
                     <form class="layui-form" action="">
                         <div class="form-box">
                             <div class="layui-form-item form-left">
-                                    <div class="table-form-item layui-input-inline">
-                                            <p id ="titleIns">全部</p>
-                                        </div>
+                                <div class="table-form-item layui-input-inline">
+                                    <p id="titleIns">全部</p>
+                                </div>
                                 <div class="table-form-item layui-input-inline">
                                     <input type="text" name="username" placeholder="用户名" autocomplete="off" class="layui-input">
-                                    <input type="hidden" name="instid" id="instid" value=""  autocomplete="off" class="layui-input">
+                                    <input type="hidden" name="instid" id="instid" value="" autocomplete="off" class="layui-input">
                                 </div>
 
                             </div>
@@ -147,7 +147,7 @@
                         title: '用户名',
                         sort: true
                     }, {
-                        field: 'password',
+                        field: 'phone',
                         title: '联系电话',
                         sort: true
                     }, {
@@ -189,8 +189,9 @@
             } else if (checkStatus.data.length > 1) {
                 layer.msg("请选择需要编辑的单条信息");
             } else {
-                var data=checkStatus.data[0];
+                var data = checkStatus.data[0];
                 data["instid"] = menuIns.id;
+                data["inaAllList"]=inaAllList;
                 window.currData = data; //全局对象存储当前选中行数据
                 $.get('view/user/user-add.html', {}, function(str) {
                     eaitLayer = layer.open({
@@ -285,11 +286,10 @@
 
 
 
-        
+
 
         //重置用户密码表单提交
         form.on('submit(resSubmit)', function(data) {
-            alert(">>>>>>>>>>>>>>>>>>>>>>>>>>>");
             var userData = window.currData;
             layer.confirm("重置密码", {
                 icon: 3,
@@ -383,8 +383,9 @@
 
         //弹出添加用户
         $(".creatUser").click(function() {
-            var  data ={};
+            var data = {};
             data["instid"] = menuIns.id;
+            data["inaAllList"]=inaAllList;
             window.currData = data;
             $.get('view/user/user-add.html', {}, function(str) {
                 eaitLayer = layer.open({
@@ -410,6 +411,12 @@
                 userUrl = userAdd;
                 data.field.id = null;
             }
+            var instid =data.field.instid.split("/");
+            var ints = instid[instid.length-1];
+            if(ints == ""){
+                ints = instid[0];
+            }
+            data.field.instid=ints;
             layer.confirm(title, {
                 icon: 3,
                 title: '提示'
@@ -458,14 +465,18 @@
             window.location.href = ilbstockExportUrl
         });
 
+        var insList = []; //用户类型顶级目录
+        var menuIns = {}; //用户类型被点击的数据
 
-        
         listIns();
         //用户类型菜单树
-        function listIns(){
-            var data={"utype":0};//0是用户类型
-            rowDataApi(listInstitution, data, function(res){
+        function listIns() {
+            var data = {
+                "utype": 0
+            }; //0是用户类型
+            rowDataApi(listInstitution, data, function(res) {
                 var insData = res.data;
+                inaAllList = insData;
                 var val=[];
                 for(var i=0;i<insData.length;i++){
                     if(insData[i].pid == 0){
@@ -476,39 +487,39 @@
                 var treeData = [];
                 console.log(treeData)
                 var number = 0;
-                for(var i=0;i<val.length;i++){
+                for (var i = 0; i < val.length; i++) {
                     var map = {};
-                    map["name"]= val[i].name;
-                    map["id"]= val[i].id;
-                    map["pid"]= val[i].pid;
-                    map["spread"]= true;
-                    var children =[];
-                    for(var j=0;j<insData.length;j++){
-                        if(val[i].id == insData[j].pid){
+                    map["name"] = val[i].name;
+                    map["id"] = val[i].id;
+                    map["pid"] = val[i].pid;
+                    map["spread"] = true;
+                    var children = [];
+                    for (var j = 0; j < insData.length; j++) {
+                        if (val[i].id == insData[j].pid) {
                             var son = {};
-                            son["name"]=insData[j].name;
-                            son["id"]=insData[j].id;
-                            son["pid"]=insData[j].pid;
+                            son["name"] = insData[j].name;
+                            son["id"] = insData[j].id;
+                            son["pid"] = insData[j].pid;
                             children.push(son);
                             number++;
-                            if(number ==1){
+                            if (number == 1) {
                                 menuIns = son;
                             }
                         }
-                        
+
                     }
-                    map["children"]= children;
+                    map["children"] = children;
                     treeData.push(map);
                 }
                 console.log(treeData);
-                $('#tree-nav').html('');
+                console.log(layui.tree);
                 layui.tree({
                     elem: '#tree-nav',
                     nodes: treeData,
                     showCheckbox: true,
                     click: resTable
                 });
-            }, function (res){
+            }, function(res) {
                 //失败
             })
         }
@@ -549,31 +560,30 @@
             click: resTable
         });*/
 
-
         var insList=[];//用户类型顶级目录
+        var inaAllList=[];//用户类型所有的数据
         var menuIns={};//用户类型被点击的数据
+
         // 根据菜单刷新表格
         function resTable(d) {
-            console.log(d)
+            // console.log(d)
             menuIns = d;
-            if(menuIns.pid != 0){
-                // 刷新表格
-                $("#instid").val(menuIns.id);
-                $("#titleIns").html(menuIns.name);
-                tableIns.reload({
-                    where:{"instid":menuIns.id},
-                    page: {
-                        curr: 1 //重新从第 1 页开始
-                    }
-                });
-            }
+            // 刷新表格
+            $("#instid").val(menuIns.id);
+            $("#titleIns").html(menuIns.name);
+            tableIns.reload({
+                where:{"instid":menuIns.id},
+                page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+            });
         }
 
         //添加用户类型
-        $("#addins").click(function(){
+        $("#addins").click(function() {
             var data = {};
-            data["insList"]=insList;
-            data["utype"]=0;
+            data["insList"] = insList;
+            data["utype"] = 0;
             window.currData = data;
             $.get('view/user/institution-add.html', {}, function(str) {
                 eaitLayer = layer.open({
@@ -586,10 +596,10 @@
             });
         });
         //修改用户类型
-        $("#updins").click(function(){
+        $("#updins").click(function() {
             var data = menuIns;
-            data["insList"]=insList;
-            data["utype"]=0;
+            data["insList"] = insList;
+            data["utype"] = 0;
             window.currData = data; //全局对象存储当前选中行数据
             $.get('view/user/institution-add.html', {}, function(str) {
                 eaitLayer = layer.open({
@@ -602,16 +612,18 @@
             });
         });
         //删除用户类型
-        $("#delins").click(function(){
+        $("#delins").click(function() {
 
-            if(!menuIns.id){
+            if (!menuIns.id) {
                 layer.msg('请选择一条数据');
                 return;
             }
 
-            var ids =[];
+            var ids = [];
             ids.push(menuIns.id);
-            var data={"ids":ids.toString()};
+            var data = {
+                "ids": ids.toString()
+            };
 
             layer.confirm("是否删除类型", {
                 icon: 3,
@@ -639,7 +651,7 @@
 
         form.on('submit(addInsSubmit)', function(data) {
             var title = "";
-            var url ="";
+            var url = "";
             //编辑提交
             if (data.field.id != null && data.field.id != "") {
                 title = '确认提交修改';
@@ -672,7 +684,6 @@
             })
             return false;
         });
-        
 
     });
 </script>
