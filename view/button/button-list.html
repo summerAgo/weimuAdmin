@@ -86,10 +86,19 @@
             return false;
         });
 
+        var buttonData = sessionStorage.getItem('buttonData');
+        var where ={};
+        var menuid= null;
+        if(buttonData != null){
+            var array = JSON.parse(buttonData);
+            menuid = array.id;
+            where["menuid"]= array.id;
+        }
         var tableIns = table.render({
             elem: '#tableContainer',
             height: 'full-' + tableTopHeight,
             url: buttonList,
+            where:where,
             parseData: function(res) { //res 即为原始返回的数据
                 if (res.status !== 0) res.status = 0;
                 return {
@@ -156,6 +165,9 @@
             } else if (checkStatus.data.length > 1) {
                 layer.msg("请选择需要编辑的单条信息");
             } else {
+                
+                var data =checkStatus.data[0];
+                data["menuid"] = menuid;
                 window.currData = checkStatus.data[0]; //全局对象存储当前选中行数据
                 $.get('view/button/button-add.html', {}, function(str) {
                     eaitLayer = layer.open({
@@ -205,7 +217,8 @@
 
         //弹出添加角色
         $("#creatRole").click(function() {
-			 window.currData = null;
+            var data ={"menuid":menuid};
+			window.currData = data;
             $.get('view/button/button-add.html', {}, function(str) {
                 eaitLayer = layer.open({
                     title: '添加按钮',
@@ -222,7 +235,7 @@
 			var userData = window.currData;
 			var title="";
 			var userUrl="";
-			if(userData !=null){
+			if(userData !=null && data.field.id != "" ){
 				title = '确认提交修改';
 				userUrl = buttonUpdate;
 			}else {

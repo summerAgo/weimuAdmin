@@ -229,14 +229,14 @@
             }else if(checkStatus.data.length > 1){
                 layer.msg("请选择需要1条数据");
             } else {
-                window.currData = checkStatus.data;
+                window.currData = checkStatus.data[0];
                 $.get('view/role/role-power.html', {}, function(str) {
                     eaitLayer = layer.open({
                         title: '设置角色权限',
                         type: 1,
                         content: str,
                         resize: false,
-                        area: ['800px', 'auto'],
+                        area: ['800px', '60%'],
                     });
                 });
             }
