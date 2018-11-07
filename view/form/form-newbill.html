@@ -202,18 +202,18 @@
             console.log(obj.data); //所在行的所有相关数据  
         });
 
-        //
-        var orderno = sessionStorage.getItem('newbill_orderno');
-        if(orderno){
-            $(".layui-elem-quote").html("预入库订单号：" + orderno.orderno);
-            $(".form-newbill input[name='ownerid']").val(orderno.ownerid).attr('disabled',true);
-            $(".form-newbill input[name='depotid']").val(orderno.depotid).attr('disabled',true);
-            $(".form-newbill input[name='origin']").val(orderno.origin).attr('disabled',true);
-            $(".form-newbill input[name='supplierid']").val(orderno.supplierid).attr('disabled',true);
+        //页面初始化
+        //根据订单号下拉订单数据
+        var orderno = null;
+        var ordernojson = sessionStorage.getItem('newbill_orderno');
+        console.log("orderno:" + ordernojson);
+        if (null != ordernojson && 'null' != ordernojson && ordernojson.length > 0) {
+            orderno = JSON.parse(ordernojson).orderno;
+            //console.log("orderno:" + orderno.orderno);
 
-            //如果订单号存在，则下拉该订单货物列表
+            $(".layui-elem-quote").html("预入库订单号：" + orderno);
             $.get(preEntrygetByOrderno, {
-                orderno: orderno.orderno
+                orderno: orderno
             }, function(data) {
 
                 if (data.stocklist != null) {
@@ -308,12 +308,6 @@
                     dataarr.push(bean);
                 }
             }
-            //如果当前没有添加新内容，则不提交后台
-            if(dataarr.length == 0){
-                //关闭窗口
-
-                return ;
-            }
 
             var arr = JSON.stringify(dataarr);
             console.log(typeof arr);
@@ -329,7 +323,7 @@
                     depotid: depotname,
                     origin: origin,
                     supplierid: supplier,
-                    orderstr:orderno.orderno
+                    orderstr:orderno
                 },
                 traditional: true,
                 success: function(data) {
