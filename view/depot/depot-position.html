@@ -141,16 +141,17 @@
                         field: 'remarks',
                         title: '备注',
                         sort: true
-                    },{
-                        field: 'status',
-                        title: '状态',
-                        templet:function(d){
-                            if(d.status == 0){
-                                return '正常';
-                            }
-                            return '已删除';
-                        }
                     }
+                    // ,{
+                    //     field: 'status',
+                    //     title: '状态',
+                    //     templet:function(d){
+                    //         if(d.status == 0){
+                    //             return '正常';
+                    //         }
+                    //         return '已删除';
+                    //     }
+                    // }
                 ]
             ],
             even: true,

@@ -119,8 +119,12 @@
                         title: '编号',
                         sort: true
                     }, {
-                        field: 'ownerid',
+                        field: 'ownername',
                         title: '货权人',
+                        sort: true
+                    } ,{
+                        field: 'personname',
+                        title: '负责人',
                         sort: true
                     }, {
                         field: 'address',
@@ -129,21 +133,28 @@
                     }, {
                         field: 'type',
                         title: '仓库类型',
-                        sort: true
+                        sort: true,
+                        templet:function(d){
+                            if(d.status == 0){
+                                return '监管仓';
+                            }
+                            return '自由仓';
+                        }
                     }, {
                         field: 'remarks',
                         title: '备注',
                         sort: true
-                    },{
-                        field: 'status',
-                        title: '状态',
-                        templet:function(d){
-                            if(d.status == 0){
-                                return '正常';
-                            }
-                            return '已删除';
-                        }
                     }
+                    //,{
+                    //     field: 'status',
+                    //     title: '状态',
+                    //     templet:function(d){
+                    //         if(d.status == 0){
+                    //             return '正常';
+                    //         }
+                    //         return '已删除';
+                    //     }
+                    // }
                 ]
             ],
             even: true,
