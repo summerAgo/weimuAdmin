@@ -83,10 +83,10 @@
         var form = layui.form;
         var laytpl = layui.laytpl;
         var layer = layui.layer;
-        var data=window.currData;
+        var dataall=window.currData;
         var getTpl = formUserRole.innerHTML,
 		view = document.getElementById('formEditView');
-        laytpl(getTpl).render(data, function(html) {
+        laytpl(getTpl).render(dataall, function(html) {
             	view.innerHTML = html;
         });
 
@@ -98,7 +98,7 @@
             success: function (data) {
                  var roleAut= window.currData;
                  var roleData={"roleid":roleAut.id};
-                 //查询角色的权限
+                 //查询角色菜单权限
                  allMuneAuthority(roleData,function(res){
                      var allMenu = data.data;
                      var ant = [] ;
@@ -149,8 +149,12 @@
                         // ,openall: true
                         autowidth: true
                     });
-
-
+                    allButtonData(function (res){//查询所有的按钮
+                        allbutData = res.data;
+                    });
+                    getButAuthorityAll(roleData,function(){//查询所有的按钮权限
+                        buttonAut = res.data;
+                    });
                  });
 
                 
@@ -192,31 +196,50 @@
             // 获取最新取消
             var lastNotChecked = authtree.getLastNotChecked('#LAY-auth-tree-index');
             console.log('lastNotChecked', lastNotChecked);
+
+            
         });
         authtree.on('deptChange(lay-check-auth)', function (data) {
             console.log('监听到显示层数改变', data);
         });
-
+        
+        var allbutData=[];//所有的按钮
+        var buttonAut=[];//按钮权限
 
         //查询按钮下面的按钮(menuid菜单id)
         function allbutton(menuid){
-            $.ajax({
-            //url: 'tree.json',
-            url:menuAll,
-            dataType: 'json',
-            success: function (data) {
-                 var roleData={"menuid":menuid};
-                 //查询按钮权限
-                 allButtonAuthority(roleData,function(res){
-
-                 });
-            }});
+            var butAllData = [];
+            for(var i=0;i<allbutData.length;i++){
+                if(allbutData[i].menuid == menuid){
+                    var map = allbutData[i];
+                    for(var j=0;j<buttonAut.length;j++){
+                        if(map.id == buttonAut[i].id){
+                            map["checked"] ="checked";
+                            break;
+                        }
+                    }
+                    butAllData.push(map);
+                }
+            }
+            dataall["butAllData"] = butAllData;
+            laytpl(getTpl).render(dataall, function(html) {
+                    view.innerHTML = html;
+            });
         }
 
-        //查询按钮权限
-        function allButtonAuthority(data,success){
+         //查询所有的按钮
+         function allButtonData(success){
             $.ajax({
-            url:menugetAuthority,
+            url:buttonAllList,
+            dataType: 'json',
+            success: success
+            });
+        } 
+
+        //根据角色id查询所有的按钮权限
+        function getButAuthorityAll(data,success){
+            $.ajax({
+            url:getAuthorityAll,
             data:data,
             dataType: 'json',
             success: success
