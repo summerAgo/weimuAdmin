@@ -372,7 +372,7 @@
         var menuIns = {}; //供应商类型被点击的数据
         // 根据菜单刷新表格
         function resTable(d) {
-            console.log(d)
+            console.log(d);
             menuIns = d;
             // 刷新表格
             $("#instid").val(menuIns.id);
@@ -457,9 +457,6 @@
             return false;
         });
 
-
-
-
         form.on('submit(addInsSubmit)', function(data) {
             var title = "";
             var url = "";
@@ -495,8 +492,6 @@
             })
             return false;
         });
-
-
 
     });
 </script>
