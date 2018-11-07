@@ -200,17 +200,15 @@
 
         //查询按钮下面的按钮(menuid菜单id)
         function allbutton(menuid){
-            var roleData={"menuid":menuid};
             $.ajax({
             //url: 'tree.json',
             url:menuAll,
-            data:roleData,
             dataType: 'json',
             success: function (data) {
                  var roleData={"menuid":menuid};
                  //查询按钮权限
                  allButtonAuthority(roleData,function(res){
-                     
+
                  });
             }});
         }
