@@ -1,6 +1,6 @@
 var localport = ":8000";//本地端口
 var localhost = "http://192.168.10.101" + localport;//本地
-var pathUrl = "http://192.168.10.201:8080/storage-web/"; //?username=admin&password=123456
+var pathUrl = "http://192.168.10.201:80/storage-web/"; //?username=admin&password=123456
 var loginUrl = pathUrl + "sys/login"; //登录
 //基础货物公共信息
 var commonBaseUrl = pathUrl + "c/goodsbasics/list"; //查询货物
@@ -75,8 +75,12 @@ var basicsInfoAdd = pathUrl + "basics/info/add";
 var basicsInfoDelete = pathUrl + "basics/info/delete"; 
 var basicsInfoUpdate = pathUrl + "basics/info/update"; 
 var basicsInfoList = pathUrl + "basics/info/list"; //查询
-var CHDList = pathUrl + "basics/info/getCodeList?code=CHD"; //根据code查询接口 //产地列表
-var VTSList = pathUrl + "basics/info/getCodeList?code=VTS"; //根据code查询接口 //品种列表
+var CHDList = pathUrl + "basics/info/getCodeList?instid=46"; //根据code查询接口 //产地列表
+var VTSList = pathUrl + "basics/info/getCodeList?instid=45"; //根据code查询接口 //品种列表
+var levelsList = pathUrl + "basics/info/getCodeList?instid=47"; //根据code查询接口 //等级列表
+var specList = pathUrl + "basics/info/getCodeList?instid=44"; //根据code查询接口 //规格列表
+
+
 var basicsInfocode = pathUrl + "basics/info/isSelectByCode";//判断code是否存在
 
 //用户分类
