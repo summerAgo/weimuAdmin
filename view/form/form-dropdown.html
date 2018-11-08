@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <title>维木智能仓管系统</title>
+    <link rel="stylesheet" href="../../layui/css/layui.css">
+    <link rel="stylesheet" href="../../js/layui-mod/formSelects-v4.css">
+    <link rel="stylesheet" href="../../js/layui-mod/eleTree.css" media="all">
+    <link rel="stylesheet" href="../../style/iconfont/iconfont.css">
+    <link rel="stylesheet" href="../../style/index.css">
+    <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+    <!--[if lt IE 9]>
+    <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+    <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+    <div class="layui-fluid">
+        <div class="layui-row">
+            <form class="layui-form layui-col-md4" action="">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">货权人</label>
+                    <div class="layui-input-block">
+                        <select name="ownerid" xm-select="ownerSelect" xm-select-radio></select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">仓库名称</label>
+                    <div class="layui-input-block">
+                        <select name="depotid" xm-select="depotSelect" xm-select-radio></select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">库位名称</label>
+                    <div class="layui-input-block">
+                        <select name="positionid" xm-select="positionSelect" xm-select-radio></select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">产地</label>
+                    <div class="layui-input-block">
+                        <select name="origin" xm-select="originSelect" xm-select-radio></select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">供应商</label>
+                    <div class="layui-input-block">
+                        <select name="supplierid" xm-select="supplierSelect" xm-select-radio></select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="confirmForm">
+                        <i class="iconfont icon-sousuo"></i> <span>查询</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../../layui/layui.js"></script>
+    <script src="../../js/api.js"></script>
+    <script>
+        layui.config({
+            base: '../../js/layui-mod/' //此处路径请自行处理, 可以使用绝对路径
+        }).extend({
+            formSelects: 'formSelects-v4'
+        });
+
+        layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'upload'], function() {
+
+            var form = layui.form;
+            var formSelects = layui.formSelects;
+            var $ = layui.jquery;
+
+            formSelects.data('ownerSelect', 'local', {
+                arr: selectDataInstall(ownerDropdown) //货权人列表
+            });
+
+            layui.formSelects.opened('depotSelect', function(id) {
+                var ownerid = formSelects.value('ownerSelect', 'val'); //获取货权人ID
+                if (ownerid.length < 1) {
+                    layer.msg("请先选择货权人");
+                    formSelects.data(id, 'local', {arr:[]});//如果货权人为空则清空列表
+                } else {
+                    formSelects.data(id, 'local', {
+                        arr: selectDataInstall(depotDropdown, {
+                            "ownerid": ownerid
+                        }) //仓库列表
+                    });
+                }
+            });
+
+            layui.formSelects.opened('positionSelect', function(id) {
+                var depotid = formSelects.value('depotSelect', 'val'); //获取仓库ID
+                if (depotid.length < 1) {
+                    layer.msg("请先选择仓库");
+                    formSelects.data(id, 'local', {arr:[]});//如果仓库为空则清空列表
+                } else {
+                    formSelects.data(id, 'local', {
+                        arr: selectDataInstall(positionDropdown, {
+                            "depotid": depotid
+                        }) //库位列表
+                    });
+                }
+            });
+
+            formSelects.data('originSelect', 'local', {
+                arr: selectDataInstall(CHDList) //产地列表
+            });
+
+            formSelects.data('supplierSelect', 'local', {
+                arr: selectDataInstall(dropSupplier) //供应商列表
+            });
+
+            form.on('submit(confirmForm)', function(data) {
+                console.log(data);
+                return false;
+            })
+
+            function selectDataInstall(url, param) {
+                //下拉选框数据组装
+                var arr = [];
+                //获取列表数据
+                $.ajax({
+                    url: url,
+                    type: "get",
+                    data: param,
+                    async: false, //同步
+                    traditional: true,
+                    success: function(data) {
+                        console.log(data);
+                        if (data.status == 0) {
+                            //把接口数据转换为[{"name":str,"value":number}]格式
+                            if (!Array.isArray(data.data) || data.data.length == 0) {
+                                // 判断arr是否为数组并保证内部有值
+                                return false;
+                            }
+                            for (var i = 0; i < data.data.length; i++) {
+                                arr.push({
+                                    "name": data.data[i].name,
+                                    "value": data.data[i].id
+                                })
+                            }
+                        }
+                    }
+                })
+                return arr;
+            }
+
+        });
+    </script>
+</body>
+
+</html>

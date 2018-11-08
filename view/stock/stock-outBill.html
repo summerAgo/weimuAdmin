@@ -8,16 +8,29 @@
                             <input type="text" name="orderno" placeholder="订单号" autocomplete="off" class="layui-input">
                         </div>
                         <div class="table-form-item layui-input-inline">
-                            <input type="text" name="cargoowner" placeholder="货权人" autocomplete="off" class="layui-input">
+                            <select name="ownerid" xm-select="ownerSelect" xm-select-radio>
+                                <option value="">选择货权人</option>
+                            </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
-                            <input type="text" name="depotname" placeholder="仓库名称" autocomplete="off" class="layui-input">
+                            <select name="depotid" xm-select="depotSelect" xm-select-radio>
+                                <option value="">选择仓库</option>
+                            </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
-                            <input type="text" name="origin" placeholder="产地" autocomplete="off" class="layui-input">
+                            <select name="positionid" xm-select="positionSelect" xm-select-radio>
+                                <option value="">选择库位</option>
+                            </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
-                            <input type="text" name="supplier" placeholder="供应商" autocomplete="off" class="layui-input">
+                            <select name="origin" xm-select="originSelect" xm-select-radio>
+                                <option value="">选择产地</option>
+                            </select>
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <select name="supplierid" xm-select="supplierSelect" xm-select-radio>
+                                <option value="">选择供应商</option>
+                            </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
                             <input type="text" name="billloading" placeholder="提运单" autocomplete="off" class="layui-input">
@@ -87,6 +100,80 @@
             show: 'name'
         });
 
+        formSelects.data('ownerSelect', 'local', {
+            arr: selectDataInstall(ownerDropdown) //货权人列表
+        });
+
+        layui.formSelects.opened('depotSelect', function(id) {
+            var ownerid = formSelects.value('ownerSelect', 'val'); //获取货权人ID
+            if (ownerid.length < 1) {
+                layer.msg("请先选择货权人");
+                formSelects.data(id, 'local', {
+                    arr: []
+                }); //如果货权人为空则清空列表
+            } else {
+                formSelects.data(id, 'local', {
+                    arr: selectDataInstall(depotDropdown, {
+                        "ownerid": ownerid
+                    }) //仓库列表
+                });
+            }
+        });
+
+        layui.formSelects.opened('positionSelect', function(id) {
+            var depotid = formSelects.value('depotSelect', 'val'); //获取仓库ID
+            if (depotid.length < 1) {
+                layer.msg("请先选择仓库");
+                formSelects.data(id, 'local', {
+                    arr: []
+                }); //如果仓库为空则清空列表
+            } else {
+                formSelects.data(id, 'local', {
+                    arr: selectDataInstall(positionDropdown, {
+                        "depotid": depotid
+                    }) //库位列表
+                });
+            }
+        });
+
+        formSelects.data('originSelect', 'local', {
+            arr: selectDataInstall(CHDList) //产地列表
+        });
+
+        formSelects.data('supplierSelect', 'local', {
+            arr: selectDataInstall(dropSupplier) //供应商列表
+        });
+
+        function selectDataInstall(url, param) {
+            //下拉选框数据组装
+            var arr = [];
+            //获取列表数据
+            $.ajax({
+                url: url,
+                type: "get",
+                data: param,
+                async: false, //同步
+                traditional: true,
+                success: function(data) {
+                    console.log(data);
+                    if (data.status == 0) {
+                        //把接口数据转换为[{"name":str,"value":number}]格式
+                        if (!Array.isArray(data.data) || data.data.length == 0) {
+                            // 判断arr是否为数组并保证内部有值
+                            return false;
+                        }
+                        for (var i = 0; i < data.data.length; i++) {
+                            arr.push({
+                                "name": data.data[i].name,
+                                "value": data.data[i].id
+                            })
+                        }
+                    }
+                }
+            })
+            return arr;
+        }
+
         form.on('submit(searchForm)', function(data) {
             var paramSearch = {};
             for (var key in data.field) {
@@ -143,7 +230,7 @@
                         field: 'num',
                         title: '件数（包）',
                         sort: true
-                    },{
+                    }, {
                         field: 'suppliername',
                         title: '供应商',
                         sort: true
@@ -174,16 +261,16 @@
                 $(".layui-table-page").append(addtableBtn);
                 $(".submissionBtn").click(function() {
                     layer.confirm('是否确认出库', {
-                    icon: 3,
-                    title: '提示'
+                        icon: 3,
+                        title: '提示'
                     }, function(index) {
                         var checkStatus = table.checkStatus('tableContainers'); //表格选中状态
                         var data = {};
-                        var ids =[];
-                        for(var i=0;i<checkStatus.data.length;i++){
+                        var ids = [];
+                        for (var i = 0; i < checkStatus.data.length; i++) {
                             ids.push(checkStatus.data[i].orderno);
                         }
-                        data["ids"]=ids.toString();
+                        data["ids"] = ids.toString();
                         $.ajax({
                             cache: true,
                             type: "get",
@@ -191,7 +278,7 @@
                             data: data,
                             async: false,
                             success: function(res) {
-                                if(res.status == 0){
+                                if (res.status == 0) {
                                     layer.msg("出库成功");
                                     tableIns.reload({
                                         page: {
@@ -200,12 +287,12 @@
                                     });
                                 }
 
-                            
+
                             }
                         });
                     });
 
-                    
+
                 })
             },
             text: {

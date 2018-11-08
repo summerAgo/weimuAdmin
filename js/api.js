@@ -64,16 +64,19 @@ var buttonList = pathUrl + "sys/button/list";//按钮列表
 var buttonAdd = pathUrl + "sys/button/add";//添加按钮
 var buttonUpdate = pathUrl + "sys/button/update";//修改按钮
 var buttonDel = pathUrl + "sys/button/deleteMany";//删除按钮
+
 //下拉列表
 var ownerDropdown = pathUrl + "user/owner/dropdown";//货权人下拉
 var depotDropdown =  pathUrl + "basics/depot/dropdown";//仓库下拉： 货权人id(ownerid)
 var positionDropdown = pathUrl + "basics/position/dropdown";//库位列表 depotid：根据仓库ID返回
+
 //系统基础信息功能
 var basicsInfoAdd = pathUrl + "basics/info/add"; 
 var basicsInfoDelete = pathUrl + "basics/info/delete"; 
 var basicsInfoUpdate = pathUrl + "basics/info/update"; 
 var basicsInfoList = pathUrl + "basics/info/list"; //查询
-var basicsInfogetCodeList = pathUrl + "basics/info/getCodeList"; //根据code查询接口
+var CHDList = pathUrl + "basics/info/getCodeList?code=CHD"; //根据code查询接口 //产地列表
+var VTSList = pathUrl + "basics/info/getCodeList?code=VTS"; //根据code查询接口 //品种列表
 var basicsInfocode = pathUrl + "basics/info/isSelectByCode";//判断code是否存在
 
 //用户分类
@@ -82,32 +85,34 @@ var addInstitution = pathUrl +"basics/institution/add";//添加分类
 var updInstitution = pathUrl +"basics/institution/update";//修改分类
 var delInstitution = pathUrl +"basics/institution/deleteMany";//查询分类
 
-
 var userAuthority = pathUrl + "sys/user/setAuthority";//设置用户对应角色(userid 角色id roleid[]菜单数组)
 
 var roledown = pathUrl + "sys/role/dropdown";//角色列表所有
 var menudown = pathUrl + "sys/menu/dropdown";//菜单列表所有
 
-//客户
+//客户(货权人)
 var listOwner = pathUrl +"user/owner/list";//查询客户
 var addOwner = pathUrl +"user/owner/add";//添加客户
 var updOwner = pathUrl +"user/owner/update";//修改客户
 var delOwner = pathUrl +"user/owner/deleteMany";//删除客户
 var dropOwner = pathUrl +"user/owner/dropdown";//查询客户所有
-
 //供应商
-var listSupplier = pathUrl +"basics/supplier/list";//查询客户
-var addSupplier = pathUrl +"basics/supplier/add";//添加客户
-var updSupplier = pathUrl +"basics/supplier/update";//修改客户
-var delSupplier = pathUrl +"basics/supplier/deleteMany";//删除客户
-var dropSupplier = pathUrl +"basics/supplier/dropdown";//查询客户所有
-
-
+var listSupplier = pathUrl +"basics/supplier/list";//查询
+var addSupplier = pathUrl +"basics/supplier/add";//添加
+var updSupplier = pathUrl +"basics/supplier/update";//修改
+var delSupplier = pathUrl +"basics/supplier/deleteMany";//删除
+var dropSupplier = pathUrl +"basics/supplier/dropdown";//供应商列表
 
 var menuAll = pathUrl + "sys/menu/dropdown";//查询所有
-
 var buttonAllList = pathUrl + "sys/button/dropdown";//查询按钮所有的
-
 var rolegetAuthority = pathUrl + "sys/role/getAuthority";//查询角色对应菜单(roleid 角色id)]
 var menugetAuthority = pathUrl + "sys/menu/getAuthority";//查询菜单对应按钮(menuid 菜单id)
+
 var getAuthorityAll = pathUrl + "sys/role/getAuthorityAll";//根据角色id查询所有的按钮权限(roleid=2)
+var getAuthorityAll = pathUrl + "sys/role/getAuthorityAll";//根据角色id查询所有的按钮权限(roleid=2)
+var setAuthorityAll = pathUrl + "sys/role/setAuthorityAll";//添加角色权限 roleid角色id，allauth 权限[{'菜单id':[按钮id]}]
+//风控
+var riskList = pathUrl + "risk/control/riskList" //商品评估列表 
+var outTreasuryList = pathUrl + "risk/control/outTreasuryList" //出货审核列表
+var setThroughOut = pathUrl + "risk/control/setThroughOut" //设置通过出货审核
+var outHistoryList = pathUrl + "risk/control/outHistoryList" //出货审核记录
