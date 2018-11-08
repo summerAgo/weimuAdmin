@@ -235,12 +235,48 @@
                         title: '设置角色权限',
                         type: 1,
                         content: str,
-                        area: ['800px', '60%'],
+                        area: ['800px', '80%'],
                     });
                 });
             }
 			
         });
+
+        //添加角色表单提交
+        form.on('submit(roleSubmit)', function(data) {
+            var allAuthority = sessionStorage.getItem('allAuthority');
+            console.log(allAuthority);
+            data.field["allauth"]=allAuthority;
+            layer.confirm("确认权限?", {
+                icon: 3,
+                title: '提示'
+            }, function(index) {
+                $.ajax({
+                    cache: true,
+                    type: "get",
+                    url: setAuthorityAll,
+                    data: data.field,
+                    async: false,
+                    error: function(request) {
+                        layer.msg('提交失败');
+                        return;
+                    },
+                    success: function(data) {
+                        layer.close(eaitLayer);
+                        layer.msg('提交成功');
+						 // 刷新表格
+                        tableIns.reload({
+                            page: {
+                                curr: 1 //重新从第 1 页开始
+                            }
+                        });
+                    }
+                });
+            })
+            return false;
+        });
+
+
 
         //添加角色表单提交
         form.on('submit(addSubmit)', function(data) {
