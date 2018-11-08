@@ -11,16 +11,29 @@
                             <button class="layui-btn" lay-submit lay-filter="addGoodsBtn">添加货物信息</button>
                         </div>
                         <div class="table-form-item layui-input-inline">
-                            <input type="text" name="ownerid" placeholder="货权人" autocomplete="off" class="layui-input">
+                            <select name="ownerid" xm-select="ownerSelectLayer" xm-select-radio>
+                                <option value="">选择货权人</option>
+                            </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
-                            <input type="text" name="depotid" placeholder="仓库名称" autocomplete="off" class="layui-input">
+                            <select name="depotid" xm-select="depotSelectLayer" xm-select-radio>
+                                <option value="">选择仓库</option>
+                            </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
-                            <input type="text" name="origin" placeholder="产地" autocomplete="off" class="layui-input">
+                            <select name="positionid" xm-select="positionSelectLayer" xm-select-radio>
+                                <option value="">选择库位</option>
+                            </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
-                            <input type="text" name="supplierid" placeholder="供应商" autocomplete="off" class="layui-input">
+                            <select name="origin" xm-select="originSelectLayer" xm-select-radio>
+                                <option value="">选择产地</option>
+                            </select>
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <select name="supplierid" xm-select="supplierSelectLayer" xm-select-radio>
+                                <option value="">选择供应商</option>
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -77,6 +90,80 @@
             show: 'name'
         });
 
+        formSelects.data('ownerSelectLayer', 'local', {
+            arr: selectDataInstall(ownerDropdown) //货权人列表
+        });
+
+        layui.formSelects.opened('depotSelectLayer', function(id) {
+            var ownerid = formSelects.value('ownerSelectLayer', 'val'); //获取货权人ID
+            if (ownerid.length < 1) {
+                layer.msg("请先选择货权人");
+                formSelects.data(id, 'local', {
+                    arr: []
+                }); //如果货权人为空则清空列表
+            } else {
+                formSelects.data(id, 'local', {
+                    arr: selectDataInstall(depotDropdown, {
+                        "ownerid": ownerid
+                    }) //仓库列表
+                });
+            }
+        });
+
+        layui.formSelects.opened('positionSelectLayer', function(id) {
+            var depotid = formSelects.value('depotSelectLayer', 'val'); //获取仓库ID
+            if (depotid.length < 1) {
+                layer.msg("请先选择仓库");
+                formSelects.data(id, 'local', {
+                    arr: []
+                }); //如果仓库为空则清空列表
+            } else {
+                formSelects.data(id, 'local', {
+                    arr: selectDataInstall(positionDropdown, {
+                        "depotid": depotid
+                    }) //库位列表
+                });
+            }
+        });
+
+        formSelects.data('originSelectLayer', 'local', {
+            arr: selectDataInstall(CHDList) //产地列表
+        });
+
+        formSelects.data('supplierSelectLayer', 'local', {
+            arr: selectDataInstall(dropSupplier) //供应商列表
+        });
+
+        function selectDataInstall(url, param) {
+            //下拉选框数据组装
+            var arr = [];
+            //获取列表数据
+            $.ajax({
+                url: url,
+                type: "get",
+                data: param,
+                async: false, //同步
+                traditional: true,
+                success: function(data) {
+                    console.log(data);
+                    if (data.status == 0) {
+                        //把接口数据转换为[{"name":str,"value":number}]格式
+                        if (!Array.isArray(data.data) || data.data.length == 0) {
+                            // 判断arr是否为数组并保证内部有值
+                            return false;
+                        }
+                        for (var i = 0; i < data.data.length; i++) {
+                            arr.push({
+                                "name": data.data[i].name,
+                                "value": data.data[i].id
+                            })
+                        }
+                    }
+                }
+            })
+            return arr;
+        }
+
         form.on('submit(addGoodsBtn)', function(data) {
             window.billBaseInfo = data.field;
             $.get('view/form/form-goods.html', {}, function(str) {
@@ -94,9 +181,7 @@
 
         form.on('submit(addGoodsForm)', function(data) {
             tableData.push(data.field);
-
             $(".rightBotBtn span").html(tableData.length); //当前选中了多少商品
-
             tableIns.reload({
                 data: tableData,
                 page: {
@@ -182,7 +267,7 @@
                 $("#tableContainer-from").siblings(".layui-form ").find(".layui-table-page").append(addtableBtn);
 
                 $(".subConfirmBtn").click(subConfun);
-                $(".subCancelBtn").click(function(){
+                $(".subCancelBtn").click(function() {
                     layer.closeAll();
                 })
                 console.log(res)
@@ -205,14 +290,33 @@
         });
 
         var orderno = JSON.parse(sessionStorage.getItem('newbill_orderno'));
-        if(orderno){
+        if (orderno) {
 
+            console.log(orderno)
             $(".layui-elem-quote").html("预入库订单号：" + orderno.orderno);
-            $(".form-newbill input[name='ownerid']").val(orderno.ownerid).attr('disabled',true);
-            $(".form-newbill input[name='depotid']").val(orderno.depotid).attr('disabled',true);
-            $(".form-newbill input[name='origin']").val(orderno.origin).attr('disabled',true);
-            $(".form-newbill input[name='supplierid']").val(orderno.supplierid).attr('disabled',true);
-            
+            //下拉框赋值
+            formSelects.data('ownerSelectLayer', 'local', {
+                arr: [{"name":orderno.ownername,"value":orderno.ownerid, selected:"selected"}]
+            });
+            formSelects.data('depotSelectLayer', 'local', {
+                arr: [{"name":orderno.depname,"value":orderno.depotid, selected:"selected"}]
+            });
+            formSelects.data('positionSelectLayer', 'local', {
+                arr: [{"name":orderno.positionname,"value":orderno.positionid, selected:"selected"}]
+            });
+            formSelects.data('originSelectLayer', 'local', {
+                arr: [{"name":orderno.origin,"value":orderno.origin, selected:"selected"}]
+            });
+            formSelects.data('supplierSelectLayer', 'local', {
+                arr: [{"name":orderno.suppliername,"value":orderno.supplierid, selected:"selected"}]
+            });
+            //禁用下拉框
+            formSelects.disabled('ownerSelectLayer');
+            formSelects.disabled('depotSelectLayer');
+            formSelects.disabled('positionSelectLayer');
+            formSelects.disabled('originSelectLayer');
+            formSelects.disabled('supplierSelectLayer');
+
             //如果订单号存在，则下拉该订单货物列表
             $.get(preEntrygetByOrderno, {
                 orderno: orderno.orderno
@@ -310,18 +414,18 @@
                 }
             }
             //如果当前没有添加新内容，则不提交后台
-            if(dataarr.length == 0){
+            if (dataarr.length == 0) {
                 //关闭窗口
 
-                return ;
+                return;
             }
 
             var arr = JSON.stringify(dataarr);
             //第二步，提交到后台
             var num;
-            if(!orderno){
+            if (!orderno) {
                 num = "";
-            }else{
+            } else {
                 num = orderno.orderno;
             }
             console.log(num)
@@ -330,14 +434,14 @@
                 type: "POST",
                 //dataType: "json",
                 //contentType: "application/json",
-                async:false,
+                async: false,
                 data: {
                     lbarr: arr.toString(),
                     ownerid: cargoowner,
                     depotid: depotname,
                     origin: origin,
                     supplierid: supplier,
-                    orderstr:num
+                    orderstr: num
                 },
                 traditional: true,
                 success: function(data) {
@@ -373,7 +477,7 @@
                         if (res.status == 0) {
                             layer.msg("上传成功")
                             layer.close(importLayer);
-                            for(var k = 0;k<res.data.length;k++){
+                            for (var k = 0; k < res.data.length; k++) {
                                 tableData.push(res.data[k]);
                             }
                             tableIns.reload({
