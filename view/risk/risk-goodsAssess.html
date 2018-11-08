@@ -102,7 +102,7 @@
                 [ // 标题栏
                     {
                         type: 'checkbox'
-                    },{
+                    }, {
                         field: 'ownername',
                         title: '货权人',
                         width: 266,
@@ -149,7 +149,7 @@
                 $.get('view/risk/risk-frameAssess.html', {}, function(str) {
                     assessLayer = layer.open({
                         type: 1,
-                        content: str, //注意，如果str是object，那么需要字符拼接。
+                        content: str, // 注意，如果str是object，那么需要字符拼接。
                         resize: false,
                         area: ['80%', 'auto'],
                     });

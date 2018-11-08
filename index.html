@@ -104,9 +104,10 @@
                     <li class="layui-nav-item">
                         <a href="javascript:;"><i class="iconfont icon-fengkongguanli"></i> 风控管理</a>
                         <dl class="layui-nav-child">
-                            <dd><a href="#!risk-goodsEvaluate">商品评估管理</a></dd>
-                            <dd><a href="javascript:;">出货警戒线设置</a></dd>
-                            <dd><a href="javascript:;">出货审核</a></dd>
+                            <dd><a href="#!risk-goodsEvaluate">商品评估列表</a></dd>
+                            <dd><a href="#!risk-shipWarn">出货警戒线设置</a></dd>
+                            <dd><a href="#!risk-shipExamine">出货审核</a></dd>
+                            <dd><a href="#!risk-examineRecode">出货审核记录</a></dd>
                         </dl>
                     </li>
                 </ul>
@@ -213,6 +214,15 @@
                 }],
                 ['risk-goodsEvaluate', function() {
                     container.load('/view/risk/risk-goodsAssess.html');
+                }],
+                ['risk-shipWarn', function() {
+                    container.load('/view/risk/risk-shipWarn.html');
+                }],
+                ['risk-shipExamine', function() {
+                    container.load('/view/risk/risk-shipExamine.html');
+                }],
+                ['risk-examineRecode', function() {
+                    container.load('/view/risk/risk-examineRecode.html');
                 }]
             ])
 
