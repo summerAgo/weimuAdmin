@@ -145,8 +145,10 @@
                     allButtonData(function (res){//查询所有的按钮
                         allbutData = res.data;
                     });
-                    getButAuthorityAll(roleData,function(){//查询所有的按钮权限
-                        buttonAut = res.data;
+                    getButAuthorityAll(roleData,function(res){//查询所有的按钮权限
+                        if(res.status == 0){
+                            buttonAut = res.data;
+                        }
                     });
                  });
 
