@@ -109,5 +109,5 @@ var menuAll = pathUrl + "sys/menu/dropdown";//查询所有
 var buttonAllList = pathUrl + "sys/button/dropdown";//查询按钮所有的
 
 var rolegetAuthority = pathUrl + "sys/role/getAuthority";//查询角色对应菜单(roleid 角色id)]
-var menugetAuthority = pathUrl + "sys/menu/getAuthority";//查询菜单对应按钮(menuid 菜单id)
 var getAuthorityAll = pathUrl + "sys/role/getAuthorityAll";//根据角色id查询所有的按钮权限(roleid=2)
+var setAuthorityAll = pathUrl + "sys/role/setAuthorityAll";//添加角色权限 roleid角色id，allauth 权限[{'菜单id':[按钮id]}]
