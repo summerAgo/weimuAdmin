@@ -81,7 +81,7 @@
         var tableIns = table.render({
             elem: '#tableContainer',
             height: 'full-' + tableTopHeight, // full -- ?
-            url: entryHistory, //数据接口
+            url: outHistoryList, //数据接口
             // 任意数据格式解析成 table 组件规定的数据格式
             parseData: function (res) { //res 即为原始返回的数据
                 if (res.status !== 0) res.status = 0;
@@ -107,18 +107,47 @@
                         width: 266,
                         sort: true
                     }, {
-                        field: 'financeamount',
+                        field: 'status',
+                        title: '审核结果',
+                        width: 100,
+                        sort: true,
+                        templet: function (d) {
+                            if (d.status == 2) {
+                                return '已出库';
+                            }
+                            if (d.status == 3) {
+                                return '不通过';
+                            }
+                        }
+                    }, {
+                        field: 'orderno',
+                        title: '出库单',
+                        width: 266,
+                        sort: true
+                    }, {
+                        field: 'depname',
+                        title: '出库仓库',
+                        width: 266,
+                        sort: true
+                    }, {
+                        field: 'num',
+                        title: '数量',
+                        sort: true
+                    }, {
+                        field: 'stockmoney',
+                        title: '库存金额',
+                        sort: true
+                    }, {
+                        field: 'financingmoney',
                         title: '融资金额',
-                        width: 266,
                         sort: true
                     }, {
-                        field: 'cordon',
+                        field: 'cordonmoney',
                         title: '警戒线',
-                        width: 266,
                         sort: true
                     }, {
-                        field: 'proportion',
-                        title: '比例',
+                        field: 'outdate',
+                        title: '预计出货时间',
                         sort: true
                     }
                 ]
