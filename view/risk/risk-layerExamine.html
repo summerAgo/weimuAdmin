@@ -1,55 +1,91 @@
 <div class="table-page">
     <div class="table-page-header">
-        <div class="table-page-form">
-            <form class="layui-form form-newbill" action="">
-                <div class="form-box">
-                    <div class="layui-form-item form-left">
-                        <div class="table-form-item layui-input-inline">
-                            <input type="text" name="packetid" placeholder="包号" autocomplete="off" class="layui-input">
-                        </div>
-                        <div class="table-form-item layui-input-inline">
-                            <input type="text" name="varietiesid" placeholder="品种" autocomplete="off" class="layui-input">
-                        </div>
-                        <div class="table-form-item layui-input-inline">
-                            <input type="text" name="thicknessid" placeholder="规格/厚度" autocomplete="off" class="layui-input">
-                        </div>
-                        <div class="table-form-item layui-input-inline">
-                            <input type="text" name="gradeid" placeholder="等级" autocomplete="off" class="layui-input">
-                        </div>
-                        <div class="table-form-item layui-input-inline">
-                            <input type="text" name="lengthid" placeholder="长度" autocomplete="off" class="layui-input">
-                        </div>
-                        <div class="table-form-item layui-input-inline">
-                            <input type="text" name="placeid" placeholder="产地" autocomplete="off" class="layui-input">
-                        </div>
-                        <div class="table-form-item layui-input-inline">
-                            <input type="text" name="assessid" placeholder="评估状态" autocomplete="off" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-form-item form-right">
-                        <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="searchForm">
-                            <i class="iconfont icon-sousuo"></i> <span>查询</span>
-                        </button>
-                        <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon layui-icon-refresh"></i></button>
-                    </div>
-                </div>
-            </form>
+        <div class="lss-bread-crumb">
+            <div class="lss-bread-item">
+                <p>出货申请订单号</p>
+                <p class="data-gray">000430541dx34xxxx</p>
+            </div>
+            <div class="lss-bread-item">
+                <p>货权人</p>
+                <p class="data-gray">亿森木业</p>
+            </div>
+            <div class="lss-bread-item">
+                <p>仓库</p>
+                <p class="data-gray">大岭山</p>
+            </div>
+            <div class="lss-bread-item">
+                <p>预计出货日期</p>
+                <p class="data-gray">2018-11-15</p>
+            </div>
+            <div class="lss-bread-item">
+                <p>库存金额（RMB）</p>
+                <p class="data-green">3,003,225,200</p>
+            </div>
+            <div class="lss-bread-item">
+                <p>融资金额（RMB）</p>
+                <p class="data-blue">3,003,225,200</p>
+            </div>
+            <div class="lss-bread-item">
+                <p>警戒线</p>
+                <p class="data-orange">3,225,200</p>
+            </div>
         </div>
     </div>
+
     <div class="table-content">
         <div class="table-content-main">
             <table class="layui-hide" id="tableContainer-from" lay-filter="tableContainer-from"></table>
         </div>
     </div>
+
     <div class="rightBotBtn">
         <button class="layui-btn" lay-submit="" type="submit" lay-filter="pass">通过</button>
         <button class="layui-btn layui-btn-primary" lay-submit="" type="submit" lay-filter="nopass">不通过</button>
+        <button class="layui-btn" lay-submit="" type="submit" lay-filter="nopass">打印</button>
     </div>
 </div>
 <style scoped>
     .rightBotBtn {
         padding: 15px;
         text-align: right
+    }
+
+    .lss-bread-crumb {
+        overflow: hidden;
+        margin: 20px 0;
+    }
+
+    .lss-bread-item {
+        float: left;
+        padding: 0 40px;
+        border-right: 1px solid #979797;
+    }
+
+    .lss-bread-item:first-child {
+        padding-left: 20px;
+    }
+
+    .lss-bread-item>p:first-child {
+        font-size: 15px;
+        color: #333;
+    }
+
+    .lss-bread-item>p:nth-child(2) {
+        font-size: 18px;
+        color: #333;
+        font-weight: bold;
+    }
+
+    .lss-bread-item>p:nth-child(2).data-green {
+        color: #06a488;
+    }
+
+    .lss-bread-item>p:nth-child(2).data-blue {
+        color: #07b1bd;
+    }
+
+    .lss-bread-item>p:nth-child(2).data-orange {
+        color: #f58935;
     }
 </style>
 <script>
@@ -140,12 +176,20 @@
                         title: '产地',
                         sort: true
                     }, {
-                        field: 'newunitprice',
-                        title: '最新采购单价',
+                        field: 'cube',
+                        title: '数量(m³)',
                         sort: true
                     }, {
-                        field: 'unitprice',
-                        title: '评估单价',
+                        field: 'place',
+                        title: '库位',
+                        sort: true
+                    }, {
+                        field: 'batch',
+                        title: '货柜号/批次号',
+                        sort: true
+                    }, {
+                        field: 'remarks',
+                        title: '备注',
                         sort: true
                     }
                 ]
