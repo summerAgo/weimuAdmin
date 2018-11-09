@@ -6,11 +6,12 @@
         <div class="layui-input-block">
             <input type="hidden" name="id" value="{{d.id || ''}}">
             <!-- <input type="text" name="code" placeholder="类型标识" value="{{d.code || ''}}"  autocomplete="off" class="layui-input"> -->
-                <select name="code" xm-select="select-varieties">
+               <!--  <select name="code" xm-select="select-varieties">
                     <option value="VTS">品种</option>
                     <option value="GUG">规格</option>
                     <option value="LEL">等级</option>
-                </select>
+                </select>-->
+                <select name="instid"  lay-verify="required" placeholder="必填项,请输入类型类型" xm-select="instidSelect" xm-select-radio="" ></select>
         </div>
     </div>
     <!-- <div class="layui-form-item">
@@ -45,19 +46,71 @@
     }
 </style>
 <script>
-    layui.use(['form', 'jquery', 'element', 'layer', 'formSelects', 'laytpl', 'laydate'], function() {
+    layui.use(['form', 'jquery', 'element', 'layer', 'formSelects', 'laytpl', 'laydate'], function () {
         var element = layui.element;
         var form = layui.form;
         var $ = layui.jquery;
+        var table = layui.table;
         var formSelects = layui.formSelects;
         var laytpl = layui.laytpl;
+        var upload = layui.upload;
+
+
+        
 
         var dataType = JSON.parse(sessionStorage.getItem('base_infodata_data')) || {}; //判断是否为修改
         // 渲染模板的内容
         var getTpl = depotTle.innerHTML,
             view = document.getElementById('depotView');
-        laytpl(getTpl).render(dataType, function(html) {
+        laytpl(getTpl).render(dataType, function (html) {
             view.innerHTML = html;
         });
+        form.render(); //重置表单渲染
+        formSelects.render(); //下拉选项
+        element.render('talbe-tools'); //表格工具栏
+        formSelects.btns(['select', 'remove'], {
+            show: 'name'
+        });
+
+        addinstidSel(dataType.inaAllList,dataType.instid);
+        function  addinstidSel(inaAllList,instid){
+            var arr=[];
+            var number="";
+            for(var i=0;i<inaAllList.length;i++){
+                if(inaAllList[i].pid == 0){
+                    var map ={};
+                    map["name"] = inaAllList[i].name;
+                    map["value"] = inaAllList[i].id;
+                    var children =[];
+                    
+                    for(var j=0;j<inaAllList.length;j++){
+                        if(inaAllList[i].id == inaAllList[j].pid){
+                            var maptwo ={};
+                            maptwo["name"] = inaAllList[j].name;
+                            maptwo["value"] = inaAllList[j].id;
+                            children.push(maptwo);
+                            if(inaAllList[j].id == instid){
+                                number =inaAllList[j].pid +"/";
+                            }
+                        }
+                    }
+                    map["children"] = children;
+                    arr.push(map);
+                }
+
+            }
+            console.log(arr);
+            layui.formSelects.data('instidSelect', 'local', {
+                arr: arr,
+                linkage: true
+            });
+            if(number.length == 0){
+                //number =instid+"/";
+            }else{
+                number =number +instid;
+                layui.formSelects.value('instidSelect', [number]);
+            }
+           
+        }
     });
 </script>

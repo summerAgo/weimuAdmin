@@ -172,7 +172,7 @@
                 allbutton(cur.value);
             //}
         })
-        eleTree.on("checkbox(treeData)",function(data) {
+        eleTree.on("checkbox(treeData)",function(data) {//选中或者取消复选框
             console.log(4);
             console.log(data);
             var cur=data.currentData;
@@ -211,12 +211,8 @@
                             }
 
                         }
-                        console.log(666)
-                        console.log(butlist)
-                        console.log(key)
                         map[key] =butlist;
                         allAuthority[k]=map
-                        console.log(allAuthority)
                     }
                 }
             }
@@ -292,9 +288,6 @@
                     butAllData.push(map);
                 }
             }
-            console.log(allbutData);
-            console.log(allAuthority);
-            console.log(butAllData);
             dataall["butAllData"] = butAllData;
             laytpl(getTpl).render(dataall, function(html) {
                     view.innerHTML = html;
@@ -360,8 +353,6 @@
             }
             var val = JSON.stringify(allAuthority);
             sessionStorage.setItem('allAuthority', val);
-            console.log( sessionStorage.getItem('allAuthority'));
-            console.log(allAuthority);
             console.log(data.elem); //得到checkbox原始DOM对象
             console.log(data.elem.checked); //开关是否开启，true或者false
             console.log(data.value); //开关value值，也可以通过data.elem.value得到
@@ -405,8 +396,6 @@
 
         //权限数据重新获取
         function alltrees(){
-            console.log(allAuthority);
-            console.log(trees);
             for(var i=0;i<trees.length;i++){//循环菜单
                 var map = trees[i];
                 if(map.children){
@@ -441,9 +430,6 @@
                 }
                 trees[i] = map;
             }
-            console.log(4);
-            console.log(trees);
-            console.log(4);
             eleTree.reload(".ele1", {where: {data: trees}});
         }
     });
