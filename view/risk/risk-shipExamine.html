@@ -49,8 +49,6 @@
 
         var examineLayer; // 审核-弹层
 
-        var _this = this;
-
         form.render(); // 重置表单渲染
         formSelects.render(); // 下拉选项
         element.render('talbe-tools'); // 表格工具栏
@@ -76,6 +74,7 @@
             return false;
         });
 
+        // 渲染母模块table
         var tableIns = table.render({
             elem: '#tableContainer',
             height: 'full-' + tableTopHeight, // full -- 
@@ -149,12 +148,12 @@
 
         // 监听出库单点击事件
         table.on('tool(tableContainer)', function (obj) {
-            console.log(obj);
+
             var curData = obj.data;
             if (obj.event === 'click') {
                 // sessionStorage.setItem('toExamine', JSON.stringify(data));
-                $.get('view/risk/risk-layerExamine.html', {}, function (str) {
-                    
+                $.get('view/risk/risk-layerExamine.html', {}, function (str) { // 请求弹框
+
                     var layerData; // 当前弹框页面数据
 
                     $.ajax({
@@ -190,11 +189,11 @@
         // 渲染弹框函数
         var layerOut = function (layerData) {
             // 弹框 - 模板渲染
-            var getTpl = demo.innerHTML, view = $(".lss-bread-crumb")[0];
+            var getTpl = tempExamine.innerHTML, view = $(".lss-bread-crumb")[0];
             laytpl(getTpl).render(layerData, function (html) {
                 view.innerHTML = html;
             });
-            console.log("弹框表格数据" + layerData.datalist);
+
             var tableIns = table.render({
                 elem: '#tableContainer-from',
                 height: 'auto', // full -- 高度将始终铺满 - 差值
@@ -258,19 +257,29 @@
                 },
                 loading: true  // 是否显示加载条，默认true
             });
-
+            
+            // 通过按钮点击
             $(".passBtn").click(function () {
-                $.get(url, { rerpe: data.re }, function (data) {
-                    if (data.status == 0) {
-                        layer.close(assessLayer)
-                    } else {
-                        layer.msg(data.msg)
+                $.ajax({
+                    cache: true,
+                    type: "get",
+                    url: "",
+                    async: false,
+                    data: {},
+                    error: function (request) {
+                        layer.msg('修改失败');
+                        return;
+                    },
+                    success: function (res) {
+                        if (res.status == 0) {
+                            layer.msg("保存修改成功");
+                        } else {
+                            layer.msg("保存修改失败");
+                        }
                     }
-                })
+                });
             })
         }
 
     });
 </script>
-
-<!-- {"containernum":"sy20180522-2","code":"1239","varieties":"樱桃","chang":"10~12","num":1,"origin":"1","brand":"绿巨人","levels":"3C","remarks":"sy20180522-2","spec":"3/4","status":3}-->

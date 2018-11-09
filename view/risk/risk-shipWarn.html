@@ -29,11 +29,6 @@
                         <a href="javascript:;">打印</a>
                     </li>
                 </ul>
-                <ul class="layui-layout-right">
-                    <li class="layui-nav-item">
-                        <a id="modify" href="javascript:;">修改</a>
-                    </li>
-                </ul>
             </div>
         </div>
         <div class="table-content-main">
@@ -101,10 +96,10 @@
             cols: [
                 [ // 标题栏
                     {
-                        type: 'checkbox'
-                    }, {
                         field: 'name',
                         title: '货权人',
+                        event: 'click',
+                        style: 'color:#4394ff',
                         width: 266,
                         sort: true
                     }, {
@@ -118,7 +113,7 @@
                         width: 266,
                         sort: true
                     }, {
-                        field: 'null',
+                        field: 'ratio',
                         title: '比例',
                         sort: true,
                         templet: function (d) {
@@ -128,9 +123,8 @@
                             if (financingmoney == null || cordonmoney == null) {
                                 return '无';
                             }
-                            var a = cordonmoney/financingmoney;
-                            //这里需要保留2位小数，杨乐弄
-                            return a+'%';
+                            var ratio = (cordonmoney / financingmoney) * 100;
+                            return ratio.toFixed(2) + '%';
                         }
                     }
                 ]
@@ -148,23 +142,49 @@
             loading: true  // 是否显示加载条，默认true
         });
 
-        $("#modify").click(function () {
-            //修改
-            var checkStatus = table.checkStatus('tableContainer'); // 监听是否选择表格项
-            if (checkStatus.data.length < 1) {
-                layer.msg("请选择需要编辑的信息");
-            } else if (checkStatus.data.length > 1) {
-                layer.msg("请选择需要编辑的单条信息");
-            } else {
-                sessionStorage.setItem('formModifyWarn', JSON.stringify(checkStatus.data[0]));// 将所选仓库信息存储到本地作为回显
+
+        // 监听货权人点击事件
+        table.on('tool(tableContainer)', function (obj) {
+            var curData = obj.data;
+            if (obj.event === 'click') {
+                // sessionStorage.setItem('layerModifyWarn', JSON.stringify(curData));    
                 $.get('view/risk/risk-layerModifyWarn.html', {}, function (str) {
                     modifyLayer = layer.open({
                         title: '出货警戒线修改',
                         type: 1,
                         content: str, // 注意，如果str是object，那么需要字符拼接。
                         resize: false,
-                        area: ['800px', 'left'],
+                        area: ['800px', '360px'],
                     });
+                    // 弹框 - 模板渲染
+                    var getTpl = templateWarn.innerHTML, view = $(".template-box")[0];
+
+                    laytpl(getTpl).render(curData, function (html) {
+                        view.innerHTML = html;
+                    });
+
+                    // 保存请求的数据接口在哪？
+                    $(".keep-modify").click(function () {
+                        $.ajax({
+                            cache: true,
+                            type: "get",
+                            url: "",
+                            async: false,
+                            data: {},
+                            error: function (request) {
+                                layer.msg('修改失败');
+                                return;
+                            },
+                            success: function (res) {
+                                if (res.status == 0) {
+                                    layer.msg("保存修改成功");
+                                } else {
+                                    layer.msg("保存修改失败");
+                                }
+                            }
+                        });
+                    })
+
                 });
             }
         });
