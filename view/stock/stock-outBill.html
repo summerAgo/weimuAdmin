@@ -111,12 +111,6 @@
                 formSelects.data(id, 'local', {
                     arr: []
                 }); //如果货权人为空则清空列表
-            } else {
-                formSelects.data(id, 'local', {
-                    arr: selectDataInstall(depotDropdown, {
-                        "ownerid": ownerid
-                    }) //仓库列表
-                });
             }
         });
 
@@ -127,14 +121,58 @@
                 formSelects.data(id, 'local', {
                     arr: []
                 }); //如果仓库为空则清空列表
-            } else {
-                formSelects.data(id, 'local', {
-                    arr: selectDataInstall(positionDropdown, {
-                        "depotid": depotid
-                    }) //库位列表
-                });
             }
         });
+
+        //监听
+        formSelects.on('ownerSelect', function(id, vals, val, isAdd, isDisabled) {
+            if (!isAdd) {
+                formSelects.data('depotSelect', 'local', {
+                    arr: [] //清空仓库列表
+                });
+                formSelects.data('positionSelect', 'local', {
+                    arr: [] //清空库位列表
+                });
+            } else {
+                var depotList = selectDataInstall(depotDropdown, {
+                    "ownerid": vals[0].value //仓库列表
+                }, true);
+
+                if (depotList.length < 1) {
+                    formSelects.data('depotSelect', 'local', {
+                        arr: [] //清空仓库列表
+                    });
+                    formSelects.data('positionSelect', 'local', {
+                        arr: [] //清空库位列表
+                    });
+                    layer.msg("该货权人下无仓库信息");
+                    return false;
+                }
+                formSelects.data('depotSelect', 'local', {
+                    arr: depotList //仓库列表
+                });
+                formSelects.data('positionSelect', 'local', {
+                    arr: selectDataInstall(positionDropdown, {
+                        "depotid": depotList[0].value
+                    }, true) //库位列表
+                });
+            }
+        }, true);
+
+        //监听
+        formSelects.on('depotSelect', function(id, vals, val, isAdd, isDisabled) {
+            if (!isAdd) {
+                formSelects.data('positionSelect', 'local', {
+                    arr: [] //仓库列表
+                });
+            } else {
+                formSelects.data('positionSelect', 'local', {
+                    arr: selectDataInstall(positionDropdown, {
+                        "depotid": vals[0].value
+                    }, true) //仓库列表
+                });
+            }
+        }, true);
 
         formSelects.data('originSelect', 'local', {
             arr: selectDataInstall(CHDList) //产地列表
@@ -144,7 +182,7 @@
             arr: selectDataInstall(dropSupplier) //供应商列表
         });
 
-        function selectDataInstall(url, param) {
+        function selectDataInstall(url, param, bool) {
             //下拉选框数据组装
             var arr = [];
             //获取列表数据
@@ -155,7 +193,7 @@
                 async: false, //同步
                 traditional: true,
                 success: function(data) {
-                    console.log(data);
+                    // console.log(data);
                     if (data.status == 0) {
                         //把接口数据转换为[{"name":str,"value":number}]格式
                         if (!Array.isArray(data.data) || data.data.length == 0) {
@@ -168,6 +206,10 @@
                                 "value": data.data[i].id
                             })
                         }
+                        if (bool) {
+                            arr[0].selected = "selected";
+                        }
+
                     }
                 }
             })
@@ -285,14 +327,14 @@
                                             curr: 1 //重新从第 1 页开始
                                         }
                                     });
+                                } else {
+                                    layer.msg(res.msg);
                                 }
 
 
                             }
                         });
                     });
-
-
                 })
             },
             text: {
@@ -307,49 +349,49 @@
             $(".rightBotBtn span").html(checkStatus.data.length); //当前选中了多少商品
         });
 
-        $(".editBtn").click(function() {
-            //编辑
-            var checkStatus = table.checkStatus('tableContainers');
-            if (checkStatus.data.length < 1) {
-                layer.msg("请选择需要编辑的信息");
-            } else if (checkStatus.data.length > 1) {
-                layer.msg("请选择需要编辑的单条信息");
-            } else {
-                window.currData = checkStatus.data[0]; //全局对象存储当前选中行数据
-                $.get('view/stock/stock-goodsList.html', {}, function(str) {
-                    eaitLayer = layer.open({
-                        title: '编辑',
-                        type: 1,
-                        content: str, //注意，如果str是object，那么需要字符拼接。
-                        resize: false,
-                        area: ['800px', 'auto'],
-                    });
-                });
-            }
-        });
+        // $(".editBtn").click(function() {
+        //     //编辑
+        //     var checkStatus = table.checkStatus('tableContainers');
+        //     if (checkStatus.data.length < 1) {
+        //         layer.msg("请选择需要编辑的信息");
+        //     } else if (checkStatus.data.length > 1) {
+        //         layer.msg("请选择需要编辑的单条信息");
+        //     } else {
+        //         window.currData = checkStatus.data[0]; //全局对象存储当前选中行数据
+        //         $.get('view/stock/stock-goodsList.html', {}, function(str) {
+        //             eaitLayer = layer.open({
+        //                 title: '编辑',
+        //                 type: 1,
+        //                 content: str, //注意，如果str是object，那么需要字符拼接。
+        //                 resize: false,
+        //                 area: ['800px', 'auto'],
+        //             });
+        //         });
+        //     }
+        // });
 
-        form.on('submit(editForm)', function(data) {
-            //编辑提交
-            layer.confirm('确认提交修改', {
-                icon: 3,
-                title: '提示'
-            }, function(index) {
-                data.field.orderno = window.currData.orderno; //防止单号被篡改
-                data.field.origin = window.currData.origin; //
-                data.field.supplier = window.currData.supplier; //
-                rowDataApi(preEntryUpdate, data.field, function(data) {
-                    layer.close(index);
-                    layer.close(eaitLayer); //关闭
-                    // 刷新表格
-                    tableIns.reload({
-                        page: {
-                            curr: 1 //重新从第 1 页开始
-                        }
-                    });
-                })
-            })
-            return false;
-        });
+        // form.on('submit(editForm)', function(data) {
+        //     //编辑提交
+        //     layer.confirm('确认提交修改', {
+        //         icon: 3,
+        //         title: '提示'
+        //     }, function(index) {
+        //         data.field.orderno = window.currData.orderno; //防止单号被篡改
+        //         data.field.origin = window.currData.origin; //
+        //         data.field.supplier = window.currData.supplier; //
+        //         rowDataApi(preEntryUpdate, data.field, function(data) {
+        //             layer.close(index);
+        //             layer.close(eaitLayer); //关闭
+        //             // 刷新表格
+        //             tableIns.reload({
+        //                 page: {
+        //                     curr: 1 //重新从第 1 页开始
+        //                 }
+        //             });
+        //         })
+        //     })
+        //     return false;
+        // });
 
         $(".deleteBtn").click(function() {
             //删除

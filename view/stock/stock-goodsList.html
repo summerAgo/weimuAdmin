@@ -11,17 +11,17 @@
                             <input type="text" name="code" placeholder="包号" autocomplete="off" class="layui-input">
                         </div>
                         <div class="table-form-item layui-input-inline">
-                            <select name="varieties" xm-select="selectVarieties" xm-select-radio>
+                            <select name="varieties" xm-select="selectVarietiesGoods" xm-select-radio>
                                 <option value="">品种</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
-                            <select name="levels" xm-select="selectLevels" xm-select-radio>
+                            <select name="levels" xm-select="selectLevelsGoods" xm-select-radio>
                                 <option value="">等级</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
-                            <select name="spec" xm-select="selectSpec" xm-select-radio>
+                            <select name="spec" xm-select="selectSpecGoods" xm-select-radio>
                                 <option value="">规格</option>
                             </select>
                         </div>
@@ -29,7 +29,7 @@
                             <input type="text" name="containernum" placeholder="货柜号" autocomplete="off" class="layui-input">
                         </div>
                         <div class="table-form-item layui-input-inline">
-                            <select name="origin" xm-select="originSelect" xm-select-radio>
+                            <select name="origin" xm-select="originSelectGoods" xm-select-radio>
                                 <option value="">选择产地</option>
                             </select>
                         </div>
@@ -39,11 +39,11 @@
                         <div class="table-form-item layui-input-inline">
                             <input type="text" name="billloading" placeholder="提运单" autocomplete="off" class="layui-input">
                         </div>
-                        <div class="table-form-item layui-input-inline">
-                            <select name="ownerid" xm-select="ownerSelect" xm-select-radio>
+                        <!-- <div class="table-form-item layui-input-inline">
+                            <select name="ownerid" xm-select="ownerSelectGoods" xm-select-radio>
                                 <option value="">选择货权人</option>
                             </select>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="layui-form-item form-right">
                         <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="searchForm">
@@ -74,6 +74,10 @@
         </div>
         <div class="table-content-main">
             <table class="layui-hide" id="tableContainer-goodsList" lay-filter="tableContainer-goodsList"></table>
+            <div class="rightBotBtn">已选择<span>0</span>个商品 <a href="javascript:;" id="addgoodList"  class="layui-btn layui-btn-sm submissionBtn" >添加</a></div>
         </div>
     </div>
 </div>
+<style scoped>
+.rightBotBtn{text-align: right; padding:15px;}
+</style>
