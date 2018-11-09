@@ -262,7 +262,7 @@
             limits: [15, 20, 30, 40, 50],
             limit: 15, //每页默认显示的数量
             done: function(res, curr, count) {
-                var addtableBtn = '<div class="rightBotBtn">已新增<span>' + count + '</span>个货物 <a href="javascript:;" class="layui-btn layui-btn-primary layui-btn-sm subCancelBtn">取消</a><a href="javascript:;" class="layui-btn layui-btn-sm subConfirmBtn">确认</a></div>';
+                var addtableBtn = '<div class="rightBotBtn">已新增<span>' + count + '</span>个货物 <a href="javascript:;" class="layui-btn layui-btn-primary layui-btn-sm subCancelBtn">取消</a><a href="javascript:;" class="layui-btn layui-btn-normal layui-btn-sm">入库</a><a href="javascript:;" class="layui-btn layui-btn-sm subConfirmBtn">确认</a></div>';
 
                 $("#tableContainer-from").siblings(".layui-form ").find(".layui-table-page").append(addtableBtn);
 

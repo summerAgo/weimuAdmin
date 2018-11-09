@@ -80,7 +80,7 @@
 
         var tableIns = table.render({
             elem: '#tableContainer',
-            height: 'full-' + tableTopHeight, // full -- ?
+            height: 'full-' + tableTopHeight, // full
             url: outHistoryList, //数据接口
             // 任意数据格式解析成 table 组件规定的数据格式
             parseData: function (res) { //res 即为原始返回的数据
@@ -118,6 +118,7 @@
                     }, {
                         field: 'orderno',
                         title: '出库单',
+                        style: 'color:#4394ff',
                         sort: true
                     }, {
                         field: 'depname',
