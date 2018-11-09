@@ -124,7 +124,7 @@
             limits: [10, 20, 30, 40, 50], // 每页条数的选择项
             limit: 10, // 每页默认显示的数量
             done: function (res, curr, count) { // 数据渲染完的回调
-                
+
             },
             text: { // 自定义文本，如空数据时的异常提示等
                 none: "无匹配数据"
@@ -133,12 +133,12 @@
         });
 
         // 监听锁定操作
-        table.on('checkbox(tableContainer)', function(obj) {
+        table.on('checkbox(tableContainer)', function (obj) {
             var checkStatus = table.checkStatus('tableContainer'); // 表格选中状态
         });
 
         // 点击评估
-        $("#assess").click(function() {
+        $("#assess").click(function () {
             var checkStatus = table.checkStatus('tableContainer');
             if (checkStatus.data.length < 1) {
                 layer.msg("请选择需要评估的信息");
@@ -147,36 +147,36 @@
             } else {
                 sessionStorage.removeItem('risk_goodsAssess_data');
                 selectLibe(checkStatus.data[0].id);
-                $.get('view/risk/risk-layerAssess.html', {}, function(str) {
+                $.get('view/risk/risk-layerAssess.html', {}, function (str) {
                     assessLayer = layer.open({
                         type: 1,
                         content: str, // 注意，如果str是object，那么需要字符拼接。
                         resize: false,
-                        area: ['80%', '80%'],
+                        area: ['80%', 'auto'],
                     });
-                    
+
                 });
             }
         });
-        
-        //根据货权人ID查询货物
-        //当没有分页的时候
-        function selectLibe(id){
+
+        // 根据货权人ID查询货物
+        // 当没有分页的时候
+        function selectLibe(id) {
             $.ajax({
                 url: ilbstockList,
                 type: "GET",
-                async:false,
+                async: false,
                 data: {
-                    'person':id,
-                    'limit':null
+                    'person': id,
+                    'limit': null
                 },
                 traditional: true,
-                success: function(res){
-                    if(res.status == 0){
-                        //存列表数据
+                success: function (res) {
+                    if (res.status == 0) {
+                        // 存列表数据
                         sessionStorage.setItem('risk_goodsAssess_data', JSON.stringify(res.data));
                     }
-                   
+
                 }
             })
         }

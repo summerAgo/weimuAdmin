@@ -41,7 +41,10 @@
             <table class="layui-hide" id="tableContainer-from" lay-filter="tableContainer-from"></table>
         </div>
     </div>
-    <div class="rightBotBtn"><button class="layui-btn" lay-submit="" type="submit" lay-filter="keepSubmit">保存提交</button></div>
+    <div class="rightBotBtn">
+        <button class="layui-btn" lay-submit="" type="submit" lay-filter="pass">通过</button>
+        <button class="layui-btn layui-btn-primary" lay-submit="" type="submit" lay-filter="nopass">不通过</button>
+    </div>
 </div>
 <style scoped>
     .rightBotBtn {
@@ -62,9 +65,9 @@
         var tableData = [];
         var eaitLayer; // 弹层
 
-        form.render(); //重置表单渲染
-        formSelects.render(); //下拉选项
-        element.render('talbe-tools'); //表格工具栏
+        form.render(); // 重置表单渲染
+        formSelects.render(); // 下拉选项
+        element.render('talbe-tools'); // 表格工具栏
         formSelects.btns(['select', 'remove'], { // 干嘛用的
             show: 'name'
         });
@@ -95,10 +98,10 @@
             parseData: function (res) { //res 即为原始返回的数据
                 if (res.status !== 0) res.status = 0;
                 return {
-                    "code": res.status, //解析接口状态
-                    "msg": res.message, //解析提示文本
-                    "count": res.count, //解析数据长度
-                    "data": res.data //解析数据列表
+                    "code": res.status, // 解析接口状态
+                    "msg": res.message, // 解析提示文本
+                    "count": res.count, // 解析数据长度
+                    "data": res.data // 解析数据列表
                 }
             },
             // 用于对分页请求的参数：page、limit重新设定名称
