@@ -105,12 +105,6 @@
                 formSelects.data(id, 'local', {
                     arr: []
                 }); //如果货权人为空则清空列表
-            } else {
-                formSelects.data(id, 'local', {
-                    arr: selectDataInstall(depotDropdown, {
-                        "ownerid": ownerid
-                    }) //仓库列表
-                });
             }
         });
 
@@ -121,14 +115,32 @@
                 formSelects.data(id, 'local', {
                     arr: []
                 }); //如果仓库为空则清空列表
-            } else {
-                formSelects.data(id, 'local', {
-                    arr: selectDataInstall(positionDropdown, {
-                        "depotid": depotid
-                    }) //库位列表
-                });
             }
         });
+
+        //监听
+        formSelects.on('ownerSelect', function(id, vals, val, isAdd, isDisabled) {
+            if (!isAdd) {
+                formSelects.data('depotSelect', 'local', {
+                    arr: [] //清空仓库列表
+                });
+            } else {
+                var depotList = selectDataInstall(depotDropdown, {
+                    "ownerid": vals[0].value //仓库列表
+                }, true);
+
+                if (depotList.length < 1) {
+                    formSelects.data('depotSelect', 'local', {
+                        arr: [] //清空仓库列表
+                    });
+                    layer.msg("该货权人下无仓库信息");
+                    return false;
+                }
+                formSelects.data('depotSelect', 'local', {
+                    arr: depotList //仓库列表
+                });
+            }
+        }, true);
 
         var outBill = sessionStorage.getItem('addOutBill');
         // console.log(outBill);
@@ -154,10 +166,18 @@
             });
             $('.util-box').show(); //显示倒计时
             formSelects.data('ownerSelect', 'local', {
-                arr: [{"name":array.ownername,"value":array.ownerid,"selected":"selected"}] //货权人列表
+                arr: [{
+                    "name": array.ownername,
+                    "value": array.ownerid,
+                    "selected": "selected"
+                }] //货权人列表
             });
             formSelects.data('depotSelect', 'local', {
-                arr: [{"name":array.depname,"value":array.depotid,"selected":"selected"}] //货权人列表
+                arr: [{
+                    "name": array.depname,
+                    "value": array.depotid,
+                    "selected": "selected"
+                }] //货权人列表
             });
             formSelects.disabled('ownerSelect'); //禁用
             formSelects.disabled('depotSelect'); //禁用
@@ -178,9 +198,7 @@
             }
         });
 
-
-
-        function selectDataInstall(url, param) {
+        function selectDataInstall(url, param, bool) {
             //下拉选框数据组装
             var arr = [];
             //获取列表数据
@@ -204,7 +222,10 @@
                                 "value": data.data[i].id
                             })
                         }
-                        // arr[0].selected = "selected";
+                        if (bool) {
+                            arr[0].selected = "selected";
+                        }
+
                     }
                 }
             })
@@ -536,7 +557,10 @@
                     },
                     parseData: function(res) { //res 即为原始返回的数据
                         console.log(res)
-                        if (res.status !== 0) {res.status = 0;res.data = []}
+                        if (res.status !== 0) {
+                            res.status = 0;
+                            res.data = []
+                        }
                         var resData = res.data;
 
                         for (var i = 0; i < resData.length; i++) {
@@ -555,7 +579,7 @@
                             }
 
                         }
-                        
+
                         return {
                             "code": res.status, //解析接口状态
                             "msg": res.message, //解析提示文本
