@@ -49,6 +49,8 @@
 
         var examineLayer; // 审核-弹层
 
+        var _this = this;
+
         form.render(); // 重置表单渲染
         formSelects.render(); // 下拉选项
         element.render('talbe-tools'); // 表格工具栏
@@ -152,113 +154,123 @@
             if (obj.event === 'click') {
                 // sessionStorage.setItem('toExamine', JSON.stringify(data));
                 $.get('view/risk/risk-layerExamine.html', {}, function (str) {
-                    assessLayer = layer.open({
-                        title: '出货申请单审核',
-                        type: 1,
-                        content: str, // 注意，如果str是object，那么需要字符拼接。
-                        area: ['80%', '80%'],
-                    });
-
-                    var layerData;// 当前弹框页面数据
+                    
+                    var layerData; // 当前弹框页面数据
 
                     $.ajax({
                         url: outHistoryDetails,
                         type: "get",
                         data: {
-                            orderno: curData.orderno// 单号
+                            // orderno: curData.orderno// 单号
+                            orderno: "510422013202923520"// 单号
                         },
-                        async: false,
+                        async: false, // 同步
                         success: function (data) {
                             if (data.status == 0) {
-                                layerData = data;
+                                layerData = data.data;
+                                // 弹出弹框
+                                assessLayer = layer.open({
+                                    title: '出货申请单审核',
+                                    type: 1,
+                                    content: str, // 注意，如果str是object，那么需要字符拼接。
+                                    area: ['80%', '80%'],
+                                });
+                                // 渲染弹框页面
+                                layerOut(layerData);
                             } else {
                                 layer.msg("页面信息获取失败，请刷新浏览器")
                             }
                         }
                     });
 
-                    var getTpl = demo.innerHTML, view = $(".lss-bread-crumb")[0];
-                    laytpl(getTpl).render(layerData, function (html) {
-                        view.innerHTML = html;
-                    });
-
-                    var tableIns = table.render({
-                        elem: '#tableContainer-from',
-                        height: 'auto', // full -- 高度将始终铺满 - 差值
-                        data: layerData.data,
-                        // 用于对分页请求的参数：page、limit重新设定名称
-                        cols: [
-                            [ // 标题栏
-                                {
-                                    field: 'packet',
-                                    title: '包号',
-                                    sort: true
-                                }, {
-                                    field: 'varieties',
-                                    title: '品种',
-                                    sort: true
-                                }, {
-                                    field: 'thickness',
-                                    title: '规格/厚度',
-                                    sort: true
-                                }, {
-                                    field: 'grade',
-                                    title: '等级',
-                                    sort: true
-                                }, {
-                                    field: 'lenght',
-                                    title: '长度',
-                                    sort: true
-                                }, {
-                                    field: 'brand',
-                                    title: '品牌',
-                                    sort: true
-                                }, {
-                                    field: 'place',
-                                    title: '产地',
-                                    sort: true
-                                }, {
-                                    field: 'cube',
-                                    title: '数量(m³)',
-                                    sort: true
-                                }, {
-                                    field: 'place',
-                                    title: '库位',
-                                    sort: true
-                                }, {
-                                    field: 'batch',
-                                    title: '货柜号/批次号',
-                                    sort: true
-                                }, {
-                                    field: 'remarks',
-                                    title: '备注',
-                                    sort: true
-                                }
-                            ]
-                        ],
-                        even: true, // 开启隔行背景
-                        done: function (res, curr, count) { // 数据渲染完的回调
-
-                        },
-                        text: { // 自定义文本，如空数据时的异常提示等
-                            none: "无匹配数据"
-                        },
-                        loading: true  // 是否显示加载条，默认true
-                    });
-                    
-                    $(".passBtn").click(function(){
-                        $.get(url,{rerpe:data.re},function(data){
-                            if(data.status == 0){
-                                layer.close(assessLayer)
-                            }else{
-                                layer.msg(data.msg)
-                            }
-                        })
-                    })
-
                 });
             }
         });
 
+        // 渲染弹框函数
+        var layerOut = function (layerData) {
+            // 弹框 - 模板渲染
+            var getTpl = demo.innerHTML, view = $(".lss-bread-crumb")[0];
+            laytpl(getTpl).render(layerData, function (html) {
+                view.innerHTML = html;
+            });
+            console.log("弹框表格数据" + layerData.datalist);
+            var tableIns = table.render({
+                elem: '#tableContainer-from',
+                height: 'auto', // full -- 高度将始终铺满 - 差值
+                data: layerData.datalist,
+                // 用于对分页请求的参数：page、limit重新设定名称
+                cols: [
+                    [ // 标题栏
+                        {
+                            field: 'code',
+                            title: '包号',
+                            sort: true
+                        }, {
+                            field: 'varieties',
+                            title: '品种',
+                            sort: true
+                        }, {
+                            field: 'thickness',
+                            title: '规格/厚度',
+                            sort: true
+                        }, {
+                            field: 'levels',
+                            title: '等级',
+                            sort: true
+                        }, {
+                            field: 'chang',
+                            title: '长度',
+                            sort: true
+                        }, {
+                            field: 'brand',
+                            title: '品牌',
+                            sort: true
+                        }, {
+                            field: 'origin',
+                            title: '产地',
+                            sort: true
+                        }, {
+                            field: 'num',
+                            title: '数量(m³)',
+                            sort: true
+                        }, {
+                            field: 'status',
+                            title: '库位',
+                            sort: true
+                        }, {
+                            field: 'containernum',
+                            title: '货柜号/批次号',
+                            sort: true
+                        }, {
+                            field: 'remarks',
+                            title: '备注',
+                            sort: true
+                        }
+                    ]
+                ],
+                even: true, // 开启隔行背景
+                done: function (res, curr, count) { // 数据渲染完的回调
+
+                },
+                text: { // 自定义文本，如空数据时的异常提示等
+                    none: "无匹配数据"
+                },
+                loading: true  // 是否显示加载条，默认true
+            });
+
+            $(".passBtn").click(function () {
+                $.get(url, { rerpe: data.re }, function (data) {
+                    if (data.status == 0) {
+                        layer.close(assessLayer)
+                    } else {
+                        layer.msg(data.msg)
+                    }
+                })
+            })
+        }
+
     });
 </script>
+
+<!-- {"containernum":"sy20180522-2","code":"1239","varieties":"樱桃","chang":"10~12","num":1,"origin":"1","brand":"绿巨人","levels":"3C","remarks":"sy20180522-2","spec":"3/4","status":3}-->

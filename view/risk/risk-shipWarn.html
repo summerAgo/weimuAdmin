@@ -79,27 +79,6 @@
             return false;
         });
 
-        $("#modify").click(function () {
-            //修改
-            var checkStatus = table.checkStatus('tableContainer'); // 监听是否选择表格项
-            if (checkStatus.data.length < 1) {
-                layer.msg("请选择需要编辑的信息");
-            } else if (checkStatus.data.length > 1) {
-                layer.msg("请选择需要编辑的单条信息");
-            } else {
-                sessionStorage.setItem('formModifyWarn', JSON.stringify(checkStatus.data[0]));// 将所选仓库信息存储到本地作为回显
-                $.get('view/risk/risk-layerModifyWarn.html', {}, function (str) {
-                    modifyLayer = layer.open({
-                        title: '出货警戒线修改',
-                        type: 1,
-                        content: str, // 注意，如果str是object，那么需要字符拼接。
-                        resize: false,
-                        area: ['800px', 'left'],
-                    });
-                });
-            }
-        });
-
         var tableIns = table.render({
             elem: '#tableContainer',
             height: 'full-' + tableTopHeight, // full
@@ -167,6 +146,27 @@
                 none: "无匹配数据"
             },
             loading: true  // 是否显示加载条，默认true
+        });
+
+        $("#modify").click(function () {
+            //修改
+            var checkStatus = table.checkStatus('tableContainer'); // 监听是否选择表格项
+            if (checkStatus.data.length < 1) {
+                layer.msg("请选择需要编辑的信息");
+            } else if (checkStatus.data.length > 1) {
+                layer.msg("请选择需要编辑的单条信息");
+            } else {
+                sessionStorage.setItem('formModifyWarn', JSON.stringify(checkStatus.data[0]));// 将所选仓库信息存储到本地作为回显
+                $.get('view/risk/risk-layerModifyWarn.html', {}, function (str) {
+                    modifyLayer = layer.open({
+                        title: '出货警戒线修改',
+                        type: 1,
+                        content: str, // 注意，如果str是object，那么需要字符拼接。
+                        resize: false,
+                        area: ['800px', 'left'],
+                    });
+                });
+            }
         });
 
     });

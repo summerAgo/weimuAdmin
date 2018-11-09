@@ -81,7 +81,7 @@
 
         var tableIns = table.render({
             elem: '#tableContainer',
-            height: 'full-' + tableTopHeight, // full -- ?
+            height: 'full-' + tableTopHeight, // full -- 差值
             url: riskList, //数据接口
             // 任意数据格式解析成 table 组件规定的数据格式
             parseData: function (res) { //res 即为原始返回的数据
@@ -145,10 +145,10 @@
             } else if (checkStatus.data.length > 1) {
                 layer.msg("请选择需要评估的单条信息");
             } else {
-                sessionStorage.removeItem('risk_goodsAssess_data');
-                selectLibe(checkStatus.data[0].id);
-                $.get('view/risk/risk-layerAssess.html', {}, function (str) {
-                    assessLayer = layer.open({
+                sessionStorage.removeItem('risk_goodsAssess_data'); // 先清除上传存储的数据
+                selectLibe(checkStatus.data[0].id); // 请求接口数据
+                $.get('view/risk/risk-layerAssess.html', {}, function (str) { // 弹出弹框
+                    assessLayer = layer.open({ 
                         type: 1,
                         content: str, // 注意，如果str是object，那么需要字符拼接。
                         resize: false,

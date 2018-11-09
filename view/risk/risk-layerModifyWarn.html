@@ -1,23 +1,30 @@
-<div id="depotView"></div>
-<script id="depotTle" type="text/html">
-    <form class="layui-form layui-form-pane" action="">
-        <div class="layui-form-item">
-            <label class="layui-form-label">融资金额</label>
-            <div class="layui-input-block">
-                <input type="text" name="financingmoney" placeholder="输入融资金额" value="{{d.financingmoney || ''}}" autocomplete="off" class="layui-input" lay-verify="required">
-            </div>
+<form class="layui-form" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">货权人</label>
+        <div class="layui-input-block">
+            <div class="area-disable" data-name="cargoowner">张三丰</div>
         </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">警戒线</label>
-            <div class="layui-input-block">
-                <input type="text" name="cordonmoney" placeholder="输入警戒金额" value="{{d.cordonmoney || ''}}" autocomplete="off" class="layui-input" lay-verify="required">
-            </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">融资金额</label>
+        <div class="layui-input-inline">
+            <input type="text" name="capital" required lay-verify="required" placeholder="请输入融资金额" autocomplete="off"
+                class="layui-input">
         </div>
-        <div class="layui-form-item">
-            <label class="layui-form-label">比例</label>
-            <div class="layui-input-block">
-                <input type="text" name="proportion" placeholder="输入比例" value="" autocomplete="off" class="layui-input" lay-verify="required">
-            </div>
+        <div class="layui-form-mid layui-word-aux">元</div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">警戒线</label>
+        <div class="layui-input-inline">
+            <input type="text" name="warn" required lay-verify="required" placeholder="请输入警戒线金额" autocomplete="off"
+                class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux">元</div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">比例</label>
+        <div class="layui-input-inline">
+            <div class="area-disable" data-name="proportion">25%</div>
         </div>
     </div>
     <div class="layui-form-item">
@@ -33,10 +40,12 @@
         max-width: 800px;
         margin: 10px 0;
     }
+
     .area-disable {
         line-height: 38px;
     }
 </style>
+
 <script>
     layui.use(['form', 'jquery', 'element', 'layer', 'formSelects', 'laytpl', 'laydate'], function () {
         var element = layui.element;
@@ -45,7 +54,8 @@
         var formSelects = layui.formSelects;
         var laytpl = layui.laytpl;
 
-        var dataType = JSON.parse(sessionStorage.getItem('formModifyWarn')) || {};// 获取本地所选仓库信息，判断是否为修改
+        var dataType = JSON.parse(sessionStorage.getItem('formModifyWarn')) || {}; // 获取本地所选仓库信息，判断是否为修改
+        // 渲染模板的内容
 
     });
 </script>
