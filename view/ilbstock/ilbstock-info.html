@@ -263,8 +263,8 @@
             ],
             even: true,
             page: true, //是否显示分页
-            limits: [10, 20, 30, 40, 50],
-            limit: 10, //每页默认显示的数量
+            limits: [15, 20, 30, 40, 50],
+            limit: 15, //每页默认显示的数量
             done: function(res, curr, count) {
                 console.log(res);
                 var addtableBtn = '<div class="rightBotBtn">合计总库存数量<span>' + res.znum + '</span>㎡ 总库存估价金额：<span>' + res.aprice + '</span>(RMB)</div>';
@@ -280,5 +280,6 @@
         $("#toExport").on('click', function(e) {
             window.location.href = ilbstockExportUrl
         });
+        
     });
 </script>

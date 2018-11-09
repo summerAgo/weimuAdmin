@@ -249,6 +249,7 @@
 			if(outBill == null){
 				formSelects.undisabled('cargoownerOne');//启用
 				formSelects.undisabled('depotnameOne');//启用
+				$("input[name='estimatedate']").attr("disabled",false)
 				ownerDrop(null,null);
 			}else{
 				data["outorderno"]=array.orderno;
@@ -257,7 +258,7 @@
 				$("#estimatedate").val(array.outdate);
 				formSelects.disabled('cargoownerOne');//禁用
 				formSelects.disabled('depotnameOne');//禁用
-
+				$("input[name='estimatedate']").attr("disabled",true)
 				ownerDrop(array.ownerid,array.depotid);
 			}
 			
