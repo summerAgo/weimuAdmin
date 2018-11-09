@@ -82,7 +82,7 @@
         var tableIns = table.render({
             elem: '#tableContainer',
             height: 'full-' + tableTopHeight, // full -- ?
-            url: entryHistory, //数据接口
+            url: riskList, //数据接口
             // 任意数据格式解析成 table 组件规定的数据格式
             parseData: function (res) { //res 即为原始返回的数据
                 if (res.status !== 0) res.status = 0;
@@ -103,17 +103,17 @@
                     {
                         type: 'checkbox'
                     }, {
-                        field: 'ownername', // 设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识
+                        field: 'name', // 设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识
                         title: '货权人',
                         width: 266,
                         sort: true
                     }, {
-                        field: 'noevaluategoods',
+                        field: 'untreated',
                         title: '未评估商品',
                         width: 266,
                         sort: true
                     }, {
-                        field: 'yesevaluategoods',
+                        field: 'already',
                         title: '已评估商品',
                         sort: true
                     }
@@ -145,16 +145,40 @@
             } else if (checkStatus.data.length > 1) {
                 layer.msg("请选择需要评估的单条信息");
             } else {
-                console.log(checkStatus.data.length);
+                sessionStorage.removeItem('risk_goodsAssess_data');
+                selectLibe(checkStatus.data[0].id);
                 $.get('view/risk/risk-layerAssess.html', {}, function(str) {
                     assessLayer = layer.open({
                         type: 1,
                         content: str, // 注意，如果str是object，那么需要字符拼接。
                         resize: false,
-                        area: ['80%', 'auto'],
+                        area: ['80%', '80%'],
                     });
+                    
                 });
             }
         });
+        
+        //根据货权人ID查询货物
+        //当没有分页的时候
+        function selectLibe(id){
+            $.ajax({
+                url: ilbstockList,
+                type: "GET",
+                async:false,
+                data: {
+                    'person':id,
+                    'limit':null
+                },
+                traditional: true,
+                success: function(res){
+                    if(res.status == 0){
+                        //存列表数据
+                        sessionStorage.setItem('risk_goodsAssess_data', JSON.stringify(res.data));
+                    }
+                   
+                }
+            })
+        }
     });
 </script>
