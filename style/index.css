@@ -111,7 +111,7 @@
 .nav-tabs .layui-tab-bar{border: 1px solid #b6b6b6; background:#d9d9d9}
 
 /* form */
-.table-page-form {padding: 10px 0;}
+.table-page-form {padding: 4px 0;}
 .form-box {display: flex;}
 .table-page-form .table-form-item {margin:5px 0 5px 10px;}
 .form-left {flex:1 1 1370px;margin:0;}

@@ -1,6 +1,6 @@
 var localport = ":8000";//本地端口
-var localhost = "http://192.168.10.101" + localport;//本地
-var pathUrl = "http://192.168.10.201:80/storage-web/"; //?username=admin&password=123456
+var localhost = "http://192.168.10.216" + localport;//本地
+var pathUrl = "http://192.168.10.201:8080/storage-web/"; //?username=admin&password=123456
 var loginUrl = pathUrl + "sys/login"; //登录
 //基础货物公共信息
 var commonBaseUrl = pathUrl + "c/goodsbasics/list"; //查询货物
@@ -9,6 +9,7 @@ var ilbstockAdd = pathUrl + "lb/ilbstock/add";//增
 var ilbstockDelete = pathUrl + "lb/ilbstock/delete";//删
 var ilbstockUpdate = pathUrl + "lb/ilbstock/update";//改
 var ilbstockList = pathUrl + "lb/ilbstock/list";//查
+var ilbstockListAll = pathUrl + "lb/ilbstock/listAll";//查
 var ilbstockImportUrl = pathUrl + "lb/ilbstock/importExcel"; //导入
 var ilbstockExportUrl = pathUrl + "lb/ilbstock/exportExcel"; //导出
 var ilbstockImportTemp = pathUrl + "template/预入库导入.xlsx"; //导入模板
@@ -113,7 +114,6 @@ var rolegetAuthority = pathUrl + "sys/role/getAuthority";//查询角色对应菜
 var menugetAuthority = pathUrl + "sys/menu/getAuthority";//查询菜单对应按钮(menuid 菜单id)
 
 var getAuthorityAll = pathUrl + "sys/role/getAuthorityAll";//根据角色id查询所有的按钮权限(roleid=2)
-var getAuthorityAll = pathUrl + "sys/role/getAuthorityAll";//根据角色id查询所有的按钮权限(roleid=2)
 var setAuthorityAll = pathUrl + "sys/role/setAuthorityAll";//添加角色权限 roleid角色id，allauth 权限[{'菜单id':[按钮id]}]
 //风控
 var riskList = pathUrl + "risk/control/riskList" //商品评估列表 
@@ -124,4 +124,3 @@ var outHistoryList = pathUrl + "risk/control/outHistoryList" //风控审核过�
 var saveEvaluationPrice = pathUrl + "risk/control/saveEvaluationPrice" //保存修改的商品评估价
 var outCordonList = pathUrl + "risk/control/outCordonList" //出货警戒线列表
 var outHistoryDetails = pathUrl + "risk/control/outHistoryDetails"//出货审核记录详情
-
