@@ -119,6 +119,8 @@ var setAuthorityAll = pathUrl + "sys/role/setAuthorityAll";//添加角色权限 
 var riskList = pathUrl + "risk/control/riskList" //商品评估列表 
 var outTreasuryList = pathUrl + "risk/control/outTreasuryList" //出货审核列表
 var setThroughOut = pathUrl + "risk/control/setThroughOut" //设置通过出货审核
-var outHistoryList = pathUrl + "risk/control/outHistoryList" //出货审核记录
-var saveEvaluationPrice = pathUrl + "risk/control/saveEvaluationPrice" //出货审核记录
+var outHistoryList = pathUrl + "risk/control/outHistoryList" //风控审核过的出货记录
+var saveEvaluationPrice = pathUrl + "risk/control/saveEvaluationPrice" //保存修改的商品评估价
+var outCordonList = pathUrl + "risk/control/outCordonList" //出货警戒线列表
+
 

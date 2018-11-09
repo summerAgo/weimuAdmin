@@ -2,27 +2,21 @@
 <script id="depotTle" type="text/html">
     <form class="layui-form layui-form-pane" action="">
         <div class="layui-form-item">
-            <label class="layui-form-label">货权人</label>
-            <div class="layui-input-block">
-                <input type="text" name="cargoowner" placeholder="编号" value="{{d.cargoowner || ''}}" autocomplete="off" class="layui-input" lay-verify="required">
-            </div>
-        </div>
-        <div class="layui-form-item">
             <label class="layui-form-label">融资金额</label>
             <div class="layui-input-block">
-                <input type="text" name="capital" placeholder="输入融资金额" value="{{d.capital || ''}}" autocomplete="off" class="layui-input" lay-verify="required">
+                <input type="text" name="financingmoney" placeholder="输入融资金额" value="{{d.financingmoney || ''}}" autocomplete="off" class="layui-input" lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">警戒线</label>
             <div class="layui-input-block">
-                <input type="text" name="warn" placeholder="输入警戒金额" value="{{d.warn || ''}}" autocomplete="off" class="layui-input" lay-verify="required">
+                <input type="text" name="cordonmoney" placeholder="输入警戒金额" value="{{d.cordonmoney || ''}}" autocomplete="off" class="layui-input" lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">比例</label>
             <div class="layui-input-block">
-                <input type="text" name="proportion" placeholder="输入比例" value="{{d.proportion || ''}}" autocomplete="off" class="layui-input" lay-verify="required">
+                <input type="text" name="proportion" placeholder="输入比例" value="" autocomplete="off" class="layui-input" lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item">

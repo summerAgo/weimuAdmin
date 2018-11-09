@@ -33,9 +33,6 @@
                     <li class="layui-nav-item">
                         <a id="modify" href="javascript:;">修改</a>
                     </li>
-                    <li class="layui-nav-item">
-                        <a id="delete" href="javascript:;">删除</a>
-                    </li>
                 </ul>
             </div>
         </div>
@@ -106,7 +103,7 @@
         var tableIns = table.render({
             elem: '#tableContainer',
             height: 'full-' + tableTopHeight, // full
-            url: entryHistory, // 数据接口
+            url: outCordonList, // 数据接口
             // 任意数据格式解析成 table 组件规定的数据格式
             parseData: function (res) { // res 即为原始返回的数据
                 if (res.status !== 0) res.status = 0;
@@ -127,24 +124,35 @@
                     {
                         type: 'checkbox'
                     }, {
-                        field: 'ownername',
+                        field: 'name',
                         title: '货权人',
                         width: 266,
                         sort: true
                     }, {
-                        field: 'financeamount',
+                        field: 'financingmoney',
                         title: '融资金额',
                         width: 266,
                         sort: true
                     }, {
-                        field: 'cordon',
-                        title: '警戒线',
+                        field: 'cordonmoney',
+                        title: '警戒线金额',
                         width: 266,
                         sort: true
                     }, {
-                        field: 'proportion',
+                        field: 'null',
                         title: '比例',
-                        sort: true
+                        sort: true,
+                        templet: function (d) {
+                            var financingmoney = d.financingmoney;
+                            var cordonmoney = d.cordonmoney;
+                            //默认无
+                            if (financingmoney == null || cordonmoney == null) {
+                                return '无';
+                            }
+                            var a = cordonmoney/financingmoney;
+                            //这里需要保留2位小数，杨乐弄
+                            return a+'%';
+                        }
                     }
                 ]
             ],
