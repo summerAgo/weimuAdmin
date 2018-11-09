@@ -105,15 +105,6 @@
                 formSelects.data(id, 'local', {
                     arr: []
                 }); //如果货权人为空则清空列表
-<<<<<<< HEAD
-            } else {
-                formSelects.data(id, 'local', {
-                    arr: selectDataInstall(depotDropdown, {
-                        "ownerid": ownerid
-                    }) //仓库列表
-                });
-=======
->>>>>>> b2f91ace94314ebc6fbed8042d2343ed96d09e5c
             }
         });
 
@@ -124,16 +115,6 @@
                 formSelects.data(id, 'local', {
                     arr: []
                 }); //如果仓库为空则清空列表
-<<<<<<< HEAD
-            } else {
-                formSelects.data(id, 'local', {
-                    arr: selectDataInstall(positionDropdown, {
-                        "depotid": depotid
-                    }) //库位列表
-                });
-            }
-        });
-=======
             }
         });
 
@@ -160,7 +141,6 @@
                 });
             }
         }, true);
->>>>>>> b2f91ace94314ebc6fbed8042d2343ed96d09e5c
 
         var outBill = sessionStorage.getItem('addOutBill');
         // console.log(outBill);
@@ -186,12 +166,6 @@
             });
             $('.util-box').show(); //显示倒计时
             formSelects.data('ownerSelect', 'local', {
-<<<<<<< HEAD
-                arr: [{"name":array.ownername,"value":array.ownerid,"selected":"selected"}] //货权人列表
-            });
-            formSelects.data('depotSelect', 'local', {
-                arr: [{"name":array.depname,"value":array.depotid,"selected":"selected"}] //货权人列表
-=======
                 arr: [{
                     "name": array.ownername,
                     "value": array.ownerid,
@@ -204,7 +178,6 @@
                     "value": array.depotid,
                     "selected": "selected"
                 }] //货权人列表
->>>>>>> b2f91ace94314ebc6fbed8042d2343ed96d09e5c
             });
             formSelects.disabled('ownerSelect'); //禁用
             formSelects.disabled('depotSelect'); //禁用
@@ -225,13 +198,8 @@
             }
         });
 
-<<<<<<< HEAD
 
-
-        function selectDataInstall(url, param) {
-=======
         function selectDataInstall(url, param, bool) {
->>>>>>> b2f91ace94314ebc6fbed8042d2343ed96d09e5c
             //下拉选框数据组装
             var arr = [];
             //获取列表数据
@@ -255,14 +223,10 @@
                                 "value": data.data[i].id
                             })
                         }
-<<<<<<< HEAD
-                        // arr[0].selected = "selected";
-=======
                         if (bool) {
                             arr[0].selected = "selected";
                         }
 
->>>>>>> b2f91ace94314ebc6fbed8042d2343ed96d09e5c
                     }
                 }
             })
@@ -594,14 +558,10 @@
                     },
                     parseData: function(res) { //res 即为原始返回的数据
                         console.log(res)
-<<<<<<< HEAD
-                        if (res.status !== 0) {res.status = 0;res.data = []}
-=======
                         if (res.status !== 0) {
                             res.status = 0;
                             res.data = []
                         }
->>>>>>> b2f91ace94314ebc6fbed8042d2343ed96d09e5c
                         var resData = res.data;
 
                         for (var i = 0; i < resData.length; i++) {
@@ -620,11 +580,7 @@
                             }
 
                         }
-<<<<<<< HEAD
-                        
-=======
 
->>>>>>> b2f91ace94314ebc6fbed8042d2343ed96d09e5c
                         return {
                             "code": res.status, //解析接口状态
                             "msg": res.message, //解析提示文本
