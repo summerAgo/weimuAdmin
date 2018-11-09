@@ -40,7 +40,6 @@
                                 <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="searchForm">
                                     <i class="iconfont icon-sousuo"></i> <span>查询</span>
                                 </button>
-                                <button type="reset" class="layui-btn layui-btn-primary"> <i class="layui-icon layui-icon-refresh"></i></button>
                             </div>
                         </div>
                     </form>
@@ -195,7 +194,7 @@
                             type: 1,
                             content: str, //注意，如果str是object，那么需要字符拼接。
                             resize: false,
-                            area: ['800px', 'auto'],
+                            area: ['800px', '50%'],
                         });
                     });
                     return false;
@@ -229,7 +228,7 @@
                     // data.field.orderno = window.currData.orderno; //防止单号被篡改
                     // data.field.origin = window.currData.origin; //
                     // data.field.supplier = window.currData.supplier; //
-                    var fromdata = $(".infodata_form").serialize();
+                   /// var fromdata = $(".infodata_form").serialize();
                     //var fromdataarr = $(".infodata_form").serializeArray();
                     var id = data.field.id;
                     var url = basicsInfoUpdate;
@@ -237,8 +236,14 @@
                     if (undefined == id || '' == id) {
                         url = basicsInfoAdd
                     }
+                    var instid =data.field.instid.split("/");
+                    var ints = instid[instid.length-1];
+                    if(ints == ""){
+                        ints = instid[0];
+                    }
+                    data.field.instid=ints;
 
-                    $.get(url, fromdata, function (data) {
+                    $.get(url,  data.field, function (data) {
                         sessionStorage.removeItem('base_infodata_data');
                         layer.close(addLayer); //关闭
                         // 刷新表格
@@ -328,6 +333,7 @@
                         var insData = res.data;
                         inaAllList = insData;
                         var val=[];
+                        menuIns = insData[0];
                         for(var i=0;i<insData.length;i++){
                             if(insData[i].pid == 0){
                                 val.push(insData[i]);

@@ -105,11 +105,11 @@
                 linkage: true
             });
             if(number.length == 0){
-                //number =instid+"/";
+                number =instid+"/";
             }else{
                 number =number +instid;
-                layui.formSelects.value('instidSelect', [number]);
             }
+            layui.formSelects.value('instidSelect', [number]);
            
         }
     });

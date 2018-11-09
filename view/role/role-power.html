@@ -70,9 +70,9 @@
                  var roleAut= window.currData;
                  var roleData={"roleid":roleAut.id};
                  //查询角色菜单权限
-                 allMuneAuthority(roleData,function(res){
+                 getButAuthorityAll(roleData,function(res){
                      var allMenu = data.data;
-                     var ant = [] ;
+                     var ant = {};
                      if(res.status == 0){
                         ant = res.data;
                      }
@@ -81,20 +81,23 @@
                             var map = {};
                             map["label"]=allMenu[i].name
                             map["value"]=allMenu[i].id;
-                            for(var j=0;j<ant.length;j++){
-                                if(allMenu[i].id == ant[j]){
+                            /*for(var key in ant){ //循环每个菜单
+                                if(allMenu[i].id == key){
                                     map["checked"]=true;
                                     break;
+                                }else{
+                                    map["checked"]=false;
                                 }
-                            }
+                            }*/
+                                
                             var list =[];
                             for(var k=0;k<allMenu.length;k++){
                                 if(allMenu[i].id == allMenu[k].pid){
                                     var mapTwo = {};
                                     mapTwo["label"]=allMenu[k].name
                                     mapTwo["value"]=allMenu[k].id;
-                                    for(var h=0;h<ant.length;h++){
-                                        if(allMenu[i].id == ant[h]){
+                                    for(var key in ant){ //循环每个菜单
+                                        if(allMenu[k].id == key){
                                             mapTwo["checked"]=true;
                                             break;
                                         }else{
@@ -110,6 +113,7 @@
                             trees.push(map);
                          }
                      }
+                     console.log(trees);
                      eleTree.render({
                         elem: '.ele1',
                         data: trees,
@@ -122,27 +126,18 @@
                     allButtonData(function (res){//查询所有的按钮
                         allbutData = res.data;
                     });
-                    getButAuthorityAll(roleData,function(res){//查询所有的按钮权限
-                        if(res.status == 0){
-                            var buttonAut = res.data;
-                           // allAuthority ;//所有的权限格式：[{'菜单id':[按钮id]}]
-                            for(var i=0;i<ant.length;i++){
-                                var keys =ant[i].menuid;
-                                var map = {};
-                                var butlist=[]
-                                for(var j=0;j<buttonAut.length;j++){
-                                    var but = buttonAut[j];
-                                    if(ant[i] = but.menuid ){//按钮id是否相同
-                                        butlist.push(but.buttonid);
-                                    }
-                                }
-                                map[keys] = butlist;
-                                allAuthority.push(map);
-                            }
-                            var val = JSON.stringify(allAuthority);
-                            sessionStorage.setItem('allAuthority', val);
-                        }
-                    });
+    
+                    // allAuthority ;//所有的权限格式：[{'菜单id':[按钮id]}]
+                    for(var key in ant){ //循环每个菜单
+                        var map = {};
+                        var butlist=ant[key];
+                        map[key] = butlist;
+                        allAuthority.push(map);
+                    }
+                    console.log(allAuthority);
+                    var val = JSON.stringify(allAuthority);
+                    sessionStorage.setItem('allAuthority', val);
+                    
                  });
 
                 
@@ -176,8 +171,6 @@
             console.log(4);
             console.log(data);
             var cur=data.currentData;
-            var isChoice = cur.checked
-            muneAut(cur.value,isChoice);
             //是否有子节点
             if(cur.children){
                 var children =cur.children;
@@ -185,6 +178,9 @@
                     var child= children[i];
                     muneAut(child.value,isChoice);
                 }
+            }else{
+                var isChoice = cur.checked
+                muneAut(cur.value,isChoice);
             }
             menuid = cur.value;
             allbutton(cur.value);
@@ -194,7 +190,10 @@
 
         //根据选中以及取消菜单权限赋值menuid(菜单id)，isChoice(选中还是权限)
         function muneAut(menuids,isChoice){
+            console.log("111qqqq");
+            console.log(allAuthority);
             var number =0;//是否已经存在权限里面,0:否，1：是
+            var dellist =[];//要删除的id
             for(var k=0;k<allAuthority.length;k++){
                 var autData = allAuthority[k];
                 for(var key in autData){ //循环每个菜单的权限
@@ -202,17 +201,22 @@
                         var map ={};
                         number =1;
                         var butlist =[];
+                        console.log(key+"=="+menuids);
+                        console.log(key+"=="+menuids);
                         if(isChoice){
                             for(var i=0;i<allbutData.length;i++){
-                                var map = allbutData[i];
-                                if(map.menuid == menuids){
-                                    butlist.push(map.id);
+                                var mapTwo = allbutData[i];
+                                if(mapTwo.menuid == menuids){
+                                    butlist.push(mapTwo.id);
                                 }
                             }
-
+                           
+                        }else{
+                            dellist.push(key);
                         }
                         map[key] =butlist;
                         allAuthority[k]=map
+                       
                     }
                 }
             }
@@ -226,10 +230,22 @@
                             butlist.push(maps.id);
                         }
                     }
-
+                    map[menuids] = butlist;
+                    allAuthority.push(map)
                 }
-                map[menuids] = butlist;
-                allAuthority.push(map)
+               
+            }
+            if(dellist.length > 0){//删除数据
+                for(var i=0;i<dellist.length;i++){
+                    for(var k=0;k<allAuthority.length;k++){
+                        var autData = allAuthority[k];
+                        for(var key in autData){ //循环每个菜单的权限
+                            if(key == dellist[i]){
+                                allAuthority.splice(k,k+1);//删除
+                            }
+                        }
+                    }
+                }
             }
             var val = JSON.stringify(allAuthority);
             sessionStorage.setItem('allAuthority', val);
