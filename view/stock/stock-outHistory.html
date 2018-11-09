@@ -114,15 +114,26 @@
         formSelects.on('ownerSelect', function(id, vals, val, isAdd, isDisabled) {
             if (!isAdd) {
                 formSelects.data('depotSelect', 'local', {
-                    arr: [] //仓库列表
+                    arr: [] //清空仓库列表
                 });
                 formSelects.data('positionSelect', 'local', {
-                    arr: [] //库位列表
+                    arr: [] //清空库位列表
                 });
             } else {
                 var depotList = selectDataInstall(depotDropdown, {
-                    "ownerid": vals[0].value//仓库列表
+                    "ownerid": vals[0].value //仓库列表
                 }, true);
+
+                if (depotList.length < 1) {
+                    formSelects.data('depotSelect', 'local', {
+                        arr: [] //清空仓库列表
+                    });
+                    formSelects.data('positionSelect', 'local', {
+                        arr: [] //清空库位列表
+                    });
+                    layer.msg("该货权人下无仓库信息");
+                    return false;
+                }
                 formSelects.data('depotSelect', 'local', {
                     arr: depotList //仓库列表
                 });
