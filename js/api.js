@@ -75,10 +75,10 @@ var basicsInfoAdd = pathUrl + "basics/info/add";
 var basicsInfoDelete = pathUrl + "basics/info/delete"; 
 var basicsInfoUpdate = pathUrl + "basics/info/update"; 
 var basicsInfoList = pathUrl + "basics/info/list"; //查询
-var CHDList = pathUrl + "basics/info/getCodeList?instid=46"; //根据code查询接口 //产地列表
-var VTSList = pathUrl + "basics/info/getCodeList?instid=45"; //根据code查询接口 //品种列表
-var levelsList = pathUrl + "basics/info/getCodeList?instid=47"; //根据code查询接口 //等级列表
-var specList = pathUrl + "basics/info/getCodeList?instid=44"; //根据code查询接口 //规格列表
+var CHDList = pathUrl + "basics/info/dropdown?instid=46"; //根据code查询接口 //产地列表
+var VTSList = pathUrl + "basics/info/dropdown?instid=45"; //根据code查询接口 //品种列表
+var levelsList = pathUrl + "basics/info/dropdown?instid=47"; //根据code查询接口 //等级列表
+var specList = pathUrl + "basics/info/dropdown?instid=44"; //根据code查询接口 //规格列表
 
 
 var basicsInfocode = pathUrl + "basics/info/isSelectByCode";//判断code是否存在

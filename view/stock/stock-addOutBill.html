@@ -262,7 +262,6 @@
 				ownerDrop(array.ownerid,array.depotid);
 			}
 			
-			
 			$.ajax({
 				cache: true,
 				type: "get",
@@ -279,12 +278,9 @@
 							}
 						});
 					}
-					
 				}
 			});
 		}
-		
-		
 		
 		//货权人下拉
 		function ownerDrop(ownerid,depotid){
@@ -320,8 +316,6 @@
 			});
 		}
 		
-		
-		
 		//监听货权人下拉
 		layui.formSelects.on('cargoownerOne', function(id, vals, val, isAdd, isDisabled){
             //id:           点击select的id
@@ -331,7 +325,6 @@
             //isDisabled:   当前选项是否是disabled
 			depotDrop(val.value,null);
         });
-		
 		
 		//仓库下拉： 货权人id(ownerid)
 		function depotDrop(ownerid,nerid){
