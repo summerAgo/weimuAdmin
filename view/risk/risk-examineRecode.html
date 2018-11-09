@@ -100,16 +100,12 @@
             cols: [
                 [ // 标题栏
                     {
-                        type: 'checkbox'
-                    }, {
                         field: 'ownername',
                         title: '货权人',
-                        width: 266,
                         sort: true
                     }, {
                         field: 'status',
                         title: '审核结果',
-                        width: 100,
                         sort: true,
                         templet: function (d) {
                             if (d.status == 2) {
@@ -122,12 +118,10 @@
                     }, {
                         field: 'orderno',
                         title: '出库单',
-                        width: 266,
                         sort: true
                     }, {
                         field: 'depname',
                         title: '出库仓库',
-                        width: 266,
                         sort: true
                     }, {
                         field: 'num',
