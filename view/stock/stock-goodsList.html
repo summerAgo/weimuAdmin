@@ -11,36 +11,27 @@
                             <input type="text" name="code" placeholder="包号" autocomplete="off" class="layui-input">
                         </div>
                         <div class="table-form-item layui-input-inline">
-                            <select name="varieties" xm-select="select-varieties">
+                            <select name="varieties" xm-select="selectVarieties" xm-select-radio>
                                 <option value="">品种</option>
-                                <option value="红木">红木</option>
-                                <option value="黄木">黄木</option>
-                                <option value="紫木">紫木</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
-                            <select name="levels" xm-select="select-varieties">
+                            <select name="levels" xm-select="selectLevels" xm-select-radio>
                                 <option value="">等级</option>
-                                <option value="A">A</option>
-                                <option value="B">B</option>
-                                <option value="C">C</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
-                            <select name="spec" xm-select="select-varieties">
+                            <select name="spec" xm-select="selectSpec" xm-select-radio>
                                 <option value="">规格</option>
-                                <option value="10*10">10*10</option>
-                                <option value="10*20">10*20</option>
-                                <option value="20*10">20*10</option>
-                                <option value="20*20">20*20</option>
-                                <option value="20*30">20*30</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
                             <input type="text" name="containernum" placeholder="货柜号" autocomplete="off" class="layui-input">
                         </div>
                         <div class="table-form-item layui-input-inline">
-                            <input type="text" name="origin" placeholder="产地" autocomplete="off" class="layui-input">
+                            <select name="origin" xm-select="originSelect" xm-select-radio>
+                                <option value="">选择产地</option>
+                            </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
                             <input type="text" name="brand" placeholder="品牌" autocomplete="off" class="layui-input">
@@ -49,7 +40,9 @@
                             <input type="text" name="billloading" placeholder="提运单" autocomplete="off" class="layui-input">
                         </div>
                         <div class="table-form-item layui-input-inline">
-                            <input type="text" name="person" placeholder="负责人" autocomplete="off" class="layui-input">
+                            <select name="ownerid" xm-select="ownerSelect" xm-select-radio>
+                                <option value="">选择货权人</option>
+                            </select>
                         </div>
                     </div>
                     <div class="layui-form-item form-right">
@@ -84,46 +77,3 @@
         </div>
     </div>
 </div>
-<script>
-   /* layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate'], function() {
-        var element = layui.element;
-        var form = layui.form;
-        var $ = layui.jquery;
-        var table = layui.table;
-        var formSelects = layui.formSelects;
-        var laytpl = layui.laytpl;
-        // var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 103); //内容区域所需减去的高度
-
-        var eaitLayer; //编辑-弹层
-
-        form.render(); //重置表单渲染
-        formSelects.render(); //下拉选项
-        element.render('talbe-tools'); //表格工具栏
-        formSelects.btns(['select', 'remove'], {
-            show: 'name'
-        });
-
-        form.on('submit(searchForm)', function(data) {
-            var paramSearch = {};
-            for (var key in data.field) {
-                //参数赋值
-                if (data.field[key] != "") {
-                    paramSearch[key] = data.field[key]
-                }
-            }
-            tableIns.reload({
-                where: paramSearch, //接口参数
-                page: {
-                    curr: 1 //重新从第 1 页开始
-                }
-            });
-            return false;
-        });
-
-       
-		
-		
-		
-		
-    });*/
-</script>

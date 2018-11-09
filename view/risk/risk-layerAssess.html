@@ -5,22 +5,22 @@
                 <div class="form-box">
                     <div class="layui-form-item form-left">
                         <div class="table-form-item layui-input-inline">
-                            <input type="text" name="packetid" placeholder="包号" autocomplete="off" class="layui-input">
+                            <input type="text" name="code" placeholder="包号" autocomplete="off" class="layui-input">
                         </div>
                         <div class="table-form-item layui-input-inline">
-                            <input type="text" name="varietiesid" placeholder="品种" autocomplete="off" class="layui-input">
+                            <input type="text" name="varieties" placeholder="品种" autocomplete="off" class="layui-input">
                         </div>
                         <div class="table-form-item layui-input-inline">
-                            <input type="text" name="thicknessid" placeholder="规格/厚度" autocomplete="off" class="layui-input">
+                            <input type="text" name="spec" placeholder="规格/厚度" autocomplete="off" class="layui-input">
                         </div>
                         <div class="table-form-item layui-input-inline">
-                            <input type="text" name="gradeid" placeholder="等级" autocomplete="off" class="layui-input">
+                            <input type="text" name="levels" placeholder="等级" autocomplete="off" class="layui-input">
                         </div>
                         <div class="table-form-item layui-input-inline">
-                            <input type="text" name="lengthid" placeholder="长度" autocomplete="off" class="layui-input">
+                            <input type="text" name="chang" placeholder="长度" autocomplete="off" class="layui-input">
                         </div>
                         <div class="table-form-item layui-input-inline">
-                            <input type="text" name="placeid" placeholder="产地" autocomplete="off" class="layui-input">
+                            <input type="text" name="origin" placeholder="产地" autocomplete="off" class="layui-input">
                         </div>
                         <div class="table-form-item layui-input-inline">
                             <input type="text" name="assessid" placeholder="评估状态" autocomplete="off" class="layui-input">
@@ -41,7 +41,7 @@
             <table class="layui-hide" id="tableContainer-from" lay-filter="tableContainer-from"></table>
         </div>
     </div>
-    <div class="rightBotBtn"><button class="layui-btn" lay-submit="" type="submit" lay-filter="keepSubmit">保存提交</button></div>
+    <div class="rightBotBtn"><button class="layui-btn saveEvaluationPrice" lay-submit="" type="submit" lay-filter="keepSubmit">保存提交</button></div>
 </div>
 <style scoped>
     .rightBotBtn {
@@ -87,29 +87,19 @@
             return false;
         });
 
+        var goodsAssessdatas = JSON.parse(sessionStorage.getItem('risk_goodsAssess_data'));
+        if (goodsAssessdatas) {
+            tableData = goodsAssessdatas;
+        }
+
         var tableIns = table.render({
             elem: '#tableContainer-from',
-            height: 'full-' + tableTopHeight, // full -- 高度将始终铺满 - 差值
-            url: entryHistory, //数据接口
-            // 任意数据格式解析成 table 组件规定的数据格式
-            parseData: function (res) { //res 即为原始返回的数据
-                if (res.status !== 0) res.status = 0;
-                return {
-                    "code": res.status, //解析接口状态
-                    "msg": res.message, //解析提示文本
-                    "count": res.count, //解析数据长度
-                    "data": res.data //解析数据列表
-                }
-            },
-            // 用于对分页请求的参数：page、limit重新设定名称
-            request: {
-                pageName: 'offset', // 页码的参数名称，默认：page
-                limitName: 'limit' // 每页数据量的参数名，默认：limit
-            },
+            height: '500px', // full -- 高度将始终铺满 - 差值
+            data: tableData, 
             cols: [
                 [ // 标题栏
                     {
-                        field: 'packet',
+                        field: 'code',
                         title: '包号',
                         sort: true
                     }, {
@@ -117,15 +107,15 @@
                         title: '品种',
                         sort: true
                     }, {
-                        field: 'thickness',
+                        field: 'spec',
                         title: '规格/厚度',
                         sort: true
                     }, {
-                        field: 'grade',
+                        field: 'levels',
                         title: '等级',
                         sort: true
                     }, {
-                        field: 'lenght',
+                        field: 'chang',
                         title: '长度',
                         sort: true
                     }, {
@@ -133,28 +123,54 @@
                         title: '品牌',
                         sort: true
                     }, {
-                        field: 'place',
+                        field: 'origin',
                         title: '产地',
                         sort: true
                     }, {
-                        field: 'newunitprice',
-                        title: '最新采购单价',
+                        field: 'pprice',
+                        title: '采购单价',
                         sort: true
                     }, {
-                        field: 'unitprice',
+                        field: 'aprice',
                         title: '评估单价',
                         sort: true
                     }
                 ]
             ],
+            page:true,
             even: true, // 开启隔行背景
             done: function (res, curr, count) { // 数据渲染完的回调
-
+                
             },
             text: { // 自定义文本，如空数据时的异常提示等
                 none: "无匹配数据"
             },
             loading: true  // 是否显示加载条，默认true
+        });
+        
+
+        //保持提交  修改的风控数据
+        $(".saveEvaluation").click(function (){
+            //请求数据源示例
+            var datainfo = [];
+            var json = {};
+            json['id'] = 1;
+            json['aprice'] = 35.6;
+            datainfo.push(json);
+            $.ajax({
+                url: saveEvaluationPrice,
+                type: "POST",
+                //async:false,
+                data: datainfo,
+                traditional: true,
+                success: function(res){
+                    if(res.status == 0){
+                        
+                        
+                    }
+                   
+                }
+            })
         });
 
     });

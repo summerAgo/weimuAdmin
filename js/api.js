@@ -120,3 +120,5 @@ var riskList = pathUrl + "risk/control/riskList" //商品评估列表
 var outTreasuryList = pathUrl + "risk/control/outTreasuryList" //出货审核列表
 var setThroughOut = pathUrl + "risk/control/setThroughOut" //设置通过出货审核
 var outHistoryList = pathUrl + "risk/control/outHistoryList" //出货审核记录
+var saveEvaluationPrice = pathUrl + "risk/control/saveEvaluationPrice" //出货审核记录
+
