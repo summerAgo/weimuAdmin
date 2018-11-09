@@ -4,18 +4,18 @@
             <form class="layui-form" action="">
                 <div class="form-box">
                     <div class="layui-form-item form-left">
-                            <div class="table-form-item layui-input-inline">
-                                    <input type="text" name="name" placeholder="仓库名称" autocomplete="off" class="layui-input">
-                                </div>
-                                <div class="table-form-item layui-input-inline">
-                                    <input type="text" name="code" placeholder="仓库编号" autocomplete="off" class="layui-input">
-                                </div>
-                                <div class="table-form-item layui-input-inline">
-                                        <select name="type">
-                                                <option value="0">监管仓</option>
-                                                <option value="-1">自由仓</option>
-                                        </select>
-                                </div>
+                        <div class="table-form-item layui-input-inline">
+                            <input type="text" name="name" placeholder="仓库名称" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <input type="text" name="code" placeholder="仓库编号" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <select name="type">
+                                <option value="0">监管仓</option>
+                                <option value="-1">自由仓</option>
+                            </select>
+                        </div>
                     </div>
                     <div class="layui-form-item form-right">
                         <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="searchForm">
@@ -50,7 +50,7 @@
     </div>
 </div>
 <script>
-    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'upload'], function() {
+    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'upload'], function () {
         var element = layui.element;
         var form = layui.form;
         var $ = layui.jquery;
@@ -69,7 +69,7 @@
             show: 'name'
         });
 
-        form.on('submit(searchForm)', function(data) {
+        form.on('submit(searchForm)', function (data) {
             var paramSearch = {};
             for (var key in data.field) {
                 //参数赋值
@@ -90,7 +90,7 @@
             elem: '#tableContainer-depotList',
             height: 'full-' + tableTopHeight,
             url: depotList,
-            parseData: function(res) { //res 即为原始返回的数据
+            parseData: function (res) { //res 即为原始返回的数据
                 if (res.status !== 0) res.status = 0;
                 return {
                     "code": res.status, //解析接口状态
@@ -122,7 +122,7 @@
                         field: 'ownername',
                         title: '货权人',
                         sort: true
-                    } ,{
+                    }, {
                         field: 'personname',
                         title: '负责人',
                         sort: true
@@ -134,8 +134,8 @@
                         field: 'type',
                         title: '仓库类型',
                         sort: true,
-                        templet:function(d){
-                            if(d.status == 0){
+                        templet: function (d) {
+                            if (d.status == 0) {
                                 return '监管仓';
                             }
                             return '自由仓';
@@ -161,7 +161,7 @@
             page: true, //是否显示分页
             limits: [10, 20, 30, 40, 50],
             limit: 10, //每页默认显示的数量
-            done: function(res, curr, count) {
+            done: function (res, curr, count) {
 
             },
             text: {
@@ -170,10 +170,10 @@
             loading: true
         });
 
-        $(".addDepotBtn").click(function() {
+        $(".addDepotBtn").click(function () {
             // 打开添加弹窗
             sessionStorage.removeItem('depotCheck');//点击新建仓库删除本地存储所选仓库信息
-            $.get('view/form/form-addDepot.html', {}, function(str) {
+            $.get('view/form/form-addDepot.html', {}, function (str) {
                 addDepotLayer = layer.open({
                     title: '添加仓库',
                     type: 1,
@@ -184,21 +184,21 @@
             });
         });
 
-        form.on('submit(addDepotForm)', function(data) {
+        form.on('submit(addDepotForm)', function (data) {
             var dataType = JSON.parse(sessionStorage.getItem('depotCheck'));//获取本地所选仓库信息，判断是否为修改
             var url;
             var msg = "新建仓库成功";
             console.log(dataType)
-            if(dataType){
+            if (dataType) {
                 //如果是修改
                 url = depotUpdate;
                 data.field.id = dataType.id
                 msg = "修改仓库成功";
-            }else{
+            } else {
                 url = depotAdd;
             }
 
-            $.get(url, data.field, function(json) {
+            $.get(url, data.field, function (json) {
                 if (json.status == 0) {
                     sessionStorage.removeItem('depotCheck');//操作成功删除本地存储
                     tableIns.reload({
@@ -215,7 +215,7 @@
             return false;
         });
 
-        $(".changeBtn").click(function() {
+        $(".changeBtn").click(function () {
             //修改
             var checkStatus = table.checkStatus('tableContainer-depotList');
             if (checkStatus.data.length < 1) {
@@ -224,7 +224,7 @@
                 layer.msg("请选择需要编辑的单条信息");
             } else {
                 sessionStorage.setItem('depotCheck', JSON.stringify(checkStatus.data[0]));//将所选仓库信息存储到本地作为回显
-                $.get('view/form/form-addDepot.html', {}, function(str) {
+                $.get('view/form/form-addDepot.html', {}, function (str) {
                     addDepotLayer = layer.open({
                         title: '修改',
                         type: 1,
@@ -236,7 +236,7 @@
             }
         });
 
-        $(".deleteBtn").click(function() {
+        $(".deleteBtn").click(function () {
             // 删除
             var checkStatus = table.checkStatus('tableContainer-depotList');
             if (checkStatus.data.length < 1) {
@@ -245,16 +245,16 @@
                 layer.confirm('是否确认删除此条信息', {
                     icon: 3,
                     title: '提示'
-                }, function(index) {
+                }, function (index) {
                     var rowId = [];
-                    $.each(checkStatus.data, function(i, v) {
+                    $.each(checkStatus.data, function (i, v) {
                         //获取所选行数ID
                         rowId.push(v.id);
                     });
                     //调删除接口
                     rowDataApi(depotDel, {
                         "ids": rowId
-                    }, function(data) {
+                    }, function (data) {
                         // 删除所选行成功
                         layer.close(index);
                         // 刷新表格
@@ -269,7 +269,7 @@
             }
         });
 
-        table.on('tool(tableContainer-depotList)', function(obj) {
+        table.on('tool(tableContainer-depotList)', function (obj) {
             //监听单元格点击事件
             var data = obj.data;
             if (obj.event === 'click') {

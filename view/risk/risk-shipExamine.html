@@ -52,6 +52,8 @@
         var upload = layui.upload;
         var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 103); //内容区域所需减去的高度
 
+        var examineLayer; // 审核-弹层
+
         form.render(); // 重置表单渲染
         formSelects.render(); // 下拉选项
         element.render('talbe-tools'); // 表格工具栏
@@ -79,16 +81,16 @@
 
         var tableIns = table.render({
             elem: '#tableContainer',
-            height: 'full-' + tableTopHeight, // full -- ?
-            url: entryHistory, //数据接口
+            height: 'full-' + tableTopHeight, // full -- 
+            url: entryHistory, // 数据接口
             // 任意数据格式解析成 table 组件规定的数据格式
             parseData: function (res) { //res 即为原始返回的数据
                 if (res.status !== 0) res.status = 0;
                 return {
-                    "code": res.status, //解析接口状态
-                    "msg": res.message, //解析提示文本
-                    "count": res.count, //解析数据长度
-                    "data": res.data //解析数据列表
+                    "code": res.status, // 解析接口状态
+                    "msg": res.message, // 解析提示文本
+                    "count": res.count, // 解析数据长度
+                    "data": res.data // 解析数据列表
                 }
             },
             // 用于对分页请求的参数：page、limit重新设定名称
@@ -133,6 +135,32 @@
                 none: "无匹配数据"
             },
             loading: true  // 是否显示加载条，默认true
+        });
+
+        // 监听锁定操作
+        table.on('checkbox(tableContainer)', function(obj) {
+            var checkStatus = table.checkStatus('tableContainer'); // 表格选中状态
+        });
+
+        // 点击审核
+        $("#examine").click(function() {
+            var checkStatus = table.checkStatus('tableContainer');
+            if (checkStatus.data.length < 1) {
+                layer.msg("请选择需要评估的信息");
+            } else if (checkStatus.data.length > 1) {
+                layer.msg("请选择需要评估的单条信息");
+            } else {
+                console.log(checkStatus.data.length);
+                $.get('view/risk/risk-layerExamine.html', {}, function(str) {
+                    assessLayer = layer.open({
+                        title: '出货申请单审核',
+                        type: 1,
+                        content: str, // 注意，如果str是object，那么需要字符拼接。
+                        resize: false,
+                        area: ['80%', 'auto'],
+                    });
+                });
+            }
         });
 
     });

@@ -1,46 +1,54 @@
 <div class="table-page">
     <div class="table-page-header">
         <div class="table-page-form">
-            <form class="layui-form" action="">
+            <form class="layui-form form-newbill" action="">
                 <div class="form-box">
                     <div class="layui-form-item form-left">
                         <div class="table-form-item layui-input-inline">
-                            <input type="text" name="cargoowner" placeholder="货权人" autocomplete="off" class="layui-input">
+                            <input type="text" name="packetid" placeholder="包号" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <input type="text" name="varietiesid" placeholder="品种" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <input type="text" name="thicknessid" placeholder="规格/厚度" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <input type="text" name="gradeid" placeholder="等级" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <input type="text" name="lengthid" placeholder="长度" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <input type="text" name="placeid" placeholder="产地" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <input type="text" name="assessid" placeholder="评估状态" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-form-item form-right">
                         <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="searchForm">
                             <i class="iconfont icon-sousuo"></i> <span>查询</span>
                         </button>
-                        <button type="reset" class="layui-btn layui-btn-primary"> <i class="layui-icon layui-icon-refresh"></i></button>
+                        <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon layui-icon-refresh"></i></button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
     <div class="table-content">
-        <div class="table-content-title">
-            <div class="table-tools">
-                <ul class="layui-nav" lay-filter="talbe-tools">
-                    <li class="layui-nav-item">
-                        <a id="toExport" href="javascript:;">导出数据</a>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;">打印</a>
-                    </li>
-                </ul>
-                <ul class="layui-layout-right">
-                    <li class="layui-nav-item">
-                        <a id="assess" href="javascript:;">评估</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
         <div class="table-content-main">
-            <table class="layui-hide" id="tableContainer" lay-filter="tableContainer"></table>
+            <table class="layui-hide" id="tableContainer-from" lay-filter="tableContainer-from"></table>
         </div>
     </div>
+    <div class="rightBotBtn"><button class="layui-btn" lay-submit="" type="submit" lay-filter="keepSubmit">保存提交</button></div>
 </div>
+<style scoped>
+    .rightBotBtn {
+        padding: 15px;
+        text-align: right
+    }
+</style>
 <script>
     layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'upload'], function () {
         var element = layui.element;
@@ -51,12 +59,12 @@
         var laytpl = layui.laytpl;
         var upload = layui.upload;
         var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 103); //内容区域所需减去的高度
+        var tableData = [];
+        var eaitLayer; // 弹层
 
-        var assessLayer; // 评估-弹层
-
-        form.render(); // 重置表单渲染
-        formSelects.render(); // 下拉选项
-        element.render('talbe-tools'); // 表格工具栏
+        form.render(); //重置表单渲染
+        formSelects.render(); //下拉选项
+        element.render('talbe-tools'); //表格工具栏
         formSelects.btns(['select', 'remove'], { // 干嘛用的
             show: 'name'
         });
@@ -80,8 +88,8 @@
         });
 
         var tableIns = table.render({
-            elem: '#tableContainer',
-            height: 'full-' + tableTopHeight, // full -- ?
+            elem: '#tableContainer-from',
+            height: 'full-' + tableTopHeight, // full -- 高度将始终铺满 - 差值
             url: entryHistory, //数据接口
             // 任意数据格式解析成 table 组件规定的数据格式
             parseData: function (res) { //res 即为原始返回的数据
@@ -101,30 +109,47 @@
             cols: [
                 [ // 标题栏
                     {
-                        type: 'checkbox'
-                    }, {
-                        field: 'ownername', // 设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识
-                        title: '货权人',
-                        width: 266,
+                        field: 'packet',
+                        title: '包号',
                         sort: true
                     }, {
-                        field: 'noevaluategoods',
-                        title: '未评估商品',
-                        width: 266,
+                        field: 'varieties',
+                        title: '品种',
                         sort: true
                     }, {
-                        field: 'yesevaluategoods',
-                        title: '已评估商品',
+                        field: 'thickness',
+                        title: '规格/厚度',
+                        sort: true
+                    }, {
+                        field: 'grade',
+                        title: '等级',
+                        sort: true
+                    }, {
+                        field: 'lenght',
+                        title: '长度',
+                        sort: true
+                    }, {
+                        field: 'brand',
+                        title: '品牌',
+                        sort: true
+                    }, {
+                        field: 'place',
+                        title: '产地',
+                        sort: true
+                    }, {
+                        field: 'newunitprice',
+                        title: '最新采购单价',
+                        sort: true
+                    }, {
+                        field: 'unitprice',
+                        title: '评估单价',
                         sort: true
                     }
                 ]
             ],
             even: true, // 开启隔行背景
-            page: true, // 是否显示分页
-            limits: [10, 20, 30, 40, 50], // 每页条数的选择项
-            limit: 10, // 每页默认显示的数量
             done: function (res, curr, count) { // 数据渲染完的回调
-                
+
             },
             text: { // 自定义文本，如空数据时的异常提示等
                 none: "无匹配数据"
@@ -132,29 +157,5 @@
             loading: true  // 是否显示加载条，默认true
         });
 
-        // 监听锁定操作
-        table.on('checkbox(tableContainer)', function(obj) {
-            var checkStatus = table.checkStatus('tableContainer'); // 表格选中状态
-        });
-
-        // 点击评估
-        $("#assess").click(function() {
-            var checkStatus = table.checkStatus('tableContainer');
-            if (checkStatus.data.length < 1) {
-                layer.msg("请选择需要评估的信息");
-            } else if (checkStatus.data.length > 1) {
-                layer.msg("请选择需要评估的单条信息");
-            } else {
-                console.log(checkStatus.data.length);
-                $.get('view/risk/risk-layerAssess.html', {}, function(str) {
-                    assessLayer = layer.open({
-                        type: 1,
-                        content: str, // 注意，如果str是object，那么需要字符拼接。
-                        resize: false,
-                        area: ['80%', 'auto'],
-                    });
-                });
-            }
-        });
     });
 </script>

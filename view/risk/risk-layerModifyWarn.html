@@ -1,0 +1,57 @@
+<div id="depotView"></div>
+<script id="depotTle" type="text/html">
+    <form class="layui-form layui-form-pane" action="">
+        <div class="layui-form-item">
+            <label class="layui-form-label">货权人</label>
+            <div class="layui-input-block">
+                <input type="text" name="cargoowner" placeholder="编号" value="{{d.cargoowner || ''}}" autocomplete="off" class="layui-input" lay-verify="required">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">融资金额</label>
+            <div class="layui-input-block">
+                <input type="text" name="capital" placeholder="输入融资金额" value="{{d.capital || ''}}" autocomplete="off" class="layui-input" lay-verify="required">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">警戒线</label>
+            <div class="layui-input-block">
+                <input type="text" name="warn" placeholder="输入警戒金额" value="{{d.warn || ''}}" autocomplete="off" class="layui-input" lay-verify="required">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">比例</label>
+            <div class="layui-input-block">
+                <input type="text" name="proportion" placeholder="输入比例" value="{{d.proportion || ''}}" autocomplete="off" class="layui-input" lay-verify="required">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="modifyWarn">
+                <i class="layui-icon layui-icon-ok"></i> <span>提交</span>
+            </button>
+        </div>
+    </form>
+</script>
+<style scoped>
+    .layui-form {
+        width: 600px;
+        margin: 10px auto;
+    }
+</style>
+<script>
+    layui.use(['form', 'jquery', 'element', 'layer', 'formSelects', 'laytpl', 'laydate'], function () {
+        var element = layui.element;
+        var form = layui.form;
+        var $ = layui.jquery;
+        var formSelects = layui.formSelects;
+        var laytpl = layui.laytpl;
+
+        var dataType = JSON.parse(sessionStorage.getItem('formModifyWarn')) || {};//获取本地所选仓库信息，判断是否为修改
+        console.log(dataType)
+        // 渲染模板的内容
+        var getTpl = depotTle.innerHTML, view = document.getElementById('depotView');
+        laytpl(getTpl).render(dataType, function (html) {
+            view.innerHTML = html;
+        });
+    });
+</script>

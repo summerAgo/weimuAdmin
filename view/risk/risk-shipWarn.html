@@ -55,6 +55,8 @@
         var upload = layui.upload;
         var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 103); //内容区域所需减去的高度
 
+        var modifyLayer; // 出货警戒线修改- 弹层
+
         form.render(); // 重置表单渲染
         formSelects.render(); // 下拉选项
         element.render('talbe-tools'); // 表格工具栏
@@ -80,18 +82,39 @@
             return false;
         });
 
+        $("#modify").click(function () {
+            //修改
+            var checkStatus = table.checkStatus('tableContainer'); // 监听是否选择表格项
+            if (checkStatus.data.length < 1) {
+                layer.msg("请选择需要编辑的信息");
+            } else if (checkStatus.data.length > 1) {
+                layer.msg("请选择需要编辑的单条信息");
+            } else {
+                sessionStorage.setItem('formModifyWarn', JSON.stringify(checkStatus.data[0]));// 将所选仓库信息存储到本地作为回显
+                $.get('view/risk/risk-layerModifyWarn.html', {}, function (str) {
+                    modifyLayer = layer.open({
+                        title: '修改',
+                        type: 1,
+                        content: str, // 注意，如果str是object，那么需要字符拼接。
+                        resize: false,
+                        area: ['800px', 'auto'],
+                    });
+                });
+            }
+        });
+
         var tableIns = table.render({
             elem: '#tableContainer',
-            height: 'full-' + tableTopHeight, // full -- ?
-            url: entryHistory, //数据接口
+            height: 'full-' + tableTopHeight, // full
+            url: entryHistory, // 数据接口
             // 任意数据格式解析成 table 组件规定的数据格式
-            parseData: function (res) { //res 即为原始返回的数据
+            parseData: function (res) { // res 即为原始返回的数据
                 if (res.status !== 0) res.status = 0;
                 return {
-                    "code": res.status, //解析接口状态
-                    "msg": res.message, //解析提示文本
-                    "count": res.count, //解析数据长度
-                    "data": res.data //解析数据列表
+                    "code": res.status, // 解析接口状态
+                    "msg": res.message, // 解析提示文本
+                    "count": res.count, // 解析数据长度
+                    "data": res.data // 解析数据列表
                 }
             },
             // 用于对分页请求的参数：page、limit重新设定名称
@@ -130,7 +153,7 @@
             limits: [10, 20, 30, 40, 50], // 每页条数的选择项
             limit: 10, // 每页默认显示的数量
             done: function (res, curr, count) { // 数据渲染完的回调
-                
+
             },
             text: { // 自定义文本，如空数据时的异常提示等
                 none: "无匹配数据"
