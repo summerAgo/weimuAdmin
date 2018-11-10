@@ -1,44 +1,42 @@
+<div class="layerModifyWarnView"></div>
+<script id="templateWarn" type="text/html">
 <form class="layui-form" action="">
     <div class="template-box">
-
+        <div class="layui-form-item">
+            <label class="layui-form-label">货权人</label>
+            <div class="layui-input-block">
+                <div class="area-disable" data-name="name">{{d.name || ""}}</div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">融资金额</label>
+            <div class="layui-input-inline">
+                <input type="text" name="financingmoney" value="{{d.financingmoney || ''}}" required lay-verify="required|number" placeholder="请输入融资金额" autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-form-mid layui-word-aux">元</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">警戒线金额</label>
+            <div class="layui-input-inline">
+                <input type="text" name="cordonmoney" value="{{d.cordonmoney || ''}}" required lay-verify="required|number" placeholder="请输入警戒线金额" autocomplete="off" class="layui-input">
+            </div>
+            <div class="layui-form-mid layui-word-aux">元</div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">比例</label>
+            <div class="layui-input-inline">
+                <div class="area-disable" data-name="proportion">{{((d.cordonmoney/d.financingmoney) * 100).toFixed(2)}}%</div>
+            </div>
+        </div>
     </div>
     <div class="layui-form-item">
         <div class="layui-input-block">
-            <button class="layui-btn keep-modify" lay-submit lay-filter="formDemo">保存</button>
+            <button class="layui-btn" lay-submit lay-filter="formDemo">保存</button>
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
         </div>
     </div>
 </form>
 
-<script id="templateWarn" type="text/html">
-    <div class="layui-form-item">
-        <label class="layui-form-label">货权人</label>
-        <div class="layui-input-block">
-            <div class="area-disable" data-name="name">{{d.name || ""}}</div>
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">融资金额</label>
-        <div class="layui-input-inline">
-            <input type="text" name="financingmoney" value="{{d.financingmoney || ''}}" required lay-verify="required" placeholder="请输入融资金额" autocomplete="off"
-                class="layui-input">
-        </div>
-        <div class="layui-form-mid layui-word-aux">元</div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">警戒线金额</label>
-        <div class="layui-input-inline">
-            <input type="text" name="warn" value="{{d.cordonmoney || ''}}" required lay-verify="required" placeholder="请输入警戒线金额" autocomplete="off"
-                class="layui-input">
-        </div>
-        <div class="layui-form-mid layui-word-aux">元</div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">比例</label>
-        <div class="layui-input-inline">
-            <div class="area-disable" data-name="proportion">{{((d.cordonmoney/d.financingmoney) * 100).toFixed(2)}}%</div>
-        </div>
-    </div>
 </script>
 
 <style scoped>

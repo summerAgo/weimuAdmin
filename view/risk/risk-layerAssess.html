@@ -27,7 +27,7 @@
                         </div>
                     </div>
                     <div class="layui-form-item form-right">
-                        <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="searchForm">
+                        <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="searchAssessForm">
                             <i class="iconfont icon-sousuo"></i> <span>查询</span>
                         </button>
                         <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon layui-icon-refresh"></i></button>
@@ -41,7 +41,7 @@
             <table class="layui-hide" id="tableContainer-from" lay-filter="tableContainer-from"></table>
         </div>
     </div>
-    <div class="rightBotBtn"><button class="layui-btn saveEvaluationPrice" lay-submit="" type="submit" lay-filter="keepSubmit">保存提交</button></div>
+    <!-- <div class="rightBotBtn"><button class="layui-btn saveEvaluationPrice" lay-submit="" type="submit" lay-filter="keepSubmit">保存提交</button></div> -->
 </div>
 <style scoped>
     .rightBotBtn {
@@ -49,130 +49,3 @@
         text-align: right
     }
 </style>
-<script>
-    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'upload'], function () {
-        var element = layui.element;
-        var form = layui.form;
-        var $ = layui.jquery;
-        var table = layui.table;
-        var formSelects = layui.formSelects;
-        var laytpl = layui.laytpl;
-        var upload = layui.upload;
-        var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 103); //内容区域所需减去的高度
-        var tableData = [];
-        var eaitLayer; // 弹层
-
-        form.render(); // 重置表单渲染
-        formSelects.render(); // 下拉选项
-        element.render('talbe-tools'); // 表格工具栏
-        formSelects.btns(['select', 'remove'], { // 干嘛用的
-            show: 'name'
-        });
-
-        form.on('submit(searchForm)', function (data) {
-            var paramSearch = {};
-            for (var key in data.field) {
-                // 参数赋值
-                if (data.field[key] != "") {
-                    paramSearch[key] = data.field[key]
-                }
-            }
-            // 表格重新加载
-            tableIns.reload({
-                where: paramSearch, // 接口参数
-                page: {
-                    curr: 1 // 重新从第 1 页开始
-                }
-            });
-            return false;
-        });
-
-        var goodsAssessdatas = JSON.parse(sessionStorage.getItem('risk_goodsAssess_data'));
-        
-        if (goodsAssessdatas) {
-            tableData = goodsAssessdatas;
-        }
-
-        var tableIns = table.render({
-            elem: '#tableContainer-from',
-            height: '500px', // full -- 高度将始终铺满 - 差值
-            data: tableData, 
-            cols: [
-                [ // 标题栏
-                    {
-                        field: 'code',
-                        title: '包号',
-                        sort: true
-                    }, {
-                        field: 'varieties',
-                        title: '品种',
-                        sort: true
-                    }, {
-                        field: 'spec',
-                        title: '规格/厚度',
-                        sort: true
-                    }, {
-                        field: 'levels',
-                        title: '等级',
-                        sort: true
-                    }, {
-                        field: 'chang',
-                        title: '长度',
-                        sort: true
-                    }, {
-                        field: 'brand',
-                        title: '品牌',
-                        sort: true
-                    }, {
-                        field: 'origin',
-                        title: '产地',
-                        sort: true
-                    }, {
-                        field: 'pprice',
-                        title: '采购单价',
-                        sort: true
-                    }, {
-                        field: 'aprice',
-                        title: '评估单价',
-                        sort: true
-                    }
-                ]
-            ],
-            page:true,
-            even: true, // 开启隔行背景
-            done: function (res, curr, count) { // 数据渲染完的回调
-                
-            },
-            text: { // 自定义文本，如空数据时的异常提示等
-                none: "无匹配数据"
-            },
-            loading: true  // 是否显示加载条，默认true
-        });
-        
-
-        //保持提交  修改的风控数据
-        $(".saveEvaluation").click(function (){
-            //请求数据源示例
-            var datainfo = [];
-            var json = {};
-            json['id'] = 1;
-            json['aprice'] = 35.6;
-            datainfo.push(json);
-            $.ajax({
-                url: saveEvaluationPrice,
-                type: "POST",
-                //async:false,
-                data: datainfo,
-                traditional: true,
-                success: function(res){
-                    if(res.status == 0){
-                        
-                        
-                    }
-                   
-                }
-            })
-        });
-
-    });
-</script>
