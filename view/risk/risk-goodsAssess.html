@@ -128,7 +128,6 @@
         table.on('tool(table-goodsAssess)', function(obj) {
             var curData = obj.data;
             console.log(curData)
-            debugger
             if (obj.event === 'click') {
 
                 $.get('view/risk/risk-layerAssess.html', {}, function(str) { // 弹出弹框
