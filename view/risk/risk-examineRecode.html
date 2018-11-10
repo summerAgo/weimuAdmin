@@ -185,20 +185,32 @@
                             console.log("156");
                             if (data.status == 0) {
                                 layerData = data.data;
-                                // 弹出弹框
-                                assessLayer = layer.open({
-                                    title: '出货审核记录',
-                                    type: 1,
-                                    content: str, // 注意，如果str是object，那么需要字符拼接。
-                                    area: ['80%', '80%'],
-                                });
-                                // 渲染弹框页面
-                                layerOut(layerData);
+                                // // 弹出弹框
+                                // assessLayer = layer.open({
+                                //     title: '出货审核记录',
+                                //     type: 1,
+                                //     content: str, // 注意，如果str是object，那么需要字符拼接。
+                                //     area: ['80%', '80%'],
+                                // });
+                                // // 渲染弹框页面
+                                // layerOut(layerData);
                             } else {
                                 layer.msg("页面信息获取失败，请刷新浏览器")
                             }
                         }
                     });
+                    
+                    // 接口请求正确后把这一段放在ajax的success里执行
+                    // 弹出弹框
+                    layerData = {};
+                    assessLayer = layer.open({
+                        title: '出货审核记录',
+                        type: 1,
+                        content: str, // 注意，如果str是object，那么需要字符拼接。
+                        area: ['80%', '80%'],
+                    });
+                    // 渲染弹框页面
+                    layerOut(layerData);
 
                 });
             }
