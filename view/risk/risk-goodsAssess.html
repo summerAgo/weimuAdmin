@@ -251,12 +251,15 @@
                         json['id'] = picid;
                         json['aprice'] = aprice;
                         datainfo.push(json);
+                        console.log(datainfo);
+                        
                         $.ajax({
                             url: saveEvaluationPrice,
                             type: "POST",
                             // async:false,
                             data: {
-                                "ownerid":ownerid
+                                "ownerid":ownerid,
+                                "znum":JSON.stringify(datainfo)
                                 },
                             traditional: true,
                             success: function(res) {
@@ -268,7 +271,7 @@
                                         }
                                     });
                                 }else{
-                                    layer.msg(res.data);
+                                    layer.msg(res.msg);
                                 }
                             }
                         })
