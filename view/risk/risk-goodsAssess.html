@@ -37,7 +37,7 @@
     </div>
 </div>
 <script>
-    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'upload'], function () {
+    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'upload'], function() {
         var element = layui.element;
         var form = layui.form;
         var $ = layui.jquery;
@@ -52,11 +52,8 @@
         form.render(); // 重置表单渲染
         formSelects.render(); // 下拉选项
         element.render('talbe-tools'); // 表格工具栏
-        formSelects.btns(['select', 'remove'], { // 干嘛用的
-            show: 'name'
-        });
 
-        form.on('submit(searchForm)', function (data) {
+        form.on('submit(searchForm)', function(data) {
             var paramSearch = {};
             for (var key in data.field) {
                 // 参数赋值
@@ -79,7 +76,7 @@
             height: 'full-' + tableTopHeight, // full -- 差值
             url: riskList, //数据接口
             // 任意数据格式解析成 table 组件规定的数据格式
-            parseData: function (res) { //res 即为原始返回的数据
+            parseData: function(res) { //res 即为原始返回的数据
                 if (res.status !== 0) res.status = 0;
                 return {
                     "code": res.status, //解析接口状态
@@ -118,56 +115,168 @@
             page: true, // 是否显示分页
             limits: [10, 20, 30, 40, 50], // 每页条数的选择项
             limit: 10, // 每页默认显示的数量
-            done: function (res, curr, count) { // 数据渲染完的回调
+            done: function(res, curr, count) { // 数据渲染完的回调
 
             },
             text: { // 自定义文本，如空数据时的异常提示等
                 none: "无匹配数据"
             },
-            loading: true  // 是否显示加载条，默认true
+            loading: true // 是否显示加载条，默认true
         });
 
         // 监听货权人点击事件
-        table.on('tool(table-goodsAssess)', function (obj) {
+        table.on('tool(table-goodsAssess)', function(obj) {
             var curData = obj.data;
-            var checkStatus = table.checkStatus('table-goodsAssess');
+            console.log(curData)
             if (obj.event === 'click') {
-                sessionStorage.removeItem('risk_goodsAssess_data'); // 先清除上次存储的数据
-                selectLibe(curData.id); // 请求接口数据
-                $.get('view/risk/risk-layerAssess.html', {}, function (str) { // 弹出弹框
-                    assessLayer = layer.open({ 
+
+                $.get('view/risk/risk-layerAssess.html', {}, function(str) { // 弹出弹框
+                    assessLayer = layer.open({
                         title: '商品评估列表',
                         type: 1,
                         content: str, // 注意，如果str是object，那么需要字符拼接。
-                        resize: false,
-                        area: ['80%', 'auto'],
+                        area: ['80%', '80%'],
                     });
+
+                    //弹窗页
+
+                    form.on('submit(searchAssessForm)', function(data) {
+                        var paramSearch = {
+                            "person": curData.id
+                        };
+                        for (var key in data.field) {
+                            // 参数赋值
+                            if (data.field[key] != "") {
+                                paramSearch[key] = data.field[key]
+                            }
+                        }
+                        // 表格重新加载
+                        tableInsAssess.reload({
+                            where: paramSearch, // 接口参数
+                            page: {
+                                curr: 1 // 重新从第 1 页开始
+                            }
+                        });
+                        return false;
+                    });
+
+                    var tableInsAssess = table.render({
+                        elem: '#tableContainer-from',
+                        height: '472', // full -- 高度将始终铺满 - 差值
+                        url: ilbstockList,
+                        where: {
+                            "person": curData.id
+                        },
+                        parseData: function(res) { //res 即为原始返回的数据
+                            console.log(res)
+                            if (res.status != 0) {
+                                res.status = 0;
+                                res.data = []
+                            }
+                            return {
+                                "code": res.status, //解析接口状态
+                                "msg": res.message, //解析提示文本
+                                "count": res.count, //解析数据长度
+                                "data": res.data, //解析数据列表
+                            }
+                        },
+                        cols: [
+                            [ // 标题栏
+                                {
+                                    field: 'code',
+                                    title: '包号',
+                                    sort: true
+                                }, {
+                                    field: 'varieties',
+                                    title: '品种'
+                                }, {
+                                    field: 'spec',
+                                    title: '规格/厚度'
+                                }, {
+                                    field: 'levels',
+                                    title: '等级',
+                                    sort: true
+                                }, {
+                                    field: 'chang',
+                                    title: '长度'
+                                }, {
+                                    field: 'brand',
+                                    title: '品牌',
+                                    sort: true
+                                }, {
+                                    field: 'origin',
+                                    title: '产地',
+                                    sort: true
+                                }, {
+                                    field: 'pprice',
+                                    title: '采购单价'
+                                }, {
+                                    field: 'aprice',
+                                    title: '评估单价',
+                                    edit: "text"
+                                }
+                            ]
+                        ],
+                        page: true,
+                        limit: 10,
+                        limits: [10, 20, 30, 40, 50],
+                        even: true, // 开启隔行背景
+                        done: function(res, curr, count) { // 数据渲染完的回调
+
+                        },
+                        text: { // 自定义文本，如空数据时的异常提示等
+                            none: "无匹配数据"
+                        }
+                    });
+
+                    //监听编辑
+                    table.on('edit(tableContainer-from)', function(obj) {
+                        console.log(obj.value); //得到修改后的值
+                        console.log(obj.field); //当前编辑的字段名
+                        console.log(obj.data); //所在行的所有相关数据
+                        if (!obj.value || isNaN(obj.value)) {
+                            layer.msg("估价只能输入数字");
+
+                        } else {
+                            console.log(obj.data)
+                            editAprice("1",obj.data.id,obj.value,tableInsAssess);
+                        }
+                    });
+
+                    //保持提交  修改的风控数据
+                    function editAprice(ownerid,picid, aprice, tableObj) {
+                        //请求数据源示例
+                        var datainfo = [];
+                        var json = {};
+                        json['id'] = picid;
+                        json['aprice'] = aprice;
+                        datainfo.push(json);
+                        $.ajax({
+                            url: saveEvaluationPrice,
+                            type: "POST",
+                            // async:false,
+                            data: {
+                                "ownerid":ownerid
+                                },
+                            traditional: true,
+                            success: function(res) {
+                                if (res.status == 0) {
+                                    layer.msg("评估单价设置成功");
+                                    tableObj.reload({
+                                        page: {
+                                            curr: 1 // 重新从第 1 页开始
+                                        }
+                                    });
+                                }else{
+                                    layer.msg(res.data);
+                                }
+                            }
+                        })
+                    };
 
                 });
             }
         });
 
-        // 根据货权人ID查询货物
-        // 当没有分页的时候
-        function selectLibe(id) {
-            $.ajax({
-                url: ilbstockList,
-                type: "GET",
-                async: false,
-                data: {
-                    'person': id,
-                    'limit': null
-                },
-                traditional: true,
-                success: function (res) {
-                    if (res.status == 0) {
-                        // 存列表数据
-                        sessionStorage.setItem('risk_goodsAssess_data', JSON.stringify(res.data));
-                    }
-
-                }
-            })
-        }
-        
     });
 </script>
