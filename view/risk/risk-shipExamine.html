@@ -152,7 +152,7 @@
             var curData = obj.data;
 
             if (obj.event === 'click') {
-                sessionStorage.setItem('orderID', curData.orderno);
+                sessionStorage.setItem('examineOrderID', curData.orderno);
                 $.get('view/risk/risk-layerExamine.html', {}, function (str) { // 请求弹框
 
                     var layerData; // 当前弹框页面数据
@@ -271,7 +271,7 @@
                         withCredentials: true
                     },
                     crossDomain: true,
-                    data: { 'orderno': sessionStorage.getItem("orderID") },
+                    data: { 'orderno': sessionStorage.getItem("examineOrderID") },
                     error: function (request) {
                         layer.msg('修改失败');
                         return;
@@ -297,7 +297,7 @@
                         withCredentials: true
                     },
                     crossDomain: true,
-                    data: { 'orderno': sessionStorage.getItem("orderID") },
+                    data: { 'orderno': sessionStorage.getItem("examineOrderID") },
                     error: function (request) {
                         layer.msg('修改失败');
                         return;

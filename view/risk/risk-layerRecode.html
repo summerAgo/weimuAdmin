@@ -1,0 +1,94 @@
+<div class="table-page">
+    <div class="table-page-header">
+        <div class="lss-bread-crumb">
+
+        </div>
+    </div>
+
+    <div class="table-content">
+        <div class="table-content-main">
+            <table class="layui-hide" id="tableContainer-from" lay-filter="tableContainer-from"></table>
+        </div>
+    </div>
+    
+</div>
+
+<script id="tempExamine" type="text/html">
+    <div class="lss-bread-item">
+        <p>出货申请订单号</p>
+        <p class="data-gray">{{d.orderno || ""}}</p>
+    </div>
+    <div class="lss-bread-item">
+        <p>货权人</p>
+        <p class="data-gray">{{d.ownername || ""}}</p>
+    </div>
+    <div class="lss-bread-item">
+        <p>仓库</p>
+        <p class="data-gray">{{d.depname || ""}}</p>
+    </div>
+    <div class="lss-bread-item">
+        <p>预计出货日期</p>
+        <p class="data-gray">{{d.Outdate || ""}}</p>
+    </div>
+    <div class="lss-bread-item">
+        <p>库存金额（RMB）</p>
+        <p class="data-green">{{d.stockmoney || ""}}</p>
+    </div>
+    <div class="lss-bread-item">
+        <p>融资金额（RMB）</p>
+        <p class="data-blue">{{d.financingmoney || ""}}</p>
+    </div>
+    <div class="lss-bread-item">
+        <p>警戒线</p>
+        <p class="data-orange">{{d.cordonmoney || ""}}</p>
+    </div>
+</script>
+<style scoped>
+    .rightBotBtn {
+        padding: 15px;
+        text-align: right;
+        position: absolute;
+        bottom: 15px;
+        right: 20px;
+    }
+
+    .lss-bread-crumb {
+        overflow: hidden;
+        margin-left: -20px;
+    }
+
+    .lss-bread-item {
+        float: left;
+        padding: 0 40px;
+        margin: 20px 0;
+        border-right: 1px solid #979797;
+    }
+
+    .lss-bread-item:last-child {
+        border-right: 1px solid transparent;
+    }
+
+    .lss-bread-item>p:first-child {
+        font-size: 15px;
+        color: #333;
+    }
+
+    .lss-bread-item>p:nth-child(2) {
+        font-size: 18px;
+        min-height: 34px;
+        color: #333;
+        font-weight: bold;
+    }
+
+    .lss-bread-item>p:nth-child(2).data-green {
+        color: #06a488;
+    }
+
+    .lss-bread-item>p:nth-child(2).data-blue {
+        color: #07b1bd;
+    }
+
+    .lss-bread-item>p:nth-child(2).data-orange {
+        color: #f58935;
+    }
+</style>
