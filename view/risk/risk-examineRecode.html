@@ -60,7 +60,7 @@
             show: 'name'
         });
 
-        var assessLayer; //躺窗对象
+        var assessLayer; //弹窗对象
         form.on('submit(searchForm)', function(data) {
             var paramSearch = {};
             for (var key in data.field) {
@@ -182,7 +182,6 @@
                         },
                         async: false, // 同步
                         success: function(data) {
-                            console.log("156");
                             layerData = data;
                         }
                     });
