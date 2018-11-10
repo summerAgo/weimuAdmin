@@ -1,0 +1,102 @@
+<div class="home-content">
+    <div class="count">
+        <div class="count-item" data-color="green">
+            <div class="count-item-top">
+                <span class="top-l">本周入库量统计</span>
+                <span class="top-r">单位：m³</span>
+            </div>
+            <div class="count-item-body">36,665,200</div>
+        </div>
+        <div class="count-item" data-color="blue">
+            <div class="count-item-top">
+                <span class="top-l">本周入库量统计</span>
+                <span class="top-r">单位：m³</span>
+            </div>
+            <div class="count-item-body">36,665,200</div>
+        </div>
+        <div class="count-item" data-color="orange">
+            <div class="count-item-top">
+                <span class="top-l">本周入库量统计</span>
+                <span class="top-r">单位：m³</span>
+            </div>
+            <div class="count-item-body">36,665,200</div>
+        </div>
+    </div>
+
+    <div class="flow-title" style="margin-top: 40px;">
+        <div class="main-title">入库流程</div>
+        <div class="sub-title">/WAREHOURSIG PROCESS</div>
+    </div>
+
+    <div class="flow-path">
+        <a href="javascript:;">
+            <dl>
+                <dt data-img="a"><u></u></dt>
+                <dd>新建仓库</dd>
+            </dl>
+        </a>
+        <div class="arrow"></div>
+        <a href="javascript:;">
+            <dl>
+                <dt data-img="b"><u></u></dt>
+                <dd>完善基础数据</dd>
+            </dl>
+        </a>
+        <div class="arrow"></div>
+        <a href="#!stock-preentry">
+            <dl>
+                <dt data-img="c"><u></u></dt>
+                <dd>预入库</dd>
+            </dl>
+        </a>
+        <div class="arrow"></div>
+        <a href="javascript:;">
+            <dl>
+                <dt data-img="d"><u></u></dt>
+                <dd>入库</dd>
+            </dl>
+        </a>
+        <div class="arrow"></div>
+        <a href="javascript:;">
+            <dl>
+                <dt data-img="e"><u></u></dt>
+                <dd>库存</dd>
+            </dl>
+        </a>
+    </div>
+
+    <div class="flow-title" style="margin-top: 40px;">
+        <div class="main-title">出货流程</div>
+        <div class="sub-title">/SHIPPING PROCESS</div>
+    </div>
+
+    <div class="flow-path">
+        <a href="#!stock-outBill">
+            <dl>
+                <dt data-img="f"><u></u></dt>
+                <dd>出货申请</dd>
+            </dl>
+        </a>
+        <div class="arrow"></div>
+        <a href="#!risk-goodsAssess">
+            <dl>
+                <dt data-img="g"><u></u></dt>
+                <dd>风控管理</dd>
+            </dl>
+        </a>
+        <div class="arrow"></div>
+        <a href="javascript:;">
+            <dl>
+                <dt data-img="h"><u></u></dt>
+                <dd>出货</dd>
+            </dl>
+        </a>
+    </div>
+</div>
+<script>
+    layui.use(['jquery'], function () {
+        var $ = layui.jquery;
+        var contentHeight = parseInt($(".layui-body").innerHeight() - $(".content-header").innerHeight() - 40);
+        $(".home-content").innerHeight(contentHeight);
+    });
+</script>
