@@ -165,25 +165,25 @@
                     });
 
                     form.on('submit(formDemo)', function(data) {
-
-                        // $.ajax({
-                        //     cache: true,
-                        //     type: "get",
-                        //     url: "",
-                        //     async: false,
-                        //     data: {},
-                        //     error: function(request) {
-                        //         layer.msg('修改失败');
-                        //         return;
-                        //     },
-                        //     success: function(res) {
-                        //         if (res.status == 0) {
-                        //             layer.msg("保存修改成功");
-                        //         } else {
-                        //             layer.msg("保存修改失败");
-                        //         }
-                        //     }
-                        // });
+                        console.log(data.field);
+                        $.ajax({
+                            cache: true,
+                            type: "get",
+                            url: setOutCordon,
+                            async: false,
+                            data: data.field,
+                            error: function(request) {
+                                layer.msg('修改失败');
+                                return;
+                            },
+                            success: function(res) {
+                                if (res.status == 0) {
+                                    layer.msg("保存修改成功");
+                                } else {
+                                    layer.msg("保存修改失败");
+                                }
+                            }
+                        });
 
                         return false;
                     });

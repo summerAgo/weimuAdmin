@@ -124,10 +124,13 @@
             loading: true // 是否显示加载条，默认true
         });
 
+
+        var ownerid = null;
         // 监听货权人点击事件
         table.on('tool(table-goodsAssess)', function(obj) {
             var curData = obj.data;
             console.log(curData)
+            ownerid = curData.id;
             if (obj.event === 'click') {
 
                 $.get('view/risk/risk-layerAssess.html', {}, function(str) { // 弹出弹框
@@ -165,7 +168,7 @@
                         height: '472', // full -- 高度将始终铺满 - 差值
                         url: ilbstockList,
                         where: {
-                            "person": curData.id
+                            "ownerid": curData.id
                         },
                         parseData: function(res) { //res 即为原始返回的数据
                             console.log(res)
@@ -239,7 +242,7 @@
 
                         } else {
                             console.log(obj.data)
-                            editAprice("1",obj.data.id,obj.value,tableInsAssess);
+                            editAprice(ownerid,obj.data.id,obj.value,tableInsAssess);
                         }
                     });
 
@@ -259,7 +262,7 @@
                             // async:false,
                             data: {
                                 "ownerid":ownerid,
-                                "znum":JSON.stringify(datainfo)
+                                "lbarr":JSON.stringify(datainfo)
                                 },
                             traditional: true,
                             success: function(res) {

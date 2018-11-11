@@ -1,6 +1,6 @@
 var localport = ":8000";//本地端口
-var localhost = "http://192.168.10.216" + localport;//本地
-var pathUrl = "http://192.168.10.201:80/storage-web/"; //?username=admin&password=123456
+var localhost = "http://1127.0.0.1" + localport;//本地
+var pathUrl = "http://127.0.0.1:80/storage-web/"; //?username=admin&password=123456
 var loginUrl = pathUrl + "sys/login"; //登录
 //基础货物公共信息
 var commonBaseUrl = pathUrl + "c/goodsbasics/list"; //查询货物
@@ -126,3 +126,4 @@ var outCordonList = pathUrl + "risk/control/outCordonList" //出货警戒线列�
 var outHistoryDetails = pathUrl + "risk/control/outHistoryDetails"//出货审核记录详情
 var setAdopt = pathUrl + "risk/control/setAdopt"//出货审核通过
 var setNotAdopt = pathUrl + "risk/control/setNotAdopt"//出货审核不通过
+var setOutCordon = pathUrl + "risk/control/setOutCordon"//修改警戒线设置

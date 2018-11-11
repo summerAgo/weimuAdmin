@@ -124,24 +124,7 @@
                         [ //标题栏
                             {
                                 type: 'checkbox'
-                            },
-                            {
-                                field: 'code',
-                                title: '类型标识',
-                                sort: true,
-                                templet: function (d) {
-                                    if (d.code == 'VTS') {
-                                        return '品种';
-                                    }
-                                    if (d.code == 'GUG') {
-                                        return '规格';
-                                    }
-                                    if (d.code == 'LEL') {
-                                        return '等级';
-                                    }
-                                    return '';
-                                }
-                            }, {
+                            },{
                                 field: 'name',
                                 title: '名称',
                                 sort: true

@@ -78,6 +78,10 @@
                     url: loginUrl,
                     type: "get",
                     data: data.field,
+                    xhrFields: {
+                      withCredentials: true
+                   },
+                   crossDomain: true,
                     success: function(data) {
                         if (data.status == 0) {
                             layer.msg("登录成功");
