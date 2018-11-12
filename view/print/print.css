@@ -1,0 +1,199 @@
+i,
+em,
+u,
+b {
+    font-style: normal;
+    font-weight: normal;
+    text-decoration: none;
+}
+
+body {
+    color: #221815;
+}
+
+.w {
+    margin: auto;
+    width: 1070px;
+    /* width: 1190px; */
+    overflow: hidden;
+}
+
+.header {
+    overflow: hidden;
+    width: 100%;
+}
+
+.header .h-left {
+    float: left;
+    width: 60%;
+    vertical-align: bottom;
+}
+
+.header .h-left>embed {
+    float: left;
+}
+
+.header .h-left>.p-title {
+    float: left;
+    width: 30.8%;
+    font-size: 50px;
+    line-height: 120px;
+    font-weight: bold;
+    letter-spacing: 12px;
+    padding-left: 20px;
+    margin-left: 20px;
+    position: relative;
+}
+
+.header .h-left>.p-title::before {
+    position: absolute;
+    content: '';
+    width: 1px;
+    height: 56px;
+    top: 34px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #221815;
+}
+
+.h-right {
+    float: right;
+    width: 40%;
+    height: 120px;
+}
+
+.h-right .numb {
+    float: right;
+    font-size: 32px;
+    font-weight: 550;
+    margin-right: 5px;
+    margin-top: 22px;
+}
+
+.h-right embed {
+    float: right;
+    margin-top: 30px;
+}
+
+.write-info {
+    overflow: hidden;
+    width: 102%;
+}
+
+.write-info .write-item {
+    float: left;
+    display: flex;
+    width: 32%;
+    padding-right: 2%;
+    margin-bottom: 20px;
+}
+
+.write-info .write-item:nth-child(3),
+.write-info .write-item:nth-child(6) {
+    padding-right: 0;
+}
+
+.write-info .write-item:nth-child(2),
+.write-info .write-item:nth-child(5) {
+    padding-left: -10%;
+}
+
+.write-info .write-item>i {
+    float: left;
+    width: 100px;
+    font-size: 18px;
+    text-align: right;
+}
+
+.write-info .write-item>span {
+    float: left;
+    flex: 1;
+    height: 22px;
+    line-height: 36px;
+    border-bottom: 1px solid #221815;
+}
+
+/*  表格样式  */
+
+table {
+    border-collapse: collapse;
+    text-align: center;
+    width: 100%;
+}
+
+table tr td {
+    border: 1px solid #221815;
+    font-size: 14px;
+}
+
+table.weimu-table {
+    border: 1px solid #221815;
+}
+
+table.weimu-table tr td {
+    padding: 10px;
+    color: #666;
+    border: 1px solid #221815;
+    font-size: 16px;
+}
+
+table.weimu-table tr.table-header {
+    background-color: #eaeaea;
+}
+
+table.weimu-table tr.table-header td {
+    font-size: 16px;
+    color: #000;
+    border: 1px solid #221815;
+    font-weight: bold;
+}
+
+table.weimu-table tr td.total {
+    font-size: 18px;
+    color: #000;
+    border: 1px solid #221815;
+    font-weight: bold;
+}
+
+.careful{
+    margin-top: 15px;
+    font-size: 16px;
+}
+
+.sign-info {
+    overflow: hidden;
+    margin-left: -13px;
+    margin-top: 40px;
+}
+
+.sign-info .sign-item {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.sign-info .sign-item:nth-of-type(odd) {
+    float: left;
+    width: 56%;
+    margin-right: 10%;
+}
+
+.sign-info .sign-item:nth-of-type(even) {
+    float: left;
+    width: 34%;
+}
+
+.sign-info .sign-item>i {
+    float: left;
+    width: 135px;
+    font-size: 18px;
+    text-align: right;
+}
+
+.sign-info .sign-item>span {
+    float: left;
+    flex: 1;
+    height: 22px;
+    line-height: 36px;
+    border-bottom: 1px solid #221815;
+}
