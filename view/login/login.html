@@ -76,7 +76,7 @@
             form.on('submit(formLogin)', function(data) {
                 $.ajax({
                     url: loginUrl,
-                    type: "get",
+                    type: "POST",
                     data: data.field,
                     xhrFields: {
                       withCredentials: true
@@ -86,7 +86,13 @@
                         if (data.status == 0) {
                             layer.msg("登录成功");
                             setCookie("SESSION_NAME", data.SESSION_NAME,"h12");
-                            setCookie("userInfo", JSON.stringify(data.data),"h12");
+                            //该用户菜单权限JSON
+                            setCookie("menuAuthority", JSON.stringify(data.menuAuthority),"h12");
+                            
+                            //该用户按钮权限JSON
+                            setCookie("buttonAuthority", JSON.stringify(data.buttonAuthority),"h12");
+                            //该用户角色数组
+                            setCookie("rolename", data.rolename,"h12");
                             history.replaceState({},'index',localhost);//修改浏览器地址
                             window.location.href = localhost;//跳转首页
                         } else {

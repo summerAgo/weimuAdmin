@@ -52,66 +52,9 @@
         </div>
 
         <div class="layui-side index-side">
-            <div class="layui-side-scroll">
+            <div class="layui-side-scroll" id="menuview">
                 <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-                <ul class="layui-nav layui-nav-tree" lay-filter="index-side" lay-shrink="all">
-                    <!-- 侧边导航: <ul class="layui-nav layui-nav-tree layui-nav-side"> -->
-                    <li class="layui-nav-item">
-                        <a href="#!home"><i class="iconfont icon-cangkuguanli"></i> 数据统计</a>
-                    </li>
-                    <li class="layui-nav-item layui-nav-itemed">
-                        <a href="javascript:;"><i class="iconfont icon-cangkuguanli"></i> 库存管理</a>
-                        <dl class="layui-nav-child">
-                            <dd class="layui-this"><a href="#!ilbstock-info">库存信息</a></dd>
-                            <dd class="layui-this"><a href="#!ilbstock-abnormal">异常调整</a></dd>
-                            <dd class="layui-this"><a href="#!ilbstock-inventory">盘点记录</a></dd>
-                        </dl>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;"><i class="iconfont icon-churukuguanli"></i> 出入库管理</a>
-                        <dl class="layui-nav-child">
-                            <dd><a href="#!stock-outBill">出货申请</a></dd>
-                            <dd><a href="#!stock-preentry">预入库</a></dd>
-                            <dd><a href="#!stock-outHistory">出库记录</a></dd>
-                            <dd><a href="#!stock-enterHistory">入库记录</a></dd>
-                        </dl>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;"><i class="iconfont icon-renyuanguanli"></i> 人员管理</a>
-                        <dl class="layui-nav-child">
-                            <dd><a href="#!user-list">用户管理</a></dd>
-                            <dd><a href="#!role-list">角色管理</a></dd>
-                            <dd><a href="#!menu-list">菜单管理</a></dd>
-                            <dd><a href="#!button-list">按钮管理</a></dd>
-                        </dl>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;"><i class="iconfont icon-jichushuju"></i> 基础数据</a>
-                        <dl class="layui-nav-child">
-                            <dd><a href="#!base-infodata">商品信息设置</a></dd>
-                            <dd><a href="#!owner-list">货权人管理</a></dd>
-                            <dd><a href="#!depot-list">仓库信息管理</a></dd>
-                            <dd><a href="#!supplier-list">供应商管理</a></dd>
-                        </dl>
-                    </li>
-                    <!-- <li class="layui-nav-item">
-                        <a href="javascript:;"><i class="iconfont icon-xitongweihu"></i> 系统维护</a>
-                        <dl class="layui-nav-child">
-                            <dd><a href="javascript:;">选项1</a></dd>
-                            <dd><a href="javascript:;">选项2</a></dd>
-                            <dd><a href="#!role-power">树形菜单</a></dd>
-                        </dl>
-                    </li> -->
-                    <li class="layui-nav-item">
-                        <a href="javascript:;"><i class="iconfont icon-fengkongguanli"></i> 风控管理</a>
-                        <dl class="layui-nav-child">
-                            <dd><a href="#!risk-goodsAssess">商品评估列表</a></dd>
-                            <dd><a href="#!risk-shipWarn">出货警戒线设置</a></dd>
-                            <dd><a href="#!risk-shipExamine">出货审核</a></dd>
-                            <dd><a href="#!risk-examineRecode">出货审核记录</a></dd>
-                        </dl>
-                    </li>
-                </ul>
+
             </div>
         </div>
 
@@ -128,7 +71,79 @@
             <div class="content-body"></div>
         </div>
     </div>
-    <script src="js/q.js"></script>
+
+
+
+
+    <script id="menuTlp" type="text/html">
+    <ul class="layui-nav layui-nav-tree" lay-filter="index-side" lay-shrink="all">
+        {{# layui.each(d.list, function(index, item){ }}
+            {{# if(item.pid == 0){ }}
+            <li class="layui-nav-item">
+                <a href="javascript:;"><i class="iconfont {{ item.icon}}"></i> {{ item.name }}</a>
+                {{# layui.each(d.list, function(indexx, itemx){ }}
+                    {{# if(itemx.pid == item.id){}}
+                    <dl class="layui-nav-child">
+                        <dd><a href="#!{{ itemx.code }}">{{ itemx.name }}</a></dd>
+                    </dl>
+                    {{# }}}
+                {{# }); }}
+            </li>
+            {{# } }}
+        {{# }); }}
+    </ul>
+    </script>
+
+    <!-- 侧边导航: <ul class="layui-nav layui-nav-tree layui-nav-side"> -->
+    <!-- <li class="layui-nav-item">
+                <a href="#!home"><i class="iconfont icon-cangkuguanli"></i> 数据统计</a>
+            </li>
+            <li class="layui-nav-item layui-nav-itemed">
+                <a href="javascript:;"><i class="iconfont icon-cangkuguanli"></i> 库存管理</a>
+                <dl class="layui-nav-child">
+                    <dd class="layui-this"><a href="#!ilbstock-info">库存信息</a></dd>
+                    <dd class="layui-this"><a href="#!ilbstock-abnormal">异常调整</a></dd>
+                    <dd class="layui-this"><a href="#!ilbstock-inventory">盘点记录</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item">
+                <a href="javascript:;"><i class="iconfont icon-churukuguanli"></i> 出入库管理</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="#!stock-outBill">出货申请</a></dd>
+                    <dd><a href="#!stock-preentry">预入库</a></dd>
+                    <dd><a href="#!stock-outHistory">出库记录</a></dd>
+                    <dd><a href="#!stock-enterHistory">入库记录</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item">
+                <a href="javascript:;"><i class="iconfont icon-renyuanguanli"></i> 人员管理</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="#!user-list">用户管理</a></dd>
+                    <dd><a href="#!role-list">角色管理</a></dd>
+                    <dd><a href="#!menu-list">菜单管理</a></dd>
+                    <dd><a href="#!button-list">按钮管理</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item">
+                <a href="javascript:;"><i class="iconfont icon-jichushuju"></i> 基础数据</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="#!base-infodata">商品信息设置</a></dd>
+                    <dd><a href="#!owner-list">货权人管理</a></dd>
+                    <dd><a href="#!depot-list">仓库信息管理</a></dd>
+                    <dd><a href="#!supplier-list">供应商管理</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item">
+                <a href="javascript:;"><i class="iconfont icon-fengkongguanli"></i> 风控管理</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="#!risk-goodsAssess">商品评估列表</a></dd>
+                    <dd><a href="#!risk-shipWarn">出货警戒线设置</a></dd>
+                    <dd><a href="#!risk-shipExamine">出货审核</a></dd>
+                    <dd><a href="#!risk-examineRecode">出货审核记录</a></dd>
+                </dl>
+            </li>
+        </ul> -->
+
     <script src="layui/layui.js"></script>
     <script src="js/api.js"></script>
     <script src="js/common.js"></script>
@@ -145,91 +160,148 @@
             formSelects: 'formSelects-v4'
         });
 
-        layui.use(['jquery', 'element', 'layer'], function() {
+        layui.use(['jquery', 'element', 'layer', 'laytpl'], function () {
             var element = layui.element,
-                $ = layui.$;
+                $ = layui.$,
+                laytpl = layui.laytpl;
             var container = $('.content-body'); //页面容器
             // var userInfo = JSON.parse(getCookie('userInfo')); //获取session中用户信息
 
-            Q.reg([
-                //注册页面
-                ['home', function() {
-                    container.load('/view/home/home.html');
-                }],
-                ['stock-preentry', function() {
-                    container.load('/view/stock/stock-preentry.html');
-                }],
-                ['stock-outHistory', function() {
-                    container.load('/view/stock/stock-outHistory.html');
-                }],
-                ['stock-enterHistory', function() {
-                    container.load('/view/stock/stock-enterHistory.html');
-                }],
-                ['stock-billDetails', function() {
-                    container.load('/view/stock/stock-billDetails.html');
-                }],
-                ['stock-outBill', function() {
-                    container.load('/view/stock/stock-outBill.html');
-                }],
-                ['stock-addOutBill', function() {
-                    container.load('/view/stock/stock-addOutBill.html');
-                }],
-                ['ilbstock-info', function() {
-                    container.load('/view/ilbstock/ilbstock-info.html');
-                }],
-                ['ilbstock-abnormal', function() {
-                    container.load('/view/ilbstock/ilbstock-abnormal.html');
-                }],
-                ['ilbstock-inventory', function() {
-                    container.load('/view/ilbstock/ilbstock-inventory.html');
-                }],
-                ['user-list', function() {
-                    container.load('/view/user/user-list.html');
-                }],
-                ['role-list', function() {
-                    container.load('/view/role/role-list.html');
-                }],
-                ['role-power', function() {
-                    container.load('/view/role/role-power.html');
-                }],
-                ['menu-list', function() {
-                    container.load('/view/menu/menu-list.html');
-                }],
-                ['button-list', function() {
-                    container.load('/view/button/button-list.html');
-                }],
-                ['depot-list', function() {
-                    container.load('/view/depot/depot-list.html');
-                }],
-                ['depot-position', function() {
-                    container.load('/view/depot/depot-position.html');
-                }],
-                ['base-infodata', function() {
-                    container.load('/view/base/base-infodata.html');
-                }],
-                ['owner-list', function() {
-                    container.load('/view/base/owner-list.html');
-                }],
-                ['supplier-list', function() {
-                    container.load('/view/base/supplier-list.html');
-                }],
-                ['risk-goodsAssess', function() {
-                    container.load('/view/risk/risk-goodsAssess.html');
-                }],
-                ['risk-shipWarn', function() {
-                    container.load('/view/risk/risk-shipWarn.html');
-                }],
-                ['risk-shipExamine', function() {
-                    container.load('/view/risk/risk-shipExamine.html');
-                }],
-                ['risk-examineRecode', function() {
-                    container.load('/view/risk/risk-examineRecode.html');
-                }]
-            ])
+            //该用户菜单权限JSON
+            var menujson = JSON.parse(getCookie("menuAuthority"));
+            console.log(menujson);
+            var menuArr = [];      //菜单显示
+            var menuRoute = [];    //路由
+            for (var key in menujson) {
+                //console.log(key);
+                var json = JSON.parse(menujson[key]);
+                //console.log(json);
+                if (json.code) {
+                    console.log(json.url);
+                    var v = [json.code, function () {
+                        container.load(json.url);
+                    }]
+                    // menuRoute.push(v);
+                }
+                menuArr.push(json);
+            }
+            // console.log(menuArr);
+
+
+
+            var getTpl = menuTlp.innerHTML, view = document.getElementById('menuview');
+
+            var data = { //数据
+                "list": menuArr
+            }
+            // console.log(data);
+            laytpl(getTpl).render(data, function (html) {
+                view.innerHTML = html;
+            });
+
+            element.render();
+
+            // console.log(menuRoute);
+            //放开权限，路由
+            //////////////////////////
+            menuRoute.push(['home', container.load('/view/home/home.html')]);
+            menuRoute.push(['stock-addOutBill', container.load('/view/stock/stock-addOutBill.html')]);
+            menuRoute.push(['depot-position', container.load('/view/depot/depot-position.html')]);
+
+
+            console.log(22222222222);
+            console.log(menuRoute);
+            //加载路由
+            // Q.reg([
+            //     menuRoute
+            // ]);
+            for (var x = 0; x < menuRoute.length; x++) {
+                Q.reg([
+                    [menuRoute[x][0],function(){menuRoute[x][1]}]
+                ]);
+            }
+            // Q.reg([
+            //     //注册页面
+            //     ['home', function() {
+            //         container.load('/view/home/home.html');
+            //     }],
+            //     ['stock-preentry', function() {
+            //         container.load('/view/stock/stock-preentry.html');
+            //     }],
+            //     ['stock-outHistory', function() {
+            //         container.load('/view/stock/stock-outHistory.html');
+            //     }],
+            //     ['stock-enterHistory', function() {
+            //         container.load('/view/stock/stock-enterHistory.html');
+            //     }],
+            //     //////////////////////////
+            //     ['stock-billDetails', function() {
+            //         container.load('/view/stock/stock-billDetails.html');
+            //     }],
+            //     ['stock-outBill', function() {
+            //         container.load('/view/stock/stock-outBill.html');
+            //     }],
+            //     //////////////////////////
+            //     ['stock-addOutBill', function() {
+            //         container.load('/view/stock/stock-addOutBill.html');
+            //     }],
+            //     ['ilbstock-info', function() {
+            //         container.load('/view/ilbstock/ilbstock-info.html');
+            //     }],
+            //     ['ilbstock-abnormal', function() {
+            //         container.load('/view/ilbstock/ilbstock-abnormal.html');
+            //     }],
+            //     ['ilbstock-inventory', function() {
+            //         container.load('/view/ilbstock/ilbstock-inventory.html');
+            //     }],
+            //     ['user-list', function() {
+            //         container.load('/view/user/user-list.html');
+            //     }],
+            //     ['role-list', function() {
+            //         container.load('/view/role/role-list.html');
+            //     }],
+            //     ['role-power', function() {
+            //         container.load('/view/role/role-power.html');
+            //     }],
+            //     ['menu-list', function() {
+            //         container.load('/view/menu/menu-list.html');
+            //     }],
+            //     ['button-list', function() {
+            //         container.load('/view/button/button-list.html');
+            //     }],
+            //     ['depot-list', function() {
+            //         container.load('/view/depot/depot-list.html');
+            //     }],
+            //     ///////////////////
+            //     ['depot-position', function() {
+            //         container.load('/view/depot/depot-position.html');
+            //     }],
+            //     ['base-infodata', function() {
+            //         container.load('/view/base/base-infodata.html');
+            //     }],
+            //     ['owner-list', function() {
+            //         container.load('/view/base/owner-list.html');
+            //     }],
+            //     ['supplier-list', function() {
+            //         container.load('/view/base/supplier-list.html');
+            //     }],
+            //     ['risk-goodsAssess', function() {
+            //         container.load('/view/risk/risk-goodsAssess.html');
+            //     }],
+            //     ['risk-shipWarn', function() {
+            //         container.load('/view/risk/risk-shipWarn.html');
+            //     }],
+            //     ['risk-shipExamine', function() {
+            //         container.load('/view/risk/risk-shipExamine.html');
+            //     }],
+            //     ['risk-examineRecode', function() {
+            //         container.load('/view/risk/risk-examineRecode.html');
+            //     }]
+            // ]);
 
             Q.init({
                 index: 'home',
-                pop: function(vid) {
+                pop: function (vid) {
                     // hash改变执行
                     var thehash = $(".index-side a").attr("href").replace(/#!/, '');
                     var dom;
@@ -248,7 +320,7 @@
                             });
                         } else {
                             var isData = false;
-                            $.each($(".layui-tab-title li[lay-id]"), function() {
+                            $.each($(".layui-tab-title li[lay-id]"), function () {
                                 if ($(this).attr("lay-id") == vid) {
                                     isData = true;
                                 }
@@ -278,14 +350,14 @@
             // element.tabChange('nav-tabs', layid);
 
             //监听Tab切换，以改变地址hash值
-            element.on('tab(nav-tabs)', function() {
+            element.on('tab(nav-tabs)', function () {
                 location.hash = '#!' + this.getAttribute('lay-id');
             });
 
-            $(".header-seacherBox input").focus(function() {
+            $(".header-seacherBox input").focus(function () {
                 //头部搜索框获取焦点变亮
                 $(".header-seacherBox").addClass('opacity1');
-            }).blur(function() {
+            }).blur(function () {
                 if ($(this).val() == "") {
                     $(".header-seacherBox").removeClass('opacity1');
                 }
@@ -294,8 +366,10 @@
             $(".signOutBtn").click(signOut); //退出登录
             function signOut() {
                 //退出登录
-                delCookie("userInfo");
                 delCookie("SESSION_NAME");
+                delCookie("rolename");
+                delCookie("menuAuthority");
+                delCookie("buttonAuthority");
                 history.replaceState({}, 'login', localhost + "/view/login/login.html");
                 window.location.href = localhost + "/view/login/login.html";
             }
@@ -304,6 +378,7 @@
 
         });
     </script>
+    <script src="js/q.js"></script>
 </body>
 
 </html>
