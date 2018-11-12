@@ -87,10 +87,11 @@
                             layer.msg("登录成功");
                             setCookie("SESSION_NAME", data.SESSION_NAME,"h12");
                             //该用户菜单权限JSON
-                            setCookie("menuAuthority", JSON.stringify(data.menuAuthority),"h12");
-                            
+                            sessionStorage.setItem("menuAuthority", JSON.stringify(data.menuAuthority));
+                            //setCookie("menuAuthority", JSON.stringify(data.menuAuthority),"h12");
+
                             //该用户按钮权限JSON
-                            setCookie("buttonAuthority", JSON.stringify(data.buttonAuthority),"h12");
+                            //setCookie("buttonAuthority", JSON.stringify(data.buttonAuthority),"h12");
                             //该用户角色数组
                             setCookie("rolename", data.rolename,"h12");
                             history.replaceState({},'index',localhost);//修改浏览器地址
