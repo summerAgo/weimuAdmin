@@ -5,7 +5,10 @@
                 <div class="form-box">
                     <div class="layui-form-item form-left">
                         <div class="table-form-item layui-input-inline">
-                            <input type="text" name="cargoowner" placeholder="货权人" autocomplete="off" class="layui-input">
+                            <!-- <input type="text" name="cargoowner" placeholder="货权人" autocomplete="off" class="layui-input"> -->
+                            <select name="ownerid" xm-select="ownerSelect" xm-select-radio>
+                                <option value="">选择货权人</option>
+                            </select>
                         </div>
                     </div>
                     <div class="layui-form-item form-right">
@@ -51,7 +54,44 @@
 
         form.render(); // 重置表单渲染
         formSelects.render(); // 下拉选项
-        element.render('talbe-tools'); // 表格工具栏
+
+        formSelects.data('ownerSelect', 'local', {
+            arr: selectDataInstall(ownerDropdown) //货权人列表
+        });
+
+        function selectDataInstall(url, param, bool) {
+            //下拉选框数据组装
+            var arr = [];
+            //获取列表数据
+            $.ajax({
+                url: url,
+                type: "get",
+                data: param,
+                async: false, //同步
+                traditional: true,
+                success: function(data) {
+                    // console.log(data);
+                    if (data.status == 0) {
+                        //把接口数据转换为[{"name":str,"value":number}]格式
+                        if (!Array.isArray(data.data) || data.data.length == 0) {
+                            // 判断arr是否为数组并保证内部有值
+                            return false;
+                        }
+                        for (var i = 0; i < data.data.length; i++) {
+                            arr.push({
+                                "name": data.data[i].name,
+                                "value": data.data[i].id
+                            })
+                        }
+                        if (bool) {
+                            arr[0].selected = "selected";
+                        }
+
+                    }
+                }
+            })
+            return arr;
+        }
 
         form.on('submit(searchForm)', function(data) {
             var paramSearch = {};
@@ -129,7 +169,7 @@
         // 监听货权人点击事件
         table.on('tool(table-goodsAssess)', function(obj) {
             var curData = obj.data;
-            console.log(curData)
+            // console.log(curData)
             ownerid = curData.id;
             if (obj.event === 'click') {
 
@@ -171,7 +211,7 @@
                             "ownerid": curData.id
                         },
                         parseData: function(res) { //res 即为原始返回的数据
-                            console.log(res)
+                            // console.log(res)
                             if (res.status != 0) {
                                 res.status = 0;
                                 res.data = []
@@ -224,9 +264,9 @@
                                 }
                             ]
                         ],
-                        page: true,
-                        limit: 10,
-                        limits: [10, 20, 30, 40, 50],
+                        page: false,
+                        limit: null,
+                        // limits: [10, 20, 30, 40, 50],
                         even: true, // 开启隔行背景
                         done: function(res, curr, count) { // 数据渲染完的回调
 
@@ -236,52 +276,92 @@
                         }
                     });
 
+                    var apriceChangeValue = {}; //单元格编辑更改评估价格数据对象
+
                     //监听编辑
                     table.on('edit(tableContainer-from)', function(obj) {
                         // console.log(obj.value); //得到修改后的值
                         // console.log(obj.field); //当前编辑的字段名
                         // console.log(obj.data); //所在行的所有相关数据
                         if (!obj.value || isNaN(obj.value)) {
-                            layer.msg("估价只能输入数字");
+                            layer.msg("估价金额只能为数字");
+                        }
 
+                        apriceChangeValue[obj.data.id] = obj.value;
+                        console.log(apriceChangeValue);
+                    });
+
+                    $(".saveEvaluationPriceBtn").click(function() {
+                        var status = true;
+                        console.log(apriceChangeValue)
+                        //保存评估价
+                        if ($.isEmptyObject(apriceChangeValue)) {
+                            layer.msg("当前估价未作修改");
                         } else {
-                            console.log(obj.data)
-                            editAprice(ownerid, obj.data.id, obj.value, tableInsAssess);
+                            for (var key in apriceChangeValue) {
+                                if (isNaN(apriceChangeValue[key]) || apriceChangeValue[key] == "") {
+                                    console.log(1)
+                                    layer.msg("保存估价失败，金额只能为数字");
+                                    status = false;
+                                }
+                            }
+                            console.log(status)
+                            if (status) {
+                                status = editAprice(ownerid, apriceChangeValue, tableInsAssess); //提交评估单价
+                                if (status) {
+                                    apriceChangeValue = {}; //如果提交成功清空估价数组
+                                    layer.close(assessLayer); //关闭估价弹窗
+                                    tableIns.reload({
+                                        page: {
+                                            curr: 1 // 重新从第 1 页开始
+                                        }
+                                    });
+                                } else {
+                                    layer.msg("提交估价失败，请检查网络"); //估价提交失败提示
+                                }
+                            } else {
+                                return false;
+                            }
+
+                        }
+                    });
+
+                    $(".cancelBtn").click(function() {
+                        if (!$.isEmptyObject(apriceChangeValue)) {
+                            layer.confirm('有未提交的评估价格', function(index) {
+                                //do something
+                                layer.close(index);
+                                apriceChangeValue = {};
+                                layer.close(assessLayer); //关闭估价弹窗
+                            });
+                        } else {
+                            layer.close(assessLayer); //关闭估价弹窗
                         }
                     });
 
                     //保持提交  修改的风控数据
-                    function editAprice(ownerid, picid, aprice, tableObj) {
+                    function editAprice(ownerid, apriceJson, tableObj) {
                         //请求数据源示例
-                        var datainfo = [];
-                        var json = {};
-                        json['id'] = picid;
-                        json['aprice'] = aprice;
-                        datainfo.push(json);
-                        console.log(datainfo);
-
+                        var status = false;
                         $.ajax({
                             url: saveEvaluationPrice,
                             type: "POST",
                             async: false,
                             data: {
-                                "ownerid": ownerid,
-                                "lbarr": JSON.stringify(datainfo)
+                                ownerid: ownerid,
+                                lbarr: JSON.stringify(apriceJson)
                             },
-                            traditional: true,
+                            // traditional: true,
                             success: function(res) {
                                 if (res.status == 0) {
                                     layer.msg("评估单价设置成功");
-                                    // tableObj.reload({
-                                    //     page: {
-                                    //         curr: 1 // 重新从第 1 页开始
-                                    //     }
-                                    // });
+                                    status = true;
                                 } else {
                                     layer.msg(res.msg);
                                 }
                             }
-                        })
+                        });
+                        return status;
                     };
 
                 });

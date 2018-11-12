@@ -123,6 +123,7 @@ var setThroughOut = pathUrl + "risk/control/setThroughOut" //设置通过出货�
 var outHistoryList = pathUrl + "risk/control/outHistoryList" //风控审核过的出货记录
 var saveEvaluationPrice = pathUrl + "risk/control/saveEvaluationPrice" //保存修改的商品评估价
 var outCordonList = pathUrl + "risk/control/outCordonList" //出货警戒线列表
+var outDetails = pathUrl + "risk/control/outHistoryDetail"//出货审核详情
 var outHistoryDetails = pathUrl + "risk/control/outHistoryDetails"//出货审核记录详情
 var setAdopt = pathUrl + "risk/control/setAdopt"//出货审核通过
 var setNotAdopt = pathUrl + "risk/control/setNotAdopt"//出货审核不通过

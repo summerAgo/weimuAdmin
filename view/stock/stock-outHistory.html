@@ -82,9 +82,6 @@
         form.render(); //重置表单渲染
         formSelects.render(); //下拉选项
         element.render('talbe-tools'); //表格工具栏
-        formSelects.btns(['select', 'remove'], {
-            show: 'name'
-        });
 
         formSelects.data('ownerSelect', 'local', {
             arr: selectDataInstall(ownerDropdown) //货权人列表
