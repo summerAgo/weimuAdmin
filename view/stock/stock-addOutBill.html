@@ -341,10 +341,9 @@
                         },
                         success: function(res) {
                             if (res.status == 0) {
-                                layer.msg("申请成功");
-                            } else {
-                                layer.msg(res.msg);
+                                
                             }
+                            layer.msg(res.msg);
                         }
                     });
                 });

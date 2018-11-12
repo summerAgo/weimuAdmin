@@ -175,15 +175,12 @@
 
             //该用户菜单权限JSON
             var menujson = JSON.parse(sessionStorage.getItem("menuAuthority"));
-            console.log(menujson);
+
             var menuArr = [];      //菜单显示
             var menuRoute = [];    //路由
             for (var key in menujson) {
-                //console.log(key);
                 var json = JSON.parse(menujson[key]);
-                //console.log(json);
                 if (json.code) {
-                    console.log(json.url);
                     var v = [json.code, function() {
                         container.load(json.url);
                     }]
@@ -364,7 +361,7 @@
                 delCookie("rolename");
                 delCookie("menuAuthority");
                 delCookie("buttonAuthority");
-                history.replaceState({}, 'login', localhost + "/view/login/login.html");
+                //history.replaceState({}, 'login', localhost + "/view/login/login.html");
                 window.location.href = localhost + "/view/login/login.html";
             }
 

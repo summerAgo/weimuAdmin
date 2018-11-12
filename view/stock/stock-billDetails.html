@@ -36,11 +36,11 @@
     </li>
     <li>
         <small>货权人</small>
-        <h3>{{d.data.ownerid}}</h3>
+        <h3>{{d.data.ownername}}</h3>
     </li>
     <li>
         <small>仓库名称</small>
-        <h3>{{d.data.depotid}}</h3>
+        <h3>{{d.data.depname}}</h3>
     </li>
     {{# if(d.data.outdate){}}
     <li>
@@ -78,7 +78,7 @@
         var laytpl = layui.laytpl;
 
         var billDetails = JSON.parse(sessionStorage.getItem('billDetails')); //获取所选择记录详情
-        console.log(billDetails)
+        //console.log(billDetails)
         if (!billDetails) {
             //判断是否存在，不存在跳转到首页
             history.replaceState(null, null, "#!home");
