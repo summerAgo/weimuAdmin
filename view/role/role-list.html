@@ -208,7 +208,7 @@
 
         //弹出添加角色
         $("#creatRole").click(function() {
-			 window.currData = null;
+			window.currData = null;
             $.get('view/role/role-add.html', {}, function(str) {
                 eaitLayer = layer.open({
                     title: '添加角色',

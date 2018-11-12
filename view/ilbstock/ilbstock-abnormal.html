@@ -1,0 +1,373 @@
+<div class="table-page">
+    <div class="table-page-header">
+        <div class="table-page-form">
+            <form class="layui-form" action="">
+                <div class="form-box">
+                    <div class="layui-form-item form-left">
+                        <div class="table-form-item layui-input-inline">
+                            <select name="ownerid" xm-select="ownerSelect" xm-select-radio>
+                                <option value="">选择货权人</option>
+                            </select>
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <select name="storeid" xm-select="storeSelect" xm-select-radio>
+                                <option value="">仓库名称</option>
+                            </select>
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <input type="text" name="code" placeholder="包号" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <select name="varieties" xm-select="selectVarieties" xm-select-radio>
+                                <option value="">品种</option>
+                            </select>
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <select name="spec" xm-select="selectSpec" xm-select-radio>
+                                <option value="">规格/厚度</option>
+                            </select>
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <select name="levels" xm-select="selectLevels" xm-select-radio>
+                                <option value="">等级</option>
+                            </select>
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <select name="chang" xm-select="changLevels" xm-select-radio>
+                                <option value="">长度</option>
+                            </select>
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <select name="brand" xm-select="brandLevels" xm-select-radio>
+                                <option value="">品牌</option>
+                            </select>
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <select name="origin" xm-select="originSelect" xm-select-radio>
+                                <option value="">选择产地</option>
+                            </select>
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <select name="dateid" xm-select="dateSelect" xm-select-radio>
+                                <option value="">创建日期</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item form-right">
+                        <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="searchForm">
+                            <i class="iconfont icon-sousuo"></i> <span>查询</span>
+                        </button>
+                        <button type="reset" class="layui-btn layui-btn-primary"> <i class="layui-icon layui-icon-refresh"></i></button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+    <div class="table-content">
+        <div class="table-content-title">
+            <div class="table-tools">
+                <ul class="layui-nav" lay-filter="talbe-tools">
+                    <li class="layui-nav-item">
+                        <a id="toExport" href="javascript:;">导出数据</a>
+                    </li>
+                    <li class="layui-nav-item">
+                        <a href="javascript:;">打印</a>
+                    </li>
+                </ul>
+                <ul class="layui-layout-right">
+                    <li><a href="javascript:;" class="addBtn">增加库存</a></li>
+                    <li><a href="javascript:;" class="reduceBtn">减少库存</a></li>
+                    <li><a href="javascript:;" class="splitBtn">库存拆分</a></li>
+                    <li><a href="javascript:;" class="modifyBtn">修改</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="table-content-main">
+            <table class="layui-hide" id="tableContainer-abnormal" lay-filter="tableContainer-abnormal"></table>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate'], function () {
+        var element = layui.element;
+        var form = layui.form;
+        var $ = layui.jquery;
+        var table = layui.table;
+        var formSelects = layui.formSelects;
+        var laytpl = layui.laytpl;
+        var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 103); //内容区域所需减去的高度
+
+        var addLayer; //增加库存-弹层
+
+        form.render(); //重置表单渲染
+        formSelects.render(); //下拉选项
+        element.render('talbe-tools'); //表格工具栏
+        formSelects.btns(['select', 'remove'], {
+            show: 'name'
+        });
+
+        formSelects.data('ownerSelect', 'local', {
+            arr: selectDataInstall(ownerDropdown) //货权人列表
+        });
+
+        formSelects.data('storeSelect', 'local', {
+            arr: selectDataInstall(ownerDropdown) //仓库列表
+        });
+
+        formSelects.data('selectVarieties', 'local', {
+            arr: selectDataInstall(VTSList) //品种列表
+        });
+
+        formSelects.data('selectSpec', 'local', {
+            arr: selectDataInstall(specList) //规格列表
+        });
+
+        formSelects.data('selectLevels', 'local', {
+            arr: selectDataInstall(levelsList) //等级列表
+        });
+
+        formSelects.data('changLevels', 'local', {
+            arr: selectDataInstall(ownerDropdown) //长度列表
+        });
+
+        formSelects.data('brandLevels', 'local', {
+            arr: selectDataInstall(ownerDropdown) //品牌列表
+        });
+
+        formSelects.data('originSelect', 'local', {
+            arr: selectDataInstall(CHDList) //产地列表
+        });
+
+        formSelects.data('dateSelect', 'local', {
+            arr: selectDataInstall(ownerDropdown) //创建日期
+        });
+
+        function selectDataInstall(url, param) {
+            //下拉选框数据组装
+            var arr = [];
+            //获取列表数据
+            $.ajax({
+                url: url,
+                type: "get",
+                data: param,
+                async: false, //同步
+                traditional: true,
+                success: function (data) {
+                    console.log(data);
+                    if (data.status == 0) {
+                        //把接口数据转换为[{"name":str,"value":number}]格式
+                        if (!Array.isArray(data.data) || data.data.length == 0) {
+                            // 判断arr是否为数组并保证内部有值
+                            return false;
+                        }
+                        for (var i = 0; i < data.data.length; i++) {
+                            arr.push({
+                                "name": data.data[i].name,
+                                "value": data.data[i].id
+                            })
+                        }
+                    }
+                }
+            })
+            return arr;
+        }
+
+        form.on('submit(searchForm)', function (data) {
+            var paramSearch = {};
+            for (var key in data.field) {
+                //参数赋值
+                if (data.field[key] != "") {
+                    paramSearch[key] = data.field[key]
+                }
+            }
+            tableIns.reload({
+                where: paramSearch, //接口参数
+                page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+            });
+            return false;
+        });
+
+        var tableIns = table.render({
+            elem: '#tableContainer-abnormal',
+            height: 'full-' + tableTopHeight,
+            url: ilbstockList,
+            parseData: function (res) { //res 即为原始返回的数据
+                if (res.status !== 0) res.status = 0;
+                return {
+                    "code": res.status, //解析接口状态
+                    "msg": res.message, //解析提示文本
+                    "count": res.count, //解析数据长度
+                    "data": res.data, //解析数据列表
+                    "aprice": res.aprice, //解析数据列表
+                    "znum": res.znum //解析数据列表
+                }
+            },
+            request: {
+                pageName: 'offset', //页码的参数名称，默认：page
+                limitName: 'limit' //每页数据量的参数名，默认：limit
+            },
+            cols: [
+                [ //标题栏
+                    {
+                        type: 'checkbox'
+                    }, {
+                        field: 'name',
+                        title: '货权人',
+                        sort: true
+                    }, {
+                        field: 'depotid',
+                        title: '仓库名称',
+                        sort: true
+                    }, {
+                        field: 'code',
+                        title: '包号',
+                        sort: true
+                    }, {
+                        field: 'varieties',
+                        title: '品种',
+                        sort: true
+                    }, {
+                        field: 'spec',
+                        title: '规格/厚度',
+                        sort: true
+                    }, {
+                        field: 'levels',
+                        title: '等级',
+                        sort: true
+                    }, {
+                        field: 'chang',
+                        title: '长度',
+                        sort: true
+                    }, {
+                        field: 'brand',
+                        title: '品牌',
+                        sort: true
+                    }, {
+                        field: 'origin',
+                        title: '产地',
+                        sort: true
+                    }, {
+                        field: 'num',
+                        title: '数量(m³)',
+                        sort: true
+                    }, {
+                        field: 'origin',
+                        title: '采购单价(RMB)',
+                        sort: true
+                    }, {
+                        field: 'aprice',
+                        title: '评估单价(RMB)',
+                        sort: true
+                    }
+                ]
+            ],
+            even: true,
+            page: true, //是否显示分页
+            limits: [15, 20, 30, 40, 50],
+            limit: 15, //每页默认显示的数量
+            done: function (res, curr, count) {
+                console.log(res);
+                var addtableBtn = '<div class="rightBotBtn">合计总库存数量<span>' + res.znum + '</span>㎡ 总库存估价金额：<span>' + res.aprice + '</span>(RMB)</div>';
+                $(".layui-table-page").append(addtableBtn);
+            },
+            text: {
+                none: "无匹配数据"
+            },
+            loading: true
+        });
+
+        //点击增加库存
+        $(".addBtn").click(function () {
+            addStore();
+        });
+
+        function addStore() {
+            $.get('view/ilbstock/ilbstock-layerAbnormal.html', {}, function (str) { // 请求弹框
+
+                addLayer = layer.open({
+                    title: '异常调整-增加库存',
+                    type: 1,
+                    content: str, // 注意，如果str是object，那么需要字符拼接。
+                    area: ['80%', '80%'],
+                });
+
+                var tableInsAssess = table.render({
+                    elem: '#tableContainer-layerAbnormal',
+                    height: '472', // full -- 高度将始终铺满 - 差值
+                    url: ilbstockList,
+
+                    parseData: function (res) { //res 即为原始返回的数据
+                        return {
+                            "code": res.status, //解析接口状态
+                            "msg": res.message, //解析提示文本
+                            "count": res.count, //解析数据长度
+                            "data": res.data, //解析数据列表
+                        }
+                    },
+                    cols: [
+                        [ // 标题栏
+                            {
+                                type: 'checkbox'
+                            }, {
+                                field: 'orderno',
+                                title: '单号',
+                                sort: true
+                            }, {
+                                field: 'name',
+                                title: '货权人'
+                            }, {
+                                field: 'depotid',
+                                title: '仓库名称'
+                            }, {
+                                field: 'billloading',
+                                title: '提运单',
+                                sort: true
+                            }, {
+                                field: '',
+                                title: '库存件数(包)'
+                            }, {
+                                field: '',
+                                title: '实际件数(包)',
+                                sort: true
+                            }, {
+                                field: 'num',
+                                title: '库存数量(m³)',
+                                sort: true
+                            }, {
+                                field: 'actualnum',
+                                title: '实际数量(m³)',
+                                sort: true
+                            }, {
+                                field: 'createdate',
+                                title: '创建日期',
+                                sort: true
+                            }, {
+                                field: '',
+                                title: '操作员',
+                                sort: true
+                            }, {
+                                field: '',
+                                title: '状态',
+                                sort: true
+                            }
+                        ]
+                    ],
+                    page: true,
+                    limit: 10,
+                    limits: [10, 20, 30, 40, 50],
+                    even: true, // 开启隔行背景
+                    done: function (res, curr, count) { // 数据渲染完的回调
+                        // var addtableBtn = '<div class="rightBotBtn">已选择<span>' + 20 + '</span>个商品<span><button class="layui-btn" lay-submit="" type="submit" lay-filter="keepSubmit">确认添加</button></div>';
+                        // $(".layui-table-page").append(addtableBtn);
+                    },
+                    text: { // 自定义文本，如空数据时的异常提示等
+                        none: "无匹配数据"
+                    }
+                });
+            });
+        }
+    });
+</script>
