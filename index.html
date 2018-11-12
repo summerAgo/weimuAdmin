@@ -205,20 +205,18 @@
             //放开权限，路由
             //////////////////////////
             menuRoute.push(['home', container.load('/view/home/home.html')]);
-            menuRoute.push(['stock-addOutBill', container.load('/view/stock/stock-addOutBill.html')]);
-            menuRoute.push(['depot-position', container.load('/view/depot/depot-position.html')]);
+            // menuRoute.push(['stock-addOutBill', container.load('/view/stock/stock-addOutBill.html')]);
+            // menuRoute.push(['depot-position', container.load('/view/depot/depot-position.html')]);
 
 
             console.log(22222222222);
             console.log(menuRoute);
             //加载路由
-            // Q.reg([
-            //     menuRoute
-            // ]);
+            Q.reg([
+                menuRoute
+            ]);
             for (var x = 0; x < menuRoute.length; x++) {
-                Q.reg([
-                    [menuRoute[x][0],function(){menuRoute[x][1]}]
-                ]);
+                Q.reg([menuRoute[x]]);
             }
             // Q.reg([
             //     //注册页面
