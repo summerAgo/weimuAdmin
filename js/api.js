@@ -2,6 +2,12 @@ var localport = ":8000";//本地端口
 var localhost = "http://1127.0.0.1" + localport;//本地
 var pathUrl = "http://127.0.0.1:80/storage-web/"; //?username=admin&password=123456
 var loginUrl = pathUrl + "sys/login"; //登录
+
+
+var weekInCount = pathUrl + "home/weekInCount";//本周入库统计立方
+var weekOutCount = pathUrl + "home/weekOutCount";//本周出库统计立方
+var weekStockCount = pathUrl + "home/weekStockCount";//本周库存统计立方
+
 //基础货物公共信息
 var commonBaseUrl = pathUrl + "c/goodsbasics/list"; //查询货物
 // 库存管理
