@@ -182,7 +182,52 @@
                     });
 
                     //弹窗页
+                    formSelects.data('selectVarieties', 'local', {
+                        arr: selectDataInstall(VTSList) //品种列表
+                    });
 
+                    formSelects.data('selectLevels', 'local', {
+                        arr: selectDataInstall(levelsList) //等级列表
+                    });
+
+                    formSelects.data('selectSpec', 'local', {
+                        arr: selectDataInstall(specList) //规格列表
+                    });
+                    
+
+                    formSelects.data('originSelect', 'local', {
+                        arr: selectDataInstall(CHDList) //产地列表
+                    });
+
+                    function selectDataInstall(url, param) {
+                        //下拉选框数据组装
+                        var arr = [];
+                        //获取列表数据
+                        $.ajax({
+                            url: url,
+                            type: "get",
+                            data: param,
+                            async: false, //同步
+                            traditional: true,
+                            success: function(data) {
+                                console.log(data);
+                                if (data.status == 0) {
+                                    //把接口数据转换为[{"name":str,"value":number}]格式
+                                    if (!Array.isArray(data.data) || data.data.length == 0) {
+                                        // 判断arr是否为数组并保证内部有值
+                                        return false;
+                                    }
+                                    for (var i = 0; i < data.data.length; i++) {
+                                        arr.push({
+                                            "name": data.data[i].name,
+                                            "value": data.data[i].id
+                                        })
+                                    }
+                                }
+                            }
+                        })
+                        return arr;
+                    }
                     form.on('submit(searchAssessForm)', function(data) {
                         var paramSearch = {
                             "person": curData.id
