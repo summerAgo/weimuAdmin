@@ -76,15 +76,11 @@
 
 
     <script id="menuTlp" type="text/html">
-        <ul class="layui-nav layui-nav-tree" lay-filter="index-side" lay-shrink="all">
+    <ul class="layui-nav layui-nav-tree" lay-filter="index-side" lay-shrink="all">
         {{# layui.each(d.list, function(index, item){ }}
             {{# if(item.pid == 0){ }}
                 <li class="layui-nav-item">
-                    {{#  if(item.code){ }}
-                        <a href="#!{{item.code}}"><i class="iconfont {{ item.icon}}"></i>{{item.name}}</a>
-                    {{#  } else { }}
-                        <a href="javascript:;"><i class="iconfont {{ item.icon}}"></i>{{item.name}}</a>
-                    {{#  } }}  
+                    <a href="{{item.code?'#!'+item.code:'javascript:;'}}"><i class="iconfont {{ item.icon}}"></i> {{ item.name }}</a>
                     {{#if(item.child){}}
                         <dl class="layui-nav-child">
                             {{# layui.each(d.list, function(indexx, itemx){ }}
@@ -167,7 +163,7 @@
             formSelects: 'formSelects-v4'
         });
 
-        layui.use(['jquery', 'element', 'layer', 'laytpl'], function () {
+        layui.use(['jquery', 'element', 'layer', 'laytpl'], function() {
             var element = layui.element,
                 $ = layui.$,
                 laytpl = layui.laytpl;
@@ -176,125 +172,145 @@
 
             //该用户菜单权限JSON
             var menujson = JSON.parse(sessionStorage.getItem("menuAuthority"));
-            console.log(menujson);
-            var menuArr = [];      //菜单显示
-            var menuRoute = [];    //路由
+            // console.log(menujson);
+            var menuArr = []; //菜单显示
+            var menuRoute = []; //路由
             for (var key in menujson) {
                 //console.log(key);
                 var json = JSON.parse(menujson[key]);
                 //console.log(json);
                 if (json.code) {
-
-                    // console.log(json.url);
+                    console.log(json.url);
                     var v = [json.code, function() {
                         container.load(json.url);
                     }]
-                    // menuRoute.push(v);
+                    menuRoute.push(v);
                 }
                 menuArr.push(json);
             }
-            // console.log(menuArr);
 
+            for (var i = 0; i < menuArr.length; i++) {
+                for (var x = 0; x < menuArr.length; x++) {
+                    if (menuArr[x].pid == menuArr[i].id) {
+                        menuArr[i].child = true;
+                    }
+                }
+            }
 
-
-            var getTpl = menuTlp.innerHTML, view = document.getElementById('menuview');
+            var getTpl = menuTlp.innerHTML,
+                view = document.getElementById('menuview');
 
             var data = { //数据
                 "list": menuArr
             }
             // console.log(data);
-            laytpl(getTpl).render(data, function (html) {
+            laytpl(getTpl).render(data, function(html) {
                 view.innerHTML = html;
             });
 
             element.render();
+
+            // console.log(menuRoute);
             //放开权限，路由
             //////////////////////////
+            // menuRoute.push(['home', container.load('/view/home/home.html')]);
+            // menuRoute.push(['stock-addOutBill', container.load('/view/stock/stock-addOutBill.html')]);
+            // menuRoute.push(['depot-position', container.load('/view/depot/depot-position.html')]);
 
+
+            console.log(22222222222);
             console.log(menuRoute);
             //加载路由
-            Q.reg([
-                //注册页面
-                ['home', function() {
-                    container.load('/view/home/home.html');
-                }],
-                ['stock-preentry', function() {
-                    container.load('/view/stock/stock-preentry.html');
-                }],
-                ['stock-outHistory', function() {
-                    container.load('/view/stock/stock-outHistory.html');
-                }],
-                ['stock-enterHistory', function() {
-                    container.load('/view/stock/stock-enterHistory.html');
-                }],
-                //////////////////////////
-                ['stock-billDetails', function() {
-                    container.load('/view/stock/stock-billDetails.html');
-                }],
-                ['stock-outBill', function() {
-                    container.load('/view/stock/stock-outBill.html');
-                }],
-                //////////////////////////
-                ['stock-addOutBill', function() {
-                    container.load('/view/stock/stock-addOutBill.html');
-                }],
-                ['ilbstock-info', function() {
-                    container.load('/view/ilbstock/ilbstock-info.html');
-                }],
-                ['ilbstock-abnormal', function() {
-                    container.load('/view/ilbstock/ilbstock-abnormal.html');
-                }],
-                ['ilbstock-inventory', function() {
-                    container.load('/view/ilbstock/ilbstock-inventory.html');
-                }],
-                ['user-list', function() {
-                    container.load('/view/user/user-list.html');
-                }],
-                ['role-list', function() {
-                    container.load('/view/role/role-list.html');
-                }],
-                ['role-power', function() {
-                    container.load('/view/role/role-power.html');
-                }],
-                ['menu-list', function() {
-                    container.load('/view/menu/menu-list.html');
-                }],
-                ['button-list', function() {
-                    container.load('/view/button/button-list.html');
-                }],
-                ['depot-list', function() {
-                    container.load('/view/depot/depot-list.html');
-                }],
-                ///////////////////
-                ['depot-position', function() {
-                    container.load('/view/depot/depot-position.html');
-                }],
-                ['base-infodata', function() {
-                    container.load('/view/base/base-infodata.html');
-                }],
-                ['owner-list', function() {
-                    container.load('/view/base/owner-list.html');
-                }],
-                ['supplier-list', function() {
-                    container.load('/view/base/supplier-list.html');
-                }],
-                ['risk-goodsAssess', function() {
-                    container.load('/view/risk/risk-goodsAssess.html');
-                }],
-                ['risk-shipWarn', function() {
-                    container.load('/view/risk/risk-shipWarn.html');
-                }],
-                ['risk-shipExamine', function() {
-                    container.load('/view/risk/risk-shipExamine.html');
-                }],
-                ['risk-examineRecode', function() {
-                    container.load('/view/risk/risk-examineRecode.html');
-                }]
-            ]);
+            Q.reg(
+                ['home','stock-preentry'],function(){
+                    container.load('/view/home/home.html')
+                }
+            );
+            // for (var x = 0; x < menuRoute.length; x++) {
+            //     Q.reg([menuRoute[x]]);
+            // }
+            // Q.reg([
+            //     //注册页面
+            //     ['home', function() {
+            //         container.load('/view/home/home.html');
+            //     }],
+            //     ['stock-preentry', function() {
+            //         container.load('/view/stock/stock-preentry.html');
+            //     }],
+            //     ['stock-outHistory', function() {
+            //         container.load('/view/stock/stock-outHistory.html');
+            //     }],
+            //     ['stock-enterHistory', function() {
+            //         container.load('/view/stock/stock-enterHistory.html');
+            //     }],
+            //     //////////////////////////
+            //     ['stock-billDetails', function() {
+            //         container.load('/view/stock/stock-billDetails.html');
+            //     }],
+            //     ['stock-outBill', function() {
+            //         container.load('/view/stock/stock-outBill.html');
+            //     }],
+            //     //////////////////////////
+            //     ['stock-addOutBill', function() {
+            //         container.load('/view/stock/stock-addOutBill.html');
+            //     }],
+            //     ['ilbstock-info', function() {
+            //         container.load('/view/ilbstock/ilbstock-info.html');
+            //     }],
+            //     ['ilbstock-abnormal', function() {
+            //         container.load('/view/ilbstock/ilbstock-abnormal.html');
+            //     }],
+            //     ['ilbstock-inventory', function() {
+            //         container.load('/view/ilbstock/ilbstock-inventory.html');
+            //     }],
+            //     ['user-list', function() {
+            //         container.load('/view/user/user-list.html');
+            //     }],
+            //     ['role-list', function() {
+            //         container.load('/view/role/role-list.html');
+            //     }],
+            //     ['role-power', function() {
+            //         container.load('/view/role/role-power.html');
+            //     }],
+            //     ['menu-list', function() {
+            //         container.load('/view/menu/menu-list.html');
+            //     }],
+            //     ['button-list', function() {
+            //         container.load('/view/button/button-list.html');
+            //     }],
+            //     ['depot-list', function() {
+            //         container.load('/view/depot/depot-list.html');
+            //     }],
+            //     ///////////////////
+            //     ['depot-position', function() {
+            //         container.load('/view/depot/depot-position.html');
+            //     }],
+            //     ['base-infodata', function() {
+            //         container.load('/view/base/base-infodata.html');
+            //     }],
+            //     ['owner-list', function() {
+            //         container.load('/view/base/owner-list.html');
+            //     }],
+            //     ['supplier-list', function() {
+            //         container.load('/view/base/supplier-list.html');
+            //     }],
+            //     ['risk-goodsAssess', function() {
+            //         container.load('/view/risk/risk-goodsAssess.html');
+            //     }],
+            //     ['risk-shipWarn', function() {
+            //         container.load('/view/risk/risk-shipWarn.html');
+            //     }],
+            //     ['risk-shipExamine', function() {
+            //         container.load('/view/risk/risk-shipExamine.html');
+            //     }],
+            //     ['risk-examineRecode', function() {
+            //         container.load('/view/risk/risk-examineRecode.html');
+            //     }]
+            // ]);
 
             Q.init({
                 index: 'home',
-                pop: function (vid) {
+                pop: function(vid) {
                     // hash改变执行
                     var thehash = $(".index-side a").attr("href").replace(/#!/, '');
                     var dom;
@@ -313,7 +329,7 @@
                             });
                         } else {
                             var isData = false;
-                            $.each($(".layui-tab-title li[lay-id]"), function () {
+                            $.each($(".layui-tab-title li[lay-id]"), function() {
                                 if ($(this).attr("lay-id") == vid) {
                                     isData = true;
                                 }
@@ -343,14 +359,14 @@
             // element.tabChange('nav-tabs', layid);
 
             //监听Tab切换，以改变地址hash值
-            element.on('tab(nav-tabs)', function () {
+            element.on('tab(nav-tabs)', function() {
                 location.hash = '#!' + this.getAttribute('lay-id');
             });
 
-            $(".header-seacherBox input").focus(function () {
+            $(".header-seacherBox input").focus(function() {
                 //头部搜索框获取焦点变亮
                 $(".header-seacherBox").addClass('opacity1');
-            }).blur(function () {
+            }).blur(function() {
                 if ($(this).val() == "") {
                     $(".header-seacherBox").removeClass('opacity1');
                 }
@@ -369,7 +385,7 @@
 
         });
     </script>
-
+    
 </body>
 
 </html>
