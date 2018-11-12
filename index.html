@@ -177,7 +177,7 @@
                 var json = JSON.parse(menujson[key]);
                 //console.log(json);
                 if (json.code) {
-                    // console.log(json.url);
+                    console.log(json.url);
                     var v = [json.code, function() {
                         container.load(json.url);
                     }]
