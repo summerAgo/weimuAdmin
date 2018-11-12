@@ -168,7 +168,7 @@
             // var userInfo = JSON.parse(getCookie('userInfo')); //获取session中用户信息
 
             //该用户菜单权限JSON
-            var menujson = JSON.parse(getCookie("menuAuthority"));
+            var menujson = JSON.parse(sessionStorage.getItem("menuAuthority"));
             console.log(menujson);
             var menuArr = [];      //菜单显示
             var menuRoute = [];    //路由
