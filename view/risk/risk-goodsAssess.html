@@ -183,6 +183,10 @@
                                 "data": res.data, //解析数据列表
                             }
                         },
+                        request: {
+                            pageName: 'offset', // 页码的参数名称，默认：page
+                            limitName: 'limit' // 每页数据量的参数名，默认：limit
+                        },
                         cols: [
                             [ // 标题栏
                                 {
@@ -234,20 +238,20 @@
 
                     //监听编辑
                     table.on('edit(tableContainer-from)', function(obj) {
-                        console.log(obj.value); //得到修改后的值
-                        console.log(obj.field); //当前编辑的字段名
-                        console.log(obj.data); //所在行的所有相关数据
+                        // console.log(obj.value); //得到修改后的值
+                        // console.log(obj.field); //当前编辑的字段名
+                        // console.log(obj.data); //所在行的所有相关数据
                         if (!obj.value || isNaN(obj.value)) {
                             layer.msg("估价只能输入数字");
 
                         } else {
                             console.log(obj.data)
-                            editAprice(ownerid,obj.data.id,obj.value,tableInsAssess);
+                            editAprice(ownerid, obj.data.id, obj.value, tableInsAssess);
                         }
                     });
 
                     //保持提交  修改的风控数据
-                    function editAprice(ownerid,picid, aprice, tableObj) {
+                    function editAprice(ownerid, picid, aprice, tableObj) {
                         //请求数据源示例
                         var datainfo = [];
                         var json = {};
@@ -255,25 +259,25 @@
                         json['aprice'] = aprice;
                         datainfo.push(json);
                         console.log(datainfo);
-                        
+
                         $.ajax({
                             url: saveEvaluationPrice,
                             type: "POST",
-                            // async:false,
+                            async: false,
                             data: {
-                                "ownerid":ownerid,
-                                "lbarr":JSON.stringify(datainfo)
-                                },
+                                "ownerid": ownerid,
+                                "lbarr": JSON.stringify(datainfo)
+                            },
                             traditional: true,
                             success: function(res) {
                                 if (res.status == 0) {
                                     layer.msg("评估单价设置成功");
-                                    tableObj.reload({
-                                        page: {
-                                            curr: 1 // 重新从第 1 页开始
-                                        }
-                                    });
-                                }else{
+                                    // tableObj.reload({
+                                    //     page: {
+                                    //         curr: 1 // 重新从第 1 页开始
+                                    //     }
+                                    // });
+                                } else {
                                     layer.msg(res.msg);
                                 }
                             }
