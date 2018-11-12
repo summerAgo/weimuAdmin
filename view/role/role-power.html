@@ -81,14 +81,7 @@
                             var map = {};
                             map["label"]=allMenu[i].name
                             map["value"]=allMenu[i].id;
-                            /*for(var key in ant){ //循环每个菜单
-                                if(allMenu[i].id == key){
-                                    map["checked"]=true;
-                                    break;
-                                }else{
-                                    map["checked"]=false;
-                                }
-                            }*/
+                            
                                 
                             var list =[];
                             for(var k=0;k<allMenu.length;k++){
@@ -109,6 +102,15 @@
                             }
                             if(list.length > 0){
                                 map["children"]=list;
+                            }else{
+                                for(var key in ant){ //循环每个菜单
+                                    if(allMenu[i].id == key){
+                                        map["checked"]=true;
+                                        break;
+                                    }else{
+                                        map["checked"]=false;
+                                    }
+                                }
                             }
                             trees.push(map);
                          }
@@ -171,6 +173,7 @@
             console.log(4);
             console.log(data);
             var cur=data.currentData;
+            var isChoice = cur.checked
             //是否有子节点
             if(cur.children){
                 var children =cur.children;
@@ -179,7 +182,6 @@
                     muneAut(child.value,isChoice);
                 }
             }else{
-                var isChoice = cur.checked
                 muneAut(cur.value,isChoice);
             }
             menuid = cur.value;
@@ -190,7 +192,8 @@
 
         //根据选中以及取消菜单权限赋值menuid(菜单id)，isChoice(选中还是权限)
         function muneAut(menuids,isChoice){
-            console.log("111qqqq");
+            console.log("menuids:"+menuids);
+            console.log("isChoice:"+isChoice);
             console.log(allAuthority);
             var number =0;//是否已经存在权限里面,0:否，1：是
             var dellist =[];//要删除的id
