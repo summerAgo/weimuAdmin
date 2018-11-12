@@ -79,16 +79,16 @@
     <ul class="layui-nav layui-nav-tree" lay-filter="index-side" lay-shrink="all">
         {{# layui.each(d.list, function(index, item){ }}
             {{# if(item.pid == 0){ }}
-            <li class="layui-nav-item">
-                <a href="javascript:;"><i class="iconfont {{ item.icon}}"></i> {{ item.name }}</a>
-                {{# layui.each(d.list, function(indexx, itemx){ }}
-                    {{# if(itemx.pid == item.id){}}
-                    <dl class="layui-nav-child">
-                        <dd><a href="#!{{ itemx.code }}">{{ itemx.name }}</a></dd>
-                    </dl>
-                    {{# }}}
-                {{# }); }}
-            </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;"><i class="iconfont {{ item.icon}}"></i> {{ item.name }}</a>
+                    {{#if(item.child){}}<dl class="layui-nav-child">{{#}}}
+                            {{# layui.each(d.list, function(indexx, itemx){ }}
+                                {{# if(itemx.pid == item.id){}}
+                                    <dd><a href="#!{{ itemx.code }}">{{ itemx.name }}</a></dd>
+                                {{# }}}
+                            {{# }); }}
+                    {{#if(item.child){}}</dl>{{#}}}
+                </li>
             {{# } }}
         {{# }); }}
     </ul>
@@ -160,7 +160,7 @@
             formSelects: 'formSelects-v4'
         });
 
-        layui.use(['jquery', 'element', 'layer', 'laytpl'], function () {
+        layui.use(['jquery', 'element', 'layer', 'laytpl'], function() {
             var element = layui.element,
                 $ = layui.$,
                 laytpl = layui.laytpl;
@@ -169,33 +169,39 @@
 
             //该用户菜单权限JSON
             var menujson = JSON.parse(sessionStorage.getItem("menuAuthority"));
-            console.log(menujson);
-            var menuArr = [];      //菜单显示
-            var menuRoute = [];    //路由
+            // console.log(menujson);
+            var menuArr = []; //菜单显示
+            var menuRoute = []; //路由
             for (var key in menujson) {
                 //console.log(key);
                 var json = JSON.parse(menujson[key]);
                 //console.log(json);
                 if (json.code) {
                     console.log(json.url);
-                    var v = [json.code, function () {
+                    var v = [json.code, function() {
                         container.load(json.url);
                     }]
-                    // menuRoute.push(v);
+                    menuRoute.push(v);
                 }
                 menuArr.push(json);
             }
-            // console.log(menuArr);
 
+            for (var i = 0; i < menuArr.length; i++) {
+                for (var x = 0; x < menuArr.length; x++) {
+                    if (menuArr[x].pid == menuArr[i].id) {
+                        menuArr[i].child = true;
+                    }
+                }
+            }
 
-
-            var getTpl = menuTlp.innerHTML, view = document.getElementById('menuview');
+            var getTpl = menuTlp.innerHTML,
+                view = document.getElementById('menuview');
 
             var data = { //数据
                 "list": menuArr
             }
             // console.log(data);
-            laytpl(getTpl).render(data, function (html) {
+            laytpl(getTpl).render(data, function(html) {
                 view.innerHTML = html;
             });
 
@@ -299,7 +305,7 @@
 
             Q.init({
                 index: 'home',
-                pop: function (vid) {
+                pop: function(vid) {
                     // hash改变执行
                     var thehash = $(".index-side a").attr("href").replace(/#!/, '');
                     var dom;
@@ -318,7 +324,7 @@
                             });
                         } else {
                             var isData = false;
-                            $.each($(".layui-tab-title li[lay-id]"), function () {
+                            $.each($(".layui-tab-title li[lay-id]"), function() {
                                 if ($(this).attr("lay-id") == vid) {
                                     isData = true;
                                 }
@@ -348,14 +354,14 @@
             // element.tabChange('nav-tabs', layid);
 
             //监听Tab切换，以改变地址hash值
-            element.on('tab(nav-tabs)', function () {
+            element.on('tab(nav-tabs)', function() {
                 location.hash = '#!' + this.getAttribute('lay-id');
             });
 
-            $(".header-seacherBox input").focus(function () {
+            $(".header-seacherBox input").focus(function() {
                 //头部搜索框获取焦点变亮
                 $(".header-seacherBox").addClass('opacity1');
-            }).blur(function () {
+            }).blur(function() {
                 if ($(this).val() == "") {
                     $(".header-seacherBox").removeClass('opacity1');
                 }
