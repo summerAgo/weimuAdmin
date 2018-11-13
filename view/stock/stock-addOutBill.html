@@ -341,7 +341,10 @@
                         },
                         success: function(res) {
                             if (res.status == 0) {
-                                
+                                var domObj = $(".nav-tabs li[lay-id='stock-addOutBill']");
+                                var hash = domObj.prev().attr("lay-id");
+                                domObj.remove();
+                                location.hash = "#!" + hash;
                             }
                             layer.msg(res.msg);
                         }
