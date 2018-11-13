@@ -81,10 +81,6 @@
 
                 form.render(); //重置表单渲染
                 formSelects.render(); //下拉选项
-                element.render('talbe-tools'); //表格工具栏
-                formSelects.btns(['select', 'remove'], {
-                    show: 'name'
-                });
 
                 form.on('submit(searchForm)', function (data) {
                     var paramSearch = {};
@@ -176,8 +172,7 @@
                             title: '添加基础信息设置',
                             type: 1,
                             content: str, //注意，如果str是object，那么需要字符拼接。
-                            resize: false,
-                            area: ['800px', '50%'],
+                            area: ['800px', '60%'],
                         });
                     });
                     return false;

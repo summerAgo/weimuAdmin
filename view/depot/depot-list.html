@@ -64,10 +64,6 @@
 
         form.render(); //重置表单渲染
         formSelects.render(); //下拉选项
-        element.render('talbe-tools'); //表格工具栏
-        formSelects.btns(['select', 'remove'], {
-            show: 'name'
-        });
 
         form.on('submit(searchForm)', function (data) {
             var paramSearch = {};
@@ -135,7 +131,7 @@
                         title: '仓库类型',
                         sort: true,
                         templet: function (d) {
-                            if (d.status == 0) {
+                            if (d.type == 0) {
                                 return '监管仓';
                             }
                             return '自由仓';
@@ -189,6 +185,7 @@
             var url;
             var msg = "新建仓库成功";
             console.log(dataType)
+            data.field.type = data.field.type - 1; 
             if (dataType) {
                 //如果是修改
                 url = depotUpdate;
