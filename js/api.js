@@ -97,7 +97,7 @@ var addInstitution = pathUrl +"basics/institution/add";//添加分类
 var updInstitution = pathUrl +"basics/institution/update";//修改分类
 var delInstitution = pathUrl +"basics/institution/deleteMany";//查询分类
 
-var userAuthority = pathUrl + "sys/user/setAuthority";//设置用户对应角色(userid 角色id roleid[]菜单数组)
+var userAuthority = pathUrl + "sys/setAuthority";//设置用户对应角色(userid 角色id roleid[]菜单数组)
 
 var roledown = pathUrl + "sys/role/dropdown";//角色列表所有
 var menudown = pathUrl + "sys/menu/dropdown";//菜单列表所有
