@@ -86,9 +86,6 @@
         form.render(); //重置表单渲染
         formSelects.render(); //下拉选项
         element.render('talbe-tools'); //表格工具栏
-        formSelects.btns(['select', 'remove'], {
-            show: 'name'
-        });
 
         formSelects.data('ownerSelectLayer', 'local', {
             arr: selectDataInstall(ownerDropdown) //货权人列表
@@ -101,12 +98,6 @@
                 formSelects.data(id, 'local', {
                     arr: []
                 }); //如果货权人为空则清空列表
-            } else {
-                formSelects.data(id, 'local', {
-                    arr: selectDataInstall(depotDropdown, {
-                        "ownerid": ownerid
-                    }) //仓库列表
-                });
             }
         });
 
@@ -117,14 +108,58 @@
                 formSelects.data(id, 'local', {
                     arr: []
                 }); //如果仓库为空则清空列表
-            } else {
-                formSelects.data(id, 'local', {
-                    arr: selectDataInstall(positionDropdown, {
-                        "depotid": depotid
-                    }) //库位列表
-                });
             }
         });
+
+        //监听
+        formSelects.on('ownerSelectLayer', function(id, vals, val, isAdd, isDisabled) {
+            if (!isAdd) {
+                formSelects.data('depotSelectLayer', 'local', {
+                    arr: [] //清空仓库列表
+                });
+                formSelects.data('positionSelectLayer', 'local', {
+                    arr: [] //清空库位列表
+                });
+            } else {
+                var depotList = selectDataInstall(depotDropdown, {
+                    "ownerid": vals[0].value //仓库列表
+                }, true);
+
+                if (depotList.length < 1) {
+                    formSelects.data('depotSelectLayer', 'local', {
+                        arr: [] //清空仓库列表
+                    });
+                    formSelects.data('positionSelectLayer', 'local', {
+                        arr: [] //清空库位列表
+                    });
+                    layer.msg("该货权人下无仓库信息");
+                    return false;
+                }
+                formSelects.data('depotSelectLayer', 'local', {
+                    arr: depotList //仓库列表
+                });
+                formSelects.data('positionSelectLayer', 'local', {
+                    arr: selectDataInstall(positionDropdown, {
+                        "depotid": depotList[0].value
+                    }, true) //库位列表
+                });
+            }
+        }, true);
+
+        //监听
+        formSelects.on('depotSelectLayer', function(id, vals, val, isAdd, isDisabled) {
+            if (!isAdd) {
+                formSelects.data('positionSelectLayer', 'local', {
+                    arr: [] //仓库列表
+                });
+            } else {
+                formSelects.data('positionSelectLayer', 'local', {
+                    arr: selectDataInstall(positionDropdown, {
+                        "depotid": vals[0].value
+                    }, true) //仓库列表
+                });
+            }
+        }, true);
 
         formSelects.data('originSelectLayer', 'local', {
             arr: selectDataInstall(CHDList) //产地列表
@@ -134,7 +169,7 @@
             arr: selectDataInstall(dropSupplier) //供应商列表
         });
 
-        function selectDataInstall(url, param) {
+        function selectDataInstall(url, param, bool) {
             //下拉选框数据组装
             var arr = [];
             //获取列表数据
@@ -145,7 +180,7 @@
                 async: false, //同步
                 traditional: true,
                 success: function(data) {
-                    console.log(data);
+                    // console.log(data);
                     if (data.status == 0) {
                         //把接口数据转换为[{"name":str,"value":number}]格式
                         if (!Array.isArray(data.data) || data.data.length == 0) {
@@ -158,6 +193,10 @@
                                 "value": data.data[i].id
                             })
                         }
+                        if (bool) {
+                            arr[0].selected = "selected";
+                        }
+
                     }
                 }
             })
@@ -296,19 +335,39 @@
             $(".layui-elem-quote").html("预入库订单号：" + orderno.orderno);
             //下拉框赋值
             formSelects.data('ownerSelectLayer', 'local', {
-                arr: [{"name":orderno.ownername,"value":orderno.ownerid, selected:"selected"}]
+                arr: [{
+                    "name": orderno.ownername,
+                    "value": orderno.ownerid,
+                    selected: "selected"
+                }]
             });
             formSelects.data('depotSelectLayer', 'local', {
-                arr: [{"name":orderno.depname,"value":orderno.depotid, selected:"selected"}]
+                arr: [{
+                    "name": orderno.depname,
+                    "value": orderno.depotid,
+                    selected: "selected"
+                }]
             });
             formSelects.data('positionSelectLayer', 'local', {
-                arr: [{"name":orderno.positionname,"value":orderno.positionid, selected:"selected"}]
+                arr: [{
+                    "name": orderno.positionname,
+                    "value": orderno.positionid,
+                    selected: "selected"
+                }]
             });
             formSelects.data('originSelectLayer', 'local', {
-                arr: [{"name":orderno.origin,"value":orderno.origin, selected:"selected"}]
+                arr: [{
+                    "name": orderno.origin,
+                    "value": orderno.origin,
+                    selected: "selected"
+                }]
             });
             formSelects.data('supplierSelectLayer', 'local', {
-                arr: [{"name":orderno.suppliername,"value":orderno.supplierid, selected:"selected"}]
+                arr: [{
+                    "name": orderno.suppliername,
+                    "value": orderno.supplierid,
+                    selected: "selected"
+                }]
             });
             //禁用下拉框
             formSelects.disabled('ownerSelectLayer');
