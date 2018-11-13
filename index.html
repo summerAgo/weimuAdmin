@@ -42,7 +42,7 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;">
                         <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-                        超级管理员
+                        <span class="rolename">超级管理员</span>
                     </a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;" class="signOutBtn">退出登录</a></dd>
@@ -173,14 +173,15 @@
             var container = $('.content-body'); //页面容器
             // var userInfo = JSON.parse(getCookie('userInfo')); //获取session中用户信息
 
+            $(".rolename").html(sessionStorage.getItem("rolename"));
             //该用户菜单权限JSON
             var menujson = JSON.parse(sessionStorage.getItem("menuAuthority"));
-
+            console.log(menujson);
             var menuArr = [];      //菜单显示
             var menuRoute = [];    //路由
             for (var key in menujson) {
                 var json = JSON.parse(menujson[key]);
-                if (json.code) {
+                if (json) {
                     var v = [json.code, function() {
                         container.load(json.url);
                     }]
@@ -188,7 +189,7 @@
                 }
                 menuArr.push(json);
             }
-            // console.log(menuArr);
+            console.log(menuArr);
 
             for (var i = 0; i < menuArr.length; i++) {
                 for (var x = 0; x < menuArr.length; x++) {
@@ -361,7 +362,7 @@
                 delCookie("rolename");
                 delCookie("menuAuthority");
                 delCookie("buttonAuthority");
-                //history.replaceState({}, 'login', localhost + "/view/login/login.html");
+                history.replaceState({}, 'login', localhost + "/view/login/login.html");
                 window.location.href = localhost + "/view/login/login.html";
             }
 

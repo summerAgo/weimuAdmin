@@ -93,7 +93,7 @@
                             //该用户按钮权限JSON
                             //setCookie("buttonAuthority", JSON.stringify(data.buttonAuthority),"h12");
                             //该用户角色数组
-                            setCookie("rolename", data.rolename,"h12");
+                            sessionStorage.setItem("rolename", data.rolename);
                             history.replaceState({},'index',localhost);//修改浏览器地址
                             window.location.href = localhost;//跳转首页
                         } else {
