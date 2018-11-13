@@ -10,7 +10,7 @@
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
-                            <select name="storeid" xm-select="storeSelect" xm-select-radio>
+                            <select name="depotid" xm-select="depotSelect" xm-select-radio>
                                 <option value="">仓库名称</option>
                             </select>
                         </div>
@@ -33,9 +33,7 @@
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
-                            <select name="chang" xm-select="changLevels" xm-select-radio>
-                                <option value="">长度</option>
-                            </select>
+                            <input type="text" name="chang" placeholder="长度" autocomplete="off" class="layui-input">
                         </div>
                         <div class="table-form-item layui-input-inline">
                             <select name="brand" xm-select="brandLevels" xm-select-radio>
@@ -45,11 +43,6 @@
                         <div class="table-form-item layui-input-inline">
                             <select name="origin" xm-select="originSelect" xm-select-radio>
                                 <option value="">选择产地</option>
-                            </select>
-                        </div>
-                        <div class="table-form-item layui-input-inline">
-                            <select name="dateid" xm-select="dateSelect" xm-select-radio>
-                                <option value="">创建日期</option>
                             </select>
                         </div>
                     </div>
@@ -111,9 +104,39 @@
             arr: selectDataInstall(ownerDropdown) //货权人列表
         });
 
-        formSelects.data('storeSelect', 'local', {
-            arr: selectDataInstall(ownerDropdown) //仓库列表
+        layui.formSelects.opened('depotSelect', function (id) {
+            var ownerid = formSelects.value('ownerSelect', 'val'); //获取货权人ID
+            if (ownerid.length < 1) {
+                layer.msg("请先选择货权人");
+                formSelects.data(id, 'local', {
+                    arr: []
+                }); //如果货权人为空则清空列表
+            }
         });
+
+        //监听
+        formSelects.on('ownerSelect', function (id, vals, val, isAdd, isDisabled) {
+            if (!isAdd) {
+                formSelects.data('depotSelect', 'local', {
+                    arr: [] //清空仓库列表
+                });
+            } else {
+                var depotList = selectDataInstall(depotDropdown, {
+                    "ownerid": vals[0].value //仓库列表
+                }, true);
+
+                if (depotList.length < 1) {
+                    formSelects.data('depotSelect', 'local', {
+                        arr: [] //清空仓库列表
+                    });
+                    layer.msg("该货权人下无仓库信息");
+                    return false;
+                }
+                formSelects.data('depotSelect', 'local', {
+                    arr: depotList //仓库列表
+                });
+            }
+        }, true);
 
         formSelects.data('selectVarieties', 'local', {
             arr: selectDataInstall(VTSList) //品种列表
@@ -143,7 +166,7 @@
             arr: selectDataInstall(ownerDropdown) //创建日期
         });
 
-        function selectDataInstall(url, param) {
+        function selectDataInstall(url, param, bool) {
             //下拉选框数据组装
             var arr = [];
             //获取列表数据
@@ -153,8 +176,8 @@
                 data: param,
                 async: false, //同步
                 traditional: true,
-                success: function (data) {
-                    console.log(data);
+                success: function(data) {
+                    // console.log(data);
                     if (data.status == 0) {
                         //把接口数据转换为[{"name":str,"value":number}]格式
                         if (!Array.isArray(data.data) || data.data.length == 0) {
@@ -167,6 +190,10 @@
                                 "value": data.data[i].id
                             })
                         }
+                        if (bool) {
+                            arr[0].selected = "selected";
+                        }
+
                     }
                 }
             })
@@ -214,11 +241,11 @@
                     {
                         type: 'checkbox'
                     }, {
-                        field: 'name',
+                        field: 'ownername',
                         title: '货权人',
                         sort: true
                     }, {
-                        field: 'depotid',
+                        field: 'depname',
                         title: '仓库名称',
                         sort: true
                     }, {
