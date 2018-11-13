@@ -11,19 +11,31 @@
         <div class="layui-form-item">
             <label class="layui-form-label">品种 <span class="layui-badge-dot"></span></label>
             <div class="layui-input-block">
-                <input type="text" name="varieties" placeholder="品种" autocomplete="off" class="layui-input" lay-verify="required">
+                <!-- <input type="text" name="varieties" placeholder="品种" autocomplete="off" class="layui-input" lay-verify="required"> -->
+                <select name="varieties" xm-select="selectVarieties" xm-select-radio>
+                        <option value="">品种</option>
+                    </select>
+
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">规格/厚度 <span class="layui-badge-dot"></span></label>
             <div class="layui-input-block">
-                <input type="text" name="spec" placeholder="规格/厚度" autocomplete="off" class="layui-input" lay-verify="required">
+                <!-- <input type="text" name="spec" placeholder="规格/厚度" autocomplete="off" class="layui-input" lay-verify="required"> -->
+                <div class="table-form-item layui-input-inline">
+                        <select name="spec" xm-select="selectSpec" xm-select-radio>
+                            <option value="">规格</option>
+                        </select>
+                    </div>
             </div>
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">等级 <span class="layui-badge-dot"></span></label>
             <div class="layui-input-block">
-                <input type="text" name="levels" placeholder="等级" autocomplete="off" class="layui-input" lay-verify="required">
+                <!-- <input type="text" name="levels" placeholder="等级" autocomplete="off" class="layui-input" lay-verify="required"> -->
+                <select name="levels" xm-select="selectLevels" xm-select-radio>
+                        <option value="">等级</option>
+                    </select>
             </div>
         </div>
         <div class="layui-form-item">
@@ -97,15 +109,69 @@
     }
 </style>
 <script>
-    layui.use(['laytpl', 'laydate'], function() {
+    layui.use(['jquery','laytpl', 'laydate','formSelects'], function() {
         var laytpl = layui.laytpl;
         var laydate = layui.laydate;
+        var $ = layui.jquery;
         var data = {}; //所选行数据
         var getTpl = formTle.innerHTML,
-            view = document.getElementById('formAddGoodsView');
+        view = document.getElementById('formAddGoodsView');
+        var formSelects = layui.formSelects;
         laytpl(getTpl).render(data, function(html) {
             view.innerHTML = html;
         });
+        
+
+
+        formSelects.data('selectVarieties', 'local', {
+            arr: selectDataInstall(VTSList) //品种列表
+        });
+
+        formSelects.data('selectLevels', 'local', {
+            arr: selectDataInstall(levelsList) //等级列表
+        });
+
+        formSelects.data('selectSpec', 'local', {
+            arr: selectDataInstall(specList) //规格列表
+        });
+
+        formSelects.data('ownerSelect', 'local', {
+            arr: selectDataInstall(ownerDropdown) //货权人列表
+        });
+
+        formSelects.data('originSelect', 'local', {
+            arr: selectDataInstall(CHDList) //产地列表
+        });
+
+        function selectDataInstall(url, param) {
+            //下拉选框数据组装
+            var arr = [];
+            //获取列表数据
+            $.ajax({
+                url: url,
+                type: "get",
+                data: param,
+                async: false, //同步
+                traditional: true,
+                success: function(data) {
+                    console.log(data);
+                    if (data.status == 0) {
+                        //把接口数据转换为[{"name":str,"value":number}]格式
+                        if (!Array.isArray(data.data) || data.data.length == 0) {
+                            // 判断arr是否为数组并保证内部有值
+                            return false;
+                        }
+                        for (var i = 0; i < data.data.length; i++) {
+                            arr.push({
+                                "name": data.data[i].name,
+                                "value": data.data[i].id
+                            })
+                        }
+                    }
+                }
+            })
+            return arr;
+        }
 
     });
 </script>
