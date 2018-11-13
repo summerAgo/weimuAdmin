@@ -697,7 +697,7 @@
                 //监听锁定操作
                 table.on('checkbox(tableContainer-goodsList)', function(obj) {
                     var checkStatus = table.checkStatus('tableContainer-goodsList'); //表格选中状态
-                    $("#tableContainer-goodsList").siblings().find(".rightBotBtn span").html(checkStatus.data.length); //当前选中了多少商品
+                    $("#tableContainer-goodsList").parent().find(".rightBotBtn span").html(checkStatus.data.length); //当前选中了多少商品
                 });
 
             });
