@@ -336,7 +336,7 @@
                         async: false,
                         data: preData,
                         error: function(request) {
-                            layer.msg('提交失败');
+                            layer.msg(request.msg);
                             return;
                         },
                         success: function(res) {
@@ -356,86 +356,6 @@
             },
             loading: true
         });
-
-        // //货权人下拉
-        // function ownerDrop(ownerid, depotid) {
-        //     $.ajax({
-        //         cache: true,
-        //         type: "get",
-        //         url: ownerDropdown,
-        //         async: false,
-        //         success: function(res) {
-        //             if (res.status == 0) {
-        //                 var ownerDropList = [];
-        //                 for (var i = 0; i < res.data.length; i++) {
-        //                     var map = {};
-        //                     map["name"] = res.data[i].name;
-        //                     map["value"] = res.data[i].id;
-        //                     if (ownerid != null && ownerid == res.data[i].id) {
-        //                         map["selected"] = "selected";
-        //                         depotDrop(res.data[0].id, depotid);
-        //                     } else if (ownerid == null && i == 0) {
-        //                         map["selected"] = "selected";
-        //                         depotDrop(res.data[0].id, null);
-        //                     }
-        //                     ownerDropList.push(map);
-        //                 }
-        //                 // console.log(ownerDropList);
-        //                 layui.formSelects.data('cargoownerOne', 'local', {
-        //                     arr: ownerDropList
-        //                 });
-
-        //             }
-
-        //         }
-        //     });
-        // }
-
-        // //监听货权人下拉
-        // layui.formSelects.on('cargoownerOne', function(id, vals, val, isAdd, isDisabled) {
-        //     //id:           点击select的id
-        //     //vals:         当前select已选中的值
-        //     //val:          当前select点击的值
-        //     //isAdd:        当前操作选中or取消
-        //     //isDisabled:   当前选项是否是disabled
-        //     depotDrop(val.value, null);
-        // });
-
-        // //仓库下拉： 货权人id(ownerid)
-        // function depotDrop(ownerid, nerid) {
-        //     var data = {
-        //         "ownerid": ownerid
-        //     };
-        //     $.ajax({
-        //         cache: true,
-        //         type: "get",
-        //         url: depotDropdown,
-        //         data: data,
-        //         async: false,
-        //         success: function(res) {
-        //             if (res.status == 0) {
-        //                 var depotDropList = [];
-        //                 //depotDrop(res.data[0].id);
-        //                 for (var i = 0; i < res.data.length; i++) {
-        //                     var map = {};
-        //                     map["name"] = res.data[i].name;
-        //                     map["value"] = res.data[i].id;
-        //                     if (nerid != null && nerid == res.data[i].id) {
-        //                         map["selected"] = "selected";
-        //                     } else if (nerid == null && i == 0) {
-        //                         map["selected"] = "selected";
-        //                     }
-        //                     depotDropList.push(map);
-        //                 }
-        //                 // console.log(depotDropList);
-        //                 layui.formSelects.data('depotnameOne', 'local', {
-        //                     arr: depotDropList
-        //                 });
-        //             }
-        //         }
-        //     });
-        // }
-
 
         //移除货物
         $("#deleteGoods").click(function() {
