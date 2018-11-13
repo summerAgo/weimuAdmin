@@ -65,10 +65,10 @@ body {
 
 .h-right .numb {
     float: right;
-    font-size: 32px;
+    font-size: 28px;
     font-weight: 550;
-    margin-right: 5px;
     margin-top: 22px;
+    letter-spacing: normal;
 }
 
 .h-right embed {
@@ -112,6 +112,8 @@ body {
     height: 22px;
     line-height: 36px;
     border-bottom: 1px solid #221815;
+    font-size: 16px;
+    line-height: 20px;
 }
 
 /*  表格样式  */
@@ -196,4 +198,6 @@ table.weimu-table tr td.total {
     height: 22px;
     line-height: 36px;
     border-bottom: 1px solid #221815;
+    font-size: 16px;
+    line-height: 20px;
 }
