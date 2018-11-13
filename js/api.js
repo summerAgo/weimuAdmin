@@ -50,6 +50,7 @@ var positionDel = pathUrl + "basics/position/delete";//删除库位
 // 用户管理
 var userList = pathUrl + "sys/list";//用户列表
 var userAdd = pathUrl + "sys/add";//添加用户
+var userdropdown = pathUrl + "sys/dropdown";//用户下拉
 var userUpdate = pathUrl + "sys/update";//修改用户
 var userDel = pathUrl + "sys/deleteMany";//删除用户
 var userPas = pathUrl + "sys/resetPassword";//重置密码

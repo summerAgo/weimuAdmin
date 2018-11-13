@@ -48,14 +48,18 @@
         <div class="layui-form-item">
             <label class="layui-form-label">业务员</label>
             <div class="layui-input-block">
-                <input type="text" id="person" name="person" placeholder="选填" value="{{d.person||""}}" class="layui-input">
+                <select name="person" xm-select="person" xm-select-radio>
+                        <option value="">请选择</option>
+                    </select>
             </div>
         </div>
 
         <div class="layui-form-item">
             <label class="layui-form-label">风控人员</label>
             <div class="layui-input-block">
-                <input type="text" id="fkperson" name="fkperson" placeholder="选填" value="{{d.fkperson||""}}" class="layui-input">
+                    <select name="fkperson" xm-select="fkperson" xm-select-radio>
+                            <option value="">请选择</option>
+                        </select>
             </div>
         </div>
 
@@ -93,13 +97,14 @@
 </style>
 
 <script>
-    layui.use(['form', 'jquery', 'element', 'layer', 'laytpl', 'laydate'], function() {
+    layui.use(['form', 'jquery', 'element', 'layer', 'formSelects','laytpl', 'laydate'], function() {
         var element = layui.element;
         var form = layui.form;
         var $ = layui.jquery;
         var laytpl = layui.laytpl;
         var laydate = layui.laydate;
         var  data= window.currData;
+        var formSelects = layui.formSelects;
 		if(data!=null && data.id){//不是空就是编辑
 			var getTpl = formUser.innerHTML,
 			view = document.getElementById('formEditView');
@@ -168,7 +173,56 @@
             console.log(number);
             layui.formSelects.value('instidSelect', [number]);
         }
+        
+        formSelects.data('person', 'local', {
+            arr: selectDataInstall(userdropdown) 
+        });
 
+        formSelects.data('fkperson', 'local', {
+            arr: selectDataInstall(userdropdown)
+        });
+        
+        if (data.person) {
+            formSelects.value('person', [data.person]);
+        }
+        
+        if (data.fkperson) {
+            formSelects.value('fkperson', [data.fkperson]);
+        }
+
+        function selectDataInstall(url, param, bool) {
+            //下拉选框数据组装
+            var arr = [];
+            //获取列表数据
+            $.ajax({
+                url: url,
+                type: "get",
+                data: param,
+                async: false, //同步
+                traditional: true,
+                success: function(data) {
+                    // console.log(data);
+                    if (data.status == 0) {
+                        //把接口数据转换为[{"name":str,"value":number}]格式
+                        if (!Array.isArray(data.data) || data.data.length == 0) {
+                            // 判断arr是否为数组并保证内部有值
+                            return false;
+                        }
+                        for (var i = 0; i < data.data.length; i++) {
+                            arr.push({
+                                "name": data.data[i].username,
+                                "value": data.data[i].id
+                            })
+                        }
+                        if (bool) {
+                            arr[0].selected = "selected";
+                        }
+
+                    }
+                }
+            })
+            return arr;
+        }
 
     });
 </script>

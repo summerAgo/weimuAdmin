@@ -150,21 +150,21 @@
             arr: selectDataInstall(levelsList) //等级列表
         });
 
-        formSelects.data('changLevels', 'local', {
-            arr: selectDataInstall(ownerDropdown) //长度列表
-        });
+        // formSelects.data('changLevels', 'local', {
+        //     arr: selectDataInstall(ownerDropdown) //长度列表
+        // });
 
-        formSelects.data('brandLevels', 'local', {
-            arr: selectDataInstall(ownerDropdown) //品牌列表
-        });
+        // formSelects.data('brandLevels', 'local', {
+        //     arr: selectDataInstall(ownerDropdown) //品牌列表
+        // });
 
         formSelects.data('originSelect', 'local', {
             arr: selectDataInstall(CHDList) //产地列表
         });
 
-        formSelects.data('dateSelect', 'local', {
-            arr: selectDataInstall(ownerDropdown) //创建日期
-        });
+        // formSelects.data('dateSelect', 'local', {
+        //     arr: selectDataInstall(ownerDropdown) //创建日期
+        // });
 
         function selectDataInstall(url, param, bool) {
             //下拉选框数据组装
@@ -283,10 +283,6 @@
                     }, {
                         field: 'origin',
                         title: '采购单价(RMB)',
-                        sort: true
-                    }, {
-                        field: 'aprice',
-                        title: '评估单价(RMB)',
                         sort: true
                     }
                 ]

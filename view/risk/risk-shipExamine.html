@@ -5,9 +5,7 @@
                 <div class="form-box">
                     <div class="layui-form-item form-left">
                         <div class="table-form-item layui-input-inline">
-                            <select name="ownerid" xm-select="ownerSelect" xm-select-radio>
-                                <option value="">选择货权人</option>
-                            </select>
+                            <input type="text" name="cargoowner" placeholder="货权人" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-form-item form-right">
@@ -31,6 +29,11 @@
                         <a href="javascript:;">打印</a>
                     </li>
                 </ul>
+                <ul class="layui-layout-right">
+                    <li class="layui-nav-item">
+                        <a id="examine" href="javascript:;">审核</a>
+                    </li>
+                </ul>
             </div>
         </div>
         <div class="table-content-main">
@@ -39,7 +42,7 @@
     </div>
 </div>
 <script>
-    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'upload'], function() {
+    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'upload'], function () {
         var element = layui.element;
         var form = layui.form;
         var $ = layui.jquery;
@@ -53,42 +56,12 @@
 
         form.render(); // 重置表单渲染
         formSelects.render(); // 下拉选项
-
-        formSelects.data('ownerSelect', 'local', {
-            arr: selectDataInstall(ownerDropdown) //货权人列表
+        element.render('talbe-tools'); // 表格工具栏
+        formSelects.btns(['select', 'remove'], { // 干嘛用的
+            show: 'name'
         });
 
-        function selectDataInstall(url, param) {
-            //下拉选框数据组装
-            var arr = [];
-            //获取列表数据
-            $.ajax({
-                url: url,
-                type: "get",
-                data: param,
-                async: false, //同步
-                traditional: true,
-                success: function(data) {
-                    console.log(data);
-                    if (data.status == 0) {
-                        //把接口数据转换为[{"name":str,"value":number}]格式
-                        if (!Array.isArray(data.data) || data.data.length == 0) {
-                            // 判断arr是否为数组并保证内部有值
-                            return false;
-                        }
-                        for (var i = 0; i < data.data.length; i++) {
-                            arr.push({
-                                "name": data.data[i].name,
-                                "value": data.data[i].id
-                            })
-                        }
-                    }
-                }
-            })
-            return arr;
-        }
-
-        form.on('submit(searchForm)', function(data) {
+        form.on('submit(searchForm)', function (data) {
             var paramSearch = {};
             for (var key in data.field) {
                 // 参数赋值
@@ -106,13 +79,12 @@
             return false;
         });
 
-        // 渲染母模块table
         var tableIns = table.render({
             elem: '#tableContainer',
             height: 'full-' + tableTopHeight, // full -- 
             url: outTreasuryList, // 数据接口
             // 任意数据格式解析成 table 组件规定的数据格式
-            parseData: function(res) { //res 即为原始返回的数据
+            parseData: function (res) { //res 即为原始返回的数据
                 if (res.status !== 0) res.status = 0;
                 return {
                     "code": res.status, // 解析接口状态
@@ -129,14 +101,14 @@
             cols: [
                 [ // 标题栏
                     {
+                        type: 'checkbox'
+                    }, {
                         field: 'ownername',
                         title: '货权人',
                         sort: true
                     }, {
                         field: 'orderno',
                         title: '出库单',
-                        event: 'click',
-                        style: 'color:#4394ff',
                         sort: true
                     }, {
                         field: 'depname',
@@ -169,198 +141,86 @@
             page: true, // 是否显示分页
             limits: [10, 20, 30, 40, 50], // 每页条数的选择项
             limit: 10, // 每页默认显示的数量
-            done: function(res, curr, count) { // 数据渲染完的回调
-
+            done: function (res, curr, count) { // 数据渲染完的回调
+                
             },
             text: { // 自定义文本，如空数据时的异常提示等
                 none: "无匹配数据"
             },
-            loading: true // 是否显示加载条，默认true
+            loading: true  // 是否显示加载条，默认true
         });
 
-        // 监听出库单点击事件
-        table.on('tool(tableContainer)', function(obj) {
+        // 监听锁定操作
+        table.on('checkbox(tableContainer)', function(obj) {
+            var checkStatus = table.checkStatus('tableContainer'); // 表格选中状态
+        });
 
-            var curData = obj.data;
-
-            if (obj.event === 'click') {
-                sessionStorage.setItem('examineOrderID', curData.orderno);
-                $.get('view/risk/risk-layerExamine.html', {}, function(str) { // 请求弹框
-
-                    var layerData; // 当前弹框页面数据
-
-                    $.ajax({
-                        url: outDetails,
-                        type: "get",
-                        data: {
-                            orderno: curData.orderno // 单号
-                            // orderno: "510576514941583360"// 单号
-                        },
-                        async: false, // 同步
-                        success: function(data) {
-                            if (data.status == 0) {
-                                layerData = data.data;
-                                // 弹出弹框
-                                examineLayer = layer.open({
-                                    title: '出货申请单审核',
-                                    type: 1,
-                                    content: str, // 注意，如果str是object，那么需要字符拼接。
-                                    area: ['80%', '80%'],
-                                });
-                                // 渲染弹框页面
-                                layerOut(layerData);
-                            } else {
-                                layer.msg("页面信息获取失败，请刷新浏览器")
-                            }
-                        }
+        // 点击审核
+        $("#examine").click(function() {
+            var checkStatus = table.checkStatus('tableContainer');
+            if (checkStatus.data.length < 1) {
+                layer.msg("请选择需要评估的信息");
+            } else if (checkStatus.data.length > 1) {
+                layer.msg("请选择需要评估的单条信息");
+            } else {
+                console.log(checkStatus.data.length);
+                $.get('view/risk/risk-layerExamine.html', {}, function(str) {
+                    assessLayer = layer.open({
+                        title: '出货申请单审核',
+                        type: 1,
+                        content: str, // 注意，如果str是object，那么需要字符拼接。
+                        resize: false,
+                        area: ['80%', 'auto'],
                     });
-
                 });
             }
         });
 
-        // 渲染弹框函数
-        var layerOut = function(layerData) {
-            // 弹框 - 模板渲染
-            var getTpl = tempExamine.innerHTML,
-                view = $(".lss-bread-crumb")[0];
-            laytpl(getTpl).render(layerData, function(html) {
-                view.innerHTML = html;
-            });
-
-            var tableInsShip = table.render({
-                elem: '#tableContainer-from',
-                height: 'auto', // full -- 高度将始终铺满 - 差值
-                data: layerData.datalist,
-                // 用于对分页请求的参数：page、limit重新设定名称
-                cols: [
-                    [ // 标题栏
-                        {
-                            field: 'code',
-                            title: '包号',
-                            sort: true
-                        }, {
-                            field: 'varieties',
-                            title: '品种',
-                            sort: true
-                        }, {
-                            field: 'thickness',
-                            title: '规格/厚度',
-                            sort: true
-                        }, {
-                            field: 'levels',
-                            title: '等级',
-                            sort: true
-                        }, {
-                            field: 'chang',
-                            title: '长度',
-                            sort: true
-                        }, {
-                            field: 'brand',
-                            title: '品牌',
-                            sort: true
-                        }, {
-                            field: 'origin',
-                            title: '产地',
-                            sort: true
-                        }, {
-                            field: 'num',
-                            title: '数量(m³)',
-                            sort: true
-                        }, {
-                            field: 'status',
-                            title: '库位',
-                            sort: true
-                        }, {
-                            field: 'containernum',
-                            title: '货柜号/批次号',
-                            sort: true
-                        }, {
-                            field: 'remarks',
-                            title: '备注',
-                            sort: true
-                        }
-                    ]
-                ],
-                even: true, // 开启隔行背景
-                done: function(res, curr, count) { // 数据渲染完的回调
-
-                },
-                text: { // 自定义文本，如空数据时的异常提示等
-                    none: "无匹配数据"
-                },
-                loading: true // 是否显示加载条，默认true
-            });
-
-            // 通过按钮点击
-            $(".passBtn").click(function() {
-
-                $.ajax({
-                    cache: true,
-                    type: "GET",
-                    url: setAdopt,
-                    async: false,
-                    xhrFields: {
-                        withCredentials: true
-                    },
-                    crossDomain: true,
-                    data: {
-                        'orderno': sessionStorage.getItem("examineOrderID")
-                    },
-                    error: function(request) {
-                        layer.msg('修改失败');
-                        return;
-                    },
-                    success: function(res) {
-                        if (res.status == 0) {
-                            layer.msg(res.msg);
-                            layer.close(examineLayer);
-                            tableIns.reload({
-                                page: {
-                                    curr: 1 // 重新从第 1 页开始
-                                }
-                            });
-                        } else {
-                            layer.msg(res.msg);
-                        }
-                    }
-                });
-            })
-
-            // 不通过按钮点击
-            $(".nopassBtn").click(function() {
-                $.ajax({
-                    cache: true,
-                    type: "GET",
-                    url: setNotAdopt,
-                    async: false,
-                    xhrFields: {
-                        withCredentials: true
-                    },
-                    crossDomain: true,
-                    data: {
-                        'orderno': sessionStorage.getItem("examineOrderID")
-                    },
-                    error: function(request) {
-                        layer.msg('修改失败');
-                        return;
-                    },
-                    success: function(res) {
-                        if (res.status == 0) {
-                            layer.msg(res.msg);
-                            layer.close(examineLayer);
-                            tableIns.reload({
-                                page: {
-                                    curr: 1 // 重新从第 1 页开始
-                                }
-                            });
-                        } else {
-                            layer.msg(res.msg);
-                        }
-                    }
-                });
-            });
-
-        }
     });
 </script>
+
+
+<!-- {
+    field: 'code',
+    title: '包号',
+    width: 266,
+    sort: true
+}, {
+    field: 'varieties',
+    title: '品种',
+    width: 266,
+    sort: true
+}, {
+    field: 'spec',
+    title: '规格/厚度',
+    width: 266,
+    sort: true
+}, {
+    field: 'levels',
+    title: '等级',
+    sort: true
+}, {
+    field: 'chang',
+    title: '长度',
+    sort: true
+}, {
+    field: 'brand',
+    title: '品牌',
+    sort: true
+}, {
+    field: 'origin',
+    title: '产地',
+    sort: true
+}, {
+    field: 'num',
+    title: '数量(m)',
+    sort: true
+}, {
+    field: 'depotid',
+    title: '仓库',
+    sort: true
+}, {
+    field: 'remarks',
+    title: '备注',
+    sort: true
+} -->
