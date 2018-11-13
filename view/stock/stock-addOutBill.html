@@ -29,6 +29,24 @@
                         </div>
                     </li>
                     <li>
+                        <small>车牌号</small>
+                        <div class="layui-input-inline">
+                            <input type="text" name="vehnum" placeholder="请输入车牌号" autocomplete="off" class="layui-input">
+                        </div>
+                    </li>
+                    <li>
+                        <small>司机姓名</small>
+                        <div class="layui-input-inline">
+                            <input type="text" name="vname" placeholder="请输入司机姓名" autocomplete="off" class="layui-input">
+                        </div>
+                    </li>
+                    <li>
+                        <small>司机身份证号</small>
+                        <div class="layui-input-inline">
+                            <input type="text" name="card" placeholder="请输入司机身份证号" autocomplete="off" class="layui-input" lay-verify="identity">
+                        </div>
+                    </li>
+                    <li>
                         <div class="layui-btn layui-btn-primary util-box"></div>
                     </li>
                 </ul>
@@ -60,13 +78,14 @@
 
     .layer-title {
         display: flex;
-        justify-content: space-around
+        flex-wrap:wrap;
+        /* justify-content: space-around */
     }
 
     .layer-title small {
         font-size: 14px;
     }
-
+    .layer-title li{flex:0 0 280px;}
     .table-page h3 {
         padding-left: 0;
     }
@@ -518,69 +537,53 @@
                                 type: 'checkbox',
                             }, {
                                 field: 'code',
-                                title: '包号',
-                                sort: true
+                                title: '包号'
                             }, {
                                 field: 'varieties',
-                                title: '品种',
-                                sort: true
+                                title: '品种'
                             }, {
                                 field: 'levels',
-                                title: '等级',
-                                sort: true
+                                title: '等级'
                             }, {
                                 field: 'spec',
-                                title: '规格',
-                                sort: true
+                                title: '规格'
                             }, {
                                 field: 'aprice',
                                 title: '评估价',
-                                sort: true
                             }, {
                                 field: 'chang',
-                                title: '长度',
-                                sort: true
+                                title: '长度'
                             }, {
                                 field: 'num',
-                                title: '数量/立方',
-                                sort: true
+                                title: '数量/立方'
                             }, {
                                 field: 'actualnum',
-                                title: '实际数量/立方',
-                                sort: true
+                                title: '实际数量/立方'
                             }, {
                                 field: 'containernum',
-                                title: '货柜号',
-                                sort: true
+                                title: '货柜号'
                             }, {
                                 field: 'origin',
-                                title: '产地',
-                                sort: true
+                                title: '产地'
                             }, {
                                 field: 'brand',
-                                title: '品牌',
-                                sort: true
+                                title: '品牌'
                             }, {
                                 field: 'billloading',
-                                title: '提运单',
-                                sort: true
+                                title: '提运单'
                             }, {
                                 field: 'person',
-                                title: '负责人',
-                                sort: true
+                                title: '负责人'
                             }, {
                                 field: 'remarks',
-                                title: '备注',
-                                sort: true
+                                title: '备注'
                             }, {
                                 field: 'depotid',
-                                title: '仓库',
-                                sort: true
+                                title: '仓库'
                             },
                             {
                                 field: 'createdate',
-                                title: '创建日期',
-                                sort: true
+                                title: '创建日期'
                             }
                         ]
                     ],

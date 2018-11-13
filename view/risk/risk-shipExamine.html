@@ -228,7 +228,7 @@
                 view.innerHTML = html;
             });
 
-            var tableIns = table.render({
+            var tableInsShip = table.render({
                 elem: '#tableContainer-from',
                 height: 'auto', // full -- 高度将始终铺满 - 差值
                 data: layerData.datalist,
@@ -315,6 +315,11 @@
                         if (res.status == 0) {
                             layer.msg(res.msg);
                             layer.close(examineLayer);
+                            tableIns.reload({
+                                page: {
+                                    curr: 1 // 重新从第 1 页开始
+                                }
+                            });
                         } else {
                             layer.msg(res.msg);
                         }
@@ -344,6 +349,11 @@
                         if (res.status == 0) {
                             layer.msg(res.msg);
                             layer.close(examineLayer);
+                            tableIns.reload({
+                                page: {
+                                    curr: 1 // 重新从第 1 页开始
+                                }
+                            });
                         } else {
                             layer.msg(res.msg);
                         }
