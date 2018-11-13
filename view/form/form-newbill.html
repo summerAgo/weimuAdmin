@@ -263,13 +263,17 @@
                     }, {
                         field: 'num',
                         title: '数量（m³）',
-                        sort: true
-                    }, {
-                        field: 'actualnum',
-                        title: '实际数量（m³）',
                         sort: true,
-                        edit: "txt"
-                    }, {
+                        edit: "txt",
+                        style: 'color:red;'
+                    },
+                    // {
+                    //     field: 'actualnum',
+                    //     title: '实际数量（m³）',
+                    //     sort: true,
+                    //     edit: "txt"
+                    // },
+                    {
                         field: 'containernum',
                         title: '货柜号',
                         sort: true
@@ -301,9 +305,10 @@
             limits: [15, 20, 30, 40, 50],
             limit: 15, //每页默认显示的数量
             done: function(res, curr, count) {
-                var addtableBtn = '<div class="rightBotBtn">已新增<span>' + count + '</span>个货物 <a href="javascript:;" class="layui-btn layui-btn-primary layui-btn-sm subCancelBtn">取消</a><a href="javascript:;" class="layui-btn layui-btn-sm subConfirmBtn">入库</a></div>';
-
-                $("#tableContainer-from").siblings(".layui-form ").find(".layui-table-page").append(addtableBtn);
+                var addtableBtn = '<div class="rightBotBtn" id="form-rightBtn">已新增<span>' + count + '</span>个货物 <a href="javascript:;" class="layui-btn layui-btn-primary layui-btn-sm subCancelBtn">取消</a><a href="javascript:;" class="layui-btn layui-btn-sm subConfirmBtn">入库</a></div>';
+                if ($("#form-rightBtn").length < 1) {
+                    $("#tableContainer-from").siblings(".layui-form ").find(".layui-table-page").append(addtableBtn);
+                }
 
                 $(".subConfirmBtn").click(subConfun);
                 $(".subCancelBtn").click(function() {
@@ -330,7 +335,6 @@
 
         var orderno = JSON.parse(sessionStorage.getItem('newbill_orderno'));
         if (orderno) {
-
             console.log(orderno)
             $(".layui-elem-quote").html("预入库订单号：" + orderno.orderno);
             //下拉框赋值
@@ -392,6 +396,13 @@
                 }
             })
         }
+
+        table.on('edit(tableContainer-from)', function(obj) {
+            var value = obj.value,
+                data = obj.data,
+                field = obj.field;
+            layer.msg('[ID: ' + data.id + '] ' + field + ' 字段更改为：' + value);
+        });
 
         $(".deleteBtn").click(function() {
             var checkStatus = table.checkStatus('tableContainer-from');
@@ -478,6 +489,8 @@
 
                 return;
             }
+            // console.log(dataarr);
+            // return false;
 
             var arr = JSON.stringify(dataarr);
             //第二步，提交到后台
@@ -487,7 +500,7 @@
             } else {
                 num = orderno.orderno;
             }
-            console.log(num)
+            
             $.ajax({
                 url: preEntryAdd,
                 type: "POST",
