@@ -25,7 +25,7 @@
     </div>
 </div>
 <script id="detailsTle" type="text/html">
-<ul class="layer-title">
+    <ul class="layer-title">
     <li>
         {{# if(d.type === "outHistory"){}}
         <small>出库订单号</small>
@@ -43,10 +43,22 @@
         <h3>{{d.data.depname}}</h3>
     </li>
     {{# if(d.data.outdate){}}
-    <li>
-        <small>出库时间</small>
-        <h3>{{d.data.outdate}}</h3>
-    </li>
+        <li>
+            <small>出库时间</small>
+            <h3>{{d.data.outdate}}</h3>
+        </li>
+        <li>
+            <small>司机姓名</small>
+            <h3>{{d.vname||""}}</h3>
+        </li>
+        <li>
+            <small>车牌号</small>
+            <h3>{{d.vehnum||""}}</h3>
+        </li>
+        <li>
+            <small>司机身份号</small>
+            <h3>{{d.card||""}}</h3>
+        </li>
     {{#  } }}
 </ul>
 </script>
@@ -92,14 +104,108 @@
             view.innerHTML = html;
         });
         // 出库详情表格字段
-        var outCols = [{field:"code",title:"包号",sort:true},{field:"varieties",title:"品种",sort:true},{field:"spec",title:"规格",sort:true},{field:"levels",title:"等级",sort:true},{field:"chang",title:"长度",sort:true,edit:"txt"},{field:"brand",title:"品牌",sort:true},{field:"origin",title:"产地",sort:true},{field:"actualnum",title:"实际数量（m³）",sort:true},{field:"updauser",title:"操作员",sort:true},{field:"billloading",title:"提运单",sort:true},{field:"containernum",title:"货柜号/批次号",sort:true}];
+        var outCols = [{
+            field: "code",
+            title: "包号",
+            sort: true
+        }, {
+            field: "varieties",
+            title: "品种",
+            sort: true
+        }, {
+            field: "spec",
+            title: "规格",
+            sort: true
+        }, {
+            field: "levels",
+            title: "等级",
+            sort: true
+        }, {
+            field: "chang",
+            title: "长度",
+            sort: true,
+            edit: "txt"
+        }, {
+            field: "brand",
+            title: "品牌",
+            sort: true
+        }, {
+            field: "origin",
+            title: "产地",
+            sort: true
+        }, {
+            field: "actualnum",
+            title: "实际数量（m³）",
+            sort: true
+        }, {
+            field: "updauser",
+            title: "操作员",
+            sort: true
+        }, {
+            field: "billloading",
+            title: "提运单",
+            sort: true
+        }, {
+            field: "containernum",
+            title: "货柜号/批次号",
+            sort: true
+        }];
         // 入库详情表格字段
-        var entryCols = [{field:"code",title:"包号",sort:true},{field:"varieties",title:"品种",sort:true},{field:"spec",title:"规格",sort:true},{field:"levels",title:"等级",sort:true},{field:"chang",title:"长度",sort:true,edit:"txt"},{field:"brand",title:"品牌",sort:true},{field:"origin",title:"产地",sort:true},{field:"num",title:"数量（m³）",sort:true},{field:"positionid",title:"库位",sort:true},{field:"updauser",title:"操作员",sort:true},{field:"billloading",title:"提运单",sort:true},{field:"containernum",title:"货柜号/批次号",sort:true}];
+        var entryCols = [{
+            field: "code",
+            title: "包号",
+            sort: true
+        }, {
+            field: "varieties",
+            title: "品种",
+            sort: true
+        }, {
+            field: "spec",
+            title: "规格",
+            sort: true
+        }, {
+            field: "levels",
+            title: "等级",
+            sort: true
+        }, {
+            field: "chang",
+            title: "长度",
+            sort: true,
+            edit: "txt"
+        }, {
+            field: "brand",
+            title: "品牌",
+            sort: true
+        }, {
+            field: "origin",
+            title: "产地",
+            sort: true
+        }, {
+            field: "num",
+            title: "数量（m³）",
+            sort: true
+        }, {
+            field: "positionid",
+            title: "库位",
+            sort: true
+        }, {
+            field: "updauser",
+            title: "操作员",
+            sort: true
+        }, {
+            field: "billloading",
+            title: "提运单",
+            sort: true
+        }, {
+            field: "containernum",
+            title: "货柜号/批次号",
+            sort: true
+        }];
 
-        var tableClos;//表格字段赋值
-        if(billDetails.type == "outHistory"){
+        var tableClos; //表格字段赋值
+        if (billDetails.type == "outHistory") {
             tableClos = outCols;
-        }else{
+        } else {
             tableClos = entryCols;
         }
 

@@ -77,6 +77,8 @@ var buttonDel = pathUrl + "sys/button/deleteMany";//删除按钮
 var ownerDropdown = pathUrl + "user/owner/dropdown";//货权人下拉
 var depotDropdown =  pathUrl + "basics/depot/dropdown";//仓库下拉： 货权人id(ownerid)
 var positionDropdown = pathUrl + "basics/position/dropdown";//库位列表 depotid：根据仓库ID返回
+var driverDropdown = pathUrl + "order/vehiclerecord/dropdown";//出货单司机记录
+
 
 //系统基础信息功能
 var basicsInfoAdd = pathUrl + "basics/info/add"; 
