@@ -47,7 +47,7 @@
                         </div>
                     </li>
                     <li>
-                        <div class="layui-btn layui-btn-primary util-box"></div>
+                        <div class="layui-btn layui-btn-radius layui-btn-normal util-box"></div>
                     </li>
                 </ul>
             </blockquote>
@@ -78,14 +78,18 @@
 
     .layer-title {
         display: flex;
-        flex-wrap:wrap;
+        flex-wrap: wrap;
         /* justify-content: space-around */
     }
 
     .layer-title small {
         font-size: 14px;
     }
-    .layer-title li{flex:0 0 280px;}
+
+    .layer-title li {
+        flex: 0 0 280px;
+    }
+
     .table-page h3 {
         padding-left: 0;
     }
@@ -165,18 +169,43 @@
         // console.log(outBill);
         var array = JSON.parse(outBill);
         // console.log(array);
+
         var data = {};
+        var pageData;
+
         if (outBill == null) {
             formSelects.undisabled('ownerSelect'); //启用
             formSelects.undisabled('depotSelect'); //启用
             $("input[name='estimatedate']").attr("disabled", false)
             $('.util-box').hide(); //隐藏倒计时
-            // ownerDrop(null, null);
         } else {
+
             data["orderno"] = array.orderno;
             data["ownerid"] = array.ownerid;
             data["depotid"] = array.depotid;
             $("#estimatedate").val(array.outdate);
+            $.ajax({
+                cache: true,
+                type: "get",
+                url: outHistoryOrderno,
+                data: data,
+                async: false,
+                success: function(res) {
+                    if (res.status == 0) {
+                        // console.log(res)
+                        pageData = res;
+                        tableData = pageData.stocklist;
+                    }
+                }
+            });
+            data["vname"] = pageData.vname; //司机姓名
+            data["vehnum"] = pageData.vehnum; //车牌号
+            data["card"] = pageData.card; //司机身份证号
+            console.log(data)
+            $("input[name='vname']").val(data.vname);
+            $("input[name='vehnum']").val(data.vehnum);
+            $("input[name='card']").val(data.card);
+
             var endTime = new Date(array.outdate).getTime(), //假设为结束日期
                 serverTime = new Date().getTime(); //假设为当前服务器时间，这里采用的是本地时间，实际使用一般是取服务端的
             util.countdown(endTime, serverTime, function(date, serverTime, timer) {
@@ -201,21 +230,10 @@
             formSelects.disabled('ownerSelect'); //禁用
             formSelects.disabled('depotSelect'); //禁用
             $("input[name='estimatedate']").attr("disabled", true)
-            // ownerDrop(array.ownerid, array.depotid);
         }
 
-        $.ajax({
-            cache: true,
-            type: "get",
-            url: outHistoryOrderno,
-            data: data,
-            async: false,
-            success: function(res) {
-                if (res.status == 0) {
-                    tableData = res.stocklist;
-                }
-            }
-        });
+
+
 
 
         function selectDataInstall(url, param, bool) {
@@ -245,7 +263,6 @@
                         if (bool) {
                             arr[0].selected = "selected";
                         }
-
                     }
                 }
             })
@@ -346,6 +363,29 @@
                     if (outBill != null) {
                         var array = JSON.parse(outBill);
                         preData["orderno"] = array.orderno;
+                    }
+
+                    var vname = $("input[name='vname']").val();
+                    var vehnum = $("input[name='vehnum']").val();
+                    var card = $("input[name='card']").val();
+                    if (outBill == null) {
+                        if (!(vname == "" && vehnum == "" && card == "")) {
+                            preData.vname = vname;
+                            preData.vehnum = vehnum;
+                            preData.card = card;
+                        }
+                    } else {
+                        if (!(vname == "" && vehnum == "" && card == "")) {
+                            if (pageData.vname != vname) {
+                                preData.vname = vname;
+                            }
+                            if (pageData.vehnum != vehnum) {
+                                preData.vehnum = vehnum;
+                            }
+                            if (pageData.card != card) {
+                                preData.card = card;
+                            }
+                        }
                     }
 
                     $.ajax({
@@ -556,9 +596,6 @@
                             }, {
                                 field: 'num',
                                 title: '数量/立方'
-                            }, {
-                                field: 'actualnum',
-                                title: '实际数量/立方'
                             }, {
                                 field: 'containernum',
                                 title: '货柜号'
