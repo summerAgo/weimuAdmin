@@ -14,8 +14,8 @@
         <div class="layui-form-item">
             <label class="layui-form-label">名称</label>
             <div class="layui-input-block">
-                <input type="text" id="name" name="name" lay-verify="required" placeholder="必填项,请输入货权人名" class="layui-input"  value="{{# if(d.name){}} {{d.name}} {{# }}}">
-                <input type="hidden" id="id" name="id"   value="{{# if(d.id){}} {{d.id}} {{# }}}">
+                <input type="text" id="name" name="name" lay-verify="required" placeholder="必填项,请输入货权人名" class="layui-input"  value="{{d.name||""}}">
+                <input type="hidden" id="id" name="id" value="{{d.id||""}}">
             </div>
 
         </div>
@@ -23,28 +23,28 @@
         <div class="layui-form-item">
             <label class="layui-form-label">员工ID</label>
             <div class="layui-input-block">
-                <input type="text" id="personid" name="personid" placeholder="选填" value="{{# if(d.personid){}} {{d.personid}} {{# }}}" class="layui-input">
+                <input type="text" id="personid" name="personid" placeholder="选填" value="{{d.personid||""}}" class="layui-input">
             </div>
         </div>
 
         <div class="layui-form-item">
             <label class="layui-form-label">货权人ID</label>
             <div class="layui-input-block">
-                <input type="text" id="ownerid" name="ownerid" placeholder="选填" value="{{# if(d.ownerid){}} {{d.ownerid}} {{# }}}" class="layui-input">
+                <input type="text" id="ownerid" name="ownerid" placeholder="选填" value="{{d.ownerid||""}}" class="layui-input">
             </div>
         </div>
 
         <div class="layui-form-item">
             <label class="layui-form-label">电话</label>
             <div class="layui-input-block">
-                <input type="text" id="phone" name="phone" placeholder="选填" value="{{# if(d.phone){}} {{d.phone}} {{# }}}" class="layui-input">
+                <input type="text" id="phone" name="phone" placeholder="选填" value="{{d.phone||""}}" class="layui-input">
             </div>
         </div>
 
         <div class="layui-form-item">
                 <label class="layui-form-label">备注</label>
                 <div class="layui-input-block">
-                    <input type="text" id="remarks" name="remarks" placeholder="选填" value="{{# if(d.remarks){}} {{d.remarks}} {{# }}}" class="layui-input">
+                    <input type="text" id="remarks" name="remarks" placeholder="选填" value="{{d.remarks||""}}" class="layui-input">
                 </div>
             </div>
 		

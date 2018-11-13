@@ -201,7 +201,7 @@
                             if (data.status == 0) {
                                 layerData = data.data;
                                 // 弹出弹框
-                                assessLayer = layer.open({
+                                examineLayer = layer.open({
                                     title: '出货申请单审核',
                                     type: 1,
                                     content: str, // 注意，如果str是object，那么需要字符拼接。
@@ -313,9 +313,10 @@
                     },
                     success: function(res) {
                         if (res.status == 0) {
-                            layer.msg("保存修改成功");
+                            layer.msg(res.msg);
+                            layer.close(examineLayer);
                         } else {
-                            layer.msg("保存修改失败");
+                            layer.msg(res.msg);
                         }
                     }
                 });
@@ -341,9 +342,10 @@
                     },
                     success: function(res) {
                         if (res.status == 0) {
-                            layer.msg("保存修改成功");
+                            layer.msg(res.msg);
+                            layer.close(examineLayer);
                         } else {
-                            layer.msg("保存修改失败");
+                            layer.msg(res.msg);
                         }
                     }
                 });

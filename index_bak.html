@@ -176,7 +176,7 @@
             $(".rolename").html(sessionStorage.getItem("rolename"));
             //该用户菜单权限JSON
             var menujson = JSON.parse(sessionStorage.getItem("menuAuthority"));
-            // console.log(menujson);
+            console.log(menujson);
             var menuArr = [];      //菜单显示
             var menuRoute = [];    //路由
             for (var key in menujson) {
@@ -189,7 +189,7 @@
                 }
                 menuArr.push(json);
             }
-            // console.log(menuArr);
+            console.log(menuArr);
 
             for (var i = 0; i < menuArr.length; i++) {
                 for (var x = 0; x < menuArr.length; x++) {
