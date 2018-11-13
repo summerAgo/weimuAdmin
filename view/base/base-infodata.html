@@ -124,27 +124,14 @@
                                 field: 'name',
                                 title: '名称',
                                 sort: true
-                            }, {
-                                field: 'remarks',
-                                title: '备注',
-                                sort: true
-                            }, {
+                            },{
                                 field: 'createdate',
                                 title: '创建日期',
                                 sort: true
-                            }, {
-                                field: 'createuser',
-                                title: '创建人',
+                            },{
+                                field: 'remarks',
+                                title: '备注',
                                 sort: true
-                            }, {
-                                field: 'status',
-                                title: '状态',
-                                templet: function (d) {
-                                    if (d.status == 0) {
-                                        return '正常';
-                                    }
-                                    return '已删除';
-                                }
                             }
                         ]
                     ],

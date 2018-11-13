@@ -104,11 +104,11 @@
     <script src="js/api.js"></script>
     <script src="js/common.js"></script>
     <script>
-        //JavaScript代码区域
-        // if (!getCookie('SESSION_NAME')) {
-        //     //判断是否已登录
-        //     window.location.href = localhost + "/view/login/login.html";
-        // }
+        var roleName = sessionStorage.getItem("rolename");
+        if (!roleName) {
+            //判断是否已登录
+            window.location.href = localhost + "/view/login/login.html";
+        }
 
         layui.config({
             base: 'js/layui-mod/' //此处路径请自行处理, 可以使用绝对路径
@@ -123,7 +123,7 @@
             var container = $('.content-body'); //页面容器
             // var userInfo = JSON.parse(getCookie('userInfo')); //获取session中用户信息
 
-            $(".rolename").html(sessionStorage.getItem("rolename"));
+            $(".rolename").html(roleName);
             //该用户菜单权限JSON
             var menujson = JSON.parse(sessionStorage.getItem("menuAuthority"));
             // console.log(menujson);
@@ -308,10 +308,10 @@
             $(".signOutBtn").click(signOut); //退出登录
             function signOut() {
                 //退出登录
-                delCookie("SESSION_NAME");
-                delCookie("rolename");
-                delCookie("menuAuthority");
-                delCookie("buttonAuthority");
+                // delCookie("SESSION_NAME");
+                // delCookie("rolename");
+                // delCookie("menuAuthority");
+                // delCookie("buttonAuthority");
                 history.replaceState({}, 'login', localhost + "/view/login/login.html");
                 window.location.href = localhost + "/view/login/login.html";
             }

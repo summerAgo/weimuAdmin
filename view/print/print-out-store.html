@@ -8,6 +8,7 @@
     <link type="text/css" rel="stylesheet" href="./reset.css">
     <link type="text/css" rel="stylesheet" href="./print.css">
     <link type="text/css" rel="stylesheet" href="../../style/iconfont/iconfont.css">
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 </head>
 
 <body>
@@ -19,18 +20,17 @@
             </div>
             <div class="h-right">
                 <embed src="../../images/NO.svg" style="display:inline-block;width:80px;height:40px" />
-                <span class="numb">WM002143245</span>
+                <span class="numb data orderno">orderno</span>
             </div>
         </div>
     </div>
     <div class="w">
         <div class="write-info">
-            <div class="write-item"><i>客户：</i><span></span></div>
-            <div class="write-item"><i>货权人：</i><span></span></div>
-            <div class="write-item"><i>出库单号：</i><span></span></div>
-            <div class="write-item"><i>仓库名称：</i><span></span></div>
-            <div class="write-item"><i>提单号：</i><span></span></div>
-            <div class="write-item"><i>出库日期：</i><span></span></div>
+            <div class="write-item"><i>客户：</i><span class="data username">username</span></div>
+            <div class="write-item"><i>车牌号：</i><span class="data billloading">billloading</span></div>
+            <div class="write-item"><i>地址：</i><span class="data address">address</span></div>
+            <div class="write-item"><i>仓库名称：</i><span class="data depname">depname</span></div>
+            <div class="write-item"><i>出库日期：</i><span class="data createdate">createdate</span></div>
         </div>
     </div>
     <div class="w" style="padding: 0 20px;">
@@ -48,59 +48,7 @@
                 <td>数量(m³)</td>
                 <td>备注</td>
             </tr>
-            <tr>
-                <td>888888</td>
-                <td>1002</td>
-                <td>1002</td>
-                <td>1002</td>
-                <td>1002</td>
-                <td>1002</td>
-                <td>1002</td>
-                <td>1002</td>
-                <td>1002</td>
-                <td>1002</td>
-                <td>1002</td>
-            </tr>
-            <tr>
-                <td>888888</td>
-                <td>1002</td>
-                <td>1002</td>
-                <td>1002</td>
-                <td>1002</td>
-                <td>1002</td>
-                <td>1002</td>
-                <td>1002</td>
-                <td>1002</td>
-                <td>1002</td>
-                <td>1002</td>
-            </tr>
-            <tr>
-                <td>888888</td>
-                <td>1002</td>
-                <td>1002</td>
-                <td>1002</td>
-                <td>1002</td>
-                <td>1002</td>
-                <td>1002</td>
-                <td>1002</td>
-                <td>1002</td>
-                <td>1002</td>
-                <td>1002</td>
-            </tr>
-            <tr>
-                <td>888888</td>
-                <td>1002</td>
-                <td>1002</td>
-                <td>1002</td>
-                <td>1002</td>
-                <td>1002</td>
-                <td>1002</td>
-                <td>1002</td>
-                <td>1002</td>
-                <td>1002</td>
-                <td>1002</td>
-            </tr>
-            <tr>
+            <tr class="bottom">
                 <td class="total">合计</td>
                 <td></td>
                 <td></td>
@@ -110,7 +58,7 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td></td>
+                <td class="total-num"></td>
                 <td></td>
             </tr>
         </table>
@@ -121,15 +69,123 @@
 
     <div class="w">
         <div class="sign-info">
-            <div class="sign-item"><i>监管方：</i><span></span></div>
-            <div class="sign-item"><i>提货人签字：</i><span></span></div>
-            <div class="sign-item"><i>仓库：</i><span></span></div>
-            <div class="sign-item"><i style="color:transparent;">&nbsp;</i></div>
-            <div class="sign-item"><i>地址：</i><span></span></div>
-            <div class="sign-item"><i>日期：</i><span></span></div>
-            <div class="sign-item"><i>联系人/电话：</i><span></span></div>
+            <div class="sign-item"><i>监管方：</i><span class="data regulators">regulators</span></div>
+            <div class="sign-item"><i>提货人签字：</i><span class="data"></span></div>
+            <div class="sign-item"><i>联系人/电话：</i><span class="data phone">phone</span></div>
+            <div class="sign-item"><i>日期：</i><span class="data date"></span></div>
         </div>
     </div>
+
+    <script>
+        var trHeader = $(".table-header");
+        var orderDataList = [];
+        var orderData = null;
+        //获取列表数据
+        $.ajax({
+            url: "http://192.168.10.201/storage-web/order/outtreasury/prinOut",
+            type: "get",
+            data: {
+                orderno: "511679205277171712"
+            },
+            async: false, //同步
+            traditional: true,
+            success: function (res) {
+                console.log(res.data);
+                orderData = res.data
+                if (res.status == 0) {
+                    orderData = res.data; // 对象迁移
+                    orderDataList = orderData.list;
+                } else {
+                    layer.msg("请选择需要编辑的单条信息");
+                }
+            }
+        })
+
+        for (var key in orderData) {
+            $("." + key + ".data").html([orderData[key]])
+        }
+
+        function getNowFormatDate() {
+            var date = new Date();
+            var seperator1 = "-";
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1;
+            var strDate = date.getDate();
+            if (month >= 1 && month <= 9) {
+                month = "0" + month;
+            }
+            if (strDate >= 0 && strDate <= 9) {
+                strDate = "0" + strDate;
+            }
+            var currentdate = year + seperator1 + month + seperator1 + strDate;
+            return currentdate;
+        }
+
+        var date = getNowFormatDate();
+        $(".data.date").html(date);
+
+        var h = {},
+            arrRear = [];
+        for (var i = 0; i < orderDataList.length; i++) {
+            var ai = orderDataList[i];
+            if (!h[ai.containernum]) {
+                arrRear.push({
+                    containernum: ai.containernum,
+                    data: [ai]
+                });
+                h[ai.containernum] = ai;
+            }
+            else {
+                for (var j = 0; j < arrRear.length; j++) {
+                    var dj = arrRear[j];
+                    if (dj.containernum == ai.containernum) {
+                        dj.data.push(ai);
+                        break;
+                    }
+                }
+            }
+        }
+
+        var trs = '';
+
+        for (var k = 0; k < arrRear.length; k++) {
+            var len = arrRear[k].data.length;
+            var arrOll = arrRear[k].data;
+            var arrBod = arrOll.slice(1);
+            var trH = '<tr>' +
+                '<td rowspan="' + len + '">' + arrOll[0].containernum + '</td>' +
+                '<td>' + arrOll[0].code + '</td>' +
+                '<td>' + arrOll[0].varieties + '</td>' +
+                '<td>' + arrOll[0].spec + '</td>' +
+                '<td>' + arrOll[0].levels + '</td>' +
+                '<td>' + arrOll[0].chang + '</td>' +
+                '<td>' + arrOll[0].brand + '</td>' +
+                '<td>' + arrOll[0].origin + '</td>' +
+                '<td>' + arrOll[0].num + '</td>' +
+                '<td>' + arrOll[0].actualnum + '</td>' +
+                '<td>' + arrOll[0].remarks + '</td>' +
+                '</tr>';
+            trs += trH;
+            for (var n = 0; n < arrBod.length; n++) {
+                var trB = '<tr>' +
+                    '<td>' + arrBod[n].code + '</td>' +
+                    '<td>' + arrBod[n].varieties + '</td>' +
+                    '<td>' + arrBod[n].spec + '</td>' +
+                    '<td>' + arrBod[n].levels + '</td>' +
+                    '<td>' + arrBod[n].chang + '</td>' +
+                    '<td>' + arrBod[n].brand + '</td>' +
+                    '<td>' + arrBod[n].origin + '</td>' +
+                    '<td>' + arrBod[n].num + '</td>' +
+                    '<td>' + arrBod[n].actualnum + '</td>' +
+                    '<td>' + arrBod[n].remarks + '</td>' +
+                    '</tr>';
+                trs += trB;
+            }
+        }
+
+        trHeader.after(trs);
+
+    </script>
 </body>
 
 </html>
