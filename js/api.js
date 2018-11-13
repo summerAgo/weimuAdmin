@@ -1,5 +1,5 @@
 var localport = ":8000";//本地端口
-var localhost = "http://192.168.10.216" + localport;//本地
+var localhost = "http://192.168.10.201" + localport;//本地
 var pathUrl = "http://192.168.10.201:80/storage-web/"; //?username=admin&password=123456
 
 var loginUrl = pathUrl + "sys/login"; //登录

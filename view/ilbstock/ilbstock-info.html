@@ -137,7 +137,7 @@
                         for (var i = 0; i < data.data.length; i++) {
                             arr.push({
                                 "name": data.data[i].name,
-                                "value": data.data[i].id
+                                "value": data.data[i].name
                             })
                         }
                     }
@@ -187,6 +187,10 @@
                     {
                         type: 'checkbox'
                     }, {
+                        field: 'orderno',
+                        title: '入库单',
+                        sort: true
+                    }, {
                         field: 'code',
                         title: '包号',
                         sort: true
@@ -233,10 +237,6 @@
                         title: '提运单',
                         sort: true
                     }, {
-                        field: 'person',
-                        title: '负责人',
-                        sort: true
-                    }, {
                         field: 'remarks',
                         title: '备注',
                         sort: true
@@ -246,7 +246,7 @@
                         sort: true
                     }, {
                         field: 'createdate',
-                        title: '创建日期',
+                        title: '入库时间',
                         sort: true
                     }
                 ]

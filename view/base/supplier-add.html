@@ -14,7 +14,7 @@
         <div class="layui-form-item">
             <label class="layui-form-label">名称</label>
             <div class="layui-input-block">
-                <input type="text" id="name" name="name" lay-verify="required" placeholder="必填项,请输入货权人名" class="layui-input"  value="{{d.name||""}}">
+                <input type="text" id="name" name="name" lay-verify="required" placeholder="必填项,请输入名称" class="layui-input"  value="{{d.name||""}}">
                 <input type="hidden" id="id" name="id" value="{{d.id||""}}">
             </div>
 
@@ -23,14 +23,20 @@
         <div class="layui-form-item">
             <label class="layui-form-label">员工</label>
             <div class="layui-input-block">
-                <input type="text" id="personid" name="personid" placeholder="选填" value="{{d.personid||""}}" class="layui-input">
+                <!-- <input type="text" id="personid" name="personid" placeholder="选填" value="{{d.personid||""}}" class="layui-input"> -->
+                <select name="personid" xm-select="personSelect" xm-select-radio>
+                        <option value="">选择货权人</option>
+                    </select>
             </div>
         </div>
 
         <div class="layui-form-item">
             <label class="layui-form-label">货权人</label>
             <div class="layui-input-block">
-                <input type="text" id="ownerid" name="ownerid" placeholder="选填" value="{{d.ownerid||""}}" class="layui-input">
+                <!-- <input type="text" id="ownerid" name="ownerid" placeholder="选填" value="{{d.ownerid||""}}" class="layui-input"> -->
+                <select name="ownerid" xm-select="ownerSelect" xm-select-radio>
+                        <option value="">选择货权人</option>
+                    </select>
             </div>
         </div>
 
@@ -67,13 +73,14 @@
 </style>
 
 <script>
-    layui.use(['form', 'jquery', 'element', 'layer', 'laytpl', 'laydate'], function() {
+    layui.use(['form', 'jquery', 'element', 'layer', 'laytpl', 'laydate','formSelects'], function() {
         var element = layui.element;
         var form = layui.form;
         var $ = layui.jquery;
         var laytpl = layui.laytpl;
         var laydate = layui.laydate;
         var  data= window.currData;
+        var formSelects = layui.formSelects;
 		if(data!=null && data.id){//不是空就是编辑
 			var getTpl = formUser.innerHTML,
 			view = document.getElementById('formEditView');
@@ -142,6 +149,49 @@
             layui.formSelects.value('instidSelect', [number]);
         }
 
+        formSelects.data('personSelect', 'local', {
+            arr: selectDataInstall(userdropdown) //员工列表
+        });
+        
+        formSelects.data('ownerSelect', 'local', {
+            arr: selectDataInstall(ownerDropdown) //货权人列表
+        });
+
+        function selectDataInstall(url, param) {
+            //下拉选框数据组装
+            var arr = [];
+            //获取列表数据
+            $.ajax({
+                url: url,
+                type: "get",
+                data: param,
+                async: false, //同步
+                traditional: true,
+                success: function(data) {
+                    console.log(data);
+                    if (data.status == 0) {
+                        //把接口数据转换为[{"name":str,"value":number}]格式
+                        if (!Array.isArray(data.data) || data.data.length == 0) {
+                            // 判断arr是否为数组并保证内部有值
+                            return false;
+                        }
+                        for (var i = 0; i < data.data.length; i++) {
+                            var name = "";
+                            if(data.data[i].name){
+                                name = data.data[i].name;
+                            }else{
+                                name = data.data[i].username;
+                            }
+                            arr.push({
+                                "name": name,
+                                "value": data.data[i].id
+                            })
+                        }
+                    }
+                }
+            })
+            return arr;
+        }
 
     });
 </script>

@@ -238,7 +238,16 @@
                 }],
                 ['risk-examineRecode', function() {
                     container.load('/view/risk/risk-examineRecode.html');
+                }],
+
+                /////打印
+                ['print-in-store', function() {
+                    container.load('/view/print/print-in-store.html');
+                }],
+                ['print-out-store', function() {
+                    container.load('/view/print/print-out-store.html');
                 }]
+
             ]);
 
             Q.init({
@@ -308,8 +317,8 @@
             $(".signOutBtn").click(signOut); //退出登录
             function signOut() {
                 //退出登录
-                // delCookie("SESSION_NAME");
-                // delCookie("rolename");
+                delCookie("SESSION_NAME");
+                //delCookie("rolename");
                 // delCookie("menuAuthority");
                 // delCookie("buttonAuthority");
                 history.replaceState({}, 'login', localhost + "/view/login/login.html");
