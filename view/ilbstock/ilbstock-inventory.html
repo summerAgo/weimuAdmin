@@ -1,0 +1,368 @@
+<div class="table-page">
+    <div class="table-page-header">
+        <div class="table-page-form">
+            <form class="layui-form" action="">
+                <div class="form-box">
+                    <div class="layui-form-item form-left">
+                        <div class="table-form-item layui-input-inline">
+                            <input type="text">
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <input type="text">
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <input type="text">
+                        </div>
+                    </div>
+                    <div class="layui-form-item form-right">
+                        <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="searchForm">
+                            <i class="iconfont icon-sousuo"></i> <span>查询</span>
+                        </button>
+                        <button type="reset" class="layui-btn layui-btn-primary"> <i class="layui-icon layui-icon-refresh"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="table-content">
+        <div class="table-content-title">
+            <div class="table-tools">
+                <ul class="layui-nav" lay-filter="talbe-tools">
+                    <li class="layui-nav-item">
+                        <a id="toExport" href="javascript:;">导出数据</a>
+                    </li>
+                    <!-- <li class="layui-nav-item">
+                            <a href="javascript:;">打印</a>
+                        </li> -->
+                </ul>
+            </div>
+        </div>
+        <div class="table-content-main">
+            <table class="layui-hide" id="tableContainer" lay-filter="tableContainer"></table>
+        </div>
+    </div>
+</div>
+<script>
+    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'upload'], function() {
+        var element = layui.element;
+        var form = layui.form;
+        var $ = layui.jquery;
+        var table = layui.table;
+        var formSelects = layui.formSelects;
+        var laytpl = layui.laytpl;
+        var upload = layui.upload;
+        var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 103); //内容区域所需减去的高度
+
+        var examineLayer; // 审核-弹层
+
+        form.render(); // 重置表单渲染
+        formSelects.render(); // 下拉选项
+        element.render('talbe-tools'); // 表格工具栏
+        formSelects.data('ownerSelect', 'local', {
+            arr: selectDataInstall(ownerDropdown) //货权人列表
+        });
+
+        function selectDataInstall(url, param) {
+            //下拉选框数据组装
+            var arr = [];
+            //获取列表数据
+            $.ajax({
+                url: url,
+                type: "get",
+                data: param,
+                async: false, //同步
+                traditional: true,
+                success: function(data) {
+                    console.log(data);
+                    if (data.status == 0) {
+                        //把接口数据转换为[{"name":str,"value":number}]格式
+                        if (!Array.isArray(data.data) || data.data.length == 0) {
+                            // 判断arr是否为数组并保证内部有值
+                            return false;
+                        }
+                        for (var i = 0; i < data.data.length; i++) {
+                            arr.push({
+                                "name": data.data[i].name,
+                                "value": data.data[i].id
+                            })
+                        }
+                    }
+                }
+            })
+            return arr;
+        }
+
+        form.on('submit(searchForm)', function(data) {
+            var paramSearch = {};
+            for (var key in data.field) {
+                // 参数赋值
+                if (data.field[key] != "") {
+                    paramSearch[key] = data.field[key]
+                }
+            }
+            // 表格重新加载
+            tableIns.reload({
+                where: paramSearch, // 接口参数
+                page: {
+                    curr: 1 // 重新从第 1 页开始
+                }
+            });
+            return false;
+        });
+
+        var tableIns = table.render({
+            elem: '#tableContainer',
+            height: 'full-' + tableTopHeight, // full -- 
+            url: outTreasuryList, // 数据接口
+            // 任意数据格式解析成 table 组件规定的数据格式
+            parseData: function(res) { //res 即为原始返回的数据
+                if (res.status !== 0) res.status = 0;
+                return {
+                    "code": res.status, // 解析接口状态
+                    "msg": res.message, // 解析提示文本
+                    "count": res.count, // 解析数据长度
+                    "data": res.data // 解析数据列表
+                }
+            },
+            // 用于对分页请求的参数：page、limit重新设定名称
+            request: {
+                pageName: 'offset', // 页码的参数名称，默认：page
+                limitName: 'limit' // 每页数据量的参数名，默认：limit
+            },
+            cols: [
+                [ // 标题栏
+                    {
+                        type: 'checkbox'
+                    }, {
+                        field: 'ownername',
+                        title: '货权人',
+                        sort: true
+                    }, {
+                        field: 'orderno',
+                        title: '出库单',
+                        event: 'click',
+                        style: 'color:#4394ff',
+                        sort: true
+                    }, {
+                        field: 'depname',
+                        title: '出库仓库',
+                        sort: true
+                    }, {
+                        field: 'num',
+                        title: '数量',
+                        sort: true
+                    }, {
+                        field: 'stockmoney',
+                        title: '库存金额',
+                        sort: true
+                    }, {
+                        field: 'financingmoney',
+                        title: '融资金额',
+                        sort: true
+                    }, {
+                        field: 'cordonmoney',
+                        title: '警戒线',
+                        sort: true
+                    }, {
+                        field: 'outdate',
+                        title: '预计出货时间',
+                        sort: true
+                    }
+                ]
+            ],
+            even: true, // 开启隔行背景
+            page: true, // 是否显示分页
+            limits: [10, 20, 30, 40, 50], // 每页条数的选择项
+            limit: 10, // 每页默认显示的数量
+            done: function(res, curr, count) { // 数据渲染完的回调
+
+            },
+            text: { // 自定义文本，如空数据时的异常提示等
+                none: "无匹配数据"
+            },
+            loading: true // 是否显示加载条，默认true
+        });
+
+        // 监听出库单点击事件
+        table.on('tool(tableContainer)', function(obj) {
+            var curData = obj.data;
+            if (obj.event === 'click') {
+                sessionStorage.setItem('examineOrderID', curData.orderno);
+                $.get('view/risk/risk-layerExamine.html', {}, function(str) { // 请求弹框
+
+                    var layerData; // 当前弹框页面数据
+                    $.ajax({
+                        url: outDetails,
+                        type: "get",
+                        data: {
+                            orderno: curData.orderno // 单号
+                            // orderno: "510576514941583360"// 单号
+                        },
+                        async: false, // 同步
+                        success: function(data) {
+                            if (data.status == 0) {
+                                layerData = data.data;
+                                // 弹出弹框
+                                examineLayer = layer.open({
+                                    title: '出货申请单审核',
+                                    type: 1,
+                                    content: str, // 注意，如果str是object，那么需要字符拼接。
+                                    area: ['80%', '80%'],
+                                });
+                                // 渲染弹框页面
+                                layerOut(layerData);
+                            } else {
+                                layer.msg("页面信息获取失败，请刷新浏览器")
+                            }
+                        }
+                    });
+
+                });
+            }
+        });
+
+        // 渲染弹框函数
+        var layerOut = function(layerData) {
+            // 弹框 - 模板渲染
+            var getTpl = tempExamine.innerHTML,
+                view = $(".lss-bread-crumb")[0];
+            laytpl(getTpl).render(layerData, function(html) {
+                view.innerHTML = html;
+            });
+
+            var tableInsShip = table.render({
+                elem: '#tableContainer-from',
+                height: 'auto', // full -- 高度将始终铺满 - 差值
+                data: layerData.datalist,
+                // 用于对分页请求的参数：page、limit重新设定名称
+                cols: [
+                    [ // 标题栏
+                        {
+                            field: 'code',
+                            title: '包号',
+                            sort: true
+                        }, {
+                            field: 'varieties',
+                            title: '品种',
+                            sort: true
+                        }, {
+                            field: 'thickness',
+                            title: '规格/厚度',
+                            sort: true
+                        }, {
+                            field: 'levels',
+                            title: '等级',
+                            sort: true
+                        }, {
+                            field: 'chang',
+                            title: '长度',
+                            sort: true
+                        }, {
+                            field: 'brand',
+                            title: '品牌',
+                            sort: true
+                        }, {
+                            field: 'origin',
+                            title: '产地',
+                            sort: true
+                        }, {
+                            field: 'num',
+                            title: '数量(m³)',
+                            sort: true
+                        }, {
+                            field: 'status',
+                            title: '库位',
+                            sort: true
+                        }, {
+                            field: 'containernum',
+                            title: '货柜号/批次号',
+                            sort: true
+                        }, {
+                            field: 'remarks',
+                            title: '备注',
+                            sort: true
+                        }
+                    ]
+                ],
+                even: true, // 开启隔行背景
+                done: function(res, curr, count) { // 数据渲染完的回调
+
+                },
+                text: { // 自定义文本，如空数据时的异常提示等
+                    none: "无匹配数据"
+                },
+                loading: true // 是否显示加载条，默认true
+            });
+
+            // 通过按钮点击
+            $(".passBtn").click(function() {
+
+                $.ajax({
+                    cache: true,
+                    type: "GET",
+                    url: setAdopt,
+                    async: false,
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    data: {
+                        'orderno': sessionStorage.getItem("examineOrderID")
+                    },
+                    error: function(request) {
+                        layer.msg('修改失败');
+                        return;
+                    },
+                    success: function(res) {
+                        if (res.status == 0) {
+                            layer.msg(res.msg);
+                            layer.close(examineLayer);
+                            tableIns.reload({
+                                page: {
+                                    curr: 1 // 重新从第 1 页开始
+                                }
+                            });
+                        } else {
+                            layer.msg(res.msg);
+                        }
+                    }
+                });
+            })
+
+            // 不通过按钮点击
+            $(".nopassBtn").click(function() {
+                $.ajax({
+                    cache: true,
+                    type: "GET",
+                    url: setNotAdopt,
+                    async: false,
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    data: {
+                        'orderno': sessionStorage.getItem("examineOrderID")
+                    },
+                    error: function(request) {
+                        layer.msg('修改失败');
+                        return;
+                    },
+                    success: function(res) {
+                        if (res.status == 0) {
+                            layer.msg(res.msg);
+                            layer.close(examineLayer);
+                            tableIns.reload({
+                                page: {
+                                    curr: 1 // 重新从第 1 页开始
+                                }
+                            });
+                        } else {
+                            layer.msg(res.msg);
+                        }
+                    }
+                });
+            });
+
+        }
+    });
+</script>
