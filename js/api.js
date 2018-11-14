@@ -143,3 +143,6 @@ var outHistoryDetails = pathUrl + "risk/control/outHistoryDetails"//出货审核
 var setAdopt = pathUrl + "risk/control/setAdopt"//出货审核通过
 var setNotAdopt = pathUrl + "risk/control/setNotAdopt"//出货审核不通过
 var setOutCordon = pathUrl + "risk/control/setOutCordon"//修改警戒线设置
+
+//盘点记录
+var checkList = pathUrl + "check/recordlist/list";//盘点记录列表
