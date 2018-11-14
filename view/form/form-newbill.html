@@ -223,6 +223,7 @@
             $(".rightBotBtn span").html(tableData.length); //当前选中了多少商品
             tableIns.reload({
                 data: tableData,
+                limit: tableData.length,
                 page: {
                     curr: 1 //重新从第 1 页开始
                 }
@@ -264,7 +265,7 @@
                         field: 'num',
                         title: '数量（m³）',
                         sort: true,
-                        edit: "txt",
+                        event: "edit",
                         style: 'color:red;'
                     },
                     // {
@@ -301,9 +302,9 @@
                 ]
             ],
             even: true,
-            page: true, //是否显示分页
-            limits: [15, 20, 30, 40, 50],
-            limit: 15, //每页默认显示的数量
+            page: false, //是否显示分页
+            limits: [tableData.length],
+            limit: tableData.length, //每页默认显示的数量
             done: function(res, curr, count) {
                 var addtableBtn = '<div class="rightBotBtn" id="form-rightBtn">已新增<span>' + count + '</span>个货物 <a href="javascript:;" class="layui-btn layui-btn-primary layui-btn-sm subCancelBtn">取消</a><a href="javascript:;" class="layui-btn layui-btn-sm subConfirmBtn">入库</a></div>';
                 if ($("#form-rightBtn").length < 1) {
@@ -389,6 +390,7 @@
                     tableData = data.stocklist;
                     tableIns.reload({
                         data: tableData,
+                        limit: tableData.length,
                         page: {
                             curr: 1 //重新从第 1 页开始
                         }
@@ -397,11 +399,37 @@
             })
         }
 
-        table.on('edit(tableContainer-from)', function(obj) {
-            var value = obj.value,
-                data = obj.data,
-                field = obj.field;
-            layer.msg('[ID: ' + data.id + '] ' + field + ' 字段更改为：' + value);
+        // table.on('edit(tableContainer-from)', function(obj) {
+        //     var value = obj.value,
+        //         data = obj.data,
+        //         field = obj.field;
+        //         console.log(value)
+        //     console.log(data)
+        //     layer.msg('[ID: ' + data.id + '] ' + field + ' 字段更改为：' + value);
+        // });
+
+        table.on('tool(tableContainer-from)', function(obj) {
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            var tr = obj.tr; //获得当前行 tr 的DOM对象
+            if (layEvent === 'edit') {
+                layer.prompt({
+                    formType: 2,
+                    title: '修改包号为' + data.code + '的数量',
+                    value: data.num
+                }, function(value, index) {
+                    if (!value||isNaN(value)) {
+                        layer.msg("请输入数字");
+                        return false;
+                    }
+                    layer.msg("修改成功");
+                    layer.close(index);
+                    obj.update({
+                        num: value
+                    });
+                });
+
+            }
         });
 
         $(".deleteBtn").click(function() {
@@ -427,6 +455,7 @@
                         layer.close(index);
                         // 刷新表格
                         tableIns.reload({
+                            limit: tableData.length,
                             page: {
                                 curr: 1 //重新从第 1 页开始
                             }
@@ -490,8 +519,10 @@
                 return;
             }
             // console.log(dataarr);
-            // return false;
 
+            // console.log(table.cache["tableContainer-from"]);
+            // console.log(dataarr);
+            
             var arr = JSON.stringify(dataarr);
             //第二步，提交到后台
             var num;
@@ -500,7 +531,7 @@
             } else {
                 num = orderno.orderno;
             }
-            
+
             $.ajax({
                 url: preEntryAdd,
                 type: "POST",
@@ -554,6 +585,7 @@
                             }
                             tableIns.reload({
                                 data: tableData,
+                                limit: tableData.length,
                                 page: {
                                     curr: 1 //重新从第 1 页开始
                                 }
