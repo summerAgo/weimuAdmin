@@ -4,6 +4,10 @@ var pathUrl = "http://192.168.10.201:80/storage-web/"; //?username=admin&passwor
 
 var loginUrl = pathUrl + "sys/login"; //登录
 
+//打印
+var printinstore = localhost+"view/print/print-in-store.html";
+var printoutstore = localhost+"view/print/print-out-store.html";
+
 
 var weekInCount = pathUrl + "home/weekInCount";//本周入库统计立方
 var weekOutCount = pathUrl + "home/weekOutCount";//本周出库统计立方
