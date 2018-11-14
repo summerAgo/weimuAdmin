@@ -289,14 +289,6 @@
                         field: 'billloading',
                         title: '提运单',
                         sort: true
-                    }, {
-                        field: 'person',
-                        title: '负责人',
-                        sort: true
-                    }, {
-                        field: 'estimatedate',
-                        title: '预计出库时间',
-                        sort: true
                     }
                 ]
             ],
@@ -305,7 +297,16 @@
             limits: [15, 20, 30, 40, 50],
             limit: 15, //每页默认显示的数量
             done: function(res, curr, count) {
-                var addtableBtn = '<div class="rightBotBtn" id="form-rightBtn">已新增<span>' + count + '</span>个货物 <a href="javascript:;" class="layui-btn layui-btn-primary layui-btn-sm subCancelBtn">取消</a><a href="javascript:;" class="layui-btn layui-btn-sm subConfirmBtn">入库</a></div>';
+                var addtableBtn = '<div class="rightBotBtn" id="form-rightBtn">已新增<span>' + count + '</span>个货物 '+
+                    '<a href="javascript:;" class="layui-btn layui-btn-primary layui-btn-sm subCancelBtn">取消</a>'+
+                    '<a href="javascript:;" class="layui-btn layui-btn-sm subConfirmBtn">保存</a>';
+                    //只有点击列表入库订单时才显示入库操作
+                    var ordernoss = JSON.parse(sessionStorage.getItem('newbill_orderno'));
+                    if (ordernoss) {
+                        addtableBtn+='<a href="javascript:;" class="layui-btn layui-btn-sm submissionBtn">入库</a>';
+                    }
+                    addtableBtn+='</div>';
+
                 if ($("#form-rightBtn").length < 1) {
                     $("#tableContainer-from").siblings(".layui-form ").find(".layui-table-page").append(addtableBtn);
                 }
@@ -314,8 +315,35 @@
                 $(".subCancelBtn").click(function() {
                     layer.closeAll();
                 })
-                console.log(res)
-                // console.log(curr)
+                
+                if (ordernoss) {
+                    //与 预入库列表页面下方的入库功能一样
+                    $(".submissionBtn").click(function() {
+                        var ids = [];//订单号
+                        console.log(ordernoss.orderno);
+                        ids.push(ordernoss.orderno);
+                        //审核订单为库存
+                        $.ajax({
+                            url: preEntryexamineStock,
+                            type: "get",
+                            data: {
+                                'ids': ids
+                            },
+                            traditional: true,
+                            success: function(data) {
+                                if (data.status == 0) {
+                                    tableIns.reload({
+                                        page: {
+                                            curr: 1 //重新从第 1 页开始
+                                        }
+                                    });
+                                    layer.msg("审核通过为库存");
+                                }
+                            }
+                        })
+
+                    })
+                }
             },
             text: {
                 none: "无匹配数据"
@@ -401,7 +429,8 @@
             var value = obj.value,
                 data = obj.data,
                 field = obj.field;
-            layer.msg('[ID: ' + data.id + '] ' + field + ' 字段更改为：' + value);
+            //layer.msg('[ID: ' + data.id + '] ' + field + ' 字段更改为：' + value);
+            layer.msg(field + ' 字段更改为：' + value);
         });
 
         $(".deleteBtn").click(function() {
@@ -457,7 +486,8 @@
             var depotname = parent.find("input[name='depotid']").val();
             var origin = parent.find("input[name='origin']").val();
             var supplier = parent.find("input[name='supplierid']").val();
-            console.log(cargoowner);
+            var positionid = parent.find("input[name='positionid']").val();
+            
             if (null == cargoowner || cargoowner.length < 1) {
                 layer.msg("请填写货权人");
                 return;
@@ -474,6 +504,11 @@
                 layer.msg("请填写供应商");
                 return;
             }
+            if (null == positionid || positionid.length < 1) {
+                layer.msg("请填写库位");
+                return;
+            }
+            
 
             var dataarr = [];
             //第一步，先去除已在后台存在的数据
@@ -486,7 +521,7 @@
             //如果当前没有添加新内容，则不提交后台
             if (dataarr.length == 0) {
                 //关闭窗口
-
+                layer.closeAll();
                 return;
             }
             // console.log(dataarr);
@@ -501,6 +536,7 @@
                 num = orderno.orderno;
             }
             
+            console.log(arr);
             $.ajax({
                 url: preEntryAdd,
                 type: "POST",
@@ -513,6 +549,7 @@
                     depotid: depotname,
                     origin: origin,
                     supplierid: supplier,
+                    positionid:positionid,
                     orderno: num
                 },
                 traditional: true,

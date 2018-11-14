@@ -60,6 +60,10 @@
                     <li class="layui-nav-item">
                         <a href="javascript:;" id="addGoodsBtn">从库存添加货物</a>
                     </li>
+                    <li class="layui-nav-item" id="shoutlb">
+                        <a href="javascript:;" class="suboutlbBtn">出库</a>
+                    </li>
+
                 </ul>
                 <ul class="layui-layout-right">
                     <li><a href="javascript:;" id="deleteGoods" class="deleteBtn">移除</a></li>
@@ -168,12 +172,13 @@
         var outBill = sessionStorage.getItem('addOutBill');
         // console.log(outBill);
         var array = JSON.parse(outBill);
-        // console.log(array);
 
         var data = {};
         var pageData;
 
         if (outBill == null) {
+            $("#shoutlb").hide();
+
             formSelects.undisabled('ownerSelect'); //启用
             formSelects.undisabled('depotSelect'); //启用
             $("input[name='estimatedate']").attr("disabled", false)
@@ -234,8 +239,6 @@
 
 
 
-
-
         function selectDataInstall(url, param, bool) {
             //下拉选框数据组装
             var arr = [];
@@ -278,20 +281,36 @@
                     {
                         type: 'checkbox',
                     }, {
-                        field: 'ownerid',
+                        field: 'ownername',
                         title: '货权人',
                         sort: true
                     }, {
-                        field: 'depotid',
+                        field: 'code',
+                        title: '包号',
+                        sort: true
+                    },, {
+                        field: 'varieties',
+                        title: '品种',
+                        sort: true
+                    }, {
+                        field: 'spec',
+                        title: '规格',
+                        sort: true
+                    }, {
+                        field: 'levels',
+                        title: '等级',
+                        sort: true
+                    }, {
+                        field: 'chang',
+                        title: '长度',
+                        sort: true
+                    }, {
+                        field: 'depname',
                         title: '仓库名称',
                         sort: true
                     }, {
                         field: 'billloading',
                         title: '提运单',
-                        sort: true
-                    }, {
-                        field: 'num',
-                        title: '件数（包）',
                         sort: true
                     }, {
                         field: 'origin',
@@ -302,18 +321,15 @@
                         title: '供应商',
                         sort: true
                     }, {
-                        field: 'volume',
+                        field: 'num',
                         title: '数量（m³）',
                         sort: true
-                    }, {
-                        field: 'createdate',
-                        title: '创建日期',
-                        sort: true
-                    }, {
-                        field: 'createuser',
-                        title: '创建人',
-                        sort: true
                     }
+                    // , {
+                    //     field: 'createdate',
+                    //     title: '入库日期',
+                    //     sort: true
+                    // }
                 ]
             ],
             even: true,
@@ -454,6 +470,40 @@
                 // console.log(val);
             }
         });
+        
+        //点击确认出库
+        $(".suboutlbBtn").click(function() {
+                    layer.confirm('是否确认出库', {
+                        icon: 3,
+                        title: '提示'
+                    }, function(index) {
+                        var ids = [];
+                        ids.push(array.orderno);
+                        $.ajax({
+                            cache: true,
+                            type: "get",
+                            url: outStock,
+                            data: {
+                                ids:ids.toString()
+                            },
+                            async: false,
+                            success: function(res) {
+                                if (res.status == 0) {
+                                    layer.msg("出库成功");
+                                    tableIns.reload({
+                                        page: {
+                                            curr: 1 //重新从第 1 页开始
+                                        }
+                                    });
+                                } else {
+                                    layer.msg(res.msg);
+                                }
+
+
+                            }
+                        });
+                    });
+                })
 
         $("#addGoodsBtn").click(function() {
             var cargoowner = layui.formSelects.value('ownerSelect', "valStr");
