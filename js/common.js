@@ -8,6 +8,17 @@ function setCookie(name, value, time) {
     document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString() + ";path=/";
 }
 
+/***
+ * 获取头部参数
+ * @param name 参数的名称
+ * @returns
+ */
+function getTopInfo(name){
+    var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+    var r = window.location.search.substr(1).match(reg);
+    if(r!=null)return  unescape(r[2]); return null;
+}
+
 function getsec(str) {
     var str1 = str.substring(1, str.length) * 1;
     var str2 = str.substring(0, 1);

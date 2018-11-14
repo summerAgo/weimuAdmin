@@ -20,17 +20,18 @@
             </div>
             <div class="h-right">
                 <embed src="../../images/NO.svg" style="display:inline-block;width:80px;height:40px" />
-                <span class="numb data orderno">orderno</span>
+                <span class="numb data orderno"></span>
             </div>
         </div>
     </div>
     <div class="w">
         <div class="write-info">
-            <div class="write-item"><i>客户：</i><span class="data username">username</span></div>
-            <div class="write-item"><i>车牌号：</i><span class="data billloading">billloading</span></div>
-            <div class="write-item"><i>地址：</i><span class="data address">address</span></div>
-            <div class="write-item"><i>仓库名称：</i><span class="data depname">depname</span></div>
-            <div class="write-item"><i>出库日期：</i><span class="data createdate">createdate</span></div>
+            <div class="write-item"><i>客户：</i><span class="data ownername"></span></div>
+            <div class="write-item"><i>车牌号：</i><span class="data vehnum"></span></div>
+            <div class="write-item"><i>地址：</i><span class="data address"></span></div>
+            <div class="write-item"><i>仓库名称：</i><span class="data depname"></span></div>
+            <div class="write-item"><i>出库日期：</i><span class="data createdate"></span></div>
+            <div class="write-item"><i>件数：</i><span class="data "></span></div>
         </div>
     </div>
     <div class="w" style="padding: 0 20px;">
@@ -44,13 +45,11 @@
                 <td>长度</td>
                 <td>品牌</td>
                 <td>产地</td>
-                <td>件数</td>
                 <td>数量(m³)</td>
                 <td>备注</td>
             </tr>
             <tr class="bottom">
                 <td class="total">合计</td>
-                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -69,14 +68,15 @@
 
     <div class="w">
         <div class="sign-info">
-            <div class="sign-item"><i>监管方：</i><span class="data regulators">regulators</span></div>
+            <div class="sign-item"><i>监管方：</i><span class="data regulators"></span></div>
             <div class="sign-item"><i>提货人签字：</i><span class="data"></span></div>
-            <div class="sign-item"><i>联系人/电话：</i><span class="data phone">phone</span></div>
+            <div class="sign-item"><i>联系人/电话：</i><span class="data phone"></span></div>
             <div class="sign-item"><i>日期：</i><span class="data date"></span></div>
         </div>
     </div>
 
     <script>
+        var orderno = sessionStorage.getItem('dayin_orderno');
         var trHeader = $(".table-header");
         var orderDataList = [];
         var orderData = null;
@@ -85,7 +85,7 @@
             url: "http://192.168.10.201/storage-web/order/outtreasury/prinOut",
             type: "get",
             data: {
-                orderno: "511679205277171712"
+                orderno: orderno
             },
             async: false, //同步
             traditional: true,
@@ -96,7 +96,7 @@
                     orderData = res.data; // 对象迁移
                     orderDataList = orderData.list;
                 } else {
-                    layer.msg("请选择需要编辑的单条信息");
+                    //layer.msg("请选择需要编辑的单条信息");
                 }
             }
         })
@@ -162,7 +162,6 @@
                 '<td>' + arrOll[0].brand + '</td>' +
                 '<td>' + arrOll[0].origin + '</td>' +
                 '<td>' + arrOll[0].num + '</td>' +
-                '<td>' + arrOll[0].actualnum + '</td>' +
                 '<td>' + arrOll[0].remarks + '</td>' +
                 '</tr>';
             trs += trH;
@@ -176,7 +175,6 @@
                     '<td>' + arrBod[n].brand + '</td>' +
                     '<td>' + arrBod[n].origin + '</td>' +
                     '<td>' + arrBod[n].num + '</td>' +
-                    '<td>' + arrBod[n].actualnum + '</td>' +
                     '<td>' + arrBod[n].remarks + '</td>' +
                     '</tr>';
                 trs += trB;
@@ -184,7 +182,7 @@
         }
 
         trHeader.after(trs);
-
+        window.print();
     </script>
 </body>
 

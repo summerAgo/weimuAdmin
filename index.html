@@ -104,8 +104,8 @@
     <script src="js/api.js"></script>
     <script src="js/common.js"></script>
     <script>
-        var roleName = sessionStorage.getItem("rolename");
-        if (!roleName) {
+        var SESSION_NAME = getCookie("SESSION_NAME");
+        if (!SESSION_NAME) {
             //判断是否已登录
             window.location.href = localhost + "/view/login/login.html";
         }
@@ -123,7 +123,7 @@
             var container = $('.content-body'); //页面容器
             // var userInfo = JSON.parse(getCookie('userInfo')); //获取session中用户信息
 
-            $(".rolename").html(roleName);
+            $(".rolename").html(sessionStorage.getItem("rolename"));
             //该用户菜单权限JSON
             var menujson = JSON.parse(sessionStorage.getItem("menuAuthority"));
             // console.log(menujson);
