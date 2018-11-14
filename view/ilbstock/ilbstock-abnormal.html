@@ -69,6 +69,7 @@
                     </li>
                 </ul>
                 <ul class="layui-layout-right">
+                    <li><a href="javascript:;" class="saveNumBtn">保存</a></li>
                     <li><a href="javascript:;" class="addBtn">增加库存</a></li>
                     <li><a href="javascript:;" class="reduceBtn">减少库存</a></li>
                     <li><a href="javascript:;" class="splitBtn">库存拆分</a></li>
@@ -82,7 +83,7 @@
     </div>
 </div>
 <script>
-    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate'], function () {
+    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate'], function() {
         var element = layui.element;
         var form = layui.form;
         var $ = layui.jquery;
@@ -104,7 +105,7 @@
             arr: selectDataInstall(ownerDropdown) //货权人列表
         });
 
-        layui.formSelects.opened('depotSelect', function (id) {
+        layui.formSelects.opened('depotSelect', function(id) {
             var ownerid = formSelects.value('ownerSelect', 'val'); //获取货权人ID
             if (ownerid.length < 1) {
                 layer.msg("请先选择货权人");
@@ -115,7 +116,7 @@
         });
 
         //监听
-        formSelects.on('ownerSelect', function (id, vals, val, isAdd, isDisabled) {
+        formSelects.on('ownerSelect', function(id, vals, val, isAdd, isDisabled) {
             if (!isAdd) {
                 formSelects.data('depotSelect', 'local', {
                     arr: [] //清空仓库列表
@@ -200,7 +201,7 @@
             return arr;
         }
 
-        form.on('submit(searchForm)', function (data) {
+        form.on('submit(searchForm)', function(data) {
             var paramSearch = {};
             for (var key in data.field) {
                 //参数赋值
@@ -221,7 +222,7 @@
             elem: '#tableContainer-abnormal',
             height: 'full-' + tableTopHeight,
             url: ilbstockList,
-            parseData: function (res) { //res 即为原始返回的数据
+            parseData: function(res) { //res 即为原始返回的数据
                 if (res.status !== 0) res.status = 0;
                 return {
                     "code": res.status, //解析接口状态
@@ -246,44 +247,36 @@
                         sort: true
                     }, {
                         field: 'depname',
-                        title: '仓库名称',
-                        sort: true
+                        title: '仓库名称'
                     }, {
                         field: 'code',
-                        title: '包号',
-                        sort: true
+                        title: '包号'
                     }, {
                         field: 'varieties',
-                        title: '品种',
-                        sort: true
+                        title: '品种'
                     }, {
                         field: 'spec',
-                        title: '规格/厚度',
-                        sort: true
+                        title: '规格/厚度'
                     }, {
                         field: 'levels',
-                        title: '等级',
-                        sort: true
+                        title: '等级'
                     }, {
                         field: 'chang',
-                        title: '长度',
-                        sort: true
+                        title: '长度'
                     }, {
                         field: 'brand',
-                        title: '品牌',
-                        sort: true
+                        title: '品牌'
                     }, {
                         field: 'origin',
-                        title: '产地',
-                        sort: true
+                        title: '产地'
                     }, {
                         field: 'num',
                         title: '数量(m³)',
-                        sort: true
+                        edit: "txt",
+                        style: "color:red;cursor: pointer"
                     }, {
                         field: 'origin',
-                        title: '采购单价(RMB)',
-                        sort: true
+                        title: '采购单价(RMB)'
                     }
                 ]
             ],
@@ -291,7 +284,7 @@
             page: true, //是否显示分页
             limits: [15, 20, 30, 40, 50],
             limit: 15, //每页默认显示的数量
-            done: function (res, curr, count) {
+            done: function(res, curr, count) {
                 console.log(res);
                 var addtableBtn = '<div class="rightBotBtn">合计总库存数量<span>' + res.znum + '</span>㎡ 总库存估价金额：<span>' + res.aprice + '</span>(RMB)</div>';
                 $(".layui-table-page").append(addtableBtn);
@@ -303,12 +296,82 @@
         });
 
         //点击增加库存
-        $(".addBtn").click(function () {
+        $(".addBtn").click(function() {
             addStore();
         });
 
+        var apriceChangeValue = {}; //单元格编辑更改评估价格数据对象
+
+        //监听编辑
+        table.on('edit(tableContainer-abnormal)', function(obj) {
+            // console.log(obj.value); //得到修改后的值
+            // console.log(obj.field); //当前编辑的字段名
+            // console.log(obj.data); //所在行的所有相关数据
+            if (!obj.value || isNaN(obj.value)) {
+                layer.msg("数量只能为数字");
+            }
+            apriceChangeValue[obj.data.id] = obj.value;
+            console.log(apriceChangeValue);
+        });
+
+        $(".saveNumBtn").click(function() {
+            var status = true;
+            console.log(apriceChangeValue)
+            //保存评估价
+            if ($.isEmptyObject(apriceChangeValue)) {
+                layer.msg("数量未作修改");
+            } else {
+                for (var key in apriceChangeValue) {
+                    if (isNaN(apriceChangeValue[key]) || apriceChangeValue[key] == "") {
+                        layer.msg("保存数量修改失败，只能为数字");
+                        status = false;
+                    }
+                }
+
+                if (status) {
+                    status = editAprice(apriceChangeValue, tableIns); //提交评估单价
+                    if (status) {
+                        apriceChangeValue = {}; //如果提交成功清空估价数组
+                        tableIns.reload({
+                            page: {
+                                curr: 1 // 重新从第 1 页开始
+                            }
+                        });
+                    } else {
+                        layer.msg("提交估价失败，请检查网络"); //估价提交失败提示
+                    }
+                } else {
+                    return false;
+                }
+
+            }
+        });
+        //保持提交  修改异常调整数据
+        function editAprice(apriceJson, tableObj) {
+            //请求数据源示例
+            var status = false;
+            $.ajax({
+                url: ilbstockSaveAbnor,
+                type: "POST",
+                async: false,
+                data: {
+                    lbarr: JSON.stringify(apriceJson)
+                },
+                // traditional: true,
+                success: function(res) {
+                    if (res.status == 0) {
+                        layer.msg(res.msg);
+                        status = true;
+                    } else {
+                        layer.msg(res.msg);
+                    }
+                }
+            });
+            return status;
+        };
+
         function addStore() {
-            $.get('view/ilbstock/ilbstock-layerAbnormal.html', {}, function (str) { // 请求弹框
+            $.get('view/ilbstock/ilbstock-layerAbnormal.html', {}, function(str) { // 请求弹框
 
                 addLayer = layer.open({
                     title: '异常调整-增加库存',
@@ -322,7 +385,7 @@
                     height: '472', // full -- 高度将始终铺满 - 差值
                     url: ilbstockList,
 
-                    parseData: function (res) { //res 即为原始返回的数据
+                    parseData: function(res) { //res 即为原始返回的数据
                         return {
                             "code": res.status, //解析接口状态
                             "msg": res.message, //解析提示文本
@@ -382,7 +445,7 @@
                     limit: 10,
                     limits: [10, 20, 30, 40, 50],
                     even: true, // 开启隔行背景
-                    done: function (res, curr, count) { // 数据渲染完的回调
+                    done: function(res, curr, count) { // 数据渲染完的回调
                         // var addtableBtn = '<div class="rightBotBtn">已选择<span>' + 20 + '</span>个商品<span><button class="layui-btn" lay-submit="" type="submit" lay-filter="keepSubmit">确认添加</button></div>';
                         // $(".layui-table-page").append(addtableBtn);
                     },

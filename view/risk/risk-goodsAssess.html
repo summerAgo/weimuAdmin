@@ -399,7 +399,7 @@
                             // traditional: true,
                             success: function(res) {
                                 if (res.status == 0) {
-                                    layer.msg("评估单价设置成功");
+                                    layer.msg(res.msg);
                                     status = true;
                                 } else {
                                     layer.msg(res.msg);
