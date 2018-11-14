@@ -239,7 +239,7 @@
         
         //打印
         $("#ondayin").on('click', function(e) {
-            var orderno = "511915429111791616";
+            var orderno = billDetails.data.orderno
             var url;
             if (billDetails.type == "outHistory") {
                 url = printoutstore;

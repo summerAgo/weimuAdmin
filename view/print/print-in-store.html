@@ -31,7 +31,7 @@
             <div class="write-item"><i>地址：</i><span class="data address"></span></div>
             <div class="write-item"><i>仓库名称：</i><span class="data depname"></span></div>
             <div class="write-item"><i>入库日期：</i><span class="data createdate"></span></div>
-            <div class="write-item"><i>件数：</i><span class="data "></span></div>
+            <div class="write-item"><i>件数：</i><span class="data number"></span></div>
         </div>
     </div>
     <div class="w" style="padding: 0 20px;">
@@ -89,7 +89,7 @@
             },
             async: false, //同步
             traditional: true,
-            success: function (res) {
+            success: function(res) {
                 console.log(res.data);
                 orderData = res.data
                 if (res.status == 0) {
@@ -97,7 +97,7 @@
                     orderDataList = orderData.list;
 
                 } else {
-                   // layer.msg("请求失败");
+                    // layer.msg("请求失败");
                 }
             }
         })
@@ -105,6 +105,15 @@
         for (var key in orderData) {
             $("." + key + ".data").html([orderData[key]])
         }
+
+        $(".number").html(orderDataList.length);
+        $(".total-num").html(function() {
+            var count = 0;
+            for(var i=0;i<orderDataList.length;i++){
+                count += orderDataList[i].num
+            }
+            return count;
+        });
 
         function getNowFormatDate() {
             var date = new Date();
@@ -135,8 +144,7 @@
                     data: [ai]
                 });
                 h[ai.containernum] = ai;
-            }
-            else {
+            } else {
                 for (var j = 0; j < arrRear.length; j++) {
                     var dj = arrRear[j];
                     if (dj.containernum == ai.containernum) {

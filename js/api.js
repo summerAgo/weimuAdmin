@@ -21,6 +21,7 @@ var ilbstockDelete = pathUrl + "lb/ilbstock/delete";//删
 var ilbstockUpdate = pathUrl + "lb/ilbstock/update";//改
 var ilbstockList = pathUrl + "lb/ilbstock/list";//查
 var ilbstockListAll = pathUrl + "lb/ilbstock/listAll";//查
+var ilbstockSaveAbnor = pathUrl + "lb/ilbstock/saveAbnor";//异常调整修改
 var ilbstockImportUrl = pathUrl + "lb/ilbstock/importExcel"; //导入
 var ilbstockExportUrl = pathUrl + "lb/ilbstock/exportExcel"; //导出
 var ilbstockImportTemp = pathUrl + "template/预入库导入.xlsx"; //导入模板
