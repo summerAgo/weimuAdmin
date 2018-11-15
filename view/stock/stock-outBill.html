@@ -1,38 +1,59 @@
 <div class="table-page">
+    <div class="table-content-title">
+        <div class="table-tools">
+            <ul class="layui-nav" lay-filter="talbe-tools">
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="creatBillBtn"><i class="iconfont icon-tianjia"></i>新建申请出库单</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;"><i class="iconfont icon-dayin"></i>打印</a>
+                </li>
+                <li class="layui-nav-item"><a href="javascript:;" class="deleteBtn"><i class="iconfont icon-shanchu"></i>删除</a></li>
+                <li class="layui-nav-item"><a href="javascript:;" class="submissionBtn"><i class="iconfont icon-chuku"></i>出库</a></li>
+            </ul>
+        </div>
+    </div>
     <div class="table-page-header">
         <div class="table-page-form">
             <form class="layui-form" action="">
-                <div class="form-box">
+                <div class="form-box clearfix">
                     <div class="layui-form-item form-left">
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">订单号</span>
                             <input type="text" name="orderno" placeholder="订单号" autocomplete="off" class="layui-input">
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">货权人</span>
                             <select name="ownerid" xm-select="ownerSelect" xm-select-radio>
                                 <option value="">选择货权人</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">仓库</span>
                             <select name="depotid" xm-select="depotSelect" xm-select-radio>
                                 <option value="">选择仓库</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">库位</span>
                             <select name="positionid" xm-select="positionSelect" xm-select-radio>
                                 <option value="">选择库位</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">产地</span>
                             <select name="origin" xm-select="originSelect" xm-select-radio>
                                 <option value="">选择产地</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">供应商</span>
                             <select name="supplierid" xm-select="supplierSelect" xm-select-radio>
                                 <option value="">选择供应商</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">提运单</span>
                             <input type="text" name="billloading" placeholder="提运单" autocomplete="off" class="layui-input">
                         </div>
                     </div>
@@ -47,34 +68,7 @@
         </div>
     </div>
     <div class="table-content">
-        <div class="table-content-title">
-            <div class="table-tools">
-                <ul class="layui-nav" lay-filter="talbe-tools">
-                    <li class="layui-nav-item">
-                        <a href="javascript:;" class="creatBillBtn">新建申请出库单</a>
-                    </li>
-                    <!-- <li class="layui-nav-item item-more">
-                            <a href="javascript:;">数据导入导出</a>
-                            <dl class="layui-nav-child">
-                                <dd><a id="dowmTemp" href="javascript:;">下载模板</a></dd>
-                                <dd><a id="toImport" href="javascript:;">导入数据</a></dd>
-                                <dd><a id="toExport" href="javascript:;">导出数据</a></dd>
-                            </dl>
-                        </li> -->
 
-                    <li class="layui-nav-item">
-                        <a href="javascript:;">打印</a>
-                    </li>
-                    <!--<li class="layui-nav-item">
-                        <a href="javascript:;">重新获取申请单</a>
-                    </li>-->
-                </ul>
-                <ul class="layui-layout-right">
-                    <!--<li><a href="javascript:;" class="editBtn">编辑</a></li>-->
-                    <li><a href="javascript:;" class="deleteBtn">删除</a></li>
-                </ul>
-            </div>
-        </div>
         <div class="table-content-main">
             <table class="layui-hide" id="tableContainers" lay-filter="tableContainers"></table>
         </div>
@@ -259,34 +253,29 @@
                         field: 'orderno',
                         title: '单号',
                         event: 'click',
-                        sort: true
+                        style: 'cursor: pointer;',
+                        width: 200
                     }, {
                         field: 'ownername',
-                        title: '货权人',
-                        sort: true
+                        title: '货权人'
                     }, {
                         field: 'depname',
-                        title: '仓库名称',
-                        sort: true
+                        title: '仓库名称'
                     }, {
                         field: 'num',
-                        title: '件数（包）',
-                        sort: true
+                        title: '件数（包）'
                     }, {
                         field: 'suppliername',
-                        title: '供应商',
-                        sort: true
+                        title: '供应商'
                     }, {
                         field: 'volume',
-                        title: '数量（m³）',
-                        sort: true
+                        title: '数量（m³）'
                     }, {
                         field: 'outdate',
                         title: '预计出库时间'
                     }, {
                         field: 'createdate',
-                        title: '创建日期',
-                        sort: true
+                        title: '创建日期'
                     }
                 ]
             ],
@@ -295,43 +284,10 @@
             limits: [10, 20, 30, 40, 50],
             limit: 10, //每页默认显示的数量
             done: function(res, curr, count) {
-                var addtableBtn = '<div class="rightBotBtn">已经选择<span>0</span>个 <a href="javascript:;" class="layui-btn layui-btn-sm submissionBtn">出库</a></div>';
-                $(".layui-table-page").append(addtableBtn);
-                $(".submissionBtn").click(function() {
-                    layer.confirm('是否确认出库', {
-                        icon: 3,
-                        title: '提示'
-                    }, function(index) {
-                        var checkStatus = table.checkStatus('tableContainers'); //表格选中状态
-                        var data = {};
-                        var ids = [];
-                        for (var i = 0; i < checkStatus.data.length; i++) {
-                            ids.push(checkStatus.data[i].orderno);
-                        }
-                        data["ids"] = ids.toString();
-                        $.ajax({
-                            cache: true,
-                            type: "get",
-                            url: outStock,
-                            data: data,
-                            async: false,
-                            success: function(res) {
-                                if (res.status == 0) {
-                                    layer.msg("出库成功");
-                                    tableIns.reload({
-                                        page: {
-                                            curr: 1 //重新从第 1 页开始
-                                        }
-                                    });
-                                } else {
-                                    layer.msg(res.msg);
-                                }
-
-
-                            }
-                        });
-                    });
-                })
+                var addtableBtn = '<div class="rightBotBtn" id="rightBox">已经选择<span>0</span>个</div>';
+                if ($("#rightBox").length < 1) {
+                    $(".layui-table-page").append(addtableBtn);
+                }
             },
             text: {
                 none: "无匹配数据"
@@ -339,6 +295,45 @@
             loading: true
         });
 
+        //入库
+        $(".submissionBtn").click(function() {
+            var checkStatus = table.checkStatus('tableContainers'); //表格选中状态
+            if (checkStatus.data.length > 0) {
+                layer.confirm('是否确认出库', {
+                    icon: 3,
+                    title: '提示'
+                }, function(index) {
+                    var data = {};
+                    var ids = [];
+                    for (var i = 0; i < checkStatus.data.length; i++) {
+                        ids.push(checkStatus.data[i].orderno);
+                    }
+                    data["ids"] = ids.toString();
+                    $.ajax({
+                        cache: true,
+                        type: "get",
+                        url: outStock,
+                        data: data,
+                        async: false,
+                        success: function(res) {
+                            if (res.status == 0) {
+                                layer.msg("出库成功");
+                                tableIns.reload({
+                                    page: {
+                                        curr: 1 //重新从第 1 页开始
+                                    }
+                                });
+                            } else {
+                                layer.msg(res.msg);
+                            }
+
+
+                        }
+                    });
+                });
+            }
+            return false;
+        })
         //监听锁定操作
         table.on('checkbox(tableContainers)', function(obj) {
             var checkStatus = table.checkStatus('tableContainers'); //表格选中状态

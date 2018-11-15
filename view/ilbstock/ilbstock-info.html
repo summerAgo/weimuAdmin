@@ -1,55 +1,80 @@
 <div class="table-page">
+    <div class="table-content-title">
+        <div class="table-tools">
+            <ul class="layui-nav" lay-filter="talbe-tools">
+                <li class="layui-nav-item">
+                    <a id="toExport" href="javascript:;"><i class="iconfont icon-daochu"></i> 导出数据</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;"><i class="iconfont icon-dayin"></i> 打印</a>
+                </li>
+            </ul>
+            <!-- <ul class="layui-layout-right">
+                            <li><a href="javascript:;" class="editBtn">编辑</a></li>
+                        </ul> -->
+        </div>
+    </div>
     <div class="table-page-header">
         <div class="table-page-form">
             <form class="layui-form" action="">
-                <div class="form-box">
+                <div class="form-box clearfix">
                     <div class="layui-form-item form-left">
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">订单号</span>
                             <input type="text" name="orderno" placeholder="订单号" autocomplete="off" class="layui-input">
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">包号</span>
                             <input type="text" name="code" placeholder="包号" autocomplete="off" class="layui-input">
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">品种</span>
                             <select name="varieties" xm-select="selectVarieties" xm-select-radio>
                                 <option value="">品种</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">等级</span>
                             <select name="levels" xm-select="selectLevels" xm-select-radio>
                                 <option value="">等级</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">规格</span>
                             <select name="spec" xm-select="selectSpec" xm-select-radio>
                                 <option value="">规格</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">货柜号</span>
                             <input type="text" name="containernum" placeholder="货柜号" autocomplete="off" class="layui-input">
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">产地</span>
                             <select name="origin" xm-select="originSelect" xm-select-radio>
-                                <option value="">选择产地</option>
+                                <option value="">产地</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">品牌</span>
                             <input type="text" name="brand" placeholder="品牌" autocomplete="off" class="layui-input">
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">提运单</span>
                             <input type="text" name="billloading" placeholder="提运单" autocomplete="off" class="layui-input">
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">货权人</span>
                             <select name="ownerid" xm-select="ownerSelect" xm-select-radio>
-                                <option value="">选择货权人</option>
+                                <option value="">货权人</option>
                             </select>
                         </div>
                     </div>
                     <div class="layui-form-item form-right">
+                        <button type="reset" class="layui-btn layui-btn-gray"> <i class="layui-icon layui-icon-refresh"></i></button>
                         <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="searchForm">
                             <i class="iconfont icon-sousuo"></i> <span>查询</span>
                         </button>
-                        <button type="reset" class="layui-btn layui-btn-primary"> <i class="layui-icon layui-icon-refresh"></i></button>
                     </div>
                 </div>
             </form>
@@ -57,21 +82,6 @@
         </div>
     </div>
     <div class="table-content">
-        <div class="table-content-title">
-            <div class="table-tools">
-                <ul class="layui-nav" lay-filter="talbe-tools">
-                    <li class="layui-nav-item">
-                        <a id="toExport" href="javascript:;">导出数据</a>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;">打印</a>
-                    </li>
-                </ul>
-                <!-- <ul class="layui-layout-right">
-                        <li><a href="javascript:;" class="editBtn">编辑</a></li>
-                    </ul> -->
-            </div>
-        </div>
         <div class="table-content-main">
             <table class="layui-hide" id="tableContainer" lay-filter="tableContainer"></table>
         </div>
@@ -188,77 +198,60 @@
                         type: 'checkbox'
                     }, {
                         field: 'orderno',
-                        title: '入库单',
-                        sort: true
+                        title: '入库单'
                     }, {
                         field: 'code',
-                        title: '包号',
-                        sort: true
+                        title: '包号'
                     }, {
                         field: 'varieties',
-                        title: '品种',
-                        sort: true
+                        title: '品种'
                     }, {
                         field: 'levels',
-                        title: '等级',
-                        sort: true
+                        title: '等级'
                     }, {
                         field: 'spec',
-                        title: '规格',
-                        sort: true
-                    }, 
-                    // {
-                    //     field: 'aprice',
-                    //     title: '评估价',
-                    //     sort: true
-                    // }, 
+                        title: '规格'
+                    },
                     {
                         field: 'chang',
-                        title: '长度',
-                        sort: true
+                        title: '长度'
                     }, {
                         field: 'num',
-                        title: '数量/立方',
-                        sort: true
+                        title: '数量/立方'
                     }, {
                         field: 'containernum',
-                        title: '货柜号',
-                        sort: true
+                        title: '货柜号'
                     }, {
                         field: 'origin',
-                        title: '产地',
-                        sort: true
+                        title: '产地'
                     }, {
                         field: 'brand',
-                        title: '品牌',
-                        sort: true
+                        title: '品牌'
                     }, {
                         field: 'billloading',
-                        title: '提运单',
-                        sort: true
-                    }, {
-                        field: 'remarks',
-                        title: '备注',
-                        sort: true
+                        title: '提运单'
                     }, {
                         field: 'depname',
-                        title: '仓库',
-                        sort: true
+                        title: '仓库'
                     }, {
                         field: 'createdate',
-                        title: '入库时间',
-                        sort: true
+                        title: '入库时间'
+                    }, {
+                        field: 'remarks',
+                        title: '备注'
                     }
                 ]
             ],
             even: true,
             page: true, //是否显示分页
-            limits: [15, 20, 30, 40, 50],
+            limits: [15, 30, 45, 60],
             limit: 15, //每页默认显示的数量
             done: function(res, curr, count) {
                 console.log(res);
-                var addtableBtn = '<div class="rightBotBtn">合计总库存数量<span>' + res.znum + '</span>㎡ 总库存估价金额：<span>' + res.aprice + '</span>(RMB)</div>';
-                $(".layui-table-page").append(addtableBtn);
+                var addtableBtn = '<div class="rightBotBtn" id="rightBox">合计总库存数量<span>' + res.znum + '</span>㎡ 总库存估价金额：<span>' + res.aprice + '</span>(RMB)</div>';
+                if ($("#rightBox").length < 1) {
+                    $(".layui-table-page").append(addtableBtn);
+                }
             },
             text: {
                 none: "无匹配数据"
@@ -270,6 +263,6 @@
         $("#toExport").on('click', function(e) {
             window.location.href = ilbstockExportUrl
         });
-        
+
     });
 </script>

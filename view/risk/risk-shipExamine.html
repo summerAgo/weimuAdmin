@@ -130,44 +130,36 @@
                 [ // 标题栏
                     {
                         field: 'ownername',
-                        title: '货权人',
-                        sort: true
+                        title: '货权人'
                     }, {
                         field: 'orderno',
                         title: '出库单',
                         event: 'click',
-                        style: 'color:#4394ff',
-                        sort: true
+                        style: 'color:#4394ff;cursor: pointer;'
                     }, {
                         field: 'depname',
-                        title: '出库仓库',
-                        sort: true
+                        title: '出库仓库'
                     }, {
                         field: 'num',
-                        title: '数量',
-                        sort: true
+                        title: '数量'
                     }, {
                         field: 'stockmoney',
-                        title: '库存金额',
-                        sort: true
+                        title: '库存金额'
                     }, {
                         field: 'financingmoney',
-                        title: '融资金额',
-                        sort: true
+                        title: '融资金额'
                     }, {
                         field: 'cordonmoney',
-                        title: '警戒线',
-                        sort: true
+                        title: '警戒线'
                     }, {
                         field: 'outdate',
-                        title: '预计出货时间',
-                        sort: true
+                        title: '预计出货时间'
                     }
                 ]
             ],
             even: true, // 开启隔行背景
             page: true, // 是否显示分页
-            limits: [10, 20, 30, 40, 50], // 每页条数的选择项
+            limits: [15, 30, 45, 60], // 每页条数的选择项
             limit: 10, // 每页默认显示的数量
             done: function(res, curr, count) { // 数据渲染完的回调
 
@@ -180,21 +172,16 @@
 
         // 监听出库单点击事件
         table.on('tool(tableContainer)', function(obj) {
-
             var curData = obj.data;
-
             if (obj.event === 'click') {
                 sessionStorage.setItem('examineOrderID', curData.orderno);
                 $.get('view/risk/risk-layerExamine.html', {}, function(str) { // 请求弹框
-
                     var layerData; // 当前弹框页面数据
-
                     $.ajax({
                         url: outDetails,
                         type: "get",
                         data: {
                             orderno: curData.orderno // 单号
-                            // orderno: "510576514941583360"// 单号
                         },
                         async: false, // 同步
                         success: function(data) {
@@ -214,7 +201,6 @@
                             }
                         }
                     });
-
                 });
             }
         });
@@ -237,48 +223,37 @@
                     [ // 标题栏
                         {
                             field: 'code',
-                            title: '包号',
-                            sort: true
+                            title: '包号'
                         }, {
                             field: 'varieties',
-                            title: '品种',
-                            sort: true
+                            title: '品种'
                         }, {
                             field: 'thickness',
-                            title: '规格/厚度',
-                            sort: true
+                            title: '规格/厚度'
                         }, {
                             field: 'levels',
-                            title: '等级',
-                            sort: true
+                            title: '等级'
                         }, {
                             field: 'chang',
-                            title: '长度',
-                            sort: true
+                            title: '长度'
                         }, {
                             field: 'brand',
-                            title: '品牌',
-                            sort: true
+                            title: '品牌'
                         }, {
                             field: 'origin',
-                            title: '产地',
-                            sort: true
+                            title: '产地'
                         }, {
                             field: 'num',
-                            title: '数量(m³)',
-                            sort: true
+                            title: '数量(m³)'
                         }, {
                             field: 'status',
-                            title: '库位',
-                            sort: true
+                            title: '库位'
                         }, {
                             field: 'containernum',
-                            title: '货柜号/批次号',
-                            sort: true
+                            title: '货柜号/批次号'
                         }, {
                             field: 'remarks',
-                            title: '备注',
-                            sort: true
+                            title: '备注'
                         }
                     ]
                 ],
@@ -293,8 +268,7 @@
             });
 
             // 通过按钮点击
-            $(".passBtn").click(function() {
-
+            $(".passBtn").click(function(){
                 $.ajax({
                     cache: true,
                     type: "GET",
@@ -360,7 +334,7 @@
                     }
                 });
             });
-
         }
+
     });
 </script>
