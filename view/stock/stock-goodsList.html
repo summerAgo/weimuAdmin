@@ -1,55 +1,75 @@
 <div class="table-page">
+    <div class="table-content-title layer-level">
+        <div class="table-tools">
+            <ul class="layui-nav" lay-filter="talbe-tools">
+                <!-- <li class="layui-nav-item">
+                    <a id="toExport" href="javascript:;"><i class="iconfont icon-daochu"></i>导出数据</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;"><i class="iconfont icon-dayin"></i>打印</a>
+                </li> -->
+                <li class="layui-nav-item">
+                    <a href="javascript:;" id="addgoodList"><i class="iconfont icon-tianjia"></i>添加</a>
+                </li>
+            </ul>
+        </div>
+    </div>
     <div class="table-page-header">
         <div class="table-page-form">
             <form class="layui-form" action="">
                 <div class="form-box">
                     <div class="layui-form-item form-left">
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">订单号</span>
                             <input type="text" name="orderno" placeholder="订单号" autocomplete="off" class="layui-input">
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">包号</span>
                             <input type="text" name="code" placeholder="包号" autocomplete="off" class="layui-input">
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">品种</span>
                             <select name="varieties" xm-select="selectVarietiesGoods" xm-select-radio>
                                 <option value="">品种</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">等级</span>
                             <select name="levels" xm-select="selectLevelsGoods" xm-select-radio>
                                 <option value="">等级</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">规格</span>
                             <select name="spec" xm-select="selectSpecGoods" xm-select-radio>
                                 <option value="">规格</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">货柜号</span>
                             <input type="text" name="containernum" placeholder="货柜号" autocomplete="off" class="layui-input">
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">产地</span>
                             <select name="origin" xm-select="originSelectGoods" xm-select-radio>
-                                <option value="">选择产地</option>
+                                <option value="">产地</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">品牌</span>
                             <input type="text" name="brand" placeholder="品牌" autocomplete="off" class="layui-input">
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">提运单</span>
                             <input type="text" name="billloading" placeholder="提运单" autocomplete="off" class="layui-input">
                         </div>
-                        <!-- <div class="table-form-item layui-input-inline">
-                            <select name="ownerid" xm-select="ownerSelectGoods" xm-select-radio>
-                                <option value="">选择货权人</option>
-                            </select>
-                        </div> -->
                     </div>
                     <div class="layui-form-item form-right">
+                        <button type="reset" class="layui-btn layui-btn-gray"> <i class="layui-icon layui-icon-refresh"></i></button>
                         <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="searchForm">
                             <i class="iconfont icon-sousuo"></i> <span>查询</span>
                         </button>
-                        <button type="reset" class="layui-btn layui-btn-primary"> <i class="layui-icon layui-icon-refresh"></i></button>
+
                     </div>
                 </div>
             </form>
@@ -57,27 +77,15 @@
         </div>
     </div>
     <div class="table-content">
-        <div class="table-content-title">
-            <div class="table-tools">
-                <ul class="layui-nav" lay-filter="talbe-tools">
-                    <!-- <li class="layui-nav-item">
-                        <a id="toExport" href="javascript:;">导出数据</a>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;">打印</a>
-                    </li> -->
-                </ul>
-                <!-- <ul class="layui-layout-right">
-                        <li><a href="javascript:;" class="editBtn">编辑</a></li>
-                    </ul> -->
-            </div>
-        </div>
         <div class="table-content-main">
             <table class="layui-hide" id="tableContainer-goodsList" lay-filter="tableContainer-goodsList"></table>
-            <div class="rightBotBtn">已选择<span>0</span>个商品 <a href="javascript:;" id="addgoodList"  class="layui-btn layui-btn-sm submissionBtn" >添加</a></div>
+            <div class="rightBotBtn">已选择<span>0</span>个商品 </div>
         </div>
     </div>
 </div>
 <style scoped>
-.rightBotBtn{text-align: right; padding:15px;}
+    .rightBotBtn {
+        text-align: right;
+        padding: 15px;
+    }
 </style>

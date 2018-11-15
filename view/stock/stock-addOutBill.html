@@ -1,22 +1,77 @@
-<div class="table-page">
+<div class="table-page addOutBill">
+
+    <div class="table-content-title layer-level">
+        <div class="table-tools">
+            <ul class="layui-nav" lay-filter="talbe-tools">
+                <li class="layui-nav-item"><a href="javascript:;" id="addGoodsBtn"><i class="iconfont icon-tianjiahuowu"></i>从库存添加货物</a></li>
+                <li class="layui-nav-item" id="shoutlb"><a href="javascript:;" class="suboutlbBtn"><i class="iconfont icon-chuku"></i>出库</a></li>
+                <li class="layui-nav-item"><a href="javascript:;" id="deleteGoods" class="deleteBtn"><i class="iconfont icon-shanchu"></i>移除</a></li>
+                <li class="layui-nav-item"><a href="javascript:;" class="submissionBtn"><i class="iconfont icon-baocunxinzeng"></i>保存</a></li>
+            </ul>
+        </div>
+    </div>
+
     <div class="table-page-header">
         <div class="table-page-form">
-            <blockquote class="layui-elem-quote" id="details-title">
+            <form class="layui-form" action="">
+                <div class="form-box clearfix">
+                    <div class="layui-form-item form-left">
+                        <div class="table-form-item layui-input-inline">
+                            <span class="input-span">货权人</span>
+                            <select name="ownerid" xm-select="ownerSelect" xm-select-radio>
+                                <option value="">货权人</option>
+                            </select>
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <span class="input-span">仓库</span>
+                            <select name="depotid" xm-select="depotSelect" xm-select-radio>
+                                <option value="">仓库</option>
+                            </select>
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <span class="input-span">预计出库时间</span>
+                            <input type="text" name="estimatedate" id="estimatedate" required lay-verify="required" placeholder="预计出库时间" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <span class="input-span">车牌号</span>
+                            <input type="text" name="vehnum" placeholder="车牌号" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <span class="input-span">司机姓名</span>
+                            <input type="text" name="vname" placeholder="司机姓名" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <span class="input-span">司机身份证号</span>
+                            <input type="text" name="card" placeholder="司机身份证号" autocomplete="off" class="layui-input" lay-verify="identity">
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <div class="util-container">
+                                <i class="iconfont icon-daojishi"></i>
+                                <div class="util-box"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="layui-form-item form-right">
+                        <button type="reset" class="layui-btn layui-btn-gray"><i class="layui-icon layui-icon-refresh"></i></button>
+                        <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="searchFormAdd">
+                            <i class="iconfont icon-sousuo"></i> <span>查询</span>
+                        </button>
+                    </div> -->
+                </div>
+            </form>
+            <!-- <blockquote class="layui-elem-quote" id="details-title">
                 <ul class="layer-title">
                     <li>
                         <small>货权人</small>
                         <div class="layui-input-inline">
-                            <!-- <select name="cargoowner" id="cargoowner" xm-select="cargoownerOne" xm-select-radio=""></select> -->
                             <select name="ownerid" xm-select="ownerSelect" xm-select-radio>
                                 <option value="">选择货权人</option>
                             </select>
                         </div>
-
                     </li>
                     <li>
                         <small>仓库名称</small>
                         <div class="layui-input-inline">
-                            <!-- <select name="depotname" id="depotname" xm-select="depotnameOne" xm-select-radio=""></select> -->
                             <select name="depotid" xm-select="depotSelect" xm-select-radio>
                                 <option value="">选择仓库</option>
                             </select>
@@ -50,26 +105,10 @@
                         <div class="layui-btn layui-btn-radius layui-btn-normal util-box"></div>
                     </li>
                 </ul>
-            </blockquote>
+            </blockquote> -->
         </div>
     </div>
     <div class="table-content">
-        <div class="table-content-title">
-            <div class="table-tools">
-                <ul class="layui-nav" lay-filter="talbe-tools">
-                    <li class="layui-nav-item">
-                        <a href="javascript:;" id="addGoodsBtn">从库存添加货物</a>
-                    </li>
-                    <li class="layui-nav-item" id="shoutlb">
-                        <a href="javascript:;" class="suboutlbBtn">出库</a>
-                    </li>
-
-                </ul>
-                <ul class="layui-layout-right">
-                    <li><a href="javascript:;" id="deleteGoods" class="deleteBtn">移除</a></li>
-                </ul>
-            </div>
-        </div>
         <div class="table-content-main">
             <table class="layui-hide" id="tableContainer-addOutBill" lay-filter="tableContainer-addOutBill"></table>
         </div>
@@ -97,6 +136,22 @@
     .table-page h3 {
         padding-left: 0;
     }
+
+    .util-container {
+        background: #0284ff;
+        height: 30px;
+        line-height: 30px;
+        border-radius: 9px;
+        font-size: 12px;
+        color: #fff;
+        text-align: center;
+        padding: 0 10px;
+        vertical-align: middle
+    }
+
+    .util-container * {
+        display: inline-block
+    }
 </style>
 <script>
     layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'upload', 'util'], function() {
@@ -111,7 +166,7 @@
         var layer = layui.layer;
         var formSelects = layui.formSelects;
         var util = layui.util;
-        var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 103); //内容区域所需减去的高度
+        var tableTopHeight = (parseInt($(".addOutBill .table-content-title").innerHeight()) + parseInt($(".addOutBill .content-header").innerHeight()) + 103); //内容区域所需减去的高度
         formSelects.render(); //下拉选项
         element.render('talbe-tools'); //表格工具栏
         formSelects.btns(['select', 'remove'], {
@@ -178,13 +233,11 @@
 
         if (outBill == null) {
             $("#shoutlb").hide();
-
             formSelects.undisabled('ownerSelect'); //启用
             formSelects.undisabled('depotSelect'); //启用
             $("input[name='estimatedate']").attr("disabled", false)
-            $('.util-box').hide(); //隐藏倒计时
+            $('.util-container').hide(); //隐藏倒计时
         } else {
-
             data["orderno"] = array.orderno;
             data["ownerid"] = array.ownerid;
             data["depotid"] = array.depotid;
@@ -215,7 +268,8 @@
                 serverTime = new Date().getTime(); //假设为当前服务器时间，这里采用的是本地时间，实际使用一般是取服务端的
             util.countdown(endTime, serverTime, function(date, serverTime, timer) {
                 var str = date[0] + '天' + date[1] + '时' + date[2] + '分' + date[3] + '秒';
-                layui.$('.util-box').html('距离出货时间还有：' + str);
+                // console.log(str);
+                layui.$('.util-box').html('剩余：' + str);
             });
             $('.util-box').show(); //显示倒计时
             formSelects.data('ownerSelect', 'local', {
@@ -236,8 +290,6 @@
             formSelects.disabled('depotSelect'); //禁用
             $("input[name='estimatedate']").attr("disabled", true)
         }
-
-
 
         function selectDataInstall(url, param, bool) {
             //下拉选框数据组装
@@ -282,48 +334,38 @@
                         type: 'checkbox',
                     }, {
                         field: 'ownername',
-                        title: '货权人',
-                        sort: true
+                        title: '货权人'
                     }, {
                         field: 'code',
-                        title: '包号',
-                        sort: true
-                    },, {
+                        title: '包号'
+                    }, , {
                         field: 'varieties',
-                        title: '品种',
-                        sort: true
+                        title: '品种'
                     }, {
                         field: 'spec',
-                        title: '规格',
-                        sort: true
+                        title: '规格'
                     }, {
                         field: 'levels',
-                        title: '等级',
-                        sort: true
+                        title: '等级'
                     }, {
                         field: 'chang',
-                        title: '长度',
-                        sort: true
+                        title: '长度'
                     }, {
                         field: 'depname',
-                        title: '仓库名称',
-                        sort: true
+                        title: '仓库名称'
                     }, {
                         field: 'billloading',
                         title: '提运单',
-                        sort: true
+                        width: 150
                     }, {
                         field: 'origin',
-                        title: '产地',
-                        sort: true
+                        title: '产地'
                     }, {
                         field: 'supplier',
-                        title: '供应商',
-                        sort: true
+                        title: '供应商'
                     }, {
                         field: 'num',
-                        title: '数量（m³）',
-                        sort: true
+                        title: '数量（m³）'
                     }
                     // , {
                     //     field: 'createdate',
@@ -337,7 +379,7 @@
             limits: [15, 20, 30, 40, 50],
             limit: 15, //每页默认显示的数量
             done: function(res, curr, count) {
-                var addtableBtn = '<div class="rightBotBtn">共添加<span>' + count + '</span>个商品 <a href="javascript:;" class="layui-btn layui-btn-sm submissionBtn">保存</a></div>';
+                var addtableBtn = '<div class="rightBotBtn">共添加<span>' + count + '</span>个商品</div>';
                 $("#tableContainer-addOutBill").siblings().find(".layui-table-page").append(addtableBtn);
                 $(".submissionBtn").click(function() {
                     var cargoowner = layui.formSelects.value('ownerSelect', "valStr");
@@ -416,10 +458,13 @@
                         },
                         success: function(res) {
                             if (res.status == 0) {
-                                var domObj = $(".nav-tabs li[lay-id='stock-addOutBill']");
-                                var hash = domObj.prev().attr("lay-id");
-                                domObj.remove();
-                                location.hash = "#!" + hash;
+                                tableIns.reload({
+                                    page: {
+                                        curr: 1 //重新从第 1 页开始
+                                    }
+                                });
+                                layer.closeAll();
+
                             }
                             layer.msg(res.msg);
                         }
@@ -470,40 +515,38 @@
                 // console.log(val);
             }
         });
-        
+
         //点击确认出库
         $(".suboutlbBtn").click(function() {
-                    layer.confirm('是否确认出库', {
-                        icon: 3,
-                        title: '提示'
-                    }, function(index) {
-                        var ids = [];
-                        ids.push(array.orderno);
-                        $.ajax({
-                            cache: true,
-                            type: "get",
-                            url: outStock,
-                            data: {
-                                ids:ids.toString()
-                            },
-                            async: false,
-                            success: function(res) {
-                                if (res.status == 0) {
-                                    layer.msg("出库成功");
-                                    tableIns.reload({
-                                        page: {
-                                            curr: 1 //重新从第 1 页开始
-                                        }
-                                    });
-                                } else {
-                                    layer.msg(res.msg);
+            layer.confirm('是否确认出库', {
+                icon: 3,
+                title: '提示'
+            }, function(index) {
+                var ids = [];
+                ids.push(array.orderno);
+                $.ajax({
+                    cache: true,
+                    type: "get",
+                    url: outStock,
+                    data: {
+                        ids: ids.toString()
+                    },
+                    async: false,
+                    success: function(res) {
+                        if (res.status == 0) {
+                            layer.msg("出库成功");
+                            tableIns.reload({
+                                page: {
+                                    curr: 1 //重新从第 1 页开始
                                 }
-
-
-                            }
-                        });
-                    });
-                })
+                            });
+                        } else {
+                            layer.msg(res.msg);
+                        }
+                    }
+                });
+            });
+        })
 
         $("#addGoodsBtn").click(function() {
             var cargoowner = layui.formSelects.value('ownerSelect', "valStr");
@@ -687,7 +730,12 @@
 
                 $("#addgoodList").click(function() {
                     var checkStatus = table.checkStatus('tableContainer-goodsList'); //表格选中状态
-                    tableData = checkStatus.data;
+                    if(tableData){
+                        tableData = tableData.concat(checkStatus.data);
+                    }else{
+                        tableData = checkStatus.data;
+                    }
+
                     // console.log(tableData);
                     layer.close(goodsListLayer); //关闭
                     // 刷新表格
@@ -707,7 +755,6 @@
                 });
 
             });
-
         });
 
     });

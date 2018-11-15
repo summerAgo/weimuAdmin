@@ -1,38 +1,70 @@
-<div class="table-page">
+<div class="table-page formNewill">
+    <div class="table-content-title layer-level">
+        <div class="table-tools">
+            <ul class="layui-nav" lay-filter="talbe-tools">
+                <li class="layui-nav-item">
+                    <a href="javascript:;" id="dowmTemp"><i class="iconfont icon-xiazaimuban"></i>下载模板</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;" id="toImport"><i class="iconfont icon-daoru"></i>导入数据</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;"><i class="iconfont icon-dayin"></i>打印</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;"><i class="iconfont icon-tianjiahuowu"></i>添加货物信息</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="submissionBtn"><i class="iconfont icon-ruku"></i>入库</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="subConfirmBtn"><i class="iconfont icon-baocun"></i>保存</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="subCancelBtn"><i class="iconfont icon-quxiao"></i>取消</a>
+                </li>
+
+            </ul>
+            <!-- <ul class="layui-layout-right">
+                        <li><a href="javascript:;" class="deleteBtn">删除</a></li>
+                    </ul> -->
+        </div>
+    </div>
     <div class="table-page-header">
         <div class="table-page-form">
             <form class="layui-form form-newbill" action="">
-                <blockquote class="layui-elem-quote">
-                    <!-- 预入库订单号：507230226812502016 -->
-                </blockquote>
-                <div class="form-box">
+                <!-- <blockquote class="layui-elem-quote">
+                </blockquote> -->
+                <div class="form-box clearfix">
                     <div class="layui-form-item form-left">
-                        <div class="table-form-item layui-input-inline table-form-item-btn">
-                            <button class="layui-btn" lay-submit lay-filter="addGoodsBtn">添加货物信息</button>
-                        </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">货权人</span>
                             <select name="ownerid" xm-select="ownerSelectLayer" xm-select-radio>
-                                <option value="">选择货权人</option>
+                                <option value="">货权人</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">仓库</span>
                             <select name="depotid" xm-select="depotSelectLayer" xm-select-radio>
-                                <option value="">选择仓库</option>
+                                <option value="">仓库</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">库位</span>
                             <select name="positionid" xm-select="positionSelectLayer" xm-select-radio>
-                                <option value="">选择库位</option>
+                                <option value="">库位</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">产地</span>
                             <select name="origin" xm-select="originSelectLayer" xm-select-radio>
-                                <option value="">选择产地</option>
+                                <option value="">产地</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">供应商</span>
                             <select name="supplierid" xm-select="supplierSelectLayer" xm-select-radio>
-                                <option value="">选择供应商</option>
+                                <option value="">供应商</option>
                             </select>
                         </div>
                     </div>
@@ -41,25 +73,6 @@
         </div>
     </div>
     <div class="table-content">
-        <div class="table-content-title">
-            <div class="table-tools">
-                <ul class="layui-nav" lay-filter="talbe-tools">
-                    <li class="layui-nav-item item-more">
-                        <a href="javascript:;">数据导入导出</a>
-                        <dl class="layui-nav-child">
-                            <dd><a id="dowmTemp" href="javascript:;">下载模板</a></dd>
-                            <dd><a id="toImport" href="javascript:;">导入数据</a></dd>
-                        </dl>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;">打印</a>
-                    </li>
-                </ul>
-                <!-- <ul class="layui-layout-right">
-                    <li><a href="javascript:;" class="deleteBtn">删除</a></li>
-                </ul> -->
-            </div>
-        </div>
         <div class="table-content-main">
             <table class="layui-hide" id="tableContainer-from" lay-filter="tableContainer-from"></table>
         </div>
@@ -79,16 +92,12 @@
         var formSelects = layui.formSelects;
         var laytpl = layui.laytpl;
         var upload = layui.upload;
-        var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 93); //内容区域所需减去的高度
         var tableData = [];
         var addLayer; //添加-弹层
 
         form.render(); //重置表单渲染
         formSelects.render(); //下拉选项
         element.render('talbe-tools'); //表格工具栏
-        formSelects.btns(['select', 'remove'], {
-            show: 'name'
-        });
 
         formSelects.data('ownerSelectLayer', 'local', {
             arr: selectDataInstall(ownerDropdown) //货权人列表
@@ -101,12 +110,6 @@
                 formSelects.data(id, 'local', {
                     arr: []
                 }); //如果货权人为空则清空列表
-            } else {
-                formSelects.data(id, 'local', {
-                    arr: selectDataInstall(depotDropdown, {
-                        "ownerid": ownerid
-                    }) //仓库列表
-                });
             }
         });
 
@@ -117,14 +120,58 @@
                 formSelects.data(id, 'local', {
                     arr: []
                 }); //如果仓库为空则清空列表
-            } else {
-                formSelects.data(id, 'local', {
-                    arr: selectDataInstall(positionDropdown, {
-                        "depotid": depotid
-                    }) //库位列表
-                });
             }
         });
+
+        //监听
+        formSelects.on('ownerSelectLayer', function(id, vals, val, isAdd, isDisabled) {
+            if (!isAdd) {
+                formSelects.data('depotSelectLayer', 'local', {
+                    arr: [] //清空仓库列表
+                });
+                formSelects.data('positionSelectLayer', 'local', {
+                    arr: [] //清空库位列表
+                });
+            } else {
+                var depotList = selectDataInstall(depotDropdown, {
+                    "ownerid": vals[0].value //仓库列表
+                }, true);
+
+                if (depotList.length < 1) {
+                    formSelects.data('depotSelectLayer', 'local', {
+                        arr: [] //清空仓库列表
+                    });
+                    formSelects.data('positionSelectLayer', 'local', {
+                        arr: [] //清空库位列表
+                    });
+                    layer.msg("该货权人下无仓库信息");
+                    return false;
+                }
+                formSelects.data('depotSelectLayer', 'local', {
+                    arr: depotList //仓库列表
+                });
+                formSelects.data('positionSelectLayer', 'local', {
+                    arr: selectDataInstall(positionDropdown, {
+                        "depotid": depotList[0].value
+                    }, true) //库位列表
+                });
+            }
+        }, true);
+
+        //监听
+        formSelects.on('depotSelectLayer', function(id, vals, val, isAdd, isDisabled) {
+            if (!isAdd) {
+                formSelects.data('positionSelectLayer', 'local', {
+                    arr: [] //仓库列表
+                });
+            } else {
+                formSelects.data('positionSelectLayer', 'local', {
+                    arr: selectDataInstall(positionDropdown, {
+                        "depotid": vals[0].value
+                    }, true) //仓库列表
+                });
+            }
+        }, true);
 
         formSelects.data('originSelectLayer', 'local', {
             arr: selectDataInstall(CHDList) //产地列表
@@ -134,7 +181,7 @@
             arr: selectDataInstall(dropSupplier) //供应商列表
         });
 
-        function selectDataInstall(url, param) {
+        function selectDataInstall(url, param, bool) {
             //下拉选框数据组装
             var arr = [];
             //获取列表数据
@@ -145,7 +192,7 @@
                 async: false, //同步
                 traditional: true,
                 success: function(data) {
-                    console.log(data);
+                    // console.log(data);
                     if (data.status == 0) {
                         //把接口数据转换为[{"name":str,"value":number}]格式
                         if (!Array.isArray(data.data) || data.data.length == 0) {
@@ -158,6 +205,10 @@
                                 "value": data.data[i].id
                             })
                         }
+                        if (bool) {
+                            arr[0].selected = "selected";
+                        }
+
                     }
                 }
             })
@@ -184,6 +235,7 @@
             $(".rightBotBtn span").html(tableData.length); //当前选中了多少商品
             tableIns.reload({
                 data: tableData,
+                limit: tableData.length,
                 page: {
                     curr: 1 //重新从第 1 页开始
                 }
@@ -194,7 +246,7 @@
 
         var tableIns = table.render({
             elem: '#tableContainer-from',
-            height: 'full-' + tableTopHeight,
+            height: '600',
             data: tableData,
             cols: [
                 [ //标题栏
@@ -224,13 +276,17 @@
                     }, {
                         field: 'num',
                         title: '数量（m³）',
-                        sort: true
-                    }, {
-                        field: 'actualnum',
-                        title: '实际数量（m³）',
                         sort: true,
-                        edit: "txt"
-                    }, {
+                        event: "edit",
+                        style: 'color:red;'
+                    },
+                    // {
+                    //     field: 'actualnum',
+                    //     title: '实际数量（m³）',
+                    //     sort: true,
+                    //     edit: "txt"
+                    // },
+                    {
                         field: 'containernum',
                         title: '货柜号',
                         sort: true
@@ -246,32 +302,33 @@
                         field: 'billloading',
                         title: '提运单',
                         sort: true
-                    }, {
-                        field: 'person',
-                        title: '负责人',
-                        sort: true
-                    }, {
-                        field: 'estimatedate',
-                        title: '预计出库时间',
-                        sort: true
                     }
                 ]
             ],
             even: true,
-            page: true, //是否显示分页
-            limits: [15, 20, 30, 40, 50],
-            limit: 15, //每页默认显示的数量
+            page: false, //是否显示分页
+            limits: [tableData.length],
+            limit: tableData.length, //每页默认显示的数量
             done: function(res, curr, count) {
-                var addtableBtn = '<div class="rightBotBtn">已新增<span>' + count + '</span>个货物 <a href="javascript:;" class="layui-btn layui-btn-primary layui-btn-sm subCancelBtn">取消</a><a href="javascript:;" class="layui-btn layui-btn-sm subConfirmBtn">入库</a></div>';
+                var addtableBtn = '<div class="rightBotBtn" id="form-rightBtn">已新增<span>' + count + '</span>个货物</div>';
+                //只有点击列表入库订单时才显示入库操作
+                var ordernoss = JSON.parse(sessionStorage.getItem('newbill_orderno'));
+                if (ordernoss) {
+                    // addtableBtn += '<a href="javascript:;" class="layui-btn layui-btn-sm submissionBtn">入库</a>';
+                    $(".submissionBtn").show();
+                }else{
+                    $(".submissionBtn").hide();
+                }
 
-                $("#tableContainer-from").siblings(".layui-form ").find(".layui-table-page").append(addtableBtn);
+
+                if ($("#form-rightBtn").length < 1) {
+                    $("#tableContainer-from").siblings(".layui-form ").find(".layui-table-page").append(addtableBtn);
+                }
 
                 $(".subConfirmBtn").click(subConfun);
                 $(".subCancelBtn").click(function() {
                     layer.closeAll();
                 })
-                console.log(res)
-                // console.log(curr)
             },
             text: {
                 none: "无匹配数据"
@@ -290,25 +347,74 @@
         });
 
         var orderno = JSON.parse(sessionStorage.getItem('newbill_orderno'));
-        if (orderno) {
 
+        $(".submissionBtn").click(function() {
+            if(!orderno){
+                return false;
+            }
+            var ids = []; //订单号
+            console.log(orderno.orderno);
+            ids.push(orderno.orderno);
+            //审核订单为库存
+            $.ajax({
+                url: preEntryexamineStock,
+                type: "get",
+                data: {
+                    'ids': ids
+                },
+                traditional: true,
+                success: function(data) {
+                    if (data.status == 0) {
+                        tableIns.reload({
+                            page: {
+                                curr: 1 //重新从第 1 页开始
+                            }
+                        });
+                        layer.msg("审核通过为库存");
+                    }
+                }
+            })
+
+        })
+
+        if (orderno) {
             console.log(orderno)
             $(".layui-elem-quote").html("预入库订单号：" + orderno.orderno);
             //下拉框赋值
             formSelects.data('ownerSelectLayer', 'local', {
-                arr: [{"name":orderno.ownername,"value":orderno.ownerid, selected:"selected"}]
+                arr: [{
+                    "name": orderno.ownername,
+                    "value": orderno.ownerid,
+                    selected: "selected"
+                }]
             });
             formSelects.data('depotSelectLayer', 'local', {
-                arr: [{"name":orderno.depname,"value":orderno.depotid, selected:"selected"}]
+                arr: [{
+                    "name": orderno.depname,
+                    "value": orderno.depotid,
+                    selected: "selected"
+                }]
             });
             formSelects.data('positionSelectLayer', 'local', {
-                arr: [{"name":orderno.positionname,"value":orderno.positionid, selected:"selected"}]
+                arr: [{
+                    "name": orderno.positionname,
+                    "value": orderno.positionid,
+                    selected: "selected"
+                }]
             });
             formSelects.data('originSelectLayer', 'local', {
-                arr: [{"name":orderno.origin,"value":orderno.origin, selected:"selected"}]
+                arr: [{
+                    "name": orderno.origin,
+                    "value": orderno.origin,
+                    selected: "selected"
+                }]
             });
             formSelects.data('supplierSelectLayer', 'local', {
-                arr: [{"name":orderno.suppliername,"value":orderno.supplierid, selected:"selected"}]
+                arr: [{
+                    "name": orderno.suppliername,
+                    "value": orderno.supplierid,
+                    selected: "selected"
+                }]
             });
             //禁用下拉框
             formSelects.disabled('ownerSelectLayer');
@@ -326,6 +432,7 @@
                     tableData = data.stocklist;
                     tableIns.reload({
                         data: tableData,
+                        limit: tableData.length,
                         page: {
                             curr: 1 //重新从第 1 页开始
                         }
@@ -333,6 +440,39 @@
                 }
             })
         }
+
+        // table.on('edit(tableContainer-from)', function(obj) {
+        //     var value = obj.value,
+        //         data = obj.data,
+        //         field = obj.field;
+        //         console.log(value)
+        //     console.log(data)
+        //     layer.msg('[ID: ' + data.id + '] ' + field + ' 字段更改为：' + value);
+        // });
+
+        table.on('tool(tableContainer-from)', function(obj) {
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            var tr = obj.tr; //获得当前行 tr 的DOM对象
+            if (layEvent === 'edit') {
+                layer.prompt({
+                    formType: 2,
+                    title: '修改包号为' + data.code + '的数量',
+                    value: data.num
+                }, function(value, index) {
+                    if (!value || isNaN(value)) {
+                        layer.msg("请输入数字");
+                        return false;
+                    }
+                    layer.msg("修改成功");
+                    layer.close(index);
+                    obj.update({
+                        num: value
+                    });
+                });
+
+            }
+        });
 
         $(".deleteBtn").click(function() {
             var checkStatus = table.checkStatus('tableContainer-from');
@@ -357,6 +497,7 @@
                         layer.close(index);
                         // 刷新表格
                         tableIns.reload({
+                            limit: tableData.length,
                             page: {
                                 curr: 1 //重新从第 1 页开始
                             }
@@ -387,7 +528,8 @@
             var depotname = parent.find("input[name='depotid']").val();
             var origin = parent.find("input[name='origin']").val();
             var supplier = parent.find("input[name='supplierid']").val();
-            console.log(cargoowner);
+            var positionid = parent.find("input[name='positionid']").val();
+
             if (null == cargoowner || cargoowner.length < 1) {
                 layer.msg("请填写货权人");
                 return;
@@ -404,6 +546,11 @@
                 layer.msg("请填写供应商");
                 return;
             }
+            if (null == positionid || positionid.length < 1) {
+                layer.msg("请填写库位");
+                return;
+            }
+
 
             var dataarr = [];
             //第一步，先去除已在后台存在的数据
@@ -416,9 +563,13 @@
             //如果当前没有添加新内容，则不提交后台
             if (dataarr.length == 0) {
                 //关闭窗口
-
+                layer.closeAll();
                 return;
             }
+            // console.log(dataarr);
+
+            // console.log(table.cache["tableContainer-from"]);
+            // console.log(dataarr);
 
             var arr = JSON.stringify(dataarr);
             //第二步，提交到后台
@@ -428,7 +579,7 @@
             } else {
                 num = orderno.orderno;
             }
-            console.log(num)
+
             $.ajax({
                 url: preEntryAdd,
                 type: "POST",
@@ -441,6 +592,7 @@
                     depotid: depotname,
                     origin: origin,
                     supplierid: supplier,
+                    positionid: positionid,
                     orderno: num
                 },
                 traditional: true,
@@ -482,6 +634,7 @@
                             }
                             tableIns.reload({
                                 data: tableData,
+                                limit: tableData.length,
                                 page: {
                                     curr: 1 //重新从第 1 页开始
                                 }
