@@ -1,4 +1,5 @@
 <div class="table-page">
+
     <div class="table-content-title">
         <div class="table-tools">
             <ul class="layui-nav" lay-filter="talbe-tools">
@@ -13,6 +14,7 @@
             </ul>
         </div>
     </div>
+
     <div class="table-page-header">
         <div class="table-page-form">
             <form class="layui-form" action="">
@@ -58,6 +60,7 @@
                         </div>
                     </div>
                     <div class="layui-form-item form-right">
+                        <button type="reset" class="layui-btn layui-btn-gray"><i class="layui-icon layui-icon-refresh"></i></button>
                         <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="searchForm">
                             <i class="iconfont icon-sousuo"></i> <span>查询</span>
                         </button>
@@ -85,7 +88,8 @@
         var upload = layui.upload;
         var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 103); //内容区域所需减去的高度
 
-        var eaitLayer; //编辑-弹层
+        var addLayer; //编辑-弹层
+
 
         form.render(); //重置表单渲染
         formSelects.render(); //下拉选项
@@ -434,15 +438,30 @@
             //监听单元格点击事件
             var data = obj.data;
             if (obj.event === 'click') {
-                location.hash = "#!stock-addOutBill/";
                 sessionStorage.setItem('addOutBill', JSON.stringify(data));
+                $.get('view/stock/stock-addOutBill.html', {}, function(str) { // 请求弹框
+                    addLayer = layer.open({
+                        title: '出货申请单详情',
+                        type: 1,
+                        content: str, // 注意，如果str是object，那么需要字符拼接。
+                        area: ['80%', '80%'],
+                    });
+                })
             }
         });
 
         $(".creatBillBtn").click(function() {
             //新建预入库单
             sessionStorage.removeItem('addOutBill');
-            location.hash = "#!stock-addOutBill/";
+            $.get('view/stock/stock-addOutBill.html', {}, function(str) { // 请求弹框
+                addLayer = layer.open({
+                    title: '新建出货申请单',
+                    type: 1,
+                    content: str, // 注意，如果str是object，那么需要字符拼接。
+                    area: ['80%', '80%'],
+                });
+            })
         })
+
     });
 </script>
