@@ -1,63 +1,56 @@
 <div id="depotView"></div>
 <script id="depotTle" type="text/html">
-    <form class="layui-form layui-form-pane" action="">
-    <div class="layui-form-item">
-        <label class="layui-form-label">编号</label>
+<form class="layui-form layer-open-form" action="">
+    <div class="layui-form-item layui-control-line">
         <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="addDepotForm"><i class="iconfont icon-daochu"></i>保存</button>
+        </div>
+    </div>
+    <div class="layui-form-item layui-normal-line">
+        <label class="layui-form-label">编号</label>
+        <div class="layui-input-inline">
             <input type="text" name="code" placeholder="编号" value="{{d.code || ''}}" autocomplete="off" class="layui-input" lay-verify="required">
         </div>
     </div>
-    <div class="layui-form-item">
+    <div class="layui-form-item layui-normal-line">
         <label class="layui-form-label">货权人</label>
-        <div class="layui-input-block">
+        <div class="layui-input-inline">
             <!-- <input type="text" name="ownerid" placeholder="货权人" value="{{d.ownerid || ''}}" autocomplete="off" class="layui-input" lay-verify="required"> -->
             <select name="ownerid" xm-select="ownerSelect" xm-select-radio lay-verify="required">
                 <option value="">选择货权人</option>
             </select>
         </div>
     </div>
-    <div class="layui-form-item">
+    <div class="layui-form-item layui-normal-line">
         <label class="layui-form-label">仓库类型</label>
-        <div class="layui-input-block">
+        <div class="layui-input-inline">
             <!-- <input type="text" name="type" placeholder="仓库类型" value="{{d.type || ''}}" autocomplete="off" class="layui-input" lay-verify="required"> -->
             <select name="type" xm-select="typeSelect" xm-select-radio lay-verify="required">
                 <option value="">选择仓库类型</option>
             </select>
         </div>
     </div>
-    <div class="layui-form-item">
+    <div class="layui-form-item layui-normal-line">
         <label class="layui-form-label">仓库名称</label>
-        <div class="layui-input-block">
+        <div class="layui-input-inline">
             <input type="text" name="name" placeholder="仓库名称" value="{{d.name || ''}}" autocomplete="off" class="layui-input" lay-verify="required">
         </div>
     </div>
-    
-    <div class="layui-form-item">
+    <div class="layui-form-item layui-normal-line">
         <label class="layui-form-label">地址</label>
-        <div class="layui-input-block">
+        <div class="layui-input-inline">
             <input type="text" name="address" placeholder="地址" value="{{d.address || ''}}" autocomplete="off" class="layui-input" lay-verify="required">
         </div>
     </div>
-    
-    <div class="layui-form-item">
+    <div class="layui-form-item layui-normal-line">
         <label class="layui-form-label">备注</label>
-        <div class="layui-input-block">
+        <div class="layui-input-inline">
             <input type="text" name="remarks" placeholder="备注" value="{{d.remarks || ''}}" autocomplete="off" class="layui-input">
         </div>
     </div>
-    <div class="layui-form-item">
-        <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="addDepotForm">
-            <i class="layui-icon layui-icon-ok"></i> <span>提交</span>
-        </button>
-    </div>
 </form>
 </script>
-<style scoped>
-    .layui-form {
-        width: 600px;
-        margin: 10px auto;
-    }
-</style>
+
 <script>
     layui.use(['form', 'jquery', 'element', 'layer', 'formSelects', 'laytpl', 'laydate'], function() {
         var element = layui.element;

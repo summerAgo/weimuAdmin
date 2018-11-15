@@ -1,68 +1,57 @@
 <div id="formEditView"></div>
-
-
 <script id="formUser" type="text/html">
-<div class="useradd layui-form">
-
-    <form>
-        <div class="layui-form-item">
-            <label class="layui-form-label">用户类型</label>
+    <form class="layui-form layer-open-form" action="">
+        <div class="layui-form-item layui-control-line">
             <div class="layui-input-block">
-                <select name="instid"  lay-verify="required" placeholder="必填项,请输入用户类型" xm-select="instidSelect" xm-select-radio="" ></select>
+                <button class="layui-btn" lay-submit="" type="submit" lay-filter="addSubmit"><i class="iconfont icon-daochu"></i>保存</button>
             </div>
         </div>
-
-        <div class="layui-form-item">
+        <div class="layui-form-item layui-normal-line">
+            <label class="layui-form-label">用户类型</label>
+            <div class="layui-input-inline">
+                <select name="instid" lay-verify="required" xm-select="instidSelect" placeholder="必填项,请输入用户类型" xm-select-radio="" ></select>
+            </div>
+        </div>
+        <div class="layui-form-item layui-normal-line">
             <label class="layui-form-label">用户名</label>
-            <div class="layui-input-block">
+            <div class="layui-input-inline">
                 <input type="text" id="username" name="username" lay-verify="required" placeholder="必填项,请输入用户名" class="layui-input"  value="{{# if(d.username){}} {{d.username}} {{# }}}">
                 <input type="hidden" id="id" name="id"   value="{{# if(d.id){}} {{d.id}} {{# }}}">
             </div>
-
         </div>
-
-		{{# if(!d.username){}} 
-        <div class="layui-form-item">
+        {{# if(!d.username){}}
+        <div class="layui-form-item layui-normal-line">
             <label class="layui-form-label">密 码</label>
-            <div class="layui-input-block">
+            <div class="layui-input-inline">
                 <input type="text" id="password" name="password" lay-verify="required" placeholder="必填项,请输入密码" class="layui-input">
             </div>
         </div>
-		{{# }}}
-		
-       
-		
-		
-		<div class="layui-form-item">
+        {{# }}}
+        <div class="layui-form-item layui-normal-line">
             <label class="layui-form-label">性别</label>
-            <div class="layui-input-block">
+            <div class="layui-input-inline">
                 <input type="radio" name="sex" value="0" title="男" {{# if(!d.sex || d.sex == 0){}} checked {{# }}} >
                 <input type="radio" name="sex" value="1" title="女  {{# if(d.sex && d.sex == 1){}} checked {{# }}}">
             </div>
         </div>
-		
-		 <div class="layui-form-item">
+         <div class="layui-form-item layui-normal-line">
             <label class="layui-form-label">电话</label>
-            <div class="layui-input-block">
+            <div class="layui-input-inline">
                 <input type="text" id="phone" name="phone" placeholder="选填" value="{{# if(d.phone){}} {{d.phone}} {{# }}}" class="layui-input">
             </div>
         </div>
-
-
-        <div class="layui-form-item">
+        <div class="layui-form-item layui-normal-line">
             <label class="layui-form-label">邮箱</label>
-            <div class="layui-input-block">
+            <div class="layui-input-inline">
                 <input type="text" id="email" name="email" placeholder="选填" value="{{# if(d.email){}} {{d.email}} {{# }}}" class="layui-input">
             </div>
-        </div> 
-		
-		<div class="layui-form-item">
-			<label class="layui-form-label">生日</label>
-			<div class="layui-input-block">
-				<input type="text" name="birthdaystr" class="layui-input" id="birthday"  value="{{# if(d.birthday){}} {{d.birthday}} {{# }}}" placeholder="请输入生日">
-			</div>
-		</div>
-
+        </div>
+        <div class="layui-form-item layui-normal-line">
+            <label class="layui-form-label">生日</label>
+            <div class="layui-input-inline">
+                <input type="text" name="birthdaystr" class="layui-input" id="birthday"  value="{{# if(d.birthday){}} {{d.birthday}} {{# }}}" placeholder="请输入生日">
+            </div>
+        </div>
         <!-- <div class="layui-form-item">
             <label class="layui-form-label">省/市县</label>
             <div class="layui-input-inline">
@@ -81,19 +70,13 @@
                 </select>
             </div>
         </div>
-
         <input type="hidden" id="address" name="address" value="" class="layui-input">
-
-
-
         <div class="layui-form-item">
             <label class="layui-form-label">等级</label>
             <div class="layui-input-block">
                 <input type="text" id="level" name="level" placeholder="选填" class="layui-input">
             </div>
         </div>
-
-
         <div class="layui-form-item">
             <label class="layui-form-label">性别</label>
             <div class="layui-input-block">
@@ -101,39 +84,27 @@
                 <input type="radio" name="sex" value="1" title="女">
             </div>
         </div>
-
         <div class="layui-form-item">
             <label class="layui-form-label">电话</label>
             <div class="layui-input-block">
                 <input type="text" id="phone" name="phone" placeholder="选填" class="layui-input">
             </div>
         </div>
-
-
         <div class="layui-form-item">
             <label class="layui-form-label">邮箱</label>
             <div class="layui-input-block">
                 <input type="text" id="email" name="email" placeholder="选填" class="layui-input">
             </div>
         </div> -->
+    <!--    <div class="layui-form-item">
+        <label class="layui-form-label">生日</label>
+        <div class="layui-input-block">
 
-        <!-- 		 	<div class="layui-form-item">
-				<label class="layui-form-label">生日</label>
-				<div class="layui-input-block">
+            <input type="text" name="birthday" class="layui-input" id="birthday" value="" placeholder="请输入生日">
 
-					<input type="text" name="birthday" class="layui-input" id="birthday" value="" placeholder="请输入生日">
-
-				</div>
-			</div> -->
-
-        <div class="layui-form-item">
-            <div class="layui-input-block">
-                <button class="layui-btn" lay-submit="" type="submit" lay-filter="addSubmit">保存提交</button>
-            </div>
         </div>
+    </div> -->
     </form>
-
-</div>
 </script>
 
 <style scoped>

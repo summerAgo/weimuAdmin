@@ -1,42 +1,32 @@
 <div id="formEditView"></div>
-
-
 <script id="formUser" type="text/html">
-<div class="useradd layui-form">
-
-    <form>
-        <div class="layui-form-item">
-            <label class="layui-form-label">分类名称</label>
-            <div class="layui-input-block">
-                <input type="text" id="name" name="name" lay-verify="required" placeholder="必填项,请输入分类名" class="layui-input"  value="{{# if(d.name){}} {{d.name}} {{# }}}">
-                <input type="hidden" id="id" name="id"   value="{{# if(d.id){}} {{d.id}} {{# }}}">
-                <input type="hidden" id="utype" name="utype"   value="{{d.utype}}">
-            </div>
-
+<form class="layui-form layer-open-form" action="">
+    <div class="layui-form-item  layui-control-line">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" type="submit" lay-filter="addInsSubmit"><i class="iconfont icon-daochu"></i>保存</button>
         </div>
-		
-        <div class="layui-form-item">
-            <label class="layui-form-label">上级分类</label>
-            <div class="layui-input-block">
-                <select name="pid" lay-verify="required" xm-select="pid" xm-select-height="12px">
-                    <option value="0">顶级菜单</option>
-
-                    {{#  layui.each(d.insList, function(index, item){ }}
-						 <option {{# if(d.pid && d.pid == item.id ){}} selected {{# }}} value="{{item.id}}">{{ item.name }}</option>
-					{{#  }); }}
-                </select>
-            </div>
+    </div>
+    <div class="layui-form-item layui-normal-line">
+        <label class="layui-form-label">分类名称</label>
+        <div class="layui-input-inline">
+            <input type="text" id="name" name="name" lay-verify="required" placeholder="必填项,请输入分类名" class="layui-input"  value="{{# if(d.name){}} {{d.name}} {{# }}}">
+            <input type="hidden" id="id" name="id"   value="{{# if(d.id){}} {{d.id}} {{# }}}">
+            <input type="hidden" id="utype" name="utype"   value="{{d.utype}}">
         </div>
-		
-		
-        <div class="layui-form-item">
-            <div class="layui-input-block">
-                <button class="layui-btn" lay-submit="" type="submit" lay-filter="addInsSubmit">保存提交</button>
-            </div>
-        </div>
-    </form>
+    </div>
+    <div class="layui-form-item layui-normal-line">
+        <label class="layui-form-label">上级分类</label>
+        <div class="layui-input-inline">
+            <select name="pid" lay-verify="required" xm-select="pid" xm-select-height="12px">
+                <option value="0">顶级菜单</option>
 
-</div>
+                {{#  layui.each(d.insList, function(index, item){ }}
+                     <option {{# if(d.pid && d.pid == item.id ){}} selected {{# }}} value="{{item.id}}">{{ item.name }}</option>
+                {{#  }); }}
+            </select>
+        </div>
+    </div>
+</form>
 </script>
 
 <style scoped>

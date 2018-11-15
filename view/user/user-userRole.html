@@ -1,13 +1,14 @@
 <div id="formEditView"></div>
-
-
 <script id="formUser" type="text/html">
-<div class="useradd layui-form">
-
-    <form>
-        <div class="layui-form-item">
-            <label class="layui-form-label">角色</label>
+    <form class="layui-form layer-open-form" action="">
+        <div class="layui-form-item layui-control-line">
             <div class="layui-input-block">
+                <button class="layui-btn" lay-submit="" type="submit" lay-filter="roleSubmit"><i class="iconfont icon-daochu"></i>保存</button>
+            </div>
+        </div>
+        <div class="layui-form-item layui-normal-line">
+            <label class="layui-form-label">角色</label>
+            <div class="layui-input-inline">
                 <input type="hidden" id="userid" name="userid"   value="{{# if(d.id){}} {{d.id}} {{# }}}">
                 <select name="roleid" lay-verify="required" >
                     {{#  layui.each(d.rolelist, function(index, item){ }}
@@ -16,17 +17,7 @@
                 </select>
             </div>
         </div>
-		
-
-
-        <div class="layui-form-item">
-            <div class="layui-input-block">
-                <button class="layui-btn" lay-submit="" type="submit" lay-filter="roleSubmit">保存提交</button>
-            </div>
-        </div>
     </form>
-
-</div>
 </script>
 
 <style scoped>

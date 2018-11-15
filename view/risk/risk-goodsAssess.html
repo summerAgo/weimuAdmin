@@ -1,46 +1,55 @@
 <div class="table-page">
+    <div class="table-content-title">
+        <div class="table-tools">
+            <ul class="layui-nav" lay-filter="talbe-tools">
+                <li class="layui-nav-item">
+                    <a id="toExport" href="javascript:;"><i class="iconfont icon-daochu"></i>导出</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;"><i class="iconfont icon-dayin"></i>打印</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;"><i class="iconfont icon-pinggu"></i>评估</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;"><i class="iconfont icon-shuaxin"></i>刷新</a>
+                </li>
+            </ul>
+        </div>
+    </div>
     <div class="table-page-header">
         <div class="table-page-form">
             <form class="layui-form" action="">
-                <div class="form-box">
+                <div class="form-box clearfix">
                     <div class="layui-form-item form-left">
                         <div class="table-form-item layui-input-inline">
-                            <!-- <input type="text" name="cargoowner" placeholder="货权人" autocomplete="off" class="layui-input"> -->
+                            <span class="input-span">货权人</span>
+                            <!--<input type="text" name="cargoowner" placeholder="货权人" autocomplete="off" class="layui-input">-->
                             <select name="ownerid" xm-select="ownerSelect" xm-select-radio>
                                 <option value="">选择货权人</option>
                             </select>
                         </div>
                     </div>
                     <div class="layui-form-item form-right">
-                        <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="searchForm">
-                            <i class="iconfont icon-sousuo"></i> <span>查询</span>
+                        <button class="layui-btn layui-btn-md layui-btn-gray" lay-submit lay-filter="searchForm">
+                            <i class="iconfont icon-zhongzhi"></i><span>重置</span>
                         </button>
-                        <button type="reset" class="layui-btn layui-btn-primary"> <i class="layui-icon layui-icon-refresh"></i></button>
+                        <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="searchForm">
+                            <i class="iconfont icon-sousuo"></i><span>查询</span>
+                        </button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
     <div class="table-content">
-        <div class="table-content-title">
-            <div class="table-tools">
-                <ul class="layui-nav" lay-filter="talbe-tools">
-                    <li class="layui-nav-item">
-                        <a id="toExport" href="javascript:;">导出数据</a>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;">打印</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
         <div class="table-content-main">
             <table class="layui-hide" id="table-goodsAssess" lay-filter="table-goodsAssess"></table>
         </div>
     </div>
 </div>
 <script>
-    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'upload'], function() {
+    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'upload'], function () {
         var element = layui.element;
         var form = layui.form;
         var $ = layui.jquery;
@@ -48,7 +57,7 @@
         var formSelects = layui.formSelects;
         var laytpl = layui.laytpl;
         var upload = layui.upload;
-        var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 103); //内容区域所需减去的高度
+        var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 93); //内容区域所需减去的高度
 
         var assessLayer; // 评估-弹层
 
@@ -69,7 +78,7 @@
                 data: param,
                 async: false, //同步
                 traditional: true,
-                success: function(data) {
+                success: function (data) {
                     // console.log(data);
                     if (data.status == 0) {
                         //把接口数据转换为[{"name":str,"value":number}]格式
@@ -89,11 +98,11 @@
 
                     }
                 }
-            })
+            });
             return arr;
         }
 
-        form.on('submit(searchForm)', function(data) {
+        form.on('submit(searchForm)', function (data) {
             var paramSearch = {};
             for (var key in data.field) {
                 // 参数赋值
@@ -116,7 +125,7 @@
             height: 'full-' + tableTopHeight, // full -- 差值
             url: riskList, //数据接口
             // 任意数据格式解析成 table 组件规定的数据格式
-            parseData: function(res) { //res 即为原始返回的数据
+            parseData: function (res) { //res 即为原始返回的数据
                 if (res.status !== 0) res.status = 0;
                 return {
                     "code": res.status, //解析接口状态
@@ -155,7 +164,7 @@
             page: true, // 是否显示分页
             limits: [10, 20, 30, 40, 50], // 每页条数的选择项
             limit: 10, // 每页默认显示的数量
-            done: function(res, curr, count) { // 数据渲染完的回调
+            done: function (res, curr, count) { // 数据渲染完的回调
 
             },
             text: { // 自定义文本，如空数据时的异常提示等
@@ -167,13 +176,13 @@
 
         var ownerid = null;
         // 监听货权人点击事件
-        table.on('tool(table-goodsAssess)', function(obj) {
+        table.on('tool(table-goodsAssess)', function (obj) {
             var curData = obj.data;
             // console.log(curData)
             ownerid = curData.id;
             if (obj.event === 'click') {
 
-                $.get('view/risk/risk-layerAssess.html', {}, function(str) { // 弹出弹框
+                $.get('view/risk/risk-layerAssess.html', {}, function (str) { // 弹出弹框
                     assessLayer = layer.open({
                         title: '商品评估列表',
                         type: 1,
@@ -193,7 +202,7 @@
                     formSelects.data('selectSpec', 'local', {
                         arr: selectDataInstall(specList) //规格列表
                     });
-                    
+
 
                     formSelects.data('originSelect', 'local', {
                         arr: selectDataInstall(CHDList) //产地列表
@@ -209,7 +218,7 @@
                             data: param,
                             async: false, //同步
                             traditional: true,
-                            success: function(data) {
+                            success: function (data) {
                                 console.log(data);
                                 if (data.status == 0) {
                                     //把接口数据转换为[{"name":str,"value":number}]格式
@@ -225,10 +234,10 @@
                                     }
                                 }
                             }
-                        })
+                        });
                         return arr;
                     }
-                    form.on('submit(searchAssessForm)', function(data) {
+                    form.on('submit(searchAssessForm)', function (data) {
                         var paramSearch = {
                             "person": curData.id
                         };
@@ -255,7 +264,7 @@
                         where: {
                             "ownerid": curData.id
                         },
-                        parseData: function(res) { //res 即为原始返回的数据
+                        parseData: function (res) { //res 即为原始返回的数据
                             // console.log(res)
                             if (res.status != 0) {
                                 res.status = 0;
@@ -313,7 +322,7 @@
                         limit: null,
                         // limits: [10, 20, 30, 40, 50],
                         even: true, // 开启隔行背景
-                        done: function(res, curr, count) { // 数据渲染完的回调
+                        done: function (res, curr, count) { // 数据渲染完的回调
 
                         },
                         text: { // 自定义文本，如空数据时的异常提示等
@@ -324,7 +333,7 @@
                     var apriceChangeValue = {}; //单元格编辑更改评估价格数据对象
 
                     //监听编辑
-                    table.on('edit(tableContainer-from)', function(obj) {
+                    table.on('edit(tableContainer-from)', function (obj) {
                         // console.log(obj.value); //得到修改后的值
                         // console.log(obj.field); //当前编辑的字段名
                         // console.log(obj.data); //所在行的所有相关数据
@@ -336,9 +345,9 @@
                         console.log(apriceChangeValue);
                     });
 
-                    $(".saveEvaluationPriceBtn").click(function() {
+                    $(".saveEvaluationPriceBtn").click(function () {
                         var status = true;
-                        console.log(apriceChangeValue)
+                        console.log(apriceChangeValue);
                         //保存评估价
                         if ($.isEmptyObject(apriceChangeValue)) {
                             layer.msg("当前估价未作修改");
@@ -371,9 +380,9 @@
                         }
                     });
 
-                    $(".cancelBtn").click(function() {
+                    $(".cancelBtn").click(function () {
                         if (!$.isEmptyObject(apriceChangeValue)) {
-                            layer.confirm('有未提交的评估价格', function(index) {
+                            layer.confirm('有未提交的评估价格', function (index) {
                                 //do something
                                 layer.close(index);
                                 apriceChangeValue = {};
@@ -397,9 +406,9 @@
                                 lbarr: JSON.stringify(apriceJson)
                             },
                             // traditional: true,
-                            success: function(res) {
+                            success: function (res) {
                                 if (res.status == 0) {
-                                    layer.msg(res.msg);
+                                    layer.msg("评估单价设置成功");
                                     status = true;
                                 } else {
                                     layer.msg(res.msg);

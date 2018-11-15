@@ -1,46 +1,51 @@
 <div class="table-page">
+    <div class="table-content-title">
+        <div class="table-tools">
+            <ul class="layui-nav" lay-filter="talbe-tools">
+                <li class="layui-nav-item">
+                    <a id="toExport" href="javascript:;"><i class="iconfont icon-daochu"></i>导出</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;"><i class="iconfont icon-dayin"></i>打印</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;"><i class="iconfont icon-shuaxin"></i>刷新</a>
+                </li>
+            </ul>
+        </div>
+    </div>
     <div class="table-page-header">
         <div class="table-page-form">
             <form class="layui-form" action="">
                 <div class="form-box">
                     <div class="layui-form-item form-left">
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">货权人</span>
                             <select name="ownerid" xm-select="ownerSelect" xm-select-radio>
-                                <option value="">选择货权人</option>
+                                <option value="">货权人</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">审核状态</span>
+                            <input type="text" name="auditstatus" placeholder="审核状态" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <span class="input-span">出货仓库</span>
                             <select name="depotid" xm-select="depotSelect" xm-select-radio>
                                 <option value="">选择仓库</option>
                             </select>
-                        </div>
-                        <div class="table-form-item layui-input-inline">
-                            <input type="text" name="auditstatus" placeholder="审核状态" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-form-item form-right">
                         <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="searchForm">
                             <i class="iconfont icon-sousuo"></i> <span>查询</span>
                         </button>
-                        <button type="reset" class="layui-btn layui-btn-primary"> <i class="layui-icon layui-icon-refresh"></i></button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
     <div class="table-content">
-        <div class="table-content-title">
-            <div class="table-tools">
-                <ul class="layui-nav" lay-filter="talbe-tools">
-                    <li class="layui-nav-item">
-                        <a id="toExport" href="javascript:;">导出数据</a>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;">打印</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
         <div class="table-content-main">
             <table class="layui-hide" id="tableContainer-recode" lay-filter="tableContainer-recode"></table>
         </div>
@@ -55,7 +60,7 @@
         var formSelects = layui.formSelects;
         var laytpl = layui.laytpl;
         var upload = layui.upload;
-        var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 103); //内容区域所需减去的高度
+        var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 93); //内容区域所需减去的高度
 
         form.render(); // 重置表单渲染
         formSelects.render(); // 下拉选项

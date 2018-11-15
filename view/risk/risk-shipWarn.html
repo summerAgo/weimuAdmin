@@ -1,12 +1,34 @@
 <div class="table-page">
+    <div class="table-content-title">
+        <div class="table-tools">
+            <ul class="layui-nav" lay-filter="talbe-tools">
+                <li class="layui-nav-item">
+                    <a id="toExport" href="javascript:;"><i class="iconfont icon-daochu"></i>导出</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;"><i class="iconfont icon-dayin"></i>打印</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;"><i class="iconfont icon-bianji"></i>修改</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;"><i class="iconfont icon-shanchu"></i>删除</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;"><i class="iconfont icon-shuaxin"></i>刷新</a>
+                </li>
+            </ul>
+        </div>
+    </div>
     <div class="table-page-header">
         <div class="table-page-form">
             <form class="layui-form" action="">
                 <div class="form-box">
                     <div class="layui-form-item form-left">
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">货权人</span>
                             <select name="ownerid" xm-select="ownerSelect" xm-select-radio>
-                                <option value="">选择货权人</option>
+                                <option value="">货权人</option>
                             </select>
                         </div>
                     </div>
@@ -14,25 +36,12 @@
                         <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="searchForm">
                             <i class="iconfont icon-sousuo"></i> <span>查询</span>
                         </button>
-                        <button type="reset" class="layui-btn layui-btn-primary"> <i class="layui-icon layui-icon-refresh"></i></button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
     <div class="table-content">
-        <div class="table-content-title">
-            <div class="table-tools">
-                <ul class="layui-nav" lay-filter="talbe-tools">
-                    <li class="layui-nav-item">
-                        <a id="toExport" href="javascript:;">导出数据</a>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;">打印</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
         <div class="table-content-main">
             <table class="layui-hide" id="tableContainer" lay-filter="tableContainer"></table>
         </div>
@@ -47,7 +56,7 @@
         var formSelects = layui.formSelects;
         var laytpl = layui.laytpl;
         var upload = layui.upload;
-        var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 103); //内容区域所需减去的高度
+        var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 93); //内容区域所需减去的高度
 
         var modifyLayer; // 出货警戒线修改- 弹层
 
@@ -83,7 +92,7 @@
                         }
                     }
                 }
-            })
+            });
             return arr;
         }
 
@@ -185,7 +194,7 @@
                         type: 1,
                         content: str, // 注意，如果str是object，那么需要字符拼接。
                         resize: false,
-                        area: ['800px', '360px'],
+                        area: ['800px', '560px'],
                     });
                     // 弹框 - 模板渲染
                     var getTpl = templateWarn.innerHTML,
@@ -209,7 +218,7 @@
                             success: function(res) {
                                 if (res.status == 0) {
                                     layer.msg("保存修改成功");
-                                    layer.close(modifyLayer)
+                                    layer.close(modifyLayer);
                                     tableIns.reload({
                                         page: {
                                             curr: 1 // 重新从第 1 页开始

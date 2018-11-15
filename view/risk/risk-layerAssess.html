@@ -1,59 +1,73 @@
 <div class="table-page">
+    <div class="table-content-title layer-level">
+        <div class="table-tools">
+            <ul class="layui-nav" lay-filter="talbe-tools">
+                <li class="layui-nav-item">
+                    <a id="toExport" href="javascript:;" class="saveEvaluationPriceBtn"><i class="iconfont icon-daochu"></i>保存</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="cancelBtn"><i class="iconfont icon-dayin"></i>取消</a>
+                </li>
+            </ul>
+        </div>
+    </div>
     <div class="table-page-header">
-        <div class="table-page-form">
+        <div class="table-page-form layer-level">
             <form class="layui-form form-newbill" action="">
                 <div class="form-box">
                     <div class="layui-form-item form-left">
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">包号</span>
                             <input type="text" name="code" placeholder="包号" autocomplete="off" class="layui-input">
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">品种</span>
                             <select name="varieties" xm-select="selectVarieties" xm-select-radio>
                                 <option value="">品种</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">规格</span>
                             <select name="spec" xm-select="selectSpec" xm-select-radio>
                                 <option value="">规格</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">等级</span>
                             <select name="levels" xm-select="selectLevels" xm-select-radio>
                                 <option value="">等级</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">长度</span>
                             <input type="text" name="chang" placeholder="长度" autocomplete="off" class="layui-input">
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">选择产地</span>
                             <select name="origin" xm-select="originSelect" xm-select-radio>
                                 <option value="">选择产地</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">评估状态</span>
                             <input type="text" name="assessid" placeholder="评估状态" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-form-item form-right">
+                        <button class="layui-btn layui-btn-md layui-btn-gray" lay-submit lay-filter="searchForm">
+                            <i class="iconfont icon-zhongzhi"></i><span>重置</span>
+                        </button>
                         <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="searchAssessForm">
                             <i class="iconfont icon-sousuo"></i> <span>查询</span>
                         </button>
-                        <button type="reset" class="layui-btn layui-btn-primary"><i class="layui-icon layui-icon-refresh"></i></button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
-    <div class="table-content">
+    <div class="table-content layer-level">
         <div class="table-content-main">
             <table class="layui-hide" id="tableContainer-from" lay-filter="tableContainer-from"></table>
         </div>
     </div>
-    <div class="rightBotBtn"><a class="layui-btn saveEvaluationPriceBtn" href="javascript:;">保存提交</a><a class="layui-btn layui-btn-primary cancelBtn" href="javascript:;">取消</a></div>
 </div>
-<style scoped>
-    .rightBotBtn {
-        padding: 15px;
-        text-align: right
-    }
-</style>

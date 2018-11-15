@@ -1,18 +1,38 @@
 <div class="table-page">
+    <div class="table-content-title">
+        <div class="table-tools">
+            <ul class="layui-nav" lay-filter="talbe-tools">
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="addDepotBtn"><i class="iconfont icon-tianjia"></i>新增仓库</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a id="toExport" href="javascript:;"><i class="iconfont icon-daochu"></i>导出</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="changeBtn"><i class="iconfont icon-bianji"></i>修改</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="deleteBtn"><i class="iconfont icon-shanchu"></i>删除</a>
+                </li>
+            </ul>
+        </div>
+    </div>
     <div class="table-page-header">
         <div class="table-page-form">
             <form class="layui-form" action="">
-                <div class="form-box">
+                <div class="form-box clearfix">
                     <div class="layui-form-item form-left">
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">仓库名称</span>
                             <input type="text" name="name" placeholder="仓库名称" autocomplete="off" class="layui-input">
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">仓库编号</span>
                             <input type="text" name="code" placeholder="仓库编号" autocomplete="off" class="layui-input">
                         </div>
                         <div class="table-form-item layui-input-inline">
-                            <select name="type">
-                                <option value="">全部</option>
+                            <span class="input-span">管仓</span>
+                            <select name="type" xm-select="" xm-select-radio>
                                 <option value="0">监管仓</option>
                                 <option value="-1">自由仓</option>
                             </select>
@@ -22,29 +42,12 @@
                         <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="searchForm">
                             <i class="iconfont icon-sousuo"></i> <span>查询</span>
                         </button>
-                        <button type="reset" class="layui-btn layui-btn-primary"> <i class="layui-icon layui-icon-refresh"></i></button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
     <div class="table-content">
-        <div class="table-content-title">
-            <div class="table-tools">
-                <ul class="layui-nav" lay-filter="talbe-tools">
-                    <li class="layui-nav-item">
-                        <a href="javascript:;" class="addDepotBtn">新增仓库</a>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a id="toExport" href="javascript:;">导出数据</a>
-                    </li>
-                </ul>
-                <ul class="layui-layout-right">
-                    <li><a href="javascript:;" class="changeBtn">修改</a></li>
-                    <li><a href="javascript:;" class="deleteBtn">删除</a></li>
-                </ul>
-            </div>
-        </div>
         <div class="table-content-main">
             <table class="layui-hide" id="tableContainer-depotList" lay-filter="tableContainer-depotList"></table>
         </div>
@@ -59,7 +62,7 @@
         var formSelects = layui.formSelects;
         var laytpl = layui.laytpl;
         var upload = layui.upload;
-        var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 103); //内容区域所需减去的高度
+        var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 93); //内容区域所需减去的高度
 
         var addDepotLayer; //编辑-弹层
 
@@ -176,7 +179,7 @@
                     type: 1,
                     content: str, //注意，如果str是object，那么需要字符拼接。
                     resize: false,
-                    area: ['800px', 'auto'],
+                    area: ['800px', '560px'],
                 });
             });
         });
@@ -185,12 +188,12 @@
             var dataType = JSON.parse(sessionStorage.getItem('depotCheck'));//获取本地所选仓库信息，判断是否为修改
             var url;
             var msg = "新建仓库成功";
-            console.log(dataType)
+            console.log(dataType);
             data.field.type = data.field.type - 1; 
             if (dataType) {
                 //如果是修改
                 url = depotUpdate;
-                data.field.id = dataType.id
+                data.field.id = dataType.id;
                 msg = "修改仓库成功";
             } else {
                 url = depotAdd;
@@ -209,7 +212,7 @@
                 } else {
                     layer.msg("提交异常");
                 }
-            })
+            });
             return false;
         });
 
@@ -228,7 +231,7 @@
                         type: 1,
                         content: str, //注意，如果str是object，那么需要字符拼接。
                         resize: false,
-                        area: ['800px', 'auto'],
+                        area: ['800px', '560px'],
                     });
                 });
             }
@@ -287,6 +290,6 @@
                 success: funSuc,
                 error: funErr
             })
-        };
+        }
     });
 </script>

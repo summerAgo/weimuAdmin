@@ -16,20 +16,49 @@
             </div>
             <div id="tree-nav"></div>
         </div>
-        <div class="table-content">
+        <div class="table-content lay-table-content">
+            <div class="table-content-title">
+                <div class="table-tools">
+                    <ul class="layui-nav" lay-filter="talbe-tools">
+                        <li class="layui-nav-item">
+                            <a href="javascript:;" class="creatUser"><i class="iconfont icon-zengjiajiaose"></i>添加用户</a>
+                        </li>
+                        <li class="layui-nav-item">
+                            <a href="javascript:;" id="resetPas"><i class="iconfont icon-zhongzhi"></i>重置密码</a>
+                        </li>
+                        <li class="layui-nav-item">
+                            <a href="javascript:;" id="userRole"><i class="iconfont icon-jiaoseshezhi"></i>设置角色</a>
+                        </li>
+                        <!--<li class="layui-nav-item item-more">
+                            <a href="javascript:;">数据导入导出</a>
+                            <dl class="layui-nav-child">
+                                <dd><a id="dowmTemp" href="javascript:;">下载模板</a></dd>
+                                <dd><a id="toImport" href="javascript:;">导入数据</a></dd>
+                                <dd><a id="toExport" href="javascript:;">导出数据</a></dd>
+                            </dl>
+                        </li>
+                        <li class="layui-nav-item">
+                            <a href="javascript:;">打印</a>
+                        </li> -->
+                        <li class="layui-nav-item">
+                            <a href="javascript:;" class="editBtn"><i class="iconfont icon-bianji"></i>编辑</a>
+                        </li>
+                        <li class="layui-nav-item">
+                            <a href="javascript:;" class="deleteBtn"><i class="iconfont icon-shanchu"></i>删除</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
             <div class="table-page-header">
                 <div class="table-page-form">
                     <form class="layui-form" action="">
                         <div class="form-box">
                             <div class="layui-form-item form-left">
                                 <div class="table-form-item layui-input-inline">
-                                    <p id="titleIns">全部</p>
-                                </div>
-                                <div class="table-form-item layui-input-inline">
+                                    <span class="input-span" id="titleIns">菜单名称</span>
                                     <input type="text" name="username" placeholder="用户名" autocomplete="off" class="layui-input">
                                     <input type="hidden" name="instid" id="instid" value="" autocomplete="off" class="layui-input">
                                 </div>
-
                             </div>
                             <div class="layui-form-item form-right">
                                 <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="searchForm">
@@ -38,47 +67,23 @@
                             </div>
                         </div>
                     </form>
-
                 </div>
             </div>
-            <div class="table-content">
-                <div class="table-content-title">
-                    <div class="table-tools">
-                        <ul class="layui-nav" lay-filter="talbe-tools">
-                            <li class="layui-nav-item">
-                                <a href="javascript:;" class="creatUser">添加用户</a>
-                            </li>
-                            <li class="layui-nav-item">
-                                <a href="javascript:;" id="resetPas">重置密码</a>
-                            </li>
-                            <li class="layui-nav-item">
-                                <a href="javascript:;" id="userRole">设置角色</a>
-                            </li>
-                            <!--<li class="layui-nav-item item-more">
-                        <a href="javascript:;">数据导入导出</a>
-                        <dl class="layui-nav-child">
-                            <dd><a id="dowmTemp" href="javascript:;">下载模板</a></dd>
-                            <dd><a id="toImport" href="javascript:;">导入数据</a></dd>
-                            <dd><a id="toExport" href="javascript:;">导出数据</a></dd>
-                        </dl>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;">打印</a>
-                    </li> -->
-                        </ul>
-                        <ul class="layui-layout-right">
-                            <li><a href="javascript:;" class="editBtn">编辑</a></li>
-                            <li><a href="javascript:;" class="deleteBtn">删除</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="table-content-main">
-                    <table class="layui-hide" id="tableContainer-userlist" lay-filter="tableContainer-userlist"></table>
-                </div>
+            <div class="table-content-main">
+                <table class="layui-hide lay-table" id="tableContainer-userlist" lay-filter="tableContainer-userlist"></table>
             </div>
         </div>
     </div>
 </div>
+<style>
+    .lay-table-content {
+        padding: 0;
+    }
+    .table-content-main {
+        padding-right: 30px;
+        padding-left: 30px;
+    }
+</style>
 <script>
     layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'tree', 'eleTree'], function() {
         var element = layui.element;
@@ -88,7 +93,7 @@
         var formSelects = layui.formSelects;
         var laytpl = layui.laytpl;
         var eleTree = layui.eleTree;
-        var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 103); //内容区域所需减去的高度
+        var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 63); //内容区域所需减去的高度
 
         var eaitLayer; //编辑-弹层
 
@@ -204,7 +209,7 @@
                         type: 1,
                         content: str, //注意，如果str是object，那么需要字符拼接。
                         resize: false,
-                        area: ['800px', 'auto'],
+                        area: ['800px', '560px'],
                     });
                 });
             }
@@ -226,11 +231,9 @@
                         type: 1,
                         content: str, //注意，如果str是object，那么需要字符拼接。
                         resize: false,
-                        area: ['800px', 'auto'],
+                        area: ['800px', '560px'],
                     });
                 });
-
-
             }
         });
 
@@ -250,9 +253,11 @@
                         type: 1,
                         content: str, //注意，如果str是object，那么需要字符拼接。
                         resize: false,
-                        area: ['800px', '40%'],
+                        area: ['800px', '560px'],
                     });
                 });
+
+
             }
         });
 
@@ -283,7 +288,7 @@
                         });
                     }
                 });
-            })
+            });
             return false;
         });
 
@@ -347,7 +352,7 @@
                         }
                     });
                 })
-            })
+            });
             return false;
         });
 
@@ -396,7 +401,7 @@
                     type: 1,
                     content: str,
                     resize: false,
-                    area: ['800px', 'auto'],
+                    area: ['800px', '560px'],
                 });
             });
         });
@@ -445,7 +450,7 @@
                         });
                     }
                 });
-            })
+            });
             return false;
         });
 
@@ -459,7 +464,7 @@
                 success: funSuc,
                 error: funErr
             })
-        };
+        }
         //变更下载模板链接
         $("#dowmTemp").attr("href", ilbstockImportTemp);
 
@@ -594,7 +599,7 @@
                     type: 1,
                     content: str,
                     resize: false,
-                    area: ['800px', '45%'],
+                    area: ['800px', '560px'],
                 });
             });
         });
@@ -610,7 +615,7 @@
                     type: 1,
                     content: str, //注意，如果str是object，那么需要字符拼接。
                     resize: false,
-                    area: ['800px', '45%'],
+                    area: ['800px', '560px'],
                 });
             });
         });
@@ -648,7 +653,7 @@
                         listIns();
                     }
                 });
-            })
+            });
             return false;
         });
 
@@ -684,7 +689,7 @@
                         listIns();
                     }
                 });
-            })
+            });
             return false;
         });
 

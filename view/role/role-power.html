@@ -1,5 +1,3 @@
-
-        
 <div class="role-power">
     <div class="layui-fluid">
         <div class="layui-row">
@@ -27,22 +25,22 @@
 </div>
 
 <script id="formUserRole" type="text/html">
-<form class="layui-form">
+<form class="layui-form layer-open-form">
     <div class="layui-field-box">
-            <input type="hidden" name="roleid" value="{{d.id}}"  >
-            {{#  layui.each(d.butAllData, function(index, item){ }}
-            <div class="layui-form-item">
-                <label class="layui-form-label">{{item.bname}}</label>
-                <div class="layui-input-block">
-                    <input type="checkbox" name="menuid" value="{{item.id}}" {{# if(item.checked){}} checked {{#}}}   lay-filter="clickBut"   lay-skin="switch" lay-text="开启|关闭">
-                </div>
+        <input type="hidden" name="roleid" value="{{d.id}}"  >
+        {{#  layui.each(d.butAllData, function(index, item){ }}
+        <div class="layui-form-item">
+            <label class="layui-form-label">{{item.bname}}</label>
+            <div class="layui-input-block">
+                <input type="checkbox" name="menuid" value="{{item.id}}" {{# if(item.checked){}} checked {{#}}}   lay-filter="clickBut"   lay-skin="switch" lay-text="开启|关闭">
             </div>
-            {{#  }); }}
-            <div class="layui-form-item">
-                <div class="layui-input-block">
-                    <button class="layui-btn" lay-submit="" type="submit" lay-filter="roleSubmit">保存提交</button>
-                </div>
+        </div>
+        {{#  }); }}
+        <div class="layui-form-item layui-control-line">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit="" type="submit" lay-filter="roleSubmit"><i class="iconfont icon-daochu"></i>保存</button>
             </div>
+        </div>
     </div>
 </form>
 </script>

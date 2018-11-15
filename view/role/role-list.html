@@ -1,13 +1,48 @@
 <div class="table-page">
+    <div class="table-content-title">
+        <div class="table-tools">
+            <ul class="layui-nav" lay-filter="talbe-tools">
+                <li class="layui-nav-item">
+                    <a href="javascript:;"  id="creatRole"><i class="iconfont icon-zengjiajiaose"></i>添加角色</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a id="toExport" href="javascript:;"><i class="iconfont icon-daochu"></i>导出</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;"><i class="iconfont icon-dayin"></i>打印</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;" id="roleAuthority" ><i class="iconfont icon-quanxianshezhi"></i>权限设置</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="editBtn"><i class="iconfont icon-bianji"></i>编辑</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="deleteBtn"><i class="iconfont icon-shanchu"></i>删除</a>
+                </li>
+                <!--<li class="layui-nav-item item-more">
+                    <a href="javascript:;">数据导入导出</a>
+                    <dl class="layui-nav-child">
+                        <dd><a id="dowmTemp" href="javascript:;">下载模板</a></dd>
+                        <dd><a id="toImport" href="javascript:;">导入数据</a></dd>
+                        <dd><a id="toExport" href="javascript:;">导出数据</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">打印</a>
+                </li> -->
+            </ul>
+        </div>
+    </div>
     <div class="table-page-header">
         <div class="table-page-form">
             <form class="layui-form" action="">
                 <div class="form-box">
                     <div class="layui-form-item form-left">
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">角色</span>
                             <input type="text" name="rolename" placeholder="角色名称" autocomplete="off" class="layui-input">
                         </div>
-
                     </div>
                     <div class="layui-form-item form-right">
                         <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="searchForm">
@@ -21,33 +56,6 @@
         </div>
     </div>
     <div class="table-content">
-        <div class="table-content-title">
-            <div class="table-tools">
-                <ul class="layui-nav" lay-filter="talbe-tools">
-                    <li class="layui-nav-item">
-                        <a href="javascript:;"  id="creatRole">添加角色</a>
-                    </li>
-					 <li class="layui-nav-item">
-                        <a href="javascript:;" id="roleAuthority" >设置角色权限</a>
-                    </li>
-                    <!--<li class="layui-nav-item item-more">
-                        <a href="javascript:;">数据导入导出</a>
-                        <dl class="layui-nav-child">
-                            <dd><a id="dowmTemp" href="javascript:;">下载模板</a></dd>
-                            <dd><a id="toImport" href="javascript:;">导入数据</a></dd>
-                            <dd><a id="toExport" href="javascript:;">导出数据</a></dd>
-                        </dl>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;">打印</a>
-                    </li> -->
-                </ul>
-                <ul class="layui-layout-right">
-                    <li><a href="javascript:;" class="editBtn">编辑</a></li>
-                    <li><a href="javascript:;" class="deleteBtn">删除</a></li>
-                </ul>
-            </div>
-        </div>
         <div class="table-content-main">
             <table class="layui-hide" id="tableContainerRole" lay-filter="tableContainerRole"></table>
         </div>
@@ -61,7 +69,7 @@
         var table = layui.table;
         var formSelects = layui.formSelects;
         var laytpl = layui.laytpl;
-        var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 103); //内容区域所需减去的高度
+        var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 93); //内容区域所需减去的高度
 
         var eaitLayer; //编辑-弹层
 
@@ -162,7 +170,7 @@
                         type: 1,
                         content: str, //注意，如果str是object，那么需要字符拼接。
                         resize: false,
-                        area: ['800px', 'auto'],
+                        area: ['800px', '560px'],
                     });
                 });
             }
@@ -211,7 +219,7 @@
                     type: 1,
                     content: str,
                     resize: false,
-                    area: ['800px', 'auto'],
+                    area: ['800px', '560px'],
                 });
             });
         });
@@ -268,7 +276,7 @@
                         });
                     }
                 });
-            })
+            });
             return false;
         });
 
@@ -311,7 +319,7 @@
                         });
                     }
                 });
-            })
+            });
             return false;
         });
 
@@ -325,7 +333,7 @@
                 success: funSuc,
                 error: funErr
             })
-        };
+        }
         //变更下载模板链接
         $("#dowmTemp").attr("href", ilbstockImportTemp);
 

@@ -1,10 +1,23 @@
 <div class="table-page">
+    <div class="table-content-title">
+        <div class="table-tools">
+            <ul class="layui-nav" lay-filter="talbe-tools">
+                <li class="layui-nav-item">
+                    <a id="toExport" href="javascript:;"><i class="iconfont icon-daochu"></i>导出</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;"><i class="iconfont icon-dayin"></i>打印</a>
+                </li>
+            </ul>
+        </div>
+    </div>
     <div class="table-page-header">
         <div class="table-page-form">
             <form class="layui-form" action="">
                 <div class="form-box">
                     <div class="layui-form-item form-left">
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">货权人</span>
                             <select name="ownerid" xm-select="ownerSelect" xm-select-radio>
                                 <option value="">选择货权人</option>
                             </select>
@@ -14,25 +27,12 @@
                         <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="searchForm">
                             <i class="iconfont icon-sousuo"></i> <span>查询</span>
                         </button>
-                        <button type="reset" class="layui-btn layui-btn-primary"> <i class="layui-icon layui-icon-refresh"></i></button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
     <div class="table-content">
-        <div class="table-content-title">
-            <div class="table-tools">
-                <ul class="layui-nav" lay-filter="talbe-tools">
-                    <li class="layui-nav-item">
-                        <a id="toExport" href="javascript:;">导出数据</a>
-                    </li>
-                    <!-- <li class="layui-nav-item">
-                        <a href="javascript:;">打印</a>
-                    </li> -->
-                </ul>
-            </div>
-        </div>
         <div class="table-content-main">
             <table class="layui-hide" id="tableContainer" lay-filter="tableContainer"></table>
         </div>
@@ -47,13 +47,13 @@
         var formSelects = layui.formSelects;
         var laytpl = layui.laytpl;
         var upload = layui.upload;
-        var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 103); //内容区域所需减去的高度
+        var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 93); //内容区域所需减去的高度
 
         var examineLayer; // 审核-弹层
 
         form.render(); // 重置表单渲染
         formSelects.render(); // 下拉选项
-        element.render('talbe-tools'); // 表格工具栏
+
         formSelects.data('ownerSelect', 'local', {
             arr: selectDataInstall(ownerDropdown) //货权人列表
         });
@@ -84,7 +84,7 @@
                         }
                     }
                 }
-            })
+            });
             return arr;
         }
 
@@ -106,6 +106,7 @@
             return false;
         });
 
+        // 渲染母模块table
         var tableIns = table.render({
             elem: '#tableContainer',
             height: 'full-' + tableTopHeight, // full -- 
@@ -128,8 +129,6 @@
             cols: [
                 [ // 标题栏
                     {
-                        type: 'checkbox'
-                    }, {
                         field: 'ownername',
                         title: '货权人',
                         sort: true
@@ -189,6 +188,7 @@
                 $.get('view/risk/risk-layerExamine.html', {}, function(str) { // 请求弹框
 
                     var layerData; // 当前弹框页面数据
+
                     $.ajax({
                         url: outDetails,
                         type: "get",
@@ -364,49 +364,3 @@
         }
     });
 </script>
-
-
-<!-- {
-    field: 'code',
-    title: '包号',
-    width: 266,
-    sort: true
-}, {
-    field: 'varieties',
-    title: '品种',
-    width: 266,
-    sort: true
-}, {
-    field: 'spec',
-    title: '规格/厚度',
-    width: 266,
-    sort: true
-}, {
-    field: 'levels',
-    title: '等级',
-    sort: true
-}, {
-    field: 'chang',
-    title: '长度',
-    sort: true
-}, {
-    field: 'brand',
-    title: '品牌',
-    sort: true
-}, {
-    field: 'origin',
-    title: '产地',
-    sort: true
-}, {
-    field: 'num',
-    title: '数量(m)',
-    sort: true
-}, {
-    field: 'depotid',
-    title: '仓库',
-    sort: true
-}, {
-    field: 'remarks',
-    title: '备注',
-    sort: true
-} -->

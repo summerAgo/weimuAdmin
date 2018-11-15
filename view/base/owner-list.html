@@ -16,20 +16,32 @@
             </div>
             <div id="tree-nav"></div>
         </div>
-        <div class="table-content">
+        <div class="table-content lay-table-content">
+            <div class="table-content-title">
+                <div class="table-tools">
+                    <ul class="layui-nav" lay-filter="talbe-tools">
+                        <li class="layui-nav-item">
+                            <a href="javascript:;" class="creatUser"><i class="iconfont icon-tianjia"></i>添加货权人</a>
+                        </li>
+                        <li class="layui-nav-item">
+                            <a href="javascript:;" class="editBtn"><i class="iconfont icon-bianji"></i>编辑</a>
+                        </li>
+                        <li class="layui-nav-item">
+                            <a href="javascript:;" class="deleteBtn"><i class="iconfont icon-shanchu"></i>删除</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
             <div class="table-page-header">
                 <div class="table-page-form">
                     <form class="layui-form" action="">
                         <div class="form-box">
                             <div class="layui-form-item form-left">
-                                    <div class="table-form-item layui-input-inline">
-                                            <p id ="titleIns">全部</p>
-                                        </div>
                                 <div class="table-form-item layui-input-inline">
+                                    <span id ="titleIns" class="input-span">全部</span>
                                     <input type="text" name="name" placeholder="名称" autocomplete="off" class="layui-input">
                                     <input type="hidden" name="instid" id="instid" value=""  autocomplete="off" class="layui-input">
                                 </div>
-
                             </div>
                             <div class="layui-form-item form-right">
                                 <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="searchForm">
@@ -38,30 +50,23 @@
                             </div>
                         </div>
                     </form>
-
                 </div>
             </div>
-            <div class="table-content">
-                <div class="table-content-title">
-                    <div class="table-tools">
-                        <ul class="layui-nav" lay-filter="talbe-tools">
-                            <li class="layui-nav-item">
-                                <a href="javascript:;" class="creatUser">添加货权人</a>
-                            </li>
-                        </ul>
-                        <ul class="layui-layout-right">
-                            <li><a href="javascript:;" class="editBtn">编辑</a></li>
-                            <li><a href="javascript:;" class="deleteBtn">删除</a></li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="table-content-main">
-                    <table class="layui-hide" id="tableContainer-userlist" lay-filter="tableContainer-userlist"></table>
-                </div>
+            <div class="table-content-main">
+                <table class="layui-hide" id="tableContainer-userlist" lay-filter="tableContainer-userlist"></table>
             </div>
         </div>
     </div>
 </div>
+<style>
+    .lay-table-content {
+        padding: 0;
+    }
+    .table-content-main {
+        padding-right: 30px;
+        padding-left: 30px;
+    }
+</style>
 <script>
     layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'tree', 'eleTree'], function() {
         var element = layui.element;
@@ -71,7 +76,7 @@
         var formSelects = layui.formSelects;
         var laytpl = layui.laytpl;
         var eleTree = layui.eleTree;
-        var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 103); //内容区域所需减去的高度
+        var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 63); //内容区域所需减去的高度
 
         var eaitLayer; //编辑-弹层
 
@@ -118,19 +123,31 @@
                         type: 'checkbox'
                     },
                     {
+                        field: 'id',
+                        title: 'ID',
+                        sort: true
+                    }, {
                         field: 'name',
                         title: '名称',
+                        sort: true
+                    }, {
+                        field: 'mnemoniccode',
+                        title: '助记码',
+                        sort: true
+                    }, {
+                        field: 'instid',
+                        title: '功能设置类型ID',
                         sort: true
                     }, {
                         field: 'contacts',
                         title: '联系人',
                         sort: true
                     }, {
-                        field: 'personname',
+                        field: 'person',
                         title: '业务员',
                         sort: true
                     }, {
-                        field: 'fkpersonname',
+                        field: 'fkperson',
                         title: '风控人员',
                         sort: true
                     }, {
@@ -182,14 +199,11 @@
                         type: 1,
                         content: str, //注意，如果str是object，那么需要字符拼接。
                         resize: false,
-                        area: ['800px', 'auto'],
+                        area: ['800px', '560px'],
                     });
                 });
             }
         });
-
-
-
 
         $("#allRefresh").click(function() {
             // 刷新表格
@@ -199,7 +213,6 @@
                 }
             });
         });
-
 
         $(".deleteBtn").click(function() {
             //删除
@@ -246,7 +259,7 @@
                     type: 1,
                     content: str,
                     resize: false,
-                    area: ['800px', 'auto'],
+                    area: ['800px', '560px'],
                 });
             });
         });
@@ -260,7 +273,7 @@
                 title = '确认提交修改';
                 userUrl = updOwner;
             } else {
-                title = '确认添加'
+                title = '确认添加';
                 userUrl = addOwner;
                 data.field.id = null;
             }
@@ -295,7 +308,7 @@
                         });
                     }
                 });
-            })
+            });
             return false;
         });
 
@@ -309,7 +322,7 @@
                 success: funSuc,
                 error: funErr
             })
-        };
+        }
         
         listIns();
         //用户类型菜单树
@@ -396,7 +409,7 @@
                     type: 1,
                     content: str,
                     resize: false,
-                    area: ['800px', '45%'],
+                    area: ['800px', '560px'],
                 });
             });
         });
@@ -412,7 +425,7 @@
                     type: 1,
                     content: str, //注意，如果str是object，那么需要字符拼接。
                     resize: false,
-                    area: ['800px', '45%'],
+                    area: ['800px', '560px'],
                 });
             });
         });
@@ -448,11 +461,9 @@
                         listIns();
                     }
                 });
-            })
+            });
             return false;
         });
-
-
 
 
         form.on('submit(addInsSubmit)', function(data) {
@@ -487,11 +498,9 @@
                         listIns();
                     }
                 });
-            })
+            });
             return false;
         });
-         
-
 
     });
 </script>

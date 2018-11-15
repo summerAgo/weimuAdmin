@@ -15,13 +15,15 @@
     height: 88px;
     margin-right: 30px;
     overflow: hidden;
+    padding-left: 20px;
 }
 
 .count-item-top {
     width: auto;
     height: 28px;
-    padding: 0 10px 0 20px;
+    padding: 0 10px 0;
     color: #fff;
+    border-bottom: 1px solid #fff;
 }
 
 .count-item-top>.top-l {
@@ -37,27 +39,15 @@
 }
 
 .count .count-item[data-color="green"] {
-    border: 1px solid #06a488;
+    background-color: #6a77cf;
 }
 
 .count .count-item[data-color="blue"] {
-    border: 1px solid #07b1bd;
+    background-color: #1684e1;
 }
 
 .count .count-item[data-color="orange"] {
-    border: 1px solid#f58935;
-}
-
-.count .count-item[data-color="green"]>.count-item-top {
-    background-color: #06a488;
-}
-
-.count .count-item[data-color="blue"]>.count-item-top {
-    background-color: #07b1bd;
-}
-
-.count .count-item[data-color="orange"]>.count-item-top {
-    background-color: #f58935;
+    background-color: #ae47b1;
 }
 
 .count-item-body {
@@ -65,18 +55,7 @@
     font-size: 36px;
     line-height: 60px;
     padding: 0 15px;
-}
-
-.count .count-item[data-color="green"]>.count-item-body {
-    color: #06a488;
-}
-
-.count .count-item[data-color="blue"]>.count-item-body {
-    color: #07b1bd;
-}
-
-.count .count-item[data-color="orange"]>.count-item-body {
-    color: #f58935;
+    color: #fff;
 }
 
 .flow-title {
