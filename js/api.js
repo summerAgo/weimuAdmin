@@ -149,3 +149,4 @@ var setOutCordon = pathUrl + "risk/control/setOutCordon"//修改警戒线设置
 //盘点记录
 var checkList = pathUrl + "check/recordlist/list";//盘点记录列表
 var checkAdd = pathUrl + "check/recordlist/add";//盘点保存
+var endInventory = pathUrl + "check/recordlist/endInventory";//确认盘点
