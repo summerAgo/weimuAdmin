@@ -100,7 +100,7 @@
         element.render('talbe-tools'); //表格工具栏
 
         formSelects.data('ownerSelectLayer', 'local', {
-            arr: selectDataInstall(ownerDropdown) //货权人列表
+            arr: selectDataInstall(ownerDropdown,null,null,0) //货权人列表
         });
 
         layui.formSelects.opened('depotSelectLayer', function(id) {
@@ -135,7 +135,7 @@
             } else {
                 var depotList = selectDataInstall(depotDropdown, {
                     "ownerid": vals[0].value //仓库列表
-                }, true);
+                }, true,0);
 
                 if (depotList.length < 1) {
                     formSelects.data('depotSelectLayer', 'local', {
@@ -153,7 +153,7 @@
                 formSelects.data('positionSelectLayer', 'local', {
                     arr: selectDataInstall(positionDropdown, {
                         "depotid": depotList[0].value
-                    }, true) //库位列表
+                    }, true,0) //库位列表
                 });
             }
         }, true);
@@ -168,20 +168,20 @@
                 formSelects.data('positionSelectLayer', 'local', {
                     arr: selectDataInstall(positionDropdown, {
                         "depotid": vals[0].value
-                    }, true) //仓库列表
+                    }, true,0) //仓库列表
                 });
             }
         }, true);
 
         formSelects.data('originSelectLayer', 'local', {
-            arr: selectDataInstall(CHDList) //产地列表
+            arr: selectDataInstall(CHDList,null,1) //产地列表
         });
 
         formSelects.data('supplierSelectLayer', 'local', {
-            arr: selectDataInstall(dropSupplier) //供应商列表
+            arr: selectDataInstall(dropSupplier,null,1) //供应商列表
         });
 
-        function selectDataInstall(url, param, bool) {
+        function selectDataInstall(url, param, bool,type) {
             //下拉选框数据组装
             var arr = [];
             //获取列表数据
@@ -200,10 +200,18 @@
                             return false;
                         }
                         for (var i = 0; i < data.data.length; i++) {
-                            arr.push({
-                                "name": data.data[i].name,
-                                "value": data.data[i].id
-                            })
+                            if(type == 0){
+                                arr.push({
+                                    "name": data.data[i].name,
+                                    "value": data.data[i].id
+                                })
+                            }else{
+                                arr.push({
+                                    "name": data.data[i].name,
+                                    "value": data.data[i].name
+                                })
+                            }
+                            
                         }
                         if (bool) {
                             arr[0].selected = "selected";
