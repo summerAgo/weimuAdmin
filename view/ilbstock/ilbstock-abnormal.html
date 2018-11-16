@@ -1,56 +1,77 @@
 <div class="table-page">
+    <div class="table-content-title">
+        <div class="table-tools">
+            <ul class="layui-nav" lay-filter="talbe-tools">
+                <li class="layui-nav-item"><a id="toExport" href="javascript:;"><i class="iconfont icon-daochu"></i>导出数据</a></li>
+                <li class="layui-nav-item"><a href="javascript:;" class="saveNumBtn"><i class="iconfont icon-baocun"></i>保存</a></li>
+                <li class="layui-nav-item"><a href="javascript:;" class="addBtn"><i class="iconfont icon-zengjiakucun"></i>增加库存</a></li>
+                <li class="layui-nav-item"><a href="javascript:;" class="reduceBtn"><i class="iconfont icon-jianshaokucun"></i>减少库存</a></li>
+                <li class="layui-nav-item"><a href="javascript:;" class="splitBtn"><i class="iconfont icon-kucunchaifen"></i>库存拆分</a></li>
+                <li class="layui-nav-item"><a href="javascript:;" class="modifyBtn"><i class="iconfont icon-xiugaileibie"></i>修改</a></li>
+            </ul>
+        </div>
+    </div>
     <div class="table-page-header">
         <div class="table-page-form">
             <form class="layui-form" action="">
                 <div class="form-box">
                     <div class="layui-form-item form-left">
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">货柜号</span>
                             <select name="ownerid" xm-select="ownerSelect" xm-select-radio>
-                                <option value="">选择货权人</option>
+                                <option value="">货权人</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">仓库名称</span>
                             <select name="depotid" xm-select="depotSelect" xm-select-radio>
                                 <option value="">仓库名称</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">包号</span>
                             <input type="text" name="code" placeholder="包号" autocomplete="off" class="layui-input">
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">品种</span>
                             <select name="varieties" xm-select="selectVarieties" xm-select-radio>
                                 <option value="">品种</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">规格/厚度</span>
                             <select name="spec" xm-select="selectSpec" xm-select-radio>
                                 <option value="">规格/厚度</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">等级</span>
                             <select name="levels" xm-select="selectLevels" xm-select-radio>
                                 <option value="">等级</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">长度</span>
                             <input type="text" name="chang" placeholder="长度" autocomplete="off" class="layui-input">
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">品牌</span>
                             <select name="brand" xm-select="brandLevels" xm-select-radio>
                                 <option value="">品牌</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">产地</span>
                             <select name="origin" xm-select="originSelect" xm-select-radio>
-                                <option value="">选择产地</option>
+                                <option value="">产地</option>
                             </select>
                         </div>
                     </div>
                     <div class="layui-form-item form-right">
+                        <button type="reset" class="layui-btn layui-btn-gray"> <i class="layui-icon layui-icon-refresh"></i></button>
                         <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="searchForm">
                             <i class="iconfont icon-sousuo"></i> <span>查询</span>
                         </button>
-                        <button type="reset" class="layui-btn layui-btn-primary"> <i class="layui-icon layui-icon-refresh"></i></button>
                     </div>
                 </div>
             </form>
@@ -58,25 +79,6 @@
         </div>
     </div>
     <div class="table-content">
-        <div class="table-content-title">
-            <div class="table-tools">
-                <ul class="layui-nav" lay-filter="talbe-tools">
-                    <li class="layui-nav-item">
-                        <a id="toExport" href="javascript:;">导出数据</a>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;">打印</a>
-                    </li>
-                </ul>
-                <ul class="layui-layout-right">
-                    <li><a href="javascript:;" class="saveNumBtn">保存</a></li>
-                    <li><a href="javascript:;" class="addBtn">增加库存</a></li>
-                    <li><a href="javascript:;" class="reduceBtn">减少库存</a></li>
-                    <li><a href="javascript:;" class="splitBtn">库存拆分</a></li>
-                    <li><a href="javascript:;" class="modifyBtn">修改</a></li>
-                </ul>
-            </div>
-        </div>
         <div class="table-content-main">
             <table class="layui-hide" id="tableContainer-abnormal" lay-filter="tableContainer-abnormal"></table>
         </div>
@@ -243,8 +245,7 @@
                         type: 'checkbox'
                     }, {
                         field: 'ownername',
-                        title: '货权人',
-                        sort: true
+                        title: '货权人'
                     }, {
                         field: 'depname',
                         title: '仓库名称'
@@ -397,8 +398,7 @@
                                 type: 'checkbox'
                             }, {
                                 field: 'orderno',
-                                title: '单号',
-                                sort: true
+                                title: '单号'
                             }, {
                                 field: 'name',
                                 title: '货权人'
@@ -407,35 +407,28 @@
                                 title: '仓库名称'
                             }, {
                                 field: 'billloading',
-                                title: '提运单',
-                                sort: true
+                                title: '提运单'
                             }, {
                                 field: '',
                                 title: '库存件数(包)'
                             }, {
                                 field: '',
-                                title: '实际件数(包)',
-                                sort: true
+                                title: '实际件数(包)'
                             }, {
                                 field: 'num',
-                                title: '库存数量(m³)',
-                                sort: true
+                                title: '库存数量(m³)'
                             }, {
                                 field: 'actualnum',
-                                title: '实际数量(m³)',
-                                sort: true
+                                title: '实际数量(m³)'
                             }, {
                                 field: 'createdate',
-                                title: '创建日期',
-                                sort: true
+                                title: '创建日期'
                             }, {
                                 field: '',
-                                title: '操作员',
-                                sort: true
+                                title: '操作员'
                             }, {
                                 field: '',
-                                title: '状态',
-                                sort: true
+                                title: '状态'
                             }
                         ]
                     ],
