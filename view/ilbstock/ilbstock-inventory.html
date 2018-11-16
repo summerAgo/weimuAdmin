@@ -231,7 +231,7 @@
                         field: 'depname',
                         title: '仓库',
                         event: 'click',
-                        style: 'color:blue'
+                        style: 'color:#4394ff;cursor: pointer;'
                     }, {
                         field: 'username',
                         title: '盘点人'
@@ -240,7 +240,7 @@
                         title: '状态',
                         templet: function(d) {
                             if (d.status == 0) {
-                                return "正在盘点";
+                                return "<span style='color:red'>正在盘点</span>";
                             }
                             if (d.status == 1) {
                                 return "已完成";
@@ -273,8 +273,15 @@
                         type: 1,
                         content: str, // 注意，如果str是object，那么需要字符拼接。
                         area: ['80%', '80%'],
+                        end: function() {
+                            tableIns.reload({
+                                page: {
+                                    curr: 1 // 重新从第 1 页开始
+                                }
+                            });
+                        }
                     });
-                    
+
 
 
                 });
@@ -290,6 +297,13 @@
                     type: 1,
                     content: str, // 注意，如果str是object，那么需要字符拼接。
                     area: ['80%', '80%'],
+                    end: function() {
+                        tableIns.reload({
+                            page: {
+                                curr: 1 // 重新从第 1 页开始
+                            }
+                        });
+                    }
                 });
             });
         });

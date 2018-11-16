@@ -221,8 +221,8 @@
             ],
             even: true,
             page: true, //是否显示分页
-            limits: [10, 20, 30, 40, 50],
-            limit: 10, //每页默认显示的数量
+            limits: [15, 40, 45, 60],
+            limit: 15, //每页默认显示的数量
             done: function(res, curr, count) {},
             loading: true
         });
@@ -261,9 +261,11 @@
             console.log(tableDataArr);
 
             if (status) {
-                status = editAprice(dataObj, tableDataArr, url); //提交评估单价
+                status = editAprice(dataObj, tableDataArr, url); 
                 if (status) {
-                    numChangeValue = {}; //如果提交成功清空估价数组
+                    numChangeValue = {};
+                    console.log(1)
+                    layer.closeAll();
                 }
             } else {
                 return false;
