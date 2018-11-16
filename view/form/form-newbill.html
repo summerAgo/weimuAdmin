@@ -97,7 +97,7 @@
         element.render('talbe-tools'); //表格工具栏
 
         formSelects.data('ownerSelectLayer', 'local', {
-            arr: selectDataInstall(ownerDropdown,null,null,0) //货权人列表
+            arr: selectDataInstall(ownerDropdown, null, null, 0) //货权人列表
         });
 
         layui.formSelects.opened('depotSelectLayer', function(id) {
@@ -132,7 +132,7 @@
             } else {
                 var depotList = selectDataInstall(depotDropdown, {
                     "ownerid": vals[0].value //仓库列表
-                }, true,0);
+                }, true, 0);
 
                 if (depotList.length < 1) {
                     formSelects.data('depotSelectLayer', 'local', {
@@ -150,7 +150,7 @@
                 formSelects.data('positionSelectLayer', 'local', {
                     arr: selectDataInstall(positionDropdown, {
                         "depotid": depotList[0].value
-                    }, true,0) //库位列表
+                    }, true, 0) //库位列表
                 });
             }
         }, true);
@@ -165,20 +165,20 @@
                 formSelects.data('positionSelectLayer', 'local', {
                     arr: selectDataInstall(positionDropdown, {
                         "depotid": vals[0].value
-                    }, true,0) //仓库列表
+                    }, true, 0) //仓库列表
                 });
             }
         }, true);
 
         formSelects.data('originSelectLayer', 'local', {
-            arr: selectDataInstall(CHDList,null,1) //产地列表
+            arr: selectDataInstall(CHDList, null, 1) //产地列表
         });
 
         formSelects.data('supplierSelectLayer', 'local', {
-            arr: selectDataInstall(dropSupplier,null,1) //供应商列表
+            arr: selectDataInstall(dropSupplier, null, 1) //供应商列表
         });
 
-        function selectDataInstall(url, param, bool,type) {
+        function selectDataInstall(url, param, bool, type) {
             //下拉选框数据组装
             var arr = [];
             //获取列表数据
@@ -197,18 +197,18 @@
                             return false;
                         }
                         for (var i = 0; i < data.data.length; i++) {
-                            if(type == 0){
+                            if (type == 0) {
                                 arr.push({
                                     "name": data.data[i].name,
                                     "value": data.data[i].id
                                 })
-                            }else{
+                            } else {
                                 arr.push({
                                     "name": data.data[i].name,
                                     "value": data.data[i].name
                                 })
                             }
-                            
+
                         }
                         if (bool) {
                             arr[0].selected = "selected";
@@ -313,7 +313,7 @@
             limits: [tableData.length],
             limit: tableData.length, //每页默认显示的数量
             done: function(res, curr, count) {
-                var addtableBtn = '<div class="rightBotBtn" id="form-rightBtn">已新增<span>' + count + '</span>个货物</div>';
+                // var addtableBtn = '<div class="rightBotBtn" id="form-rightBtn">已新增<span>' + count + '</span>个货物</div>';
                 //只有点击列表入库订单时才显示入库操作
                 var ordernoss = JSON.parse(sessionStorage.getItem('newbill_orderno'));
                 if (ordernoss) {
@@ -324,9 +324,9 @@
                 }
 
 
-                if ($("#form-rightBtn").length < 1) {
-                    $("#tableContainer-from").siblings(".layui-form ").find(".layui-table-page").append(addtableBtn);
-                }
+                // if ($("#form-rightBtn").length < 1) {
+                //     $("#tableContainer-from").siblings(".layui-form ").find(".layui-table-page").append(addtableBtn);
+                // }
 
                 $(".subConfirmBtn").unbind("click").bind("click", function() {
                     event.stopPropagation();
@@ -381,7 +381,6 @@
                     }
                 }
             })
-
         })
 
         if (orderno) {
@@ -447,15 +446,6 @@
                 }
             })
         }
-
-        // table.on('edit(tableContainer-from)', function(obj) {
-        //     var value = obj.value,
-        //         data = obj.data,
-        //         field = obj.field;
-        //         console.log(value)
-        //     console.log(data)
-        //     layer.msg('[ID: ' + data.id + '] ' + field + ' 字段更改为：' + value);
-        // });
 
         table.on('tool(tableContainer-from)', function(obj) {
             var data = obj.data; //获得当前行数据
@@ -549,6 +539,7 @@
             //     return;
             // }
 
+            tableData = table.cache["tableContainer-from"];
 
             var arr = JSON.stringify(tableData);
             // console.log(arr);
