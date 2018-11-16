@@ -1,4 +1,16 @@
 <div class="table-page">
+    <div class="table-content-title">
+        <div class="table-tools">
+            <ul class="layui-nav" lay-filter="talbe-tools">
+                <li class="layui-nav-item">
+                    <a href="javascript:;" id="toExport"><i class="iconfont icon-daochu"></i>导出数据</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;" id="ondayin"><i class="iconfont icon-dayin"></i>打印</a>
+                </li>
+            </ul>
+        </div>
+    </div>
     <div class="table-page-header">
         <div class="table-page-form">
             <div class="lss-bread-crumb" id="details-title">
@@ -7,18 +19,7 @@
         </div>
     </div>
     <div class="table-content">
-        <div class="table-content-title">
-            <div class="table-tools">
-                <ul class="layui-nav" lay-filter="talbe-tools">
-                    <li class="layui-nav-item">
-                        <a href="javascript:;" id="toExport">导出数据</a>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;" id="ondayin">打印</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+
         <div class="table-content-main">
             <table class="layui-hide" id="tableContainer_billDetails" lay-filter="tableContainer_billDetails"></table>
         </div>
@@ -243,7 +244,7 @@
             sessionStorage.setItem('dayin_orderno', orderno);
             window.open(url, '打印', 'height=800, width=1100, top=100, left=100, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no');
         });
-        
+
     });
 
     // function dayin(t) {
