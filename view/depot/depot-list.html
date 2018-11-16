@@ -5,9 +5,9 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;" class="addDepotBtn"><i class="iconfont icon-tianjia"></i>新增仓库</a>
                 </li>
-                <li class="layui-nav-item">
+                <!-- <li class="layui-nav-item">
                     <a id="toExport" href="javascript:;"><i class="iconfont icon-daochu"></i>导出</a>
-                </li>
+                </li> -->
                 <li class="layui-nav-item">
                     <a href="javascript:;" class="changeBtn"><i class="iconfont icon-bianji"></i>修改</a>
                 </li>
@@ -30,13 +30,13 @@
                             <span class="input-span">仓库编号</span>
                             <input type="text" name="code" placeholder="仓库编号" autocomplete="off" class="layui-input">
                         </div>
-                        <div class="table-form-item layui-input-inline">
+                        <!-- <div class="table-form-item layui-input-inline">
                             <span class="input-span">管仓</span>
                             <select name="type" xm-select="" xm-select-radio>
                                 <option value="0">监管仓</option>
                                 <option value="-1">自由仓</option>
                             </select>
-                        </div>
+                        </div> -->
                     </div>
                     <div class="layui-form-item form-right">
                         <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="searchForm">
@@ -117,10 +117,6 @@
                     }, {
                         field: 'ownername',
                         title: '货权人',
-                        sort: true
-                    }, {
-                        field: 'personname',
-                        title: '负责人',
                         sort: true
                     }, {
                         field: 'address',

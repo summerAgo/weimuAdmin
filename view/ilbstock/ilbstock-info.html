@@ -5,9 +5,9 @@
                 <li class="layui-nav-item">
                     <a id="toExport" href="javascript:;"><i class="iconfont icon-daochu"></i> 导出数据</a>
                 </li>
-                <li class="layui-nav-item">
+                <!-- <li class="layui-nav-item">
                     <a href="javascript:;"><i class="iconfont icon-dayin"></i> 打印</a>
-                </li>
+                </li> -->
             </ul>
             <!-- <ul class="layui-layout-right">
                             <li><a href="javascript:;" class="editBtn">编辑</a></li>
@@ -107,26 +107,26 @@
         });
 
         formSelects.data('selectVarieties', 'local', {
-            arr: selectDataInstall(VTSList) //品种列表
+            arr: selectDataInstall(VTSList,null,1) //品种列表
         });
 
         formSelects.data('selectLevels', 'local', {
-            arr: selectDataInstall(levelsList) //等级列表
+            arr: selectDataInstall(levelsList,null,1) //等级列表
         });
 
         formSelects.data('selectSpec', 'local', {
-            arr: selectDataInstall(specList) //规格列表
+            arr: selectDataInstall(specList,null,1) //规格列表
         });
 
         formSelects.data('ownerSelect', 'local', {
-            arr: selectDataInstall(ownerDropdown) //货权人列表
+            arr: selectDataInstall(ownerDropdown,null,0) //货权人列表
         });
 
         formSelects.data('originSelect', 'local', {
-            arr: selectDataInstall(CHDList) //产地列表
+            arr: selectDataInstall(CHDList,null,1) //产地列表
         });
 
-        function selectDataInstall(url, param) {
+        function selectDataInstall(url, param,type) {
             //下拉选框数据组装
             var arr = [];
             //获取列表数据
@@ -145,10 +145,18 @@
                             return false;
                         }
                         for (var i = 0; i < data.data.length; i++) {
-                            arr.push({
-                                "name": data.data[i].name,
-                                "value": data.data[i].name
-                            })
+                            if(type == 1){
+                                arr.push({
+                                    "name": data.data[i].name,
+                                    "value": data.data[i].name
+                                })
+                            }else{
+                                arr.push({
+                                    "name": data.data[i].name,
+                                    "value": data.data[i].id
+                                })
+                            }
+                            
                         }
                     }
                 }
