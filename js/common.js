@@ -51,3 +51,18 @@ function delCookie(name) {
     if (cval != null)
         document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
 }
+//数组去重
+Array.prototype.unique = function() {
+    // n为hash表，r为临时数组
+    var n = {}, r = [];
+    for (var i = 0; i < this.length; i++) {
+        // 如果hash表中没有当前项
+        if (!n[this[i]]) {
+            // 存入hash表
+            n[this[i]] = true;
+            // 把当前数组的当前项push到临时数组里面
+            r.push(this[i]); 
+        }
+    }
+    return r;
+}
