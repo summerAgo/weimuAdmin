@@ -15,7 +15,7 @@
                     <a href="javascript:;" class="addGoodsBtn"><i class="iconfont icon-tianjiahuowu"></i>添加货物信息</a>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;" class="submissionBtn"><i class="iconfont icon-ruku"></i>入库</a>
+                    <a href="javascript:;" class="submissionLayBtn"><i class="iconfont icon-ruku"></i>入库</a>
                 </li>
                 <li class="layui-nav-item">
                     <a href="javascript:;" class="subConfirmBtn"><i class="iconfont icon-baocun"></i>保存</a>
@@ -314,9 +314,9 @@
                 var ordernoss = JSON.parse(sessionStorage.getItem('newbill_orderno'));
                 if (ordernoss) {
                     // addtableBtn += '<a href="javascript:;" class="layui-btn layui-btn-sm submissionBtn">入库</a>';
-                    $(".submissionBtn").show();
+                    $(".submissionLayBtn").show();
                 }else{
-                    $(".submissionBtn").hide();
+                    $(".submissionLayBtn").hide();
                 }
 
 
@@ -324,7 +324,10 @@
                     $("#tableContainer-from").siblings(".layui-form ").find(".layui-table-page").append(addtableBtn);
                 }
 
-                $(".subConfirmBtn").click(subConfun);
+                $(".subConfirmBtn").click(function(){
+                    subConfun();
+                });
+
                 $(".subCancelBtn").click(function() {
                     layer.closeAll();
                 })
@@ -347,7 +350,7 @@
 
         var orderno = JSON.parse(sessionStorage.getItem('newbill_orderno'));
 
-        $(".submissionBtn").click(function() {
+        $(".submissionLayBtn").click(function() {
             if(!orderno){
                 return false;
             }

@@ -1,9 +1,9 @@
 <div class="table-page">
     <div class="table-page-header">
         <div class="table-page-form">
-            <blockquote class="layui-elem-quote" id="details-title">
+            <div class="lss-bread-crumb" id="details-title">
 
-            </blockquote>
+            </div>
         </div>
     </div>
     <div class="table-content">
@@ -25,42 +25,40 @@
     </div>
 </div>
 <script id="detailsTle" type="text/html">
-    <ul class="layer-title">
-    <li>
+    <div class="lss-bread-item">
         {{# if(d.type === "outHistory"){}}
-        <small>出库订单号</small>
+        <p>出库订单号</p>
         {{#  } else{ }}
-        <small>入库订单号</small>
+        <p>入库订单号</p>
         {{#  } }}
-        <h3>{{d.data.orderno}}</h3>
-    </li>
-    <li>
-        <small>货权人</small>
-        <h3>{{d.data.ownername}}</h3>
-    </li>
-    <li>
-        <small>仓库名称</small>
-        <h3>{{d.data.depname}}</h3>
-    </li>
+        <p>{{d.data.orderno}}</p>
+    </div>
+    <div class="lss-bread-item">
+        <p>货权人</p>
+        <p>{{d.data.ownername}}</p>
+    </div>
+    <div class="lss-bread-item">
+        <p>仓库名称</p>
+        <p>{{d.data.depname}}</p>
+    </div>
     {{# if(d.data.outdate){}}
-        <li>
-            <small>出库时间</small>
-            <h3>{{d.data.outdate}}</h3>
-        </li>
-        <li>
-            <small>司机姓名</small>
-            <h3>{{d.vname||""}}</h3>
-        </li>
-        <li>
-            <small>车牌号</small>
-            <h3>{{d.vehnum||""}}</h3>
-        </li>
-        <li>
-            <small>司机身份号</small>
-            <h3>{{d.card||""}}</h3>
-        </li>
+        <div class="lss-bread-item">
+            <p>出库时间</p>
+            <p>{{d.data.outdate}}</p>
+        </div>
+        <div class="lss-bread-item">
+            <p>司机姓名</p>
+            <p>{{d.vname||""}}</p>
+        </div>
+        <div class="lss-bread-item">
+            <p>车牌号</p>
+            <p>{{d.vehnum||""}}</p>
+        </div>
+        <div class="lss-bread-item">
+            <p>司机身份号</p>
+            <p>{{d.card||""}}</p>
+        </div>
     {{#  } }}
-</ul>
 </script>
 <style scoped>
     .layui-elem-quote {
@@ -132,10 +130,6 @@
         }, {
             field: "origin",
             title: "产地",
-            sort: true
-        }, {
-            field: "actualnum",
-            title: "实际数量（m³）",
             sort: true
         }, {
             field: "updauser",
@@ -236,7 +230,7 @@
         $("#toExport").on('click', function(e) {
             window.location.href = ilbstockExportUrl
         });
-        
+
         //打印
         $("#ondayin").on('click', function(e) {
             var orderno = billDetails.data.orderno
@@ -249,18 +243,19 @@
             sessionStorage.setItem('dayin_orderno', orderno);
             window.open(url, '打印', 'height=800, width=1100, top=100, left=100, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no');
         });
+        
     });
 
     // function dayin(t) {
     //         var Width = window.innerWidth;
     //         var Height = window.innerHeight;
-            
+
     //         //弹出准备打印窗口
     //         var wind = window.open(winhtml, '打印', 'height=' + Height + ', width=' + Width + ', top=100, left=100, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no');
     //         //将需打印的内容放在准备打印窗口中
     //         wind.document.body.innerHTML = winhtml;
     //         //开始打印
-            
+
     //         return false;
     //     }
 </script>
