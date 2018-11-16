@@ -8,11 +8,11 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;" id="toImport"><i class="iconfont icon-daoru"></i>导入数据</a>
                 </li>
-                <li class="layui-nav-item">
+                <!-- <li class="layui-nav-item">
                     <a href="javascript:;"><i class="iconfont icon-dayin"></i>打印</a>
-                </li>
+                </li> -->
                 <li class="layui-nav-item">
-                    <a href="javascript:;"><i class="iconfont icon-tianjiahuowu"></i>添加货物信息</a>
+                    <a href="javascript:;" class="addGoodsBtn"><i class="iconfont icon-tianjiahuowu"></i>添加货物信息</a>
                 </li>
                 <li class="layui-nav-item">
                     <a href="javascript:;" class="submissionBtn"><i class="iconfont icon-ruku"></i>入库</a>
@@ -215,8 +215,7 @@
             return arr;
         }
 
-        form.on('submit(addGoodsBtn)', function(data) {
-            window.billBaseInfo = data.field;
+        $(".addGoodsBtn").click(function(){
             $.get('view/form/form-goods.html', {}, function(str) {
                 addLayer = layer.open({
                     title: '添加货物信息',
