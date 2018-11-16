@@ -1,21 +1,36 @@
 <div class="table-page">
+    <div class="table-content-title layer-level">
+        <div class="table-tools">
+            <ul class="layui-nav" lay-filter="talbe-tools">
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="saveBtn"><i class="iconfont icon-baocun"></i>保存修改</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="confirmBtn"><i class="iconfont icon-querenpandian"></i>确认盘点</a>
+                </li>
+            </ul>
+        </div>
+    </div>
     <div class="table-page-header layer-header">
         <div class="table-page-form">
             <form class="layui-form" action="">
                 <div class="form-box">
                     <div class="layui-form-item form-left">
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">货权人</span>
                             <select name="ownerid" xm-select="ownerSelect" xm-select-radio lay-verify="required">
-                                <option value="">选择货权人</option>
+                                <option value="">货权人</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">仓库</span>
                             <select name="depotid" xm-select="depotSelect" xm-select-radio lay-verify="required">
-                                <option value="">选择仓库</option>
+                                <option value="">仓库</option>
                             </select>
                         </div>
                     </div>
                     <div class="layui-form-item form-right">
+                        <button type="reset" class="layui-btn layui-btn-gray"> <i class="layui-icon layui-icon-refresh"></i></button>
                         <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="searchForm-layer">
                             <i class="iconfont icon-sousuo"></i> <span>查询</span>
                         </button>
@@ -26,18 +41,7 @@
         </div>
     </div>
     <div class="table-content">
-        <div class="table-content-title">
-            <div class="table-tools">
-                <ul class="layui-nav" lay-filter="talbe-tools">
-                    <li class="layui-nav-item">
-                        <a href="javascript:;" class="saveBtn">保存修改</a>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;" class="confirmBtn">确认盘点</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+
         <div class="table-content-main">
             <table class="layui-hide" id="tableContainer-layerInventory" lay-filter="tableContainer-layerInventory"></table>
         </div>
@@ -240,7 +244,9 @@
             console.log(numChangeValue);
         });
 
-        $(".saveBtn").click(function(){submitOrSave(depotData,numChangeValue,checkAdd)});
+        $(".saveBtn").click(function() {
+            submitOrSave(depotData, numChangeValue, checkAdd)
+        });
 
         function submitOrSave(dataObj, valueArr, url) {
             var status = true;
@@ -256,8 +262,6 @@
                 status = editAprice(dataObj, valueArr, url); //提交评估单价
                 if (status) {
                     numChangeValue = {}; //如果提交成功清空估价数组
-                } else {
-                    layer.msg("提交估价失败，请检查网络"); //估价提交失败提示
                 }
             } else {
                 return false;
