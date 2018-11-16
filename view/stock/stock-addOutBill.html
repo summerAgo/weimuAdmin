@@ -706,9 +706,6 @@
                             }, {
                                 field: 'remarks',
                                 title: '备注'
-                            }, {
-                                field: 'depotname',
-                                title: '仓库'
                             }
                         ]
                     ],
@@ -729,12 +726,12 @@
 
                 $("#addgoodList").click(function() {
                     var checkStatus = table.checkStatus('tableContainer-goodsList'); //表格选中状态
-                    if(tableData){
-                        tableData = tableData.concat(checkStatus.data);
-                    }else{
-                        tableData = checkStatus.data;
-                    }
-
+                    // if(tableData){
+                    //     tableData = tableData.concat(checkStatus.data);
+                    // }else{
+                    //     tableData = checkStatus.data;
+                    // }
+                    tableData = checkStatus.data;
                     // console.log(tableData);
                     layer.close(goodsListLayer); //关闭
                     // 刷新表格

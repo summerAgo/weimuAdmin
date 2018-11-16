@@ -251,7 +251,7 @@
             cols: [
                 [ //标题栏
                     {
-                        type: 'checkbox'
+                        type: 'radio'
                     },
                     {
                         field: 'orderno',
@@ -277,17 +277,18 @@
                     }, {
                         field: 'status',
                         title: '状态',
+
                         templet: function (d) {
                             if (d.status == 0) {
                                 return '出库申请';
                             }
                             if (d.status == 1) {
-                                return '待审核';
+                                return '<span style="color:red">待审核<span>';
                             }
                             if (d.status == 2) {
                                 return '审核通过';
                             }
-                            return '审核失败';
+                            return '<span style="color:red">审核失败<span>';;
                         }
 
                     }, {
@@ -312,7 +313,7 @@
             loading: true
         });
 
-        //入库
+        //出库
         $(".submOutBtn").click(function() {
             var checkStatus = table.checkStatus('tableContainers'); //表格选中状态
             if (checkStatus.data.length > 0) {
@@ -339,8 +340,33 @@
                                         curr: 1 //重新从第 1 页开始
                                     }
                                 });
+
+                                var msgstr = "";
+                                if(res.adopt){
+                                    msgstr = "审核通过<br/>";
+                                    $.each(res.adopt,function (i,v){
+                                        msgstr = "   "+ msgstr + v + "<br/>";
+                                    });
+                                    
+                                }
+                                if(res.noadopt){
+                                    //msgstr = msgstr+  "订单:"+res.noadopt+"<br/>请风控审核！";
+
+                                    msgstr = msgstr+ "请风控审核<br/>";
+                                    $.each(res.noadopt,function (i,v){
+                                        msgstr = "   "+ msgstr + v + "<br/>";
+                                    });
+
+                                }
+                                layer.msg(msgstr, {
+                                    time: 60000, //60s后自动关闭
+                                    btn: ['关闭']
+                                });
+                            }else{
+                                layer.msg(res.msg);
                             }
-                            layer.msg(res.msg);
+                            
+                            
                         }
                     });
                 });

@@ -25,9 +25,9 @@
                 </li>
 
             </ul>
-            <!-- <ul class="layui-layout-right">
-                        <li><a href="javascript:;" class="deleteBtn">删除</a></li>
-                    </ul> -->
+            <ul class="layui-layout-right">
+                <li><a href="javascript:;" class="deleteBtn">删除</a></li>
+            </ul>
         </div>
     </div>
     <div class="table-page-header">
@@ -249,9 +249,9 @@
             data: tableData,
             cols: [
                 [ //标题栏
-                    // {
-                    //     type: 'checkbox'
-                    // },
+                    {
+                         type: 'checkbox'
+                    },
                     {
                         field: 'code',
                         title: '包号',
@@ -479,7 +479,7 @@
 
         $(".deleteBtn").click(function() {
             var checkStatus = table.checkStatus('tableContainer-from');
-            console.log(checkStatus.data)
+            console.log(checkStatus);
             if (checkStatus.data.length < 1) {
                 layer.msg("请选择需要删除的信息");
             } else {
@@ -487,26 +487,19 @@
                     icon: 3,
                     title: '提示'
                 }, function(index) {
+
+
+                    // 刷新表格
+                    tableIns.reload({
+                        limit: tableData.length,
+                        page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                    });
+                    layer.msg(data.msg);
+
                     var rowId = [];
-                    $.each(checkStatus.data, function(i, v) {
-                        //获取所选行数ID
-                        rowId.push(v.orderno);
-                    });
-                    //调删除接口
-                    rowDataApi(preEntryDelete, {
-                        "ids": rowId
-                    }, function(data) {
-                        // 删除所选行成功
-                        layer.close(index);
-                        // 刷新表格
-                        tableIns.reload({
-                            limit: tableData.length,
-                            page: {
-                                curr: 1 //重新从第 1 页开始
-                            }
-                        });
-                        layer.msg(data.msg);
-                    });
+                    
                 });
             }
         });
