@@ -240,10 +240,10 @@
                         field: 'status',
                         title: '状态',
                         templet: function(d) {
-                            if(d.status == 0){
+                            if (d.status == 0) {
                                 return "正在盘点";
                             }
-                            if(d.status == 1){
+                            if (d.status == 1) {
                                 return "已完成";
                             }
                         }
@@ -266,35 +266,35 @@
         table.on('tool(tableContainer)', function(obj) {
             var curData = obj.data;
             if (obj.event === 'click') {
-                //sessionStorage.setItem('examineOrderID', curData.orderno);
-                
+                sessionStorage.setItem('inventoryParam', JSON.stringify(curData));
                 $.get('view/ilbstock/ilbstock-layerInventory.html', {}, function(str) { // 请求弹框
                     // 弹出弹框
                     inventoryLayer = layer.open({
-                        title: '盘点',
+                        title: '盘点详情',
                         type: 1,
                         content: str, // 注意，如果str是object，那么需要字符拼接。
                         area: ['80%', '80%'],
                     });
+                    
 
-            });
+
+                });
             }
         });
-        
-        
 
         $("#addBtn").click(function() {
+            sessionStorage.removeItem('inventoryParam');
             $.get('view/ilbstock/ilbstock-layerInventory.html', {}, function(str) { // 请求弹框
                 // 弹出弹框
                 inventoryLayer = layer.open({
-                    title: '盘点',
+                    title: '新建盘点表',
                     type: 1,
                     content: str, // 注意，如果str是object，那么需要字符拼接。
                     area: ['80%', '80%'],
                 });
-
             });
         });
+
 
     });
 </script>

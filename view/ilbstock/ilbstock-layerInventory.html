@@ -14,17 +14,17 @@
     <div class="table-page-header layer-header">
         <div class="table-page-form">
             <form class="layui-form" action="">
-                <div class="form-box">
+                <div class="form-box layerInventory">
                     <div class="layui-form-item form-left">
                         <div class="table-form-item layui-input-inline">
                             <span class="input-span">货权人</span>
-                            <select name="ownerid" xm-select="ownerSelect" xm-select-radio lay-verify="required">
+                            <select name="ownerid" xm-select="ownerSelectLayer" xm-select-radio lay-verify="required">
                                 <option value="">货权人</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
                             <span class="input-span">仓库</span>
-                            <select name="depotid" xm-select="depotSelect" xm-select-radio lay-verify="required">
+                            <select name="depotid" xm-select="depotSelectLayer" xm-select-radio lay-verify="required">
                                 <option value="">仓库</option>
                             </select>
                         </div>
@@ -59,7 +59,18 @@
         form.render(); //重置表单渲染
         formSelects.render(); //下拉选项
 
-        var depotData = {};
+        var depotData = {
+            ownerid: 0,
+            depotid: 0
+        };
+        var echoData = JSON.parse(sessionStorage.getItem('inventoryParam'));
+
+        if (echoData) {
+            $(".layerInventory").hide();
+            depotData.ownerid = echoData.ownerid;
+            depotData.depotid = echoData.depotid;
+        }
+
         form.on('submit(searchForm-layer)', function(data) {
             var paramSearch = {};
             for (var key in data.field) {
@@ -80,12 +91,12 @@
             return false;
         });
 
-        formSelects.data('ownerSelect', 'local', {
+        formSelects.data('ownerSelectLayer', 'local', {
             arr: selectDataInstall(ownerDropdown) //货权人列表
         });
 
-        layui.formSelects.opened('depotSelect', function(id) {
-            var ownerid = formSelects.value('ownerSelect', 'val'); //获取货权人ID
+        layui.formSelects.opened('depotSelectLayer', function(id) {
+            var ownerid = formSelects.value('ownerSelectLayer', 'val'); //获取货权人ID
             if (ownerid.length < 1) {
                 layer.msg("请先选择货权人");
                 formSelects.data(id, 'local', {
@@ -95,9 +106,9 @@
         });
 
         //监听
-        formSelects.on('ownerSelect', function(id, vals, val, isAdd, isDisabled) {
+        formSelects.on('ownerSelectLayer', function(id, vals, val, isAdd, isDisabled) {
             if (!isAdd) {
-                formSelects.data('depotSelect', 'local', {
+                formSelects.data('depotSelectLayer', 'local', {
                     arr: [] //清空仓库列表
                 });
             } else {
@@ -106,13 +117,13 @@
                 }, true);
 
                 if (depotList.length < 1) {
-                    formSelects.data('depotSelect', 'local', {
+                    formSelects.data('depotSelectLayer', 'local', {
                         arr: [] //清空仓库列表
                     });
                     layer.msg("该货权人下无仓库信息");
                     return false;
                 }
-                formSelects.data('depotSelect', 'local', {
+                formSelects.data('depotSelectLayer', 'local', {
                     arr: depotList //仓库列表
                 });
             }
@@ -153,12 +164,9 @@
 
         var tableIns = table.render({
             elem: '#tableContainer-layerInventory',
-            height: 'full - ' + $(".layer-header").innerHeight(),
+            height: 'auto',
             url: checklbList,
-            where: {
-                ownerid: 0,
-                depotid: 0
-            },
+            where: depotData,
             parseData: function(res) { //res 即为原始返回的数据
                 if (res.status !== 0) res.status = 0;
                 return {
@@ -234,9 +242,13 @@
             console.log(numChangeValue);
         });
 
-        $(".saveBtn").click(function(){submitOrSave(depotData,numChangeValue,checkAdd)});
-        
-        $(".confirmBtn").click(function(){submitOrSave(depotData,numChangeValue,endInventory)});
+        $(".saveBtn").click(function() {
+            submitOrSave(depotData, numChangeValue, checkAdd)
+        });
+
+        $(".confirmBtn").click(function() {
+            submitOrSave(depotData, numChangeValue, endInventory)
+        });
 
         function submitOrSave(dataObj, valueArr, url) {
             var status = true;
@@ -258,6 +270,7 @@
                 return false;
             }
         }
+        
         //保持提交  修改异常调整数据
         function editAprice(depotData, apriceJson, url) {
             //请求数据源示例
@@ -281,5 +294,6 @@
             });
             return status;
         };
+
     });
 </script>
