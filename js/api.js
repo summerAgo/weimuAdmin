@@ -150,3 +150,5 @@ var checklbList = pathUrl + "check/recordlist/lblist";//查
 var checkList = pathUrl + "check/recordlist/list";//盘点记录列表
 var checkAdd = pathUrl + "check/recordlist/add";//盘点保存
 var endInventory = pathUrl + "check/recordlist/endInventory";//确认盘点
+
+var getByidList = pathUrl + "check/recordlist/getByidList";//查询盘点记录 参数cid
