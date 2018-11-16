@@ -552,26 +552,8 @@
             }
 
 
-            var dataarr = [];
-            //第一步，先去除已在后台存在的数据
-            for (var i = 0; i < tableData.length; i++) {
-                var bean = tableData[i];
-                if (undefined == bean.id || null == bean.id) {
-                    dataarr.push(bean);
-                }
-            }
-            //如果当前没有添加新内容，则不提交后台
-            if (dataarr.length == 0) {
-                //关闭窗口
-                layer.closeAll();
-                return;
-            }
-            // console.log(dataarr);
-
-            // console.log(table.cache["tableContainer-from"]);
-            // console.log(dataarr);
-
-            var arr = JSON.stringify(dataarr);
+            var arr = JSON.stringify(tableData);
+            console.log(arr);
             //第二步，提交到后台
             var num;
             if (!orderno) {

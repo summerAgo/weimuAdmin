@@ -39,19 +39,8 @@
                         <div class="form-box">
                             <div class="layui-form-item form-left">
                                 <div class="table-form-item layui-input-inline">
-                                    <span class="input-span">标识</span>
-                                    <input type="text" name="code" placeholder="标识" autocomplete="off" class="layui-input">
-                                </div>
-                                <div class="table-form-item layui-input-inline">
                                     <span class="input-span">名称</span>
                                     <input type="text" name="name" placeholder="名称" autocomplete="off" class="layui-input">
-                                </div>
-                                <div class="table-form-item layui-input-inline">
-                                    <span class="input-span">状态</span>
-                                    <select name="status" xm-select="" xm-select-radio>
-                                        <option value="0">正常</option>
-                                        <option value="-1">已删除</option>
-                                    </select>
                                 </div>
                                 <input type="hidden" name="instid" id="instid" value="" autocomplete="off" class="layui-input">
                             </div>
@@ -150,15 +139,6 @@
                         field: 'createuser',
                         title: '创建人',
                         sort: true
-                    }, {
-                        field: 'status',
-                        title: '状态',
-                        templet: function (d) {
-                            if (d.status == 0) {
-                                return '正常';
-                            }
-                            return '已删除';
-                        }
                     }
                 ]
             ],

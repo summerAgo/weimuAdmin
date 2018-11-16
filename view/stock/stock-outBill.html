@@ -269,9 +269,6 @@
                         field: 'num',
                         title: '件数（包）'
                     }, {
-                        field: 'suppliername',
-                        title: '供应商'
-                    }, {
                         field: 'volume',
                         title: '数量（m³）'
                     }, {
@@ -281,13 +278,13 @@
                         field: 'status',
                         title: '状态',
                         templet: function (d) {
-                            if (d.type == 0) {
+                            if (d.status == 0) {
                                 return '出库申请';
                             }
-                            if (d.type == 1) {
+                            if (d.status == 1) {
                                 return '待审核';
                             }
-                            if (d.type == 2) {
+                            if (d.status == 2) {
                                 return '审核通过';
                             }
                             return '审核失败';
@@ -337,17 +334,13 @@
                         async: false,
                         success: function(res) {
                             if (res.status == 0) {
-                                layer.msg("出库成功");
                                 tableIns.reload({
                                     page: {
                                         curr: 1 //重新从第 1 页开始
                                     }
                                 });
-                            } else {
-                                layer.msg(res.msg);
                             }
-
-
+                            layer.msg(res.msg);
                         }
                     });
                 });

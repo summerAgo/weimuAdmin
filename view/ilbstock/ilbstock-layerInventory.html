@@ -69,6 +69,7 @@
             $(".layerInventory").hide();
             depotData.ownerid = echoData.ownerid;
             depotData.depotid = echoData.depotid;
+            depotData.id = echoData.id;
         }
 
         form.on('submit(searchForm-layer)', function(data) {
@@ -168,10 +169,11 @@
             url: checklbList,
             where: depotData,
             parseData: function(res) { //res 即为原始返回的数据
-                if (res.status !== 0) res.status = 0;
+                console.log(res.msg);
+                //if (res.status !== 0) res.status = 0;                
                 return {
                     "code": res.status, //解析接口状态
-                    "msg": res.message, //解析提示文本
+                    "msg": res.msg, //解析提示文本
                     "count": res.count, //解析数据长度
                     "data": res.data //解析数据列表
                 }
@@ -222,9 +224,6 @@
             limits: [10, 20, 30, 40, 50],
             limit: 10, //每页默认显示的数量
             done: function(res, curr, count) {},
-            text: {
-                none: "无匹配数据"
-            },
             loading: true
         });
 
@@ -280,6 +279,7 @@
                 type: "POST",
                 async: false,
                 data: {
+                    id:depotData.id,
                     ownerid: depotData.ownerid,
                     depotid: depotData.depotid,
                     lbarr: JSON.stringify(apriceJson)
