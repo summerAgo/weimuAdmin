@@ -275,11 +275,27 @@
                         field: 'volume',
                         title: '数量（m³）'
                     }, {
-                        field: 'outdate',
-                        title: '预计出库时间'
-                    }, {
                         field: 'createdate',
                         title: '创建日期'
+                    }, {
+                        field: 'status',
+                        title: '状态',
+                        templet: function (d) {
+                            if (d.type == 0) {
+                                return '出库申请';
+                            }
+                            if (d.type == 1) {
+                                return '待审核';
+                            }
+                            if (d.type == 2) {
+                                return '审核通过';
+                            }
+                            return '审核失败';
+                        }
+
+                    }, {
+                        field: 'remarks',
+                        title: '备注'
                     }
                 ]
             ],
