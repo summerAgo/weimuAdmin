@@ -278,7 +278,7 @@
                         field: 'status',
                         title: '状态',
 
-                        templet: function (d) {
+                        templet: function(d) {
                             if (d.status == 0) {
                                 return '出库申请';
                             }
@@ -342,19 +342,19 @@
                                 });
 
                                 var msgstr = "";
-                                if(res.adopt){
+                                if (res.adopt) {
                                     msgstr = "审核通过<br/>";
-                                    $.each(res.adopt,function (i,v){
-                                        msgstr = "   "+ msgstr + v + "<br/>";
+                                    $.each(res.adopt, function(i, v) {
+                                        msgstr = "   " + msgstr + v + "<br/>";
                                     });
-                                    
+
                                 }
-                                if(res.noadopt){
+                                if (res.noadopt) {
                                     //msgstr = msgstr+  "订单:"+res.noadopt+"<br/>请风控审核！";
 
-                                    msgstr = msgstr+ "请风控审核<br/>";
-                                    $.each(res.noadopt,function (i,v){
-                                        msgstr = "   "+ msgstr + v + "<br/>";
+                                    msgstr = msgstr + "请风控审核<br/>";
+                                    $.each(res.noadopt, function(i, v) {
+                                        msgstr = "   " + msgstr + v + "<br/>";
                                     });
 
                                 }
@@ -362,11 +362,11 @@
                                     time: 60000, //60s后自动关闭
                                     btn: ['关闭']
                                 });
-                            }else{
+                            } else {
                                 layer.msg(res.msg);
                             }
-                            
-                            
+
+
                         }
                     });
                 });
@@ -480,6 +480,13 @@
                         type: 1,
                         content: str, // 注意，如果str是object，那么需要字符拼接。
                         area: ['80%', '80%'],
+                        end: function() {
+                            tableIns.reload({
+                                page: {
+                                    curr: 1 //重新从第 1 页开始
+                                }
+                            });
+                        }
                     });
                 })
             }
@@ -494,6 +501,13 @@
                     type: 1,
                     content: str, // 注意，如果str是object，那么需要字符拼接。
                     area: ['80%', '80%'],
+                    end: function() {
+                        tableIns.reload({
+                            page: {
+                                curr: 1 //重新从第 1 页开始
+                            }
+                        });
+                    }
                 });
             })
         })
