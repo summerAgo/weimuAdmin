@@ -2,6 +2,7 @@ var localport = ":8000";//本地端口
 var localhost = "http://192.168.10.216" + localport;//本地
 var pathUrl = "http://192.168.10.201:80/storage-web/"; //?username=admin&password=123456
 
+
 var loginUrl = pathUrl + "sys/login"; //登录
 
 //打印
@@ -145,6 +146,7 @@ var setNotAdopt = pathUrl + "risk/control/setNotAdopt"//出货审核不通过
 var setOutCordon = pathUrl + "risk/control/setOutCordon"//修改警戒线设置
 
 //盘点记录
+var checklbList = pathUrl + "check/recordlist/lblist";//查
 var checkList = pathUrl + "check/recordlist/list";//盘点记录列表
 var checkAdd = pathUrl + "check/recordlist/add";//盘点保存
 var endInventory = pathUrl + "check/recordlist/endInventory";//确认盘点

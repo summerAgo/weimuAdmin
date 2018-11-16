@@ -145,7 +145,6 @@
                         if (bool) {
                             arr[0].selected = "selected";
                         }
-
                     }
                 }
             })
@@ -155,7 +154,7 @@
         var tableIns = table.render({
             elem: '#tableContainer-layerInventory',
             height: 'full - ' + $(".layer-header").innerHeight(),
-            url: ilbstockList,
+            url: checklbList,
             where: {
                 ownerid: 0,
                 depotid: 0
@@ -179,19 +178,10 @@
                         field: 'num',
                         title: '数量（m³）'
                     }, {
-                        field: 'num',
+                        field: 'num1',
                         title: '实际数量（m³）',
                         edit: "txt",
                         style: "color:red;cursor: pointer"
-                    }, {
-                        field: 'createuser',
-                        title: '创建人'
-                    }, {
-                        field: 'ownername',
-                        title: '货权人'
-                    }, {
-                        field: 'depname',
-                        title: '仓库名称'
                     }, {
                         field: 'code',
                         title: '包号'
@@ -244,9 +234,9 @@
             console.log(numChangeValue);
         });
 
-        $(".saveBtn").click(function() {
-            submitOrSave(depotData, numChangeValue, checkAdd)
-        });
+        $(".saveBtn").click(function(){submitOrSave(depotData,numChangeValue,checkAdd)});
+        
+        $(".confirmBtn").click(function(){submitOrSave(depotData,numChangeValue,endInventory)});
 
         function submitOrSave(dataObj, valueArr, url) {
             var status = true;
@@ -256,10 +246,11 @@
                     status = false;
                 }
             }
+            var tableDataArr = table.cache["tableContainer-layerInventory"];
+            console.log(tableDataArr);
+
             if (status) {
-                // console.log(depotData)
-                // console.log(numChangeValue)
-                status = editAprice(dataObj, valueArr, url); //提交评估单价
+                status = editAprice(dataObj, tableDataArr, url); //提交评估单价
                 if (status) {
                     numChangeValue = {}; //如果提交成功清空估价数组
                 }
@@ -283,11 +274,9 @@
                 // traditional: true,
                 success: function(res) {
                     if (res.status == 0) {
-                        layer.msg(res.msg);
                         status = true;
-                    } else {
-                        layer.msg(res.msg);
                     }
+                    layer.msg(res.msg);
                 }
             });
             return status;

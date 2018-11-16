@@ -5,9 +5,9 @@
                 <li class="layui-nav-item">
                     <a id="toExport" href="javascript:;"><i class="iconfont icon-daochu"></i>导出</a>
                 </li>
-                <li class="layui-nav-item">
+                <!-- <li class="layui-nav-item">
                     <a href="javascript:;"><i class="iconfont icon-dayin"></i>打印</a>
-                </li>
+                </li> -->
             </ul>
         </div>
     </div>
@@ -142,7 +142,11 @@
                     }, {
                         field: 'num',
                         title: '数量'
-                    }, {
+                    },
+                    {
+                        field: 'totalamount',
+                        title: '订单总金额'
+                    },{
                         field: 'stockmoney',
                         title: '库存金额'
                     }, {
@@ -151,9 +155,6 @@
                     }, {
                         field: 'cordonmoney',
                         title: '警戒线'
-                    }, {
-                        field: 'outdate',
-                        title: '预计出货时间'
                     }
                 ]
             ],
