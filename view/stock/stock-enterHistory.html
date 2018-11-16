@@ -1,66 +1,73 @@
 <div class="table-page">
+    <div class="table-content-title">
+        <div class="table-tools">
+            <ul class="layui-nav" lay-filter="talbe-tools">
+                <li class="layui-nav-item">
+                    <a id="toExport" href="javascript:;">导出数据</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;" onclick="dayin()">打印</a>
+                </li>
+            </ul>
+        </div>
+    </div>
     <div class="table-page-header">
         <div class="table-page-form">
             <form class="layui-form" action="">
                 <div class="form-box">
                     <div class="layui-form-item form-left">
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">订单号</span>
                             <input type="text" name="orderno" placeholder="订单号" autocomplete="off" class="layui-input">
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">货权人</span>
                             <select name="ownerid" xm-select="ownerSelect" xm-select-radio>
-                                <option value="">选择货权人</option>
+                                <option value="">货权人</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">仓库</span>
                             <select name="depotid" xm-select="depotSelect" xm-select-radio>
-                                <option value="">选择仓库</option>
+                                <option value="">仓库</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">库位</span>
                             <select name="positionid" xm-select="positionSelect" xm-select-radio>
-                                <option value="">选择库位</option>
+                                <option value="">库位</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">产地</span>
                             <select name="origin" xm-select="originSelect" xm-select-radio>
-                                <option value="">选择产地</option>
+                                <option value="">产地</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">供应商</span>
                             <select name="supplierid" xm-select="supplierSelect" xm-select-radio>
-                                <option value="">选择供应商</option>
+                                <option value="">供应商</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">提运单</span>
                             <input type="text" name="billloading" placeholder="提运单" autocomplete="off" class="layui-input">
                             <input type="text" name="ishistory" hidden value="1">
                             <!-- 隐藏域 ishistory：1 历史记录 -->
                         </div>
                     </div>
                     <div class="layui-form-item form-right">
+                        <button type="reset" class="layui-btn layui-btn-gray"> <i class="layui-icon layui-icon-refresh"></i></button>
                         <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="searchForm">
                             <i class="iconfont icon-sousuo"></i> <span>查询</span>
                         </button>
-                        <button type="reset" class="layui-btn layui-btn-primary"> <i class="layui-icon layui-icon-refresh"></i></button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
     <div class="table-content">
-        <div class="table-content-title">
-            <div class="table-tools">
-                <ul class="layui-nav" lay-filter="talbe-tools">
-                    <li class="layui-nav-item">
-                        <a id="toExport" href="javascript:;">导出数据</a>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;" onclick="dayin()">打印</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
         <div class="table-content-main">
             <table class="layui-hide" id="tableContainer" lay-filter="tableContainer"></table>
         </div>
@@ -306,20 +313,20 @@
                 })
             }
         });
-  
+
     });
 
     function dayin() {
-            var Width = window.innerWidth;
-            var Height = window.innerHeight;
+        var Width = window.innerWidth;
+        var Height = window.innerHeight;
 
-            var winhtml = "http://192.168.10.201:8000/view/print/print-in-store.html"; //需打印的数据源(包括html)
-            //弹出准备打印窗口
-            var wind = window.open(winhtml, '打印', 'height=' + Height + ', width=' + Width + ', top=100, left=100, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no');
-            //将需打印的内容放在准备打印窗口中
-            wind.document.body.innerHTML = winhtml;
-            //开始打印
-            wind.print();
-            return false;
-        }
+        var winhtml = "http://192.168.10.201:8000/view/print/print-in-store.html"; //需打印的数据源(包括html)
+        //弹出准备打印窗口
+        var wind = window.open(winhtml, '打印', 'height=' + Height + ', width=' + Width + ', top=100, left=100, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no');
+        //将需打印的内容放在准备打印窗口中
+        wind.document.body.innerHTML = winhtml;
+        //开始打印
+        wind.print();
+        return false;
+    }
 </script>
