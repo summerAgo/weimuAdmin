@@ -23,10 +23,7 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;" class="subCancelBtn"><i class="iconfont icon-quxiao"></i>取消</a>
                 </li>
-
-            </ul>
-            <ul class="layui-layout-right">
-                <li><a href="javascript:;" class="deleteBtn">删除</a></li>
+                <li class="layui-nav-item"><a href="javascript:;" class="deleteBtn"><i class="iconfont icon-shanchu"></i>删除</a></li>
             </ul>
         </div>
     </div>
@@ -208,14 +205,13 @@
                         if (bool) {
                             arr[0].selected = "selected";
                         }
-
                     }
                 }
             })
             return arr;
         }
 
-        $(".addGoodsBtn").click(function(){
+        $(".addGoodsBtn").click(function() {
             $.get('view/form/form-goods.html', {}, function(str) {
                 addLayer = layer.open({
                     title: '添加货物信息',
@@ -250,7 +246,7 @@
             cols: [
                 [ //标题栏
                     {
-                         type: 'checkbox'
+                        type: 'radio'
                     },
                     {
                         field: 'code',
@@ -315,7 +311,7 @@
                 if (ordernoss) {
                     // addtableBtn += '<a href="javascript:;" class="layui-btn layui-btn-sm submissionBtn">入库</a>';
                     $(".submissionLayBtn").show();
-                }else{
+                } else {
                     $(".submissionLayBtn").hide();
                 }
 
@@ -324,7 +320,7 @@
                     $("#tableContainer-from").siblings(".layui-form ").find(".layui-table-page").append(addtableBtn);
                 }
 
-                $(".subConfirmBtn").unbind("click").bind("click",function(){
+                $(".subConfirmBtn").unbind("click").bind("click", function() {
                     event.stopPropagation();
                     subConfun();
                 });
@@ -352,7 +348,7 @@
         var orderno = JSON.parse(sessionStorage.getItem('newbill_orderno'));
 
         $(".submissionLayBtn").click(function() {
-            if(!orderno){
+            if (!orderno) {
                 return false;
             }
             var ids = []; //订单号
@@ -477,29 +473,27 @@
             }
         });
 
+        //监听表格复选框选择
+        var checkBoxTrDomArr;
+        table.on('radio(tableContainer-from)', function(obj) {
+            // console.log(obj)
+            checkBoxTrDomArr = obj;
+            // console.log(checkBoxTrDomArr)
+        });
+
         $(".deleteBtn").click(function() {
-            var checkStatus = table.checkStatus('tableContainer-from');
-            console.log(checkStatus);
-            if (checkStatus.data.length < 1) {
+            if (!checkBoxTrDomArr) {
                 layer.msg("请选择需要删除的信息");
             } else {
                 layer.confirm('是否确认删除此条信息', {
                     icon: 3,
                     title: '提示'
                 }, function(index) {
-
-
-                    // 刷新表格
-                    tableIns.reload({
-                        limit: tableData.length,
-                        page: {
-                            curr: 1 //重新从第 1 页开始
-                        }
-                    });
-                    layer.msg(data.msg);
+                    checkBoxTrDomArr.del();
+                    layer.close(index);
 
                     var rowId = [];
-                    
+
                 });
             }
         });
@@ -542,10 +536,10 @@
                 layer.msg("请填写供应商");
                 return;
             }
-            if (null == positionid || positionid.length < 1) {
-                layer.msg("请填写库位");
-                return;
-            }
+            // if (null == positionid || positionid.length < 1) {
+            //     layer.msg("请填写库位");
+            //     return;
+            // }
 
 
             var arr = JSON.stringify(tableData);
@@ -557,9 +551,9 @@
             } else {
                 num = orderno.orderno;
             }
-            
+
             console.log(1)
-            
+
             $.ajax({
                 url: preEntryAdd,
                 type: "POST",
