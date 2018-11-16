@@ -10,7 +10,7 @@
                     <a href="javascript:;"><i class="iconfont icon-dayin"></i>打印</a>
                 </li>
                 <li class="layui-nav-item"><a href="javascript:;" class="deleteBtn"><i class="iconfont icon-shanchu"></i>删除</a></li>
-                <li class="layui-nav-item"><a href="javascript:;" class="submissionBtn"><i class="iconfont icon-chuku"></i>出库</a></li>
+                <li class="layui-nav-item"><a href="javascript:;" class="submOutBtn"><i class="iconfont icon-chuku"></i>出库</a></li>
             </ul>
         </div>
     </div>
@@ -313,7 +313,7 @@
         });
 
         //入库
-        $(".submissionBtn").click(function() {
+        $(".submOutBtn").click(function() {
             var checkStatus = table.checkStatus('tableContainers'); //表格选中状态
             if (checkStatus.data.length > 0) {
                 layer.confirm('是否确认出库', {

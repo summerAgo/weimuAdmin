@@ -381,7 +381,7 @@
             done: function(res, curr, count) {
                 var addtableBtn = '<div class="rightBotBtn">共添加<span>' + count + '</span>个商品</div>';
                 $("#tableContainer-addOutBill").siblings().find(".layui-table-page").append(addtableBtn);
-                $(".submissionBtn").click(function() {
+                $(".submissionBtn").unbind("click").bind("click",function() {
                     var cargoowner = layui.formSelects.value('ownerSelect', "valStr");
                     if (cargoowner == "") {
                         layer.msg('货权人不能为空');
@@ -393,7 +393,6 @@
                         layer.msg('仓库名称不能为空');
                         return false;
                     }
-
 
                     var estimatedate = $("#estimatedate").val();
                     if (estimatedate == "") {
