@@ -25,10 +25,10 @@
                                 <option value="">货权人</option>
                             </select>
                         </div>
-                        <div class="table-form-item layui-input-inline">
+                        <!-- <div class="table-form-item layui-input-inline">
                             <span class="input-span">审核状态</span>
                             <input type="text" name="auditstatus" placeholder="审核状态" autocomplete="off" class="layui-input">
-                        </div>
+                        </div> -->
                         <div class="table-form-item layui-input-inline">
                             <span class="input-span">出货仓库</span>
                             <select name="depotid" xm-select="depotSelect" xm-select-radio>
@@ -219,8 +219,8 @@
                         title: '警戒线',
                         sort: true
                     }, {
-                        field: 'outdate',
-                        title: '预计出货时间',
+                        field: 'createdate',
+                        title: '出库时间',
                         sort: true
                     }
                 ]
