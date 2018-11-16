@@ -80,7 +80,7 @@
 
         laydate.render({
             elem: '.date',
-            type: 'datetime',
+            type: 'date',
             range: true
         });
 
@@ -179,10 +179,9 @@
 
         form.on('submit(searchForm)', function(data) {
             if (data.field.date) {
-                data.field.startdate = data.field.date.substring(0, 19);
-                data.field.enddate = data.field.date.substring(22, data.field.date.length);
+                data.field.startdate = data.field.date.substring(0, 10) + " 00:00:00";
+                data.field.enddate = data.field.date.substring(13, data.field.date.length) + " 00:00:00";
             }
-
             var paramSearch = {};
 
             for (var key in data.field) {
