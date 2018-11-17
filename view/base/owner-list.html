@@ -206,8 +206,8 @@
             });
         });
 
+        //删除
         $(".deleteBtn").click(function () {
-            //删除
             var checkStatus = table.checkStatus('tableContainer-userlist');
             if (checkStatus.data.length < 1) {
                 layer.msg("请选择需要删除的信息");
@@ -221,19 +221,34 @@
                         //获取所选行数ID
                         rowId.push(v.id);
                     });
-                    //调删除接口
-                    rowDataApi(delOwner, {
-                        "ids": rowId
-                    }, function (data) {
-                        // 删除所选行成功
-                        layer.close(index);
-                        // 刷新表格
-                        tableIns.reload({
-                            page: {
-                                curr: 1 //重新从第 1 页开始
+
+                    //调用删除接口
+                    $.ajax({
+                        url: delOwner,
+                        type: "post",
+                        data: {
+                            "ids": rowId
+                        },
+                        traditional: true,
+                        xhrFields: {
+                            withCredentials: true
+                        },
+                        crossDomain: true,
+                        success: function (res) {
+                            if (res.status === 0) {
+                                // 删除所选行成功
+                                layer.close(index);
+                                // 刷新表格
+                                tableIns.reload({
+                                    page: {
+                                        curr: 1 //重新从第 1 页开始
+                                    }
+                                });
+                                layer.msg(res.msg);
+                            }else if (res.status === 1) {
+                                window.location.href = loginPageUrl;
                             }
-                        });
-                        layer.msg(data.msg);
+                        }
                     });
                 });
             }

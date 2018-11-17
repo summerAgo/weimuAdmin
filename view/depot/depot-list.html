@@ -189,26 +189,35 @@
             } else {
                 url = depotAdd;
             }
-
-            $.get(url, data.field, function (json) {
-                if (json.status == 0) {
-                    sessionStorage.removeItem('depotCheck');//操作成功删除本地存储
-                    tableIns.reload({
-                        page: {
-                            curr: 1 //重新从第 1 页开始
-                        }
-                    });
-                    layer.msg(msg);
-                    layer.close(addDepotLayer);
-                } else {
-                    layer.msg("提交异常");
+            $.ajax({
+                url: url,
+                type: "post",
+                data: data.field,
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
+                success: function (res) {
+                    if (res.status === 0) {
+                        sessionStorage.removeItem('depotCheck');//操作成功删除本地存储
+                        tableIns.reload({
+                            page: {
+                                curr: 1 //重新从第 1 页开始
+                            }
+                        });
+                        layer.msg(msg);
+                        layer.close(addDepotLayer);
+                    } else if(res.status === 1) {
+                        layer.msg("提交异常");
+                        window.location.href = loginPageUrl;
+                    }
                 }
             });
             return false;
         });
 
+        //修改
         $(".changeBtn").click(function () {
-            //修改
             var checkStatus = table.checkStatus('tableContainer-depotList');
             if (checkStatus.data.length < 1) {
                 layer.msg("请选择需要编辑的信息");
@@ -228,8 +237,8 @@
             }
         });
 
+        // 删除
         $(".deleteBtn").click(function () {
-            // 删除
             var checkStatus = table.checkStatus('tableContainer-depotList');
             if (checkStatus.data.length < 1) {
                 layer.msg("请选择需要删除的信息");
@@ -243,22 +252,42 @@
                         //获取所选行数ID
                         rowId.push(v.id);
                     });
-                    //调删除接口
-                    rowDataApi(depotDel, {
-                        "ids": rowId
-                    }, function (res) {
-                        if(res.status === 0){
-                            // 删除所选行成功
-                            layer.close(index);
-                            // 刷新表格
-                            tableIns.reload({
-                                page: {
-                                    curr: 1 //重新从第 1 页开始
-                                }
-                            });
-                            layer.msg(data.msg);
-                        }else if (res.status === 1) {
-                            window.location.href = loginPageUrl;
+                    //调用删除接口
+                    $.ajax({
+                        url: depotDel,
+                        type: "post",
+                        data: {
+                            "ids": rowId
+                        },
+                        traditional: true,
+                        xhrFields: {
+                            withCredentials: true
+                        },
+                        crossDomain: true,
+                        success: function (res) {
+                            if(res.status === 0){
+                                // 删除所选行成功
+                                layer.close(index);
+                                // 刷新表格
+                                tableIns.reload({
+                                    page: {
+                                        curr: 1 //重新从第 1 页开始
+                                    }
+                                });
+                                layer.msg(res.msg);
+                            }else if (res.status === 2) {
+                                // 当前仓库已存在
+                                layer.close(index);
+                                // 刷新表格
+                                tableIns.reload({
+                                    page: {
+                                        curr: 1 //重新从第 1 页开始
+                                    }
+                                });
+                                layer.msg(res.msg);
+                            } else if (res.status === 1) {
+                                window.location.href = loginPageUrl;
+                            }
                         }
                     });
                 });
@@ -279,13 +308,9 @@
         function rowDataApi(url, data, funSuc, funErr) {
             $.ajax({
                 url: url,
-                type: "post",
+                type: "get",
                 data: data,
                 traditional: true,
-                xhrFields: {
-                    withCredentials: true
-                },
-                crossDomain: true,
                 success: funSuc,
                 error: funErr
             })

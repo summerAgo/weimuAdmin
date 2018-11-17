@@ -292,7 +292,7 @@
                                 }
                             });
                         }
-                        if (data.status == 1) {
+                        if (data.status === 1) {
                             window.location.href = loginPageUrl;
                         }
 
@@ -335,7 +335,7 @@
                         layer.msg('重置成功');
                     }
                 });
-            })
+            });
             return false;
         });
 
@@ -382,29 +382,39 @@
                 layer.confirm('是否确认删除此条信息', {
                     icon: 3,
                     title: '提示'
-                }, function(index) {
+                }, function (index) {
                     var rowId = [];
-                    $.each(checkStatus.data, function(i, v) {
+                    $.each(checkStatus.data, function (i, v) {
                         //获取所选行数ID
                         rowId.push(v.id);
                     });
-                    //调删除接口
-                    rowDataApi(userDel, {
-                        "ids": rowId
-                    }, function(data) {
-                        if (data.status === 1) {
-                            window.location.href = loginPageUrl;
-                        }
-
-                        // 删除所选行成功
-                        layer.close(index);
-                        // 刷新表格
-                        tableIns.reload({
-                            page: {
-                                curr: 1 //重新从第 1 页开始
+                    //调用删除接口
+                    $.ajax({
+                        url: userDel,
+                        type: "post",
+                        data: {
+                            "ids": rowId
+                        },
+                        traditional: true,
+                        xhrFields: {
+                            withCredentials: true
+                        },
+                        crossDomain: true,
+                        success: function (res) {
+                            if(res.status === 0){
+                                // 删除所选行成功
+                                layer.close(index);
+                                // 刷新表格
+                                tableIns.reload({
+                                    page: {
+                                        curr: 1 //重新从第 1 页开始
+                                    }
+                                });
+                                layer.msg(data.msg);
+                            }else if (res.status === 1) {
+                                window.location.href = loginPageUrl;
                             }
-                        });
-                        layer.msg(data.msg);
+                        }
                     });
                 });
             }
@@ -442,7 +452,7 @@
             }
             var instid =data.field.instid.split("/");
             var ints = instid[instid.length-1];
-            if(ints == ""){
+            if(ints === ""){
                 ints = instid[0];
             }
             data.field.instid=ints;
@@ -452,19 +462,19 @@
             }, function(index) {
                 $.ajax({
                     cache: true,
-                    type: "POST",
+                    type: "post",
                     url: userUrl,
                     data: data.field,
                     async: false,
-                    xhrFields: {
-                      withCredentials: true
-                   },
-                   crossDomain: true,
-                    error: function(request) {
-                        layer.msg('提交失败');
-                        return;
+                    xhrFields: {
+                        withCredentials: true
                     },
-                    success: function(data) {
+                    crossDomain: true,
+                    error: function (request) {
+                        layer.msg('提交失败');
+                        return false;
+                    },
+                    success: function (data) {
                         if (data.status === 1) {
                             window.location.href = loginPageUrl;
                         }
@@ -488,10 +498,6 @@
                 url: url,
                 type: "get",
                 data: data,
-                xhrFields: {
-                  withCredentials: true
-               },
-               crossDomain: true,
                 traditional: true,
                 success: funSuc,
                 error: funErr
@@ -546,7 +552,6 @@
                                 menuIns = son;
                             }
                         }
-
                     }
                     map["children"] = children;
                     treeData.push(map);
@@ -653,43 +658,41 @@
         });
         //删除用户类型
         $("#delins").click(function() {
-
             if (!menuIns.id) {
                 layer.msg('请选择一条数据');
                 return;
             }
-
             var ids = [];
             ids.push(menuIns.id);
             var data = {
                 "ids": ids.toString()
             };
-
             layer.confirm("是否删除类型", {
                 icon: 3,
                 title: '提示'
-            }, function(index) {
+            }, function (index) {
                 $.ajax({
                     cache: true,
-                    type: "get",
+                    type: "post",
                     url: delInstitution,
                     data: data,
                     async: false,
-                    xhrFields: {
-                      withCredentials: true
-                   },
-                   crossDomain: true,
-                    error: function(request) {
-                        layer.msg('提交失败');
-                        return;
+                    xhrFields: {
+                        withCredentials: true
                     },
-                    success: function(data) {
-                        if (data.status === 1) {
+                    crossDomain: true,
+                    error: function (msg) {
+                        layer.msg('提交失败');
+                        return false;
+                    },
+                    success: function (res) {
+                        if (res.status === 0) {
+                            layer.close(eaitLayer);
+                            layer.msg('提交成功');
+                            listIns();
+                        }else if (res.status === 1) {
                             window.location.href = loginPageUrl;
                         }
-                        layer.close(eaitLayer);
-                        layer.msg('提交成功');
-                        listIns();
                     }
                 });
             });
@@ -700,44 +703,44 @@
             var title = "";
             var url = "";
             //编辑提交
-            if (data.field.id != null && data.field.id != "") {
+            if (data.field.id != null && data.field.id !== "") {
                 title = '确认提交修改';
                 userUrl = updInstitution;
             } else {
-                title = '确认添加'
+                title = '确认添加';
                 userUrl = addInstitution;
                 data.field.id = null;
             }
             layer.confirm(title, {
                 icon: 3,
                 title: '提示'
-            }, function(index) {
+            }, function (index) {
                 $.ajax({
                     cache: true,
-                    type: "get",
+                    type: "post",
                     url: userUrl,
                     data: data.field,
                     async: false,
-                    xhrFields: {
-                      withCredentials: true
-                   },
-                   crossDomain: true,
-                    error: function(request) {
-                        layer.msg('提交失败');
-                        return;
+                    xhrFields: {
+                        withCredentials: true
                     },
-                    success: function(data) {
-                        if (data.status === 1) {
-    window.location.href = loginPageUrl;
-}
-                        layer.close(eaitLayer);
-                        layer.msg('提交成功');
-                        listIns();
+                    crossDomain: true,
+                    error: function (msg) {
+                        layer.msg('提交失败');
+                        return false;
+                    },
+                    success: function (res) {
+                        if (res.status === 0) {
+                            layer.close(eaitLayer);
+                            layer.msg('提交成功');
+                            listIns();
+                        } else if (res.status === 1) {
+                            window.location.href = loginPageUrl;
+                        }
                     }
                 });
             });
             return false;
         });
-
     });
 </script>
