@@ -328,6 +328,10 @@
                         });
                         layer.msg("审核通过为库存");
                     }
+                    //请求过期，重新登陆
+                    if(data.status == 1){
+                        window.location.href = localhost + "/view/login/login.html";
+                    }
                 }
             })
         })
