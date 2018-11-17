@@ -1,8 +1,9 @@
 var localport = ":8000";//本地端口
-var localhost = "http://192.168.10.216" + localport;//本地
+var localhost = "http://192.168.10.110" + localport;//本地
 var pathUrl = "http://119.23.68.13:80/storage-web/"; //?username=admin&password=123456
 
 var loginUrl = pathUrl + "sys/login"; //登录
+var loginPageUrl = localhost + "/view/login/login.html"; //filter拦截到登录页面
 
 //打印
 var printinstore = localhost+"/view/print/print-in-store.html";
