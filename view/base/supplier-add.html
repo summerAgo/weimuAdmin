@@ -1,49 +1,55 @@
 <div id="formEditView"></div>
 <script id="formUser" type="text/html">
-<form class="layui-form layer-open-form" action="">
-    <div class="layui-form-item layui-control-line">
-        <div class="layui-input-block">
-            <button class="layui-btn" lay-submit="" type="submit" lay-filter="addSubmit"><i class="iconfont icon-daochu"></i>保存</button>
+    <form class="layui-form layer-open-form" action="">
+        <div class="layui-form-item layui-control-line">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit="" type="submit" lay-filter="addSubmit"><i
+                        class="iconfont icon-daochu"></i>保存
+                </button>
+            </div>
         </div>
-    </div>
-    <div class="layui-form-item layui-normal-line">
-        <label class="layui-form-label">类型</label>
-        <div class="layui-input-inline">
-            <select name="instid"  lay-verify="required" placeholder="必填项,请输入用户类型" xm-select="instidSelect" xm-select-radio="" ></select>
+        <div class="layui-form-item layui-normal-line">
+            <label class="layui-form-label">类型</label>
+            <div class="layui-input-inline">
+                <select name="instid" lay-verify="required" placeholder="必填项,请输入用户类型" xm-select="instidSelect"
+                        xm-select-radio=""></select>
+            </div>
         </div>
-    </div>
-    <div class="layui-form-item layui-normal-line">
-        <label class="layui-form-label">名称</label>
-        <div class="layui-input-inline">
-            <input type="text" id="name" name="name" lay-verify="required" placeholder="必填项,请输入货权人名" class="layui-input"  value="{{d.name || ''}}">
-            <input type="hidden" id="id" name="id" value="{{d.id || ''}}">
+        <div class="layui-form-item layui-normal-line">
+            <label class="layui-form-label">名称</label>
+            <div class="layui-input-inline">
+                <input type="text" id="name" name="name" lay-verify="required" placeholder="必填项,请输入货权人名"
+                       class="layui-input" value="{{d.name || ''}}">
+                <input type="hidden" id="id" name="id" value="{{d.id || ''}}">
+            </div>
         </div>
-    </div>
-    <!-- <div class="layui-form-item layui-normal-line">
-        <label class="layui-form-label">员工ID</label>
-        <div class="layui-input-inline">
-            <input type="text" id="personid" name="personid" placeholder="选填" value="{{d.personid || ''}}" class="layui-input">
+        <!-- <div class="layui-form-item layui-normal-line">
+            <label class="layui-form-label">员工ID</label>
+            <div class="layui-input-inline">
+                <input type="text" id="personid" name="personid" placeholder="选填" value="{{d.personid || ''}}" class="layui-input">
+            </div>
         </div>
-    </div>
-    <div class="layui-form-item layui-normal-line">
-        <label class="layui-form-label">货权人ID</label>
-        <div class="layui-input-inline">
-            <input type="text" id="ownerid" name="ownerid" placeholder="选填" value="{{d.ownerid || ''}}" class="layui-input">
+        <div class="layui-form-item layui-normal-line">
+            <label class="layui-form-label">货权人ID</label>
+            <div class="layui-input-inline">
+                <input type="text" id="ownerid" name="ownerid" placeholder="选填" value="{{d.ownerid || ''}}" class="layui-input">
+            </div>
+        </div> -->
+        <div class="layui-form-item layui-normal-line">
+            <label class="layui-form-label">电话</label>
+            <div class="layui-input-inline">
+                <input type="text" id="phone" name="phone" placeholder="选填" value="{{d.phone || ''}}"
+                       class="layui-input">
+            </div>
         </div>
-    </div> -->
-    <div class="layui-form-item layui-normal-line">
-        <label class="layui-form-label">电话</label>
-        <div class="layui-input-inline">
-            <input type="text" id="phone" name="phone" placeholder="选填" value="{{d.phone || ''}}" class="layui-input">
+        <div class="layui-form-item layui-normal-line">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-inline">
+                <input type="text" id="remarks" name="remarks" placeholder="选填" value="{{d.remarks || ''}}"
+                       class="layui-input">
+            </div>
         </div>
-    </div>
-    <div class="layui-form-item layui-normal-line">
-        <label class="layui-form-label">备注</label>
-        <div class="layui-input-inline">
-            <input type="text" id="remarks" name="remarks" placeholder="选填" value="{{d.remarks || ''}}" class="layui-input">
-        </div>
-    </div>
-</form>
+    </form>
 </script>
 
 <style scoped>
@@ -54,28 +60,28 @@
 </style>
 
 <script>
-    layui.use(['form', 'jquery', 'element', 'layer', 'laytpl', 'laydate'], function() {
+    layui.use(['form', 'jquery', 'element', 'layer', 'laytpl', 'laydate'], function () {
         var element = layui.element;
         var form = layui.form;
         var $ = layui.jquery;
         var laytpl = layui.laytpl;
         var laydate = layui.laydate;
-        var  data= window.currData;
-		if(data!=null && data.id){//不是空就是编辑
-			var getTpl = formUser.innerHTML,
-			view = document.getElementById('formEditView');
-			laytpl(getTpl).render(data, function(html) {
-            	view.innerHTML = html;
-        	});
-		}else{
-			var getTpl = formUser.innerHTML,
-			view = document.getElementById('formEditView');
-			var dataOff=data;
-			laytpl(getTpl).render(dataOff, function(html) {
-				view.innerHTML = html;
-			});
-		}
-		
+        var data = window.currData;
+        if (data != null && data.id) {//不是空就是编辑
+            var getTpl = formUser.innerHTML,
+                view = document.getElementById('formEditView');
+            laytpl(getTpl).render(data, function (html) {
+                view.innerHTML = html;
+            });
+        } else {
+            var getTpl = formUser.innerHTML,
+                view = document.getElementById('formEditView');
+            var dataOff = data;
+            laytpl(getTpl).render(dataOff, function (html) {
+                view.innerHTML = html;
+            });
+        }
+
         form.render(); //重置表单渲染
 
         //日期时间选择器
@@ -83,30 +89,31 @@
             elem: '#birthday',
             type: 'datetime',
             max: 0,
-            change: function(val) {
+            change: function (val) {
                 console.log(val);
             }
         });
 
-        addinstidSel(data.inaAllList,data.instid);
-        function  addinstidSel(inaAllList,instid){
-            var arr=[];
-            var number="";
-            for(var i=0;i<inaAllList.length;i++){
-                if(inaAllList[i].pid == 0){
-                    var map ={};
+        addinstidSel(data.inaAllList, data.instid);
+
+        function addinstidSel(inaAllList, instid) {
+            var arr = [];
+            var number = "";
+            for (var i = 0; i < inaAllList.length; i++) {
+                if (inaAllList[i].pid === 0) {
+                    var map = {};
                     map["name"] = inaAllList[i].name;
                     map["value"] = inaAllList[i].id;
-                    var children =[];
-                    
-                    for(var j=0;j<inaAllList.length;j++){
-                        if(inaAllList[i].id == inaAllList[j].pid){
-                            var maptwo ={};
+                    var children = [];
+
+                    for (var j = 0; j < inaAllList.length; j++) {
+                        if (inaAllList[i].id === inaAllList[j].pid) {
+                            var maptwo = {};
                             maptwo["name"] = inaAllList[j].name;
                             maptwo["value"] = inaAllList[j].id;
                             children.push(maptwo);
-                            if(inaAllList[j].id == instid){
-                                number =inaAllList[j].pid +"/";
+                            if (inaAllList[j].id === instid) {
+                                number = inaAllList[j].pid + "/";
                             }
                         }
                     }
@@ -120,15 +127,14 @@
                 arr: arr,
                 linkage: true
             });
-            if(number.length == 0){
-                number =instid+"/";
-            }else{
-                number =number +instid;
+            if (number.length === 0) {
+                number = instid + "/";
+            } else {
+                number = number + instid;
             }
             console.log(number);
             layui.formSelects.value('instidSelect', [number]);
         }
-
 
     });
 </script>

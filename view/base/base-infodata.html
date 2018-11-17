@@ -206,16 +206,29 @@
                 ints = instid[0];
             }
             data.field.instid=ints;
-
-            $.get(url,  data.field, function (data) {
-                sessionStorage.removeItem('base_infodata_data');
-                layer.close(addLayer); //关闭
-                // 刷新表格
-                tableIns.reload({
-                    page: {
-                        curr: 1 //重新从第 1 页开始
+            // 添加
+            $.ajax({
+                url: url,
+                type: "post",
+                data: data.field,
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
+                success: function (res) {
+                    if(res.status === 0){
+                        sessionStorage.removeItem('base_infodata_data');
+                        layer.close(addLayer); //关闭
+                        // 刷新表格
+                        tableIns.reload({
+                            page: {
+                                curr: 1 //重新从第 1 页开始
+                            }
+                        });
+                    }else if(res.status === 1) {
+                        window.location.href = loginPageUrl;
                     }
-                });
+                }
             });
 
             return false;
@@ -223,7 +236,6 @@
 
         //删除
         $(".deleteBtn").click(function () {
-            //删除
             var checkStatus = table.checkStatus('tableContainer_baseinfo');
             if (checkStatus.data.length < 1) {
                 layer.msg("请选择需要删除的信息");
@@ -238,22 +250,33 @@
                         //rowId.push(parseInt(v.id));
                         rowId[rowId.length] = v.id;
                     });
-                    console.log(rowId);
                     //调删除接口
-                    $.get(basicsInfoDelete, {
-                        "idsstr": rowId.toLocaleString()
-                    }, function (data) {
-                        // 删除所选行成功
-                        layer.close(index);
-                        // 刷新表格
-                        tableIns.reload({
-                            page: {
-                                curr: 1 //重新从第 1 页开始
+                    $.ajax({
+                        url: basicsInfoDelete,
+                        type: "post",
+                        data: {
+                            "idsstr": rowId.toLocaleString()
+                        },
+                        xhrFields: {
+                            withCredentials: true
+                        },
+                        crossDomain: true,
+                        success: function (res) {
+                            if(res.status === 0){
+                                // 删除所选行成功
+                                layer.close(index);
+                                // 刷新表格
+                                tableIns.reload({
+                                    page: {
+                                        curr: 1 //重新从第 1 页开始
+                                    }
+                                });
+                                layer.msg(res.msg);
+                            }else if (res.status === 1){
+                                window.location.href = loginPageUrl;
                             }
-                        });
-                        layer.msg(data.msg);
+                        }
                     });
-
                 });
             }
         });
@@ -275,13 +298,13 @@
         function rowDataApi(url, data, funSuc, funErr) {
             $.ajax({
                 url: url,
-                type: "get",
+                type: "post",
                 data: data,
                 traditional: true,
                 success: funSuc,
                 error: funErr
             })
-        };
+        }
 
 
         var insList = []; //商品类型顶级目录
@@ -397,6 +420,7 @@
                 });
             });
         });
+
         //删除商品类型
         $("#delins").click(function() {
 
@@ -417,18 +441,26 @@
             }, function(index) {
                 $.ajax({
                     cache: true,
-                    type: "get",
+                    type: "post",
                     url: delInstitution,
                     data: data,
                     async: false,
-                    error: function(request) {
-                        layer.msg('提交失败');
-                        return;
+                    xhrFields: {
+                        withCredentials: true
                     },
-                    success: function(data) {
-                        layer.close(eaitLayer);
-                        layer.msg('提交成功');
-                        listIns();
+                    crossDomain: true,
+                    error: function(msg) {
+                        layer.msg('提交失败');
+                        return false;
+                    },
+                    success: function(res) {
+                        if(res.status === 0){
+                            layer.close(eaitLayer);
+                            layer.msg('提交成功');
+                            listIns();
+                        }else if (res.status === 1) {
+                            window.location.href = loginPageUrl;
+                        }
                     }
                 });
             });
@@ -439,7 +471,7 @@
             var title = "";
             var url = "";
             //编辑提交
-            if (data.field.id != null && data.field.id != "") {
+            if (data.field.id != null && data.field.id !== "") {
                 title = '确认提交修改';
                 userUrl = updInstitution;
             } else {
@@ -453,18 +485,26 @@
             }, function(index) {
                 $.ajax({
                     cache: true,
-                    type: "get",
+                    type: "post",
                     url: userUrl,
                     data: data.field,
                     async: false,
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
                     error: function(request) {
                         layer.msg('提交失败');
-                        return;
+                        return false;
                     },
-                    success: function(data) {
-                        layer.close(eaitLayer);
-                        layer.msg('提交成功');
-                        listIns();
+                    success: function(res) {
+                        if(res.status === 0){
+                            layer.close(eaitLayer);
+                            layer.msg('提交成功');
+                            listIns();
+                        }else if (res.status === 1) {
+                            window.location.href = loginPageUrl;
+                        }
                     }
                 });
             });

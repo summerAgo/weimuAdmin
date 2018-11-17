@@ -10,8 +10,8 @@
                 </li> -->
             </ul>
             <!-- <ul class="layui-layout-right">
-                            <li><a href="javascript:;" class="editBtn">编辑</a></li>
-                        </ul> -->
+                <li><a href="javascript:;" class="editBtn">编辑</a></li>
+            </ul> -->
         </div>
     </div>
     <div class="table-page-header">
@@ -71,7 +71,9 @@
                         </div>
                     </div>
                     <div class="layui-form-item form-right">
-                        <button type="reset" class="layui-btn layui-btn-gray"> <i class="layui-icon layui-icon-refresh"></i></button>
+                        <button class="layui-btn layui-btn-md layui-btn-gray" lay-submit lay-filter="searchForm">
+                            <i class="iconfont icon-zhongzhi"></i><span>重置</span>
+                        </button>
                         <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="searchForm">
                             <i class="iconfont icon-sousuo"></i> <span>查询</span>
                         </button>
@@ -160,7 +162,7 @@
                         }
                     }
                 }
-            })
+            });
             return arr;
         }
 

@@ -62,7 +62,9 @@
                         </div>
                     </div>
                     <div class="layui-form-item form-right">
-                        <button type="reset" class="layui-btn layui-btn-gray"> <i class="layui-icon layui-icon-refresh"></i></button>
+                        <button class="layui-btn layui-btn-md layui-btn-gray" lay-submit lay-filter="searchForm">
+                            <i class="iconfont icon-zhongzhi"></i><span>重置</span>
+                        </button>
                         <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="searchForm">
                             <i class="iconfont icon-sousuo"></i> <span>查询</span>
                         </button>
@@ -192,9 +194,9 @@
                 traditional: true,
                 success: function(data) {
                     // console.log(data);
-                    if (data.status == 0) {
+                    if (data.status === 0) {
                         //把接口数据转换为[{"name":str,"value":number}]格式
-                        if (!Array.isArray(data.data) || data.data.length == 0) {
+                        if (!Array.isArray(data.data) || data.data.length === 0) {
                             // 判断arr是否为数组并保证内部有值
                             return false;
                         }
@@ -207,10 +209,9 @@
                         if (bool) {
                             arr[0].selected = "selected";
                         }
-
                     }
                 }
-            })
+            });
             return arr;
         }
 
@@ -218,7 +219,7 @@
             var paramSearch = {};
             for (var key in data.field) {
                 //参数赋值
-                if (data.field[key] != "") {
+                if (data.field[key] !== "") {
                     paramSearch[key] = data.field[key]
                 }
             }
@@ -330,11 +331,11 @@
                     }
                     //请求过期，重新登陆
                     if(data.status == 1){
-                        window.location.href = localhost + "/view/login/login.html";
+                        window.location.href = loginPageUrl;
                     }
                 }
             })
-        })
+        });
 
         //查看框里面的提交
         form.on('submit(editForm)', function(data) {
@@ -356,7 +357,7 @@
                         }
                     });
                 })
-            })
+            });
             return false;
         });
 

@@ -51,7 +51,7 @@
         form.on('submit(searchForm)', function(data) {
             var paramSearch = {};
             paramSearch[data.field.searchType] = data.field.searchValue; //查询参数
-            if (data.field.searchType == "reset") {
+            if (data.field.searchType === "reset") {
                 paramSearch = {};
             }
             tableIns.reload({
