@@ -447,7 +447,7 @@
 
                     $.ajax({
                         cache: true,
-                        type: "get",
+                        type: "POST",
                         url: outTreasuryAdd,
                         async: false,
                         data: preData,
@@ -455,7 +455,14 @@
                             layer.msg(request.msg);
                             return;
                         },
+                        xhrFields: {
+          withCredentials: true
+       },
+       crossDomain: true,
                         success: function(res) {
+                            if (res.status === 1) {
+    window.location.href = loginPageUrl;
+}
                             if (res.status == 0) {
                                 tableIns.reload({
                                     page: {
@@ -525,13 +532,20 @@
                 ids.push(array.orderno);
                 $.ajax({
                     cache: true,
-                    type: "get",
+                    type: "POST",
                     url: outStock,
+                    xhrFields: {
+          withCredentials: true
+       },
+       crossDomain: true,
                     data: {
                         ids: ids.toString()
                     },
                     async: false,
                     success: function(res) {
+                        if (res.status === 1) {
+    window.location.href = loginPageUrl;
+}
                         if (res.status == 0) {
                             layer.msg("出库成功");
                             tableIns.reload({

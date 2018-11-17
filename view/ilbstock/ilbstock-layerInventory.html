@@ -297,8 +297,15 @@
                     depotid: depotData.depotid,
                     lbarr: JSON.stringify(apriceJson)
                 },
+                xhrFields: {
+          withCredentials: true
+       },
+       crossDomain: true,
                 // traditional: true,
                 success: function(res) {
+                    if (res.status === 1) {
+    window.location.href = loginPageUrl;
+}
                     if (res.status == 0) {
                         status = true;
                     }

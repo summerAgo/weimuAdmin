@@ -269,23 +269,33 @@
             }, function(index) {
                 $.ajax({
                     cache: true,
-                    type: "get",
+                    type: "POST",
                     url: userAuthority,
                     data: data.field,
                     async: false,
+                    xhrFields: {
+                      withCredentials: true
+                    },
+                   crossDomain: true,
                     error: function(request) {
                         layer.msg('提交失败');
                         return;
                     },
                     success: function(data) {
-                        layer.close(eaitLayer);
-                        layer.msg('提交成功');
-                        // 刷新表格
-                        tableIns.reload({
-                            page: {
-                                curr: 1 //重新从第 1 页开始
-                            }
-                        });
+                        if(data.status === 1){
+                            layer.close(eaitLayer);
+                            layer.msg('提交成功');
+                            // 刷新表格
+                            tableIns.reload({
+                                page: {
+                                    curr: 1 //重新从第 1 页开始
+                                }
+                            });
+                        }
+                        if (data.status == 1) {
+                            window.location.href = loginPageUrl;
+                        }
+
                     }
                 });
             });
@@ -305,15 +315,22 @@
             }, function(index) {
                 $.ajax({
                     cache: true,
-                    type: "get",
+                    type: "POST",
                     url: userPas,
                     data: data.field,
                     async: false,
+                    xhrFields: {
+                      withCredentials: true
+                    },
+                   crossDomain: true,
                     error: function(request) {
                         layer.msg('重置失败');
                         return;
                     },
                     success: function(data) {
+                        if (data.status == 1) {
+                            window.location.href = loginPageUrl;
+                        }
                         layer.close(eaitLayer);
                         layer.msg('重置成功');
                     }
@@ -375,6 +392,10 @@
                     rowDataApi(userDel, {
                         "ids": rowId
                     }, function(data) {
+                        if (data.status === 1) {
+                            window.location.href = loginPageUrl;
+                        }
+
                         // 删除所选行成功
                         layer.close(index);
                         // 刷新表格
@@ -431,15 +452,22 @@
             }, function(index) {
                 $.ajax({
                     cache: true,
-                    type: "get",
+                    type: "POST",
                     url: userUrl,
                     data: data.field,
                     async: false,
+                    xhrFields: {
+                      withCredentials: true
+                   },
+                   crossDomain: true,
                     error: function(request) {
                         layer.msg('提交失败');
                         return;
                     },
                     success: function(data) {
+                        if (data.status === 1) {
+                            window.location.href = loginPageUrl;
+                        }
                         layer.close(eaitLayer);
                         layer.msg('提交成功');
                         // 刷新表格
@@ -460,6 +488,10 @@
                 url: url,
                 type: "get",
                 data: data,
+                xhrFields: {
+                  withCredentials: true
+               },
+               crossDomain: true,
                 traditional: true,
                 success: funSuc,
                 error: funErr
@@ -643,11 +675,18 @@
                     url: delInstitution,
                     data: data,
                     async: false,
+                    xhrFields: {
+                      withCredentials: true
+                   },
+                   crossDomain: true,
                     error: function(request) {
                         layer.msg('提交失败');
                         return;
                     },
                     success: function(data) {
+                        if (data.status === 1) {
+                            window.location.href = loginPageUrl;
+                        }
                         layer.close(eaitLayer);
                         layer.msg('提交成功');
                         listIns();
@@ -679,11 +718,18 @@
                     url: userUrl,
                     data: data.field,
                     async: false,
+                    xhrFields: {
+                      withCredentials: true
+                   },
+                   crossDomain: true,
                     error: function(request) {
                         layer.msg('提交失败');
                         return;
                     },
                     success: function(data) {
+                        if (data.status === 1) {
+    window.location.href = loginPageUrl;
+}
                         layer.close(eaitLayer);
                         layer.msg('提交成功');
                         listIns();
