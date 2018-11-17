@@ -298,7 +298,7 @@
         function rowDataApi(url, data, funSuc, funErr) {
             $.ajax({
                 url: url,
-                type: "post",
+                type: "get",
                 data: data,
                 traditional: true,
                 success: funSuc,
@@ -472,10 +472,10 @@
             //编辑提交
             if (data.field.id != null && data.field.id !== "") {
                 title = '确认提交修改';
-                userUrl = updInstitution;
+                url = updInstitution;
             } else {
                 title = '确认添加';
-                userUrl = addInstitution;
+                url = addInstitution;
                 data.field.id = null;
             }
             layer.confirm(title, {
@@ -485,7 +485,7 @@
                 $.ajax({
                     cache: true,
                     type: "post",
-                    url: userUrl,
+                    url: url,
                     data: data.field,
                     async: false,
                     xhrFields: {
@@ -509,6 +509,5 @@
             });
             return false;
         });
-
     });
 </script>

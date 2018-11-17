@@ -2,18 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2a1908b1-3c71-432d-86df-3ecbf9dcacec" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/js/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/api.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/view/base/base-infodata.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/base/base-infodata.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/base/owner-list.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/base/owner-list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/base/supplier-list.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/base/supplier-list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/button/button-add.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/button/button-add.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/button/button-list.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/button/button-list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/depot/depot-list.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/depot/depot-list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/form/form-addDepot.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/form/form-addDepot.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/form/form-dropdown.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/form/form-dropdown.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/form/form-goods.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/form/form-goods.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/form/form-infodata.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/form/form-infodata.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/form/form-newbill.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/form/form-newbill.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/form/form-user.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/form/form-user.html" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -34,25 +24,25 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="html" value="62" />
+          <entry key="html" value="63" />
           <entry key="js" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="HTML" value="62" />
+          <entry key="HTML" value="63" />
           <entry key="JavaScript" value="2" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="html" value="1056" />
+          <entry key="html" value="1060" />
           <entry key="js" value="20" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="HTML" value="1056" />
+          <entry key="HTML" value="1060" />
           <entry key="JavaScript" value="20" />
         </counts>
       </usages-collector>
@@ -60,84 +50,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/view/form/form-addDepot.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="106" column="16" lean-forward="true" selection-start-line="106" selection-start-column="16" selection-end-line="109" selection-end-column="34" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/view/form/form-addPosition.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1170" />
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/view/form/form-depotPosition.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1182" />
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/view/form/form-dropdown.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="172">
-              <caret line="137" column="20" selection-start-line="137" selection-start-column="20" selection-end-line="140" selection-end-column="38" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/view/form/form-goods.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="575">
-              <caret line="165" column="41" lean-forward="true" selection-start-line="165" selection-start-column="41" selection-end-line="165" selection-end-column="41" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/view/form/form-import.html">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/view/form/form-infodata.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1466">
-              <caret line="68" column="26" lean-forward="true" selection-start-line="68" selection-start-column="26" selection-end-line="68" selection-end-column="26" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/view/form/form-newbill.html">
+        <entry file="file://$PROJECT_DIR$/view/base/base-infodata.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="345">
-              <caret line="591" column="21" selection-start-line="591" selection-start-column="21" selection-end-line="591" selection-end-column="21" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/api.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="251">
-              <caret line="33" column="24" selection-start-line="33" selection-start-column="4" selection-end-line="33" selection-end-column="24" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/view/form/form-user.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="432">
-              <caret line="117" column="23" selection-start-line="117" selection-start-column="23" selection-end-line="117" selection-end-column="23" />
+            <state relative-caret-position="338">
+              <caret line="312" column="18" lean-forward="true" selection-start-line="312" selection-start-column="18" selection-end-line="312" selection-end-column="18" />
             </state>
           </provider>
         </entry>
@@ -151,8 +68,9 @@
       <find>delins</find>
       <find>m</find>
       <find>msg</find>
-      <find>rowDataApi</find>
       <find>preEntrygetByOrderno</find>
+      <find>userUrl</find>
+      <find>rowDataApi</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -176,7 +94,6 @@
         <option value="$PROJECT_DIR$/view/base/owner-add.html" />
         <option value="$PROJECT_DIR$/view/button/button-add.html" />
         <option value="$PROJECT_DIR$/view/base/supplier-list.html" />
-        <option value="$PROJECT_DIR$/view/base/base-infodata.html" />
         <option value="$PROJECT_DIR$/view/base/owner-list.html" />
         <option value="$PROJECT_DIR$/view/button/button-list.html" />
         <option value="$PROJECT_DIR$/view/depot/depot-list.html" />
@@ -186,6 +103,7 @@
         <option value="$PROJECT_DIR$/view/form/form-infodata.html" />
         <option value="$PROJECT_DIR$/view/form/form-user.html" />
         <option value="$PROJECT_DIR$/view/form/form-newbill.html" />
+        <option value="$PROJECT_DIR$/view/base/base-infodata.html" />
       </list>
     </option>
   </component>
@@ -216,11 +134,6 @@
             <path>
               <item name="weimuAdmin" type="b2602c69:ProjectViewProjectNode" />
               <item name="weimuAdmin" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="weimuAdmin" type="b2602c69:ProjectViewProjectNode" />
-              <item name="weimuAdmin" type="462c0819:PsiDirectoryNode" />
               <item name="view" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -228,18 +141,6 @@
               <item name="weimuAdmin" type="462c0819:PsiDirectoryNode" />
               <item name="view" type="462c0819:PsiDirectoryNode" />
               <item name="base" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="weimuAdmin" type="b2602c69:ProjectViewProjectNode" />
-              <item name="weimuAdmin" type="462c0819:PsiDirectoryNode" />
-              <item name="view" type="462c0819:PsiDirectoryNode" />
-              <item name="depot" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="weimuAdmin" type="b2602c69:ProjectViewProjectNode" />
-              <item name="weimuAdmin" type="462c0819:PsiDirectoryNode" />
-              <item name="view" type="462c0819:PsiDirectoryNode" />
-              <item name="form" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -276,12 +177,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1542442430024</updated>
-      <workItem from="1542442431153" duration="8314000" />
+      <workItem from="1542442431153" duration="9367000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8314000" />
+    <option name="totallyTimeSpent" value="9367000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -469,13 +370,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/view/base/base-infodata.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="364">
-          <caret line="299" column="25" lean-forward="true" selection-start-line="299" selection-start-column="25" selection-end-line="299" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/view/depot/depot-position.html">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -555,8 +449,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/view/form/form-newbill.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="591" column="21" selection-start-line="591" selection-start-column="21" selection-end-line="591" selection-end-column="21" />
+        <state relative-caret-position="501">
+          <caret line="592" column="18" lean-forward="true" selection-start-line="592" selection-start-column="18" selection-end-line="592" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/view/base/base-infodata.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="338">
+          <caret line="312" column="18" lean-forward="true" selection-start-line="312" selection-start-column="18" selection-end-line="312" selection-end-column="18" />
         </state>
       </provider>
     </entry>
