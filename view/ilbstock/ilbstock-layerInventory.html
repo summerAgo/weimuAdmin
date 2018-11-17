@@ -1,6 +1,6 @@
 <div class="table-page">
     <div class="table-content-title layer-level">
-        <div class="table-tools">
+        <div class="table-tools layerInventoryTools">
             <ul class="layui-nav" lay-filter="talbe-tools">
                 <li class="layui-nav-item">
                     <a href="javascript:;" class="saveBtn"><i class="iconfont icon-baocun"></i>保存修改</a>
@@ -67,6 +67,9 @@
 
         if (echoData) {
             $(".layerInventory").hide();
+            if (echoData.status == 1) {
+                $(".layerInventoryTools").hide();
+            }
             depotData.ownerid = echoData.ownerid;
             depotData.depotid = echoData.depotid;
             depotData.id = echoData.id;
@@ -221,8 +224,8 @@
             ],
             even: true,
             page: true, //是否显示分页
-            limits: [10, 20, 30, 40, 50],
-            limit: 10, //每页默认显示的数量
+            limits: [15, 40, 45, 60],
+            limit: 15, //每页默认显示的数量
             done: function(res, curr, count) {},
             loading: true
         });
@@ -250,6 +253,11 @@
         });
 
         function submitOrSave(dataObj, valueArr, url) {
+            if(!dataObj.ownerid || !dataObj.depotid ){
+                layer.msg('请选择货权人和仓库并查询后再进行盘点操作');
+                return false;
+            }
+
             var status = true;
             for (var key in numChangeValue) {
                 if (isNaN(numChangeValue[key]) || numChangeValue[key] == "") {
@@ -261,25 +269,28 @@
             console.log(tableDataArr);
 
             if (status) {
-                status = editAprice(dataObj, tableDataArr, url); //提交评估单价
+                status = editAprice(dataObj, tableDataArr, url);
                 if (status) {
-                    numChangeValue = {}; //如果提交成功清空估价数组
+                    numChangeValue = {};
+                    layer.closeAll();
                 }
             } else {
                 return false;
             }
+
         }
-        
+
         //保持提交  修改异常调整数据
         function editAprice(depotData, apriceJson, url) {
             //请求数据源示例
+            console.log(depotData)
             var status = false;
             $.ajax({
                 url: url,
                 type: "POST",
                 async: false,
                 data: {
-                    id:depotData.id,
+                    id: depotData.id,
                     ownerid: depotData.ownerid,
                     depotid: depotData.depotid,
                     lbarr: JSON.stringify(apriceJson)
