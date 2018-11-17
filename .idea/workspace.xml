@@ -2,24 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2a1908b1-3c71-432d-86df-3ecbf9dcacec" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/js/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/base/base-info.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/base/base-info.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/base/base-infodata.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/base/base-infodata.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/view/base/owner-add.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/base/owner-add.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/base/owner-list.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/base/owner-list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/base/supplier-add.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/base/supplier-add.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/base/supplier-list.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/base/supplier-list.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/form/form-infodata.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/form/form-infodata.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/ilbstock/ilbstock-abnormal.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/ilbstock/ilbstock-abnormal.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/ilbstock/ilbstock-info.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/ilbstock/ilbstock-info.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/ilbstock/ilbstock-inventory.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/ilbstock/ilbstock-inventory.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/ilbstock/ilbstock-layerAbnormal.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/ilbstock/ilbstock-layerAbnormal.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/ilbstock/ilbstock-layerInventory.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/ilbstock/ilbstock-layerInventory.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/stock/stock-enterHistory.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/stock/stock-enterHistory.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/stock/stock-outBill.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/stock/stock-outBill.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/stock/stock-outHistory.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/stock/stock-outHistory.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/stock/stock-preentry.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/stock/stock-preentry.html" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -52,13 +35,13 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="html" value="741" />
+          <entry key="html" value="752" />
           <entry key="js" value="20" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="HTML" value="741" />
+          <entry key="HTML" value="752" />
           <entry key="JavaScript" value="20" />
         </counts>
       </usages-collector>
@@ -84,11 +67,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/view/base/supplier-list.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="633">
-              <caret line="452" column="30" lean-forward="true" selection-start-line="452" selection-start-column="30" selection-end-line="454" selection-end-column="25" />
+            <state relative-caret-position="283">
+              <caret line="481" column="37" lean-forward="true" selection-start-line="481" selection-start-column="37" selection-end-line="481" selection-end-column="37" />
             </state>
           </provider>
         </entry>
@@ -102,11 +85,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/view/base/owner-add.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2845">
-              <caret line="125" column="17" lean-forward="true" selection-start-line="125" selection-start-column="17" selection-end-line="125" selection-end-column="17" />
+            <state relative-caret-position="20">
+              <caret line="38" column="14" lean-forward="true" selection-start-line="38" selection-start-column="14" selection-end-line="38" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -157,13 +140,13 @@
         <option value="$PROJECT_DIR$/view/ilbstock/ilbstock-layerInventory.html" />
         <option value="$PROJECT_DIR$/view/ilbstock/ilbstock-info.html" />
         <option value="$PROJECT_DIR$/view/stock/stock-preentry.html" />
-        <option value="$PROJECT_DIR$/view/base/owner-add.html" />
         <option value="$PROJECT_DIR$/js/api.js" />
         <option value="$PROJECT_DIR$/view/base/base-info.html" />
         <option value="$PROJECT_DIR$/view/base/owner-list.html" />
         <option value="$PROJECT_DIR$/view/base/base-infodata.html" />
         <option value="$PROJECT_DIR$/view/base/supplier-add.html" />
         <option value="$PROJECT_DIR$/view/base/supplier-list.html" />
+        <option value="$PROJECT_DIR$/view/base/owner-add.html" />
       </list>
     </option>
   </component>
@@ -248,12 +231,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1542442430024</updated>
-      <workItem from="1542442431153" duration="6273000" />
+      <workItem from="1542442431153" duration="6524000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6273000" />
+    <option name="totallyTimeSpent" value="6524000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -434,13 +417,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/view/base/owner-add.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2845">
-          <caret line="125" column="17" lean-forward="true" selection-start-line="125" selection-start-column="17" selection-end-line="125" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/view/base/base-infodata.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-52">
@@ -450,8 +426,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/view/base/supplier-list.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="633">
-          <caret line="452" column="30" lean-forward="true" selection-start-line="452" selection-start-column="30" selection-end-line="454" selection-end-column="25" />
+        <state relative-caret-position="283">
+          <caret line="481" column="37" lean-forward="true" selection-start-line="481" selection-start-column="37" selection-end-line="481" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/view/base/owner-add.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="20">
+          <caret line="38" column="14" lean-forward="true" selection-start-line="38" selection-start-column="14" selection-end-line="38" selection-end-column="14" />
         </state>
       </provider>
     </entry>
