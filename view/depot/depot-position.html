@@ -192,19 +192,29 @@
             data.field['depotid'] = depid;
 
             console.log(data)
-
-            $.get(url, data.field, function(json) {
-                if (json.status == 0) {
-                    sessionStorage.removeItem('positionCheck'); //操作成功删除本地存储
-                    tableIns.reload({
-                        page: {
-                            curr: 1 //重新从第 1 页开始
-                        }
-                    });
-                    layer.msg(msg);
-                    layer.close(addPositionLayer);
-                } else {
-                    layer.msg("提交异常");
+            $.ajax({
+                url: url,
+                type: "POST",
+                data: data.field,
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
+                traditional: true,
+                success: function(json){
+                    if (json.status === 1) {
+                        window.location.href = loginPageUrl;
+                    }
+                    if (json.status == 0) {
+                        sessionStorage.removeItem('positionCheck'); //操作成功删除本地存储
+                        tableIns.reload({
+                            page: {
+                                curr: 1 //重新从第 1 页开始
+                            }
+                        });
+                        layer.msg(msg);
+                        layer.close(addPositionLayer);
+                    } 
                 }
             })
             return false;
@@ -250,6 +260,9 @@
                     rowDataApi(positionDel, {
                         "ids": rowId
                     }, function(data) {
+                        if (data.status === 1) {
+    window.location.href = loginPageUrl;
+}
                         // 删除所选行成功
                         layer.close(index);
                         // 刷新表格
@@ -268,8 +281,12 @@
         function rowDataApi(url, data, funSuc, funErr) {
             $.ajax({
                 url: url,
-                type: "get",
+                type: "POST",
                 data: data,
+                xhrFields: {
+          withCredentials: true
+       },
+       crossDomain: true,
                 traditional: true,
                 success: funSuc,
                 error: funErr
