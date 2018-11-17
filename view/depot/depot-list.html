@@ -180,7 +180,6 @@
             var dataType = JSON.parse(sessionStorage.getItem('depotCheck'));//获取本地所选仓库信息，判断是否为修改
             var url;
             var msg = "新建仓库成功";
-            console.log(dataType);
             data.field.type = data.field.type - 1; 
             if (dataType) {
                 //如果是修改
@@ -247,16 +246,20 @@
                     //调删除接口
                     rowDataApi(depotDel, {
                         "ids": rowId
-                    }, function (data) {
-                        // 删除所选行成功
-                        layer.close(index);
-                        // 刷新表格
-                        tableIns.reload({
-                            page: {
-                                curr: 1 //重新从第 1 页开始
-                            }
-                        });
-                        layer.msg(data.msg);
+                    }, function (res) {
+                        if(res.status === 0){
+                            // 删除所选行成功
+                            layer.close(index);
+                            // 刷新表格
+                            tableIns.reload({
+                                page: {
+                                    curr: 1 //重新从第 1 页开始
+                                }
+                            });
+                            layer.msg(data.msg);
+                        }else if (res.status === 1) {
+                            window.location.href = loginPageUrl;
+                        }
                     });
                 });
             }
@@ -276,9 +279,13 @@
         function rowDataApi(url, data, funSuc, funErr) {
             $.ajax({
                 url: url,
-                type: "get",
+                type: "post",
                 data: data,
                 traditional: true,
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
                 success: funSuc,
                 error: funErr
             })

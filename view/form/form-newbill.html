@@ -188,16 +188,20 @@
                 data: param,
                 async: false, //同步
                 traditional: true,
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
                 success: function(data) {
                     // console.log(data);
-                    if (data.status == 0) {
+                    if (data.status === 0) {
                         //把接口数据转换为[{"name":str,"value":number}]格式
-                        if (!Array.isArray(data.data) || data.data.length == 0) {
+                        if (!Array.isArray(data.data) || data.data.length === 0) {
                             // 判断arr是否为数组并保证内部有值
                             return false;
                         }
                         for (var i = 0; i < data.data.length; i++) {
-                            if (type == 0) {
+                            if (type === 0) {
                                 arr.push({
                                     "name": data.data[i].name,
                                     "value": data.data[i].id
@@ -215,7 +219,7 @@
                         }
                     }
                 }
-            })
+            });
             return arr;
         }
 
@@ -365,26 +369,31 @@
             //审核订单为库存
             $.ajax({
                 url: preEntryexamineStock,
-                type: "get",
+                type: "post",
                 data: {
                     'ids': ids
                 },
                 traditional: true,
-                success: function(data) {
-                    if (data.status == 0) {
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
+                success: function(res) {
+                    if (res.status === 0) {
                         tableIns.reload({
                             page: {
                                 curr: 1 //重新从第 1 页开始
                             }
                         });
                         layer.msg("审核通过为库存");
+                    }else if (res.status === 1) {
+                        window.location.href = loginPageUrl;
                     }
                 }
             })
-        })
+        });
 
         if (orderno) {
-            console.log(orderno)
             $(".layui-elem-quote").html("预入库订单号：" + orderno.orderno);
             //下拉框赋值
             formSelects.data('ownerSelectLayer', 'local', {
@@ -433,7 +442,6 @@
             $.get(preEntrygetByOrderno, {
                 orderno: orderno.orderno
             }, function(data) {
-
                 if (data.stocklist != null) {
                     tableData = data.stocklist;
                     tableIns.reload({
@@ -489,9 +497,7 @@
                 }, function(index) {
                     checkBoxTrDomArr.del();
                     layer.close(index);
-
                     var rowId = [];
-
                 });
             }
         });
@@ -500,13 +506,17 @@
         function rowDataApi(url, data, funSuc, funErr) {
             $.ajax({
                 url: url,
-                type: "get",
+                type: "post",
                 data: data,
                 traditional: true,
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
                 success: funSuc,
                 error: funErr
             })
-        };
+        }
 
         //点击入库
         function subConfun() {
@@ -551,14 +561,16 @@
                 num = orderno.orderno;
             }
 
-            console.log(1)
-
             $.ajax({
                 url: preEntryAdd,
-                type: "POST",
+                type: "post",
                 //dataType: "json",
                 //contentType: "application/json",
                 async: false,
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
                 data: {
                     lbarr: arr.toString(),
                     ownerid: cargoowner,
@@ -569,11 +581,15 @@
                     orderno: num
                 },
                 traditional: true,
-                success: function(data) {
-                    console.log(data);
-                    layer.msg("提交成功");
-                    layer.closeAll();
-                    //刷新当前列表
+                success: function(res) {
+                    if (res.status === 0) {
+                        console.log(data);
+                        layer.msg("提交成功");
+                        layer.closeAll();
+                        //刷新当前列表
+                    } else if (data.status === 1) {
+                        window.location.href = loginPageUrl;
+                    }
                 },
                 error: function() {}
             })
@@ -599,7 +615,7 @@
                     accept: 'file', //普通文件
                     exts: 'xls|xlsx|xlsm|xlt|xltx|xltm', //只允许上传后缀
                     done: function(res) {
-                        if (res.status == 0) {
+                        if (res.status === 0) {
                             layer.msg("上传成功")
                             layer.close(importLayer);
                             for (var k = 0; k < res.data.length; k++) {

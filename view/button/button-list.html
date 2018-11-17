@@ -143,7 +143,6 @@
             done: function(res, curr, count) {
                 var addtableBtn = '<div class="rightBotBtn">已经选择<span>0</span>个数据</div>';
                 $(".layui-table-page").append(addtableBtn);
-                
             },
             text: {
                 none: "无匹配数据"
@@ -165,7 +164,6 @@
             } else if (checkStatus.data.length > 1) {
                 layer.msg("请选择需要编辑的单条信息");
             } else {
-                
                 var data =checkStatus.data[0];
                 data["menuid"] = menuid;
                 window.currData = checkStatus.data[0]; //全局对象存储当前选中行数据
@@ -235,11 +233,11 @@
 			var userData = window.currData;
 			var title="";
 			var userUrl="";
-			if(userData !=null && data.field.id != "" ){
+			if(userData !=null && data.field.id !== "" ){
 				title = '确认提交修改';
 				userUrl = buttonUpdate;
 			}else {
-				title = '确认添加'
+				title = '确认添加';
 				userUrl = buttonAdd;
 			}
             layer.confirm(title, {
@@ -248,23 +246,31 @@
             }, function(index) {
                 $.ajax({
                     cache: true,
-                    type: "get",
+                    type: "post",
                     url: userUrl,
                     data: data.field,
                     async: false,
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
                     error: function(request) {
                         layer.msg('提交失败');
-                        return;
+                        return false;
                     },
-                    success: function(data) {
-                        layer.close(eaitLayer);
-                        layer.msg('提交成功');
-						 // 刷新表格
-                        tableIns.reload({
-                            page: {
-                                curr: 1 //重新从第 1 页开始
-                            }
-                        });
+                    success: function(res) {
+                        if(res.status === 0){
+                            layer.close(eaitLayer);
+                            layer.msg('提交成功');
+                            // 刷新表格
+                            tableIns.reload({
+                                page: {
+                                    curr: 1 //重新从第 1 页开始
+                                }
+                            });
+                        }else if (res.status === 1) {
+                            window.location.href = loginPageUrl;
+                        }
                     }
                 });
             })

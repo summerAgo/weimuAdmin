@@ -274,26 +274,34 @@
             }, function (index) {
                 $.ajax({
                     cache: true,
-                    type: "get",
+                    type: "post",
                     url: userUrl,
                     data: data.field,
                     async: false,
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
                     error: function (errMsg) {
                         layer.msg('提交失败');
                         return false;
                     },
                     success: function (res) {
-                        layer.close(eaitLayer);
-                        layer.msg('提交成功');
-                        // 刷新表格
-                        tableIns.reload({
-                            page: {
-                                curr: 1 //重新从第 1 页开始
-                            }
-                        });
+                        if(res.status === 0){
+                            layer.close(eaitLayer);
+                            layer.msg('提交成功');
+                            // 刷新表格
+                            tableIns.reload({
+                                page: {
+                                    curr: 1 //重新从第 1 页开始
+                                }
+                            });
+                        }else if(res.status === 1){
+                            window.location.href = loginPageUrl;
+                        }
                     }
                 });
-            })
+            });
             return false;
         });
 
@@ -321,13 +329,12 @@
                 inaAllList = insData;
                 var val = [];
                 for (var i = 0; i < insData.length; i++) {
-                    if (insData[i].pid == 0) {
+                    if (insData[i].pid === 0) {
                         val.push(insData[i]);
                     }
                 }
                 insList = val;
                 var treeData = [];
-                console.log(treeData)
                 var number = 0;
                 for (var i = 0; i < val.length; i++) {
                     var map = {};
@@ -337,14 +344,14 @@
                     map["spread"] = true;
                     var children = [];
                     for (var j = 0; j < insData.length; j++) {
-                        if (val[i].id == insData[j].pid) {
+                        if (val[i].id === insData[j].pid) {
                             var son = {};
                             son["name"] = insData[j].name;
                             son["id"] = insData[j].id;
                             son["pid"] = insData[j].pid;
                             children.push(son);
                             number++;
-                            if (number == 1) {
+                            if (number === 1) {
                                 menuIns = son;
                             }
                         }
@@ -437,10 +444,14 @@
             }, function (index) {
                 $.ajax({
                     cache: true,
-                    type: "get",
+                    type: "post",
                     url: delInstitution,
                     data: data,
                     async: false,
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
                     error: function (msg) {
                         layer.msg('提交失败');
                         return false;
@@ -463,7 +474,7 @@
             var title = "";
             var url = "";
             //编辑提交
-            if (data.field.id != null && data.field.id != "") {
+            if (data.field.id != null && data.field.id !== "") {
                 title = '确认提交修改';
                 userUrl = updInstitution;
             } else {
@@ -477,18 +488,26 @@
             }, function (index) {
                 $.ajax({
                     cache: true,
-                    type: "get",
+                    type: "post",
                     url: userUrl,
                     data: data.field,
                     async: false,
-                    error: function (request) {
-                        layer.msg('提交失败');
-                        return;
+                    xhrFields: {
+                        withCredentials: true
                     },
-                    success: function (data) {
-                        layer.close(eaitLayer);
-                        layer.msg('提交成功');
-                        listIns();
+                    crossDomain: true,
+                    error: function (msg) {
+                        layer.msg('提交失败');
+                        return false;
+                    },
+                    success: function (res) {
+                        if(res.status === 0){
+                            layer.close(eaitLayer);
+                            layer.msg('提交成功');
+                            listIns();
+                        }else if (res.status === 1) {
+                            window.location.href = loginPageUrl;
+                        }
                     }
                 });
             });

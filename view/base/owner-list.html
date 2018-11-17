@@ -281,23 +281,31 @@
             }, function (index) {
                 $.ajax({
                     cache: true,
-                    type: "get",
+                    type: "post",
                     url: userUrl,
                     data: data.field,
                     async: false,
-                    error: function (request) {
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    error: function (msg) {
                         layer.msg('提交失败');
                         return false;
                     },
-                    success: function (data) {
-                        layer.close(eaitLayer);
-                        layer.msg('提交成功');
-                        // 刷新表格
-                        tableIns.reload({
-                            page: {
-                                curr: 1 //重新从第 1 页开始
-                            }
-                        });
+                    success: function (res) {
+                        if (res.status === 0) {
+                            layer.close(eaitLayer);
+                            layer.msg('提交成功');
+                            // 刷新表格
+                            tableIns.reload({
+                                page: {
+                                    curr: 1 //重新从第 1 页开始
+                                }
+                            });
+                        }else if (res.status === 1) {
+                            window.location.href = loginPageUrl;
+                        }
                     }
                 });
             });
@@ -315,9 +323,7 @@
                 error: funErr
             })
         }
-
         listIns();
-
         //用户类型菜单树
         function listIns() {
             var data = {"utype": 1};//1是货权人类型
