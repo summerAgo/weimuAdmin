@@ -221,6 +221,9 @@
                     rowDataApi(menuDel, {
                         "ids": rowId
                     }, function(data) {
+                        if (data.status === 1) {
+    window.location.href = loginPageUrl;
+}
                         // 删除所选行成功
                         layer.close(index);
                         // 刷新表格
@@ -283,15 +286,22 @@
             }, function(index) {
                 $.ajax({
                     cache: true,
-                    type: "get",
+                    type: "POST",
                     url: userUrl,
                     data: data.field,
                     async: false,
+                    xhrFields: {
+          withCredentials: true
+       },
+       crossDomain: true,
                     error: function(request) {
                         layer.msg('提交失败');
                         return;
                     },
                     success: function(data) {
+                        if (data.status === 1) {
+    window.location.href = loginPageUrl;
+}
                         layer.close(eaitLayer);
                         layer.msg('提交成功');
 						// 刷新表格
@@ -310,8 +320,12 @@
         function rowDataApi(url, data, funSuc, funErr) {
             $.ajax({
                 url: url,
-                type: "get",
+                type: "POST",
                 data: data,
+                xhrFields: {
+          withCredentials: true
+       },
+       crossDomain: true,
                 traditional: true,
                 success: funSuc,
                 error: funErr

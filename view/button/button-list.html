@@ -252,11 +252,20 @@
                     url: userUrl,
                     data: data.field,
                     async: false,
+                    xhrFields: {
+                      withCredentials: true
+                   },
+                   crossDomain: true,
                     error: function(request) {
                         layer.msg('提交失败');
                         return;
                     },
                     success: function(data) {
+                        //请求过期，重新登陆
+                        if(data.status == 1){
+                            window.location.href = localhost + "/view/login/login.html";
+                        }
+
                         layer.close(eaitLayer);
                         layer.msg('提交成功');
 						 // 刷新表格

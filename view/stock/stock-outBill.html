@@ -331,11 +331,18 @@
                     data["ids"] = ids.toString();
                     $.ajax({
                         cache: true,
-                        type: "get",
+                        type: "POST",
                         url: outStock,
                         data: data,
                         async: false,
+                        xhrFields: {
+          withCredentials: true
+       },
+       crossDomain: true,
                         success: function(res) {
+                            if (res.status === 1) {
+    window.location.href = loginPageUrl;
+}
                             if (res.status == 0) {
                                 tableIns.reload({
                                     page: {
@@ -444,6 +451,9 @@
                     rowDataApi(outTreasuryDelete, {
                         "ids": rowId
                     }, function(data) {
+                        if (data.status === 1) {
+    window.location.href = loginPageUrl;
+}
                         // 删除所选行成功
                         layer.close(index);
                         // 刷新表格
@@ -466,6 +476,10 @@
                 type: "get",
                 data: data,
                 traditional: true,
+                xhrFields: {
+          withCredentials: true
+       },
+       crossDomain: true,
                 success: funSuc,
                 error: funErr
             })

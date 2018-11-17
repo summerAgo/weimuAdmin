@@ -180,12 +180,19 @@
                     var layerData; // 当前弹框页面数据
                     $.ajax({
                         url: outDetails,
-                        type: "get",
+                        type: "POST",
                         data: {
                             orderno: curData.orderno // 单号
                         },
+                        xhrFields: {
+          withCredentials: true
+       },
+       crossDomain: true,
                         async: false, // 同步
                         success: function(data) {
+                            if (res.status === 1) {
+    window.location.href = loginPageUrl;
+}
                             if (data.status == 0) {
                                 layerData = data.data;
                                 // 弹出弹框
@@ -287,6 +294,9 @@
                         return;
                     },
                     success: function(res) {
+                        if (res.status === 1) {
+    window.location.href = loginPageUrl;
+}
                         if (res.status == 0) {
                             layer.msg(res.msg);
                             layer.close(examineLayer);
@@ -321,6 +331,9 @@
                         return;
                     },
                     success: function(res) {
+                        if (res.status === 1) {
+    window.location.href = loginPageUrl;
+}
                         if (res.status == 0) {
                             layer.msg(res.msg);
                             layer.close(examineLayer);
