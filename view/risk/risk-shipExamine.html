@@ -180,7 +180,7 @@
                     var layerData; // 当前弹框页面数据
                     $.ajax({
                         url: outDetails,
-                        type: "POST",
+                        type: "get",
                         data: {
                             orderno: curData.orderno // 单号
                         },
@@ -190,7 +190,7 @@
        crossDomain: true,
                         async: false, // 同步
                         success: function(data) {
-                            if (res.status === 1) {
+                            if (data.status === 1) {
     window.location.href = loginPageUrl;
 }
                             if (data.status == 0) {
@@ -279,7 +279,7 @@
             $(".passBtn").click(function(){
                 $.ajax({
                     cache: true,
-                    type: "GET",
+                    type: "POST",
                     url: setAdopt,
                     async: false,
                     xhrFields: {
@@ -316,7 +316,7 @@
             $(".nopassBtn").click(function() {
                 $.ajax({
                     cache: true,
-                    type: "GET",
+                    type: "POST",
                     url: setNotAdopt,
                     async: false,
                     xhrFields: {

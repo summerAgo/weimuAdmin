@@ -108,7 +108,7 @@
             //获取列表数据
             $.ajax({
                 url: url,
-                type: "POST",
+                type: "get",
                 data: param,
                 async: false, //同步
                 traditional: true,
@@ -258,7 +258,7 @@
 
                     $.ajax({
                         url: outHistoryDetails,
-                        type: "POST",
+                        type: "get",
                         data: {
                             orderno: curData.orderno // 单号
                         },
@@ -269,8 +269,8 @@
                         async: false, // 同步
                         success: function(data) {
                             if (data.status === 1) {
-    window.location.href = loginPageUrl;
-}
+                                window.location.href = loginPageUrl;
+                            }
                             layerData = data;
                         }
                     });
