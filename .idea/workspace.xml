@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2a1908b1-3c71-432d-86df-3ecbf9dcacec" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/js/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/view/base/base-infodata.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/base/base-infodata.html" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
@@ -36,13 +36,13 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="html" value="1060" />
+          <entry key="html" value="1081" />
           <entry key="js" value="20" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="HTML" value="1060" />
+          <entry key="HTML" value="1081" />
           <entry key="JavaScript" value="20" />
         </counts>
       </usages-collector>
@@ -53,8 +53,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/view/base/base-infodata.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="338">
-              <caret line="312" column="18" lean-forward="true" selection-start-line="312" selection-start-column="18" selection-end-line="312" selection-end-column="18" />
+            <state relative-caret-position="598">
+              <caret line="226" column="29" lean-forward="true" selection-start-line="226" selection-start-column="29" selection-end-line="226" selection-end-column="29" />
             </state>
           </provider>
         </entry>
@@ -177,12 +177,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1542442430024</updated>
-      <workItem from="1542442431153" duration="9367000" />
+      <workItem from="1542442431153" duration="10001000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="9367000" />
+    <option name="totallyTimeSpent" value="10001000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -456,8 +456,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/view/base/base-infodata.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="338">
-          <caret line="312" column="18" lean-forward="true" selection-start-line="312" selection-start-column="18" selection-end-line="312" selection-end-column="18" />
+        <state relative-caret-position="598">
+          <caret line="226" column="29" lean-forward="true" selection-start-line="226" selection-start-column="29" selection-end-line="226" selection-end-column="29" />
         </state>
       </provider>
     </entry>
