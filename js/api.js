@@ -1,6 +1,11 @@
-var localport = ":8000";//本地端口
-var localhost = "http://192.168.10.110" + localport;//本地
-var pathUrl = "http://192.168.10.201:80/storage-web/"; //?username=admin&password=123456
+var localport = ":8080";//本地端口
+var localhost = "http://119.23.68.13" + localport;//本地
+var pathUrl = "http://119.23.68.13:80/storage-web/"; //?username=admin&password=123456
+
+//var localport = ":8080";//本地端口
+//var localhost = "http://127.0.0.1" + localport;//本地
+//var pathUrl = "http://127.0.0.1:80/storage-web/"; //?username=admin&password=123456
+
 
 var loginUrl = pathUrl + "sys/login"; //登录
 var loginPageUrl = localhost + "/view/login/login.html"; //filter拦截到登录页面
@@ -152,3 +157,9 @@ var checkAdd = pathUrl + "check/recordlist/add";//盘点保存
 var endInventory = pathUrl + "check/recordlist/endInventory";//确认盘点
 
 var getByidList = pathUrl + "check/recordlist/getByidList";//查询盘点记录 参数cid
+
+//异常处理
+var abnList = pathUrl + "abn/recordlist/list";//查
+var abnlbList = pathUrl + "abn/recordlist/lblist";//查
+var abnAdd = pathUrl + "abn/recordlist/add";//
+var abnByidList = pathUrl + "abn/recordlist/getByidList";//查询盘点记录 参数cid
