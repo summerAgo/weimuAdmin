@@ -198,20 +198,19 @@
         }
 
         formSelects.data('supplierSelectLayer', 'local', {
-            arr: selectDataInstall(dropSupplier, null) //供应商列表
+            arr: selectDataInstall(dropSupplier, null,false,0) //供应商列表
         });
 
         formSelects.on('supplierSelectLayer', function(id, vals, val, isAdd, isDisabled) {
-            var id;//供应商ID
+
             if(isAdd){
-                console.log(val)
                 for(var i=0;i<supplierData.length;i++){
-                    if(supplierData[i].name == val.value){
-                        id = supplierData[i].id;
+                    if(supplierData[i].id == val.value){
+                        $(".suppliernameLayer").val(supplierData[i].name);
                         break;
                     }
                 }
-                $(".suppliernameLayer").val(id);
+                
             }else{
                 $(".suppliernameLayer").val("");
             }
@@ -472,7 +471,7 @@
                     selected: "selected"
                 }]
             });
-            $(".suppliernameLayer").val(orderno.supplierid);
+            $(".suppliernameLayer").val(orderno.suppliername);
             //禁用下拉框
             formSelects.disabled('ownerSelectLayer');
             formSelects.disabled('depotSelectLayer');
@@ -567,8 +566,10 @@
             var cargoowner = parent.find("input[name='ownerid']").val();
             var depotname = parent.find("input[name='depotid']").val();
             var origin = parent.find("input[name='origin']").val();
-            var supplier = parent.find("input[name='supplierid']").val();
+            var supplierid = parent.find("input[name='supplierid']").val();
             var positionid = parent.find("input[name='positionid']").val();
+
+            var suppliername = parent.find("input[name='suppliername']").val();
 
             if (null == cargoowner || cargoowner.length < 1) {
                 layer.msg("请填写货权人");
@@ -582,7 +583,7 @@
                 layer.msg("请填写产地");
                 return;
             }
-            if (null == supplier || supplier.length < 1) {
+            if (null == supplierid || supplierid.length < 1) {
                 layer.msg("请填写供应商");
                 return;
             }
@@ -618,7 +619,8 @@
                     ownerid: cargoowner,
                     depotid: depotname,
                     origin: origin,
-                    suppliername: supplier,
+                    supplierid: supplierid,
+                    suppliername: suppliername,
                     positionid: positionid,
                     orderno: num
                 },
