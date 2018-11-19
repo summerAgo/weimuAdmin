@@ -115,6 +115,13 @@
                         title: '未评估商品',
                         width: 266,
                         sort: true,
+                        templet: function(d) {
+                            //默认无
+                            if (d.untreated > 0) {
+                                return '<span style="color:red;">'+d.untreated+'</span>';
+                            }
+                            return d.untreated;
+                        }
                     }, {
                         field: 'already',
                         title: '已评估商品',
