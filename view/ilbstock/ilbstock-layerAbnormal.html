@@ -1,35 +1,319 @@
 <div class="table-page">
     <div class="table-content-title layer-level">
-        <div class="table-tools">
+        <div class="table-tools layerInventoryTools">
             <ul class="layui-nav" lay-filter="talbe-tools">
                 <li class="layui-nav-item">
-                    <a href="javascript:;"><i class="iconfont icon-tianjia"></i>从库存添加货物</a>
+                    <a href="javascript:;" class="saveBtn"><i class="iconfont icon-baocun"></i>保存修改</a>
                 </li>
-                <li class="layui-nav-item">
-                    <a href="javascript:;"><i class="iconfont icon-bianji"></i>编辑</a>
-                </li>
-                <li class="layui-nav-item">
-                    <a href="javascript:;"><i class="iconfont icon-shanchu"></i>删除</a>
-                </li>
-                <li class="layui-nav-item">
-                    <a href="javascript:;"><i class="iconfont icon-shanchu"></i>确认添加</a>
-                </li>
+                <!-- <li class="layui-nav-item">
+                    <a href="javascript:;" class="confirmBtn"><i class="iconfont icon-querenpandian"></i>确认</a>
+                </li> -->
             </ul>
         </div>
     </div>
-    <div class="table-content">
-        <div class="table-content-main">
-            <table class="layui-hide" id="tableContainer-layerAbnormal" lay-filter="tableContainer-layerAbnormal"></table>
+    <div class="table-page-header layer-header">
+        <div class="table-page-form">
+            <form class="layui-form" action="">
+                <div class="form-box layerInventory">
+                    <div class="layui-form-item form-left">
+                        <div class="table-form-item layui-input-inline">
+                            <span class="input-span">货权人</span>
+                            <select name="ownerid" xm-select="ownerSelectLayer" xm-select-radio lay-verify="required">
+                                <option value="">货权人</option>
+                            </select>
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <span class="input-span">仓库</span>
+                            <select name="depotid" xm-select="depotSelectLayer" xm-select-radio lay-verify="required">
+                                <option value="">仓库</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item form-right">
+                        <button class="layui-btn layui-btn-md layui-btn-gray" lay-submit lay-filter="searchForm">
+                            <i class="iconfont icon-zhongzhi"></i><span>重置</span>
+                        </button>
+                        <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="searchForm-layer">
+                            <i class="iconfont icon-sousuo"></i> <span>查询</span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+
         </div>
-        <div class="rightBotBtn">已选择<span>0</span>个商品</div>
+    </div>
+    <div class="table-content">
+
+        <div class="table-content-main">
+            <table class="layui-hide" id="tableContainer-layerInventoryabn" lay-filter="tableContainer-layerInventoryabn"></table>
+        </div>
     </div>
 </div>
-<style>
-    .rightBotBtn {
-        float: right;
-    }
+<script>
+    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate'], function() {
+        var element = layui.element;
+        var form = layui.form;
+        var $ = layui.jquery;
+        var table = layui.table;
+        var formSelects = layui.formSelects;
+        var laytpl = layui.laytpl;
 
-    .rightBotBtn button {
-        margin: 0 20px;
-    }
-</style>
+        form.render(); //重置表单渲染
+        formSelects.render(); //下拉选项
+
+        var depotData = {
+            ownerid: 0,
+            depotid: 0
+        };
+        var echoData = JSON.parse(sessionStorage.getItem('inventoryabnParam'));
+
+        if (echoData) {
+            $(".layerInventory").hide();
+            if (echoData.status == 1) {
+                $(".layerInventoryTools").hide();
+            }
+            depotData.ownerid = echoData.ownerid;
+            depotData.depotid = echoData.depotid;
+            depotData.id = echoData.id;
+        }
+
+        form.on('submit(searchForm-layer)', function(data) {
+            var paramSearch = {};
+            for (var key in data.field) {
+                //参数赋值
+                if (data.field[key] != "") {
+                    paramSearch[key] = data.field[key]
+                }
+            }
+            depotData.ownerid = data.field.ownerid;
+            depotData.depotid = data.field.depotid;
+
+            tableIns.reload({
+                where: paramSearch, //接口参数
+                page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+            });
+            return false;
+        });
+
+        formSelects.data('ownerSelectLayer', 'local', {
+            arr: selectDataInstall(ownerDropdown) //货权人列表
+        });
+
+        layui.formSelects.opened('depotSelectLayer', function(id) {
+            var ownerid = formSelects.value('ownerSelectLayer', 'val'); //获取货权人ID
+            if (ownerid.length < 1) {
+                layer.msg("请先选择货权人");
+                formSelects.data(id, 'local', {
+                    arr: []
+                }); //如果货权人为空则清空列表
+            }
+        });
+
+        //监听
+        formSelects.on('ownerSelectLayer', function(id, vals, val, isAdd, isDisabled) {
+            if (!isAdd) {
+                formSelects.data('depotSelectLayer', 'local', {
+                    arr: [] //清空仓库列表
+                });
+            } else {
+                var depotList = selectDataInstall(depotDropdown, {
+                    "ownerid": vals[0].value //仓库列表
+                }, true);
+
+                if (depotList.length < 1) {
+                    formSelects.data('depotSelectLayer', 'local', {
+                        arr: [] //清空仓库列表
+                    });
+                    layer.msg("该货权人下无仓库信息");
+                    return false;
+                }
+                formSelects.data('depotSelectLayer', 'local', {
+                    arr: depotList //仓库列表
+                });
+            }
+        }, true);
+
+        function selectDataInstall(url, param, bool) {
+            //下拉选框数据组装
+            var arr = [];
+            //获取列表数据
+            $.ajax({
+                url: url,
+                type: "get",
+                data: param,
+                async: false, //同步
+                traditional: true,
+                success: function(data) {
+                    // console.log(data);
+                    if (data.status == 0) {
+                        //把接口数据转换为[{"name":str,"value":number}]格式
+                        if (!Array.isArray(data.data) || data.data.length == 0) {
+                            // 判断arr是否为数组并保证内部有值
+                            return false;
+                        }
+                        for (var i = 0; i < data.data.length; i++) {
+                            arr.push({
+                                "name": data.data[i].name,
+                                "value": data.data[i].id
+                            })
+                        }
+                        if (bool) {
+                            arr[0].selected = "selected";
+                        }
+                    }
+                }
+            })
+            return arr;
+        }
+
+        var tableIns = table.render({
+            elem: '#tableContainer-layerInventoryabn',
+            height: 'auto',
+            url: abnlbList,
+            where: depotData,
+            parseData: function(res) { //res 即为原始返回的数据
+                console.log(res.msg);
+                //if (res.status !== 0) res.status = 0;                
+                return {
+                    "code": res.status, //解析接口状态
+                    "msg": res.msg, //解析提示文本
+                    "count": res.count, //解析数据长度
+                    "data": res.data //解析数据列表
+                }
+            },
+            request: {
+                pageName: 'offset', //页码的参数名称，默认：page
+                limitName: 'limit' //每页数据量的参数名，默认：limit
+            },
+            cols: [
+                [ //标题栏
+                    {
+                        field: 'num',
+                        title: '数量（m³）'
+                    }, {
+                        field: 'num1',
+                        title: '实际数量（m³）',
+                        edit: "txt",
+                        style: "color:red;cursor: pointer"
+                    }, {
+                        field: 'code',
+                        title: '包号'
+                    }, {
+                        field: 'varieties',
+                        title: '品种'
+                    }, {
+                        field: 'spec',
+                        title: '规格/厚度'
+                    }, {
+                        field: 'levels',
+                        title: '等级'
+                    }, {
+                        field: 'chang',
+                        title: '长度'
+                    }, {
+                        field: 'brand',
+                        title: '品牌'
+                    }, {
+                        field: 'origin',
+                        title: '产地'
+                    }, {
+                        field: 'pprice',
+                        title: '采购单价'
+                    }
+                ]
+            ],
+            even: true,
+            page: true, //是否显示分页
+            limits: [15, 40, 45, 60],
+            limit: 15, //每页默认显示的数量
+            done: function(res, curr, count) {},
+            loading: true
+        });
+
+
+        var numChangeValue = {}; //单元格编辑更改评估价格数据对象
+        //监听编辑
+        table.on('edit(tableContainer-layerInventoryabn)', function(obj) {
+            // console.log(obj.value); //得到修改后的值
+            // console.log(obj.field); //当前编辑的字段名
+            // console.log(obj.data); //所在行的所有相关数据
+            if (!obj.value || isNaN(obj.value)) {
+                layer.msg("数量只能为数字");
+            }
+            numChangeValue[obj.data.id] = obj.value;
+            console.log(numChangeValue);
+        });
+
+        $(".saveBtn").click(function() {
+            submitOrSave(depotData, numChangeValue, abnAdd)
+        });
+
+        /*$(".confirmBtn").click(function() {
+            submitOrSave(depotData, numChangeValue, endInventory)
+        });*/
+
+        function submitOrSave(dataObj, valueArr, url) {
+            if(!dataObj.ownerid || !dataObj.depotid ){
+                layer.msg('请选择货权人和仓库并查询后再进行异常操作');
+                return false;
+            }
+
+            var status = true;
+            for (var key in numChangeValue) {
+                if (isNaN(numChangeValue[key]) || numChangeValue[key] == "") {
+                    layer.msg("保存数量修改失败，只能为数字");
+                    status = false;
+                }
+            }
+            var tableDataArr = table.cache["tableContainer-layerInventoryabn"];
+            console.log(tableDataArr);
+
+            if (status) {
+                status = editAprice(dataObj, tableDataArr, url);
+                if (status) {
+                    numChangeValue = {};
+                    layer.closeAll();
+                }
+            } else {
+                return false;
+            }
+
+        }
+
+        //保持提交  修改异常调整数据
+        function editAprice(depotData, apriceJson, url) {
+            //请求数据源示例
+            console.log(depotData)
+            var status = false;
+            $.ajax({
+                url: url,
+                type: "POST",
+                async: false,
+                data: {
+                    id: depotData.id,
+                    ownerid: depotData.ownerid,
+                    depotid: depotData.depotid,
+                    lbarr: JSON.stringify(apriceJson)
+                },
+                xhrFields: {
+          withCredentials: true
+       },
+       crossDomain: true,
+                // traditional: true,
+                success: function(res) {
+                    if (res.status === 1) {
+    window.location.href = loginPageUrl;
+}
+                    if (res.status == 0) {
+                        status = true;
+                    }
+                    layer.msg(res.msg);
+                }
+            });
+            return status;
+        };
+
+    });
+</script>

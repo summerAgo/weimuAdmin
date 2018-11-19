@@ -209,15 +209,15 @@
             // 添加
             $.ajax({
                 url: url,
-                type: "post",
+                type: "POST",
                 data: data.field,
                 xhrFields: {
                     withCredentials: true
                 },
                 crossDomain: true,
                 success: function (res) {
-                    alert(1111)
-                    if(res.status == 0){
+                    console.log(res)
+                    if(res.status === 0){
                         sessionStorage.removeItem('base_infodata_data');
                         layer.close(addLayer); //关闭
                         // 刷新表格
@@ -226,7 +226,7 @@
                                 curr: 1 //重新从第 1 页开始
                             }
                         });
-                    }else if(res.status == 1) {
+                    }else if(res.status === 1) {
                         window.location.href = loginPageUrl;
                     }
                 }

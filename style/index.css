@@ -1110,3 +1110,16 @@ div[xm-select-skin] .xm-select-title div.xm-select-label>span {
 .lss-bread-item>p:nth-child(2).data-orange {
     color: #f58935;
 }
+
+.xm-select-linkage-group:nth-child(4n+1) {
+    background-color: #fdfdfd;
+    left: 0;
+}
+.xm-select-linkage-group:nth-child(4n+2) {
+    background-color: #F3F3F3;
+    left: 100px;
+}
+
+.xm-select-parent .xm-form-select dl {
+    border: 1px solid #F2F2F2;
+}
