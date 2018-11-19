@@ -31,6 +31,9 @@
                         </div>
                     </div>
                     <div class="layui-form-item form-right">
+                        <button class="layui-btn layui-btn-md layui-btn-gray" lay-submit lay-filter="searchForm">
+                            <i class="iconfont icon-zhongzhi"></i><span>重置</span>
+                        </button>
                         <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="searchForm">
                             <i class="iconfont icon-sousuo"></i> <span>查询</span>
                         </button>
@@ -172,17 +175,17 @@
                             url: setOutCordon,
                             async: false,
                             data: data.field,
-                            xhrFields: {
-          withCredentials: true
-       },
-       crossDomain: true,
+                            xhrFields: {
+                                withCredentials: true
+                            },
+                            crossDomain: true,
                             error: function(request) {
                                 layer.msg('修改失败');
                             },
                             success: function(res) {
                                 if (res.status === 1) {
-    window.location.href = loginPageUrl;
-}
+                                    window.location.href = loginPageUrl;
+                                }
                                 if (res.status == 0) {
                                     layer.msg("保存修改成功");
                                     layer.close(modifyLayer);
