@@ -259,7 +259,7 @@
                         field: 'orderno',
                         title: '单号',
                         event: 'click',
-                        style: 'cursor: pointer;',
+                        style: 'cursor: pointer;color:#4394ff;',
                         width: 200
                     }, {
                         field: 'ownername',
@@ -275,7 +275,7 @@
                         title: '数量（m³）'
                     }, {
                         field: 'createdate',
-                        title: '创建日期'
+                        title: '申请出库日期'
                     }, {
                         field: 'status',
                         title: '状态',
@@ -285,7 +285,7 @@
                                 return '申请中';
                             }
                             if (d.status == 1) {
-                                return '<span style="color:red">待审核<span>';
+                                return '待出库';
                             }
                             if (d.status == 2) {
                                 return '审核通过';
@@ -348,11 +348,11 @@
                                     page: {
                                         curr: 1 //重新从第 1 页开始
                                     }
-                                });
-
+                                }); 
+                                //layer.msg(res.msg);
                                 var msgstr = "";
                                 if (res.adopt) {
-                                    msgstr = "审核通过<br/>";
+                                    msgstr = res.msg+"<br/>";
                                     $.each(res.adopt, function(i, v) {
                                         msgstr = "   " + msgstr + v + "<br/>";
                                     });
