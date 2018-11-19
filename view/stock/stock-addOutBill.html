@@ -684,7 +684,8 @@
                                 type: 'checkbox',
                             }, {
                                 field: 'code',
-                                title: '包号'
+                                title: '包号',
+                                width: 150
                             }, {
                                 field: 'varieties',
                                 title: '品种'
@@ -700,9 +701,9 @@
                                 templet: function(d) {
                                     //默认无
                                     if (null == d.aprice || d.aprice < 0) {
-                                        return '<span style="">未评估</span>';
+                                        return '<span style="color:red;">未评估</span>';
                                     }
-                                    return d.aprice;
+                                    return "已评估";
                                 }
                             }, {
                                 field: 'chang',
@@ -712,7 +713,8 @@
                                 title: '数量（m³）'
                             }, {
                                 field: 'containernum',
-                                title: '货柜号'
+                                title: '货柜号',
+                                width: 150
                             }, {
                                 field: 'origin',
                                 title: '产地'
@@ -721,13 +723,15 @@
                                 title: '品牌'
                             }, {
                                 field: 'billloading',
-                                title: '提运单'
+                                title: '提运单',
+                                width: 180
                             }, {
                                 field: 'person',
                                 title: '负责人'
                             }, {
                                 field: 'remarks',
-                                title: '备注'
+                                title: '备注',
+                                width: 180
                             }
                         ]
                     ],
