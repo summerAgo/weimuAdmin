@@ -13,7 +13,7 @@
             <select name="pid" lay-verify="required">
                     <option {{# if(d.pid && d.pid == 0){}} selected {{# }}} value="0">主菜单</option>
                 {{#  layui.each(d.menulist, function(index, item){ }}
-                     <option {{# if(d.pid && d.pid == item.id ){}} selected {{# }}} value="{{item.id}}">{{ item.name }}</option>
+                     <option {{# if(d.pid && d.pid == item.id ){}} selected {{# }}} value="{{item.id}}">{{item.name}}</option>
                 {{#  }); }}
             </select>
         </div>
@@ -21,20 +21,20 @@
     <div class="layui-form-item layui-normal-line">
         <label class="layui-form-label">菜单名称</label>
         <div class="layui-input-inline">
-            <input type="text" id="name" name="name" lay-verify="required" placeholder="用户名" class="layui-input"  value="{{# if(d.name){}} {{d.name}} {{# }}}">
+            <input type="text" id="name" name="name" lay-verify="required" placeholder="用户名" class="layui-input"  value="{{# if(d.name){}}{{d.name}}{{# }}}">
             <input type="hidden" id="id" name="id"   value="{{# if(d.id){}} {{d.id}} {{# }}}">
         </div>
     </div>
     <div class="layui-form-item layui-normal-line">
         <label class="layui-form-label">地址</label>
         <div class="layui-input-inline">
-            <input type="text" id="url" name="url" placeholder="选填" value="{{# if(d.url){}} {{d.url}} {{# }}}" class="layui-input">
+            <input type="text" id="url" name="url" placeholder="选填" value="{{# if(d.url){}}{{d.url}}{{# }}}" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item layui-normal-line">
         <label class="layui-form-label">排序</label>
         <div class="layui-input-inline">
-            <input type="text" id="sort" name="sort" placeholder="选填" value="{{# if(d.sort){}} {{d.sort}} {{# }}}" class="layui-input">
+            <input type="text" id="sort" name="sort" placeholder="选填" value="{{# if(d.sort){}}{{d.sort}}{{# }}}" class="layui-input">
         </div>
     </div>
 </form>

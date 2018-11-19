@@ -190,7 +190,8 @@
                         content: str, // 注意，如果str是object，那么需要字符拼接。
                         area: ['80%', '80%'],
                     });
-
+                    form.render(); // 重置表单渲染
+                    formSelects.render(); // 下拉选项
                     //弹窗页
                     formSelects.data('selectVarieties', 'local', {
                         arr: selectDataInstall(VTSList) //品种列表
@@ -263,7 +264,8 @@
                         height: '472', // full -- 高度将始终铺满 - 差值
                         url: ilbstockList,
                         where: {
-                            "ownerid": curData.id
+                            "ownerid": curData.id,
+                            'isaprice': $("#isaprice").val()
                         },
                         parseData: function (res) { //res 即为原始返回的数据
                             // console.log(res)
@@ -406,15 +408,15 @@
                                 ownerid: ownerid,
                                 lbarr: JSON.stringify(apriceJson)
                             },
-                            xhrFields: {
-          withCredentials: true
-       },
-       crossDomain: true,
+                            xhrFields: {
+                                withCredentials: true
+                            },
+                            crossDomain: true,
                             // traditional: true,
                             success: function (res) {
                                 if (res.status === 1) {
-    window.location.href = loginPageUrl;
-}
+                                    window.location.href = loginPageUrl;
+                                }
                                 if (res.status == 0) {
                                     layer.msg("评估单价设置成功");
                                     status = true;
