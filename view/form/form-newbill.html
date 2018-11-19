@@ -133,7 +133,7 @@
             } else {
                 var depotList = selectDataInstall(depotDropdown, {
                     "ownerid": vals[0].value //仓库列表
-                }, true, 0);
+                }, false, 0);
 
                 if (depotList.length < 1) {
                     formSelects.data('depotSelectLayer', 'local', {
@@ -151,7 +151,7 @@
                 formSelects.data('positionSelectLayer', 'local', {
                     arr: selectDataInstall(positionDropdown, {
                         "depotid": depotList[0].value
-                    }, true, 0) //库位列表
+                    }, false, 0) //库位列表
                 });
             }
         }, true);
@@ -166,7 +166,7 @@
                 formSelects.data('positionSelectLayer', 'local', {
                     arr: selectDataInstall(positionDropdown, {
                         "depotid": vals[0].value
-                    }, true, 0) //仓库列表
+                    }, false, 0) //仓库列表
                 });
             }
         }, true);

@@ -185,7 +185,7 @@
             } else {
                 var depotList = selectDataInstall(depotDropdown, {
                     "ownerid": vals[0].value //仓库列表
-                }, true);
+                }, false);
 
                 if (depotList.length < 1) {
                     formSelects.data('depotSelectLayer', 'local', {
@@ -197,6 +197,7 @@
                 formSelects.data('depotSelectLayer', 'local', {
                     arr: depotList //仓库列表
                 });
+                
             }
         }, true);
 
