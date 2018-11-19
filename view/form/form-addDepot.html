@@ -21,15 +21,15 @@
             </select>
         </div>
     </div>
-    <div class="layui-form-item layui-normal-line">
+    <input type="hidden" name="type" value="0" >
+    <!-- <div class="layui-form-item layui-normal-line">
         <label class="layui-form-label">仓库类型</label>
         <div class="layui-input-inline">
-            <!-- <input type="text" name="type" placeholder="仓库类型" value="{{d.type || ''}}" autocomplete="off" class="layui-input" lay-verify="required"> -->
             <select name="type" xm-select="typeSelect" xm-select-radio lay-verify="required">
                 <option value="">选择仓库类型</option>
             </select>
         </div>
-    </div>
+    </div> -->
     <div class="layui-form-item layui-normal-line">
         <label class="layui-form-label">仓库名称</label>
         <div class="layui-input-inline">
@@ -39,7 +39,7 @@
     <div class="layui-form-item layui-normal-line">
         <label class="layui-form-label">地址</label>
         <div class="layui-input-inline">
-            <input type="text" name="address" placeholder="地址" value="{{d.address || ''}}" autocomplete="off" class="layui-input" lay-verify="required">
+            <input type="text" name="address" placeholder="地址" value="{{d.address || ''}}" autocomplete="off" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item layui-normal-line">
