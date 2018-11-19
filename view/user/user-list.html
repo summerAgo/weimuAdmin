@@ -282,7 +282,7 @@
                         return;
                     },
                     success: function(data) {
-                        if(data.status === 1){
+                        if(data.status === 0){
                             layer.close(eaitLayer);
                             layer.msg('提交成功');
                             // 刷新表格
@@ -291,6 +291,7 @@
                                     curr: 1 //重新从第 1 页开始
                                 }
                             });
+
                         }
                         if (data.status === 1) {
                             window.location.href = loginPageUrl;
@@ -410,7 +411,7 @@
                                         curr: 1 //重新从第 1 页开始
                                     }
                                 });
-                                layer.msg(data.msg);
+                                layer.msg(res.msg);
                             }else if (res.status === 1) {
                                 window.location.href = loginPageUrl;
                             }
@@ -496,7 +497,7 @@
         function rowDataApi(url, data, funSuc, funErr) {
             $.ajax({
                 url: url,
-                type: "post",
+                type: "get",
                 data: data,
                 traditional: true,
                 success: funSuc,
