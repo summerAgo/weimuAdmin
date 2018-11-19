@@ -405,6 +405,7 @@
                         layer.msg('数据不能为空');
                         return false;
                     }
+                    
                     for (var i = 0; i < tableData.length; i++) {
                         ids.push(tableData[i].id);
                     }
@@ -701,7 +702,7 @@
                                 title: '长度'
                             }, {
                                 field: 'num',
-                                title: '数量/立方'
+                                title: '数量（m³）'
                             }, {
                                 field: 'containernum',
                                 title: '货柜号'
