@@ -26,31 +26,31 @@
                         </div>
                         <div class="table-form-item layui-input-inline">
                             <span class="input-span">货权人</span>
-                            <select name="ownerid" xm-select="ownerSelect" xm-select-radio>
+                            <select name="ownerid" xm-select="ownerSelectOut" xm-select-radio>
                                 <option value="">选择货权人</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
                             <span class="input-span">仓库</span>
-                            <select name="depotid" xm-select="depotSelect" xm-select-radio>
+                            <select name="depotid" xm-select="depotSelectOut" xm-select-radio>
                                 <option value="">选择仓库</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
                             <span class="input-span">库位</span>
-                            <select name="positionid" xm-select="positionSelect" xm-select-radio>
+                            <select name="positionid" xm-select="positionSelectOut" xm-select-radio>
                                 <option value="">选择库位</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
                             <span class="input-span">产地</span>
-                            <select name="origin" xm-select="originSelect" xm-select-radio>
+                            <select name="origin" xm-select="originSelectOut" xm-select-radio>
                                 <option value="">选择产地</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
                             <span class="input-span">供应商</span>
-                            <select name="supplierid" xm-select="supplierSelect" xm-select-radio>
+                            <select name="supplierid" xm-select="supplierSelectOut" xm-select-radio>
                                 <option value="">选择供应商</option>
                             </select>
                         </div>
@@ -100,12 +100,12 @@
             show: 'name'
         });
 
-        formSelects.data('ownerSelect', 'local', {
+        formSelects.data('ownerSelectOut', 'local', {
             arr: selectDataInstall(ownerDropdown) //货权人列表
         });
 
-        layui.formSelects.opened('depotSelect', function(id) {
-            var ownerid = formSelects.value('ownerSelect', 'val'); //获取货权人ID
+        layui.formSelects.opened('depotSelectOut', function(id) {
+            var ownerid = formSelects.value('ownerSelectOut', 'val'); //获取货权人ID
             if (ownerid.length < 1) {
                 layer.msg("请先选择货权人");
                 formSelects.data(id, 'local', {
@@ -114,8 +114,8 @@
             }
         });
 
-        layui.formSelects.opened('positionSelect', function(id) {
-            var depotid = formSelects.value('depotSelect', 'val'); //获取仓库ID
+        layui.formSelects.opened('positionSelectOut', function(id) {
+            var depotid = formSelects.value('depotSelectOut', 'val'); //获取仓库ID
             if (depotid.length < 1) {
                 layer.msg("请先选择仓库");
                 formSelects.data(id, 'local', {
@@ -125,12 +125,12 @@
         });
 
         //监听
-        formSelects.on('ownerSelect', function(id, vals, val, isAdd, isDisabled) {
+        formSelects.on('ownerSelectOut', function(id, vals, val, isAdd, isDisabled) {
             if (!isAdd) {
-                formSelects.data('depotSelect', 'local', {
+                formSelects.data('depotSelectOut', 'local', {
                     arr: [] //清空仓库列表
                 });
-                formSelects.data('positionSelect', 'local', {
+                formSelects.data('positionSelectOut', 'local', {
                     arr: [] //清空库位列表
                 });
             } else {
@@ -139,19 +139,19 @@
                 }, true);
 
                 if (depotList.length < 1) {
-                    formSelects.data('depotSelect', 'local', {
+                    formSelects.data('depotSelectOut', 'local', {
                         arr: [] //清空仓库列表
                     });
-                    formSelects.data('positionSelect', 'local', {
+                    formSelects.data('positionSelectOut', 'local', {
                         arr: [] //清空库位列表
                     });
                     layer.msg("该货权人下无仓库信息");
                     return false;
                 }
-                formSelects.data('depotSelect', 'local', {
+                formSelects.data('depotSelectOut', 'local', {
                     arr: depotList //仓库列表
                 });
-                formSelects.data('positionSelect', 'local', {
+                formSelects.data('positionSelectOut', 'local', {
                     arr: selectDataInstall(positionDropdown, {
                         "depotid": depotList[0].value
                     }, true) //库位列表
@@ -160,13 +160,13 @@
         }, true);
 
         //监听
-        formSelects.on('depotSelect', function(id, vals, val, isAdd, isDisabled) {
+        formSelects.on('depotSelectOut', function(id, vals, val, isAdd, isDisabled) {
             if (!isAdd) {
-                formSelects.data('positionSelect', 'local', {
+                formSelects.data('positionSelectOut', 'local', {
                     arr: [] //仓库列表
                 });
             } else {
-                formSelects.data('positionSelect', 'local', {
+                formSelects.data('positionSelectOut', 'local', {
                     arr: selectDataInstall(positionDropdown, {
                         "depotid": vals[0].value
                     }, true) //仓库列表
@@ -174,11 +174,11 @@
             }
         }, true);
 
-        formSelects.data('originSelect', 'local', {
+        formSelects.data('originSelectOut', 'local', {
             arr: selectDataInstall(CHDList) //产地列表
         });
 
-        formSelects.data('supplierSelect', 'local', {
+        formSelects.data('supplierSelectOut', 'local', {
             arr: selectDataInstall(dropSupplier) //供应商列表
         });
 
@@ -335,14 +335,14 @@
                         url: outStock,
                         data: data,
                         async: false,
-                        xhrFields: {
-          withCredentials: true
-       },
-       crossDomain: true,
+                        xhrFields: {
+                            withCredentials: true
+                        },
+                        crossDomain: true,
                         success: function(res) {
                             if (res.status === 1) {
-    window.location.href = loginPageUrl;
-}
+                                window.location.href = loginPageUrl;
+                            }
                             if (res.status == 0) {
                                 tableIns.reload({
                                     page: {
@@ -452,8 +452,8 @@
                         "ids": rowId
                     }, function(data) {
                         if (data.status === 1) {
-    window.location.href = loginPageUrl;
-}
+                            window.location.href = loginPageUrl;
+                        }
                         // 删除所选行成功
                         layer.close(index);
                         // 刷新表格
@@ -476,10 +476,10 @@
                 type: "POST",
                 data: data,
                 traditional: true,
-                xhrFields: {
-          withCredentials: true
-       },
-       crossDomain: true,
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
                 success: funSuc,
                 error: funErr
             })
