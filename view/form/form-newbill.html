@@ -63,6 +63,7 @@
                             <select name="supplierid" xm-select="supplierSelectLayer" xm-select-radio>
                                 <option value="">供应商</option>
                             </select>
+                            <input type="hidden" name="suppliername" value="" class="suppliernameLayer">
                         </div>
                     </div>
                 </div>
@@ -171,12 +172,51 @@
         }, true);
 
         formSelects.data('originSelectLayer', 'local', {
-            arr: selectDataInstall(CHDList, null, 1) //产地列表
+            arr: selectDataInstall(CHDList, null) //产地列表
         });
 
-        formSelects.data('supplierSelectLayer', 'local', {
-            arr: selectDataInstall(dropSupplier, null, 1) //供应商列表
+        var supplierData;
+        $.ajax({
+            url: dropSupplier,
+            type: "get",
+            async: false, //同步
+            traditional: true,
+            xhrFields: {
+                withCredentials: true
+            },
+            crossDomain: true,
+            success: function(data) {
+                if (data.status == 0) {
+                    supplierData = data.data;
+                }
+            }
         });
+
+        if (!(supplierData instanceof Array)) {
+            console.log(supplierData);
+            console.log("供应商列表为空");
+        }
+
+        formSelects.data('supplierSelectLayer', 'local', {
+            arr: selectDataInstall(dropSupplier, null) //供应商列表
+        });
+
+        formSelects.on('supplierSelectLayer', function(id, vals, val, isAdd, isDisabled) {
+            var id;//供应商ID
+            if(isAdd){
+                console.log(val)
+                for(var i=0;i<supplierData.length;i++){
+                    if(supplierData[i].name == val.value){
+                        id = supplierData[i].id;
+                        break;
+                    }
+                }
+                $(".suppliernameLayer").val(id);
+            }else{
+                $(".suppliernameLayer").val("");
+            }
+        });
+
 
         function selectDataInstall(url, param, bool, type) {
             //下拉选框数据组装
@@ -188,10 +228,10 @@
                 data: param,
                 async: false, //同步
                 traditional: true,
-                xhrFields: {
-                    withCredentials: true
+                xhrFields: {
+                    withCredentials: true
                 },
-                crossDomain: true,
+                crossDomain: true,
                 success: function(data) {
                     // console.log(data);
                     if (data.status === 0) {
@@ -212,7 +252,6 @@
                                     "value": data.data[i].name
                                 })
                             }
-
                         }
                         if (bool) {
                             arr[0].selected = "selected";
@@ -374,10 +413,10 @@
                     'ids': ids
                 },
                 traditional: true,
-                xhrFields: {
-                    withCredentials: true
+                xhrFields: {
+                    withCredentials: true
                 },
-                crossDomain: true,
+                crossDomain: true,
                 success: function(res) {
                     if (res.status === 0) {
                         tableIns.reload({
@@ -386,7 +425,7 @@
                             }
                         });
                         layer.msg("审核通过为库存");
-                    }else if (res.status === 1) {
+                    } else if (res.status === 1) {
                         window.location.href = loginPageUrl;
                     }
                 }
@@ -431,6 +470,7 @@
                     selected: "selected"
                 }]
             });
+            $(".suppliernameLayer").val(orderno.supplierid);
             //禁用下拉框
             formSelects.disabled('ownerSelectLayer');
             formSelects.disabled('depotSelectLayer');
@@ -509,10 +549,10 @@
                 type: "post",
                 data: data,
                 traditional: true,
-                xhrFields: {
-                    withCredentials: true
+                xhrFields: {
+                    withCredentials: true
                 },
-                crossDomain: true,
+                crossDomain: true,
                 success: funSuc,
                 error: funErr
             })
@@ -567,10 +607,10 @@
                 //dataType: "json",
                 //contentType: "application/json",
                 async: false,
-                xhrFields: {
-                    withCredentials: true
+                xhrFields: {
+                    withCredentials: true
                 },
-                crossDomain: true,
+                crossDomain: true,
                 data: {
                     lbarr: arr.toString(),
                     ownerid: cargoowner,
