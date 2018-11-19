@@ -23,7 +23,7 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;" class="subCancelBtn"><i class="iconfont icon-quxiao"></i>取消</a>
                 </li>
-                <li class="layui-nav-item"><a href="javascript:;" class="deleteBtn"><i class="iconfont icon-shanchu"></i>删除</a></li>
+                <li class="layui-nav-item"><a href="javascript:;" class="deleteBtnLayer"><i class="iconfont icon-shanchu"></i>删除</a></li>
             </ul>
         </div>
     </div>
@@ -528,7 +528,7 @@
             // console.log(checkBoxTrDomArr)
         });
 
-        $(".deleteBtn").click(function() {
+        $(".deleteBtnLayer").click(function() {
             if (!checkBoxTrDomArr) {
                 layer.msg("请选择需要删除的信息");
             } else {
