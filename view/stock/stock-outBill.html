@@ -9,8 +9,10 @@
                 <!-- <li class="layui-nav-item">
                     <a href="javascript:;"><i class="iconfont icon-dayin"></i>打印</a>
                 </li> -->
-                <li class="layui-nav-item"><a href="javascript:;" class="deleteBtn"><i class="iconfont icon-shanchu"></i>删除</a></li>
-                <li class="layui-nav-item"><a href="javascript:;" class="submOutBtn"><i class="iconfont icon-chuku"></i>出库</a></li>
+                <li class="layui-nav-item"><a href="javascript:;" class="deleteBtn"><i
+                        class="iconfont icon-shanchu"></i>删除</a></li>
+                <li class="layui-nav-item"><a href="javascript:;" class="submOutBtn"><i class="iconfont icon-chuku"></i>出库</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -56,7 +58,8 @@
                         </div>
                         <div class="table-form-item layui-input-inline">
                             <span class="input-span">提运单</span>
-                            <input type="text" name="billloading" placeholder="提运单" autocomplete="off" class="layui-input">
+                            <input type="text" name="billloading" placeholder="提运单" autocomplete="off"
+                                   class="layui-input">
                         </div>
                     </div>
                     <div class="layui-form-item form-right">
@@ -80,7 +83,7 @@
     </div>
 </div>
 <script>
-    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'upload'], function() {
+    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'upload'], function () {
         var element = layui.element;
         var form = layui.form;
         var $ = layui.jquery;
@@ -104,7 +107,7 @@
             arr: selectDataInstall(ownerDropdown) //货权人列表
         });
 
-        layui.formSelects.opened('depotSelectOut', function(id) {
+        layui.formSelects.opened('depotSelectOut', function (id) {
             var ownerid = formSelects.value('ownerSelectOut', 'val'); //获取货权人ID
             if (ownerid.length < 1) {
                 layer.msg("请先选择货权人");
@@ -114,7 +117,7 @@
             }
         });
 
-        layui.formSelects.opened('positionSelectOut', function(id) {
+        layui.formSelects.opened('positionSelectOut', function (id) {
             var depotid = formSelects.value('depotSelectOut', 'val'); //获取仓库ID
             if (depotid.length < 1) {
                 layer.msg("请先选择仓库");
@@ -125,7 +128,7 @@
         });
 
         //监听
-        formSelects.on('ownerSelectOut', function(id, vals, val, isAdd, isDisabled) {
+        formSelects.on('ownerSelectOut', function (id, vals, val, isAdd, isDisabled) {
             if (!isAdd) {
                 formSelects.data('depotSelectOut', 'local', {
                     arr: [] //清空仓库列表
@@ -160,7 +163,7 @@
         }, true);
 
         //监听
-        formSelects.on('depotSelectOut', function(id, vals, val, isAdd, isDisabled) {
+        formSelects.on('depotSelectOut', function (id, vals, val, isAdd, isDisabled) {
             if (!isAdd) {
                 formSelects.data('positionSelectOut', 'local', {
                     arr: [] //仓库列表
@@ -192,7 +195,7 @@
                 data: param,
                 async: false, //同步
                 traditional: true,
-                success: function(data) {
+                success: function (data) {
                     // console.log(data);
                     if (data.status == 0) {
                         //把接口数据转换为[{"name":str,"value":number}]格式
@@ -209,14 +212,13 @@
                         if (bool) {
                             arr[0].selected = "selected";
                         }
-
                     }
                 }
-            })
+            });
             return arr;
         }
 
-        form.on('submit(searchForm)', function(data) {
+        form.on('submit(searchForm)', function (data) {
             var paramSearch = {};
             for (var key in data.field) {
                 //参数赋值
@@ -237,7 +239,7 @@
             elem: '#tableContainers',
             height: 'full-' + tableTopHeight,
             url: outTreasury,
-            parseData: function(res) { //res 即为原始返回的数据
+            parseData: function (res) { //res 即为原始返回的数据
                 if (res.status !== 0) res.status = 0;
                 return {
                     "code": res.status, //解析接口状态
@@ -262,48 +264,48 @@
                         style: 'cursor: pointer;color:#4394ff;',
                         width: 200
                     }, {
-                        field: 'ownername',
-                        title: '货权人'
-                    }, {
-                        field: 'depname',
-                        title: '仓库名称'
-                    }, {
-                        field: 'num',
-                        title: '件数（包）'
-                    }, {
-                        field: 'volume',
-                        title: '数量（m³）'
-                    }, {
-                        field: 'createdate',
-                        title: '申请出库日期'
-                    }, {
-                        field: 'status',
-                        title: '状态',
+                    field: 'ownername',
+                    title: '货权人'
+                }, {
+                    field: 'depname',
+                    title: '仓库名称'
+                }, {
+                    field: 'num',
+                    title: '件数（包）'
+                }, {
+                    field: 'volume',
+                    title: '数量（m³）'
+                }, {
+                    field: 'createdate',
+                    title: '申请出库日期'
+                }, {
+                    field: 'status',
+                    title: '状态',
 
-                        templet: function(d) {
-                            if (d.status == 0) {
-                                return '申请中';
-                            }
-                            if (d.status == 1) {
-                                return '待出库';
-                            }
-                            if (d.status == 2) {
-                                return '审核通过';
-                            }
-                            return '<span style="color:red">审核失败<span>';;
+                    templet: function (d) {
+                        if (d.status == 0) {
+                            return '申请中';
                         }
-
-                    }, {
-                        field: 'remarks',
-                        title: '备注'
+                        if (d.status == 1) {
+                            return '待出库';
+                        }
+                        if (d.status == 2) {
+                            return '审核通过';
+                        }
+                        return '<span style="color:red">审核失败<span>';
                     }
+
+                }, {
+                    field: 'remarks',
+                    title: '备注'
+                }
                 ]
             ],
             even: true,
             page: true, //是否显示分页
             limits: [10, 20, 30, 40, 50],
             limit: 10, //每页默认显示的数量
-            done: function(res, curr, count) {
+            done: function (res, curr, count) {
                 var addtableBtn = '<div class="rightBotBtn" id="rightBox">已经选择<span>0</span>个</div>';
                 if ($("#rightBox").length < 1) {
                     $(".layui-table-page").append(addtableBtn);
@@ -316,13 +318,13 @@
         });
 
         //出库
-        $(".submOutBtn").click(function() {
+        $(".submOutBtn").click(function () {
             var checkStatus = table.checkStatus('tableContainers'); //表格选中状态
             if (checkStatus.data.length > 0) {
                 layer.confirm('是否确认出库', {
                     icon: 3,
                     title: '提示'
-                }, function(index) {
+                }, function (index) {
                     var data = {};
                     var ids = [];
                     for (var i = 0; i < checkStatus.data.length; i++) {
@@ -339,7 +341,7 @@
                             withCredentials: true
                         },
                         crossDomain: true,
-                        success: function(res) {
+                        success: function (res) {
                             if (res.status === 1) {
                                 window.location.href = loginPageUrl;
                             }
@@ -353,7 +355,7 @@
                                 var msgstr = "";
                                 if (res.adopt) {
                                     msgstr = res.msg + "<br/>";
-                                    $.each(res.adopt, function(i, v) {
+                                    $.each(res.adopt, function (i, v) {
                                         msgstr = "   " + msgstr + v + "<br/>";
                                     });
 
@@ -362,7 +364,7 @@
                                     //msgstr = msgstr+  "订单:"+res.noadopt+"<br/>请风控审核！";
 
                                     msgstr = msgstr + "请风控审核<br/>";
-                                    $.each(res.noadopt, function(i, v) {
+                                    $.each(res.noadopt, function (i, v) {
                                         msgstr = "   " + msgstr + v + "<br/>";
                                     });
 
@@ -374,16 +376,14 @@
                             } else {
                                 layer.msg(res.msg);
                             }
-
-
                         }
                     });
                 });
             }
             return false;
-        })
+        });
         //监听锁定操作
-        table.on('checkbox(tableContainers)', function(obj) {
+        table.on('checkbox(tableContainers)', function (obj) {
             var checkStatus = table.checkStatus('tableContainers'); //表格选中状态
             $(".rightBotBtn span").html(checkStatus.data.length); //当前选中了多少商品
         });
@@ -432,7 +432,7 @@
         //     return false;
         // });
 
-        $(".deleteBtn").click(function() {
+        $(".deleteBtn").click(function () {
             //删除
             var checkStatus = table.checkStatus('tableContainers');
             if (checkStatus.data.length < 1) {
@@ -441,16 +441,16 @@
                 layer.confirm('是否确认删除此条信息', {
                     icon: 3,
                     title: '提示'
-                }, function(index) {
+                }, function (index) {
                     var rowId = [];
-                    $.each(checkStatus.data, function(i, v) {
+                    $.each(checkStatus.data, function (i, v) {
                         //获取所选行数ID
                         rowId.push(v.orderno);
                     });
                     //调删除接口
                     rowDataApi(outTreasuryDelete, {
                         "ids": rowId
-                    }, function(data) {
+                    }, function (data) {
                         if (data.status === 1) {
                             window.location.href = loginPageUrl;
                         }
@@ -483,20 +483,20 @@
                 success: funSuc,
                 error: funErr
             })
-        };
+        }
 
-        table.on('tool(tableContainers)', function(obj) {
+        table.on('tool(tableContainers)', function (obj) {
             //监听单元格点击事件
             var data = obj.data;
             if (obj.event === 'click') {
                 sessionStorage.setItem('addOutBill', JSON.stringify(data));
-                $.get('view/stock/stock-addOutBill.html', {}, function(str) { // 请求弹框
+                $.get('view/stock/stock-addOutBill.html', {}, function (str) { // 请求弹框
                     addLayer = layer.open({
                         title: '出货申请单详情',
                         type: 1,
                         content: str, // 注意，如果str是object，那么需要字符拼接。
                         area: ['80%', '80%'],
-                        end: function() {
+                        end: function () {
                             tableIns.reload({
                                 page: {
                                     curr: 1 //重新从第 1 页开始
@@ -508,16 +508,16 @@
             }
         });
 
-        $(".creatBillBtn").click(function() {
-            //新建预入库单
+        //新建申请出库单
+        $(".creatBillBtn").click(function () {
             sessionStorage.removeItem('addOutBill');
-            $.get('view/stock/stock-addOutBill.html', {}, function(str) { // 请求弹框
+            $.get('view/stock/stock-addOutBill.html', {}, function (str) { // 请求弹框
                 addLayer = layer.open({
                     title: '新建出货申请单',
                     type: 1,
                     content: str, // 注意，如果str是object，那么需要字符拼接。
                     area: ['80%', '80%'],
-                    end: function() {
+                    end: function () {
                         tableIns.reload({
                             page: {
                                 curr: 1 //重新从第 1 页开始
