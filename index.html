@@ -185,8 +185,11 @@
                     container.load('/view/stock/stock-enterHistory.html');
                 }],
                 //////////////////////////
-                ['stock-billDetails', function() {
-                    container.load('/view/stock/stock-billDetails.html');
+                ['stock-enterBillDetails', function() {
+                    container.load('/view/stock/stock-enterBillDetails.html');
+                }],
+                ['stock-outBillDetails', function() {
+                    container.load('/view/stock/stock-outBillDetails.html');
                 }],
                 ['stock-outBill', function() {
                     container.load('/view/stock/stock-outBill.html');
@@ -279,8 +282,10 @@
                                 var title;
                                 if (vid == "stock-addOutBill") {
                                     title = "出货申请单详情";
-                                } else if (vid == "stock-billDetails") {
-                                    title = "库单详情";
+                                } else if (vid == "stock-enterBillDetails") {
+                                    title = "入库单详情";
+                                } else if (vid == "stock-outBillDetails") {
+                                    title = "出库单详情";
                                 } else if (vid == "depot-position") {
                                     title = "库位详情";
                                 }
@@ -323,7 +328,7 @@
                 history.replaceState({}, 'login', localhost + "/view/login/login.html");
                 window.location.href = localhost + "/view/login/login.html";
             }
-            
+
             // // console.log(document.cookie)
             // $.ajax({
             //     url: "http://192.168.10.201/storage-web/check/recordlist/list",
@@ -341,7 +346,6 @@
             // })
         });
         // document.cookie = "username=SESSION_NAME;path=/;domain=192.168.10.216/2"
-
     </script>
 
 </body>
