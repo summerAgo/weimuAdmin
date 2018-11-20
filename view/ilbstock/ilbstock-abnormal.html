@@ -104,16 +104,6 @@
             }
         });
 
-        layui.formSelects.opened('positionSelect', function(id) {
-            var depotid = formSelects.value('depotSelect', 'val'); //获取仓库ID
-            if (depotid.length < 1) {
-                layer.msg("请先选择仓库");
-                formSelects.data(id, 'local', {
-                    arr: []
-                }); //如果仓库为空则清空列表
-            }
-        });
-
         //监听
         formSelects.on('ownerSelect', function(id, vals, val, isAdd, isDisabled) {
             if (!isAdd) {
@@ -121,9 +111,10 @@
                     arr: [] //清空仓库列表
                 });
             } else {
+
                 var depotList = selectDataInstall(depotDropdown, {
                     "ownerid": vals[0].value //仓库列表
-                }, true);
+                }, false);
 
                 if (depotList.length < 1) {
                     formSelects.data('depotSelect', 'local', {
@@ -132,9 +123,11 @@
                     layer.msg("该货权人下无仓库信息");
                     return false;
                 }
+
                 formSelects.data('depotSelect', 'local', {
                     arr: depotList //仓库列表
                 });
+
             }
         }, true);
 

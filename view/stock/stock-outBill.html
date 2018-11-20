@@ -136,7 +136,7 @@
             } else {
                 var depotList = selectDataInstall(depotDropdown, {
                     "ownerid": vals[0].value //仓库列表
-                }, true);
+                }, false);
 
                 if (depotList.length < 1) {
                     formSelects.data('depotSelectOut', 'local', {
@@ -154,7 +154,7 @@
                 formSelects.data('positionSelectOut', 'local', {
                     arr: selectDataInstall(positionDropdown, {
                         "depotid": depotList[0].value
-                    }, true) //库位列表
+                    }, false) //库位列表
                 });
             }
         }, true);
@@ -169,7 +169,7 @@
                 formSelects.data('positionSelectOut', 'local', {
                     arr: selectDataInstall(positionDropdown, {
                         "depotid": vals[0].value
-                    }, true) //仓库列表
+                    }, false) //仓库列表
                 });
             }
         }, true);
@@ -348,11 +348,11 @@
                                     page: {
                                         curr: 1 //重新从第 1 页开始
                                     }
-                                }); 
+                                });
                                 //layer.msg(res.msg);
                                 var msgstr = "";
                                 if (res.adopt) {
-                                    msgstr = res.msg+"<br/>";
+                                    msgstr = res.msg + "<br/>";
                                     $.each(res.adopt, function(i, v) {
                                         msgstr = "   " + msgstr + v + "<br/>";
                                     });
@@ -527,8 +527,6 @@
                 });
             })
         })
-        
-        
 
     });
 </script>

@@ -209,7 +209,7 @@
             } else {
                 var depotList = selectDataInstall(depotDropdown, {
                     "ownerid": vals[0].value //仓库列表
-                }, true);
+                }, false);
 
                 if (depotList.length < 1) {
                     formSelects.data('depotSelect', 'local', {
@@ -235,7 +235,7 @@
             $("#shoutlb").hide();
             formSelects.undisabled('ownerSelect'); //启用
             formSelects.undisabled('depotSelect'); //启用
-            $("input[name='estimatedate']").attr("disabled", false)
+            $("input[name='estimatedate']").attr("disabled", false);
             $('.util-container').hide(); //隐藏倒计时
         } else {
             data["orderno"] = array.orderno;
@@ -381,7 +381,7 @@
             done: function(res, curr, count) {
                 var addtableBtn = '<div class="rightBotBtn">共添加<span>' + count + '</span>个商品</div>';
                 $("#tableContainer-addOutBill").siblings().find(".layui-table-page").append(addtableBtn);
-                $(".submissionBtn").unbind("click").bind("click",function() {
+                $(".submissionBtn").unbind("click").bind("click", function() {
                     var cargoowner = layui.formSelects.value('ownerSelect', "valStr");
                     if (cargoowner == "") {
                         layer.msg('货权人不能为空');
@@ -405,7 +405,7 @@
                         layer.msg('数据不能为空');
                         return false;
                     }
-                    
+
                     for (var i = 0; i < tableData.length; i++) {
                         ids.push(tableData[i].id);
                     }
@@ -456,14 +456,14 @@
                             layer.msg(request.msg);
                             return;
                         },
-                        xhrFields: {
-          withCredentials: true
-       },
-       crossDomain: true,
+                        xhrFields: {
+                            withCredentials: true
+                        },
+                        crossDomain: true,
                         success: function(res) {
                             if (res.status === 1) {
-    window.location.href = loginPageUrl;
-}
+                                window.location.href = loginPageUrl;
+                            }
                             if (res.status == 0) {
                                 tableIns.reload({
                                     page: {
@@ -535,18 +535,18 @@
                     cache: true,
                     type: "POST",
                     url: outStock,
-                    xhrFields: {
-          withCredentials: true
-       },
-       crossDomain: true,
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
                     data: {
                         ids: ids.toString()
                     },
                     async: false,
                     success: function(res) {
                         if (res.status === 1) {
-    window.location.href = loginPageUrl;
-}
+                            window.location.href = loginPageUrl;
+                        }
                         if (res.status == 0) {
                             layer.msg("出库成功");
                             tableIns.reload({
