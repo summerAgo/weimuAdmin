@@ -772,8 +772,26 @@
 
                 //监听锁定操作
                 table.on('checkbox(tableContainer-goodsList)', function(obj) {
-                    var checkStatus = table.checkStatus('tableContainer-goodsList'); //表格选中状态
-                    $("#tableContainer-goodsList").parent().find(".rightBotBtn span").html(checkStatus.data.length); //当前选中了多少商品
+                    console.log("xxxxx");
+                    console.log(obj);
+                    if(obj.checked){
+                        var aprice = obj.data.aprice;
+                        if(aprice && aprice>0){
+                            var checkStatus = table.checkStatus('tableContainer-goodsList'); //表格选中状态
+                            $("#tableContainer-goodsList").parent().find(".rightBotBtn span").html(checkStatus.data.length); //当前选中了多少商品
+                        }else{
+                            layer.msg('该商品未评估，不可出库');
+                            obj.checked = false;
+                            tableInsGood.reload({
+                                data: tableData,
+                                page: {
+                                    curr: 1 //重新从第 1 页开始
+                                }
+                            });
+                        }
+
+                    }
+                    
                 });
 
             });
