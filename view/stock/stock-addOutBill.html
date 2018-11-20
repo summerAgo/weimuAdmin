@@ -3,10 +3,18 @@
     <div class="table-content-title layer-level">
         <div class="table-tools">
             <ul class="layui-nav topmenu" lay-filter="talbe-tools">
-                <li class="layui-nav-item"><a href="javascript:;" id="addGoodsBtn"><i class="iconfont icon-tianjiahuowu"></i>从库存添加货物</a></li>
-                <li class="layui-nav-item" id="shoutlb"><a href="javascript:;" class="suboutlbBtn"><i class="iconfont icon-chuku"></i>出库</a></li>
-                <li class="layui-nav-item"><a href="javascript:;" id="deleteGoods" class="deleteBtn"><i class="iconfont icon-shanchu"></i>移除</a></li>
-                <li class="layui-nav-item"><a href="javascript:;" class="submissionBtn"><i class="iconfont icon-baocunxinzeng"></i>保存</a></li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;" id="addGoodsBtn"><i class="iconfont icon-tianjiahuowu"></i>从库存添加货物</a>
+                </li>
+                <li class="layui-nav-item" id="shoutlb">
+                    <a href="javascript:;" class="suboutlbBtn"><i class="iconfont icon-chuku"></i>出库</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;" id="deleteGoods" class="deleteBtn"><i class="iconfont icon-shanchu"></i>移除</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="submissionBtn"><i class="iconfont icon-baocunxinzeng"></i>保存</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -17,19 +25,19 @@
                 <div class="form-box clearfix">
                     <div class="layui-form-item form-left">
                         <div class="table-form-item layui-input-inline">
-                            <span class="input-span">货权人</span>
+                            <span class="input-span form-required">货权人</span>
                             <select name="ownerid" xm-select="ownerSelect" xm-select-radio>
                                 <option value="">货权人</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
-                            <span class="input-span">仓库</span>
+                            <span class="input-span form-required">仓库</span>
                             <select name="depotid" xm-select="depotSelect" xm-select-radio>
                                 <option value="">仓库</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
-                            <span class="input-span">预计时间</span>
+                            <span class="input-span form-required">预计时间</span>
                             <input type="text" name="estimatedate" id="estimatedate" required lay-verify="required" placeholder="预计时间" autocomplete="off" class="layui-input">
                         </div>
                         <div class="table-form-item layui-input-inline">
@@ -115,16 +123,6 @@
     </div>
 </div>
 <style scoped>
-    .layui-elem-quote {
-        margin-bottom: 0
-    }
-
-    .layer-title {
-        display: flex;
-        flex-wrap: wrap;
-        /* justify-content: space-around */
-    }
-
     .layer-title small {
         font-size: 14px;
     }
@@ -252,17 +250,17 @@
                 data: data,
                 async: false,
                 success: function(res) {
-                    if (res.status == 0) {
-                        // console.log(res)
+                    if (res.status === 0) {
                         pageData = res;
                         tableData = pageData.stocklist;
                     }
                 }
             });
+
             data["vname"] = pageData.vname; //司机姓名
             data["vehnum"] = pageData.vehnum; //车牌号
             data["card"] = pageData.card; //司机身份证号
-            console.log(data)
+
             $("input[name='vname']").val(data.vname);
             $("input[name='vehnum']").val(data.vehnum);
             $("input[name='card']").val(data.card);
@@ -323,7 +321,7 @@
                         }
                     }
                 }
-            })
+            });
             return arr;
         }
 
@@ -386,25 +384,25 @@
                 $("#tableContainer-addOutBill").siblings().find(".layui-table-page").append(addtableBtn);
                 $(".submissionBtn").unbind("click").bind("click", function() {
                     var cargoowner = layui.formSelects.value('ownerSelect', "valStr");
-                    if (cargoowner == "") {
+                    if (cargoowner === "") {
                         layer.msg('货权人不能为空');
                         return false;
                     }
 
                     var depotname = layui.formSelects.value('depotSelect', "valStr");;
-                    if (depotname == "") {
-                        layer.msg('仓库名称不能为空');
+                    if (depotname === "") {
+                        layer.msg('仓库名不能为空');
                         return false;
                     }
 
                     var estimatedate = $("#estimatedate").val();
-                    if (estimatedate == "") {
+                    if (estimatedate === "") {
                         layer.msg('预计出库时间不能为空');
                         return false;
                     }
 
                     var ids = [];
-                    if (tableData.length == 0) {
+                    if (tableData.length === 0) {
                         layer.msg('数据不能为空');
                         return false;
                     }
@@ -418,7 +416,7 @@
                         "depotid": depotname,
                         "outdateString": estimatedate,
                         "ids": ids.toString()
-                    }
+                    };
 
                     var outBill = sessionStorage.getItem('addOutBill');
                     if (outBill != null) {
@@ -457,7 +455,7 @@
                         data: preData,
                         error: function(request) {
                             layer.msg(request.msg);
-                            return;
+                            return false;
                         },
                         xhrFields: {
                             withCredentials: true
@@ -467,7 +465,7 @@
                             if (res.status === 1) {
                                 window.location.href = loginPageUrl;
                             }
-                            if (res.status == 0) {
+                            if (res.status === 0) {
                                 tableIns.reload({
                                     page: {
                                         curr: 1 //重新从第 1 页开始
@@ -498,14 +496,13 @@
                     for (var j = 0; j < tableData.length; j++) {
                         // console.log(checkStatus.data[i]);
                         // console.log(tableData[j]);
-                        if (checkStatus.data[i].orderno == tableData[j].orderno) {
-                            tableData.splice(j, 1)
+                        if (checkStatus.data[i].orderno === tableData[j].orderno) {
+                            tableData.splice(j, 1);
                             break;
                         }
                     }
                 }
                 console.log(tableData);
-
                 tableIns.reload({
                     data: tableData,
                     page: {
@@ -550,7 +547,7 @@
                         if (res.status === 1) {
                             window.location.href = loginPageUrl;
                         }
-                        if (res.status == 0) {
+                        if (res.status === 0) {
                             layer.msg("出库成功");
                             tableIns.reload({
                                 page: {
@@ -563,17 +560,17 @@
                     }
                 });
             });
-        })
+        });
 
         $("#addGoodsBtn").click(function() {
             var cargoowner = layui.formSelects.value('ownerSelect', "valStr");
-            if (cargoowner == "") {
+            if (cargoowner === "") {
                 layer.msg('货权人不能为空');
                 return false;
             }
 
             var depotname = layui.formSelects.value('depotSelect', "valStr");
-            if (depotname == "") {
+            if (depotname === "") {
                 layer.msg('仓库名称不能为空');
                 return false;
             }
@@ -582,7 +579,7 @@
                     title: '库存货物列表',
                     type: 1,
                     content: str, //注意，如果str是object，那么需要字符拼接。
-                    area: ['95%', '80%'],
+                    area: ['95%', '80%']
                 });
 
 
@@ -620,9 +617,9 @@
                         traditional: true,
                         success: function(data) {
                             // console.log(data);
-                            if (data.status == 0) {
+                            if (data.status === 0) {
                                 //把接口数据转换为[{"name":str,"value":number}]格式
-                                if (!Array.isArray(data.data) || data.data.length == 0) {
+                                if (!Array.isArray(data.data) || data.data.length === 0) {
                                     // 判断arr是否为数组并保证内部有值
                                     return false;
                                 }
@@ -634,7 +631,7 @@
                                 }
                             }
                         }
-                    })
+                    });
                     return arr;
                 }
 
@@ -664,7 +661,7 @@
                                     }
                                 }
                             }
-                            if (k == 0) {
+                            if (k === 0) {
                                 resData[i]["LAY_CHECKED"] = false;
                             } else {
                                 resData[i]["LAY_CHECKED"] = true;
@@ -684,7 +681,7 @@
                     cols: [
                         [ //标题栏
                             {
-                                type: 'checkbox',
+                                type: 'checkbox'
                             }, {
                                 field: 'code',
                                 title: '包号',
@@ -791,9 +788,6 @@
                         }
                     }
                 });
-
-                
-
             });
         });
 

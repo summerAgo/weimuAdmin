@@ -12,7 +12,7 @@
                 <input type="hidden" id="userid" name="userid"   value="{{# if(d.id){}} {{d.id}} {{# }}}">
                 <select name="roleid" lay-verify="required" >
                     {{#  layui.each(d.rolelist, function(index, item){ }}
-						 <option {{# if(d.pid && d.pid == item.id ){}} selected {{# }}} value="{{item.id}}">{{ item.rolename }}</option>
+						<option {{# if(d.pid && d.pid == item.id ){}} selected {{# }}} value="{{item.id}}">{{item.rolename}}</option>
 					{{#  }); }}
                 </select>
             </div>
@@ -34,10 +34,10 @@
         var $ = layui.jquery;
         var laytpl = layui.laytpl;
         var laydate = layui.laydate;
-        var  data= window.currData;
-		if(data!=null && data.id){//不是空就是编辑
-			var getTpl = formUser.innerHTML,
-            view = document.getElementById('formEditView');
+        var data = window.currData;
+        if (data != null && data.id) { //不是空就是编辑
+            var getTpl = formUser.innerHTML,
+                view = document.getElementById('formEditView');
             $.ajax({
                 cache: true,
                 type: "get",
@@ -50,13 +50,13 @@
                 success: function(res) {
                     data["rolelist"] = res.data;
                     laytpl(getTpl).render(data, function(html) {
-            	view.innerHTML = html;
-        	});
+                        view.innerHTML = html;
+                    });
                 }
             });
-			
-		}
-		
+
+        }
+
         form.render(); //重置表单渲染
 
         //日期时间选择器

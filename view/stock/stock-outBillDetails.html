@@ -15,52 +15,51 @@
         </div>
     </div>
     <div class="table-page-header">
-        <div class="table-page-form">
-            <div class="lss-bread-crumb" id="details-title">
+        <div class="table-page-form table-page-info">
+            <div class="lay-bread-crumb" id="details-title">
 
             </div>
         </div>
     </div>
     <div class="table-content">
-
         <div class="table-content-main">
             <table class="layui-hide" id="tableContainer_billDetails" lay-filter="tableContainer_billDetails"></table>
         </div>
     </div>
 </div>
 <script id="detailsTle" type="text/html">
-    <div class="lss-bread-item">
+    <div class="lay-bread-item">
         {{# if(d.type === "outHistory"){}}
-        <p>出库订单号</p>
+        <span>出库订单号：</span>
         {{#  } else{ }}
-        <p>入库订单号</p>
+        <span>入库订单号：</span>
         {{#  } }}
-        <p>{{d.data.orderno}}</p>
+        <span>{{d.data.orderno}}</span>
     </div>
-    <div class="lss-bread-item">
-        <p>货权人</p>
-        <p>{{d.data.ownername}}</p>
+    <div class="lay-bread-item">
+        <span>货权人：</span>
+        <span>{{d.data.ownername}}</span>
     </div>
-    <div class="lss-bread-item">
-        <p>仓库名称</p>
-        <p>{{d.data.depname}}</p>
+    <div class="lay-bread-item">
+        <span>仓库名称：</span>
+        <span>{{d.data.depname}}</span>
     </div>
     {{# if(d.data.outdate){}}
-        <div class="lss-bread-item">
-            <p>出库时间</p>
-            <p>{{d.data.outdate}}</p>
+        <div class="lay-bread-item">
+            <span>出库时间：</span>
+            <span>{{d.data.outdate}}</span>
         </div>
-        <div class="lss-bread-item">
-            <p>司机姓名</p>
-            <p>{{d.vname||""}}</p>
+        <div class="lay-bread-item">
+            <span>司机姓名：</span>
+            <span>{{d.vname||""}}</span>
         </div>
-        <div class="lss-bread-item">
-            <p>车牌号</p>
-            <p>{{d.vehnum||""}}</p>
+        <div class="lay-bread-item">
+            <span>车牌号：</span>
+            <span>{{d.vehnum||""}}</span>
         </div>
-        <div class="lss-bread-item">
-            <p>司机身份号</p>
-            <p>{{d.card||""}}</p>
+        <div class="lay-bread-item">
+            <span>司机身份号：</span>
+            <span>{{d.card||""}}</span>
         </div>
     {{#  } }}
 </script>
@@ -68,7 +67,6 @@
     .layer-title small {
         font-size: 14px;
     }
-
     .table-page h3 {
         padding-left: 0;
     }
@@ -82,7 +80,7 @@
         var formSelects = layui.formSelects;
         var laytpl = layui.laytpl;
 
-        var billDetails = JSON.parse(sessionStorage.getItem('billDetails')); //获取所选择记录详情
+        var billDetails = JSON.parse(sessionStorage.getItem('outBillDetails')); //获取所选择记录详情
         //console.log(billDetails)
         if (!billDetails) {
             //判断是否存在，不存在跳转到首页

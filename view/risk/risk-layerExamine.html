@@ -12,8 +12,10 @@
         </div>
     </div>
     <div class="table-page-header">
-        <div class="lss-bread-crumb">
-
+        <div class="table-page-form table-page-info">
+            <div class="lay-bread-crumb">
+                
+            </div>
         </div>
     </div>
     <div class="table-content">
@@ -24,32 +26,32 @@
 </div>
 
 <script id="tempExamine" type="text/html">
-    <div class="lss-bread-item">
-        <p>出货申请订单号</p>
-        <p class="data-gray">{{d.orderno || ""}}</p>
+    <div class="lay-bread-item">
+        <span>出货申请订单号：</span>
+        <span class="data-gray">{{d.orderno || ""}}</span>
     </div>
-    <div class="lss-bread-item">
-        <p>货权人</p>
-        <p class="data-gray">{{d.ownername || ""}}</p>
+    <div class="lay-bread-item">
+        <span>货权人：</span>
+        <span class="data-gray">{{d.ownername || ""}}</span>
     </div>
-    <div class="lss-bread-item">
-        <p>仓库</p>
-        <p class="data-gray">{{d.depname || ""}}</p>
+    <div class="lay-bread-item">
+        <span>仓库：</span>
+        <span class="data-gray">{{d.depname || ""}}</span>
     </div>
-    <div class="lss-bread-item">
-        <p>预计出货日期</p>
-        <p class="data-gray">{{d.Outdate || ""}}</p>
+    <div class="lay-bread-item">
+        <span>预计出货日期：</span>
+        <span class="data-gray">{{d.Outdate || ""}}</span>
     </div>
-    <div class="lss-bread-item">
-        <p>库存金额（RMB）</p>
-        <p class="data-green">{{d.stockmoney || ""}}</p>
+    <div class="lay-bread-item">
+        <span>库存金额（RMB）：</span>
+        <span class="data-green">{{d.stockmoney || ""}}</span>
     </div>
-    <div class="lss-bread-item">
-        <p>融资金额（RMB）</p>
-        <p class="data-blue">{{d.financingmoney || ""}}</p>
+    <div class="lay-bread-item">
+        <span>融资金额（RMB）：</span>
+        <span class="data-blue">{{d.financingmoney || ""}}</span>
     </div>
-    <div class="lss-bread-item">
-        <p>警戒线</p>
-        <p class="data-orange">{{d.cordonmoney || ""}}</p>
+    <div class="lay-bread-item">
+        <span>警戒线：</span>
+        <span class="data-orange">{{d.cordonmoney || ""}}</span>
     </div>
 </script>
