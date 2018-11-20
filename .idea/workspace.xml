@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2a1908b1-3c71-432d-86df-3ecbf9dcacec" name="Default Changelist" comment="" />
+    <list default="true" id="2a1908b1-3c71-432d-86df-3ecbf9dcacec" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/weimuAdmin.iml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/style/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/style/index.css" afterDir="false" />
+    </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -57,8 +61,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/style/index.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1570">
-              <caret line="1062" column="7" selection-start-line="1062" selection-start-column="7" selection-end-line="1062" selection-end-column="7" />
+            <state relative-caret-position="542">
+              <caret line="1130" lean-forward="true" selection-start-line="1130" selection-end-line="1130" />
             </state>
           </provider>
         </entry>
@@ -125,7 +129,7 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="178" />
     <option name="y" value="77" />
     <option name="width" value="1508" />
@@ -202,12 +206,12 @@
       <workItem from="1542442431153" duration="18645000" />
       <workItem from="1542603623846" duration="3417000" />
       <workItem from="1542678856700" duration="3083000" />
-      <workItem from="1542684145848" duration="166000" />
+      <workItem from="1542684145848" duration="422000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="25214000" />
+    <option name="totallyTimeSpent" value="25470000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -515,8 +519,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/style/index.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1570">
-          <caret line="1062" column="7" selection-start-line="1062" selection-start-column="7" selection-end-line="1062" selection-end-column="7" />
+        <state relative-caret-position="542">
+          <caret line="1130" lean-forward="true" selection-start-line="1130" selection-end-line="1130" />
         </state>
       </provider>
     </entry>
