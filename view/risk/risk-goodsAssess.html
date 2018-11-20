@@ -9,12 +9,13 @@
                     <a href="javascript:;"><i class="iconfont icon-dayin"></i>打印</a>
                 </li>
                 
-                <li class="layui-nav-item">
-                    <a href="javascript:;"><i class="iconfont icon-shuaxin"></i>刷新</a>
-                </li> -->
+                 -->
                 <!-- <li class="layui-nav-item">
                     <a href="javascript:;"><i class="iconfont icon-pinggu"></i>评估</a>
                 </li> -->
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="refreshBtn"><i class="iconfont icon-shuaxin"></i>刷新</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -50,7 +51,7 @@
     </div>
 </div>
 <script>
-    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'upload'], function () {
+    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'upload'], function() {
         var element = layui.element;
         var form = layui.form;
         var $ = layui.jquery;
@@ -64,7 +65,7 @@
 
         form.render(); // 重置表单渲染
 
-        form.on('submit(searchForm)', function (data) {
+        form.on('submit(searchForm)', function(data) {
             var paramSearch = {};
             for (var key in data.field) {
                 // 参数赋值
@@ -82,12 +83,20 @@
             return false;
         });
 
+        $(".refreshBtn").click(function() {
+            tableIns.reload({
+                page: {
+                    curr: 1 // 重新从第 1 页开始
+                }
+            });
+        });
+
         var tableIns = table.render({
             elem: '#table-goodsAssess',
             height: 'full-' + tableTopHeight, // full -- 差值
             url: riskList, //数据接口
             // 任意数据格式解析成 table 组件规定的数据格式
-            parseData: function (res) { //res 即为原始返回的数据
+            parseData: function(res) { //res 即为原始返回的数据
                 if (res.status !== 0) res.status = 0;
                 return {
                     "code": res.status, //解析接口状态
@@ -118,7 +127,7 @@
                         templet: function(d) {
                             //默认无
                             if (d.untreated > 0) {
-                                return '<span style="color:red;">'+d.untreated+'</span>';
+                                return '<span style="color:red;">' + d.untreated + '</span>';
                             }
                             return d.untreated;
                         }
@@ -133,7 +142,7 @@
             page: true, // 是否显示分页
             limits: [10, 20, 30, 40, 50], // 每页条数的选择项
             limit: 10, // 每页默认显示的数量
-            done: function (res, curr, count) { // 数据渲染完的回调
+            done: function(res, curr, count) { // 数据渲染完的回调
 
             },
             text: { // 自定义文本，如空数据时的异常提示等
@@ -145,13 +154,13 @@
 
         var ownerid = null;
         // 监听货权人点击事件
-        table.on('tool(table-goodsAssess)', function (obj) {
+        table.on('tool(table-goodsAssess)', function(obj) {
             var curData = obj.data;
             // console.log(curData)
             ownerid = curData.id;
             if (obj.event === 'click') {
 
-                $.get('view/risk/risk-layerAssess.html', {}, function (str) { // 弹出弹框
+                $.get('view/risk/risk-layerAssess.html', {}, function(str) { // 弹出弹框
                     assessLayer = layer.open({
                         title: '商品评估列表',
                         type: 1,
@@ -188,7 +197,7 @@
                             data: param,
                             async: false, //同步
                             traditional: true,
-                            success: function (data) {
+                            success: function(data) {
                                 console.log(data);
                                 if (data.status == 0) {
                                     //把接口数据转换为[{"name":str,"value":number}]格式
@@ -207,7 +216,7 @@
                         });
                         return arr;
                     }
-                    form.on('submit(searchAssessForm)', function (data) {
+                    form.on('submit(searchAssessForm)', function(data) {
                         var paramSearch = {
                             "person": curData.id
                         };
@@ -235,7 +244,7 @@
                             "ownerid": curData.id,
                             'isaprice': $("#isaprice").val()
                         },
-                        parseData: function (res) { //res 即为原始返回的数据
+                        parseData: function(res) { //res 即为原始返回的数据
                             // console.log(res)
                             if (res.status != 0) {
                                 res.status = 0;
@@ -293,7 +302,7 @@
                         limit: null,
                         // limits: [10, 20, 30, 40, 50],
                         even: true, // 开启隔行背景
-                        done: function (res, curr, count) { // 数据渲染完的回调
+                        done: function(res, curr, count) { // 数据渲染完的回调
 
                         },
                         text: { // 自定义文本，如空数据时的异常提示等
@@ -304,7 +313,7 @@
                     var apriceChangeValue = {}; //单元格编辑更改评估价格数据对象
 
                     //监听编辑
-                    table.on('edit(tableContainer-from)', function (obj) {
+                    table.on('edit(tableContainer-from)', function(obj) {
                         // console.log(obj.value); //得到修改后的值
                         // console.log(obj.field); //当前编辑的字段名
                         // console.log(obj.data); //所在行的所有相关数据
@@ -316,7 +325,7 @@
                         console.log(apriceChangeValue);
                     });
 
-                    $(".saveEvaluationPriceBtn").click(function () {
+                    $(".saveEvaluationPriceBtn").click(function() {
                         var status = true;
                         console.log(apriceChangeValue);
                         //保存评估价
@@ -351,9 +360,9 @@
                         }
                     });
 
-                    $(".cancelBtn").click(function () {
+                    $(".cancelBtn").click(function() {
                         if (!$.isEmptyObject(apriceChangeValue)) {
-                            layer.confirm('有未提交的评估价格', function (index) {
+                            layer.confirm('有未提交的评估价格', function(index) {
                                 //do something
                                 layer.close(index);
                                 apriceChangeValue = {};
@@ -381,7 +390,7 @@
                             },
                             crossDomain: true,
                             // traditional: true,
-                            success: function (res) {
+                            success: function(res) {
                                 if (res.status === 1) {
                                     window.location.href = loginPageUrl;
                                 }

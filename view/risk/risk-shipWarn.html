@@ -11,9 +11,9 @@
                 <!-- <li class="layui-nav-item">
                     <a href="javascript:;"><i class="iconfont icon-bianji"></i>修改</a>
                 </li> -->
-                <!-- <li class="layui-nav-item">
-                    <a href="javascript:;"><i class="iconfont icon-shuaxin"></i>刷新</a>
-                </li> -->
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="refreshBtn"><i class="iconfont icon-shuaxin"></i>刷新</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -80,7 +80,13 @@
             });
             return false;
         });
-
+        $(".refreshBtn").click(function() {
+            tableIns.reload({
+                page: {
+                    curr: 1 // 重新从第 1 页开始
+                }
+            });
+        });
         var tableIns = table.render({
             elem: '#tableContainer',
             height: 'full-' + tableTopHeight, // full
@@ -108,7 +114,7 @@
                         event: 'click',
                         style: 'color:#4394ff;cursor: pointer;',
                         width: 266
-                    },{
+                    }, {
                         field: 'stockmoney',
                         title: '现有库存金额',
                         width: 266,

@@ -8,6 +8,9 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;"><i class="iconfont icon-dayin"></i>打印</a>
                 </li> -->
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="refreshBtn"><i class="iconfont icon-shuaxin"></i>刷新</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -105,7 +108,13 @@
             });
             return false;
         });
-
+        $(".refreshBtn").click(function() {
+            tableIns.reload({
+                page: {
+                    curr: 1 // 重新从第 1 页开始
+                }
+            });
+        });
         // 渲染母模块table
         var tableIns = table.render({
             elem: '#tableContainer',
@@ -146,7 +155,7 @@
                     {
                         field: 'totalamount',
                         title: '订单总金额'
-                    },{
+                    }, {
                         field: 'stockmoney',
                         title: '库存金额'
                     }, {
@@ -184,15 +193,15 @@
                         data: {
                             orderno: curData.orderno // 单号
                         },
-                        xhrFields: {
-          withCredentials: true
-       },
-       crossDomain: true,
+                        xhrFields: {
+                            withCredentials: true
+                        },
+                        crossDomain: true,
                         async: false, // 同步
                         success: function(data) {
                             if (data.status === 1) {
-    window.location.href = loginPageUrl;
-}
+                                window.location.href = loginPageUrl;
+                            }
                             if (data.status == 0) {
                                 layerData = data.data;
                                 // 弹出弹框
@@ -276,7 +285,7 @@
             });
 
             // 通过按钮点击
-            $(".passBtn").click(function(){
+            $(".passBtn").click(function() {
                 $.ajax({
                     cache: true,
                     type: "POST",
@@ -295,8 +304,8 @@
                     },
                     success: function(res) {
                         if (res.status === 1) {
-    window.location.href = loginPageUrl;
-}
+                            window.location.href = loginPageUrl;
+                        }
                         if (res.status == 0) {
                             layer.msg(res.msg);
                             layer.close(examineLayer);
@@ -332,8 +341,8 @@
                     },
                     success: function(res) {
                         if (res.status === 1) {
-    window.location.href = loginPageUrl;
-}
+                            window.location.href = loginPageUrl;
+                        }
                         if (res.status == 0) {
                             layer.msg(res.msg);
                             layer.close(examineLayer);

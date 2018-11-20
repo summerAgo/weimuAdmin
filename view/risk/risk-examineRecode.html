@@ -11,6 +11,9 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;"><i class="iconfont icon-shuaxin"></i>刷新</a>
                 </li> -->
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="refreshBtn"><i class="iconfont icon-shuaxin"></i>刷新</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -112,14 +115,14 @@
                 data: param,
                 async: false, //同步
                 traditional: true,
-                xhrFields: {
-          withCredentials: true
-       },
-       crossDomain: true,
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
                 success: function(data) {
                     if (data.status === 1) {
-    window.location.href = loginPageUrl;
-}
+                        window.location.href = loginPageUrl;
+                    }
                     if (data.status == 0) {
                         //把接口数据转换为[{"name":str,"value":number}]格式
                         if (!Array.isArray(data.data) || data.data.length == 0) {
@@ -160,7 +163,13 @@
             });
             return false;
         });
-
+        $(".refreshBtn").click(function() {
+            tableIns.reload({
+                page: {
+                    curr: 1 // 重新从第 1 页开始
+                }
+            });
+        });
         var tableIns = table.render({
             elem: '#tableContainer-recode',
             height: 'full-' + tableTopHeight, // full
@@ -249,54 +258,54 @@
         });
 
         // 监听出库单点击事件
-//         table.on('tool(tableContainer-recode)', function(obj) {
+        //         table.on('tool(tableContainer-recode)', function(obj) {
 
-//             var curData = obj.data;
+        //             var curData = obj.data;
 
-//             if (obj.event === 'click') {
-//                 console.log('111');
-//                 sessionStorage.setItem('recodeOrderID', curData.orderno);
-//                 $.get('view/risk/risk-layerRecode.html', {}, function(str) { // 请求弹框
+        //             if (obj.event === 'click') {
+        //                 console.log('111');
+        //                 sessionStorage.setItem('recodeOrderID', curData.orderno);
+        //                 $.get('view/risk/risk-layerRecode.html', {}, function(str) { // 请求弹框
 
-//                     var layerData; // 当前弹框页面数据
+        //                     var layerData; // 当前弹框页面数据
 
-//                     $.ajax({
-//                         url: outHistoryDetails,
-//                         type: "get",
-//                         data: {
-//                             orderno: curData.orderno // 单号
-//                         },
-//                         xhrFields: {
-//           withCredentials: true
-//        },
-//        crossDomain: true,
-//                         async: false, // 同步
-//                         success: function(data) {
-//                             if (data.status === 1) {
-//                                 window.location.href = loginPageUrl;
-//                             }
-//                             layerData = data;
-//                         }
-//                     });
+        //                     $.ajax({
+        //                         url: outHistoryDetails,
+        //                         type: "get",
+        //                         data: {
+        //                             orderno: curData.orderno // 单号
+        //                         },
+        //                         xhrFields: {
+        //           withCredentials: true
+        //        },
+        //        crossDomain: true,
+        //                         async: false, // 同步
+        //                         success: function(data) {
+        //                             if (data.status === 1) {
+        //                                 window.location.href = loginPageUrl;
+        //                             }
+        //                             layerData = data;
+        //                         }
+        //                     });
 
-//                     if (layerData.status == 0) {
-//                         // 接口请求正确后把这一段放在ajax的success里执行
-//                         // 弹出弹框
-//                         // layerData = {};
-//                         assessLayer = layer.open({
-//                             title: '出货审核记录',
-//                             type: 1,
-//                             content: str, // 注意，如果str是object，那么需要字符拼接。
-//                             area: ['80%', '80%'],
-//                         });
-//                         // 渲染弹框页面
-//                         layerOut(layerData.data);
-//                     } else {
-//                         layer.msg("信息获取失败");
-//                     }
-//                 });
-//             }
-//         });
+        //                     if (layerData.status == 0) {
+        //                         // 接口请求正确后把这一段放在ajax的success里执行
+        //                         // 弹出弹框
+        //                         // layerData = {};
+        //                         assessLayer = layer.open({
+        //                             title: '出货审核记录',
+        //                             type: 1,
+        //                             content: str, // 注意，如果str是object，那么需要字符拼接。
+        //                             area: ['80%', '80%'],
+        //                         });
+        //                         // 渲染弹框页面
+        //                         layerOut(layerData.data);
+        //                     } else {
+        //                         layer.msg("信息获取失败");
+        //                     }
+        //                 });
+        //             }
+        //         });
 
         // 渲染弹框函数
         var layerOut = function(layerData) {

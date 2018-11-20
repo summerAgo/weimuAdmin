@@ -8,6 +8,9 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;" onclick="dayin()"><i class="iconfont icon-dayin"></i>打印</a>
                 </li> -->
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="refreshBtn"><i class="iconfont icon-shuaxin"></i>刷新</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -227,7 +230,13 @@
             });
             return false;
         });
-
+        $(".refreshBtn").click(function() {
+            tableIns.reload({
+                page: {
+                    curr: 1 // 重新从第 1 页开始
+                }
+            });
+        });
         var tableIns = table.render({
             elem: '#tableContainer',
             height: 'full-' + tableTopHeight,
