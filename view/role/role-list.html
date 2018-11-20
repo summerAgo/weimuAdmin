@@ -84,7 +84,7 @@
             var paramSearch = {};
             for (var key in data.field) {
                 //参数赋值
-                if (data.field[key] != "") {
+                if (data.field[key] !== "") {
                     paramSearch[key] = data.field[key]
                 }
             }
@@ -271,7 +271,7 @@
                     crossDomain: true,
                     error: function(request) {
                         layer.msg('提交失败');
-                        return;
+                        return false;
                     },
                     success: function(data) {
                         layer.close(eaitLayer);
@@ -288,8 +288,6 @@
             return false;
         });
 
-
-
         //添加角色表单提交
         form.on('submit(addSubmit)', function(data) {
             var userData = window.currData;
@@ -299,9 +297,33 @@
                 title = '确认提交修改';
                 userUrl = roleUpdate;
             } else {
-                title = '确认添加'
+                title = '确认添加';
                 userUrl = roleAdd;
             }
+
+            // 判断觉得名是否重复
+            var isName = true; // 是否有用户名标识
+            $.ajax({
+                cache: true,
+                type: "get",
+                url: isname_role,
+                data: {
+                    rolename: data.field.rolename
+                },
+                async: false,
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
+                success: function(data) {
+                    if (data.status === 2) {
+                        layer.msg('角色已存在');
+                        isName = false;
+                    }
+                }
+            });
+            if (!isName) {return false;}
+
             layer.confirm(title, {
                 icon: 3,
                 title: '提示'
@@ -318,7 +340,7 @@
                     crossDomain: true,
                     error: function(request) {
                         layer.msg('提交失败');
-                        return;
+                        return false;
                     },
                     success: function(data) {
                         if (data.status === 1) {

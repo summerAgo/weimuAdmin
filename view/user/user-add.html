@@ -13,17 +13,17 @@
             </div>
         </div>
         <div class="layui-form-item layui-normal-line">
-            <label class="layui-form-label">用户名</label>
+            <label class="layui-form-label form-required">用户名</label>
             <div class="layui-input-inline">
                 <input type="text" id="username" name="username" lay-verify="required" placeholder="必填项,请输入用户名" class="layui-input"  value="{{# if(d.username){}}{{d.username}}{{# }}}">
-                <input type="hidden" id="id" name="id"   value="{{# if(d.id){}}{{d.id}}{{# }}}">
+                <input type="hidden" id="id" name="id" value="{{# if(d.id){}}{{d.id}}{{# }}}">
             </div>
         </div>
         {{# if(!d.username){}}
         <div class="layui-form-item layui-normal-line">
-            <label class="layui-form-label">密 码</label>
+            <label class="layui-form-label form-required">密 码</label>
             <div class="layui-input-inline">
-                <input type="text" id="password" name="password" lay-verify="required" placeholder="必填项,请输入密码" class="layui-input">
+                <input type="password" id="password" name="password" lay-verify="required" placeholder="必填项,请输入密码" class="layui-input">
             </div>
         </div>
         {{# }}}
@@ -130,14 +130,12 @@
 		}else{
 			var getTpl = formUser.innerHTML,
 			view = document.getElementById('formEditView');
-			var dataOff=data;
+			var dataOff = data;
 			laytpl(getTpl).render(dataOff, function(html) {
 				view.innerHTML = html;
 			});
 		}
-		
         form.render(); //重置表单渲染
-
         //日期时间选择器
         laydate.render({
             elem: '#birthday',
@@ -147,25 +145,23 @@
                 console.log(val);
             }
         });
-        
         addinstidSel(data.inaAllList,data.instid);
         function  addinstidSel(inaAllList,instid){
             var arr=[];
             var number="";
             for(var i=0;i<inaAllList.length;i++){
-                if(inaAllList[i].pid == 0){
+                if(inaAllList[i].pid === 0){
                     var map ={};
                     map["name"] = inaAllList[i].name;
                     map["value"] = inaAllList[i].id;
                     var children =[];
-                    
                     for(var j=0;j<inaAllList.length;j++){
-                        if(inaAllList[i].id == inaAllList[j].pid){
+                        if(inaAllList[i].id === inaAllList[j].pid){
                             var maptwo ={};
                             maptwo["name"] = inaAllList[j].name;
                             maptwo["value"] = inaAllList[j].id;
                             children.push(maptwo);
-                            if(inaAllList[j].id == instid){
+                            if(inaAllList[j].id === instid){
                                 number =inaAllList[j].pid +"/";
                             }
                         }
@@ -173,23 +169,17 @@
                     map["children"] = children;
                     arr.push(map);
                 }
-
             }
-            console.log(arr);
             layui.formSelects.data('instidSelect', 'local', {
                 arr: arr,
                 linkage: true
             });
-            if(number.length == 0){
+            if(number.length === 0){
                 number =instid+"/";
             }else{
                 number =number +instid;
             }
-            console.log(number);
             layui.formSelects.value('instidSelect', [number]);
         }
-        
-
-
     });
 </script>

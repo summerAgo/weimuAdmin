@@ -383,8 +383,8 @@
             return false;
         });
 
+        //编辑提交
         form.on('submit(editForm)', function(data) {
-            //编辑提交
             layer.confirm('确认提交修改', {
                 icon: 3,
                 title: '提示'
@@ -405,7 +405,7 @@
                         }
                     });
                 })
-            })
+            });
             return false;
         });
 
@@ -431,7 +431,6 @@
                         if (data.status === 1) {
                             window.location.href = loginPageUrl;
                         }
-
                         // 删除所选行成功
                         layer.close(index);
                         // 刷新表格
@@ -442,7 +441,6 @@
                         });
                         layer.msg(data.msg);
                     });
-
                 });
             }
         });
@@ -461,7 +459,7 @@
                 success: funSuc,
                 error: funErr
             })
-        };
+        }
 
         $(".creatBillBtn").click(function() {
             //新建预入库单
