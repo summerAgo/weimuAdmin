@@ -2,7 +2,7 @@
 
     <div class="table-content-title layer-level">
         <div class="table-tools">
-            <ul class="layui-nav" lay-filter="talbe-tools">
+            <ul class="layui-nav topmenu" lay-filter="talbe-tools">
                 <li class="layui-nav-item"><a href="javascript:;" id="addGoodsBtn"><i class="iconfont icon-tianjiahuowu"></i>从库存添加货物</a></li>
                 <li class="layui-nav-item" id="shoutlb"><a href="javascript:;" class="suboutlbBtn"><i class="iconfont icon-chuku"></i>出库</a></li>
                 <li class="layui-nav-item"><a href="javascript:;" id="deleteGoods" class="deleteBtn"><i class="iconfont icon-shanchu"></i>移除</a></li>
@@ -225,7 +225,7 @@
         }, true);
 
         var outBill = sessionStorage.getItem('addOutBill');
-        // console.log(outBill);
+        
         var array = JSON.parse(outBill);
 
         var data = {};
@@ -238,6 +238,9 @@
             $("input[name='estimatedate']").attr("disabled", false);
             $('.util-container').hide(); //隐藏倒计时
         } else {
+            if(array.status == 3){
+                $(".topmenu").hide();
+            }
             data["orderno"] = array.orderno;
             data["ownerid"] = array.ownerid;
             data["depotid"] = array.depotid;
