@@ -314,6 +314,10 @@
             for (var i = 0; i < datalist.length; i++) {
                 ids.push(datalist[i].orderno);
             }
+            if(ids.length<1){
+                layer.msg("未选择入库项");
+                return false;
+            }
             //审核订单为库存
             $.ajax({
                 url: preEntryexamineStock,
