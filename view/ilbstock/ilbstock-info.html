@@ -43,7 +43,7 @@
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
-                            <span class="input-span">规格</span>
+                            <span class="input-span">规格/厚度</span>
                             <select name="spec" xm-select="selectSpec" xm-select-radio>
                                 <option value="">规格</option>
                             </select>
@@ -70,6 +70,12 @@
                             <span class="input-span">货权人</span>
                             <select name="ownerid" xm-select="ownerSelect" xm-select-radio>
                                 <option value="">货权人</option>
+                            </select>
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <span class="input-span">仓库</span>
+                            <select name="depotid" xm-select="depotSelect" xm-select-radio>
+                                <option value="">仓库</option>
                             </select>
                         </div>
                     </div>
@@ -127,11 +133,43 @@
             arr: selectDataInstall(ownerDropdown, null, 0) //货权人列表
         });
 
+        layui.formSelects.opened('depotSelect', function(id) {
+            var ownerid = formSelects.value('ownerSelect', 'val'); //获取货权人ID
+            if (ownerid.length < 1) {
+                layer.msg("请先选择货权人");
+                formSelects.data(id, 'local', {
+                    arr: []
+                }); //如果货权人为空则清空列表
+            }
+        });
+        //监听
+        formSelects.on('ownerSelect', function(id, vals, val, isAdd, isDisabled) {
+            if (!isAdd) {
+                formSelects.data('depotSelect', 'local', {
+                    arr: [] //清空仓库列表
+                });
+            } else {
+                var depotList = selectDataInstall(depotDropdown, {
+                    "ownerid": vals[0].value //仓库列表
+                }, false);
+
+                if (depotList.length < 1) {
+                    formSelects.data('depotSelect', 'local', {
+                        arr: [] //清空仓库列表
+                    });
+                    layer.msg("该货权人下无仓库信息");
+                    return false;
+                }
+                formSelects.data('depotSelect', 'local', {
+                    arr: depotList //仓库列表
+                });
+            }
+        }, true);
         formSelects.data('originSelect', 'local', {
             arr: selectDataInstall(CHDList, null, 1) //产地列表
         });
 
-        function selectDataInstall(url, param, type) {
+        function selectDataInstall(url, param, bool) {
             //下拉选框数据组装
             var arr = [];
             //获取列表数据
@@ -142,30 +180,29 @@
                 async: false, //同步
                 traditional: true,
                 success: function(data) {
-                    console.log(data);
+                    // console.log(data);
                     if (data.status == 0) {
                         //把接口数据转换为[{"name":str,"value":number}]格式
                         if (!Array.isArray(data.data) || data.data.length == 0) {
                             // 判断arr是否为数组并保证内部有值
                             return false;
                         }
-                        for (var i = 0; i < data.data.length; i++) {
-                            if (type == 1) {
-                                arr.push({
-                                    "name": data.data[i].name,
-                                    "value": data.data[i].name
-                                })
-                            } else {
-                                arr.push({
-                                    "name": data.data[i].name,
-                                    "value": data.data[i].id
-                                })
-                            }
 
+                        for (var i = 0; i < data.data.length; i++) {
+                            var name = "";
+                            if (data.data[i].name) {
+                                name = data.data[i].name;
+                            } else {
+                                name = data.data[i].username;
+                            }
+                            arr.push({
+                                "name": name,
+                                "value": data.data[i].id
+                            })
                         }
                     }
                 }
-            });
+            })
             return arr;
         }
 
