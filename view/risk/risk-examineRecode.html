@@ -208,12 +208,14 @@
                         title: '审核结果',
                         sort: true,
                         templet: function(d) {
-                            if (d.status == 2) {
-                                return '已出库';
+                            console.log(d);
+                            if (d.isexamine == 2) {
+                                return '通过';
                             }
-                            if (d.status == 3) {
+                            if (d.isexamine == 1 && d.status == 3) {
                                 return '不通过';
                             }
+                            return '';
                         }
                     }, {
                         field: 'orderno',

@@ -17,13 +17,13 @@
                 <div class="form-box layerInventory">
                     <div class="layui-form-item form-left">
                         <div class="table-form-item layui-input-inline">
-                            <span class="input-span">货权人</span>
+                            <span class="input-span form-required">货权人</span>
                             <select name="ownerid" xm-select="ownerSelectLayer" xm-select-radio lay-verify="required">
                                 <option value="">货权人</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
-                            <span class="input-span">仓库</span>
+                            <span class="input-span form-required">仓库</span>
                             <select name="depotid" xm-select="depotSelectLayer" xm-select-radio lay-verify="required">
                                 <option value="">仓库</option>
                             </select>
@@ -258,9 +258,6 @@
         var numChangeValue = {}; //单元格编辑更改评估价格数据对象
         //监听编辑
         table.on('edit(tableContainer-layerInventory)', function(obj) {
-            // console.log(obj.value); //得到修改后的值
-            // console.log(obj.field); //当前编辑的字段名
-            // console.log(obj.data); //所在行的所有相关数据
             if (!obj.value || isNaN(obj.value)) {
                 layer.msg("数量只能为数字");
             }

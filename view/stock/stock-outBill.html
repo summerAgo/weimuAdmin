@@ -220,7 +220,7 @@
             var paramSearch = {};
             for (var key in data.field) {
                 //参数赋值
-                if (data.field[key] != "") {
+                if (data.field[key] !== "") {
                     paramSearch[key] = data.field[key]
                 }
             }
@@ -287,20 +287,19 @@
                     }, {
                         field: 'status',
                         title: '状态',
-
                         templet: function(d) {
-                            if (d.status == 0) {
-                                return '申请中';
+                            if (d.status == 1 && d.isexamine == 1) {
+                                return '<span style="color:red">待审核<span>';
                             }
                             if (d.status == 1) {
-                                return '待出库';
+                                return '正常待出库';
                             }
                             if (d.status == 2) {
                                 return '审核通过';
                             }
-                            return '<span style="color:red">审核失败<span>';
-                        }
+                            return '<span style="color:red">审核不通过<span>';;
 
+                        }=
                     }, {
                         field: 'remarks',
                         title: '备注'
@@ -351,7 +350,7 @@
                             if (res.status === 1) {
                                 window.location.href = loginPageUrl;
                             }
-                            if (res.status == 0) {
+                            if (res.status === 0) {
                                 tableIns.reload({
                                     page: {
                                         curr: 1 //重新从第 1 页开始
@@ -364,7 +363,6 @@
                                     $.each(res.adopt, function(i, v) {
                                         msgstr = "   " + msgstr + v + "<br/>";
                                     });
-
                                 }
                                 if (res.noadopt) {
                                     //msgstr = msgstr+  "订单:"+res.noadopt+"<br/>请风控审核！";
