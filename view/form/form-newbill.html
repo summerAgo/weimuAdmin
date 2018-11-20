@@ -275,6 +275,8 @@
         });
 
         form.on('submit(addGoodsForm)', function (data) {
+            console.log(data)
+            //return false;
             tableData.push(data.field);
             $(".rightBotBtn span").html(tableData.length); //当前选中了多少商品
             tableIns.reload({
@@ -294,6 +296,10 @@
             data: tableData,
             cols: [
                 [ //标题栏
+                    
+                    {
+                        type: 'radio'
+                    },
                     {
                         field: 'LAY_TABLE_INDEX',
                         title: '序号',
@@ -303,22 +309,19 @@
                         }
                     },
                     {
-                        type: 'radio'
-                    },
-                    {
                         field: 'code',
                         title: '包号',
                         sort: true
                     }, {
-                    field: 'varieties',
+                    field: 'varietiesName',
                     title: '品种',
                     sort: true
                 }, {
-                    field: 'levels',
+                    field: 'levelsName',
                     title: '等级',
                     sort: true
                 }, {
-                    field: 'spec',
+                    field: 'specName',
                     title: '规格',
                     sort: true
                 }, {

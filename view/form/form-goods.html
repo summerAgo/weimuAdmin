@@ -15,6 +15,7 @@
                 <select name="varieties" xm-select="selectVarieties" xm-select-radio>
                     <option value="">品种</option>
                 </select>
+                <input type="hidden" name="varietiesName" id="varietiesName" value="">
             </div>
         </div>
         <div class="layui-form-item">
@@ -25,6 +26,7 @@
                     <select name="spec" xm-select="selectSpec" xm-select-radio>
                         <option value="">规格</option>
                     </select>
+                    <input type="hidden" name="specName" id="specName" value="">
                 </div>
             </div>
         </div>
@@ -35,6 +37,7 @@
                 <select name="levels" xm-select="selectLevels" xm-select-radio>
                     <option value="">等级</option>
                 </select>
+                <input type="hidden" name="levelsName" id="levelsName" value="">
             </div>
         </div>
         <div class="layui-form-item">
@@ -119,14 +122,42 @@
             arr: selectDataInstall(VTSList) //品种列表
         });
 
+        layui.formSelects.on('selectVarieties', function(id, vals, val, isAdd, isDisabled){
+            $("#varietiesName").val(val.name);
+            if(val.value == 1){
+                return false;
+            }
+        }); 
+
+
+
+        
+
         formSelects.data('selectLevels', 'local', {
             arr: selectDataInstall(levelsList) //等级列表
         });
+
+        layui.formSelects.on('selectLevels', function(id, vals, val, isAdd, isDisabled){
+            $("#levelsName").val(val.name);
+            if(val.value == 1){
+                return false;
+            }
+        }); 
+
 
         formSelects.data('selectSpec', 'local', {
             arr: selectDataInstall(specList) //规格列表
         });
 
+        layui.formSelects.on('selectSpec', function(id, vals, val, isAdd, isDisabled){
+            $("#specName").val(val.name);
+            if(val.value == 1){
+                return false;
+            }
+        }); 
+
+
+       
         formSelects.data('ownerSelect', 'local', {
             arr: selectDataInstall(ownerDropdown) //货权人列表
         });
