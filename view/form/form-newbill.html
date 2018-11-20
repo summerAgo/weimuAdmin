@@ -23,26 +23,23 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;" class="subCancelBtn"><i class="iconfont icon-quxiao"></i>取消</a>
                 </li>
-                <li class="layui-nav-item"><a href="javascript:;" class="deleteBtnLayer"><i
-                        class="iconfont icon-shanchu"></i>删除</a></li>
+                <li class="layui-nav-item"><a href="javascript:;" class="deleteBtnLayer"><i class="iconfont icon-shanchu"></i>删除</a></li>
             </ul>
         </div>
     </div>
     <div class="table-page-header">
         <div class="table-page-form">
             <form class="layui-form form-newbill" action="">
-                <!-- <blockquote class="layui-elem-quote">
-                </blockquote> -->
                 <div class="form-box clearfix">
                     <div class="layui-form-item form-left">
                         <div class="table-form-item layui-input-inline">
-                            <span class="input-span">货权人</span>
+                            <span class="input-span form-required">货权人</span>
                             <select name="ownerid" xm-select="ownerSelectLayer" xm-select-radio>
                                 <option value="">货权人</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
-                            <span class="input-span">仓库</span>
+                            <span class="input-span form-required">仓库</span>
                             <select name="depotid" xm-select="depotSelectLayer" xm-select-radio>
                                 <option value="">仓库</option>
                             </select>
@@ -187,7 +184,7 @@
             },
             crossDomain: true,
             success: function (data) {
-                if (data.status == 0) {
+                if (data.status === 0) {
                     supplierData = data.data;
                 }
             }
@@ -206,7 +203,7 @@
 
             if (isAdd) {
                 for (var i = 0; i < supplierData.length; i++) {
-                    if (supplierData[i].id == val.value) {
+                    if (supplierData[i].id === val.value) {
                         $(".suppliernameLayer").val(supplierData[i].name);
                         break;
                     }
@@ -267,7 +264,7 @@
                     type: 1,
                     content: str, //注意，如果str是object，那么需要字符拼接。
                     resize: false,
-                    area: ['800px', 'auto'],
+                    area: ['800px', '560px']
                 });
             });
             form.render();
@@ -307,11 +304,11 @@
                         templet: function(d) {
                             return d.LAY_TABLE_INDEX + 1;
                         }
-                    },
-                    {
+                    }, {
+                        type: 'radio'
+                    }, {
                         field: 'code',
-                        title: '包号',
-                        sort: true
+                        title: '包号'
                     }, {
                     field: 'varietiesName',
                     title: '品种',
@@ -326,12 +323,10 @@
                     sort: true
                 }, {
                     field: 'pprice',
-                    title: '采购价',
-                    sort: true
+                    title: '采购价'
                 }, {
                     field: 'num',
                     title: '数量（m³）',
-                    sort: true,
                     event: "edit",
                     style: 'color:red;'
                 },
@@ -671,7 +666,7 @@
                     exts: 'xls|xlsx|xlsm|xlt|xltx|xltm', //只允许上传后缀
                     done: function (res) {
                         if (res.status === 0) {
-                            layer.msg("上传成功")
+                            layer.msg("上传成功");
                             layer.close(importLayer);
                             for (var k = 0; k < res.data.length; k++) {
                                 tableData.push(res.data[k]);

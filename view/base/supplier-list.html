@@ -286,6 +286,31 @@
                 ints = instid[0];
             }
             data.field.instid = ints;
+
+            // 判供应商是否重复
+            var isName = true; // 重复标识
+            $.ajax({
+                cache: true,
+                type: "get",
+                url: isname_supplier,
+                data: {
+                    instid: data.field.instid,
+                    name: data.field.name
+                },
+                async: false,
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
+                success: function(data) {
+                    if (data.status === 2) {
+                        layer.msg('供应商已存在');
+                        isName = false;
+                    }
+                }
+            });
+            if (!isName) {return false;}
+
             layer.confirm(title, {
                 icon: 3,
                 title: '提示'
@@ -497,6 +522,31 @@
                 userUrl = addInstitution;
                 data.field.id = null;
             }
+
+            // 判供应商类型是否重复
+            var isName = true; // 重复标识
+            $.ajax({
+                cache: true,
+                type: "get",
+                url: isname_institution,
+                data: {
+                    utype: 2,
+                    name: data.field.name
+                },
+                async: false,
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
+                success: function(data) {
+                    if (data.status === 2) {
+                        layer.msg('供应商类型已存在');
+                        isName = false;
+                    }
+                }
+            });
+            if (!isName) {return false;}
+
             layer.confirm(title, {
                 icon: 3,
                 title: '提示'

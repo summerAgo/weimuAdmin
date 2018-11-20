@@ -268,7 +268,7 @@
             });
         });
 
-        //添加加货权人表单提交
+        //添加货权人表单提交
         form.on('submit(addSubmit)', function(data) {
             var userData = window.currData;
             var title = "";
@@ -287,6 +287,31 @@
                 ints = instid[0];
             }
             data.field.instid = ints;
+
+            // 判断货权人是否重复
+            var isName = true; // 重复标识
+            $.ajax({
+                cache: true,
+                type: "get",
+                url: isname_owner,
+                data: {
+                    instid: data.field.instid,
+                    name: data.field.name
+                },
+                async: false,
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
+                success: function(data) {
+                    if (data.status === 2) {
+                        layer.msg('货权人已存在');
+                        isName = false;
+                    }
+                }
+            });
+            if (!isName) {return false;}
+
             layer.confirm(title, {
                 icon: 3,
                 title: '提示'
@@ -485,7 +510,7 @@
             return false;
         });
 
-
+        // 添加和编辑用户类型
         form.on('submit(addInsSubmit)', function(data) {
             var title = "";
             var url = "";
@@ -498,6 +523,30 @@
                 userUrl = addInstitution;
                 data.field.id = null;
             }
+            // 判断货权人类型是否重复
+            var isName = true; // 重复标识
+            $.ajax({
+                cache: true,
+                type: "get",
+                url: isname_institution,
+                data: {
+                    utype: 1,
+                    name: data.field.name
+                },
+                async: false,
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
+                success: function(data) {
+                    if (data.status === 2) {
+                        layer.msg('货权人类型已存在');
+                        isName = false;
+                    }
+                }
+            });
+            if (!isName) {return false;}
+
             layer.confirm(title, {
                 icon: 3,
                 title: '提示'

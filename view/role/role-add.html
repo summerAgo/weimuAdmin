@@ -8,7 +8,7 @@
         </div>
     </div>
     <div class="layui-form-item layui-normal-line">
-        <label class="layui-form-label">角色名称</label>
+        <label class="layui-form-label form-required">角色名称</label>
         <div class="layui-input-inline">
             <input type="text" id="rolename" name="rolename" lay-verify="required" placeholder="必填项,请输入用户名" class="layui-input"  value="{{# if(d.rolename){}}{{d.rolename}}{{# }}}">
             <input type="hidden" id="id" name="id"  value="{{# if(d.id){}}{{d.id}}{{# }}}">

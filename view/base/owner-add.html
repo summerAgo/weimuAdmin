@@ -7,13 +7,13 @@
             </div>
         </div>
          <div class="layui-form-item layui-normal-line">
-            <label class="layui-form-label">类型标识</label>
+            <label class="layui-form-label form-required">类型标识</label>
             <div class="layui-input-inline">
                 <select name="instid" lay-verify="required" placeholder="必填项,请输入用户类型" xm-select="instidSelect" xm-select-radio="" ></select>
             </div>
         </div>
         <div class="layui-form-item layui-normal-line">
-            <label class="layui-form-label">名称</label>
+            <label class="layui-form-label form-required">名称</label>
             <div class="layui-input-inline">
                 <input type="text" id="name" name="name" lay-verify="required" placeholder="必填项,请输入货权人名" class="layui-input" value="{{d.name||''}}">
                 <input type="hidden" id="id" name="id" value="{{d.id||''}}">
@@ -38,7 +38,7 @@
             </div>
         </div>
         <div class="layui-form-item layui-normal-line">
-            <label class="layui-form-label">业务员</label>
+            <label class="layui-form-label form-required">业务员</label>
             <div class="layui-input-inline">
                 <select name="person" xm-select="person" xm-select-radio>
                     <option value="">请选择</option>
@@ -46,7 +46,7 @@
             </div>
         </div>
         <div class="layui-form-item layui-normal-line">
-            <label class="layui-form-label">风控人员</label>
+            <label class="layui-form-label form-required">风控人员</label>
             <div class="layui-input-inline">
                 <select name="fkperson" xm-select="fkperson" xm-select-radio>
                     <option value="">请选择</option>

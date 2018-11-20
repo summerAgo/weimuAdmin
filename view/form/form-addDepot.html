@@ -7,13 +7,13 @@
         </div>
     </div>
     <div class="layui-form-item layui-normal-line">
-        <label class="layui-form-label">编号</label>
+        <label class="layui-form-label form-required">编号</label>
         <div class="layui-input-inline">
             <input type="text" name="code" placeholder="编号" value="{{d.code || ''}}" autocomplete="off" class="layui-input" lay-verify="required">
         </div>
     </div>
     <div class="layui-form-item layui-normal-line">
-        <label class="layui-form-label">货权人</label>
+        <label class="layui-form-label form-required">货权人</label>
         <div class="layui-input-inline">
             <!-- <input type="text" name="ownerid" placeholder="货权人" value="{{d.ownerid || ''}}" autocomplete="off" class="layui-input" lay-verify="required"> -->
             <select name="ownerid" xm-select="ownerSelect" xm-select-radio lay-verify="required">
@@ -31,7 +31,7 @@
         </div>
     </div> -->
     <div class="layui-form-item layui-normal-line">
-        <label class="layui-form-label">仓库名称</label>
+        <label class="layui-form-label form-required">仓库名称</label>
         <div class="layui-input-inline">
             <input type="text" name="name" placeholder="仓库名称" value="{{d.name||''}}" autocomplete="off" class="layui-input" lay-verify="required">
         </div>
