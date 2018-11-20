@@ -227,7 +227,7 @@
         var layerOut = function(layerData) {
             // 弹框 - 模板渲染
             var getTpl = tempExamine.innerHTML,
-                view = $(".lss-bread-crumb")[0];
+                view = $(".lay-bread-crumb")[0];
             laytpl(getTpl).render(layerData, function(html) {
                 view.innerHTML = html;
             });
@@ -320,7 +320,7 @@
                         }
                     }
                 });
-            })
+            });
 
             // 不通过按钮点击
             $(".nopassBtn").click(function() {
@@ -338,7 +338,7 @@
                     },
                     error: function(request) {
                         layer.msg('修改失败');
-                        return;
+                        return false;
                     },
                     success: function(res) {
                         if (res.status === 1) {

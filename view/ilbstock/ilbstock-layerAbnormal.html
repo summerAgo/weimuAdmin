@@ -3,11 +3,18 @@
         <div class="table-tools layerInventoryTools">
             <ul class="layui-nav" lay-filter="talbe-tools">
                 <li class="layui-nav-item">
-                    <a href="javascript:;" class="saveBtn"><i class="iconfont icon-baocun"></i>保存修改</a>
+                    <a href="javascript:;" class="addGoodsBtn"><i class="iconfont icon-tianjiahuowu"></i>从库存添加货物</a>
                 </li>
-                <!-- <li class="layui-nav-item">
-                    <a href="javascript:;" class="confirmBtn"><i class="iconfont icon-querenpandian"></i>确认</a>
-                </li> -->
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="editBtn"><i class="iconfont icon-bianji"></i>编辑</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="deleteBtn"><i class="iconfont icon-shanchu"></i>删除</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="saveBtn"><i class="iconfont icon-baocun"></i>确认添加</a>
+                </li>
+                <li class="layui-nav-item" style="float: right;"><div class="warning"><i class="icon iconfont icon-gantanhao_icon"></i>此操作成功后，会直接修改该物品的实际库存数量。</div></li>
             </ul>
         </div>
     </div>
@@ -39,18 +46,16 @@
                     </div>
                 </div>
             </form>
-
         </div>
     </div>
     <div class="table-content">
-
         <div class="table-content-main">
             <table class="layui-hide" id="tableContainer-layerInventoryabn" lay-filter="tableContainer-layerInventoryabn"></table>
         </div>
     </div>
 </div>
 <script>
-    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate'], function() {
+    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate'], function () {
         var element = layui.element;
         var form = layui.form;
         var $ = layui.jquery;
@@ -66,75 +71,75 @@
             depotid: 0
         };
         var echoData = JSON.parse(sessionStorage.getItem('inventoryabnParam'));
-        
+
         var url = abnlbList;
-        var colslist =[ {
-                        field: 'num',
-                        title: '数量（m³）'
-                    }, {
-                        field: 'num1',
-                        title: '实际数量（m³）',
-                        edit: "txt",
-                        style: "color:red;cursor: pointer"
-                    }, {
-                        field: 'code',
-                        title: '包号'
-                    }, {
-                        field: 'varieties',
-                        title: '品种'
-                    }, {
-                        field: 'spec',
-                        title: '规格/厚度'
-                    }, {
-                        field: 'levels',
-                        title: '等级'
-                    }, {
-                        field: 'chang',
-                        title: '长度'
-                    }, {
-                        field: 'brand',
-                        title: '品牌'
-                    }, {
-                        field: 'origin',
-                        title: '产地'
-                    }, {
-                        field: 'pprice',
-                        title: '采购单价'
-                    }];
+        var colslist = [{
+            field: 'num',
+            title: '数量（m³）'
+        }, {
+            field: 'num1',
+            title: '实际数量（m³）',
+            edit: "txt",
+            style: "color:red;cursor: pointer"
+        }, {
+            field: 'code',
+            title: '包号'
+        }, {
+            field: 'varieties',
+            title: '品种'
+        }, {
+            field: 'spec',
+            title: '规格/厚度'
+        }, {
+            field: 'levels',
+            title: '等级'
+        }, {
+            field: 'chang',
+            title: '长度'
+        }, {
+            field: 'brand',
+            title: '品牌'
+        }, {
+            field: 'origin',
+            title: '产地'
+        }, {
+            field: 'pprice',
+            title: '采购单价'
+        }];
 
         if (echoData) {
             $(".layerInventory").hide();
             if (echoData.id != null) {
                 $(".layerInventoryTools").hide();
 
-                colslist =[ {
-                        field: 'num',
-                        title: '数量（m³）'
-                    }, {
-                        field: 'code',
-                        title: '包号'
-                    }, {
-                        field: 'varieties',
-                        title: '品种'
-                    }, {
-                        field: 'spec',
-                        title: '规格/厚度'
-                    }, {
-                        field: 'levels',
-                        title: '等级'
-                    }, {
-                        field: 'chang',
-                        title: '长度'
-                    }, {
-                        field: 'brand',
-                        title: '品牌'
-                    }, {
-                        field: 'origin',
-                        title: '产地'
-                    }, {
-                        field: 'pprice',
-                        title: '采购单价'
-                    }];
+                colslist = [{
+                    field: 'num',
+                    title: '数量（m³）'
+                }, {
+                    field: 'code',
+                    title: '包号'
+                }, {
+                    field: 'varieties',
+                    title: '品种'
+                }, {
+                    field: 'spec',
+                    title: '规格/厚度'
+                }, {
+                    field: 'levels',
+                    title: '等级'
+                }, {
+                    field: 'chang',
+                    title: '长度'
+                }, {
+                    field: 'brand',
+                    title: '品牌'
+                }, {
+                    field: 'origin',
+                    title: '产地'
+                }, {
+                    field: 'pprice',
+                    title: '采购单价'
+                }];
             }
             depotData.ownerid = echoData.ownerid;
             depotData.depotid = echoData.depotid;
@@ -142,11 +147,11 @@
             url = abnByidList;
         }
 
-        form.on('submit(searchForm-layer)', function(data) {
+        form.on('submit(searchForm-layer)', function (data) {
             var paramSearch = {};
             for (var key in data.field) {
                 //参数赋值
-                if (data.field[key] != "") {
+                if (data.field[key] !== "") {
                     paramSearch[key] = data.field[key]
                 }
             }
@@ -166,7 +171,7 @@
             arr: selectDataInstall(ownerDropdown) //货权人列表
         });
 
-        layui.formSelects.opened('depotSelectLayer', function(id) {
+        layui.formSelects.opened('depotSelectLayer', function (id) {
             var ownerid = formSelects.value('ownerSelectLayer', 'val'); //获取货权人ID
             if (ownerid.length < 1) {
                 layer.msg("请先选择货权人");
@@ -177,7 +182,7 @@
         });
 
         //监听
-        formSelects.on('ownerSelectLayer', function(id, vals, val, isAdd, isDisabled) {
+        formSelects.on('ownerSelectLayer', function (id, vals, val, isAdd, isDisabled) {
             if (!isAdd) {
                 formSelects.data('depotSelectLayer', 'local', {
                     arr: [] //清空仓库列表
@@ -197,7 +202,6 @@
                 formSelects.data('depotSelectLayer', 'local', {
                     arr: depotList //仓库列表
                 });
-                
             }
         }, true);
 
@@ -211,11 +215,11 @@
                 data: param,
                 async: false, //同步
                 traditional: true,
-                success: function(data) {
+                success: function (data) {
                     // console.log(data);
-                    if (data.status == 0) {
+                    if (data.status === 0) {
                         //把接口数据转换为[{"name":str,"value":number}]格式
-                        if (!Array.isArray(data.data) || data.data.length == 0) {
+                        if (!Array.isArray(data.data) || data.data.length === 0) {
                             // 判断arr是否为数组并保证内部有值
                             return false;
                         }
@@ -230,7 +234,7 @@
                         }
                     }
                 }
-            })
+            });
             return arr;
         }
 
@@ -239,7 +243,7 @@
             height: 'auto',
             url: url,
             where: depotData,
-            parseData: function(res) { //res 即为原始返回的数据
+            parseData: function (res) { //res 即为原始返回的数据
                 console.log(res.msg);
                 //if (res.status !== 0) res.status = 0;                
                 return {
@@ -254,22 +258,22 @@
                 limitName: 'limit' //每页数据量的参数名，默认：limit
             },
             cols: [
-                 //标题栏
-                    colslist
-                
+                //标题栏
+                colslist
             ],
             even: true,
             page: true, //是否显示分页
             limits: [15, 40, 45, 60],
             limit: 15, //每页默认显示的数量
-            done: function(res, curr, count) {},
+            done: function (res, curr, count) {
+            },
             loading: true
         });
 
 
         var numChangeValue = {}; //单元格编辑更改评估价格数据对象
         //监听编辑
-        table.on('edit(tableContainer-layerInventoryabn)', function(obj) {
+        table.on('edit(tableContainer-layerInventoryabn)', function (obj) {
             // console.log(obj.value); //得到修改后的值
             // console.log(obj.field); //当前编辑的字段名
             // console.log(obj.data); //所在行的所有相关数据
@@ -280,7 +284,7 @@
             console.log(numChangeValue);
         });
 
-        $(".saveBtn").click(function() {
+        $(".saveBtn").click(function () {
             submitOrSave(depotData, numChangeValue, abnAdd)
         });
 
@@ -289,11 +293,10 @@
         });*/
 
         function submitOrSave(dataObj, valueArr, url) {
-            if(!dataObj.ownerid || !dataObj.depotid ){
+            if (!dataObj.ownerid || !dataObj.depotid) {
                 layer.msg('请选择货权人和仓库并查询后再进行异常操作');
                 return false;
             }
-
             var status = true;
             for (var key in numChangeValue) {
                 if (isNaN(numChangeValue[key]) || numChangeValue[key] == "") {
@@ -313,7 +316,6 @@
             } else {
                 return false;
             }
-
         }
 
         //保持提交  修改异常调整数据
@@ -331,15 +333,15 @@
                     depotid: depotData.depotid,
                     lbarr: JSON.stringify(apriceJson)
                 },
-                xhrFields: {
-          withCredentials: true
-       },
-       crossDomain: true,
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
                 // traditional: true,
-                success: function(res) {
+                success: function (res) {
                     if (res.status === 1) {
-    window.location.href = loginPageUrl;
-}
+                        window.location.href = loginPageUrl;
+                    }
                     if (res.status == 0) {
                         status = true;
                     }
@@ -347,7 +349,239 @@
                 }
             });
             return status;
-        };
+        }
 
+        $(".addGoodsBtn").click(function() {
+
+            var cargoowner = layui.formSelects.value('ownerSelectLayer', "valStr");
+
+            if (cargoowner === "") {
+                layer.msg('货权人不能为空');
+                return false;
+            }
+
+            var depotname = layui.formSelects.value('depotSelectLayer', "valStr");
+            if (depotname == "") {
+                layer.msg('仓库名称不能为空');
+                return false;
+            }
+            $.get('view/stock/stock-goodsList.html', {}, function(str) {
+                goodsListLayer = layer.open({
+                    title: '库存货物列表',
+                    type: 1,
+                    content: str, //注意，如果str是object，那么需要字符拼接。
+                    area: ['95%', '80%'],
+                });
+
+                /********************************一下都是弹出框数据******************************************************/
+
+                formSelects.data('selectVarietiesGoods', 'local', {
+                    arr: selectDataInstall(VTSList) //品种列表
+                });
+
+                formSelects.data('selectLevelsGoods', 'local', {
+                    arr: selectDataInstall(levelsList) //等级列表
+                });
+
+                formSelects.data('selectSpecGoods', 'local', {
+                    arr: selectDataInstall(specList) //规格列表
+                });
+
+                // formSelects.data('ownerSelectGoods', 'local', {
+                //     arr: selectDataInstall(ownerDropdown) //货权人列表
+                // });
+
+                formSelects.data('originSelectGoods', 'local', {
+                    arr: selectDataInstall(CHDList) //产地列表
+                });
+
+                function selectDataInstall(url, param) {
+                    //下拉选框数据组装
+                    var arr = [];
+                    //获取列表数据
+                    $.ajax({
+                        url: url,
+                        type: "get",
+                        data: param,
+                        async: false, //同步
+                        traditional: true,
+                        success: function(data) {
+                            // console.log(data);
+                            if (data.status == 0) {
+                                //把接口数据转换为[{"name":str,"value":number}]格式
+                                if (!Array.isArray(data.data) || data.data.length == 0) {
+                                    // 判断arr是否为数组并保证内部有值
+                                    return false;
+                                }
+                                for (var i = 0; i < data.data.length; i++) {
+                                    arr.push({
+                                        "name": data.data[i].name,
+                                        "value": data.data[i].id
+                                    })
+                                }
+                            }
+                        }
+                    });
+                    return arr;
+                }
+
+                var tableInsGood = table.render({
+                    elem: '#tableContainer-goodsList',
+                    // height: 'full-' + tableTopHeight,
+                    height: '430px',
+                    url: ilbstockListAll,
+                    where: {
+                        "ownerid": cargoowner,
+                        "depotid": depotname
+                    },
+                    parseData: function(res) { //res 即为原始返回的数据
+                        console.log(res)
+                        if (res.status !== 0) {
+                            res.status = 0;
+                            res.data = []
+                        }
+                        var resData = res.data;
+
+                        for (var i = 0; i < resData.length; i++) {
+                            var k = 0;
+                            if (tableData != null) {
+                                for (var j = 0; j < tableData.length; j++) {
+                                    if (resData[i].id == tableData[j].id) {
+                                        k = 1;
+                                    }
+                                }
+                            }
+                            if (k == 0) {
+                                resData[i]["LAY_CHECKED"] = false;
+                            } else {
+                                resData[i]["LAY_CHECKED"] = true;
+                            }
+
+                        }
+
+                        return {
+                            "code": res.status, //解析接口状态
+                            "msg": res.message, //解析提示文本
+                            "count": res.count, //解析数据长度
+                            "data": resData, //解析数据列表
+                            "aprice": res.aprice, //解析数据列表
+                            "znum": res.znum //解析数据列表
+                        }
+                    },
+                    cols: [
+                        [ //标题栏
+                            {
+                                type: 'checkbox',
+                            }, {
+                            field: 'code',
+                            title: '包号',
+                            width: 150
+                        }, {
+                            field: 'varieties',
+                            title: '品种'
+                        }, {
+                            field: 'levels',
+                            title: '等级'
+                        }, {
+                            field: 'spec',
+                            title: '规格'
+                        }, {
+                            field: 'aprice',
+                            title: '评估状态',
+                            templet: function(d) {
+                                //默认无
+                                if (null == d.aprice || d.aprice < 0) {
+                                    return '<span style="color:red;">未评估</span>';
+                                }
+                                return "已评估";
+                            }
+                        }, {
+                            field: 'chang',
+                            title: '长度'
+                        }, {
+                            field: 'num',
+                            title: '数量（m³）'
+                        }, {
+                            field: 'containernum',
+                            title: '货柜号',
+                            width: 150
+                        }, {
+                            field: 'origin',
+                            title: '产地'
+                        }, {
+                            field: 'brand',
+                            title: '品牌'
+                        }, {
+                            field: 'billloading',
+                            title: '提运单',
+                            width: 180
+                        }, {
+                            field: 'person',
+                            title: '负责人'
+                        }, {
+                            field: 'remarks',
+                            title: '备注',
+                            width: 180
+                        }
+                        ]
+                    ],
+                    even: false,
+                    page: false, //是否显示分页
+                    limits: [10, 20, 30, 40, 50],
+                    // limit: 10, //每页默认显示的数量
+                    done: function(res, curr, count) {
+                        // console.log(res);
+
+                    },
+                    text: {
+                        none: "无匹配数据"
+                    },
+                    loading: true
+
+                });
+
+                $("#addgoodList").click(function() {
+                    var checkStatus = table.checkStatus('tableContainer-goodsList'); //表格选中状态
+                    // if(tableData){
+                    //     tableData = tableData.concat(checkStatus.data);
+                    // }else{
+                    //     tableData = checkStatus.data;
+                    // }
+                    tableData = checkStatus.data;
+                    // console.log(tableData);
+                    layer.close(goodsListLayer); //关闭
+                    // 刷新表格
+                    // console.log(tableData);
+                    tableIns.reload({
+                        data: tableData,
+                        page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                    });
+                });
+
+                //监听锁定操作
+                table.on('checkbox(tableContainer-goodsList)', function(obj) {
+                    console.log("xxxxx");
+                    console.log(obj);
+                    if(obj.checked){
+                        var aprice = obj.data.aprice;
+                        if(aprice && aprice>0){
+                            var checkStatus = table.checkStatus('tableContainer-goodsList'); //表格选中状态
+                            $("#tableContainer-goodsList").parent().find(".rightBotBtn span").html(checkStatus.data.length); //当前选中了多少商品
+                        }else{
+                            layer.msg('该商品未评估，不可出库');
+                            obj.checked = false;
+                            tableInsGood.reload({
+                                data: tableData,
+                                page: {
+                                    curr: 1 //重新从第 1 页开始
+                                }
+                            });
+                        }
+                    }
+                });
+            });
+        });
     });
 </script>

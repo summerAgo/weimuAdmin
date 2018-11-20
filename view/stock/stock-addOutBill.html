@@ -3,10 +3,18 @@
     <div class="table-content-title layer-level">
         <div class="table-tools">
             <ul class="layui-nav topmenu" lay-filter="talbe-tools">
-                <li class="layui-nav-item"><a href="javascript:;" id="addGoodsBtn"><i class="iconfont icon-tianjiahuowu"></i>从库存添加货物</a></li>
-                <li class="layui-nav-item" id="shoutlb"><a href="javascript:;" class="suboutlbBtn"><i class="iconfont icon-chuku"></i>出库</a></li>
-                <li class="layui-nav-item"><a href="javascript:;" id="deleteGoods" class="deleteBtn"><i class="iconfont icon-shanchu"></i>移除</a></li>
-                <li class="layui-nav-item"><a href="javascript:;" class="submissionBtn"><i class="iconfont icon-baocunxinzeng"></i>保存</a></li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;" id="addGoodsBtn"><i class="iconfont icon-tianjiahuowu"></i>从库存添加货物</a>
+                </li>
+                <li class="layui-nav-item" id="shoutlb">
+                    <a href="javascript:;" class="suboutlbBtn"><i class="iconfont icon-chuku"></i>出库</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;" id="deleteGoods" class="deleteBtn"><i class="iconfont icon-shanchu"></i>移除</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="submissionBtn"><i class="iconfont icon-baocunxinzeng"></i>保存</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -115,16 +123,6 @@
     </div>
 </div>
 <style scoped>
-    .layui-elem-quote {
-        margin-bottom: 0
-    }
-
-    .layer-title {
-        display: flex;
-        flex-wrap: wrap;
-        /* justify-content: space-around */
-    }
-
     .layer-title small {
         font-size: 14px;
     }
@@ -563,7 +561,7 @@
                     }
                 });
             });
-        })
+        });
 
         $("#addGoodsBtn").click(function() {
             var cargoowner = layui.formSelects.value('ownerSelect', "valStr");
@@ -634,7 +632,7 @@
                                 }
                             }
                         }
-                    })
+                    });
                     return arr;
                 }
 
