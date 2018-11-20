@@ -12,8 +12,7 @@
                 <input type="hidden" id="userid" name="userid"   value="{{# if(d.id){}} {{d.id}} {{# }}}">
                 <select name="roleid" lay-verify="required" >
                     {{#  layui.each(d.rolelist, function(index, item){ }}
-                         <!-- <option {{# if(d.pid && d.pid == item.id ){}} selected {{# }}} value="{{item.id}}">{{ item.rolename }}</option> -->
-                         <option value="{{item.id}}">{{ item.rolename }}</option>
+						 <option {{# if(d.pid && d.pid == item.id ){}} selected {{# }}} value="{{item.id}}">{{item.rolename}}</option>
 					{{#  }); }}
                 </select>
             </div>
