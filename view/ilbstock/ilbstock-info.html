@@ -5,6 +5,9 @@
                 <li class="layui-nav-item">
                     <a id="toExport" href="javascript:;"><i class="iconfont icon-daochu"></i> 导出数据</a>
                 </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="refreshBtn"><i class="iconfont icon-shuaxin"></i>刷新</a>
+                </li>
                 <!-- <li class="layui-nav-item">
                     <a href="javascript:;"><i class="iconfont icon-dayin"></i> 打印</a>
                 </li> -->
@@ -109,26 +112,26 @@
         });
 
         formSelects.data('selectVarieties', 'local', {
-            arr: selectDataInstall(VTSList,null,1) //品种列表
+            arr: selectDataInstall(VTSList, null, 1) //品种列表
         });
 
         formSelects.data('selectLevels', 'local', {
-            arr: selectDataInstall(levelsList,null,1) //等级列表
+            arr: selectDataInstall(levelsList, null, 1) //等级列表
         });
 
         formSelects.data('selectSpec', 'local', {
-            arr: selectDataInstall(specList,null,1) //规格列表
+            arr: selectDataInstall(specList, null, 1) //规格列表
         });
 
         formSelects.data('ownerSelect', 'local', {
-            arr: selectDataInstall(ownerDropdown,null,0) //货权人列表
+            arr: selectDataInstall(ownerDropdown, null, 0) //货权人列表
         });
 
         formSelects.data('originSelect', 'local', {
-            arr: selectDataInstall(CHDList,null,1) //产地列表
+            arr: selectDataInstall(CHDList, null, 1) //产地列表
         });
 
-        function selectDataInstall(url, param,type) {
+        function selectDataInstall(url, param, type) {
             //下拉选框数据组装
             var arr = [];
             //获取列表数据
@@ -147,18 +150,18 @@
                             return false;
                         }
                         for (var i = 0; i < data.data.length; i++) {
-                            if(type == 1){
+                            if (type == 1) {
                                 arr.push({
                                     "name": data.data[i].name,
                                     "value": data.data[i].name
                                 })
-                            }else{
+                            } else {
                                 arr.push({
                                     "name": data.data[i].name,
                                     "value": data.data[i].id
                                 })
                             }
-                            
+
                         }
                     }
                 }
@@ -182,7 +185,13 @@
             });
             return false;
         });
-
+        $(".refreshBtn").click(function() {
+            tableIns.reload({
+                page: {
+                    curr: 1 // 重新从第 1 页开始
+                }
+            });
+        });
         var tableIns = table.render({
             elem: '#tableContainer',
             height: 'full-' + tableTopHeight,
