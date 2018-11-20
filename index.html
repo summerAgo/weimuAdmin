@@ -10,8 +10,8 @@
     <meta content="black" name="apple-mobile-web-app-status-bar-style">
     <meta content="telephone=no" name="format-detection">
     <meta http-equiv="Access-Control-Allow-Origin" content="*">
-    
-    <title>维木智能仓管系统</title>
+
+    <title>维木智能仓储系统</title>
     <link rel="stylesheet" href="layui/css/layui.css">
     <link rel="stylesheet" href="js/layui-mod/formSelects-v4.css">
     <link rel="stylesheet" href="js/layui-mod/eleTree.css" media="all">
@@ -28,7 +28,9 @@
 <body class="layui-layout-body">
     <div class="layui-layout layui-layout-admin">
         <div class="layui-header index-header clearfix">
-            <div class="layui-logo"><div class="logo"></div></div>
+            <div class="layui-logo">
+                <div class="logo"></div>
+            </div>
             <!-- 头部区域（可配合layui已有的水平导航） -->
             <!-- <ul class="layui-nav layui-layout-left">
                 <li>
@@ -80,7 +82,7 @@
 
 
     <script id="menuTlp" type="text/html">
-    <ul class="layui-nav layui-nav-tree" lay-filter="index-side" lay-shrink="all">
+        <ul class="layui-nav layui-nav-tree" lay-filter="index-side" lay-shrink="all">
         {{# layui.each(d.list, function(index, item){ }}
             {{# if(item.pid == 0){ }}
                 <li class="layui-nav-item">
@@ -121,7 +123,7 @@
             formSelects: 'formSelects-v4'
         });
 
-        layui.use(['jquery', 'element', 'layer', 'laytpl'], function () {
+        layui.use(['jquery', 'element', 'layer', 'laytpl'], function() {
             var element = layui.element,
                 $ = layui.$,
                 laytpl = layui.laytpl;
@@ -132,8 +134,8 @@
             //该用户菜单权限JSON
             var menujson = JSON.parse(sessionStorage.getItem("menuAuthority"));
             // console.log(menujson);
-            var menuArr = [];      //菜单显示
-            var menuRoute = [];    //路由
+            var menuArr = []; //菜单显示
+            var menuRoute = []; //路由
             for (var key in menujson) {
                 var json = JSON.parse(menujson[key]);
                 if (json) {
@@ -154,13 +156,14 @@
                 }
             }
 
-            var getTpl = menuTlp.innerHTML, view = document.getElementById('menuview');
+            var getTpl = menuTlp.innerHTML,
+                view = document.getElementById('menuview');
 
             var data = { //数据
                 "list": menuArr
             };
             // console.log(data);
-            laytpl(getTpl).render(data, function (html) {
+            laytpl(getTpl).render(data, function(html) {
                 view.innerHTML = html;
             });
 
@@ -248,7 +251,7 @@
 
             Q.init({
                 index: 'home',
-                pop: function (vid) {
+                pop: function(vid) {
                     // hash改变执行
                     var thehash = $(".index-side a").attr("href").replace(/#!/, '');
                     var dom;
@@ -267,7 +270,7 @@
                             });
                         } else {
                             var isData = false;
-                            $.each($(".layui-tab-title li[lay-id]"), function () {
+                            $.each($(".layui-tab-title li[lay-id]"), function() {
                                 if ($(this).attr("lay-id") == vid) {
                                     isData = true;
                                 }
@@ -297,14 +300,14 @@
             // element.tabChange('nav-tabs', layid);
 
             //监听Tab切换，以改变地址hash值
-            element.on('tab(nav-tabs)', function () {
+            element.on('tab(nav-tabs)', function() {
                 location.hash = '#!' + this.getAttribute('lay-id');
             });
 
-            $(".header-seacherBox input").focus(function () {
+            $(".header-seacherBox input").focus(function() {
                 //头部搜索框获取焦点变亮
                 $(".header-seacherBox").addClass('opacity1');
-            }).blur(function () {
+            }).blur(function() {
                 if ($(this).val() == "") {
                     $(".header-seacherBox").removeClass('opacity1');
                 }
@@ -320,8 +323,27 @@
                 history.replaceState({}, 'login', localhost + "/view/login/login.html");
                 window.location.href = localhost + "/view/login/login.html";
             }
+            
+            // // console.log(document.cookie)
+            // $.ajax({
+            //     url: "http://192.168.10.201/storage-web/check/recordlist/list",
+            //     type: "GET",
+            //     dataType: 'json',
+            //     async: false, //同步
+            //     xhrFields: {
+            //         withCredentials: true
+            //     },
+            //     crossDomain: true,
+            //     contentType: "application/json",
+            //     success: function(data) {
+            //         console.log(data);
+            //     }
+            // })
         });
+        // document.cookie = "username=SESSION_NAME;path=/;domain=192.168.10.216/2"
+
     </script>
-    
+
 </body>
+
 </html>
