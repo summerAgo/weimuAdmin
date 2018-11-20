@@ -67,6 +67,7 @@
     .layer-title small {
         font-size: 14px;
     }
+
     .table-page h3 {
         padding-left: 0;
     }
@@ -96,6 +97,13 @@
         });
         // 出库详情表格字段
         var outCols = [{
+            field: 'LAY_TABLE_INDEX',
+            title: '序号',
+            width: 50,
+            templet: function(d) {
+                return d.LAY_TABLE_INDEX + 1;
+            }
+        }, {
             field: "code",
             title: "包号",
             sort: true
@@ -139,6 +147,13 @@
         }];
         // 入库详情表格字段
         var entryCols = [{
+            field: 'LAY_TABLE_INDEX',
+            title: '序号',
+            width: 50,
+            templet: function(d) {
+                return d.LAY_TABLE_INDEX + 1;
+            }
+        }, {
             field: "code",
             title: "包号",
             sort: true

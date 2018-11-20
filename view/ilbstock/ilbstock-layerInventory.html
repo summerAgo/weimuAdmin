@@ -177,12 +177,12 @@
                 console.log(res.data);
 
                 var datas = [];
-                if(echoData || !res.data){
+                if (echoData || !res.data) {
                     console.log(1);
                     datas = res.data;
-                }else{
+                } else {
                     console.log(2);
-                    for(var i =0;i<res.data.length;i++){
+                    for (var i = 0; i < res.data.length; i++) {
                         var v = res.data[i];
                         v.num1 = null;
                         datas.push(v);
@@ -203,6 +203,14 @@
             },
             cols: [
                 [ //标题栏
+                    {
+                        field: 'LAY_TABLE_INDEX',
+                        title: '序号',
+                        width: 50,
+                        templet: function(d) {
+                            return d.LAY_TABLE_INDEX + 1;
+                        }
+                    },
                     {
                         field: 'num',
                         title: '数量（m³）'

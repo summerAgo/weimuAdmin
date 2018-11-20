@@ -14,7 +14,9 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;" class="saveBtn"><i class="iconfont icon-baocun"></i>确认添加</a>
                 </li>
-                <li class="layui-nav-item" style="float: right;"><div class="warning"><i class="icon iconfont icon-gantanhao_icon"></i>此操作成功后，会直接修改该物品的实际库存数量。</div></li>
+                <li class="layui-nav-item" style="float: right;">
+                    <div class="warning"><i class="icon iconfont icon-gantanhao_icon"></i>此操作成功后，会直接修改该物品的实际库存数量。</div>
+                </li>
             </ul>
         </div>
     </div>
@@ -55,7 +57,7 @@
     </div>
 </div>
 <script>
-    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate'], function () {
+    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate'], function() {
         var element = layui.element;
         var form = layui.form;
         var $ = layui.jquery;
@@ -74,6 +76,13 @@
 
         var url = abnlbList;
         var colslist = [{
+            field: 'LAY_TABLE_INDEX',
+            title: '序号',
+            width: 50,
+            templet: function(d) {
+                return d.LAY_TABLE_INDEX + 1;
+            }
+        }, {
             field: 'num',
             title: '数量（m³）'
         }, {
@@ -113,6 +122,13 @@
                 $(".layerInventoryTools").hide();
 
                 colslist = [{
+                    field: 'LAY_TABLE_INDEX',
+                    title: '序号',
+                    width: 50,
+                    templet: function(d) {
+                        return d.LAY_TABLE_INDEX + 1;
+                    }
+                }, {
                     field: 'num',
                     title: '数量（m³）'
                 }, {
@@ -147,7 +163,7 @@
             url = abnByidList;
         }
 
-        form.on('submit(searchForm-layer)', function (data) {
+        form.on('submit(searchForm-layer)', function(data) {
             var paramSearch = {};
             for (var key in data.field) {
                 //参数赋值
@@ -171,7 +187,7 @@
             arr: selectDataInstall(ownerDropdown) //货权人列表
         });
 
-        layui.formSelects.opened('depotSelectLayer', function (id) {
+        layui.formSelects.opened('depotSelectLayer', function(id) {
             var ownerid = formSelects.value('ownerSelectLayer', 'val'); //获取货权人ID
             if (ownerid.length < 1) {
                 layer.msg("请先选择货权人");
@@ -182,7 +198,7 @@
         });
 
         //监听
-        formSelects.on('ownerSelectLayer', function (id, vals, val, isAdd, isDisabled) {
+        formSelects.on('ownerSelectLayer', function(id, vals, val, isAdd, isDisabled) {
             if (!isAdd) {
                 formSelects.data('depotSelectLayer', 'local', {
                     arr: [] //清空仓库列表
@@ -215,7 +231,7 @@
                 data: param,
                 async: false, //同步
                 traditional: true,
-                success: function (data) {
+                success: function(data) {
                     // console.log(data);
                     if (data.status === 0) {
                         //把接口数据转换为[{"name":str,"value":number}]格式
@@ -243,7 +259,7 @@
             height: 'auto',
             url: url,
             where: depotData,
-            parseData: function (res) { //res 即为原始返回的数据
+            parseData: function(res) { //res 即为原始返回的数据
                 console.log(res.msg);
                 //if (res.status !== 0) res.status = 0;                
                 return {
@@ -265,15 +281,14 @@
             page: true, //是否显示分页
             limits: [15, 40, 45, 60],
             limit: 15, //每页默认显示的数量
-            done: function (res, curr, count) {
-            },
+            done: function(res, curr, count) {},
             loading: true
         });
 
 
         var numChangeValue = {}; //单元格编辑更改评估价格数据对象
         //监听编辑
-        table.on('edit(tableContainer-layerInventoryabn)', function (obj) {
+        table.on('edit(tableContainer-layerInventoryabn)', function(obj) {
             // console.log(obj.value); //得到修改后的值
             // console.log(obj.field); //当前编辑的字段名
             // console.log(obj.data); //所在行的所有相关数据
@@ -284,7 +299,7 @@
             console.log(numChangeValue);
         });
 
-        $(".saveBtn").click(function () {
+        $(".saveBtn").click(function() {
             submitOrSave(depotData, numChangeValue, abnAdd)
         });
 
@@ -338,7 +353,7 @@
                 },
                 crossDomain: true,
                 // traditional: true,
-                success: function (res) {
+                success: function(res) {
                     if (res.status === 1) {
                         window.location.href = loginPageUrl;
                     }
@@ -471,58 +486,66 @@
                     cols: [
                         [ //标题栏
                             {
+                                field: 'LAY_TABLE_INDEX',
+                                title: '序号',
+                                width: 50,
+                                templet: function(d) {
+                                    return d.LAY_TABLE_INDEX + 1;
+                                }
+                            },
+                            {
                                 type: 'checkbox',
                             }, {
-                            field: 'code',
-                            title: '包号',
-                            width: 150
-                        }, {
-                            field: 'varieties',
-                            title: '品种'
-                        }, {
-                            field: 'levels',
-                            title: '等级'
-                        }, {
-                            field: 'spec',
-                            title: '规格'
-                        }, {
-                            field: 'aprice',
-                            title: '评估状态',
-                            templet: function(d) {
-                                //默认无
-                                if (null == d.aprice || d.aprice < 0) {
-                                    return '<span style="color:red;">未评估</span>';
+                                field: 'code',
+                                title: '包号',
+                                width: 150
+                            }, {
+                                field: 'varieties',
+                                title: '品种'
+                            }, {
+                                field: 'levels',
+                                title: '等级'
+                            }, {
+                                field: 'spec',
+                                title: '规格'
+                            }, {
+                                field: 'aprice',
+                                title: '评估状态',
+                                templet: function(d) {
+                                    //默认无
+                                    if (null == d.aprice || d.aprice < 0) {
+                                        return '<span style="color:red;">未评估</span>';
+                                    }
+                                    return "已评估";
                                 }
-                                return "已评估";
+                            }, {
+                                field: 'chang',
+                                title: '长度'
+                            }, {
+                                field: 'num',
+                                title: '数量（m³）'
+                            }, {
+                                field: 'containernum',
+                                title: '货柜号',
+                                width: 150
+                            }, {
+                                field: 'origin',
+                                title: '产地'
+                            }, {
+                                field: 'brand',
+                                title: '品牌'
+                            }, {
+                                field: 'billloading',
+                                title: '提运单',
+                                width: 180
+                            }, {
+                                field: 'person',
+                                title: '负责人'
+                            }, {
+                                field: 'remarks',
+                                title: '备注',
+                                width: 180
                             }
-                        }, {
-                            field: 'chang',
-                            title: '长度'
-                        }, {
-                            field: 'num',
-                            title: '数量（m³）'
-                        }, {
-                            field: 'containernum',
-                            title: '货柜号',
-                            width: 150
-                        }, {
-                            field: 'origin',
-                            title: '产地'
-                        }, {
-                            field: 'brand',
-                            title: '品牌'
-                        }, {
-                            field: 'billloading',
-                            title: '提运单',
-                            width: 180
-                        }, {
-                            field: 'person',
-                            title: '负责人'
-                        }, {
-                            field: 'remarks',
-                            title: '备注',
-                            width: 180
-                        }
                         ]
                     ],
                     even: false,
@@ -564,12 +587,12 @@
                 table.on('checkbox(tableContainer-goodsList)', function(obj) {
                     console.log("xxxxx");
                     console.log(obj);
-                    if(obj.checked){
+                    if (obj.checked) {
                         var aprice = obj.data.aprice;
-                        if(aprice && aprice>0){
+                        if (aprice && aprice > 0) {
                             var checkStatus = table.checkStatus('tableContainer-goodsList'); //表格选中状态
                             $("#tableContainer-goodsList").parent().find(".rightBotBtn span").html(checkStatus.data.length); //当前选中了多少商品
-                        }else{
+                        } else {
                             layer.msg('该商品未评估，不可出库');
                             obj.checked = false;
                             tableInsGood.reload({

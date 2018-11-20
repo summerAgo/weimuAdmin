@@ -192,6 +192,14 @@
             cols: [
                 [ // 标题栏
                     {
+                        field: 'LAY_TABLE_INDEX',
+                        title: '序号',
+                        width: 50,
+                        templet: function(d) {
+                            return d.LAY_TABLE_INDEX + 1;
+                        }
+                    },
+                    {
                         field: 'ownername',
                         title: '货权人',
                         sort: true
@@ -211,7 +219,7 @@
                         field: 'orderno',
                         title: '出库单',
                         event: 'click',
-                        width:195
+                        width: 195
                     }, {
                         field: 'depname',
                         title: '出库仓库',

@@ -39,15 +39,12 @@
                             <div class="layui-form-item form-left">
                                 <div class="table-form-item layui-input-inline">
                                     <span id="titleIns" class="input-span">名称</span>
-                                    <input type="text" name="name" placeholder="名称" autocomplete="off"
-                                           class="layui-input">
-                                    <input type="hidden" name="instid" id="instid" value="" autocomplete="off"
-                                           class="layui-input">
+                                    <input type="text" name="name" placeholder="名称" autocomplete="off" class="layui-input">
+                                    <input type="hidden" name="instid" id="instid" value="" autocomplete="off" class="layui-input">
                                 </div>
                             </div>
                             <div class="layui-form-item form-right">
-                                <button class="layui-btn layui-btn-md layui-btn-green" lay-submit
-                                        lay-filter="searchForm">
+                                <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="searchForm">
                                     <i class="iconfont icon-sousuo"></i> <span>查询</span>
                                 </button>
                             </div>
@@ -56,8 +53,7 @@
                 </div>
             </div>
             <div class="table-content-main">
-                <table class="layui-hide" id="tableContainer-supplierlist"
-                       lay-filter="tableContainer-supplierlist"></table>
+                <table class="layui-hide" id="tableContainer-supplierlist" lay-filter="tableContainer-supplierlist"></table>
             </div>
         </div>
     </div>
@@ -73,7 +69,7 @@
     }
 </style>
 <script>
-    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'tree', 'eleTree'], function () {
+    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'tree', 'eleTree'], function() {
         var element = layui.element;
         var form = layui.form;
         var $ = layui.jquery;
@@ -92,7 +88,7 @@
             show: 'name'
         });
 
-        form.on('submit(searchForm)', function (data) {
+        form.on('submit(searchForm)', function(data) {
             var paramSearch = {};
             for (var key in data.field) {
                 //参数赋值
@@ -113,7 +109,7 @@
             elem: '#tableContainer-supplierlist',
             height: 'full-' + tableTopHeight,
             url: listSupplier,
-            parseData: function (res) { //res 即为原始返回的数据
+            parseData: function(res) { //res 即为原始返回的数据
                 if (res.status !== 0) res.status = 0;
                 return {
                     "code": res.status, //解析接口状态
@@ -129,6 +125,14 @@
             cols: [
                 [ //标题栏
                     {
+                        field: 'LAY_TABLE_INDEX',
+                        title: '序号',
+                        width: 50,
+                        templet: function(d) {
+                            return d.LAY_TABLE_INDEX + 1;
+                        }
+                    },
+                    {
                         type: 'checkbox'
                     },
                     {
@@ -136,20 +140,20 @@
                         title: '名称',
                         sort: true
                     }, {
-                    field: 'phone',
-                    title: '电话',
-                    sort: true
-                }, {
-                    field: 'remarks',
-                    title: '备注'
-                }
+                        field: 'phone',
+                        title: '电话',
+                        sort: true
+                    }, {
+                        field: 'remarks',
+                        title: '备注'
+                    }
                 ]
             ],
             even: true,
             page: true, //是否显示分页
             limits: [10, 20, 30, 40, 50],
             limit: 10, //每页默认显示的数量
-            done: function (res, curr, count) {
+            done: function(res, curr, count) {
                 var addtableBtn = '<div class="rightBotBtn">已经选择<span>0</span>个商品 </div>';
                 $(".layui-table-page").append(addtableBtn);
             },
@@ -160,12 +164,12 @@
         });
 
         //监听锁定操作
-        table.on('checkbox(tableContainer-supplierlist)', function (obj) {
+        table.on('checkbox(tableContainer-supplierlist)', function(obj) {
             var checkStatus = table.checkStatus('tableContainer-supplierlist'); //表格选中状态
             $(".rightBotBtn span").html(checkStatus.data.length); //当前选中了多少商品
         });
 
-        $(".editBtn").click(function () {
+        $(".editBtn").click(function() {
             //编辑
             var checkStatus = table.checkStatus('tableContainer-supplierlist');
             if (checkStatus.data.length < 1) {
@@ -177,7 +181,7 @@
                 data["instid"] = menuIns.id;
                 data["inaAllList"] = inaAllList;
                 window.currData = data; //全局对象存储当前选中行数据
-                $.get('view/base/supplier-add.html', {}, function (str) {
+                $.get('view/base/supplier-add.html', {}, function(str) {
                     eaitLayer = layer.open({
                         title: '编辑',
                         type: 1,
@@ -189,7 +193,7 @@
             }
         });
 
-        $("#allRefresh").click(function () {
+        $("#allRefresh").click(function() {
             // 刷新表格
             tableIns.reload({
                 page: {
@@ -200,7 +204,7 @@
 
 
         //删除
-        $(".deleteBtn").click(function () {
+        $(".deleteBtn").click(function() {
             var checkStatus = table.checkStatus('tableContainer-supplierlist');
             if (checkStatus.data.length < 1) {
                 layer.msg("请选择需要删除的信息");
@@ -208,9 +212,9 @@
                 layer.confirm('是否确认删除此条信息', {
                     icon: 3,
                     title: '提示'
-                }, function (index) {
+                }, function(index) {
                     var rowId = [];
-                    $.each(checkStatus.data, function (i, v) {
+                    $.each(checkStatus.data, function(i, v) {
                         //获取所选行数ID
                         rowId.push(v.id);
                     });
@@ -222,12 +226,12 @@
                             "ids": rowId
                         },
                         traditional: true,
-                        xhrFields: {
-                            withCredentials: true
+                        xhrFields: {
+                            withCredentials: true
                         },
-                        crossDomain: true,
-                        success: function (res) {
-                            if(res.status === 0){
+                        crossDomain: true,
+                        success: function(res) {
+                            if (res.status === 0) {
                                 // 删除所选行成功
                                 layer.close(index);
                                 // 刷新表格
@@ -237,7 +241,7 @@
                                     }
                                 });
                                 layer.msg(res.msg);
-                            }else if (res.status === 1) {
+                            } else if (res.status === 1) {
                                 window.location.href = loginPageUrl;
                             }
                         }
@@ -247,12 +251,12 @@
         });
 
         //弹出添加供应商
-        $(".creatUser").click(function () {
+        $(".creatUser").click(function() {
             var data = {};
             data["instid"] = menuIns.id;
             data["inaAllList"] = inaAllList;
             window.currData = data;
-            $.get('view/base/supplier-add.html', {}, function (str) {
+            $.get('view/base/supplier-add.html', {}, function(str) {
                 eaitLayer = layer.open({
                     title: '添加加供应商',
                     type: 1,
@@ -264,7 +268,7 @@
         });
 
         //添加加供应商表单提交
-        form.on('submit(addSubmit)', function (data) {
+        form.on('submit(addSubmit)', function(data) {
             var userData = window.currData;
             var title = "";
             var userUrl = "";
@@ -285,23 +289,23 @@
             layer.confirm(title, {
                 icon: 3,
                 title: '提示'
-            }, function (index) {
+            }, function(index) {
                 $.ajax({
                     cache: true,
                     type: "post",
                     url: userUrl,
                     data: data.field,
                     async: false,
-                    xhrFields: {
-                        withCredentials: true
+                    xhrFields: {
+                        withCredentials: true
                     },
-                    crossDomain: true,
-                    error: function (errMsg) {
+                    crossDomain: true,
+                    error: function(errMsg) {
                         layer.msg('提交失败');
                         return false;
                     },
-                    success: function (res) {
-                        if(res.status === 0){
+                    success: function(res) {
+                        if (res.status === 0) {
                             layer.close(eaitLayer);
                             layer.msg('提交成功');
                             // 刷新表格
@@ -310,7 +314,7 @@
                                     curr: 1 //重新从第 1 页开始
                                 }
                             });
-                        }else if(res.status === 1){
+                        } else if (res.status === 1) {
                             window.location.href = loginPageUrl;
                         }
                     }
@@ -338,7 +342,7 @@
             var data = {
                 "utype": 2
             }; //2是供应商类型
-            rowDataApi(listInstitution, data, function (res) {
+            rowDataApi(listInstitution, data, function(res) {
                 var insData = res.data;
                 inaAllList = insData;
                 var val = [];
@@ -381,13 +385,13 @@
                     showCheckbox: true,
                     click: resTable
                 });
-            }, function (res) {
+            }, function(res) {
                 //失败
             })
         }
 
         var insList = []; //供应商类型顶级目录
-        var inaAllList = [];//供应商类型所有的数据
+        var inaAllList = []; //供应商类型所有的数据
         var menuIns = {}; //供应商类型被点击的数据
         // 根据菜单刷新表格
         function resTable(d) {
@@ -407,12 +411,12 @@
         }
 
         //添加用供应商
-        $("#addins").click(function () {
+        $("#addins").click(function() {
             var data = {};
             data["insList"] = insList;
             data["utype"] = 2;
             window.currData = data;
-            $.get('view/user/institution-add.html', {}, function (str) {
+            $.get('view/user/institution-add.html', {}, function(str) {
                 eaitLayer = layer.open({
                     title: '添加供应商类型',
                     type: 1,
@@ -423,12 +427,12 @@
             });
         });
         //修改供应商类型
-        $("#updins").click(function () {
+        $("#updins").click(function() {
             var data = menuIns;
             data["insList"] = insList;
             data["utype"] = 2;
             window.currData = data; //全局对象存储当前选中行数据
-            $.get('view/user/institution-add.html', {}, function (str) {
+            $.get('view/user/institution-add.html', {}, function(str) {
                 eaitLayer = layer.open({
                     title: '修改供应商类型',
                     type: 1,
@@ -439,7 +443,7 @@
             });
         });
         //删除用户类型
-        $("#delins").click(function () {
+        $("#delins").click(function() {
             if (!menuIns.id) {
                 layer.msg('请选择一条数据');
                 return;
@@ -452,27 +456,27 @@
             layer.confirm("是否删除类型", {
                 icon: 3,
                 title: '提示'
-            }, function (index) {
+            }, function(index) {
                 $.ajax({
                     cache: true,
                     type: "post",
                     url: delInstitution,
                     data: data,
                     async: false,
-                    xhrFields: {
-                        withCredentials: true
+                    xhrFields: {
+                        withCredentials: true
                     },
-                    crossDomain: true,
-                    error: function (msg) {
+                    crossDomain: true,
+                    error: function(msg) {
                         layer.msg('提交失败');
                         return false;
                     },
-                    success: function (res) {
+                    success: function(res) {
                         if (res.status === 0) {
                             layer.close(eaitLayer);
                             layer.msg('提交成功');
                             listIns();
-                        }else if (res.status === 1) {
+                        } else if (res.status === 1) {
                             window.location.href = loginPageUrl;
                         }
                     }
@@ -481,7 +485,7 @@
             return false;
         });
 
-        form.on('submit(addInsSubmit)', function (data) {
+        form.on('submit(addInsSubmit)', function(data) {
             var title = "";
             var url = "";
             //编辑提交
@@ -496,27 +500,27 @@
             layer.confirm(title, {
                 icon: 3,
                 title: '提示'
-            }, function (index) {
+            }, function(index) {
                 $.ajax({
                     cache: true,
                     type: "post",
                     url: userUrl,
                     data: data.field,
                     async: false,
-                    xhrFields: {
-                        withCredentials: true
+                    xhrFields: {
+                        withCredentials: true
                     },
-                    crossDomain: true,
-                    error: function (msg) {
+                    crossDomain: true,
+                    error: function(msg) {
                         layer.msg('提交失败');
                         return false;
                     },
-                    success: function (res) {
-                        if(res.status === 0){
+                    success: function(res) {
+                        if (res.status === 0) {
                             layer.close(eaitLayer);
                             layer.msg('提交成功');
                             listIns();
-                        }else if (res.status === 1) {
+                        } else if (res.status === 1) {
                             window.location.href = loginPageUrl;
                         }
                     }

@@ -67,7 +67,7 @@
             elem: '#tableContainer',
             height: 'full-' + tableTopHeight,
             url: commonBaseUrl,
-            id:"tableContainer",
+            id: "tableContainer",
             parseData: function(res) { //res 即为原始返回的数据
                 if (res.status !== 0) res.status = 0;
                 return {
@@ -83,6 +83,14 @@
             },
             cols: [
                 [ //标题栏
+                    {
+                        field: 'LAY_TABLE_INDEX',
+                        title: '序号',
+                        width: 50,
+                        templet: function(d) {
+                            return d.LAY_TABLE_INDEX + 1;
+                        }
+                    },
                     {
                         field: 'id',
                         title: 'ID',
@@ -125,11 +133,11 @@
             }
         });
 
-        $(".importBtn").click(function(){
+        $(".importBtn").click(function() {
 
         });
-        
-        $(".exportBtn").click(function(){
+
+        $(".exportBtn").click(function() {
             console.log(tableIns);
         });
     });

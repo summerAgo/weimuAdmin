@@ -198,20 +198,20 @@
         }
 
         formSelects.data('supplierSelectLayer', 'local', {
-            arr: selectDataInstall(dropSupplier, null,false,0) //供应商列表
+            arr: selectDataInstall(dropSupplier, null, false, 0) //供应商列表
         });
 
         formSelects.on('supplierSelectLayer', function(id, vals, val, isAdd, isDisabled) {
 
-            if(isAdd){
-                for(var i=0;i<supplierData.length;i++){
-                    if(supplierData[i].id == val.value){
+            if (isAdd) {
+                for (var i = 0; i < supplierData.length; i++) {
+                    if (supplierData[i].id == val.value) {
                         $(".suppliernameLayer").val(supplierData[i].name);
                         break;
                     }
                 }
-                
-            }else{
+
+            } else {
                 $(".suppliernameLayer").val("");
             }
         });
@@ -296,6 +296,14 @@
             cols: [
                 [ //标题栏
                     {
+                        field: 'LAY_TABLE_INDEX',
+                        title: '序号',
+                        width: 50,
+                        templet: function(d) {
+                            return d.LAY_TABLE_INDEX + 1;
+                        }
+                    },
+                    {
                         type: 'radio'
                     },
                     {
@@ -341,7 +349,7 @@
                     //     title: '产地',
                     //     sort: true
                     // },
-                     {
+                    {
                         field: 'brand',
                         title: '品牌',
                         sort: true

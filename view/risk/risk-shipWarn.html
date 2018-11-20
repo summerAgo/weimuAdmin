@@ -109,6 +109,14 @@
             cols: [
                 [ // 标题栏
                     {
+                        field: 'LAY_TABLE_INDEX',
+                        title: '序号',
+                        width: 50,
+                        templet: function(d) {
+                            return d.LAY_TABLE_INDEX + 1;
+                        }
+                    },
+                    {
                         field: 'name',
                         title: '货权人',
                         event: 'click',

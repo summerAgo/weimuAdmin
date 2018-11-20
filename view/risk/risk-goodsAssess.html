@@ -113,6 +113,14 @@
             cols: [
                 [ // 标题栏
                     {
+                        field: 'LAY_TABLE_INDEX',
+                        title: '序号',
+                        width: 50,
+                        templet: function(d) {
+                            return d.LAY_TABLE_INDEX + 1;
+                        }
+                    },
+                    {
                         field: 'name', // 设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识
                         title: '货权人',
                         event: 'click',
@@ -263,6 +271,14 @@
                         },
                         cols: [
                             [ // 标题栏
+                                {
+                                    field: 'LAY_TABLE_INDEX',
+                                    title: '序号',
+                                    width: 50,
+                                    templet: function(d) {
+                                        return d.LAY_TABLE_INDEX + 1;
+                                    }
+                                },
                                 {
                                     field: 'code',
                                     title: '包号',
