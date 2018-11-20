@@ -3,11 +3,26 @@
         <div class="table-tools">
             <ul class="layui-nav" lay-filter="talbe-tools">
                 <li class="layui-nav-item">
-                    <a id="addBtn" href="javascript:;"><i class="iconfont icon-tianjia"></i>新建异常处理记录</a>
+                    <a id="addBtn" href="javascript:;"><i class="iconfont icon-zengjiakucun"></i>添加库存</a>
                 </li>
-                <!-- <li class="layui-nav-item">
-                                <a href="javascript:;">打印</a>
-                            </li> -->
+                <li class="layui-nav-item">
+                    <a class="reduceStore" href="javascript:;"><i class="iconfont icon-jianshaokucun"></i>减少库存</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a class="splitStore" href="javascript:;"><i class="iconfont icon-chaibao"></i>库存拆分</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a class="toExport" href="javascript:;"><i class="iconfont icon-daochu"></i>导出</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a class="printStore" href="javascript:;"><i class="iconfont icon-dayin"></i>打印</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="updateBtn"><i class="iconfont icon-bianji"></i>修改</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a class="printStore" href="javascript:;"><i class="iconfont icon-shuaxin"></i>刷新</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -16,9 +31,6 @@
             <form class="layui-form" action="">
                 <div class="form-box">
                     <div class="layui-form-item form-left">
-                        <div class="table-form-item layui-input-inline">
-                            <input type="text" name="date" placeholder="请选择时间范围" autocomplete="off" class="layui-input date">
-                        </div>
                         <!-- <div class="table-form-item layui-input-inline">
                             <input type="text" name="enddate" placeholder="请选择结束时间" autocomplete="off" class="layui-input enddate">
                         </div> -->
@@ -35,10 +47,44 @@
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
-                            <span class="input-span">异常人</span>
-                            <select name="userid" xm-select="useridSelect" xm-select-radio>
-                                <option value="">异常人</option>
+                            <span class="input-span">包号</span>
+                            <input type="text" name="code" placeholder="包号" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <span class="input-span">品种</span>
+                            <select name="varieties" xm-select="selectVarieties" xm-select-radio>
+                                <option value="">品种</option>
                             </select>
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <span class="input-span">规格/厚度</span>
+                            <select name="spec" xm-select="selectSpec" xm-select-radio>
+                                <option value="">规格</option>
+                            </select>
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <span class="input-span">等级</span>
+                            <select name="levels" xm-select="selectLevels" xm-select-radio>
+                                <option value="">等级</option>
+                            </select>
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <span class="input-span">长度</span>
+                            <input type="text" name="chang" placeholder="长度" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <span class="input-span">品牌</span>
+                            <input type="text" name="brand" placeholder="品牌" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <span class="input-span">产地</span>
+                            <select name="origin" xm-select="originSelect" xm-select-radio>
+                                <option value="">产地</option>
+                            </select>
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <span class="input-span">创建日期</span>
+                            <input type="text" name="date" placeholder="请选择时间范围" autocomplete="off" class="layui-input date">
                         </div>
                     </div>
                     <div class="layui-form-item form-right">
@@ -48,7 +94,6 @@
                         <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="searchForm">
                             <i class="iconfont icon-sousuo"></i> <span>查询</span>
                         </button>
-
                     </div>
                 </div>
             </form>
@@ -56,7 +101,6 @@
     </div>
 
     <div class="table-content">
-
         <div class="table-content-main">
             <table class="layui-hide" id="tableContainer" lay-filter="tableContainer"></table>
         </div>
