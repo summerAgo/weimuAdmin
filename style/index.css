@@ -526,7 +526,7 @@
 }
 
 .table-page-form .table-form-item {
-    width: 230px;
+    width: 250px;
     height: 30px;
     line-height: 30px;
     display: flex;
@@ -815,7 +815,7 @@ body .layui-tree-skin-shihuang .layui-tree-branch {
     text-align: center;
     font-size: 14px;
     cursor: pointer;
-    border: 1px solid #ddd;
+    border: 1px solid #bababa;
     border-radius: 4px;
     margin-right: 0px;
     padding: 0 10px;
@@ -1128,3 +1128,9 @@ div[xm-select-skin] .xm-select-title div.xm-select-label > span {
 .xm-select-parent .xm-form-select dl {
     border: 1px solid #F2F2F2;
 }
+<<<<<<< HEAD
+=======
+
+/* form */
+.form-required::after{content:"*";color:#f00;vertical-align:middle}
+>>>>>>> c4649c545f47346e09dc2d18f2b21868f440d1d9
