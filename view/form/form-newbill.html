@@ -420,12 +420,14 @@
                 crossDomain: true,
                 success: function(res) {
                     if (res.status === 0) {
+
                         tableIns.reload({
                             page: {
                                 curr: 1 //重新从第 1 页开始
                             }
                         });
                         layer.msg("审核通过为库存");
+                        layer.closeAll();
                     } else if (res.status === 1) {
                         window.location.href = loginPageUrl;
                     }
@@ -579,14 +581,14 @@
                 layer.msg("请填写仓库名称");
                 return;
             }
-            if (null == origin || origin.length < 1) {
-                layer.msg("请填写产地");
-                return;
-            }
-            if (null == supplierid || supplierid.length < 1) {
-                layer.msg("请填写供应商");
-                return;
-            }
+            // if (null == origin || origin.length < 1) {
+            //     layer.msg("请填写产地");
+            //     return;
+            // }
+            // if (null == supplierid || supplierid.length < 1) {
+            //     layer.msg("请填写供应商");
+            //     return;
+            // }
             // if (null == positionid || positionid.length < 1) {
             //     layer.msg("请填写库位");
             //     return;
