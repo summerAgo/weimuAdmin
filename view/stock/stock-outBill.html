@@ -281,16 +281,16 @@
                         title: '状态',
 
                         templet: function(d) {
-                            if (d.status == 0) {
-                                return '申请中';
+                            if (d.status == 1 && d.isexamine == 1) {
+                                return '<span style="color:red">待审核<span>';
                             }
                             if (d.status == 1) {
-                                return '待出库';
+                                return '正常待出库';
                             }
                             if (d.status == 2) {
                                 return '审核通过';
                             }
-                            return '<span style="color:red">审核失败<span>';;
+                            return '<span style="color:red">审核不通过<span>';;
                         }
 
                     }, {
