@@ -1123,3 +1123,6 @@ div[xm-select-skin] .xm-select-title div.xm-select-label>span {
 .xm-select-parent .xm-form-select dl {
     border: 1px solid #F2F2F2;
 }
+
+/* form */
+.form-required::after{content:"*";color:#f00;vertical-align:middle}
