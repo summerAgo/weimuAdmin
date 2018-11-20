@@ -6,12 +6,6 @@
                     <a id="addBtn" href="javascript:;"><i class="iconfont icon-zengjiakucun"></i>增加库存</a>
                 </li>
                 <li class="layui-nav-item">
-                    <a class="reduceStore" href="javascript:;"><i class="iconfont icon-jianshaokucun"></i>减少库存</a>
-                </li>
-                <li class="layui-nav-item">
-                    <a class="splitStore" href="javascript:;"><i class="iconfont icon-chaibao"></i>库存拆分</a>
-                </li>
-                <li class="layui-nav-item">
                     <a class="toExport" href="javascript:;"><i class="iconfont icon-daochu"></i>导出</a>
                 </li>
                 <li class="layui-nav-item">
@@ -260,7 +254,7 @@
             },
             cols: [
                 [ // 标题栏
-                    {
+                {
                         field: 'LAY_TABLE_INDEX',
                         title: '序号',
                         width: 80,
@@ -269,16 +263,32 @@
                         }
                     },
                     {
-                        field: 'createdate',
-                        title: '创建时间'
+                        field: 'num',
+                        title: '数量（m³）'
                     }, {
-                        field: 'ownername',
-                        title: '货权人'
+                        field: 'code',
+                        title: '包号'
                     }, {
-                        field: 'depname',
-                        title: '仓库',
-                        event: 'click',
-                        style: 'color:#4394ff;cursor: pointer;'
+                        field: 'varieties',
+                        title: '品种'
+                    }, {
+                        field: 'spec',
+                        title: '规格/厚度'
+                    }, {
+                        field: 'levels',
+                        title: '等级'
+                    }, {
+                        field: 'chang',
+                        title: '长度'
+                    }, {
+                        field: 'brand',
+                        title: '品牌'
+                    }, {
+                        field: 'origin',
+                        title: '产地'
+                    }, {
+                        field: 'pprice',
+                        title: '采购单价'
                     }
                     //, 
                     // {
