@@ -3,7 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="2a1908b1-3c71-432d-86df-3ecbf9dcacec" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/view/base/base-infodata.html" beforeDir="false" afterPath="$PROJECT_DIR$/view/base/base-infodata.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/js/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/api.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/style/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/style/index.css" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -18,43 +19,50 @@
     <session id="-1826398716">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
+          <entry key="project.closed" value="2" />
           <entry key="project.open.time.0" value="1" />
-          <entry key="project.opened" value="1" />
+          <entry key="project.open.time.4" value="1" />
+          <entry key="project.open.time.5" value="1" />
+          <entry key="project.opened" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="html" value="63" />
-          <entry key="js" value="2" />
+          <entry key="css" value="5" />
+          <entry key="html" value="74" />
+          <entry key="js" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="HTML" value="63" />
-          <entry key="JavaScript" value="2" />
+          <entry key="CSS" value="5" />
+          <entry key="HTML" value="74" />
+          <entry key="JavaScript" value="5" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="html" value="1081" />
-          <entry key="js" value="20" />
+          <entry key="css" value="56" />
+          <entry key="html" value="1680" />
+          <entry key="js" value="21" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="HTML" value="1081" />
-          <entry key="JavaScript" value="20" />
+          <entry key="CSS" value="56" />
+          <entry key="HTML" value="1680" />
+          <entry key="JavaScript" value="21" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/view/base/base-infodata.html">
+        <entry file="file://$PROJECT_DIR$/style/index.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="598">
-              <caret line="226" column="29" lean-forward="true" selection-start-line="226" selection-start-column="29" selection-end-line="226" selection-end-column="29" />
+            <state relative-caret-position="560">
+              <caret line="124" selection-start-line="124" selection-end-line="124" />
             </state>
           </provider>
         </entry>
@@ -70,7 +78,11 @@
       <find>msg</find>
       <find>preEntrygetByOrderno</find>
       <find>userUrl</find>
+      <find>addSubmit</find>
+      <find>deleteBtn</find>
+      <find>删除</find>
       <find>rowDataApi</find>
+      <find>7</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -88,15 +100,9 @@
         <option value="$PROJECT_DIR$/view/ilbstock/ilbstock-layerInventory.html" />
         <option value="$PROJECT_DIR$/view/ilbstock/ilbstock-info.html" />
         <option value="$PROJECT_DIR$/view/stock/stock-preentry.html" />
-        <option value="$PROJECT_DIR$/js/api.js" />
         <option value="$PROJECT_DIR$/view/base/base-info.html" />
-        <option value="$PROJECT_DIR$/view/base/supplier-add.html" />
-        <option value="$PROJECT_DIR$/view/base/owner-add.html" />
         <option value="$PROJECT_DIR$/view/button/button-add.html" />
-        <option value="$PROJECT_DIR$/view/base/supplier-list.html" />
-        <option value="$PROJECT_DIR$/view/base/owner-list.html" />
         <option value="$PROJECT_DIR$/view/button/button-list.html" />
-        <option value="$PROJECT_DIR$/view/depot/depot-list.html" />
         <option value="$PROJECT_DIR$/view/form/form-addDepot.html" />
         <option value="$PROJECT_DIR$/view/form/form-dropdown.html" />
         <option value="$PROJECT_DIR$/view/form/form-goods.html" />
@@ -104,6 +110,16 @@
         <option value="$PROJECT_DIR$/view/form/form-user.html" />
         <option value="$PROJECT_DIR$/view/form/form-newbill.html" />
         <option value="$PROJECT_DIR$/view/base/base-infodata.html" />
+        <option value="$PROJECT_DIR$/view/base/owner-list.html" />
+        <option value="$PROJECT_DIR$/view/depot/depot-list.html" />
+        <option value="$PROJECT_DIR$/view/base/supplier-add.html" />
+        <option value="$PROJECT_DIR$/view/base/supplier-list.html" />
+        <option value="$PROJECT_DIR$/view/base/owner-add.html" />
+        <option value="$PROJECT_DIR$/view/user/user-add.html" />
+        <option value="$PROJECT_DIR$/view/user/user-list.html" />
+        <option value="$PROJECT_DIR$/view/menu/menu-list.html" />
+        <option value="$PROJECT_DIR$/js/api.js" />
+        <option value="$PROJECT_DIR$/style/index.css" />
       </list>
     </option>
   </component>
@@ -113,9 +129,9 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="423" />
-    <option name="y" value="100" />
+  <component name="ProjectFrameBounds" extendedState="1">
+    <option name="x" value="178" />
+    <option name="y" value="77" />
     <option name="width" value="1508" />
     <option name="height" value="996" />
   </component>
@@ -134,13 +150,7 @@
             <path>
               <item name="weimuAdmin" type="b2602c69:ProjectViewProjectNode" />
               <item name="weimuAdmin" type="462c0819:PsiDirectoryNode" />
-              <item name="view" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="weimuAdmin" type="b2602c69:ProjectViewProjectNode" />
-              <item name="weimuAdmin" type="462c0819:PsiDirectoryNode" />
-              <item name="view" type="462c0819:PsiDirectoryNode" />
-              <item name="base" type="462c0819:PsiDirectoryNode" />
+              <item name="style" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -151,7 +161,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="D:/weimu/WeimuApp" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
   </component>
@@ -177,24 +187,22 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1542442430024</updated>
-      <workItem from="1542442431153" duration="10001000" />
+      <workItem from="1542442431153" duration="18645000" />
+      <workItem from="1542603623846" duration="3417000" />
+      <workItem from="1542678856700" duration="3083000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10001000" />
+    <option name="totallyTimeSpent" value="25145000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info id="Favorites" side_tool="true" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14541623" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1369863" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Terminal" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
@@ -202,6 +210,10 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Terminal" order="9" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -274,13 +286,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-7214">
-          <caret line="18" column="21" selection-start-line="18" selection-start-column="21" selection-end-line="18" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/view/ilbstock/ilbstock-info.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="641">
@@ -328,31 +333,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/view/base/supplier-list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-6057">
-          <caret line="283" column="38" selection-start-line="283" selection-start-column="38" selection-end-line="283" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/view/button/button-add.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="570">
           <caret line="76" selection-start-line="76" selection-end-line="76" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/view/base/supplier-add.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1130">
-          <caret line="68" column="35" selection-start-line="68" selection-start-column="35" selection-end-line="68" selection-end-column="35" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/view/base/owner-list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-4783">
-          <caret line="325" column="18" selection-start-line="325" selection-start-column="18" selection-end-line="325" selection-end-column="18" />
         </state>
       </provider>
     </entry>
@@ -363,33 +347,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/view/base/owner-add.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="829">
-          <caret line="187" column="30" lean-forward="true" selection-start-line="187" selection-start-column="30" selection-end-line="187" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/view/depot/depot-position.html">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/view/base/base-info.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2314">
-          <caret line="89" column="24" selection-start-line="89" selection-start-column="24" selection-end-line="89" selection-end-column="24" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/view/form/form-1.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-2166" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/view/depot/depot-list.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="615">
-          <caret line="259" column="25" selection-start-line="259" selection-start-column="25" selection-end-line="261" selection-end-column="25" />
-        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/view/form/form-addPosition.html">
@@ -426,13 +389,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/api.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="251">
-          <caret line="33" column="24" selection-start-line="33" selection-start-column="4" selection-end-line="33" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/view/form/form-infodata.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1466">
@@ -454,10 +410,100 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/layui/css/layui.css">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/view/base/owner-list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="429">
+          <caret line="238" column="42" lean-forward="true" selection-start-line="238" selection-start-column="42" selection-end-line="238" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/view/base/supplier-add.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1364">
+          <caret line="58" column="8" lean-forward="true" selection-start-line="58" selection-start-column="8" selection-end-line="58" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/view/base/base-info.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1594">
+          <caret line="89" column="24" selection-start-line="89" selection-start-column="24" selection-end-line="89" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/view/depot/depot-list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2796">
+          <caret line="291" column="23" lean-forward="true" selection-start-line="254" selection-start-column="20" selection-end-line="291" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/view/base/owner-add.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="473">
+          <caret line="69" selection-start-line="69" selection-end-line="73" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/view/user/user-add.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1625">
+          <caret line="78" column="14" lean-forward="true" selection-start-line="78" selection-start-column="14" selection-end-line="78" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/view/base/supplier-list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="764">
+          <caret line="243" column="23" lean-forward="true" selection-start-line="216" selection-start-column="20" selection-end-line="243" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/view/menu/menu-list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="535">
+          <caret line="242" column="35" lean-forward="true" selection-start-line="242" selection-start-column="35" selection-end-line="242" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/view/user/user-list.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="913">
+          <caret line="417" column="23" selection-start-line="417" selection-start-column="23" selection-end-line="417" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/view/base/base-infodata.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="598">
+        <state relative-caret-position="-6746">
           <caret line="226" column="29" lean-forward="true" selection-start-line="226" selection-start-column="29" selection-end-line="226" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="260">
+          <caret line="10" column="27" lean-forward="true" selection-start-line="10" selection-start-column="27" selection-end-line="10" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/api.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="96">
+          <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/style/index.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="560">
+          <caret line="124" selection-start-line="124" selection-end-line="124" />
         </state>
       </provider>
     </entry>
