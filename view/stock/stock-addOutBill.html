@@ -223,7 +223,7 @@
         }, true);
 
         var outBill = sessionStorage.getItem('addOutBill');
-        
+
         var array = JSON.parse(outBill);
 
         var data = {};
@@ -236,7 +236,7 @@
             $("input[name='estimatedate']").attr("disabled", false);
             $('.util-container').hide(); //隐藏倒计时
         } else {
-            if(array.status == 3){
+            if (array.status == 3) {
                 $(".topmenu").hide();
             }
             data["orderno"] = array.orderno;
@@ -331,6 +331,14 @@
             data: tableData,
             cols: [
                 [ //标题栏
+                    {
+                        field: 'LAY_TABLE_INDEX',
+                        title: '序号',
+                        width: 80,
+                        templet: function(d) {
+                            return d.LAY_TABLE_INDEX + 1;
+                        }
+                    },
                     {
                         type: 'checkbox',
                     }, {
@@ -681,6 +689,14 @@
                     cols: [
                         [ //标题栏
                             {
+                                field: 'LAY_TABLE_INDEX',
+                                title: '序号',
+                                width: 80,
+                                templet: function(d) {
+                                    return d.LAY_TABLE_INDEX + 1;
+                                }
+                            },
+                            {
                                 type: 'checkbox'
                             }, {
                                 field: 'code',
@@ -771,12 +787,12 @@
                 table.on('checkbox(tableContainer-goodsList)', function(obj) {
                     console.log("xxxxx");
                     console.log(obj);
-                    if(obj.checked){
+                    if (obj.checked) {
                         var aprice = obj.data.aprice;
-                        if(aprice && aprice>0){
+                        if (aprice && aprice > 0) {
                             var checkStatus = table.checkStatus('tableContainer-goodsList'); //表格选中状态
                             $("#tableContainer-goodsList").parent().find(".rightBotBtn span").html(checkStatus.data.length); //当前选中了多少商品
-                        }else{
+                        } else {
                             layer.msg('该商品未评估，不可出库');
                             obj.checked = false;
                             tableInsGood.reload({

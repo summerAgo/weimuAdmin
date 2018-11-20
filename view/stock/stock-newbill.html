@@ -60,7 +60,7 @@
     }
 </style>
 <script>
-    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate','upload'], function() {
+    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'upload'], function() {
         var element = layui.element;
         var form = layui.form;
         var $ = layui.jquery;
@@ -122,6 +122,14 @@
             cols: [
                 [ //标题栏
                     {
+                        field: 'LAY_TABLE_INDEX',
+                        title: '序号',
+                        width: 80,
+                        templet: function(d) {
+                            return d.LAY_TABLE_INDEX + 1;
+                        }
+                    },
+                    {
                         type: 'checkbox'
                     },
                     {
@@ -148,7 +156,7 @@
                         field: 'num',
                         title: '数量（m³）',
                         sort: true,
-                        edit:"txt"
+                        edit: "txt"
                     }, {
                         field: 'containernum',
                         title: '货柜号',
@@ -201,7 +209,7 @@
             console.log(obj.value); //得到修改后的值
             console.log(obj.field); //当前编辑的字段名
             var field = obj.field;
-            if(field == 'num' ){
+            if (field == 'num') {
 
             }
             console.log(obj.data); //所在行的所有相关数据  
@@ -226,8 +234,8 @@
                         "ids": rowId
                     }, function(data) {
                         if (data.status === 1) {
-    window.location.href = loginPageUrl;
-}
+                            window.location.href = loginPageUrl;
+                        }
                         // 删除所选行成功
                         layer.close(index);
                         // 刷新表格
@@ -249,10 +257,10 @@
                 type: "post",
                 data: data,
                 traditional: true,
-                xhrFields: {
-          withCredentials: true
-       },
-       crossDomain: true,
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
                 success: funSuc,
                 error: funErr
             })
@@ -281,10 +289,10 @@
                     type: "POST",
                     dataType: "json",
                     contentType: "application/json",
-                    xhrFields: {
-          withCredentials: true
-       },
-       crossDomain: true,
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
                     data: {
                         lbarr: arr,
                         cargoowner: basedata.cargoowner,
@@ -295,8 +303,8 @@
                     traditional: true,
                     success: function(data) {
                         if (data.status === 1) {
-    window.location.href = loginPageUrl;
-}
+                            window.location.href = loginPageUrl;
+                        }
                         console.log("成功");
                         console.log(data);
                     },
@@ -326,10 +334,10 @@
                     accept: 'file', //普通文件
                     exts: 'xls|xlsx|xlsm|xlt|xltx|xltm', //只允许上传后缀
                     done: function(res) {
-                        if(res.status == 0){
+                        if (res.status == 0) {
                             layer.msg("上传成功")
                             layer.close(importLayer);
-                        }else{
+                        } else {
                             layer.msg(res.msg)
                         }
                     }
@@ -340,6 +348,6 @@
         $("#toExport").on('click', function(e) {
             window.location.href = ilbstockExportUrl
         });
-        
+
     });
 </script>

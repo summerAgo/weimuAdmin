@@ -225,6 +225,14 @@
             cols: [
                 [ // 标题栏
                     {
+                        field: 'LAY_TABLE_INDEX',
+                        title: '序号',
+                        width: 80,
+                        templet: function(d) {
+                            return d.LAY_TABLE_INDEX + 1;
+                        }
+                    },
+                    {
                         field: 'createdate',
                         title: '盘点时间'
                     }, {
