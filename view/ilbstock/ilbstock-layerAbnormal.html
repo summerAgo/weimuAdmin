@@ -66,15 +66,80 @@
             depotid: 0
         };
         var echoData = JSON.parse(sessionStorage.getItem('inventoryabnParam'));
+        
+        var url = abnlbList;
+        var colslist =[ {
+                        field: 'num',
+                        title: '数量（m³）'
+                    }, {
+                        field: 'num1',
+                        title: '实际数量（m³）',
+                        edit: "txt",
+                        style: "color:red;cursor: pointer"
+                    }, {
+                        field: 'code',
+                        title: '包号'
+                    }, {
+                        field: 'varieties',
+                        title: '品种'
+                    }, {
+                        field: 'spec',
+                        title: '规格/厚度'
+                    }, {
+                        field: 'levels',
+                        title: '等级'
+                    }, {
+                        field: 'chang',
+                        title: '长度'
+                    }, {
+                        field: 'brand',
+                        title: '品牌'
+                    }, {
+                        field: 'origin',
+                        title: '产地'
+                    }, {
+                        field: 'pprice',
+                        title: '采购单价'
+                    }];
 
         if (echoData) {
             $(".layerInventory").hide();
-            if (echoData.status == 1) {
+            if (echoData.id != null) {
                 $(".layerInventoryTools").hide();
+
+                colslist =[ {
+                        field: 'num',
+                        title: '数量（m³）'
+                    }, {
+                        field: 'code',
+                        title: '包号'
+                    }, {
+                        field: 'varieties',
+                        title: '品种'
+                    }, {
+                        field: 'spec',
+                        title: '规格/厚度'
+                    }, {
+                        field: 'levels',
+                        title: '等级'
+                    }, {
+                        field: 'chang',
+                        title: '长度'
+                    }, {
+                        field: 'brand',
+                        title: '品牌'
+                    }, {
+                        field: 'origin',
+                        title: '产地'
+                    }, {
+                        field: 'pprice',
+                        title: '采购单价'
+                    }];
             }
             depotData.ownerid = echoData.ownerid;
             depotData.depotid = echoData.depotid;
-            depotData.id = echoData.id;
+            depotData.cid = echoData.id;
+            url = abnByidList;
         }
 
         form.on('submit(searchForm-layer)', function(data) {
@@ -120,7 +185,7 @@
             } else {
                 var depotList = selectDataInstall(depotDropdown, {
                     "ownerid": vals[0].value //仓库列表
-                }, true);
+                }, false);
 
                 if (depotList.length < 1) {
                     formSelects.data('depotSelectLayer', 'local', {
@@ -132,6 +197,7 @@
                 formSelects.data('depotSelectLayer', 'local', {
                     arr: depotList //仓库列表
                 });
+                
             }
         }, true);
 
@@ -171,7 +237,7 @@
         var tableIns = table.render({
             elem: '#tableContainer-layerInventoryabn',
             height: 'auto',
-            url: abnlbList,
+            url: url,
             where: depotData,
             parseData: function(res) { //res 即为原始返回的数据
                 console.log(res.msg);
@@ -188,41 +254,9 @@
                 limitName: 'limit' //每页数据量的参数名，默认：limit
             },
             cols: [
-                [ //标题栏
-                    {
-                        field: 'num',
-                        title: '数量（m³）'
-                    }, {
-                        field: 'num1',
-                        title: '实际数量（m³）',
-                        edit: "txt",
-                        style: "color:red;cursor: pointer"
-                    }, {
-                        field: 'code',
-                        title: '包号'
-                    }, {
-                        field: 'varieties',
-                        title: '品种'
-                    }, {
-                        field: 'spec',
-                        title: '规格/厚度'
-                    }, {
-                        field: 'levels',
-                        title: '等级'
-                    }, {
-                        field: 'chang',
-                        title: '长度'
-                    }, {
-                        field: 'brand',
-                        title: '品牌'
-                    }, {
-                        field: 'origin',
-                        title: '产地'
-                    }, {
-                        field: 'pprice',
-                        title: '采购单价'
-                    }
-                ]
+                 //标题栏
+                    colslist
+                
             ],
             even: true,
             page: true, //是否显示分页

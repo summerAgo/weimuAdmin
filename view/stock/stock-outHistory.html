@@ -38,12 +38,12 @@
                                 <option value="">库位</option>
                             </select>
                         </div>
-                        <!-- <div class="table-form-item layui-input-inline">
+                        <div class="table-form-item layui-input-inline">
                             <span class="input-span">产地</span>
                             <select name="origin" xm-select="originSelect" xm-select-radio>
                                 <option value="">产地</option>
                             </select>
-                        </div> -->
+                        </div>
                         <!-- <div class="table-form-item layui-input-inline">
                             <span class="input-span">供应商</span>
                             <select name="supplierid" xm-select="supplierSelect" xm-select-radio>
@@ -127,7 +127,7 @@
             } else {
                 var depotList = selectDataInstall(depotDropdown, {
                     "ownerid": vals[0].value //仓库列表
-                }, true);
+                }, false);
 
                 if (depotList.length < 1) {
                     formSelects.data('depotSelect', 'local', {
@@ -145,7 +145,7 @@
                 formSelects.data('positionSelect', 'local', {
                     arr: selectDataInstall(positionDropdown, {
                         "depotid": depotList[0].value
-                    }, true) //库位列表
+                    }, false) //库位列表
                 });
             }
         }, true);
@@ -160,7 +160,7 @@
                 formSelects.data('positionSelect', 'local', {
                     arr: selectDataInstall(positionDropdown, {
                         "depotid": vals[0].value
-                    }, true) //仓库列表
+                    }, false) //仓库列表
                 });
             }
         }, true);
@@ -169,9 +169,9 @@
             arr: selectDataInstall(CHDList) //产地列表
         });
 
-        formSelects.data('supplierSelect', 'local', {
-            arr: selectDataInstall(dropSupplier) //供应商列表
-        });
+        // formSelects.data('supplierSelect', 'local', {
+        //     arr: selectDataInstall(dropSupplier) //供应商列表
+        // });
 
         function selectDataInstall(url, param, bool) {
             //下拉选框数据组装
@@ -247,7 +247,7 @@
                         field: 'orderno',
                         title: '单号',
                         event: 'click',
-                        style: 'cursor: pointer;',
+                        style: 'cursor: pointer;color:#4394ff;',
                         sort: true
                     }, {
                         field: 'ownername',

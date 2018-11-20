@@ -3,15 +3,15 @@
 <form class="layui-form layer-open-form" action="">
     <div class="layui-form-item layui-control-line">
         <div class="layui-input-block">
-            <button class="layui-btn" type="submit" lay-filter="addSubmit"><i class="iconfont icon-daochu"></i>保存</button>
+            <button class="layui-btn" lay-submit lay-filter="addSubmit"><i class="iconfont icon-daochu"></i>保存</button>
             <button class="layui-btn layui-btn-primary" type="reset"><i class="iconfont icon-zhongzhi"></i>重置</button>
         </div>
     </div>
     <div class="layui-form-item layui-normal-line">
         <label class="layui-form-label">角色名称</label>
         <div class="layui-input-inline">
-            <input type="text" id="rolename" name="rolename" lay-verify="required" placeholder="必填项,请输入用户名" class="layui-input"  value="{{# if(d.rolename){}} {{d.rolename}} {{# }}}">
-            <input type="hidden" id="id" name="id"   value="{{# if(d.id){}} {{d.id}} {{# }}}">
+            <input type="text" id="rolename" name="rolename" lay-verify="required" placeholder="必填项,请输入用户名" class="layui-input"  value="{{# if(d.rolename){}}{{d.rolename}}{{# }}}">
+            <input type="hidden" id="id" name="id"  value="{{# if(d.id){}}{{d.id}}{{# }}}">
         </div>
     </div>
     <!-- <div class="layui-form-item layui-normal-line">

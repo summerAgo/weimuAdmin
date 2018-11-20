@@ -213,6 +213,15 @@
                         field: 'code',
                         title: '包号'
                     }, {
+                        field: 'code',
+                        title: '评估状态',
+                        templet: function(d) {
+                            if (d.aprice <= 0 || null == d.aprice) {
+                                return '待评估';
+                            }
+                            return "";
+                        }
+                    }, {
                         field: 'varieties',
                         title: '品种'
                     }, {
@@ -227,7 +236,7 @@
                         title: '长度'
                     }, {
                         field: 'num',
-                        title: '数量/立方'
+                        title: '数量（m³）'
                     }, {
                         field: 'containernum',
                         title: '货柜号'

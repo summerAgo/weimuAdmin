@@ -55,7 +55,7 @@
                         <div class="form-box">
                             <div class="layui-form-item form-left">
                                 <div class="table-form-item layui-input-inline">
-                                    <span class="input-span" id="titleIns">菜单名称</span>
+                                    <span class="input-span" id="titleIns">用户名</span>
                                     <input type="text" name="username" placeholder="用户名" autocomplete="off" class="layui-input">
                                     <input type="hidden" name="instid" id="instid" value="" autocomplete="off" class="layui-input">
                                 </div>
@@ -282,7 +282,7 @@
                         return;
                     },
                     success: function(data) {
-                        if(data.status === 1){
+                        if(data.status === 0){
                             layer.close(eaitLayer);
                             layer.msg('提交成功');
                             // 刷新表格
@@ -291,6 +291,7 @@
                                     curr: 1 //重新从第 1 页开始
                                 }
                             });
+
                         }
                         if (data.status === 1) {
                             window.location.href = loginPageUrl;
@@ -410,7 +411,7 @@
                                         curr: 1 //重新从第 1 页开始
                                     }
                                 });
-                                layer.msg(data.msg);
+                                layer.msg(res.msg);
                             }else if (res.status === 1) {
                                 window.location.href = loginPageUrl;
                             }
@@ -558,6 +559,7 @@
                 }
                 console.log(treeData);
                 console.log(layui.tree);
+                $("#tree-nav").html("");
                 layui.tree({
                     elem: '#tree-nav',
                     nodes: treeData,

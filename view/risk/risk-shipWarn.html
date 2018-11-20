@@ -108,14 +108,40 @@
                         event: 'click',
                         style: 'color:#4394ff;cursor: pointer;',
                         width: 266
+                    },{
+                        field: 'stockmoney',
+                        title: '现有库存金额',
+                        width: 266,
+                        templet: function(d) {
+                            //默认无
+                            if (d.stockmoney == null || d.stockmoney == 0) {
+                                return '<span style="color:red;">---</span>';
+                            }
+                            return d.stockmoney;
+                        }
                     }, {
                         field: 'financingmoney',
                         title: '融资金额',
-                        width: 266
+                        width: 266,
+                        templet: function(d) {
+                            //默认无
+                            if (d.financingmoney == null || d.financingmoney == 0) {
+                                return '<span style="color:red;">---</span>';
+                            }
+                            return d.financingmoney;
+                        }
+
                     }, {
                         field: 'cordonmoney',
                         title: '警戒线金额',
-                        width: 266
+                        width: 266,
+                        templet: function(d) {
+                            //默认无
+                            if (d.cordonmoney == null || d.cordonmoney == 0) {
+                                return '<span style="color:red;">---</span>';
+                            }
+                            return d.cordonmoney;
+                        }
                     }, {
                         field: 'ratio',
                         title: '比例',
@@ -124,7 +150,7 @@
                             var cordonmoney = d.cordonmoney;
                             //默认无
                             if (financingmoney == null || cordonmoney == null) {
-                                return '无';
+                                return '<span style="color:red;">---</span>';
                             }
                             var ratio = (cordonmoney / financingmoney) * 100;
                             return ratio.toFixed(2) + '%';

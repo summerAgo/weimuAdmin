@@ -131,7 +131,7 @@
             } else {
                 var depotList = selectDataInstall(depotDropdown, {
                     "ownerid": vals[0].value //仓库列表
-                }, true);
+                }, false);
 
                 if (depotList.length < 1) {
                     formSelects.data('depotSelect', 'local', {
@@ -149,7 +149,7 @@
                 formSelects.data('positionSelect', 'local', {
                     arr: selectDataInstall(positionDropdown, {
                         "depotid": depotList[0].value
-                    }, true) //库位列表
+                    }, false) //库位列表
                 });
             }
         }, true);
@@ -164,7 +164,7 @@
                 formSelects.data('positionSelect', 'local', {
                     arr: selectDataInstall(positionDropdown, {
                         "depotid": vals[0].value
-                    }, true) //仓库列表
+                    }, false) //仓库列表
                 });
             }
         }, true);
@@ -173,9 +173,9 @@
             arr: selectDataInstall(CHDList) //产地列表
         });
 
-        formSelects.data('supplierSelect', 'local', {
-            arr: selectDataInstall(dropSupplier) //供应商列表
-        });
+        // formSelects.data('supplierSelect', 'local', {
+        //     arr: selectDataInstall(dropSupplier) //供应商列表
+        // });
 
         function selectDataInstall(url, param, bool) {
             //下拉选框数据组装
@@ -254,7 +254,7 @@
                         field: 'orderno',
                         title: '入库单号',
                         event: 'click',
-                        style: 'cursor: pointer;',
+                        style: 'cursor: pointer;color:#4394ff;',
                         sort: true
                     }, {
                         field: 'ownername',

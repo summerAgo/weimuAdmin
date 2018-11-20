@@ -12,9 +12,9 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;"><i class="iconfont icon-shuaxin"></i>刷新</a>
                 </li> -->
-                <li class="layui-nav-item">
+                <!-- <li class="layui-nav-item">
                     <a href="javascript:;"><i class="iconfont icon-pinggu"></i>评估</a>
-                </li>
+                </li> -->
             </ul>
         </div>
     </div>
@@ -115,6 +115,13 @@
                         title: '未评估商品',
                         width: 266,
                         sort: true,
+                        templet: function(d) {
+                            //默认无
+                            if (d.untreated > 0) {
+                                return '<span style="color:red;">'+d.untreated+'</span>';
+                            }
+                            return d.untreated;
+                        }
                     }, {
                         field: 'already',
                         title: '已评估商品',

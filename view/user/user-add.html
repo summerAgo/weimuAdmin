@@ -15,8 +15,8 @@
         <div class="layui-form-item layui-normal-line">
             <label class="layui-form-label">用户名</label>
             <div class="layui-input-inline">
-                <input type="text" id="username" name="username" lay-verify="required" placeholder="必填项,请输入用户名" class="layui-input"  value="{{# if(d.username){}} {{d.username}} {{# }}}">
-                <input type="hidden" id="id" name="id"   value="{{# if(d.id){}} {{d.id}} {{# }}}">
+                <input type="text" id="username" name="username" lay-verify="required" placeholder="必填项,请输入用户名" class="layui-input"  value="{{# if(d.username){}}{{d.username}}{{# }}}">
+                <input type="hidden" id="id" name="id"   value="{{# if(d.id){}}{{d.id}}{{# }}}">
             </div>
         </div>
         {{# if(!d.username){}}
@@ -37,19 +37,19 @@
          <div class="layui-form-item layui-normal-line">
             <label class="layui-form-label">电话</label>
             <div class="layui-input-inline">
-                <input type="text" id="phone" name="phone" placeholder="选填" value="{{# if(d.phone){}} {{d.phone}} {{# }}}" class="layui-input">
+                <input type="text" id="phone" name="phone" placeholder="选填" value="{{# if(d.phone){}}{{d.phone}}{{# }}}" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item layui-normal-line">
             <label class="layui-form-label">邮箱</label>
             <div class="layui-input-inline">
-                <input type="text" id="email" name="email" placeholder="选填" value="{{# if(d.email){}} {{d.email}} {{# }}}" class="layui-input">
+                <input type="text" id="email" name="email" placeholder="选填" value="{{# if(d.email){}}{{d.email}}{{# }}}" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item layui-normal-line">
             <label class="layui-form-label">生日</label>
             <div class="layui-input-inline">
-                <input type="text" name="birthdaystr" class="layui-input" id="birthday"  value="{{# if(d.birthday){}} {{d.birthday}} {{# }}}" placeholder="请输入生日">
+                <input type="text" name="birthdaystr" class="layui-input" id="birthday"  value="{{# if(d.birthday){}}{{d.birthday}}{{# }}}" placeholder="请输入生日">
             </div>
         </div>
         <!-- <div class="layui-form-item">

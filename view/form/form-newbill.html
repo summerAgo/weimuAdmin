@@ -23,7 +23,7 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;" class="subCancelBtn"><i class="iconfont icon-quxiao"></i>取消</a>
                 </li>
-                <li class="layui-nav-item"><a href="javascript:;" class="deleteBtn"><i class="iconfont icon-shanchu"></i>删除</a></li>
+                <li class="layui-nav-item"><a href="javascript:;" class="deleteBtnLayer"><i class="iconfont icon-shanchu"></i>删除</a></li>
             </ul>
         </div>
     </div>
@@ -133,7 +133,7 @@
             } else {
                 var depotList = selectDataInstall(depotDropdown, {
                     "ownerid": vals[0].value //仓库列表
-                }, true, 0);
+                }, false, 0);
 
                 if (depotList.length < 1) {
                     formSelects.data('depotSelectLayer', 'local', {
@@ -151,7 +151,7 @@
                 formSelects.data('positionSelectLayer', 'local', {
                     arr: selectDataInstall(positionDropdown, {
                         "depotid": depotList[0].value
-                    }, true, 0) //库位列表
+                    }, false, 0) //库位列表
                 });
             }
         }, true);
@@ -166,7 +166,7 @@
                 formSelects.data('positionSelectLayer', 'local', {
                     arr: selectDataInstall(positionDropdown, {
                         "depotid": vals[0].value
-                    }, true, 0) //仓库列表
+                    }, false, 0) //仓库列表
                 });
             }
         }, true);
@@ -198,20 +198,19 @@
         }
 
         formSelects.data('supplierSelectLayer', 'local', {
-            arr: selectDataInstall(dropSupplier, null) //供应商列表
+            arr: selectDataInstall(dropSupplier, null,false,0) //供应商列表
         });
 
         formSelects.on('supplierSelectLayer', function(id, vals, val, isAdd, isDisabled) {
-            var id;//供应商ID
+
             if(isAdd){
-                console.log(val)
                 for(var i=0;i<supplierData.length;i++){
-                    if(supplierData[i].name == val.value){
-                        id = supplierData[i].id;
+                    if(supplierData[i].id == val.value){
+                        $(".suppliernameLayer").val(supplierData[i].name);
                         break;
                     }
                 }
-                $(".suppliernameLayer").val(id);
+                
             }else{
                 $(".suppliernameLayer").val("");
             }
@@ -472,7 +471,7 @@
                     selected: "selected"
                 }]
             });
-            $(".suppliernameLayer").val(orderno.supplierid);
+            $(".suppliernameLayer").val(orderno.suppliername);
             //禁用下拉框
             formSelects.disabled('ownerSelectLayer');
             formSelects.disabled('depotSelectLayer');
@@ -529,7 +528,7 @@
             // console.log(checkBoxTrDomArr)
         });
 
-        $(".deleteBtn").click(function() {
+        $(".deleteBtnLayer").click(function() {
             if (!checkBoxTrDomArr) {
                 layer.msg("请选择需要删除的信息");
             } else {
@@ -567,8 +566,10 @@
             var cargoowner = parent.find("input[name='ownerid']").val();
             var depotname = parent.find("input[name='depotid']").val();
             var origin = parent.find("input[name='origin']").val();
-            var supplier = parent.find("input[name='supplierid']").val();
+            var supplierid = parent.find("input[name='supplierid']").val();
             var positionid = parent.find("input[name='positionid']").val();
+
+            var suppliername = parent.find("input[name='suppliername']").val();
 
             if (null == cargoowner || cargoowner.length < 1) {
                 layer.msg("请填写货权人");
@@ -582,7 +583,7 @@
                 layer.msg("请填写产地");
                 return;
             }
-            if (null == supplier || supplier.length < 1) {
+            if (null == supplierid || supplierid.length < 1) {
                 layer.msg("请填写供应商");
                 return;
             }
@@ -618,7 +619,8 @@
                     ownerid: cargoowner,
                     depotid: depotname,
                     origin: origin,
-                    suppliername: supplier,
+                    supplierid: supplierid,
+                    suppliername: suppliername,
                     positionid: positionid,
                     orderno: num
                 },

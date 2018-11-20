@@ -1,43 +1,44 @@
 <div class="table-page">
+    <div class="table-content-title">
+        <div class="table-tools">
+            <ul class="layui-nav" lay-filter="talbe-tools">
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="addPositionBtn"><i class="iconfont icon-tianjia"></i>新增库位</a>
+                </li>
+                <li class="layui-nav-item"><a href="javascript:;" class="changeBtn"><i class="iconfont icon-bianji"></i>修改</a></li>
+                <li class="layui-nav-item"><a href="javascript:;" class="deleteBtn"><i class="iconfont icon-shanchu"></i>删除</a></li>
+                <!-- <li class="layui-nav-item">
+                            <a id="toExport" href="javascript:;">导出数据</a>
+                        </li> -->
+            </ul>
+        </div>
+    </div>
     <div class="table-page-header">
         <div class="table-page-form">
             <form class="layui-form" action="">
                 <div class="form-box">
                     <div class="layui-form-item form-left">
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">库位名称</span>
                             <input type="text" name="name" placeholder="库位名称" autocomplete="off" class="layui-input">
                         </div>
                         <div class="table-form-item layui-input-inline">
-                            <input type="text" name="code" placeholder="库位编号" autocomplete="off" class="layui-input">
+                            <span class="input-span">库位名称</span>
+                            <input type="text" name="code" placeholder="库位名称" autocomplete="off" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-form-item form-right">
+                        <button type="reset" class="layui-btn layui-btn-gray"> <i class="layui-icon layui-icon-refresh"></i></button>
                         <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="searchForm">
                             <i class="iconfont icon-sousuo"></i> <span>查询</span>
                         </button>
-                        <button type="reset" class="layui-btn layui-btn-primary"> <i class="layui-icon layui-icon-refresh"></i></button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
     <div class="table-content">
-        <div class="table-content-title">
-            <div class="table-tools">
-                <ul class="layui-nav" lay-filter="talbe-tools">
-                    <li class="layui-nav-item">
-                        <a href="javascript:;" class="addPositionBtn">新增库位</a>
-                    </li>
-                    <!-- <li class="layui-nav-item">
-                        <a id="toExport" href="javascript:;">导出数据</a>
-                    </li> -->
-                </ul>
-                <ul class="layui-layout-right">
-                    <li><a href="javascript:;" class="changeBtn">修改</a></li>
-                    <li><a href="javascript:;" class="deleteBtn">删除</a></li>
-                </ul>
-            </div>
-        </div>
+
         <div class="table-content-main">
             <table class="layui-hide" id="tableContainer-positionList" lay-filter="tableContainer-positionList"></table>
         </div>
@@ -55,17 +56,17 @@
         var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 93); //内容区域所需减去的高度
 
         var addPositionLayer; //编辑-弹层
-        
+
         //仓库ID
         var depid = null;
         //先获取到仓库信息,如果为空则异常
         var depotPosition = JSON.parse(sessionStorage.getItem('depotPosition'));
-        
-        if(null != depotPosition){
-            
+
+        if (null != depotPosition) {
+
             depid = depotPosition.id;
-            console.log("depid:"+depid);
-        }else{
+            console.log("depid:" + depid);
+        } else {
             //提示报错。异常
         }
 
@@ -98,7 +99,9 @@
             elem: '#tableContainer-positionList',
             height: 'full-' + tableTopHeight,
             url: positionList,
-            where:{'depotid':depid},
+            where: {
+                'depotid': depid
+            },
             parseData: function(res) { //res 即为原始返回的数据
                 if (res.status !== 0) res.status = 0;
                 return {
@@ -196,12 +199,12 @@
                 url: url,
                 type: "POST",
                 data: data.field,
-                xhrFields: {
-                    withCredentials: true
-                },
-                crossDomain: true,
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
                 traditional: true,
-                success: function(json){
+                success: function(json) {
                     if (json.status === 1) {
                         window.location.href = loginPageUrl;
                     }
@@ -214,7 +217,7 @@
                         });
                         layer.msg(msg);
                         layer.close(addPositionLayer);
-                    } 
+                    }
                 }
             })
             return false;
@@ -261,8 +264,8 @@
                         "ids": rowId
                     }, function(data) {
                         if (data.status === 1) {
-    window.location.href = loginPageUrl;
-}
+                            window.location.href = loginPageUrl;
+                        }
                         // 删除所选行成功
                         layer.close(index);
                         // 刷新表格
@@ -283,10 +286,10 @@
                 url: url,
                 type: "POST",
                 data: data,
-                xhrFields: {
-          withCredentials: true
-       },
-       crossDomain: true,
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
                 traditional: true,
                 success: funSuc,
                 error: funErr
