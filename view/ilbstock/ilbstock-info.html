@@ -226,9 +226,9 @@
                         title: '评估状态',
                         templet: function(d) {
                             if (d.aprice <= 0 || null == d.aprice) {
-                                return '待评估';
+                                return '<span style="color:#4394ff;">待评估</span>';
                             }
-                            return "";
+                            return "已评估";
                         }
                     }, {
                         field: 'varieties',
