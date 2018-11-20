@@ -276,7 +276,7 @@
                     //     field: 'suppliername',
                     //     title: '供应商'
                     // } ,
-                     {
+                    {
                         field: 'volume',
                         title: '数量（m³）'
                     }, {
@@ -314,7 +314,7 @@
             for (var i = 0; i < datalist.length; i++) {
                 ids.push(datalist[i].orderno);
             }
-            if(ids.length<1){
+            if (ids.length < 1) {
                 layer.msg("未选择入库项");
                 return false;
             }
@@ -326,10 +326,10 @@
                     'ids': ids
                 },
                 traditional: true,
-                xhrFields: {
-                  withCredentials: true
-               },
-               crossDomain: true,
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
                 success: function(data) {
                     if (data.status == 0) {
                         tableIns.reload({
@@ -340,7 +340,7 @@
                         layer.msg("审核通过为库存");
                     }
                     //请求过期，重新登陆
-                    if(data.status == 1){
+                    if (data.status == 1) {
                         window.location.href = loginPageUrl;
                     }
                 }
@@ -423,7 +423,7 @@
                         if (data.status === 1) {
                             window.location.href = loginPageUrl;
                         }
-                        
+
                         // 删除所选行成功
                         layer.close(index);
                         // 刷新表格
@@ -446,10 +446,10 @@
                 type: "POST",
                 data: data,
                 traditional: true,
-                xhrFields: {
-          withCredentials: true
-       },
-       crossDomain: true,
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
                 success: funSuc,
                 error: funErr
             })
