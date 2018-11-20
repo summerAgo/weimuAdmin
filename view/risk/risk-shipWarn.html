@@ -208,7 +208,7 @@
                     });
 
                     form.on('submit(formDemo)', function(data) {
-                        console.log(data.field);
+                        data.field.stockmoney=curData.stockmoney;
                         $.ajax({
                             cache: true,
                             type: "POST",
