@@ -3,55 +3,54 @@
 <div class="addGoods-layer">
     <form class="layui-form layui-form-pane" action="">
         <div class="layui-form-item">
-            <label class="layui-form-label">包号 <span class="layui-badge-dot"></span></label>
+            <label class="layui-form-label form-required">包号</label>
             <div class="layui-input-block">
-                <input type="text" name="code" placeholder="包号" autocomplete="off" class="layui-input" lay-verify="required">
+                <input type="text" name="code" placeholder="包号" autocomplete="off" class="layui-input" lay-verify="required ">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">品种 <span class="layui-badge-dot"></span></label>
+            <label class="layui-form-label">品种</label>
             <div class="layui-input-block">
                 <!-- <input type="text" name="varieties" placeholder="品种" autocomplete="off" class="layui-input" lay-verify="required"> -->
                 <select name="varieties" xm-select="selectVarieties" xm-select-radio>
-                        <option value="">品种</option>
-                    </select>
-
+                    <option value="">品种</option>
+                </select>
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">规格/厚度 <span class="layui-badge-dot"></span></label>
+            <label class="layui-form-label">规格/厚度</label>
             <div class="layui-input-block">
                 <!-- <input type="text" name="spec" placeholder="规格/厚度" autocomplete="off" class="layui-input" lay-verify="required"> -->
                 <div class="table-form-item layui-input-inline">
-                        <select name="spec" xm-select="selectSpec" xm-select-radio>
-                            <option value="">规格</option>
-                        </select>
-                    </div>
+                    <select name="spec" xm-select="selectSpec" xm-select-radio>
+                        <option value="">规格</option>
+                    </select>
+                </div>
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">等级 <span class="layui-badge-dot"></span></label>
+            <label class="layui-form-label">等级 </label>
             <div class="layui-input-block">
                 <!-- <input type="text" name="levels" placeholder="等级" autocomplete="off" class="layui-input" lay-verify="required"> -->
                 <select name="levels" xm-select="selectLevels" xm-select-radio>
-                        <option value="">等级</option>
-                    </select>
+                    <option value="">等级</option>
+                </select>
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">长度 <span class="layui-badge-dot"></span></label>
+            <label class="layui-form-label">长度 </label>
             <div class="layui-input-block">
                 <input type="text" name="chang" placeholder="长度" autocomplete="off" class="layui-input" lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">采购单价 <span class="layui-badge-dot"></span></label>
+            <label class="layui-form-label">采购单价</label>
             <div class="layui-input-block">
                 <input type="text" name="pprice" placeholder="采购单价" autocomplete="off" class="layui-input" lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">数量（m³）<span class="layui-badge-dot"></span></label>
+            <label class="layui-form-label">数量（m³）</label>
             <div class="layui-input-block">
                 <input type="text" name="num" placeholder="数量（m³）" autocomplete="off" class="layui-input" lay-verify="required">
             </div>
@@ -63,19 +62,19 @@
             </div>
         </div> -->
         <div class="layui-form-item">
-            <label class="layui-form-label">货柜号 <span class="layui-badge-dot"></span></label>
+            <label class="layui-form-label">货柜号</label>
             <div class="layui-input-block">
                 <input type="text" name="containernum" placeholder="货柜号" autocomplete="off" class="layui-input" lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">提运单 <span class="layui-badge-dot"></span></label>
+            <label class="layui-form-label">提运单</label>
             <div class="layui-input-block">
                 <input type="text" name="billloading" placeholder="提运单" autocomplete="off" class="layui-input" lay-verify="required">
             </div>
         </div>
         <div class="layui-form-item">
-            <label class="layui-form-label">品牌 <span class="layui-badge-dot"></span></label>
+            <label class="layui-form-label">品牌</label>
             <div class="layui-input-block">
                 <input type="text" name="brand" placeholder="品牌 " autocomplete="off" class="layui-input" lay-verify="required">
             </div>
@@ -102,11 +101,6 @@
     .layui-form-pane .layui-input-block {
         margin-left: 130px;
     }
-
-    .layer-title {
-        display: flex;
-        justify-content: space-around
-    }
 </style>
 <script>
     layui.use(['jquery','laytpl', 'laydate','formSelects'], function() {
@@ -120,8 +114,6 @@
         laytpl(getTpl).render(data, function(html) {
             view.innerHTML = html;
         });
-        
-
 
         formSelects.data('selectVarieties', 'local', {
             arr: selectDataInstall(VTSList) //品种列表
@@ -176,6 +168,5 @@
             });
             return arr;
         }
-
     });
 </script>
