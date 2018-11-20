@@ -1,55 +1,50 @@
 <div id="positionView"></div>
 <script id="depotTle" type="text/html">
-    <form class="layui-form layui-form-pane" action="">
-    <div class="layui-form-item">
-        <label class="layui-form-label form-required">编号</label>
-        <div class="layui-input-block">
-            <input type="text" name="code" placeholder="编号" value="{{d.code||''}}" autocomplete="off" class="layui-input" lay-verify="required">
+    <form class="layui-form layer-open-form" action="">
+        <div class="layui-form-item layui-control-line">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="addPositionForm"><i class="iconfont icon-daochu"></i>保存</button>
+            </div>
         </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label form-required">库位名称</label>
-        <div class="layui-input-block"> 
-            <input type="text" name="name" placeholder="库位名称" value="{{d.name||''}}" autocomplete="off" class="layui-input" lay-verify="required">
+        <div class="layui-form-item layui-normal-line">
+            <label class="layui-form-label form-required">编号</label>
+            <div class="layui-input-inline">
+                <input type="text" name="code" placeholder="编号" value="{{d.code||''}}" autocomplete="off" class="layui-input" lay-verify="required">
+            </div>
         </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">面积</label>
-        <div class="layui-input-block">
-            <input type="text" name="acreage" placeholder="面积" value="{{d.acreage||''}}" autocomplete="off" class="layui-input" >
+        <div class="layui-form-item layui-normal-line">
+            <label class="layui-form-label form-required">库位名称</label>
+            <div class="layui-input-inline">
+                <input type="text" name="name" placeholder="库位名称" value="{{d.name||''}}" autocomplete="off" class="layui-input" lay-verify="required">
+            </div>
         </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label">地址</label>
-        <div class="layui-input-block">
-            <input type="text" name="address" placeholder="地址" value="{{d.address||''}}" autocomplete="off" class="layui-input" >
+        <div class="layui-form-item layui-normal-line">
+            <label class="layui-form-label">面积</label>
+            <div class="layui-input-inline">
+                <input type="text" name="acreage" placeholder="面积" value="{{d.acreage||''}}" autocomplete="off" class="layui-input" >
+            </div>
         </div>
-    </div>
-    <!-- <div class="layui-form-item">
-        <label class="layui-form-label">负责人</label>
-        <div class="layui-input-block">
-            <input type="text" name="person" placeholder="负责人" value="{{d.person||''}}" autocomplete="off" class="layui-input" >
+        <div class="layui-form-item layui-normal-line">
+            <label class="layui-form-label">地址</label>
+            <div class="layui-input-inline">
+                <input type="text" name="address" placeholder="地址" value="{{d.address||''}}" autocomplete="off" class="layui-input" >
+            </div>
         </div>
-    </div> -->
-    <div class="layui-form-item">
-        <label class="layui-form-label">备注</label>
-        <div class="layui-input-block">
-            <input type="text" name="remarks" placeholder="备注" value="{{d.remarks||''}}" autocomplete="off" class="layui-input">
+        <!-- <div class="layui-form-item">
+            <label class="layui-form-label">负责人</label>
+            <div class="layui-input-block">
+                <input type="text" name="person" placeholder="负责人" value="{{d.person||''}}" autocomplete="off" class="layui-input" >
+            </div>
+        </div> -->
+        <div class="layui-form-item layui-normal-line">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-inline">
+                <input type="text" name="remarks" placeholder="备注" value="{{d.remarks||''}}" autocomplete="off" class="layui-input">
+            </div>
         </div>
-    </div>
-    <div class="layui-form-item">
-        <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="addPositionForm">
-            <i class="layui-icon layui-icon-ok"></i> <span>提交</span>
-        </button>
-    </div>
-</form>
+    </form>
 </script>
-<style scoped>
-    .layui-form {
-        width: 600px;
-        margin: 10px auto;
-    }
-</style>
+
 <script>
     layui.use(['form', 'jquery', 'element', 'layer', 'formSelects', 'laytpl', 'laydate'], function() {
         var element = layui.element;

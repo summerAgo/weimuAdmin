@@ -109,7 +109,7 @@
             var paramSearch = {};
             for (var key in data.field) {
                 //参数赋值
-                if (data.field[key] != "") {
+                if (data.field[key] !== "") {
                     paramSearch[key] = data.field[key]
                 }
             }
@@ -265,8 +265,6 @@
                         area: ['800px', '560px']
                     });
                 });
-
-
             }
         });
 
@@ -300,7 +298,6 @@
                                     curr: 1 //重新从第 1 页开始
                                 }
                             });
-
                         }
                         if (data.status === 1) {
                             window.location.href = loginPageUrl;
@@ -473,7 +470,7 @@
                 url: isname_user,
                 data: {
                     instid: data.field.instid,
-                    name: data.field.username
+                    username: data.field.username
                 },
                 async: false,
                 xhrFields: {
