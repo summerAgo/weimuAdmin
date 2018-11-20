@@ -263,32 +263,25 @@
                         field: 'orderno',
                         title: '入库单号',
                         event: 'click',
-                        style: 'cursor: pointer;color:#4394ff;',
-                        sort: true
+                        style: 'cursor: pointer;color:#4394ff;'
                     }, {
                         field: 'ownername',
-                        title: '货权人',
-                        sort: true
+                        title: '货权人'
                     }, {
                         field: 'depname',
-                        title: '仓库名称',
-                        sort: true
+                        title: '仓库名称'
                     }, {
                         field: 'num',
-                        title: '件数（包）',
-                        sort: true
+                        title: '件数（包）'
                     }, {
                         field: 'suppliername',
-                        title: '供应商',
-                        sort: true
+                        title: '供应商'
                     }, {
                         field: 'volume',
-                        title: '数量（m³）',
-                        sort: true
+                        title: '数量（m³）'
                     }, {
                         field: 'createdate',
-                        title: '入库时间',
-                        sort: true
+                        title: '入库时间'
                     }
                 ]
             ],
@@ -305,7 +298,6 @@
             loading: true
         });
 
-
         table.on('tool(tableContainer)', function(obj) {
             // console.log(obj.tr) //得到当前行元素对象
             // console.log(obj.data) //得到当前行数据
@@ -320,7 +312,6 @@
                 })
             }
         });
-
     });
 
     function dayin() {
