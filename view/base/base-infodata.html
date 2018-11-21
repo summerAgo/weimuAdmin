@@ -90,7 +90,7 @@
             var paramSearch = {};
             for (var key in data.field) {
                 //参数赋值
-                if (data.field[key] != "") {
+                if (data.field[key] !== "") {
                     paramSearch[key] = data.field[key]
                 }
             }
@@ -219,7 +219,7 @@
             // 判供商品是否重复
             var isName = true; // 重复标识
             var tableData = JSON.parse(sessionStorage.getItem("base_infodata_data"));
-            if(tableData.name !== data.field.name) {
+            if(tableData && tableData.name !== data.field.name) {
                 $.ajax({
                     cache: true,
                     type: "get",
@@ -235,7 +235,7 @@
                     crossDomain: true,
                     success: function (data) {
                         if (data.status === 2) {
-                            layer.msg('商品类型已存在');
+                            layer.msg('商品已存在');
                             isName = false;
                         }
                     }
