@@ -201,7 +201,7 @@
             }
             // 判供仓库是否重复
             var isName = true; // 重复标识
-            if (dataType && dataType.name !== data.field.name) {
+            if (!dataType || dataType.name !== data.field.name) {
                 $.ajax({
                     cache: true,
                     type: "get",
