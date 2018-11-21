@@ -156,7 +156,7 @@
             loading: true
         });
 
-
+        // 点击添加商品
         $("#toAdd").click(function() {
             var data = {};
             data["instid"] = menuIns.id;
@@ -164,7 +164,7 @@
             sessionStorage.setItem('base_infodata_data', JSON.stringify(data));
             $.get('view/form/form-infodata.html', {}, function(str) {
                 addLayer = layer.open({
-                    title: '添加基础信息设置',
+                    title: '添加商品信息设置',
                     type: 1,
                     content: str, //注意，如果str是object，那么需要字符拼接。
                     area: ['800px', '560px'],
@@ -173,6 +173,7 @@
             return false;
         });
 
+        // 点击修改商品
         $(".updateBtn").click(function() {
             var checkStatus = table.checkStatus('tableContainer_baseinfo');
             if (checkStatus.data.length !== 1) {
@@ -196,8 +197,9 @@
             }
         });
 
-        //提交修改
+        //监测添加修改商品表单提交
         form.on('submit(addinfodataForm)', function(data) {
+            console.log("xxxx");
             // data.field.orderno = window.currData.orderno; //防止单号被篡改
             // data.field.origin = window.currData.origin; //
             // data.field.supplier = window.currData.supplier; //
@@ -216,7 +218,7 @@
             }
             data.field.instid = ints;
 
-            // 判供商品信息是否重复
+            // 判供商品是否重复
             var isName = true; // 重复标识
             $.ajax({
                 cache: true,
@@ -264,7 +266,6 @@
                     }
                 }
             });
-
             return false;
         });
 
@@ -340,7 +341,6 @@
             })
         }
 
-
         var insList = []; //商品类型顶级目录
         var menuIns = {}; //商品类型被点击的数据
 
@@ -399,7 +399,6 @@
                 //失败
             })
         }
-
 
         var insList = []; //商品类型顶级目录
         var inaAllList = []; //商品类型所有的数据
