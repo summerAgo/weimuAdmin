@@ -203,11 +203,19 @@
             // data.field.supplier = window.currData.supplier; //
             /// var fromdata = $(".infodata_form").serialize();
             //var fromdataarr = $(".infodata_form").serializeArray();
+            var isNameAdd = false;// 判断添加是否同名标识
+            var isNameEdit = false;// 判断修改是否同名标识
+            var isName = true; // 是否重名标识
+
             var id = data.field.id;
-            var url = basicsInfoUpdate;
-            //debugger;
+            var url;
+            var tableData = JSON.parse(sessionStorage.getItem("base_infodata_data"));
             if (undefined === id || '' === id) {
-                url = basicsInfoAdd
+                url = basicsInfoAdd; // 如果没有id，那么是添加
+                isNameAdd = true;
+            }else{
+                url = basicsInfoUpdate; // 否则为修改
+                isNameEdit = !!(tableData.name !== data.field.name);
             }
             var instid = data.field.instid.split("/");
             var ints = instid[instid.length - 1];
@@ -215,11 +223,8 @@
                 ints = instid[0];
             }
             data.field.instid = ints;
-
             // 判供商品是否重复
-            var isName = true; // 重复标识
-            var tableData = JSON.parse(sessionStorage.getItem("base_infodata_data"));
-            if(!tableData || tableData.name !== data.field.name) {
+            if(isNameAdd || isNameEdit) {
                 $.ajax({
                     cache: true,
                     type: "get",

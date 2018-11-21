@@ -273,13 +273,19 @@
             var userData = window.currData;
             var title = "";
             var userUrl = "";
+            var isNameAdd = false;// 判断添加是否同名标识
+            var isNameEdit = false;// 判断修改是否同名标识
+            var isName = true; // 是否重名标识
+
             if (data.field.id != null && data.field.id !== "") {
                 title = '确认提交修改';
                 userUrl = updOwner;
+                isNameEdit = !!(userData.name !== data.field.name);
             } else {
                 title = '确认添加';
                 userUrl = addOwner;
                 data.field.id = null;
+                isNameAdd = true;
             }
             var instid = data.field.instid.split("/");
             var ints = instid[instid.length - 1];
@@ -289,28 +295,31 @@
             data.field.instid = ints;
 
             // 判断货权人是否重复
-            var isName = true; // 重复标识
-            $.ajax({
-                cache: true,
-                type: "get",
-                url: isname_owner,
-                data: {
-                    instid: data.field.instid,
-                    name: data.field.name
-                },
-                async: false,
-                xhrFields: {
-                    withCredentials: true
-                },
-                crossDomain: true,
-                success: function(data) {
-                    if (data.status === 2) {
-                        layer.msg('货权人已存在');
-                        isName = false;
+            if (isNameAdd || isNameEdit) {
+                $.ajax({
+                    cache: true,
+                    type: "get",
+                    url: isname_owner,
+                    data: {
+                        instid: data.field.instid,
+                        name: data.field.name
+                    },
+                    async: false,
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    success: function (data) {
+                        if (data.status === 2) {
+                            layer.msg('货权人已存在');
+                            isName = false;
+                        }
                     }
+                });
+                if (!isName) {
+                    return false;
                 }
-            });
-            if (!isName) {return false;}
+            }
 
             layer.confirm(title, {
                 icon: 3,
@@ -514,38 +523,47 @@
         form.on('submit(addInsSubmit)', function(data) {
             var title = "";
             var url = "";
+            var isNameAdd = false;// 判断添加是否同名标识
+            var isNameEdit = false;// 判断修改是否同名标识
+            var isName = true; // 是否重名标识
             //编辑提交
             if (data.field.id != null && data.field.id !== "") {
                 title = '确认提交修改';
                 userUrl = updInstitution;
+                isNameEdit = !!(menuIns.name !== data.field.name);
             } else {
                 title = '确认添加';
                 userUrl = addInstitution;
                 data.field.id = null;
+                isNameAdd = true;
             }
+
             // 判断货权人类型是否重复
-            var isName = true; // 重复标识
-            $.ajax({
-                cache: true,
-                type: "get",
-                url: isname_institution,
-                data: {
-                    utype: 1,
-                    name: data.field.name
-                },
-                async: false,
-                xhrFields: {
-                    withCredentials: true
-                },
-                crossDomain: true,
-                success: function(data) {
-                    if (data.status === 2) {
-                        layer.msg('货权人类型已存在');
-                        isName = false;
+            if (isNameAdd || isNameEdit) {
+                $.ajax({
+                    cache: true,
+                    type: "get",
+                    url: isname_institution,
+                    data: {
+                        utype: 1,
+                        name: data.field.name
+                    },
+                    async: false,
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    success: function (data) {
+                        if (data.status === 2) {
+                            layer.msg('货权人类型已存在');
+                            isName = false;
+                        }
                     }
+                });
+                if (!isName) {
+                    return false;
                 }
-            });
-            if (!isName) {return false;}
+            }
 
             layer.confirm(title, {
                 icon: 3,
