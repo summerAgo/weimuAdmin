@@ -253,7 +253,7 @@
                     {
                         field: 'LAY_TABLE_INDEX',
                         title: '序号',
-                        width: 80,
+                        width: 40,
                         templet: function(d) {
                             return d.LAY_TABLE_INDEX + 1;
                         }
@@ -271,7 +271,7 @@
                         title: '评估状态',
                         templet: function(d) {
                             if (d.aprice <= 0 || null == d.aprice) {
-                                return '<span style="color:#4394ff;">待评估</span>';
+                                return '<span style="color:#0063de;">待评估</span>';
                             }
                             return "已评估";
                         }
