@@ -92,7 +92,7 @@
             var paramSearch = {};
             for (var key in data.field) {
                 //参数赋值
-                if (data.field[key] != "") {
+                if (data.field[key] !== "") {
                     paramSearch[key] = data.field[key]
                 }
             }
@@ -256,7 +256,7 @@
             window.currData = data;
             $.get('view/base/supplier-add.html', {}, function(str) {
                 eaitLayer = layer.open({
-                    title: '添加加供应商',
+                    title: '添加供应商',
                     type: 1,
                     content: str,
                     resize: false,
