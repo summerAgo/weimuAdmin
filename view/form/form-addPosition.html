@@ -54,13 +54,12 @@
         var laytpl = layui.laytpl;
         
         var dataType = JSON.parse(sessionStorage.getItem('positionCheck')) || {};//获取本地所选仓库信息，判断是否为修改
-        console.log(dataType)
+        console.log(dataType);
         // 渲染模板的内容
         var getTpl = depotTle.innerHTML,
             view = document.getElementById('positionView');
         laytpl(getTpl).render(dataType, function(html) {
             view.innerHTML = html;
         });
-
     });
 </script>

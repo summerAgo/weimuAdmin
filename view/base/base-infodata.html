@@ -175,7 +175,7 @@
 
         $(".updateBtn").click(function() {
             var checkStatus = table.checkStatus('tableContainer_baseinfo');
-            if (checkStatus.data.length != 1) {
+            if (checkStatus.data.length !== 1) {
                 layer.msg("请选择一条需要修改的信息");
             } else {
                 $.get('view/form/form-infodata.html', {}, function(str) {
@@ -185,7 +185,7 @@
                     data["inaAllList"] = inaAllList;
                     sessionStorage.setItem('base_infodata_data', JSON.stringify(data));
                     addLayer = layer.open({
-                        title: '添加基础信息设置',
+                        title: '添加商品信息',
                         type: 1,
                         content: str, //注意，如果str是object，那么需要字符拼接。
                         resize: false,
@@ -206,12 +206,12 @@
             var id = data.field.id;
             var url = basicsInfoUpdate;
             //debugger;
-            if (undefined == id || '' == id) {
+            if (undefined === id || '' === id) {
                 url = basicsInfoAdd
             }
             var instid = data.field.instid.split("/");
             var ints = instid[instid.length - 1];
-            if (ints == "") {
+            if (ints === "") {
                 ints = instid[0];
             }
             data.field.instid = ints;
@@ -356,13 +356,13 @@
                 var val = [];
                 menuIns = insData[0];
                 for (var i = 0; i < insData.length; i++) {
-                    if (insData[i].pid == 0) {
+                    if (insData[i].pid === 0) {
                         val.push(insData[i]);
                     }
                 }
                 insList = val;
                 var treeData = [];
-                console.log(treeData)
+                console.log(treeData);
                 var number = 0;
                 for (var i = 0; i < val.length; i++) {
                     var map = {};
@@ -372,14 +372,14 @@
                     map["spread"] = true;
                     var children = [];
                     for (var j = 0; j < insData.length; j++) {
-                        if (val[i].id == insData[j].pid) {
+                        if (val[i].id === insData[j].pid) {
                             var son = {};
                             son["name"] = insData[j].name;
                             son["id"] = insData[j].id;
                             son["pid"] = insData[j].pid;
                             children.push(son);
                             number++;
-                            if (number == 1) {
+                            if (number === 1) {
                                 menuIns = son;
                             }
                         }

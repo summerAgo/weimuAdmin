@@ -286,7 +286,7 @@
                     crossDomain: true,
                     error: function(request) {
                         layer.msg('提交失败');
-                        return;
+                        return false;
                     },
                     success: function(data) {
                         if (data.status === 0) {
@@ -330,10 +330,10 @@
                     crossDomain: true,
                     error: function(request) {
                         layer.msg('重置失败');
-                        return;
+                        return false;
                     },
                     success: function(data) {
-                        if (data.status == 1) {
+                        if (data.status === 1) {
                             window.location.href = loginPageUrl;
                         }
                         layer.close(eaitLayer);

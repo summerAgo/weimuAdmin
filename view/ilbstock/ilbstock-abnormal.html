@@ -3,9 +3,9 @@
         <div class="table-tools">
             <ul class="layui-nav" lay-filter="talbe-tools">
                 <li class="layui-nav-item">
-                    <a id="addBtn" href="javascript:;"><i class="iconfont icon-zengjiakucun"></i>增加库存</a>
+                    <a id="addBtn" href="javascript:;"><i class="iconfont icon-zengjiakucun"></i>调整库存</a>
                 </li>
-                <li class="layui-nav-item">
+                <!-- <li class="layui-nav-item">
                     <a class="toExport" href="javascript:;"><i class="iconfont icon-daochu"></i>导出</a>
                 </li>
                 <li class="layui-nav-item">
@@ -13,7 +13,7 @@
                 </li>
                 <li class="layui-nav-item">
                     <a href="javascript:;" class="updateBtn"><i class="iconfont icon-bianji"></i>修改</a>
-                </li>
+                </li> -->
                 <li class="layui-nav-item">
                     <a class="printStore" href="javascript:;"><i class="iconfont icon-shuaxin"></i>刷新</a>
                 </li>
@@ -261,13 +261,12 @@
                         templet: function(d) {
                             return d.LAY_TABLE_INDEX + 1;
                         }
-                    },
-                    {
-                        field: 'num',
-                        title: '调整前数量（m³）'
-                    },{
+                    }, {
                         field: 'num1',
                         title: '调整后数量（m³）'
+                    },{
+                        field: 'num',
+                        title: '调整前数量（m³）'
                     }, {
                         field: 'code',
                         title: '包号'
@@ -287,6 +286,7 @@
                         field: 'brand',
                         title: '品牌'
                     }, {
+
                         field: 'origin',
                         title: '产地'
                     }, {
