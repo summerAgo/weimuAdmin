@@ -49,7 +49,6 @@
                         <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="searchForm">
                             <i class="iconfont icon-sousuo"></i> <span>查询</span>
                         </button>
-
                     </div>
                 </div>
             </form>
@@ -57,7 +56,6 @@
     </div>
 
     <div class="table-content">
-
         <div class="table-content-main">
             <table class="layui-hide" id="tableContainer" lay-filter="tableContainer"></table>
         </div>
@@ -227,7 +225,7 @@
                     {
                         field: 'LAY_TABLE_INDEX',
                         title: '序号',
-                        width: 80,
+                        width: 40,
                         templet: function(d) {
                             return d.LAY_TABLE_INDEX + 1;
                         }
