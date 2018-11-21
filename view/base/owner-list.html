@@ -88,7 +88,7 @@
             var paramSearch = {};
             for (var key in data.field) {
                 //参数赋值
-                if (data.field[key] != "") {
+                if (data.field[key] !== "") {
                     paramSearch[key] = data.field[key]
                 }
             }
@@ -293,7 +293,7 @@
                 ints = instid[0];
             }
             data.field.instid = ints;
-            // 判断货权人是否重复
+            // 判断仓库主是否重复
             if (isNameAdd || isNameEdit) {
                 $.ajax({
                     cache: true,
@@ -310,7 +310,7 @@
                     crossDomain: true,
                     success: function (data) {
                         if (data.status === 2) {
-                            layer.msg('货权人已存在');
+                            layer.msg('仓库主已存在');
                             isName = false;
                         }
                     }
@@ -408,7 +408,6 @@
                     map["children"] = children;
                     treeData.push(map);
                 }
-                console.log(treeData);
                 $('#tree-nav').html('');
                 layui.tree({
                     elem: '#tree-nav',
@@ -441,7 +440,7 @@
             });
         }
 
-        //添加用户类型
+        //添加仓库主类型
         $("#addins").click(function() {
             var data = {};
             data["insList"] = insList;
@@ -449,7 +448,7 @@
             window.currData = data;
             $.get('view/user/institution-add.html', {}, function(str) {
                 eaitLayer = layer.open({
-                    title: '添加用户类型',
+                    title: '添加仓库主类型',
                     type: 1,
                     content: str,
                     resize: false,
@@ -457,7 +456,7 @@
                 });
             });
         });
-        //修改用户类型
+        //修改仓库主类型
         $("#updins").click(function() {
             var data = menuIns;
             data["insList"] = insList;
@@ -465,7 +464,7 @@
             window.currData = data; //全局对象存储当前选中行数据
             $.get('view/user/institution-add.html', {}, function(str) {
                 eaitLayer = layer.open({
-                    title: '修用户类型',
+                    title: '修改仓库主类型',
                     type: 1,
                     content: str, //注意，如果str是object，那么需要字符拼接。
                     resize: false,
@@ -534,7 +533,7 @@
                 data.field.id = null;
                 isNameAdd = true;
             }
-            // 判断货权人类型是否重复
+            // 判断仓库主类型是否重复
             if (isNameAdd || isNameEdit) {
                 $.ajax({
                     cache: true,
@@ -551,7 +550,7 @@
                     crossDomain: true,
                     success: function (data) {
                         if (data.status === 2) {
-                            layer.msg('货权人类型已存在');
+                            layer.msg('仓库主类型已存在');
                             isName = false;
                         }
                     }

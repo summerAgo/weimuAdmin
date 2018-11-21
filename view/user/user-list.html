@@ -211,7 +211,7 @@
                 window.currData = data; //全局对象存储当前选中行数据
                 $.get('view/user/user-add.html', {}, function(str) {
                     eaitLayer = layer.open({
-                        title: '编辑',
+                        title: '编辑用户',
                         type: 1,
                         content: str, //注意，如果str是object，那么需要字符拼接。
                         resize: false,
@@ -481,7 +481,7 @@
                     crossDomain: true,
                     success: function (data) {
                         if (data.status === 2) {
-                            layer.msg('此用户名已存在');
+                            layer.msg('用户名已存在');
                             isName = false;
                         }
                     }
@@ -566,7 +566,7 @@
                 }
                 insList = val;
                 var treeData = [];
-                console.log(treeData)
+                console.log(treeData);
                 var number = 0;
                 for (var i = 0; i < val.length; i++) {
                     var map = {};
@@ -686,7 +686,7 @@
             window.currData = data; //全局对象存储当前选中行数据
             $.get('view/user/institution-add.html', {}, function(str) {
                 eaitLayer = layer.open({
-                    title: '修用户类型',
+                    title: '修改用户类型',
                     type: 1,
                     content: str, //注意，如果str是object，那么需要字符拼接。
                     resize: false,
@@ -772,7 +772,7 @@
                     crossDomain: true,
                     success: function (data) {
                         if (data.status === 2) {
-                            layer.msg('仓库主类型已存在');
+                            layer.msg('用户类型已存在');
                             isName = false;
                         }
                     }
