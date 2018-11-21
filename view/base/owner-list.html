@@ -259,7 +259,7 @@
             window.currData = data;
             $.get('view/base/owner-add.html', {}, function(str) {
                 eaitLayer = layer.open({
-                    title: '添加加货权人',
+                    title: '添加货权人',
                     type: 1,
                     content: str,
                     resize: false,
@@ -305,7 +305,7 @@
                 crossDomain: true,
                 success: function(data) {
                     if (data.status === 2) {
-                        layer.msg('命名已存在');
+                        layer.msg('货权人已存在');
                         isName = false;
                     }
                 }
