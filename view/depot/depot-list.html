@@ -73,7 +73,7 @@
             var paramSearch = {};
             for (var key in data.field) {
                 //参数赋值
-                if (data.field[key] != "") {
+                if (data.field[key] !== "") {
                     paramSearch[key] = data.field[key]
                 }
             }
@@ -189,21 +189,22 @@
             });
         });
 
+        console.log($("#store-name"));
+
         form.on('submit(addDepotForm)', function(data) {
             var dataType = JSON.parse(sessionStorage.getItem('depotCheck')); //获取本地所选仓库信息，判断是否为修改
             var url;
             var msg = "新建仓库成功";
             data.field.type = data.field.type - 1;
+            //如果是修改
             if (dataType) {
-                //如果是修改
                 url = depotUpdate;
                 data.field.id = dataType.id;
                 msg = "修改仓库成功";
             } else {
                 url = depotAdd;
             }
-
-            // 判供商品信息是否重复
+            // 判供仓库是否重复
             var isName = true; // 重复标识
             $.ajax({
                 cache: true,
