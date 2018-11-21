@@ -148,11 +148,9 @@
                         templet: function(d) {
                             return d.LAY_TABLE_INDEX + 1;
                         }
-                    },
-                    {
+                    }, {
                         type: 'checkbox'
-                    },
-                    {
+                    }, {
                         field: 'username',
                         title: '用户名',
                         sort: true
@@ -177,7 +175,6 @@
                         title: '创建时间',
                         sort: true
                     }
-
                 ]
             ],
             even: true,
@@ -214,7 +211,7 @@
                 window.currData = data; //全局对象存储当前选中行数据
                 $.get('view/user/user-add.html', {}, function(str) {
                     eaitLayer = layer.open({
-                        title: '编辑',
+                        title: '编辑用户',
                         type: 1,
                         content: str, //注意，如果str是object，那么需要字符拼接。
                         resize: false,
@@ -268,7 +265,7 @@
             }
         });
 
-        //添加用户角色提交
+        //配置用户角色提交
         form.on('submit(roleSubmit)', function(data) {
             layer.confirm("确认设置角色", {
                 icon: 3,
@@ -447,44 +444,52 @@
             var userData = window.currData;
             var title = "";
             var userUrl = "";
+            var isNameAdd = false;// 判断添加是否同名标识
+            var isNameEdit = false;// 判断修改是否同名标识
+            var isName = true; // 是否重名标识
             if (data.field.id != null && data.field.id !== "") {
                 title = '确认提交修改';
                 userUrl = userUpdate;
+                isNameEdit = !!(userData.username !== data.field.username);
             } else {
                 title = '确认添加';
                 userUrl = userAdd;
                 data.field.id = null;
+                isNameAdd = true;
             }
+            console.log(data.field.instid );
             var instid = data.field.instid.split("/");
             var ints = instid[instid.length - 1];
             if (ints === "") {
                 ints = instid[0];
             }
             data.field.instid = ints;
-
             // 判断是否用户重复
-            var isName = true; // 重复标识
-            $.ajax({
-                cache: true,
-                type: "get",
-                url: isname_user,
-                data: {
-                    instid: data.field.instid,
-                    username: data.field.username
-                },
-                async: false,
-                xhrFields: {
-                    withCredentials: true
-                },
-                crossDomain: true,
-                success: function(data) {
-                    if (data.status === 2) {
-                        layer.msg('此用户名已存在');
-                        isName = false;
+            if (isNameAdd || isNameEdit) {
+                $.ajax({
+                    cache: true,
+                    type: "get",
+                    url: isname_user,
+                    data: {
+                        instid: data.field.instid,
+                        username: data.field.username
+                    },
+                    async: false,
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    success: function (data) {
+                        if (data.status === 2) {
+                            layer.msg('用户名已存在');
+                            isName = false;
+                        }
                     }
+                });
+                if (!isName) {
+                    return false;
                 }
-            });
-            if (!isName) {return false;}
+            }
 
             layer.confirm(title, {
                 icon: 3,
@@ -555,13 +560,13 @@
                 inaAllList = insData;
                 var val = [];
                 for (var i = 0; i < insData.length; i++) {
-                    if (insData[i].pid == 0) {
+                    if (insData[i].pid === 0) {
                         val.push(insData[i]);
                     }
                 }
                 insList = val;
                 var treeData = [];
-                console.log(treeData)
+                console.log(treeData);
                 var number = 0;
                 for (var i = 0; i < val.length; i++) {
                     var map = {};
@@ -571,14 +576,14 @@
                     map["spread"] = true;
                     var children = [];
                     for (var j = 0; j < insData.length; j++) {
-                        if (val[i].id == insData[j].pid) {
+                        if (val[i].id === insData[j].pid) {
                             var son = {};
                             son["name"] = insData[j].name;
                             son["id"] = insData[j].id;
                             son["pid"] = insData[j].pid;
                             children.push(son);
                             number++;
-                            if (number == 1) {
+                            if (number === 1) {
                                 menuIns = son;
                             }
                         }
@@ -681,7 +686,7 @@
             window.currData = data; //全局对象存储当前选中行数据
             $.get('view/user/institution-add.html', {}, function(str) {
                 eaitLayer = layer.open({
-                    title: '修用户类型',
+                    title: '修改用户类型',
                     type: 1,
                     content: str, //注意，如果str是object，那么需要字符拼接。
                     resize: false,
@@ -732,41 +737,48 @@
             return false;
         });
 
+        // 添加用户类型表单提交
         form.on('submit(addInsSubmit)', function(data) {
             var title = "";
             var url = "";
+            var isNameAdd = false;// 判断添加是否同名标识
+            var isNameEdit = false;// 判断修改是否同名标识
+            var isName = true; // 是否重名标识
             //编辑提交
             if (data.field.id != null && data.field.id !== "") {
                 title = '确认提交修改';
                 userUrl = updInstitution;
+                isNameEdit = !!(menuIns.name !== data.field.name);
             } else {
                 title = '确认添加';
                 userUrl = addInstitution;
                 data.field.id = null;
+                isNameAdd = true;
             }
             // 判断用户类型是否重复
-            var isName = true; // 重复标识
-            $.ajax({
-                cache: true,
-                type: "get",
-                url: isname_institution,
-                data: {
-                    utype: 0,
-                    name: data.field.name
-                },
-                async: false,
-                xhrFields: {
-                    withCredentials: true
-                },
-                crossDomain: true,
-                success: function(data) {
-                    if (data.status === 2) {
-                        layer.msg('货权人类型已存在');
-                        isName = false;
+            if (isNameAdd || isNameEdit) {
+                $.ajax({
+                    cache: true,
+                    type: "get",
+                    url: isname_institution,
+                    data: {
+                        utype: 0,
+                        name: data.field.name
+                    },
+                    async: false,
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    success: function (data) {
+                        if (data.status === 2) {
+                            layer.msg('用户类型已存在');
+                            isName = false;
+                        }
                     }
-                }
-            });
-            if (!isName) {return false;}
+                });
+                if (!isName) { return false; }
+            }
 
             layer.confirm(title, {
                 icon: 3,

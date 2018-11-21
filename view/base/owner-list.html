@@ -21,7 +21,7 @@
                 <div class="table-tools">
                     <ul class="layui-nav" lay-filter="talbe-tools">
                         <li class="layui-nav-item">
-                            <a href="javascript:;" class="creatUser"><i class="iconfont icon-tianjia"></i>添加货权人</a>
+                            <a href="javascript:;" class="creatUser"><i class="iconfont icon-tianjia"></i>添加仓库主</a>
                         </li>
                         <li class="layui-nav-item">
                             <a href="javascript:;" class="editBtn"><i class="iconfont icon-bianji"></i>编辑</a>
@@ -88,7 +88,7 @@
             var paramSearch = {};
             for (var key in data.field) {
                 //参数赋值
-                if (data.field[key] != "") {
+                if (data.field[key] !== "") {
                     paramSearch[key] = data.field[key]
                 }
             }
@@ -251,7 +251,7 @@
             }
         });
 
-        //弹出添加货权人
+        //弹出添加仓库主
         $(".creatUser").click(function() {
             var data = {};
             data["instid"] = menuIns.id;
@@ -259,7 +259,7 @@
             window.currData = data;
             $.get('view/base/owner-add.html', {}, function(str) {
                 eaitLayer = layer.open({
-                    title: '添加货权人',
+                    title: '添加仓库主',
                     type: 1,
                     content: str,
                     resize: false,
@@ -268,18 +268,24 @@
             });
         });
 
-        //添加货权人表单提交
+        //添加仓库主表单提交
         form.on('submit(addSubmit)', function(data) {
             var userData = window.currData;
             var title = "";
             var userUrl = "";
+            var isNameAdd = false;// 判断添加是否同名标识
+            var isNameEdit = false;// 判断修改是否同名标识
+            var isName = true; // 是否重名标识
+
             if (data.field.id != null && data.field.id !== "") {
                 title = '确认提交修改';
                 userUrl = updOwner;
+                isNameEdit = !!(userData.name !== data.field.name);
             } else {
                 title = '确认添加';
                 userUrl = addOwner;
                 data.field.id = null;
+                isNameAdd = true;
             }
             var instid = data.field.instid.split("/");
             var ints = instid[instid.length - 1];
@@ -287,30 +293,30 @@
                 ints = instid[0];
             }
             data.field.instid = ints;
-
-            // 判断货权人是否重复
-            var isName = true; // 重复标识
-            $.ajax({
-                cache: true,
-                type: "get",
-                url: isname_owner,
-                data: {
-                    instid: data.field.instid,
-                    name: data.field.name
-                },
-                async: false,
-                xhrFields: {
-                    withCredentials: true
-                },
-                crossDomain: true,
-                success: function(data) {
-                    if (data.status === 2) {
-                        layer.msg('货权人已存在');
-                        isName = false;
+            // 判断仓库主是否重复
+            if (isNameAdd || isNameEdit) {
+                $.ajax({
+                    cache: true,
+                    type: "get",
+                    url: isname_owner,
+                    data: {
+                        instid: data.field.instid,
+                        name: data.field.name
+                    },
+                    async: false,
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    success: function (data) {
+                        if (data.status === 2) {
+                            layer.msg('仓库主已存在');
+                            isName = false;
+                        }
                     }
-                }
-            });
-            if (!isName) {return false;}
+                });
+                if (!isName) {return false;}
+            }
 
             layer.confirm(title, {
                 icon: 3,
@@ -365,7 +371,7 @@
         function listIns() {
             var data = {
                 "utype": 1
-            }; //1是货权人类型
+            }; //1是仓库主类型
             rowDataApi(listInstitution, data, function(res) {
                 var insData = res.data;
                 inaAllList = insData;
@@ -402,7 +408,6 @@
                     map["children"] = children;
                     treeData.push(map);
                 }
-                console.log(treeData);
                 $('#tree-nav').html('');
                 layui.tree({
                     elem: '#tree-nav',
@@ -435,7 +440,7 @@
             });
         }
 
-        //添加用户类型
+        //添加仓库主类型
         $("#addins").click(function() {
             var data = {};
             data["insList"] = insList;
@@ -443,7 +448,7 @@
             window.currData = data;
             $.get('view/user/institution-add.html', {}, function(str) {
                 eaitLayer = layer.open({
-                    title: '添加用户类型',
+                    title: '添加仓库主类型',
                     type: 1,
                     content: str,
                     resize: false,
@@ -451,7 +456,7 @@
                 });
             });
         });
-        //修改用户类型
+        //修改仓库主类型
         $("#updins").click(function() {
             var data = menuIns;
             data["insList"] = insList;
@@ -459,7 +464,7 @@
             window.currData = data; //全局对象存储当前选中行数据
             $.get('view/user/institution-add.html', {}, function(str) {
                 eaitLayer = layer.open({
-                    title: '修用户类型',
+                    title: '修改仓库主类型',
                     type: 1,
                     content: str, //注意，如果str是object，那么需要字符拼接。
                     resize: false,
@@ -514,38 +519,44 @@
         form.on('submit(addInsSubmit)', function(data) {
             var title = "";
             var url = "";
+            var isNameAdd = false;// 判断添加是否同名标识
+            var isNameEdit = false;// 判断修改是否同名标识
+            var isName = true; // 是否重名标识
             //编辑提交
             if (data.field.id != null && data.field.id !== "") {
                 title = '确认提交修改';
                 userUrl = updInstitution;
+                isNameEdit = !!(menuIns.name !== data.field.name);
             } else {
                 title = '确认添加';
                 userUrl = addInstitution;
                 data.field.id = null;
+                isNameAdd = true;
             }
-            // 判断货权人类型是否重复
-            var isName = true; // 重复标识
-            $.ajax({
-                cache: true,
-                type: "get",
-                url: isname_institution,
-                data: {
-                    utype: 1,
-                    name: data.field.name
-                },
-                async: false,
-                xhrFields: {
-                    withCredentials: true
-                },
-                crossDomain: true,
-                success: function(data) {
-                    if (data.status === 2) {
-                        layer.msg('货权人类型已存在');
-                        isName = false;
+            // 判断仓库主类型是否重复
+            if (isNameAdd || isNameEdit) {
+                $.ajax({
+                    cache: true,
+                    type: "get",
+                    url: isname_institution,
+                    data: {
+                        utype: 1,
+                        name: data.field.name
+                    },
+                    async: false,
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    success: function (data) {
+                        if (data.status === 2) {
+                            layer.msg('仓库主类型已存在');
+                            isName = false;
+                        }
                     }
-                }
-            });
-            if (!isName) {return false;}
+                });
+                if (!isName) { return false;}
+            }
 
             layer.confirm(title, {
                 icon: 3,

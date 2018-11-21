@@ -129,7 +129,7 @@
                         sort: true
                     }, {
                         field: 'ownername',
-                        title: '货权人',
+                        title: '仓库主',
                         sort: true
                     }, {
                         field: 'address',
@@ -191,17 +191,21 @@
             var url;
             var msg = "新建仓库成功";
             data.field.type = data.field.type - 1;
+            var isNameAdd = false;// 判断添加是否同名标识
+            var isNameEdit = false;// 判断修改是否同名标识
+            var isName = true; // 是否重名标识
             //如果是修改
             if (dataType) {
                 url = depotUpdate;
                 data.field.id = dataType.id;
                 msg = "修改仓库成功";
+                isNameEdit = !!(dataType.name !== data.field.name);
             } else {
+                isNameAdd = true;
                 url = depotAdd;
             }
             // 判供仓库是否重复
-            var isName = true; // 重复标识
-            if (dataType && dataType.name !== data.field.name) {
+            if (isNameAdd || isNameEdit) {
                 $.ajax({
                     cache: true,
                     type: "get",

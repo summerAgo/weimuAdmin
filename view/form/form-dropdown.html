@@ -27,7 +27,7 @@
         <div class="layui-row">
             <form class="layui-form layui-col-md4" action="">
                 <div class="layui-form-item">
-                    <label class="layui-form-label">货权人</label>
+                    <label class="layui-form-label">仓库主</label>
                     <div class="layui-input-block">
                         <select name="ownerid" xm-select="ownerSelect" xm-select-radio></select>
                     </div>
@@ -81,14 +81,14 @@
             var $ = layui.jquery;
 
             formSelects.data('ownerSelect', 'local', {
-                arr: selectDataInstall(ownerDropdown) //货权人列表
+                arr: selectDataInstall(ownerDropdown) //仓库主列表
             });
 
             layui.formSelects.opened('depotSelect', function(id) {
-                var ownerid = formSelects.value('ownerSelect', 'val'); //获取货权人ID
+                var ownerid = formSelects.value('ownerSelect', 'val'); //获取仓库主ID
                 if (ownerid.length < 1) {
-                    layer.msg("请先选择货权人");
-                    formSelects.data(id, 'local', {arr:[]});//如果货权人为空则清空列表
+                    layer.msg("请先选择仓库主");
+                    formSelects.data(id, 'local', {arr:[]});//如果仓库主为空则清空列表
                 } else {
                     formSelects.data(id, 'local', {
                         arr: selectDataInstall(depotDropdown, {

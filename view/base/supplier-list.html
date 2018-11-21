@@ -167,8 +167,8 @@
             $(".rightBotBtn span").html(checkStatus.data.length); //当前选中了多少商品
         });
 
+        //编辑供应商
         $(".editBtn").click(function() {
-            //编辑
             var checkStatus = table.checkStatus('tableContainer-supplierlist');
             if (checkStatus.data.length < 1) {
                 layer.msg("请选择需要编辑的信息");
@@ -267,16 +267,22 @@
 
         //添加供应商表单提交
         form.on('submit(addSubmit)', function(data) {
-            var userData = window.currData;
+            var checkStatus = table.checkStatus('tableContainer-supplierlist');
             var title = "";
             var userUrl = "";
+            var isNameAdd = false;// 判断添加是否同名标识
+            var isNameEdit = false;// 判断修改是否同名标识
+            var isName = true; // 是否重名标识
+
             if (data.field.id != null && data.field.id !== "") {
                 title = '确认提交修改';
                 userUrl = updSupplier;
+                isNameEdit = !!(checkStatus.data[0].name !== data.field.name);
             } else {
                 title = '确认添加';
                 userUrl = addSupplier;
                 data.field.id = null;
+                isNameAdd = true;
             }
             var instid = data.field.instid.split("/");
             var ints = instid[instid.length - 1];
@@ -284,29 +290,29 @@
                 ints = instid[0];
             }
             data.field.instid = ints;
-
             // 判供应商是否重复
-            var isName = true; // 重复标识
-            $.ajax({
-                cache: true,
-                type: "get",
-                url: isname_supplier,
-                data: {
-                    instid: data.field.instid,
-                    name: data.field.name
-                },
-                async: false,
-                xhrFields: {
-                    withCredentials: true
-                },
-                crossDomain: true,
-                success: function(data) {
-                    if (data.status === 2) {
-                        layer.msg('供应商已存在');
-                        isName = false;
+            if (isNameAdd || isNameEdit) {
+                $.ajax({
+                    cache: true,
+                    type: "get",
+                    url: isname_supplier,
+                    data: {
+                        instid: data.field.instid,
+                        name: data.field.name
+                    },
+                    async: false,
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    success: function(data) {
+                        if (data.status === 2) {
+                            layer.msg('供应商已存在');
+                            isName = false;
+                        }
                     }
-                }
-            });
+                });
+            }
             if (!isName) {return false;}
 
             layer.confirm(title, {
@@ -400,7 +406,7 @@
                     map["children"] = children;
                     treeData.push(map);
                 }
-                console.log(treeData);
+                // console.log(treeData);
                 $('#tree-nav').html("");
                 layui.tree({
                     elem: '#tree-nav',
@@ -418,7 +424,7 @@
         var menuIns = {}; //供应商类型被点击的数据
         // 根据菜单刷新表格
         function resTable(d) {
-            console.log(d);
+            // console.log(d);
             menuIns = d;
             // 刷新表格
             $("#instid").val(menuIns.id);
@@ -433,10 +439,10 @@
             });
         }
 
-        //添加用供应商
+        //添加供应商类型
         $("#addins").click(function() {
             var data = {};
-            data["insList"] = insList;
+            data["insList"] = insList; //供应商类型顶级目录
             data["utype"] = 2;
             window.currData = data;
             $.get('view/user/institution-add.html', {}, function(str) {
@@ -466,7 +472,7 @@
             });
         });
 
-        //删除用户类型
+        //删除供应商类型
         $("#delins").click(function() {
             if (!menuIns.id) {
                 layer.msg('请选择一条数据');
@@ -513,39 +519,46 @@
         form.on('submit(addInsSubmit)', function(data) {
             var title = "";
             var url = "";
-            //编辑提交
+
+            var isNameAdd = false;// 判断添加是否同名标识
+            var isNameEdit = false;// 判断修改是否同名标识
+            var isName = true; // 是否重名标识
+
             if (data.field.id != null && data.field.id !== "") {
                 title = '确认提交修改';
                 userUrl = updInstitution;
+                isNameEdit = !!(menuIns.name !== data.field.name);
             } else {
                 title = '确认添加';
                 userUrl = addInstitution;
                 data.field.id = null;
+                isNameAdd = true;
             }
 
             // 判供应商类型是否重复
-            var isName = true; // 重复标识
-            $.ajax({
-                cache: true,
-                type: "get",
-                url: isname_institution,
-                data: {
-                    utype: 2,
-                    name: data.field.name
-                },
-                async: false,
-                xhrFields: {
-                    withCredentials: true
-                },
-                crossDomain: true,
-                success: function(data) {
-                    if (data.status === 2) {
-                        layer.msg('供应商类型已存在');
-                        isName = false;
+            if (isNameAdd || isNameEdit) {
+                $.ajax({
+                    cache: true,
+                    type: "get",
+                    url: isname_institution,
+                    data: {
+                        utype: 2,
+                        name: data.field.name
+                    },
+                    async: false,
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    success: function(data) {
+                        if (data.status === 2) {
+                            layer.msg('供应商类型已存在');
+                            isName = false;
+                        }
                     }
-                }
-            });
-            if (!isName) {return false;}
+                });
+                if (!isName) {return false;}
+            }
 
             layer.confirm(title, {
                 icon: 3,
