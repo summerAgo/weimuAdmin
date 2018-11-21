@@ -236,7 +236,7 @@
         var tableIns = table.render({
             elem: '#tableContainer',
             height: 'full-' + tableTopHeight, // full -- 
-            url: abnList, // 数据接口
+            url: abnByidList, // 数据接口
             // 任意数据格式解析成 table 组件规定的数据格式
             parseData: function(res) { //res 即为原始返回的数据
                 if (res.status !== 0) res.status = 0;
@@ -264,7 +264,10 @@
                     },
                     {
                         field: 'num',
-                        title: '数量（m³）'
+                        title: '调整前数量（m³）'
+                    },{
+                        field: 'num1',
+                        title: '调整后数量（m³）'
                     }, {
                         field: 'code',
                         title: '包号'
