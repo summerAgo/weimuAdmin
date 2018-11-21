@@ -186,8 +186,6 @@
             });
         });
 
-        console.log($("#store-name"));
-
         form.on('submit(addDepotForm)', function(data) {
             var dataType = JSON.parse(sessionStorage.getItem('depotCheck')); //获取本地所选仓库信息，判断是否为修改
             var url;
@@ -203,7 +201,7 @@
             }
             // 判供仓库是否重复
             var isName = true; // 重复标识
-            if (dataType.name !== data.field.name) {
+            if (url === depotAdd || (url === depotUpdate && (dataType.name !== data.field.name))) {
                 $.ajax({
                     cache: true,
                     type: "get",
