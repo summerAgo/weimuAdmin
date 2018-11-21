@@ -140,10 +140,7 @@
                         title: '仓库类型',
                         sort: true,
                         templet: function(d) {
-                            if (d.type == 0) {
-                                return '监管仓';
-                            }
-                            return '自有仓';
+                            return '监管仓';
                         }
                     }, {
                         field: 'remarks',
@@ -206,27 +203,32 @@
             }
             // 判供仓库是否重复
             var isName = true; // 重复标识
-            $.ajax({
-                cache: true,
-                type: "get",
-                url: isname_depot,
-                data: {
-                    ownerid: data.field.ownerid,
-                    name: data.field.name
-                },
-                async: false,
-                xhrFields: {
-                    withCredentials: true
-                },
-                crossDomain: true,
-                success: function(data) {
-                    if (data.status === 2) {
-                        layer.msg('仓库已存在');
-                        isName = false;
+            if (dataType.name != data.field.name) {
+                $.ajax({
+                    cache: true,
+                    type: "get",
+                    url: isname_depot,
+                    data: {
+                        ownerid: data.field.ownerid,
+                        name: data.field.name
+                    },
+                    async: false,
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    success: function (data) {
+                        if (data.status === 2) {
+                            layer.msg('仓库已存在');
+                            isName = false;
+                        }
                     }
-                }
-            });
-            if (!isName) {return false;}
+                });
+            }
+
+            if (!isName) {
+                return false;
+            }
 
             $.ajax({
                 url: url,
