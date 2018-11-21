@@ -108,44 +108,35 @@
                     {
                         field: 'LAY_TABLE_INDEX',
                         title: '序号',
-                        width: 80,
+                        width: 40,
                         templet: function(d) {
                             return d.LAY_TABLE_INDEX + 1;
                         }
-                    },
-                    {
+                    }, {
                         type: 'checkbox'
-                    },
-                    {
+                    }, {
                         field: 'code',
                         title: '仓库编号',
-                        sort: true
-                    },
-                    {
+                    }, {
                         field: 'name',
                         title: '仓库名称',
                         event: 'click',
                         style: 'cursor: pointer;color:#4394ff;',
-                        sort: true
                     }, {
                         field: 'ownername',
                         title: '仓库主',
-                        sort: true
                     }, {
                         field: 'address',
                         title: '地址',
-                        sort: true
                     }, {
                         field: 'type',
                         title: '仓库类型',
-                        sort: true,
                         templet: function(d) {
                             return '监管仓';
                         }
                     }, {
                         field: 'remarks',
                         title: '备注',
-                        sort: true
                     }
                     //,{
                     //     field: 'status',

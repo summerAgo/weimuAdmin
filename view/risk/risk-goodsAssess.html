@@ -115,23 +115,20 @@
                     {
                         field: 'LAY_TABLE_INDEX',
                         title: '序号',
-                        width: 80,
+                        width: 40,
                         templet: function(d) {
                             return d.LAY_TABLE_INDEX + 1;
                         }
-                    },
-                    {
+                    }, {
                         field: 'name', // 设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识
                         title: '仓库主',
                         event: 'click',
                         style: 'color:#4394ff',
                         width: 266,
-                        sort: true
                     }, {
                         field: 'untreated',
                         title: '未评估商品',
                         width: 266,
-                        sort: true,
                         templet: function(d) {
                             //默认无
                             if (d.untreated > 0) {
@@ -142,7 +139,6 @@
                     }, {
                         field: 'already',
                         title: '已评估商品',
-                        sort: true
                     }
                 ]
             ],
