@@ -337,8 +337,8 @@
     padding: 0 0 0 0;
     margin: 0;
     flex: 1 1 auto;
-    border-top: 1px solid #ddd;
-    border-bottom: 1px solid #ddd;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
 }
 
 .layui-tab-title .nav-tabs-home i {
@@ -398,7 +398,7 @@
     line-height: 36px;
     color: #333;
     font-size: 14px;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #ccc;
 }
 
 .layui-layer.layui-layer-page .layui-layer-title {
@@ -1171,4 +1171,12 @@ div[xm-select-skin] .xm-select-title div.xm-select-label > span {
 
 .layui-table thead tr {
     background-color: #e8e8e8;
+}
+
+.layui-input {
+    border-color: #ddd;
+}
+
+.layui-table th {
+    text-align: center;
 }
