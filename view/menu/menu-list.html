@@ -110,44 +110,35 @@
                     {
                         field: 'LAY_TABLE_INDEX',
                         title: '序号',
-                        width: 80,
+                        width: 40,
                         templet: function(d) {
                             return d.LAY_TABLE_INDEX + 1;
                         }
-                    },
-                    {
+                    }, {
                         type: 'checkbox'
-                    },
-                    {
+                    }, {
                         field: 'code',
                         title: '菜单KEY',
                         event: 'click',
-                        sort: true
                     }, {
                         field: 'name',
                         title: '菜单名称',
                         event: 'click',
-                        sort: true
                     }, {
                         field: 'icon',
                         title: '菜单图标',
-                        sort: true
                     }, {
                         field: 'sort',
                         title: '排序',
-                        sort: true
                     }, {
                         field: 'url',
                         title: '地址',
-                        sort: true
                     }, {
                         field: 'level',
                         title: '菜单层级',
-                        sort: true
                     }, {
                         field: 'createdate',
                         title: '创建时间',
-                        sort: true
                     }
                 ]
             ],
