@@ -2,9 +2,9 @@
     <div class="table-content-title layer-level">
         <div class="table-tools layerInventoryTools">
             <ul class="layui-nav" lay-filter="talbe-tools">
-                <li class="layui-nav-item">
+                <!-- <li class="layui-nav-item">
                     <a href="javascript:;" class="addGoodsBtn"><i class="iconfont icon-tianjiahuowu"></i>从库存添加货物</a>
-                </li>
+                </li> -->
                 <li class="layui-nav-item">
                     <a href="javascript:;" class="editBtn"><i class="iconfont icon-bianji"></i>编辑</a>
                 </li>
@@ -64,7 +64,7 @@
         var table = layui.table;
         var formSelects = layui.formSelects;
         var laytpl = layui.laytpl;
-
+        var tableData = [];
         form.render(); //重置表单渲染
         formSelects.render(); //下拉选项
 
@@ -129,9 +129,12 @@
                         return d.LAY_TABLE_INDEX + 1;
                     }
                 }, {
+                    field: 'num1',
+                    title: '调整后数量（m³）'
+                },{
                     field: 'num',
-                    title: '数量（m³）'
-                }, {
+                    title: '调整前数量（m³）'
+                },{
                     field: 'code',
                     title: '包号'
                 }, {
@@ -440,7 +443,7 @@
                     return arr;
                 }
 
-                var tableInsGood = table.render({
+                var tableInsGoods = table.render({
                     elem: '#tableContainer-goodsList',
                     // height: 'full-' + tableTopHeight,
                     height: '430px',
@@ -574,7 +577,8 @@
                     // console.log(tableData);
                     layer.close(goodsListLayer); //关闭
                     // 刷新表格
-                    // console.log(tableData);
+                    console.log(tableData);
+                    debugger;
                     tableIns.reload({
                         data: tableData,
                         page: {
@@ -595,7 +599,7 @@
                         } else {
                             layer.msg('该商品未评估，不可出库');
                             obj.checked = false;
-                            tableInsGood.reload({
+                            tableInsGoods.reload({
                                 data: tableData,
                                 page: {
                                     curr: 1 //重新从第 1 页开始
