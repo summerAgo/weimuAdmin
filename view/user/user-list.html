@@ -148,11 +148,9 @@
                         templet: function(d) {
                             return d.LAY_TABLE_INDEX + 1;
                         }
-                    },
-                    {
+                    }, {
                         type: 'checkbox'
-                    },
-                    {
+                    }, {
                         field: 'username',
                         title: '用户名',
                         sort: true
@@ -177,7 +175,6 @@
                         title: '创建时间',
                         sort: true
                     }
-
                 ]
             ],
             even: true,
@@ -571,14 +568,14 @@
                     map["spread"] = true;
                     var children = [];
                     for (var j = 0; j < insData.length; j++) {
-                        if (val[i].id == insData[j].pid) {
+                        if (val[i].id === insData[j].pid) {
                             var son = {};
                             son["name"] = insData[j].name;
                             son["id"] = insData[j].id;
                             son["pid"] = insData[j].pid;
                             children.push(son);
                             number++;
-                            if (number == 1) {
+                            if (number === 1) {
                                 menuIns = son;
                             }
                         }
