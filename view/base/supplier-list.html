@@ -265,7 +265,7 @@
             });
         });
 
-        //添加加供应商表单提交
+        //添加供应商表单提交
         form.on('submit(addSubmit)', function(data) {
             var userData = window.currData;
             var title = "";
@@ -465,6 +465,7 @@
                 });
             });
         });
+
         //删除用户类型
         $("#delins").click(function() {
             if (!menuIns.id) {
@@ -508,6 +509,7 @@
             return false;
         });
 
+        // 供应商类型表单提交监测
         form.on('submit(addInsSubmit)', function(data) {
             var title = "";
             var url = "";
