@@ -33,9 +33,9 @@
                 <div class="form-box clearfix">
                     <div class="layui-form-item form-left">
                         <div class="table-form-item layui-input-inline">
-                            <span class="input-span form-required">货权人</span>
+                            <span class="input-span form-required">仓库主</span>
                             <select name="ownerid" xm-select="ownerSelectLayer" xm-select-radio>
-                                <option value="">货权人</option>
+                                <option value="">仓库主</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
@@ -96,16 +96,16 @@
         element.render('talbe-tools'); //表格工具栏
 
         formSelects.data('ownerSelectLayer', 'local', {
-            arr: selectDataInstall(ownerDropdown, null, null, 0) //货权人列表
+            arr: selectDataInstall(ownerDropdown, null, null, 0) //仓库主列表
         });
 
         layui.formSelects.opened('depotSelectLayer', function (id) {
-            var ownerid = formSelects.value('ownerSelectLayer', 'val'); //获取货权人ID
+            var ownerid = formSelects.value('ownerSelectLayer', 'val'); //获取仓库主ID
             if (ownerid.length < 1) {
-                layer.msg("请先选择货权人");
+                layer.msg("请先选择仓库主");
                 formSelects.data(id, 'local', {
                     arr: []
-                }); //如果货权人为空则清空列表
+                }); //如果仓库主为空则清空列表
             }
         });
 
@@ -140,7 +140,7 @@
                     formSelects.data('positionSelectLayer', 'local', {
                         arr: [] //清空库位列表
                     });
-                    layer.msg("该货权人下无仓库信息");
+                    layer.msg("该仓库主下无仓库信息");
                     return false;
                 }
                 formSelects.data('depotSelectLayer', 'local', {
@@ -586,7 +586,7 @@
             var suppliername = parent.find("input[name='suppliername']").val();
 
             if (null == cargoowner || cargoowner.length < 1) {
-                layer.msg("请填写货权人");
+                layer.msg("请填写仓库主");
                 return;
             }
             if (null == depotname || depotname.length < 1) {

@@ -23,11 +23,11 @@
                 <div class="form-box">
                     <div class="layui-form-item form-left">
                         <div class="table-form-item layui-input-inline">
-                            <span class="input-span">货权人</span>
+                            <span class="input-span">仓库主</span>
                             <!-- <select name="ownerid" xm-select="ownerSelect" xm-select-radio>
-                                <option value="">货权人</option>
+                                <option value="">仓库主</option>
                             </select> -->
-                            <input type="text" name="name" placeholder="请输入货权人" class="layui-input">
+                            <input type="text" name="name" placeholder="请输入仓库主" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-form-item form-right">
@@ -118,7 +118,7 @@
                     },
                     {
                         field: 'name',
-                        title: '货权人',
+                        title: '仓库主',
                         event: 'click',
                         style: 'color:#4394ff;cursor: pointer;',
                         width: 266
@@ -186,7 +186,7 @@
         });
 
 
-        // 监听货权人点击事件
+        // 监听仓库主点击事件
         table.on('tool(tableContainer)', function(obj) {
             var curData = obj.data;
             if (obj.event === 'click') {

@@ -25,9 +25,9 @@
                 <div class="form-box clearfix">
                     <div class="layui-form-item form-left">
                         <div class="table-form-item layui-input-inline">
-                            <span class="input-span form-required">货权人</span>
+                            <span class="input-span form-required">仓库主</span>
                             <select name="ownerid" xm-select="ownerSelect" xm-select-radio>
-                                <option value="">货权人</option>
+                                <option value="">仓库主</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
@@ -70,10 +70,10 @@
             <!-- <blockquote class="layui-elem-quote" id="details-title">
                 <ul class="layer-title">
                     <li>
-                        <small>货权人</small>
+                        <small>仓库主</small>
                         <div class="layui-input-inline">
                             <select name="ownerid" xm-select="ownerSelect" xm-select-radio>
-                                <option value="">选择货权人</option>
+                                <option value="">选择仓库主</option>
                             </select>
                         </div>
                     </li>
@@ -175,16 +175,16 @@
         var tableData = [];
 
         formSelects.data('ownerSelect', 'local', {
-            arr: selectDataInstall(ownerDropdown) //货权人列表
+            arr: selectDataInstall(ownerDropdown) //仓库主列表
         });
 
         layui.formSelects.opened('depotSelect', function(id) {
-            var ownerid = formSelects.value('ownerSelect', 'val'); //获取货权人ID
+            var ownerid = formSelects.value('ownerSelect', 'val'); //获取仓库主ID
             if (ownerid.length < 1) {
-                layer.msg("请先选择货权人");
+                layer.msg("请先选择仓库主");
                 formSelects.data(id, 'local', {
                     arr: []
-                }); //如果货权人为空则清空列表
+                }); //如果仓库主为空则清空列表
             }
         });
 
@@ -213,7 +213,7 @@
                     formSelects.data('depotSelect', 'local', {
                         arr: [] //清空仓库列表
                     });
-                    layer.msg("该货权人下无仓库信息");
+                    layer.msg("该仓库主下无仓库信息");
                     return false;
                 }
                 formSelects.data('depotSelect', 'local', {
@@ -278,14 +278,14 @@
                     "name": array.ownername,
                     "value": array.ownerid,
                     "selected": "selected"
-                }] //货权人列表
+                }] //仓库主列表
             });
             formSelects.data('depotSelect', 'local', {
                 arr: [{
                     "name": array.depname,
                     "value": array.depotid,
                     "selected": "selected"
-                }] //货权人列表
+                }] //仓库主列表
             });
             formSelects.disabled('ownerSelect'); //禁用
             formSelects.disabled('depotSelect'); //禁用
@@ -343,7 +343,7 @@
                         type: 'checkbox',
                     }, {
                         field: 'ownername',
-                        title: '货权人'
+                        title: '仓库主'
                     }, {
                         field: 'code',
                         title: '包号'
@@ -393,7 +393,7 @@
                 $(".submissionBtn").unbind("click").bind("click", function() {
                     var cargoowner = layui.formSelects.value('ownerSelect', "valStr");
                     if (cargoowner === "") {
-                        layer.msg('货权人不能为空');
+                        layer.msg('仓库主不能为空');
                         return false;
                     }
 
@@ -573,7 +573,7 @@
         $("#addGoodsBtn").click(function() {
             var cargoowner = layui.formSelects.value('ownerSelect', "valStr");
             if (cargoowner === "") {
-                layer.msg('货权人不能为空');
+                layer.msg('仓库主不能为空');
                 return false;
             }
 
@@ -606,7 +606,7 @@
                 });
 
                 // formSelects.data('ownerSelectGoods', 'local', {
-                //     arr: selectDataInstall(ownerDropdown) //货权人列表
+                //     arr: selectDataInstall(ownerDropdown) //仓库主列表
                 // });
 
                 formSelects.data('originSelectGoods', 'local', {

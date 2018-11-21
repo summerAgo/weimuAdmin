@@ -67,9 +67,9 @@
                             <input type="text" name="billloading" placeholder="提运单" autocomplete="off" class="layui-input">
                         </div>
                         <div class="table-form-item layui-input-inline">
-                            <span class="input-span">货权人</span>
+                            <span class="input-span">仓库主</span>
                             <select name="ownerid" xm-select="ownerSelect" xm-select-radio>
-                                <option value="">货权人</option>
+                                <option value="">仓库主</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
@@ -130,16 +130,16 @@
         });
 
         formSelects.data('ownerSelect', 'local', {
-            arr: selectDataInstall(ownerDropdown, null, 0) //货权人列表
+            arr: selectDataInstall(ownerDropdown, null, 0) //仓库主列表
         });
 
         layui.formSelects.opened('depotSelect', function(id) {
-            var ownerid = formSelects.value('ownerSelect', 'val'); //获取货权人ID
+            var ownerid = formSelects.value('ownerSelect', 'val'); //获取仓库主ID
             if (ownerid.length < 1) {
-                layer.msg("请先选择货权人");
+                layer.msg("请先选择仓库主");
                 formSelects.data(id, 'local', {
                     arr: []
-                }); //如果货权人为空则清空列表
+                }); //如果仓库主为空则清空列表
             }
         });
         //监听
@@ -157,7 +157,7 @@
                     formSelects.data('depotSelect', 'local', {
                         arr: [] //清空仓库列表
                     });
-                    layer.msg("该货权人下无仓库信息");
+                    layer.msg("该仓库主下无仓库信息");
                     return false;
                 }
                 formSelects.data('depotSelect', 'local', {
@@ -311,7 +311,7 @@
                         title: '入库时间'
                     }, {
                         field: 'ownername',
-                        title: '货权人'
+                        title: '仓库主'
                     }, {
                         field: 'remarks',
                         title: '备注'

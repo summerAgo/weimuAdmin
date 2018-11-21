@@ -26,9 +26,9 @@
                             <input type="text" name="orderno" placeholder="订单号" autocomplete="off" class="layui-input">
                         </div>
                         <div class="table-form-item layui-input-inline">
-                            <span class="input-span">货权人</span>
+                            <span class="input-span">仓库主</span>
                             <select name="ownerid" xm-select="ownerSelectOut" xm-select-radio>
-                                <option value="">选择货权人</option>
+                                <option value="">选择仓库主</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
@@ -102,16 +102,16 @@
         });
 
         formSelects.data('ownerSelectOut', 'local', {
-            arr: selectDataInstall(ownerDropdown) //货权人列表
+            arr: selectDataInstall(ownerDropdown) //仓库主列表
         });
 
         layui.formSelects.opened('depotSelectOut', function(id) {
-            var ownerid = formSelects.value('ownerSelectOut', 'val'); //获取货权人ID
+            var ownerid = formSelects.value('ownerSelectOut', 'val'); //获取仓库主ID
             if (ownerid.length < 1) {
-                layer.msg("请先选择货权人");
+                layer.msg("请先选择仓库主");
                 formSelects.data(id, 'local', {
                     arr: []
-                }); //如果货权人为空则清空列表
+                }); //如果仓库主为空则清空列表
             }
         });
 
@@ -146,7 +146,7 @@
                     formSelects.data('positionSelectOut', 'local', {
                         arr: [] //清空库位列表
                     });
-                    layer.msg("该货权人下无仓库信息");
+                    layer.msg("该仓库主下无仓库信息");
                     return false;
                 }
                 formSelects.data('depotSelectOut', 'local', {
@@ -271,7 +271,7 @@
                         width: 200
                     }, {
                         field: 'ownername',
-                        title: '货权人'
+                        title: '仓库主'
                     }, {
                         field: 'depname',
                         title: '仓库名称'

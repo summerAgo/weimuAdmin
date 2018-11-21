@@ -25,10 +25,10 @@
                 <div class="form-box clearfix">
                     <div class="layui-form-item form-left">
                         <div class="table-form-item layui-input-inline">
-                            <span class="input-span">货权人</span>
-                            <input type="text" name="name" placeholder="货权人" autocomplete="off" class="layui-input">
+                            <span class="input-span">仓库主</span>
+                            <input type="text" name="name" placeholder="仓库主" autocomplete="off" class="layui-input">
                             <!-- <select name="ownerid" xm-select="ownerSelect" xm-select-radio>
-                                <option value="">选择货权人</option>
+                                <option value="">选择仓库主</option>
                             </select> -->
                         </div>
                     </div>
@@ -122,7 +122,7 @@
                     },
                     {
                         field: 'name', // 设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识
-                        title: '货权人',
+                        title: '仓库主',
                         event: 'click',
                         style: 'color:#4394ff',
                         width: 266,
@@ -161,7 +161,7 @@
 
 
         var ownerid = null;
-        // 监听货权人点击事件
+        // 监听仓库主点击事件
         table.on('tool(table-goodsAssess)', function(obj) {
             var curData = obj.data;
             // console.log(curData)
