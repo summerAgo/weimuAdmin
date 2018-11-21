@@ -194,7 +194,7 @@
                     {
                         field: 'LAY_TABLE_INDEX',
                         title: '序号',
-                        width: 80,
+                        width: 40,
                         templet: function(d) {
                             return d.LAY_TABLE_INDEX + 1;
                         }
@@ -202,11 +202,9 @@
                     {
                         field: 'ownername',
                         title: '仓库主',
-                        sort: true
                     }, {
                         field: 'status',
                         title: '审核结果',
-                        sort: true,
                         templet: function(d) {
                             console.log(d);
                             if (d.isexamine == 2) {
@@ -225,31 +223,24 @@
                     }, {
                         field: 'depname',
                         title: '出库仓库',
-                        sort: true
                     }, {
                         field: 'num',
                         title: '数量（m³）',
-                        sort: true
                     }, {
                         field: 'totalamount',
                         title: '出货金额',
-                        sort: true
                     }, {
                         field: 'stockmoney',
                         title: '库存金额',
-                        sort: true
                     }, {
                         field: 'financingmoney',
                         title: '融资金额',
-                        sort: true
                     }, {
                         field: 'cordonmoney',
                         title: '警戒线',
-                        sort: true
                     }, {
                         field: 'createdate',
                         title: '审核时间',
-                        sort: true
                     }
                 ]
             ],
