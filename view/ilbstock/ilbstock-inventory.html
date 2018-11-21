@@ -8,6 +8,12 @@
                 <!-- <li class="layui-nav-item">
                     <a href="javascript:;">打印</a>
                 </li> -->
+                <li class="layui-nav-item">
+                    <a href="javascript:;">删除已盘点</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">删除</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -237,10 +243,10 @@
                         title: '盘点时间'
                     }, {
                         field: 'ownername',
-                        title: '货权人'
+                        title: '仓库主'
                     }, {
                         field: 'depname',
-                        title: '仓库',
+                        title: '仓库名称',
                         event: 'click',
                         style: 'color:#4394ff;cursor: pointer;'
                     }, {
@@ -277,7 +283,7 @@
             var curData = obj.data;
             if (obj.event === 'click') {
                 sessionStorage.setItem('inventoryParam', JSON.stringify(curData));
-                $.get('view/ilbstock/ilbstock-layerInventory.html', {}, function(str) { // 请求弹框
+                $.get('view/ilbstock/ilbstock-layerAbnormal.html', {}, function(str) { // 请求弹框
                     // 弹出弹框
                     inventoryLayer = layer.open({
                         title: '盘点详情',

@@ -1,3 +1,4 @@
+<!--点击 新建盘点按钮 进入页面-->
 <div class="table-page">
     <div class="table-content-title layer-level">
         <div class="table-tools layerInventoryTools">
@@ -17,15 +18,15 @@
                 <div class="form-box layerInventory">
                     <div class="layui-form-item form-left">
                         <div class="table-form-item layui-input-inline">
-                            <span class="input-span form-required">货权人</span>
+                            <span class="input-span form-required">仓库主</span>
                             <select name="ownerid" xm-select="ownerSelectLayer" xm-select-radio lay-verify="required">
-                                <option value="">货权人</option>
+                                <option value="">仓库人</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
-                            <span class="input-span form-required">仓库</span>
+                            <span class="input-span form-required">仓库名称</span>
                             <select name="depotid" xm-select="depotSelectLayer" xm-select-radio lay-verify="required">
-                                <option value="">仓库</option>
+                                <option value="">仓库名称</option>
                             </select>
                         </div>
                     </div>
@@ -65,17 +66,17 @@
             ownerid: 0,
             depotid: 0
         };
-        var echoData = JSON.parse(sessionStorage.getItem('inventoryParam'));
+        // var echoData = JSON.parse(sessionStorage.getItem('inventoryParam'));
 
-        if (echoData) {
-            $(".layerInventory").hide();
-            if (echoData.status == 1) {
-                $(".layerInventoryTools").hide();
-            }
-            depotData.ownerid = echoData.ownerid;
-            depotData.depotid = echoData.depotid;
-            depotData.id = echoData.id;
-        }
+        // if (echoData) {
+        //     $(".layerInventory").hide();
+        //     if (echoData.status == 1) {
+        //         $(".layerInventoryTools").hide();
+        //     }
+        //     depotData.ownerid = echoData.ownerid;
+        //     depotData.depotid = echoData.depotid;
+        //     depotData.id = echoData.id;
+        // }
 
         form.on('submit(searchForm-layer)', function(data) {
             var paramSearch = {};
@@ -175,26 +176,12 @@
             where: depotData,
             parseData: function(res) { //res 即为原始返回的数据
                 console.log(res.data);
-
-                var datas = [];
-                if (echoData || !res.data) {
-                    console.log(1);
-                    datas = res.data;
-                } else {
-                    console.log(2);
-                    for (var i = 0; i < res.data.length; i++) {
-                        var v = res.data[i];
-                        v.num1 = null;
-                        datas.push(v);
-                    }
-                }
-                console.log(datas);
                 //if (res.status !== 0) res.status = 0;                
                 return {
                     "code": res.status, //解析接口状态
                     "msg": res.msg, //解析提示文本
                     "count": res.count, //解析数据长度
-                    "data": datas //解析数据列表
+                    "data": res.data //解析数据列表
                 }
             },
             request: {
@@ -213,12 +200,14 @@
                     },
                     {
                         field: 'num',
-                        title: '数量（m³）'
+                        title: '盘点前数量（m³）',
+                        width:150
                     }, {
                         field: 'num1',
-                        title: '实际数量（m³）',
+                        title: '盘点后数量（m³）',
                         edit: "txt",
-                        style: "color:red;cursor: pointer"
+                        style: "color:red;cursor: pointer",
+                        width:150
                     }, {
                         field: 'code',
                         title: '包号'
