@@ -164,7 +164,7 @@
             sessionStorage.setItem('base_infodata_data', JSON.stringify(data));
             $.get('view/form/form-infodata.html', {}, function(str) {
                 addLayer = layer.open({
-                    title: '添加商品信息设置',
+                    title: '添加商品',
                     type: 1,
                     content: str, //注意，如果str是object，那么需要字符拼接。
                     area: ['800px', '560px'],
@@ -180,7 +180,6 @@
                 layer.msg("请选择一条需要修改的信息");
             } else {
                 $.get('view/form/form-infodata.html', {}, function(str) {
-                    //console.log(checkStatus.data[0].id)
                     var data = checkStatus.data[0];
                     data["instid"] = menuIns.id;
                     data["inaAllList"] = inaAllList;
@@ -197,9 +196,8 @@
             }
         });
 
-        //监测添加修改商品表单提交
+        //修改商品表单提交
         form.on('submit(addinfodataForm)', function(data) {
-            console.log("xxxx");
             // data.field.orderno = window.currData.orderno; //防止单号被篡改
             // data.field.origin = window.currData.origin; //
             // data.field.supplier = window.currData.supplier; //
@@ -220,27 +218,30 @@
 
             // 判供商品是否重复
             var isName = true; // 重复标识
-            $.ajax({
-                cache: true,
-                type: "get",
-                url: isname_info,
-                data: {
-                    instid: data.field.instid,
-                    name: data.field.name
-                },
-                async: false,
-                xhrFields: {
-                    withCredentials: true
-                },
-                crossDomain: true,
-                success: function(data) {
-                    if (data.status === 2) {
-                        layer.msg('商品类型已存在');
-                        isName = false;
+            var tableData = JSON.parse(sessionStorage.getItem("base_infodata_data"));
+            if(tableData.name !== data.field.name) {
+                $.ajax({
+                    cache: true,
+                    type: "get",
+                    url: isname_info,
+                    data: {
+                        instid: data.field.instid,
+                        name: data.field.name
+                    },
+                    async: false,
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    success: function (data) {
+                        if (data.status === 2) {
+                            layer.msg('商品类型已存在');
+                            isName = false;
+                        }
                     }
-                }
-            });
-            if (!isName) {return false;}
+                });
+                if (!isName) {return false;}
+            }
 
             // 添加
             $.ajax({
@@ -269,7 +270,7 @@
             return false;
         });
 
-        //删除
+        //删除商品
         $(".deleteBtn").click(function() {
             var checkStatus = table.checkStatus('tableContainer_baseinfo');
             if (checkStatus.data.length < 1) {
@@ -362,7 +363,6 @@
                 }
                 insList = val;
                 var treeData = [];
-                console.log(treeData);
                 var number = 0;
                 for (var i = 0; i < val.length; i++) {
                     var map = {};
@@ -387,8 +387,8 @@
                     map["children"] = children;
                     treeData.push(map);
                 }
-                console.log(treeData);
-                console.log(layui.tree);
+                // console.log(treeData);
+                // console.log(layui.tree);
                 layui.tree({
                     elem: '#tree-nav',
                     nodes: treeData,
@@ -406,7 +406,6 @@
 
         // 根据菜单刷新表格
         function resTable(d) {
-            // console.log(d)
             menuIns = d;
             // 刷新表格
             $("#instid").val(menuIns.id);
@@ -501,6 +500,7 @@
             return false;
         });
 
+        // 监测商品类型修改表单提交
         form.on('submit(addInsSubmit)', function(data) {
             var title = "";
             var url = "";
