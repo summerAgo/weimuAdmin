@@ -169,11 +169,9 @@
                         resize: false,
                         area: ['800px', '560px'],
                     });
-
                 });
             }
         });
-
 
         $(".deleteBtn").click(function() {
             //删除
@@ -225,7 +223,6 @@
             });
         });
 
-
         //设置角色权限
         $("#roleAuthority").click(function() {
             var checkStatus = table.checkStatus('tableContainerRole');
@@ -244,7 +241,6 @@
                     });
                 });
             }
-
         });
 
         //添加角色表单提交
@@ -290,36 +286,46 @@
             var userData = window.currData;
             var title = "";
             var userUrl = "";
+            var isNameAdd = false;// 判断添加是否同名标识
+            var isNameEdit = false;// 判断修改是否同名标识
+            var isName = true; // 是否重名标识
+
             if (userData != null) {
                 title = '确认提交修改';
                 userUrl = roleUpdate;
+                isNameEdit = !!(userData.rolename !== data.field.rolename);
             } else {
                 title = '确认添加';
                 userUrl = roleAdd;
+                isNameAdd = true;
             }
 
             // 判断觉得名是否重复
             var isName = true; // 是否有用户名标识
-            $.ajax({
-                cache: true,
-                type: "get",
-                url: isname_role,
-                data: {
-                    rolename: data.field.rolename
-                },
-                async: false,
-                xhrFields: {
-                    withCredentials: true
-                },
-                crossDomain: true,
-                success: function(data) {
-                    if (data.status === 2) {
-                        layer.msg('角色已存在');
-                        isName = false;
+            if (isNameAdd || isNameEdit) {
+                $.ajax({
+                    cache: true,
+                    type: "get",
+                    url: isname_role,
+                    data: {
+                        rolename: data.field.rolename
+                    },
+                    async: false,
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    success: function (data) {
+                        if (data.status === 2) {
+                            layer.msg('角色已存在');
+                            isName = false;
+                        }
                     }
+                });
+                if (!isName) {
+                    return false;
                 }
-            });
-            if (!isName) {return false;}
+            }
 
             layer.confirm(title, {
                 icon: 3,
