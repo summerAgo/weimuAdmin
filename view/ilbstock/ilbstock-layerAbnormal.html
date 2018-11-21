@@ -26,9 +26,9 @@
                 <div class="form-box layerInventory">
                     <div class="layui-form-item form-left">
                         <div class="table-form-item layui-input-inline">
-                            <span class="input-span form-required">货权人</span>
+                            <span class="input-span form-required">仓库主</span>
                             <select name="ownerid" xm-select="ownerSelectLayer" xm-select-radio lay-verify="required">
-                                <option value="">货权人</option>
+                                <option value="">仓库主</option>
                             </select>
                         </div>
                         <div class="table-form-item layui-input-inline">
@@ -187,16 +187,16 @@
         });
 
         formSelects.data('ownerSelectLayer', 'local', {
-            arr: selectDataInstall(ownerDropdown) //货权人列表
+            arr: selectDataInstall(ownerDropdown) //仓库主列表
         });
 
         layui.formSelects.opened('depotSelectLayer', function(id) {
-            var ownerid = formSelects.value('ownerSelectLayer', 'val'); //获取货权人ID
+            var ownerid = formSelects.value('ownerSelectLayer', 'val'); //获取仓库主ID
             if (ownerid.length < 1) {
-                layer.msg("请先选择货权人");
+                layer.msg("请先选择仓库主");
                 formSelects.data(id, 'local', {
                     arr: []
-                }); //如果货权人为空则清空列表
+                }); //如果仓库主为空则清空列表
             }
         });
 
@@ -215,7 +215,7 @@
                     formSelects.data('depotSelectLayer', 'local', {
                         arr: [] //清空仓库列表
                     });
-                    layer.msg("该货权人下无仓库信息");
+                    layer.msg("该仓库主下无仓库信息");
                     return false;
                 }
                 formSelects.data('depotSelectLayer', 'local', {
@@ -312,7 +312,7 @@
 
         function submitOrSave(dataObj, valueArr, url) {
             if (!dataObj.ownerid || !dataObj.depotid) {
-                layer.msg('请选择货权人和仓库并查询后再进行异常操作');
+                layer.msg('请选择仓库主和仓库并查询后再进行异常操作');
                 return false;
             }
             var status = true;
@@ -374,7 +374,7 @@
             var cargoowner = layui.formSelects.value('ownerSelectLayer', "valStr");
 
             if (cargoowner === "") {
-                layer.msg('货权人不能为空');
+                layer.msg('仓库主不能为空');
                 return false;
             }
 
@@ -406,7 +406,7 @@
                 });
 
                 // formSelects.data('ownerSelectGoods', 'local', {
-                //     arr: selectDataInstall(ownerDropdown) //货权人列表
+                //     arr: selectDataInstall(ownerDropdown) //仓库主列表
                 // });
 
                 formSelects.data('originSelectGoods', 'local', {

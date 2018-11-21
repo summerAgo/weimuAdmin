@@ -13,11 +13,11 @@
         </div>
     </div>
     <div class="layui-form-item layui-normal-line">
-        <label class="layui-form-label form-required">货权人</label>
+        <label class="layui-form-label form-required">仓库主</label>
         <div class="layui-input-inline">
-            <!-- <input type="text" name="ownerid" placeholder="货权人" value="{{d.ownerid || ''}}" autocomplete="off" class="layui-input" lay-verify="required"> -->
+            <!-- <input type="text" name="ownerid" placeholder="仓库主" value="{{d.ownerid || ''}}" autocomplete="off" class="layui-input" lay-verify="required"> -->
             <select name="ownerid" xm-select="ownerSelect" xm-select-radio lay-verify="required">
-                <option value="">选择货权人</option>
+                <option value="">选择仓库主</option>
             </select>
         </div>
     </div>
@@ -71,7 +71,7 @@
         formSelects.render();
 
         formSelects.data('ownerSelect', 'local', {
-            arr: selectDataInstall(ownerDropdown) //货权人列表
+            arr: selectDataInstall(ownerDropdown) //仓库主列表
         });
 
         formSelects.data('typeSelect', 'local', {

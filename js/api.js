@@ -38,7 +38,7 @@ var preEntryUpdate = pathUrl + "order/warehousing/update";//预入库编辑
 var preEntrygetByOrderno = pathUrl + "order/warehousing/getByOrderno?ish=1";//预入库单详情 ish:获取单号所有信息
 var preEntryexamineStock = pathUrl + "order/warehousing/examineStock";//预入库单审核为库存
 var entryHistory = preEntry + "?ishistory=1";//入库记录
-var getOrdernoDetails =  pathUrl + "order/outtreasury/getOrdernoDetails" //库存中查询货物 （仓库：depotid 货权人：ownerid）
+var getOrdernoDetails =  pathUrl + "order/outtreasury/getOrdernoDetails" //库存中查询货物 （仓库：depotid 仓库主：ownerid）
 
 var outTreasuryAdd = pathUrl + "order/outtreasury/add";//增加出货申请
 var outHistory = pathUrl + "order/outtreasury/list?ishistory=1";//出库记录
@@ -85,11 +85,19 @@ var buttonUpdate = pathUrl + "sys/button/update";//修改按钮
 var buttonDel = pathUrl + "sys/button/deleteMany";//删除按钮
 
 //下拉列表
-var ownerDropdown = pathUrl + "user/owner/dropdown";//货权人下拉
-var depotDropdown =  pathUrl + "basics/depot/dropdown";//仓库下拉： 货权人id(ownerid)
+var ownerDropdown = pathUrl + "user/owner/dropdown";//仓库主下拉
+var depotDropdown =  pathUrl + "basics/depot/dropdown";//仓库下拉： 仓库主id(ownerid)
 var positionDropdown = pathUrl + "basics/position/dropdown";//库位列表 depotid：根据仓库ID返回
 var driverDropdown = pathUrl + "order/vehiclerecord/dropdown";//出货单司机记录
 
+// 货权人
+var customerList = pathUrl + "user/customer/list";//查询列表
+var customerIsName = pathUrl + "user/customer/isName";//验证名称重复
+var customerDropdown = pathUrl + "user/customer/dropdown";//下拉
+var customerAdd = pathUrl + "user/customer/add";//新增
+var customerDelete = pathUrl + "user/customer/delete";//根据ID删除
+var customerDeleteMany = pathUrl + "user/customer/deleteMany";//根据IDS删除
+var customerUpdate = pathUrl + "user/customer/update";//修改
 
 //系统基础信息功能
 var basicsInfoAdd = pathUrl + "basics/info/add"; 
@@ -100,7 +108,6 @@ var CHDList = pathUrl + "basics/info/dropdown?instid=46"; //根据code查询接�
 var VTSList = pathUrl + "basics/info/dropdown?instid=45"; //根据code查询接口 //品种列表
 var levelsList = pathUrl + "basics/info/dropdown?instid=47"; //根据code查询接口 //等级列表
 var specList = pathUrl + "basics/info/dropdown?instid=44"; //根据code查询接口 //规格列表
-
 
 var basicsInfocode = pathUrl + "basics/info/isSelectByCode";//判断code是否存在
 
@@ -115,7 +122,7 @@ var userAuthority = pathUrl + "sys/setAuthority";//设置用户对应角色(user
 var roledown = pathUrl + "sys/role/dropdown";//角色列表所有
 var menudown = pathUrl + "sys/menu/dropdown";//菜单列表所有
 
-//客户(货权人)
+//客户(仓库主)
 var listOwner = pathUrl +"user/owner/list";//查询客户
 var addOwner = pathUrl +"user/owner/add";//添加客户
 var updOwner = pathUrl +"user/owner/update";//修改客户
@@ -163,13 +170,12 @@ var abnlbList = pathUrl + "abn/recordlist/lblist";//查
 var abnAdd = pathUrl + "abn/recordlist/add";//
 var abnByidList = pathUrl + "abn/recordlist/getByidList";//查询盘点记录 参数cid
 
-
 /////验证
 var isname_supplier = pathUrl +"basics/supplier/isName";        //供应商验证    instid,name
 var isname_position = pathUrl +"basics/position/isName";        //库位验证      depotid,name
-var isname_institution = pathUrl +"basics/institution/isName";  //类型信息  utype:0员工1货权人2供应商3基础数据 ,name
+var isname_institution = pathUrl +"basics/institution/isName";  //类型信息  utype:0员工1仓库主2供应商3基础数据 ,name
 var isname_info = pathUrl +"basics/info/isName";                //商品信息      instid,name
 var isname_depot = pathUrl +"basics/depot/isName";              //仓库验证      ownerid,name
 var isname_user = pathUrl +"sys/isName";                        //员工验证      instid,
 var isname_role = pathUrl +"sys/role/isName";                   //角色验证      rolename
-var isname_owner = pathUrl +"user/owner/isName";                //货权人验证    instid,name
+var isname_owner = pathUrl +"user/owner/isName";                //仓库主验证    instid,name

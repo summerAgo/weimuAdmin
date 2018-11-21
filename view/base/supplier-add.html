@@ -15,7 +15,7 @@
         <div class="layui-form-item layui-normal-line">
             <label class="layui-form-label form-required">名称</label>
             <div class="layui-input-inline">
-                <input type="text" id="name" name="name" lay-verify="required" placeholder="必填项,请输入货权人名" class="layui-input" value="{{d.name||''}}">
+                <input type="text" id="name" name="name" lay-verify="required" placeholder="必填项,请输入仓库主名" class="layui-input" value="{{d.name||''}}">
                 <input type="hidden" id="id" name="id" value="{{d.id||''}}">
             </div>
         </div>
@@ -26,7 +26,7 @@
             </div>
         </div>
         <div class="layui-form-item layui-normal-line">
-            <label class="layui-form-label">货权人ID</label>
+            <label class="layui-form-label">仓库主ID</label>
             <div class="layui-input-inline">
                 <input type="text" id="ownerid" name="ownerid" placeholder="选填" value="{{d.ownerid || ''}}" class="layui-input">
             </div>
