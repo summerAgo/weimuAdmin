@@ -3,15 +3,9 @@
         <div class="table-tools">
             <ul class="layui-nav" lay-filter="talbe-tools">
                 <li class="layui-nav-item">
-                    <a id="addBtn" href="javascript:;"><i class="iconfont icon-zengjiakucun"></i>增加库存</a>
+                    <a id="addBtn" href="javascript:;"><i class="iconfont icon-zengjiakucun"></i>调整库存</a>
                 </li>
-                <li class="layui-nav-item">
-                    <a class="reduceStore" href="javascript:;"><i class="iconfont icon-jianshaokucun"></i>减少库存</a>
-                </li>
-                <li class="layui-nav-item">
-                    <a class="splitStore" href="javascript:;"><i class="iconfont icon-chaibao"></i>库存拆分</a>
-                </li>
-                <li class="layui-nav-item">
+                <!-- <li class="layui-nav-item">
                     <a class="toExport" href="javascript:;"><i class="iconfont icon-daochu"></i>导出</a>
                 </li>
                 <li class="layui-nav-item">
@@ -19,7 +13,7 @@
                 </li>
                 <li class="layui-nav-item">
                     <a href="javascript:;" class="updateBtn"><i class="iconfont icon-bianji"></i>修改</a>
-                </li>
+                </li> -->
                 <li class="layui-nav-item">
                     <a class="printStore" href="javascript:;"><i class="iconfont icon-shuaxin"></i>刷新</a>
                 </li>
@@ -242,7 +236,7 @@
         var tableIns = table.render({
             elem: '#tableContainer',
             height: 'full-' + tableTopHeight, // full -- 
-            url: abnList, // 数据接口
+            url: abnByidList, // 数据接口
             // 任意数据格式解析成 table 组件规定的数据格式
             parseData: function(res) { //res 即为原始返回的数据
                 if (res.status !== 0) res.status = 0;
@@ -267,18 +261,36 @@
                         templet: function(d) {
                             return d.LAY_TABLE_INDEX + 1;
                         }
-                    },
-                    {
-                        field: 'createdate',
-                        title: '创建时间'
                     }, {
-                        field: 'ownername',
-                        title: '货权人'
+                        field: 'num1',
+                        title: '调整后数量（m³）'
+                    },{
+                        field: 'num',
+                        title: '调整前数量（m³）'
                     }, {
-                        field: 'depname',
-                        title: '仓库',
-                        event: 'click',
-                        style: 'color:#4394ff;cursor: pointer;'
+                        field: 'code',
+                        title: '包号'
+                    }, {
+                        field: 'varieties',
+                        title: '品种'
+                    }, {
+                        field: 'spec',
+                        title: '规格/厚度'
+                    }, {
+                        field: 'levels',
+                        title: '等级'
+                    }, {
+                        field: 'chang',
+                        title: '长度'
+                    }, {
+                        field: 'brand',
+                        title: '品牌'
+                    }, {
+                        field: 'origin',
+                        title: '产地'
+                    }, {
+                        field: 'pprice',
+                        title: '采购单价'
                     }
                     //, 
                     // {
