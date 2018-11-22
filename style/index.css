@@ -33,7 +33,7 @@
     background: linear-gradient(to right, #51018c 0%, #2648ca 50%, #0383fe 100%);
     !* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ *!
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#51018c', endColorstr='#0383fe', GradientType=1);*/
-    background-color: #0284ff;
+    background-color: #0078ea;
 }
 
 .layui-header .layui-logo .logo {
@@ -92,6 +92,7 @@
 
 .index-side .layui-side-scroll {
     width: 170px;
+    background-color: #101c2b;
 }
 
 .index-side .layui-nav-tree .layui-nav-item > a {
@@ -99,22 +100,22 @@
     line-height: 45px;
     padding: 0 10px 0 20px;
     margin-bottom: 2px;
-    background: #2a3441;
+    background: #1c293a;
     font-size: 15px;
     font-weight: bold;
 }
 
 .index-side .layui-nav-tree .layui-nav-item > a:hover {
-    background: #384455;
+    background: #202d40;
 }
 
 .index-side .layui-nav-tree .layui-nav-itemed > a {
-    color: #2e99ff !important;
-    background: #384455;
+    color: #148cff !important;
+    background: #202d40;
 }
 
 .index-side .layui-nav-tree .layui-nav-item a {
-    color: #93979c;
+    color: #cbcbcb;
 }
 
 .index-side .layui-nav-tree .layui-nav-item a:hover {
@@ -133,18 +134,8 @@
     vertical-align: baseline;
 }
 
-/*.index-side .layui-nav-tree .layui-nav-item.layui-nav-itemed a i {*/
-    /*background: -webkit-linear-gradient(left, #8f4cff 0%, #359dff 100%);*/
-    /*-webkit-text-fill-color: transparent;*/
-    /*-webkit-background-clip: text;*/
-/*}*/
-
-.index-side {
-    background: #1e262f
-}
-
 .index-side .layui-nav {
-    background: #1e262f
+    background-color: #101c2b;
 }
 
 .index-side .layui-nav .layui-nav-child a {
@@ -1142,7 +1133,7 @@ div[xm-select-skin] .xm-select-title div.xm-select-label > span {
 }
 
 .layui-table-total tr, .layui-table[lay-even] tr:nth-child(even) {
-    background: #fdfdfd;
+    background: #fafafa;
 }
 
 .layui-table-total tr:hover, .layui-table[lay-even] tr:nth-child(even):hover {
@@ -1166,7 +1157,7 @@ div[xm-select-skin] .xm-select-title div.xm-select-label > span {
 }
 
 .layui-table tbody tr:hover {
-    background-color: #f2f9ff;
+    background-color: #e9f3ff;
 }
 
 .layui-table thead tr {
@@ -1179,4 +1170,21 @@ div[xm-select-skin] .xm-select-title div.xm-select-label > span {
 
 .layui-table th {
     text-align: center;
+}
+
+.layui-table-page .layui-laypage input:focus {
+    border: 1px solid #0284ff !important;
+}
+
+.layui-table-view select[lay-ignore]:focus {
+    border: 1px solid #0284ff !important;
+}
+
+.layui-table td[data-field="LAY_TABLE_INDEX"] .layui-table-cell {
+    height: 28px;
+    line-height: 28px;
+    padding: 0 5px;
+    position: relative;
+    text-align: center;
+    box-sizing: border-box;
 }
