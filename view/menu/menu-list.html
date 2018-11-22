@@ -173,7 +173,6 @@
                 layer.msg("请选择需要编辑的单条信息");
             } else {
                 var currData = checkStatus.data[0];
-                console.log(currData.menulist);
                 $.ajax({
                     url: menuAll,
                     type: "get",
@@ -252,7 +251,7 @@
             }
         });
 
-        //弹出添加角色
+        //弹出添加菜单
         $("#creatRole").click(function() {
             var checkStatus = table.checkStatus('tableContainerMenu');
             var currData = {};
@@ -282,7 +281,7 @@
             });
         });
 
-        //添加角色表单提交
+        //添加菜单表单提交
         form.on('submit(addSubmit)', function(data) {
             var userData = window.currData;
             var title = "";

@@ -1,6 +1,6 @@
 .home-content {
     height: 100%;
-    padding: 40px 0 40px 40px;
+    padding: 40px 0 30px 30px;
     box-sizing: border-box; 
 }
 
@@ -21,14 +21,14 @@
 .count-item-top {
     width: auto;
     height: 28px;
-    padding: 0 10px 0;
+    padding: 0 10px 0 0;
     color: #fff;
-    border-bottom: 1px solid #fff;
+    border-bottom: 1px solid rgba(255,255,255,.3);
 }
 
 .count-item-top>.top-l {
     float: left;
-    font-size: 18px;
+    font-size: 16px;
     line-height: 28px;
 }
 
@@ -52,9 +52,9 @@
 
 .count-item-body {
     width: auto;
-    font-size: 36px;
+    font-size: 32px;
     line-height: 60px;
-    padding: 0 15px;
+    padding: 0 15px 0 0;
     color: #fff;
 }
 

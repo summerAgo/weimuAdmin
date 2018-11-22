@@ -188,7 +188,7 @@
 }
 
 .content-body {
-    background: #f2f2f2;
+    /*background: #f2f2f2;*/
     box-sizing: border-box
 }
 
@@ -343,6 +343,7 @@
 .nav-tabs .layui-tab-title {
     border: 0;
     z-index: 2;
+    padding-left: 30px;
 }
 
 .nav-tabs .layui-tab-title .layui-this::after {
