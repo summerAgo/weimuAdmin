@@ -375,6 +375,9 @@
                     }, {
                         field: 'num',
                         title: '数量（m³）'
+                    },{
+                        field: 'aprice',
+                        title: '评估金额'
                     }
                     // , {
                     //     field: 'createdate',
@@ -719,7 +722,7 @@
                                     if (null == d.aprice || d.aprice < 0) {
                                         return '<span style="color:red;">未评估</span>';
                                     }
-                                    return "已评估";
+                                    return d.aprice;
                                 }
                             }, {
                                 field: 'chang',
