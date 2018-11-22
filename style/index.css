@@ -1090,6 +1090,35 @@ div[xm-select-skin] .xm-select-title div.xm-select-label > span {
     border-bottom: 1px solid #bbb;
 }
 
+.store-bread-crumb {
+    overflow: hidden;
+}
+
+.store-bread-item {
+    float: left;
+    margin: 5px 0;
+    margin-right: 40px;
+    position: relative;
+}
+
+.store-bread-item > span {
+    float: left;
+}
+
+.store-bread-item > span:first-child {
+    font-size: 14px;
+    color: #333;
+    line-height: 26px;
+}
+
+.store-bread-item > span:nth-child(2) {
+    height: 26px;
+    line-height: 26px;
+    font-size: 14px;
+    color: #333;
+    font-weight: bold;
+}
+
 .xm-select-linkage-group:nth-child(4n+1) {
     background-color: #fdfdfd;
     left: 0;
@@ -1101,7 +1130,7 @@ div[xm-select-skin] .xm-select-title div.xm-select-label > span {
 }
 
 .xm-select-parent .xm-form-select dl {
-    border: 1px solid #F2F2F2;
+    border: 1px solid #d2d2d2;
 }
 
 /* form */
@@ -1188,3 +1217,4 @@ div[xm-select-skin] .xm-select-title div.xm-select-label > span {
     text-align: center;
     box-sizing: border-box;
 }
+

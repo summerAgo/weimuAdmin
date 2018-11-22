@@ -52,12 +52,12 @@
                             <span class="input-span">司机身份证号</span>
                             <input type="text" name="card" placeholder="司机身份证号" autocomplete="off" class="layui-input" lay-verify="identity">
                         </div>
-                        <div class="table-form-item layui-input-inline">
+                        <!-- <div class="table-form-item layui-input-inline">
                             <div class="util-container">
                                 <i class="iconfont icon-daojishi"></i>
                                 <div class="util-box"></div>
                             </div>
-                        </div>
+                        </div> -->
                     </div>
                     <!-- <div class="layui-form-item form-right">
                         <button type="reset" class="layui-btn layui-btn-gray"><i class="layui-icon layui-icon-refresh"></i></button>
@@ -265,14 +265,14 @@
             $("input[name='vehnum']").val(data.vehnum);
             $("input[name='card']").val(data.card);
 
-            var endTime = new Date(array.outdate).getTime(), //假设为结束日期
-                serverTime = new Date().getTime(); //假设为当前服务器时间，这里采用的是本地时间，实际使用一般是取服务端的
-            util.countdown(endTime, serverTime, function(date, serverTime, timer) {
-                var str = date[0] + '天' + date[1] + '时' + date[2] + '分' + date[3] + '秒';
-                // console.log(str);
-                layui.$('.util-box').html('剩余：' + str);
-            });
-            $('.util-box').show(); //显示倒计时
+            // var endTime = new Date(array.outdate).getTime(), //假设为结束日期
+            //     serverTime = new Date().getTime(); //假设为当前服务器时间，这里采用的是本地时间，实际使用一般是取服务端的
+            // util.countdown(endTime, serverTime, function(date, serverTime, timer) {
+            //     var str = date[0] + '天' + date[1] + '时' + date[2] + '分' + date[3] + '秒';
+            //     // console.log(str);
+            //     layui.$('.util-box').html('剩余：' + str);
+            // });
+            // $('.util-box').show(); //显示倒计时
             formSelects.data('ownerSelect', 'local', {
                 arr: [{
                     "name": array.ownername,
@@ -344,10 +344,14 @@
                     }, {
                         field: 'ownername',
                         title: '仓库主'
+                    },  {
+                        field: 'uuid',
+                        title: '货物标识码',
+                        width: 170,
                     }, {
                         field: 'code',
                         title: '包号'
-                    }, , {
+                    }, {
                         field: 'varieties',
                         title: '品种'
                     }, {
@@ -701,6 +705,10 @@
                             },
                             {
                                 type: 'checkbox'
+                            },  {
+                                field: 'uuid',
+                                title: '货物标识码',
+                                width: 170,
                             }, {
                                 field: 'code',
                                 title: '包号',
