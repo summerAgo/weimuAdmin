@@ -342,7 +342,6 @@
 
 .nav-tabs .layui-tab-title {
     border: 0;
-    padding-left: 1px;
     z-index: 2;
 }
 
@@ -1157,7 +1156,7 @@ div[xm-select-skin] .xm-select-title div.xm-select-label > span {
 }
 
 .layui-table tbody tr:hover {
-    background-color: #e9f3ff;
+    background-color: #f2f9ff;
 }
 
 .layui-table thead tr {
