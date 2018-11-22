@@ -1142,7 +1142,7 @@ div[xm-select-skin] .xm-select-title div.xm-select-label > span {
 }
 
 .layui-table-total tr, .layui-table[lay-even] tr:nth-child(even) {
-    background: #fdfdfd;
+    background: #fafafa;
 }
 
 .layui-table-total tr:hover, .layui-table[lay-even] tr:nth-child(even):hover {
@@ -1166,7 +1166,7 @@ div[xm-select-skin] .xm-select-title div.xm-select-label > span {
 }
 
 .layui-table tbody tr:hover {
-    background-color: #f2f9ff;
+    background-color: #e9f3ff;
 }
 
 .layui-table thead tr {
@@ -1179,4 +1179,21 @@ div[xm-select-skin] .xm-select-title div.xm-select-label > span {
 
 .layui-table th {
     text-align: center;
+}
+
+.layui-table-page .layui-laypage input:focus {
+    border: 1px solid #0284ff !important;
+}
+
+.layui-table-view select[lay-ignore]:focus {
+    border: 1px solid #0284ff !important;
+}
+
+.layui-table td[data-field="LAY_TABLE_INDEX"] .layui-table-cell {
+    height: 28px;
+    line-height: 28px;
+    padding: 0 5px;
+    position: relative;
+    text-align: center;
+    box-sizing: border-box;
 }
