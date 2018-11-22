@@ -12,6 +12,7 @@
     <title>维木仓储管理后台</title>
     <link rel="stylesheet" href="../../layui/css/layui.css">
     <link rel="stylesheet" href="style/login.css">
+    <link rel="stylesheet" href="../../style/iconfont/iconfont.css">
     <!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
     <!--[if lt IE 9]>
     <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
@@ -21,44 +22,43 @@
 
 <body class="layui-layout-body">
 <div class="layui-fluid container">
-    <div class="layui-row">
-        <div class="layui-col-xs12 layui-col-sm12 layui-col-md12 layui-col-lg3 layui-col-lg-offset8">
-            <div class="login-container">
-                <div class="login-header">
-                    <div class="login-logo"></div>
-                    <div class="login-slogin">
-                        <h3>维木智能仓管系统</h3>
-                        <small>V·M-V 1.0.2</small>
+    <div class="top">
+        <div class="w">
+            <div class="computer"><span class="login-log"></span>维木科技智能仓储系统 T1.0.2</div>
+            <div class="hotline"></div>
+        </div>
+    </div>
+    <div class="w">
+        <div class="form-container">
+            <div class="form-header">系统登录</div>
+            <form class="layui-form" action="">
+                <div class="layui-form-item login-item">
+                    <label class="layui-form-label"><i class="layui-icon layui-icon-username"></i></label>
+                    <input type="text" name="username" value="admin" required lay-verify="required" placeholder="用户ID" autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-form-item login-item">
+                    <label class="layui-form-label"><i class="layui-icon layui-icon-password"></i></label>
+                    <input type="password" name="password" value="123456" required lay-verify="required" placeholder="登录密码" autocomplete="off" class="layui-input">
+                </div>
+                <div class="layui-form-item login-item">
+                    <label class="layui-form-label"><i class="layui-icon layui-icon-vercode"></i></label>
+                    <div class="layui-input-block-left">
+                        <input type="text" name="verify" required lay-verify="required|gVerify" placeholder="验证码" autocomplete="off" class="layui-input" maxlength="4">
+                    </div>
+                    <div class="layui-form-mid layui-word-aux">
+                        <div id="v_container"></div>
                     </div>
                 </div>
-                <form class="layui-form" action="">
-                    <div class="layui-form-item login-item">
-                        <label class="layui-form-label"><i class="layui-icon layui-icon-username"></i></label>
-                        <input type="text" name="username" value="admin" required lay-verify="required"
-                               placeholder="用户ID" autocomplete="off" class="layui-input">
-                    </div>
-                    <div class="layui-form-item login-item">
-                        <label class="layui-form-label"><i class="layui-icon layui-icon-password"></i></label>
-                        <input type="password" name="password" value="123456" required lay-verify="required"
-                               placeholder="登录密码" autocomplete="off" class="layui-input">
-                    </div>
-                    <div class="layui-form-item login-item">
-                        <label class="layui-form-label"><i class="layui-icon layui-icon-vercode"></i></label>
-                        <div class="layui-input-block-left">
-                            <input type="text" name="verify" required lay-verify="required|gVerify" placeholder="验证码"
-                                   autocomplete="off" class="layui-input" maxlength="4">
-                        </div>
-                        <div class="layui-form-mid layui-word-aux">
-                            <div id="v_container"></div>
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="formLogin" id="login_button">
-                            登录
-                        </button>
-                    </div>
-                </form>
-            </div>
+                <div class="layui-form-item">
+                    <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="formLogin" id="login_button">登录</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="w">
+            <div>广东维木网络科技有限公司</div>
+            <div>Copyright © 2015-2018 GuangDong Venneer Mall Trading Co.，Ltd</div>
         </div>
     </div>
 </div>
