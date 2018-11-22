@@ -105,45 +105,34 @@
             }
         }, {
             field: "code",
-            title: "包号",
-            sort: true
+            title: "包号"
         }, {
             field: "varieties",
-            title: "品种",
-            sort: true
+            title: "品种"
         }, {
             field: "spec",
-            title: "规格",
-            sort: true
+            title: "规格"
         }, {
             field: "levels",
-            title: "等级",
-            sort: true
+            title: "等级"
         }, {
             field: "chang",
-            title: "长度",
-            sort: true,
-            edit: "txt"
+            title: "长度"
         }, {
             field: "brand",
-            title: "品牌",
-            sort: true
+            title: "品牌"
         }, {
             field: "origin",
-            title: "产地",
-            sort: true
+            title: "产地"
         }, {
             field: "updauser",
-            title: "操作员",
-            sort: true
+            title: "操作员"
         }, {
             field: "billloading",
-            title: "提运单",
-            sort: true
+            title: "提运单"
         }, {
             field: "containernum",
-            title: "货柜号/批次号",
-            sort: true
+            title: "货柜号/批次号"
         }];
         // 入库详情表格字段
         var entryCols = [{
@@ -155,53 +144,40 @@
             }
         }, {
             field: "code",
-            title: "包号",
-            sort: true
+            title: "包号"
         }, {
             field: "varieties",
-            title: "品种",
-            sort: true
+            title: "品种"
         }, {
             field: "spec",
-            title: "规格",
-            sort: true
+            title: "规格"
         }, {
             field: "levels",
-            title: "等级",
-            sort: true
+            title: "等级"
         }, {
             field: "chang",
-            title: "长度",
-            sort: true,
-            edit: "txt"
+            title: "长度"
         }, {
             field: "brand",
-            title: "品牌",
-            sort: true
+            title: "品牌"
         }, {
             field: "origin",
-            title: "产地",
-            sort: true
+            title: "产地"
         }, {
             field: "num",
-            title: "数量（m³）",
-            sort: true
+            title: "数量（m³）"
         }, {
             field: "positionid",
-            title: "库位",
-            sort: true
+            title: "库位"
         }, {
             field: "updauser",
-            title: "操作员",
-            sort: true
+            title: "操作员"
         }, {
             field: "billloading",
-            title: "提运单",
-            sort: true
+            title: "提运单"
         }, {
             field: "containernum",
-            title: "货柜号/批次号",
-            sort: true
+            title: "货柜号/批次号"
         }];
 
         var tableClos; //表格字段赋值
@@ -222,11 +198,13 @@
             ],
             even: true,
             page: true, //是否显示分页
-            limits: [15, 20, 30, 40, 50],
-            limit: 15, //每页默认显示的数量
+            limits: [billDetails.stocklist.length],
+            limit: billDetails.stocklist.length, //每页默认显示的数量
             done: function(res, curr, count) {
-                var addtableBtn = '<div class="rightBotBtn">合计： 件数<span>' + billDetails.znum + '</span>包 数量：<span>' + billDetails.cube + '</span>m³</div>';
-                $(".layui-table-page").append(addtableBtn);
+                var addtableBtn = '<div class="rightBotBtn" id="rightDetails">合计： 件数<span>' + billDetails.znum + '</span>包 数量：<span>' + billDetails.cube + '</span>m³</div>';
+                if($("#rightDetails").length < 1){
+                    $(".layui-table-page").append(addtableBtn);
+                }
             },
             text: {
                 none: "无匹配数据"
