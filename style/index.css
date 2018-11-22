@@ -1130,7 +1130,7 @@ div[xm-select-skin] .xm-select-title div.xm-select-label > span {
 }
 
 .xm-select-parent .xm-form-select dl {
-    border: 1px solid #F2F2F2;
+    border: 1px solid #d2d2d2;
 }
 
 /* form */
@@ -1217,3 +1217,4 @@ div[xm-select-skin] .xm-select-title div.xm-select-label > span {
     text-align: center;
     box-sizing: border-box;
 }
+
