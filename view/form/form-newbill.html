@@ -78,6 +78,9 @@
     .table-page-form .table-form-item.table-form-item-btn {
         width: 140px;
     }
+    .table-content {
+        padding: 0 30px 30px;
+    }
 </style>
 <script>
     layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'upload'], function () {
@@ -272,7 +275,6 @@
         });
 
         form.on('submit(addGoodsForm)', function (data) {
-            console.log(data)
             //return false;
             tableData.push(data.field);
             $(".rightBotBtn span").html(tableData.length); //当前选中了多少商品
@@ -293,7 +295,6 @@
             data: tableData,
             cols: [
                 [ //标题栏
-
                     {
                         type: 'radio'
                     },
