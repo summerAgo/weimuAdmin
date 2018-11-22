@@ -17,7 +17,6 @@ var ilbstockDelete = pathUrl + "lb/ilbstock/delete";//删
 var ilbstockUpdate = pathUrl + "lb/ilbstock/update";//改
 var ilbstockList = pathUrl + "lb/ilbstock/list";//查
 var ilbstockListAll = pathUrl + "lb/ilbstock/listAll";//查
-var ilbstockSaveAbnor = pathUrl + "lb/ilbstock/saveAbnor";//异常调整修改
 var ilbstockImportUrl = pathUrl + "lb/ilbstock/importExcel"; //导入
 var ilbstockExportUrl = pathUrl + "lb/ilbstock/exportExcel"; //导出
 var ilbstockImportTemp = pathUrl + "template/预入库导入.xlsx"; //导入模板
@@ -155,11 +154,6 @@ var endInventory = pathUrl + "check/recordlist/endInventory";//确认盘点
 
 var getByidList = pathUrl + "check/recordlist/getByidList";//查询盘点记录 参数cid
 
-//异常处理
-var abnList = pathUrl + "abn/recordlist/list";//查
-var abnlbList = pathUrl + "abn/recordlist/lblist";//查
-var abnAdd = pathUrl + "abn/recordlist/add";//
-var abnByidList = pathUrl + "abn/recordlist/getByidList";//查询盘点记录 参数cid
 
 /////验证
 var isname_supplier = pathUrl +"basics/supplier/isName";        //供应商验证    instid,name
