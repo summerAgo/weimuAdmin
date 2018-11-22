@@ -78,6 +78,7 @@
     .table-page-form .table-form-item.table-form-item-btn {
         width: 140px;
     }
+
     .table-content {
         padding: 0 30px 30px;
     }
@@ -119,6 +120,12 @@
                 formSelects.data(id, 'local', {
                     arr: []
                 }); //如果仓库为空则清空列表
+            } else {
+                formSelects.data(id, 'local', {
+                    arr: selectDataInstall(positionDropdown, {
+                        "depotid": depotid
+                    }, false, 0) //仓库列表
+                });
             }
         });
 
@@ -146,9 +153,11 @@
                     layer.msg("该仓库主下无仓库信息");
                     return false;
                 }
+
                 formSelects.data('depotSelectLayer', 'local', {
                     arr: depotList //仓库列表
                 });
+
                 formSelects.data('positionSelectLayer', 'local', {
                     arr: selectDataInstall(positionDropdown, {
                         "depotid": depotList[0].value

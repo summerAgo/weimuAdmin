@@ -26,6 +26,12 @@
         </div>
     </div>
     <div class="layui-form-item layui-normal-line">
+        <label class="layui-form-label">菜单图标</label>
+        <div class="layui-input-inline">
+            <input type="text" id="icon" name="icon" lay-verify="required" placeholder="图标" class="layui-input"  value="{{# if(d.icon){}}{{d.icon}}{{# }}}">
+        </div>
+    </div>
+    <div class="layui-form-item layui-normal-line">
         <label class="layui-form-label">地址</label>
         <div class="layui-input-inline">
             <input type="text" id="url" name="url" placeholder="选填" value="{{# if(d.url){}}{{d.url}}{{# }}}" class="layui-input">
