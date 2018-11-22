@@ -221,8 +221,9 @@
                         return arr;
                     }
                     form.on('submit(searchAssessForm)', function(data) {
+                        console.log(data);
                         var paramSearch = {
-                            "person": curData.id
+                            "ownerid": curData.id
                         };
                         for (var key in data.field) {
                             // 参数赋值
