@@ -78,6 +78,9 @@
     .table-page-form .table-form-item.table-form-item-btn {
         width: 140px;
     }
+    .table-content {
+        padding: 0 30px 30px;
+    }
 </style>
 <script>
     layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'upload'], function() {
@@ -293,7 +296,6 @@
             data: tableData,
             cols: [
                 [ //标题栏
-
                     {
                         type: 'radio'
                     },
