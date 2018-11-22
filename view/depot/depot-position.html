@@ -10,7 +10,7 @@
             </ul>
         </div>
     </div>
-    <div class="table-page-header">
+    <!--<div class="table-page-header">
         <div class="table-page-form">
             <form class="layui-form" action="">
                 <div class="form-box">
@@ -33,6 +33,13 @@
                 </div>
             </form>
         </div>
+    </div>-->
+    <div class="table-page-header">
+        <div class="table-page-form table-page-info">
+            <div class="store-bread-crumb" id="details-title">
+
+            </div>
+        </div>
     </div>
     <div class="table-content">
         <div class="table-content-main">
@@ -40,6 +47,26 @@
         </div>
     </div>
 </div>
+
+<script id="detailsTitle" type="text/html">
+    <div class="store-bread-item">
+        <span>仓库主：</span>
+        <span>{{d.ownername||''}}</span>
+    </div>
+    <div class="store-bread-item">
+        <span>仓库名称：</span>
+        <span>{{d.name||''}}</span>
+    </div>
+    <div class="store-bread-item">
+        <span>仓库类型：</span>
+        {{#  if(true){ }}
+            <span>监控仓</span>
+        {{#  } else { }}
+            <span>自有仓</span>
+        {{#  } }}
+    </div>
+</script>
+
 <script>
     layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'upload'], function() {
         var element = layui.element;
@@ -49,7 +76,7 @@
         var formSelects = layui.formSelects;
         var laytpl = layui.laytpl;
         var upload = layui.upload;
-        var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 93); //内容区域所需减去的高度
+        var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 133); //内容区域所需减去的高度
 
         var addPositionLayer; //编辑-弹层
 
@@ -59,13 +86,18 @@
         var depotPosition = JSON.parse(sessionStorage.getItem('depotPosition'));
 
         if (null != depotPosition) {
-
             depid = depotPosition.id;
             console.log("depid:" + depid);
         } else {
             //提示报错。异常
         }
 
+        // 渲染库位详情模板信息
+        var getTpl = detailsTitle.innerHTML,
+            view = document.getElementById('details-title');
+        laytpl(getTpl).render(depotPosition, function(html) {
+            view.innerHTML = html;
+        });
 
         form.render(); //重置表单渲染
         formSelects.render(); //下拉选项
