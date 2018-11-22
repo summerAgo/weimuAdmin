@@ -163,8 +163,8 @@
             loading: true
         });
 
+        // 打开添加弹窗
         $(".addDepotBtn").click(function() {
-            // 打开添加弹窗
             sessionStorage.removeItem('depotCheck'); //点击新建仓库删除本地存储所选仓库信息
             $.get('view/form/form-addDepot.html', {}, function(str) {
                 addDepotLayer = layer.open({
@@ -325,8 +325,8 @@
             }
         });
 
+        //监听单元格点击事件
         table.on('tool(tableContainer-depotList)', function(obj) {
-            //监听单元格点击事件
             var data = obj.data;
             if (obj.event === 'click') {
                 data.type = "depotPosition";
