@@ -27,6 +27,7 @@
         </div>
     </div>
 </div>
+
 <script id="detailsTle" type="text/html">
     <div class="lay-bread-item">
         {{# if(d.type === "outHistory"){}}
@@ -198,7 +199,7 @@
             ],
             even: true,
             page: true, //是否显示分页
-            // limits: [15, 20, 30, 40, 50],
+            limits: [billDetails.stocklist.length],
             limit: billDetails.stocklist.length, //每页默认显示的数量
             done: function(res, curr, count) {
                 var addtableBtn = '<div class="rightBotBtn" id="rightDetails">合计： 件数<span>' + billDetails.znum + '</span>包 数量：<span>' + billDetails.cube + '</span>m³</div>';
