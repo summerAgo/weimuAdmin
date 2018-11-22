@@ -337,7 +337,7 @@
                 },
                 crossDomain: true,
                 success: function(data) {
-                    if (data.status == 0) {
+                    if (data.status === 0) {
                         tableIns.reload({
                             page: {
                                 curr: 1 //重新从第 1 页开始
@@ -346,7 +346,7 @@
                         layer.msg("审核通过为库存");
                     }
                     //请求过期，重新登陆
-                    if (data.status == 1) {
+                    if (data.status === 1) {
                         window.location.href = loginPageUrl;
                     }
                 }
