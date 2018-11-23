@@ -79,26 +79,27 @@
 
     <script id="menuTlp" type="text/html">
         <ul class="layui-nav layui-nav-tree" lay-filter="index-side" lay-shrink="all">
-        {{# layui.each(d.list, function(index, item){ }}
-            {{# if(item.pid == 0){ }}
-                <li class="layui-nav-item">
+            {{# layui.each(d.list, function(index, item){ }}
+                {{# if(item.pid == 0){ }}
+                    <li class="layui-nav-item">
                         {{#  if(item.code){ }}
-                        <a href="#!{{item.code}}"><i class="iconfont {{ item.icon}}"></i>{{item.name}}</a>
-                    {{#  } else { }}
-                        <a href="javascript:;"><i class="iconfont {{ item.icon}}"></i>{{item.name}}</a>
-                    {{#  } }}  
-                    {{#if(item.child){}}
-                        <dl class="layui-nav-child">
-                            {{# layui.each(d.list, function(indexx, itemx){ }}
-                                {{# if(itemx.pid == item.id){}}
-                                    <dd><a href="#!{{ itemx.code }}">{{ itemx.name }}</a></dd>
-                                {{# }}}
-                            {{# }); }}</dl>
-                    {{#}}}
-                </li>
-            {{# } }}
-        {{# }); }}
-    </ul>
+                            <a href="#!{{item.code}}"><i class="iconfont {{ item.icon}}"></i>{{item.name}}</a>
+                        {{#  } else { }}
+                            <a href="javascript:;"><i class="iconfont {{ item.icon}}"></i>{{item.name}}</a>
+                        {{#  } }}
+                        {{# if(item.child){}}
+                            <dl class="layui-nav-child">
+                                {{# layui.each(d.list, function(indexx, itemx){ }}
+                                    {{# if(itemx.pid == item.id){}}
+                                        <dd><a href="#!{{ itemx.code }}">{{ itemx.name }}</a></dd>
+                                    {{# }}}
+                                {{# }); }}
+                            </dl>
+                        {{# } }}
+                    </li>
+                {{# } }}
+            {{# }); }}
+        </ul>
     </script>
 
     <script src="layui/layui.js"></script>
@@ -126,8 +127,8 @@
                 laytpl = layui.laytpl;
             var container = $('.content-body'); //页面容器
             // var userInfo = JSON.parse(getCookie('userInfo')); //获取session中用户信息
-
             $(".rolename").html(roleName);
+
             //该用户菜单权限JSON
             var menujson = JSON.parse(sessionStorage.getItem("menuAuthority"));
             // console.log(menujson);
@@ -144,18 +145,16 @@
                 menuArr.push(json);
             }
             // console.log(menuArr);
-
             for (var i = 0; i < menuArr.length; i++) {
                 for (var x = 0; x < menuArr.length; x++) {
-                    if (menuArr[x].pid == menuArr[i].id) {
+                    if (menuArr[x].pid === menuArr[i].id) {
                         menuArr[i].child = true;
                     }
                 }
             }
-
+            // 左侧菜单模板渲染
             var getTpl = menuTlp.innerHTML,
                 view = document.getElementById('menuview');
-
             var data = { //数据
                 "list": menuArr
             };
@@ -164,9 +163,7 @@
                 view.innerHTML = html;
             });
 
-            element.render();
-            //加载路由
-
+            element.render();//加载路由
             Q.reg([
                 //注册页面
                 ['home', function() {
