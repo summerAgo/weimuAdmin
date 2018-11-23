@@ -612,6 +612,7 @@
 
 .table-page-form .form-box {
     display: flex;
+    position: relative;
 }
 
 .table-page-form .form-box .form-left {
@@ -622,6 +623,18 @@
     min-width: 80px;
     max-width: 200px;
     padding-left: 30px;
+}
+
+.table-page-form .form-box .audit-status {
+    position: absolute;
+    right: 0;
+    top: 5px;
+    width: 150px;
+    height: 30px;
+    line-height: 30px;
+    color: #ff3c4e;
+    text-align: right;
+    font-size: 16px;
 }
 
 .table-page-form .form-box .form-right .layui-btn {
