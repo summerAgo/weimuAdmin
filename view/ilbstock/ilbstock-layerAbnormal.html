@@ -204,15 +204,15 @@
             apiurl = getByidList;
             break;
         }
-
+        var tableData;
         var tableIns = table.render({
             elem: '#tableContainer-layerInventory',
             height: tableLayerHeight,
             url: apiurl,
-            where: depotData,
+            where: depotData, // 接口的其他参数
             parseData: function(res) { //res 即为原始返回的数据
                 //if (res.status !== 0) res.status = 0;
-                console.log(this);
+                sessionStorage.setItem('pageLength', JSON.stringify(res.data.length));
                 return {
                     "code": res.status, //解析接口状态
                     "msg": res.msg, //解析提示文本
@@ -301,12 +301,15 @@
                 ]
             ],
             even: true,
-            page: true, //是否显示分页
-            // limits: [data.length],
-            // limit: data.length, //每页默认显示的数量
-            done: function(res, curr, count) {},
+            page: false, //是否显示分页
+            // limits: [Number(sessionStorage.getItem("pageLength"))],
+            // limit: sessionStorage.getItem("pageLength"), //每页默认显示的数量
+            done: function(res, curr, count) {
+                console.log(sessionStorage.getItem("pageLength"));
+            },
             loading: true
         });
+
 
         var numChangeValue = {}; //单元格编辑更改评估价格数据对象
         //监听编辑

@@ -284,7 +284,7 @@
                         title: '状态',
                         templet: function(d) {
                             if (d.status === 1 && d.isexamine === 1) {
-                                return '<span style="color:red">待审核<span>';
+                                return '<span style="color:#ff3c4e">待审核<span>';
                             }
                             if (d.status === 1) {
                                 return '正常待出库';
@@ -292,7 +292,7 @@
                             if (d.status === 2) {
                                 return '审核通过';
                             }
-                            return '<span style="color:red">审核不通过<span>';
+                            return '<span style="color:#ff3c4e">审核不通过<span>';
                         }
                     }, {
                         field: 'remarks',
@@ -510,7 +510,7 @@
             sessionStorage.removeItem('addOutBill');
             $.get('view/stock/stock-addOutBill.html', {}, function(str) { // 请求弹框
                 addLayer = layer.open({
-                    title: '新建出货申请单',
+                    title: '新建申请出库单',
                     type: 1,
                     content: str, // 注意，如果str是object，那么需要字符拼接。
                     area: ['80%', '80%'],

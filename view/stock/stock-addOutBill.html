@@ -65,9 +65,7 @@
                             <i class="iconfont icon-sousuo"></i> <span>查询</span>
                         </button>
                     </div> -->
-                    <div class="audit-status">
-                        审核状态
-                    </div>
+                    <div class="audit-status"></div>
                 </div>
             </form>
             <!-- <blockquote class="layui-elem-quote" id="details-title">
@@ -254,17 +252,21 @@
             $("input[name='vehnum']").val(data.vehnum);
             $("input[name='card']").val(data.card);
 
-
-            // 审核状态显示
+            var addOutBill = sessionStorage.getItem("addOutBill");
             var auditStatus = $(".audit-status");
-            if (outBill.status === 1 && outBill.isexamine === 1) {
-                auditStatus.html("待审核");
-            }else if (outBill.status === 1) {
-                auditStatus.html("正常待出库");
-            }else if (outBill.status === 2) {
-                auditStatus.html("审核通过");
+            if (addOutBill !== null) {
+                // 审核状态显示
+                if (outBill.status === 1 && outBill.isexamine === 1) {
+                    auditStatus.html("<span style='color: #ff3c4e;'>待审核</span>");
+                }else if (outBill.status === 1) {
+                    auditStatus.html("<span style='color: #666;'>正常待出库</span>");
+                }else if (outBill.status === 2) {
+                    auditStatus.html("<span style='color: #666;'>审核通过</span>");
+                }else {
+                    auditStatus.html("<span style='color: #ff3c4e;'>审核不通过</span>");
+                }
             }else {
-                auditStatus.html("审核不通过");
+                auditStatus.html("")
             }
 
             // var endTime = new Date(outBill.outdate).getTime(), //假设为结束日期
