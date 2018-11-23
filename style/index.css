@@ -910,10 +910,9 @@ body .layui-tree-skin-shihuang .layui-tree-branch {
 
 .xm-select-parent .xm-select {
     line-height: normal;
-    height: auto;
     padding: 0px 10px 1px 10px;
     overflow: hidden;
-    min-height: 30px;
+    height: 30px;
     left: 0;
     z-index: 99;
     position: absolute;
