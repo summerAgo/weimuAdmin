@@ -70,11 +70,9 @@
                     </div>
                 </div>
             </form>
-
         </div>
     </div>
     <div class="table-content">
-
         <div class="table-content-main">
             <table class="layui-hide" id="tableContainers" lay-filter="tableContainers"></table>
         </div>
@@ -194,9 +192,9 @@
                 traditional: true,
                 success: function(data) {
                     // console.log(data);
-                    if (data.status == 0) {
+                    if (data.status === 0) {
                         //把接口数据转换为[{"name":str,"value":number}]格式
-                        if (!Array.isArray(data.data) || data.data.length == 0) {
+                        if (!Array.isArray(data.data) || data.data.length === 0) {
                             // 判断arr是否为数组并保证内部有值
                             return false;
                         }
@@ -285,17 +283,16 @@
                         field: 'status',
                         title: '状态',
                         templet: function(d) {
-                            if (d.status == 1 && d.isexamine == 1) {
+                            if (d.status === 1 && d.isexamine === 1) {
                                 return '<span style="color:red">待审核<span>';
                             }
-                            if (d.status == 1) {
+                            if (d.status === 1) {
                                 return '正常待出库';
                             }
-                            if (d.status == 2) {
+                            if (d.status === 2) {
                                 return '审核通过';
                             }
                             return '<span style="color:red">审核不通过<span>';;
-
                         }
                     }, {
                         field: 'remarks',
@@ -305,7 +302,7 @@
             ],
             even: true,
             page: true, //是否显示分页
-            limits: [10, 20, 30, 40, 50],
+            limits: [100, 200, 500, 1000],
             limit: 10, //每页默认显示的数量
             done: function(res, curr, count) {
                 var addtableBtn = '<div class="rightBotBtn" id="rightBox">已经选择<span>0</span>个</div>';
@@ -465,7 +462,6 @@
                         });
                         layer.msg(data.msg);
                     });
-
                 });
             }
         });

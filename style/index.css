@@ -619,7 +619,9 @@
 }
 
 .table-page-form .form-box .form-right {
-    width: 200px;
+    min-width: 80px;
+    max-width: 200px;
+    padding-left: 30px;
 }
 
 .table-page-form .form-box .form-right .layui-btn {

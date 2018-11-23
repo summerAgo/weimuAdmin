@@ -210,9 +210,7 @@
             }
         }, true);
 
-        var outBill = sessionStorage.getItem('addOutBill');
-
-        var array = JSON.parse(outBill);
+        var outBill = JSON.parse(sessionStorage.getItem('addOutBill')); //获取所选择记录详情
 
         var data = {};
         var pageData;
@@ -224,13 +222,13 @@
             $("input[name='estimatedate']").attr("disabled", false);
             $('.util-container').hide(); //隐藏倒计时
         } else {
-            if (array.status == 3) {
+            if (outBill.status === 3) {
                 $(".topmenu").hide();
             }
-            data["orderno"] = array.orderno;
-            data["ownerid"] = array.ownerid;
-            data["depotid"] = array.depotid;
-            $("#estimatedate").val(array.outdate);
+            data["orderno"] = outBill.orderno;
+            data["ownerid"] = outBill.ownerid;
+            data["depotid"] = outBill.depotid;
+            $("#estimatedate").val(outBill.outdate);
             $.ajax({
                 cache: true,
                 type: "get",
@@ -253,7 +251,7 @@
             $("input[name='vehnum']").val(data.vehnum);
             $("input[name='card']").val(data.card);
 
-            // var endTime = new Date(array.outdate).getTime(), //假设为结束日期
+            // var endTime = new Date(outBill.outdate).getTime(), //假设为结束日期
             //     serverTime = new Date().getTime(); //假设为当前服务器时间，这里采用的是本地时间，实际使用一般是取服务端的
             // util.countdown(endTime, serverTime, function(date, serverTime, timer) {
             //     var str = date[0] + '天' + date[1] + '时' + date[2] + '分' + date[3] + '秒';
@@ -263,15 +261,15 @@
             // $('.util-box').show(); //显示倒计时
             formSelects.data('ownerSelect', 'local', {
                 arr: [{
-                    "name": array.ownername,
-                    "value": array.ownerid,
+                    "name": outBill.ownername,
+                    "value": outBill.ownerid,
                     "selected": "selected"
                 }] //仓库主列表
             });
             formSelects.data('depotSelect', 'local', {
                 arr: [{
-                    "name": array.depname,
-                    "value": array.depotid,
+                    "name": outBill.depname,
+                    "value": outBill.depotid,
                     "selected": "selected"
                 }] //仓库主列表
             });
@@ -292,9 +290,9 @@
                 traditional: true,
                 success: function(data) {
                     // console.log(data);
-                    if (data.status == 0) {
+                    if (data.status === 0) {
                         //把接口数据转换为[{"name":str,"value":number}]格式
-                        if (!Array.isArray(data.data) || data.data.length == 0) {
+                        if (!Array.isArray(data.data) || data.data.length === 0) {
                             // 判断arr是否为数组并保证内部有值
                             return false;
                         }
@@ -374,8 +372,8 @@
             ],
             even: true,
             page: true, //是否显示分页
-            limits: [15, 20, 30, 40, 50],
-            limit: 15, //每页默认显示的数量
+            limits: [tableData.length],
+            limit: tableData.length, //每页默认显示的数量
             done: function(res, curr, count) {
                 var addtableBtn = '<div class="rightBotBtn">共添加<span>' + count + '</span>个商品</div>';
                 $("#tableContainer-addOutBill").siblings().find(".layui-table-page").append(addtableBtn);
@@ -415,10 +413,10 @@
                         "ids": ids.toString()
                     };
 
-                    var outBill = sessionStorage.getItem('addOutBill');
+                    var outBill = JSON.parse(sessionStorage.getItem('addOutBill'));
                     if (outBill != null) {
-                        var array = JSON.parse(outBill);
-                        preData["orderno"] = array.orderno;
+                        // var array = JSON.parse(outBill);
+                        preData["orderno"] = outBill.orderno;
                     }
 
                     var vname = $("input[name='vname']").val();
@@ -499,14 +497,12 @@
                         }
                     }
                 }
-                console.log(tableData);
                 tableIns.reload({
                     data: tableData,
                     page: {
                         curr: 1 //重新从第 1 页开始
                     }
                 });
-
             }
         });
 
@@ -527,7 +523,7 @@
                 title: '提示'
             }, function(index) {
                 var ids = [];
-                ids.push(array.orderno);
+                ids.push(outBill.orderno);
                 $.ajax({
                     cache: true,
                     type: "POST",
@@ -642,7 +638,6 @@
                         "depotid": depotname
                     },
                     parseData: function(res) { //res 即为原始返回的数据
-                        console.log(res)
                         if (res.status !== 0) {
                             res.status = 0;
                             res.data = []
@@ -653,7 +648,7 @@
                             var k = 0;
                             if (tableData != null) {
                                 for (var j = 0; j < tableData.length; j++) {
-                                    if (resData[i].id == tableData[j].id) {
+                                    if (resData[i].id === tableData[j].id) {
                                         k = 1;
                                     }
                                 }
@@ -743,7 +738,7 @@
                     even: false,
                     page: false, //是否显示分页
                     limits: [10, 20, 30, 40, 50],
-                    // limit: 10, //每页默认显示的数量
+                    limit: 10, //每页默认显示的数量
                     done: function(res, curr, count) {
                         // console.log(res);
 
