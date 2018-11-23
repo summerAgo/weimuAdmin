@@ -81,9 +81,8 @@
         var table = layui.table;
         var formSelects = layui.formSelects;
         var laytpl = layui.laytpl;
-
         var billDetails = JSON.parse(sessionStorage.getItem('outBillDetails')); //获取所选择记录详情
-        //console.log(billDetails)
+        console.log(billDetails);
         if (!billDetails) {
             //判断是否存在，不存在跳转到首页
             history.replaceState(null, null, "#!home");
@@ -186,7 +185,7 @@
         }];
 
         var tableClos; //表格字段赋值
-        if (billDetails.type == "outHistory") {
+        if (billDetails.type === "outHistory") {
             tableClos = outCols;
         } else {
             tableClos = entryCols;
@@ -224,9 +223,9 @@
 
         //打印
         $("#ondayin").on('click', function(e) {
-            var orderno = billDetails.data.orderno
+            var orderno = billDetails.data.orderno;
             var url;
-            if (billDetails.type == "outHistory") {
+            if (billDetails.type === "outHistory") {
                 url = printoutstore;
             } else {
                 url = printinstore;
