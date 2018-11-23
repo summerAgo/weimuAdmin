@@ -12,11 +12,19 @@
             <div class="store-bread-crumb" id="details-title">
                 <div class="store-bread-item">
                     <span>仓库主：</span>
-                    <span class='owner_name'></span>
+                    <span class='owner-name'></span>
                 </div>
                 <div class="store-bread-item">
                     <span>仓库名称：</span>
-                    <span class='dep_name'></span>
+                    <span class='dep-name'></span>
+                </div>
+                <div class="store-bread-item">
+                    <span>盘点时间：</span>
+                    <span class='create-date'></span>
+                </div>
+                <div class="store-bread-item">
+                    <span>盘点人：</span>
+                    <span class='user-name'></span>
                 </div>
             </div>
         </div>
@@ -71,6 +79,8 @@
         var formSelects = layui.formSelects;
         var laytpl = layui.laytpl;
 
+        var tableLayerHeight = (parseInt($(".layui-layer-page").innerHeight()) - parseInt($(".layui-layer-title").innerHeight()) - parseInt($(".table-page-header").innerHeight()) - 30); //内容区域所需减去的高度
+
         form.render(); //重置表单渲染
         formSelects.render(); //下拉选项
 
@@ -85,8 +95,10 @@
             // if (echoData.status == 1) {
             //     $(".layerInventoryTools").hide();
             // }
-            $(".owner_name").html(echoData.ownername);
-            $(".dep_name").html(echoData.depname);
+            $(".owner-name").html(echoData.ownername);
+            $(".dep-name").html(echoData.depname);
+            $(".create-date").html(echoData.createdate);
+            $(".user-name").html(echoData.username);
 
             depotData.ownerid = echoData.ownerid;
             depotData.depotid = echoData.depotid;
@@ -180,7 +192,7 @@
                         }
                     }
                 }
-            })
+            });
             return arr;
         }
         var apiurl;
@@ -195,7 +207,7 @@
 
         var tableIns = table.render({
             elem: '#tableContainer-layerInventory',
-            height: 'auto',
+            height: tableLayerHeight,
             url: apiurl,
             where: depotData,
             parseData: function(res) { //res 即为原始返回的数据
@@ -221,8 +233,7 @@
                         templet: function(d) {
                             return d.LAY_TABLE_INDEX + 1;
                         }
-                    },
-                    {
+                    }, {
                         field: 'num',
                         title: '盘点前数量（m³）',
                         width:150
