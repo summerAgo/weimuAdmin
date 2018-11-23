@@ -347,7 +347,7 @@
         //保持提交  修改异常调整数据
         function editAprice(depotData, apriceJson, url) {
             //请求数据源示例
-            console.log(depotData)
+            console.log(depotData);
             var status = false;
             $.ajax({
                 url: url,
@@ -368,14 +368,13 @@
                     if (res.status === 1) {
                         window.location.href = loginPageUrl;
                     }
-                    if (res.status == 0) {
+                    if (res.status === 0) {
                         status = true;
                     }
                     layer.msg(res.msg);
                 }
             });
             return status;
-        };
-
+        }
     });
 </script>
