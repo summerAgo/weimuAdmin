@@ -330,6 +330,10 @@
                 icon: 3,
                 title: '提示'
             }, function(index) {
+
+                data.field["SESSION_NAME"] = getCookie('SESSION_NAME');
+                data.field["TOKEN"] = getCookie('TOKEN');
+                console.log(data);
                 $.ajax({
                     cache: true,
                     type: "POST",
