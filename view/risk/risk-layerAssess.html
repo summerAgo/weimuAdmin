@@ -1,4 +1,4 @@
-<div class="table-page">
+<div class="table-page" id="risk-layerAssess">
     <div class="table-content-title layer-level">
         <div class="table-tools">
             <ul class="layui-nav" lay-filter="talbe-tools">
@@ -75,6 +75,7 @@
         </div>
     </div>
 </div>
+
 <script>
     layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate'], function() {
         var element = layui.element;
@@ -83,20 +84,15 @@
         var table = layui.table;
         var formSelects = layui.formSelects;
         var laytpl = layui.laytpl;
-        
+
         var menuKey = "testkey_1";
+        var obj = $("#risk-layerAssess .table-tools").find("li");
+
+        var btnData = JSON.parse(localStorage.getItem("menuBtnData")); //获取按钮权限数据
+        var currentBtnData = btnData ? btnData[menuKey]:[];
+        console.log(obj)
         
-        var btnData = JSON.parse(localStorage.getItem("menuBtnData"));//获取按钮权限数据
-        console.log(btnData);
-        var currentLevel = menuKey.split('_');
-        console.log(currentLevel);
-
-        var currentKey;
-        if(currentLevel.length>1){
-            currentLevel = currentLevel[1];
-        }else{
-            currentLevel = currentLevel[0];
-        }
-
+        
+        
     });
 </script>
