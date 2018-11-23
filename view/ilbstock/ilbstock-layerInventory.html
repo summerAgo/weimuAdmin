@@ -307,7 +307,9 @@
                     id: depotData.id,
                     ownerid: depotData.ownerid,
                     depotid: depotData.depotid,
-                    lbarr: JSON.stringify(apriceJson)
+                    lbarr: JSON.stringify(apriceJson),
+                    'SESSION_NAME': getCookie('SESSION_NAME'),
+                    'TOKEN': getCookie('TOKEN')
                 },
                 xhrFields: {
                     withCredentials: true
