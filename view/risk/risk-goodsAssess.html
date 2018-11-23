@@ -50,6 +50,11 @@
         </div>
     </div>
 </div>
+<!-- 是否评估按钮 -->
+<script type="text/html" id="checkboxTpl">
+    <input type="checkbox" name="aprice" value="评估" title="评估" lay-filter="lockDemo" {{ d.aprice > 0 ? 'checked' : '' }}>
+</script>
+
 <script>
     layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'upload'], function() {
         var element = layui.element;
@@ -144,8 +149,8 @@
             ],
             even: true, // 开启隔行背景
             page: true, // 是否显示分页
-            limits: [10, 20, 30, 40, 50], // 每页条数的选择项
-            limit: 10, // 每页默认显示的数量
+            limits: [100, 200, 500, 1000],
+            limit: 100, //每页默认显示的数量
             done: function(res, curr, count) { // 数据渲染完的回调
 
             },
@@ -163,7 +168,6 @@
             // console.log(curData)
             ownerid = curData.id;
             if (obj.event === 'click') {
-
                 $.get('view/risk/risk-layerAssess.html', {}, function(str) { // 弹出弹框
                     assessLayer = layer.open({
                         title: '商品评估列表',
@@ -308,9 +312,18 @@
                                     field: 'pprice',
                                     title: '采购单价'
                                 }, {
+                                    field:'lock',
+                                    title:'是否评估',
+                                    width:110,
+                                    templet: '#checkboxTpl',
+                                    unresize: true,
+                                }, {
                                     field: 'aprice',
                                     title: '评估单价',
                                     edit: "text"
+                                }, {
+                                    field: 'remarks',
+                                    title: '备注',
                                 }
                             ]
                         ],

@@ -350,8 +350,8 @@
             ],
             even: true,
             page: true, //是否显示分页
-            limits: [100, 200, 500, 1000],
-            limit: 100, //每页默认显示的数量
+            limits: [500, 1000, 2000, 5000],
+            limit: 500, //每页默认显示的数量
             done: function(res, curr, count) {
                 console.log(res);
                 var addtableBtn = '<div class="rightBotBtn" id="rightBox">合计总库存数量<span>' + res.znum + '</span>㎡ 总库存估价金额：<span>' + res.aprice + '</span>(RMB)</div>';

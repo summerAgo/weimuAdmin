@@ -302,8 +302,8 @@
             ],
             even: true,
             page: false, //是否显示分页
-            // limits: [Number(sessionStorage.getItem("pageLength"))],
-            // limit: sessionStorage.getItem("pageLength"), //每页默认显示的数量
+            // limits: [0],
+            // limit: 0, //每页默认显示的数量
             done: function(res, curr, count) {
                 console.log(sessionStorage.getItem("pageLength"));
             },

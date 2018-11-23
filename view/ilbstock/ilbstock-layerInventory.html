@@ -6,9 +6,9 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;" class="saveBtn"><i class="iconfont icon-baocun"></i>保存修改</a>
                 </li>
-                <li class="layui-nav-item">
-                    <a href="javascript:;" class="confirmBtn"><i class="iconfont icon-querenpandian"></i>确认盘点</a>
-                </li>
+                <!--<li class="layui-nav-item">-->
+                    <!--<a href="javascript:;" class="confirmBtn"><i class="iconfont icon-querenpandian"></i>确认盘点</a>-->
+                <!--</li>-->
             </ul>
         </div>
     </div>
@@ -44,7 +44,6 @@
         </div>
     </div>
     <div class="table-content">
-
         <div class="table-content-main">
             <table class="layui-hide" id="tableContainer-layerInventory" lay-filter="tableContainer-layerInventory"></table>
         </div>
@@ -148,7 +147,7 @@
                 traditional: true,
                 success: function(data) {
                     // console.log(data);
-                    if (data.status == 0) {
+                    if (data.status === 0) {
                         //把接口数据转换为[{"name":str,"value":number}]格式
                         if (!Array.isArray(data.data) || data.data.length == 0) {
                             // 判断arr是否为数组并保证内部有值
@@ -165,7 +164,7 @@
                         }
                     }
                 }
-            })
+            });
             return arr;
         }
 
@@ -241,8 +240,8 @@
             ],
             even: true,
             page: true, //是否显示分页
-            limits: [15, 40, 45, 60],
-            limit: 15, //每页默认显示的数量
+            limits: [100, 200, 500, 1000],
+            limit: 100, //每页默认显示的数量
             done: function(res, curr, count) {},
             loading: true
         });
@@ -274,7 +273,7 @@
 
             var status = true;
             for (var key in numChangeValue) {
-                if (isNaN(numChangeValue[key]) || numChangeValue[key] == "") {
+                if (isNaN(numChangeValue[key]) || numChangeValue[key] === "") {
                     layer.msg("保存数量修改失败，只能为数字");
                     status = false;
                 }
@@ -327,7 +326,6 @@
                 }
             });
             return status;
-        };
-
+        }
     });
 </script>

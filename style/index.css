@@ -1232,3 +1232,7 @@ div[xm-select-skin] .xm-select-title div.xm-select-label > span {
     box-sizing: border-box;
 }
 
+.layui-form-checked, .layui-form-checked:hover {
+    border-color: #0284ff;
+}
+

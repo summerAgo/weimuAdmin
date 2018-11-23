@@ -116,14 +116,12 @@
                             // 判断arr是否为数组并保证内部有值
                             return false;
                         }
-
                         for (var i = 0; i < data.data.length; i++) {
                             arr.push({
                                 "name": data.data[i].name,
                                 "value": data.data[i].id
                             })
                         }
-
                         if (bool) {
                             arr[0].selected = "selected";
                         }
