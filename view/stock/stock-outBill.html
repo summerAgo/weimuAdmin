@@ -272,16 +272,19 @@
                         title: '仓库名称'
                     }, {
                         field: 'num',
-                        title: '件数（包）'
+                        title: '件数（包）',
+                        width: 90
                     }, {
                         field: 'volume',
-                        title: '数量（m³）'
+                        title: '数量（m³）',
+                        width: 90
                     }, {
                         field: 'createdate',
                         title: '申请出库日期'
                     }, {
                         field: 'status',
                         title: '状态',
+                        width: 117,
                         templet: function(d) {
                             if (d.status === 1 && d.isexamine === 1) {
                                 return '<span style="color:#ff3c4e">待审核<span>';
@@ -296,7 +299,8 @@
                         }
                     }, {
                         field: 'remarks',
-                        title: '备注'
+                        title: '备注',
+                        width: 340
                     }
                 ]
             ],

@@ -75,3 +75,28 @@
         </div>
     </div>
 </div>
+<script>
+    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate'], function() {
+        var element = layui.element;
+        var form = layui.form;
+        var $ = layui.jquery;
+        var table = layui.table;
+        var formSelects = layui.formSelects;
+        var laytpl = layui.laytpl;
+        
+        var menuKey = "testkey_1";
+        
+        var btnData = JSON.parse(localStorage.getItem("menuBtnData"));//获取按钮权限数据
+        console.log(btnData);
+        var currentLevel = menuKey.split('_');
+        console.log(currentLevel);
+
+        var currentKey;
+        if(currentLevel.length>1){
+            currentLevel = currentLevel[1];
+        }else{
+            currentLevel = currentLevel[0];
+        }
+
+    });
+</script>
