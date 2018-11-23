@@ -268,19 +268,19 @@
                         } else {
                             var isData = false;
                             $.each($(".layui-tab-title li[lay-id]"), function() {
-                                if ($(this).attr("lay-id") == vid) {
+                                if ($(this).attr("lay-id") === vid) {
                                     isData = true;
                                 }
-                            })
-                            if (isData == false) {
+                            });
+                            if (isData === false) {
                                 var title;
-                                if (vid == "stock-addOutBill") {
+                                if (vid === "stock-addOutBill") {
                                     title = "出货申请单详情";
-                                } else if (vid == "stock-enterBillDetails") {
+                                } else if (vid === "stock-enterBillDetails") {
                                     title = "入库单详情";
-                                } else if (vid == "stock-outBillDetails") {
+                                } else if (vid === "stock-outBillDetails") {
                                     title = "出库单详情";
-                                } else if (vid == "depot-position") {
+                                } else if (vid === "depot-position") {
                                     title = "库位详情";
                                 }
                                 element.tabAdd('nav-tabs', {
@@ -307,7 +307,7 @@
                 //头部搜索框获取焦点变亮
                 $(".header-seacherBox").addClass('opacity1');
             }).blur(function() {
-                if ($(this).val() == "") {
+                if ($(this).val() === "") {
                     $(".header-seacherBox").removeClass('opacity1');
                 }
             });
@@ -348,7 +348,7 @@
                         'type': '0' //0：主动按钮 1：被动按钮
                     }]
                 }
-            }
+            };
 
             localStorage.setItem("menuBtnData", JSON.stringify(menuBtnData))
             // // console.log(document.cookie)
