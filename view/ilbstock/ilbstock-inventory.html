@@ -162,7 +162,6 @@
                             // 判断arr是否为数组并保证内部有值
                             return false;
                         }
-
                         for (var i = 0; i < data.data.length; i++) {
                             var name = "";
                             if (data.data[i].name) {
@@ -235,8 +234,7 @@
                         templet: function(d) {
                             return d.LAY_TABLE_INDEX + 1;
                         }
-                    },
-                    {
+                    }, {
                         field: 'createdate',
                         title: '盘点时间',
                         width: 170,
@@ -282,7 +280,6 @@
             var curData = obj.data;
             if (obj.event === 'click') {
                 sessionStorage.setItem('inventoryParam', JSON.stringify(curData));
-                
                 $.get('view/ilbstock/ilbstock-layerAbnormal.html', {}, function(str) { // 请求弹框
                     // 弹出弹框
                     inventoryLayer = layer.open({
@@ -321,7 +318,6 @@
                 });
             });
         });
-
 
     });
 </script>
