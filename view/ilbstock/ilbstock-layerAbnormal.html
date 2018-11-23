@@ -211,8 +211,8 @@
             url: apiurl,
             where: depotData,
             parseData: function(res) { //res 即为原始返回的数据
-                console.log(res.data);
-                //if (res.status !== 0) res.status = 0;                
+                //if (res.status !== 0) res.status = 0;
+                console.log(this);
                 return {
                     "code": res.status, //解析接口状态
                     "msg": res.msg, //解析提示文本
@@ -245,7 +245,7 @@
                         templet: function(d) {
                             var num = d.num;
                             var num1= d.num1;
-                            if(num != num1){
+                            if(num !== num1){
                                 return "<span style='color:red'>"+num1+"</span>";
                             }else{
                                 return num1;
@@ -302,12 +302,11 @@
             ],
             even: true,
             page: true, //是否显示分页
-            limits: [15, 40, 45, 60],
-            limit: 15, //每页默认显示的数量
+            // limits: [data.length],
+            // limit: data.length, //每页默认显示的数量
             done: function(res, curr, count) {},
             loading: true
         });
-
 
         var numChangeValue = {}; //单元格编辑更改评估价格数据对象
         //监听编辑
@@ -335,7 +334,7 @@
 
             var status = true;
             for (var key in numChangeValue) {
-                if (isNaN(numChangeValue[key]) || numChangeValue[key] == "") {
+                if (isNaN(numChangeValue[key]) || numChangeValue[key] === "") {
                     layer.msg("保存数量修改失败，只能为数字");
                     status = false;
                 }
@@ -352,7 +351,6 @@
             } else {
                 return false;
             }
-
         }
 
         //保持提交  修改异常调整数据
