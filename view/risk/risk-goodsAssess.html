@@ -52,7 +52,7 @@
 </div>
 <!-- 是否评估按钮 -->
 <script type="text/html" id="checkboxTpl">
-    <input type="checkbox" name="lock" value="评估" title="评估" lay-filter="lockDemo" {{ d.aprice > 0 ? 'checked' : '' }}>
+    <input type="checkbox" name="isapp" value="{{d.id}}" title="评估" lay-filter="isapp" checked>
 </script>
 
 <script>
@@ -190,7 +190,6 @@
                         arr: selectDataInstall(specList) //规格列表
                     });
 
-
                     formSelects.data('originSelect', 'local', {
                         arr: selectDataInstall(CHDList) //产地列表
                     });
@@ -207,9 +206,9 @@
                             traditional: true,
                             success: function(data) {
                                 // console.log(data);
-                                if (data.status == 0) {
+                                if (data.status === 0) {
                                     //把接口数据转换为[{"name":str,"value":number}]格式
-                                    if (!Array.isArray(data.data) || data.data.length == 0) {
+                                    if (!Array.isArray(data.data) || data.data.length === 0) {
                                         // 判断arr是否为数组并保证内部有值
                                         return false;
                                     }
@@ -255,7 +254,7 @@
                         },
                         parseData: function(res) { //res 即为原始返回的数据
                             // console.log(res)
-                            if (res.status != 0) {
+                            if (res.status !== 0) {
                                 res.status = 0;
                                 res.data = []
                             }
@@ -312,7 +311,7 @@
                                     field: 'pprice',
                                     title: '采购单价'
                                 }, {
-                                    field:'lock',
+                                    field:'isapp',
                                     title:'是否评估',
                                     width:110,
                                     templet: '#checkboxTpl',
@@ -339,36 +338,40 @@
                         }
                     });
 
+                    //监听锁定操作
+                    form.on('checkbox(isapp)', function(obj){
+                        console.log(this.value + ":" + obj.elem.checked);
+                        // layer.tips(this.value + '-' + this.name + '：'+ obj.elem.checked, obj.othis);
+                    });
+
                     var apriceChangeValue = {}; //单元格编辑更改评估价格数据对象
 
                     //监听编辑
                     table.on('edit(tableContainer-from)', function(obj) {
                         // console.log(obj.value); //得到修改后的值
                         // console.log(obj.field); //当前编辑的字段名
-                        // console.log(obj.data); //所在行的所有相关数据
+                        console.log(obj.data); //所在行的所有相关数据
                         if (!obj.value || isNaN(obj.value)) {
                             layer.msg("估价金额只能为数字");
                         }
-
                         apriceChangeValue[obj.data.id] = obj.value;
                         console.log(apriceChangeValue);
                     });
 
                     $(".saveEvaluationPriceBtn").click(function() {
                         var status = true;
-                        console.log(apriceChangeValue);
+                        // console.log(apriceChangeValue);
                         //保存评估价
                         if ($.isEmptyObject(apriceChangeValue)) {
                             layer.msg("当前估价未作修改");
                         } else {
                             for (var key in apriceChangeValue) {
-                                if (isNaN(apriceChangeValue[key]) || apriceChangeValue[key] == "") {
-                                    console.log(1)
+                                if (isNaN(apriceChangeValue[key]) || apriceChangeValue[key] === "") {
                                     layer.msg("保存估价失败，金额只能为数字");
                                     status = false;
                                 }
                             }
-                            console.log(status)
+                            // console.log(status);
                             if (status) {
                                 status = editAprice(ownerid, apriceChangeValue, tableInsAssess); //提交评估单价
                                 if (status) {
@@ -385,7 +388,6 @@
                             } else {
                                 return false;
                             }
-
                         }
                     });
 
@@ -412,7 +414,7 @@
                             async: false,
                             data: {
                                 ownerid: ownerid,
-                                lbarr: JSON.stringify(apriceJson)
+                                lbarr: JSON.stringify(apriceJson),
                             },
                             xhrFields: {
                                 withCredentials: true
