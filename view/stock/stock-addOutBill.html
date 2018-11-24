@@ -772,13 +772,13 @@
 
                 $("#addgoodList").click(function() {
                     var checkStatus = table.checkStatus('tableContainer-goodsList'); //表格选中状态
-                    // if(tableData){
-                    //     tableData = tableData.concat(checkStatus.data);
-                    // }else{
-                    //     tableData = checkStatus.data;
-                    // }
-                    tableData = checkStatus.data;
-                    // console.log(tableData);
+                    console.log(tableData)
+                    if(tableData.length>1){
+                        tableData = tableData.concat(checkStatus.data);
+                    }else{
+                        tableData = checkStatus.data;
+                    }
+                    
                     layer.close(goodsListLayer); //关闭
                     // 刷新表格
                     // console.log(tableData);
@@ -811,6 +811,7 @@
                         }
                     }
                 });
+
             });
         });
 
