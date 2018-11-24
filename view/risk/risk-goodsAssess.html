@@ -65,11 +65,8 @@
         var laytpl = layui.laytpl;
         var upload = layui.upload;
         var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 93); //内容区域所需减去的高度
-
         var assessLayer; // 评估-弹层
-
         form.render(); // 重置表单渲染
-
         form.on('submit(searchForm)', function(data) {
             var paramSearch = {};
             for (var key in data.field) {
@@ -267,63 +264,61 @@
                             pageName: 'offset', // 页码的参数名称，默认：page
                             limitName: 'limit' // 每页数据量的参数名，默认：limit
                         },
-                        cols: [
-                            [ // 标题栏
-                                {
-                                    field: 'LAY_TABLE_INDEX',
-                                    title: '序号',
-                                    width: 40,
-                                    templet: function(d) {
-                                        return d.LAY_TABLE_INDEX + 1;
-                                    }
-                                }, {
-                                    field: 'uuid',
-                                    title: '货物标识码',
-                                    width: 170,
-                                }, {
-                                    field: 'code',
-                                    title: '包号',
-                                    sort: true
-                                }, {
-                                    field: 'varieties',
-                                    title: '品种'
-                                }, {
-                                    field: 'spec',
-                                    title: '规格/厚度'
-                                }, {
-                                    field: 'levels',
-                                    title: '等级',
-                                    sort: true
-                                }, {
-                                    field: 'chang',
-                                    title: '长度'
-                                }, {
-                                    field: 'brand',
-                                    title: '品牌',
-                                    sort: true
-                                }, {
-                                    field: 'origin',
-                                    title: '产地',
-                                    sort: true
-                                }, {
-                                    field: 'pprice',
-                                    title: '采购单价'
-                                }, {
-                                    field:'isapp',
-                                    title:'是否评估',
-                                    width:110,
-                                    templet: '#checkboxTpl',
-                                    unresize: true,
-                                }, {
-                                    field: 'aprice',
-                                    title: '评估单价',
-                                    edit: "text"
-                                }, {
-                                    field: 'remarks',
-                                    title: '备注',
+                        cols: [[ // 标题栏
+                            {
+                                field: 'LAY_TABLE_INDEX',
+                                title: '序号',
+                                width: 40,
+                                templet: function(d) {
+                                    return d.LAY_TABLE_INDEX + 1;
                                 }
-                            ]
-                        ],
+                            }, {
+                                field: 'uuid',
+                                title: '货物标识码',
+                                width: 170,
+                            }, {
+                                field: 'code',
+                                title: '包号',
+                                sort: true
+                            }, {
+                                field: 'varieties',
+                                title: '品种'
+                            }, {
+                                field: 'spec',
+                                title: '规格/厚度'
+                            }, {
+                                field: 'levels',
+                                title: '等级',
+                                sort: true
+                            }, {
+                                field: 'chang',
+                                title: '长度'
+                            }, {
+                                field: 'brand',
+                                title: '品牌',
+                                sort: true
+                            }, {
+                                field: 'origin',
+                                title: '产地',
+                                sort: true
+                            }, {
+                                field: 'pprice',
+                                title: '采购单价'
+                            }, {
+                                field:'isapp',
+                                title:'是否评估',
+                                width:110,
+                                templet: '#checkboxTpl',
+                                unresize: true,
+                            }, {
+                                field: 'aprice',
+                                title: '评估单价',
+                                edit: "text"
+                            }, {
+                                field: 'remarks',
+                                title: '备注',
+                            }
+                        ]],
                         page: false,
                         limit: null,
                         // limits: [10, 20, 30, 40, 50],
