@@ -52,7 +52,7 @@
 </div>
 <!-- 是否评估按钮 -->
 <script type="text/html" id="checkboxTpl">
-    <input type="checkbox" name="aprice" value="评估" title="评估" lay-filter="lockDemo" {{ d.aprice > 0 ? 'checked' : '' }}>
+    <input type="checkbox" name="lock" value="评估" title="评估" lay-filter="lockDemo" {{ d.aprice > 0 ? 'checked' : '' }}>
 </script>
 
 <script>
@@ -74,7 +74,7 @@
             var paramSearch = {};
             for (var key in data.field) {
                 // 参数赋值
-                if (data.field[key] != "") {
+                if (data.field[key] !== "") {
                     paramSearch[key] = data.field[key]
                 }
             }
@@ -231,7 +231,7 @@
                         };
                         for (var key in data.field) {
                             // 参数赋值
-                            if (data.field[key] != "") {
+                            if (data.field[key] !== "") {
                                 paramSearch[key] = data.field[key]
                             }
                         }

@@ -163,7 +163,8 @@
                 view.innerHTML = html;
             });
 
-            element.render();//加载路由
+
+            element.render("nav-tabs");//加载路由
             Q.reg([
                 //注册页面
                 ['home', function() {
@@ -303,14 +304,14 @@
                 location.hash = '#!' + this.getAttribute('lay-id');
             });
 
-            $(".header-seacherBox input").focus(function() {
+            /*$(".header-seacherBox input").focus(function() {
                 //头部搜索框获取焦点变亮
                 $(".header-seacherBox").addClass('opacity1');
             }).blur(function() {
                 if ($(this).val() === "") {
                     $(".header-seacherBox").removeClass('opacity1');
                 }
-            });
+            });*/
 
             $(".signOutBtn").click(signOut); //退出登录
             function signOut() {
