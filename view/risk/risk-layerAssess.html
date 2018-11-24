@@ -2,15 +2,16 @@
     <div class="table-content-title layer-level">
         <div class="table-tools">
             <ul class="layui-nav" lay-filter="talbe-tools">
-                <li class="layui-nav-item">
-                    <a href="javascript:;" class="saveEvaluationPriceBtn"><i class="iconfont icon-daochu"></i>保存</a>
+                <!-- <li class="layui-nav-item">
+                    <a href="javascript:;" class="saveEvaluationPriceBtn"><i class="iconfont icon-baocun"></i>保存</a>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;" class="cancelBtn"><i class="iconfont icon-dayin"></i>取消</a>
-                </li>
+                    <a href="javascript:;" class="cancelBtn"><i class="iconfont icon-quxiao"></i>取消</a>
+                </li> -->
             </ul>
         </div>
     </div>
+    
     <div class="table-page-header">
         <div class="table-page-form layer-level">
             <form class="layui-form form-newbill" action="">
@@ -58,7 +59,7 @@
                         </div>
                     </div>
                     <div class="layui-form-item form-right">
-                        <button class="layui-btn layui-btn-md layui-btn-gray" lay-submit lay-filter="searchForm">
+                        <button class="layui-btn layui-btn-md layui-btn-gray" type="reset" lay-filter="searchForm">
                             <i class="iconfont icon-zhongzhi"></i><span>重置</span>
                         </button>
                         <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="searchAssessForm">
@@ -69,6 +70,7 @@
             </form>
         </div>
     </div>
+
     <div class="table-content layer-level">
         <div class="table-content-main">
             <table class="layui-hide" id="tableContainer-from" lay-filter="tableContainer-from"></table>
@@ -84,21 +86,21 @@
         var table = layui.table;
         var formSelects = layui.formSelects;
         var laytpl = layui.laytpl;
+        // var btnAuth = layui.btnAuth;
 
-        var menuKey = "testkey_1";//当前页面key
-        var obj = $("#risk-layerAssess .table-tools").find("ul");//当前页面容器
-        var btnData = JSON.parse(localStorage.getItem("menuBtnData")); //获取按钮权限数据
-        var dom = '<li class="layui-nav-item"><a href="javascript:;" class="saveEvaluationPriceBtn"><i class="iconfont icon-daochu"></i>保存</a></li>';
-        console.log(btnData);
+        var menuKey = "testkey_1"; //当前页面key
+        var domObj = $("#risk-layerAssess .table-tools").find("ul"); //当前页面容器
+        var btnData = JSON.parse(sessionStorage.getItem("buttonAuthority")); //获取按钮权限数据
+
+        var btnDom;
         if (btnData !== null) {
             var currentBtnData = btnData ? btnData[menuKey] : [];
+            // btnAuth.ready(currentBtnData.btn,domObj)
+            for (var i = 0; i < currentBtnData.btn.length; i++) {
+                btnDom = '<li class="layui-nav-item"><a href="' + currentBtnData.btn[i].url + '" class="' + currentBtnData.btn[i].class + '"><i class="' + currentBtnData.btn[i].icon + '"></i>' + currentBtnData.btn[i].name + '</a></li>';
+                domObj.append(btnDom);
+            }
         }
 
-
-
-        console.log(currentBtnData)
-        console.log(obj);
-
     });
-
 </script>
