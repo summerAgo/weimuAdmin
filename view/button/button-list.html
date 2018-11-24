@@ -254,6 +254,8 @@
                 icon: 3,
                 title: '提示'
             }, function(index) {
+                data.field['SESSION_NAME']= getCookie('SESSION_NAME');
+                data.field['TOKEN']= getCookie('TOKEN');
                 $.ajax({
                     cache: true,
                     type: "post",
@@ -298,7 +300,7 @@
                 success: funSuc,
                 error: funErr
             })
-        };
+        }
         //变更下载模板链接
         $("#dowmTemp").attr("href", ilbstockImportTemp);
 

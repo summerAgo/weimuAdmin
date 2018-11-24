@@ -219,7 +219,9 @@
                         url: delSupplier,
                         type: "post",
                         data: {
-                            "ids": rowId
+                            "ids": rowId,
+                             'SESSION_NAME':getCookie('SESSION_NAME'),
+                             'TOKEN':getCookie('TOKEN'),
                         },
                         traditional: true,
                         xhrFields: {
@@ -275,7 +277,7 @@
             if (data.field.id != null && data.field.id !== "") {
                 title = '确认提交修改';
                 userUrl = updSupplier;
-                isNameEdit = !!(checkStatus.data[0].name !== data.field.name);
+                isNameEdit = !!(checkStatus.data[0].name.trim() !== data.field.name.trim());
             } else {
                 title = '确认添加';
                 userUrl = addSupplier;
@@ -288,7 +290,7 @@
                 ints = instid[0];
             }
             data.field.instid = ints;
-            // 判供应商是否重复
+            // 判断供应商是否重复
             if (isNameAdd || isNameEdit) {
                 $.ajax({
                     cache: true,
@@ -296,7 +298,9 @@
                     url: isname_supplier,
                     data: {
                         instid: data.field.instid,
-                        name: data.field.name
+                        name: data.field.name,
+                        'SESSION_NAME':getCookie('SESSION_NAME'),
+                        'TOKEN':getCookie('TOKEN'),
                     },
                     async: false,
                     xhrFields: {
@@ -312,11 +316,12 @@
                 });
             }
             if (!isName) {return false;}
-
             layer.confirm(title, {
                 icon: 3,
                 title: '提示'
             }, function(index) {
+                data.field['SESSION_NAME']= getCookie('SESSION_NAME');
+                data.field['TOKEN']= getCookie('TOKEN');
                 $.ajax({
                     cache: true,
                     type: "post",
@@ -485,6 +490,8 @@
                 icon: 3,
                 title: '提示'
             }, function(index) {
+                data['SESSION_NAME']= getCookie('SESSION_NAME');
+                data['TOKEN']= getCookie('TOKEN');
                 $.ajax({
                     cache: true,
                     type: "post",
@@ -541,7 +548,9 @@
                     url: isname_institution,
                     data: {
                         utype: 2,
-                        name: data.field.name
+                        name: data.field.name,
+                        'SESSION_NAME':getCookie('SESSION_NAME'),
+                        'TOKEN':getCookie('TOKEN'),
                     },
                     async: false,
                     xhrFields: {
@@ -557,11 +566,14 @@
                 });
                 if (!isName) {return false;}
             }
-
+            // 添加供应商类型去空格
+            data.field.name = data.field.name.replace(/^\s*|\s*$/g,"");
             layer.confirm(title, {
                 icon: 3,
                 title: '提示'
             }, function(index) {
+                data.field['SESSION_NAME']= getCookie('SESSION_NAME');
+                data.field['TOKEN']= getCookie('TOKEN');
                 $.ajax({
                     cache: true,
                     type: "post",

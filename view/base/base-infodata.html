@@ -231,7 +231,9 @@
                     url: isname_info,
                     data: {
                         instid: data.field.instid,
-                        name: data.field.name
+                        name: data.field.name,
+                        'SESSION_NAME':getCookie('SESSION_NAME'),
+                        'TOKEN':getCookie('TOKEN'),
                     },
                     async: false,
                     xhrFields: {
@@ -249,7 +251,8 @@
                     return false;
                 }
             }
-
+            data.field['SESSION_NAME']= getCookie('SESSION_NAME');
+            data.field['TOKEN']= getCookie('TOKEN');
             // 添加
             $.ajax({
                 url: url,
@@ -298,7 +301,9 @@
                         url: basicsInfoDelete,
                         type: "post",
                         data: {
-                            "idsstr": rowId.toLocaleString()
+                            "idsstr": rowId.toLocaleString(),
+                            'SESSION_NAME':getCookie('SESSION_NAME'),
+                            'TOKEN':getCookie('TOKEN'),
                         },
                         xhrFields: {
                             withCredentials: true
@@ -479,6 +484,8 @@
                 icon: 3,
                 title: '提示'
             }, function(index) {
+                data['SESSION_NAME']= getCookie('SESSION_NAME');
+                data['TOKEN']= getCookie('TOKEN');
                 $.ajax({
                     cache: true,
                     type: "post",
@@ -507,7 +514,7 @@
             return false;
         });
 
-        // 监测商品类型修改表单提交
+        // 商品类型添加修改表单提交
         form.on('submit(addInsSubmit)', function(data) {
             var title = "";
             var url = "";
@@ -524,6 +531,8 @@
                 icon: 3,
                 title: '提示'
             }, function(index) {
+                data.field['SESSION_NAME']= getCookie('SESSION_NAME');
+                data.field['TOKEN']= getCookie('TOKEN');
                 $.ajax({
                     cache: true,
                     type: "post",

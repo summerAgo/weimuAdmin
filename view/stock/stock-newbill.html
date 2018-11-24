@@ -301,7 +301,9 @@
                         cargoowner: basedata.cargoowner,
                         depotname: basedata.depotname,
                         origin: basedata.origin,
-                        supplier: basedata.supplier
+                        supplier: basedata.supplier,
+                        'SESSION_NAME': getCookie('SESSION_NAME'),
+                        'TOKEN': getCookie('TOKEN')
                     },
                     traditional: true,
                     success: function(data) {

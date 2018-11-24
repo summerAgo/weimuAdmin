@@ -229,6 +229,8 @@
             data["orderno"] = outBill.orderno;
             data["ownerid"] = outBill.ownerid;
             data["depotid"] = outBill.depotid;
+            data['SESSION_NAME']= getCookie('SESSION_NAME');
+            data['TOKEN']= getCookie('TOKEN');
             $("#estimatedate").val(outBill.outdate);
             $.ajax({
                 cache: true,
@@ -460,7 +462,8 @@
                             }
                         }
                     }
-
+                    preData['SESSION_NAME']= getCookie('SESSION_NAME');
+                    preData['TOKEN']= getCookie('TOKEN');
                     $.ajax({
                         cache: true,
                         type: "POST",
@@ -552,7 +555,9 @@
                     },
                     crossDomain: true,
                     data: {
-                        ids: ids.toString()
+                        ids: ids.toString(),
+                        'SESSION_NAME':getCookie('SESSION_NAME'),
+                        'TOKEN':getCookie('TOKEN'),
                     },
                     async: false,
                     success: function(res) {

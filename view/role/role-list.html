@@ -251,6 +251,8 @@
                 icon: 3,
                 title: '提示'
             }, function(index) {
+                data.field['SESSION_NAME'] =getCookie("SESSION_NAME");
+                data.field['TOKEN'] =getCookie("TOKEN");
                 $.ajax({
                     cache: true,
                     type: "POST",
@@ -307,7 +309,9 @@
                     type: "get",
                     url: isname_role,
                     data: {
-                        rolename: data.field.rolename
+                        rolename: data.field.rolename,
+                        'SESSION_NAME': getCookie('SESSION_NAME'),
+                        'TOKEN': getCookie('TOKEN')
                     },
                     async: false,
                     xhrFields: {
@@ -330,7 +334,6 @@
                 icon: 3,
                 title: '提示'
             }, function(index) {
-
                 data.field["SESSION_NAME"] = getCookie('SESSION_NAME');
                 data.field["TOKEN"] = getCookie('TOKEN');
                 console.log(data);

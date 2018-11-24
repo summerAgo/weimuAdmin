@@ -218,7 +218,9 @@
                         url: delOwner,
                         type: "post",
                         data: {
-                            "ids": rowId
+                            "ids": rowId,
+                            'SESSION_NAME':getCookie('SESSION_NAME'),
+                            'TOKEN':getCookie('TOKEN'),
                         },
                         traditional: true,
                         xhrFields: {
@@ -295,7 +297,9 @@
                     url: isname_owner,
                     data: {
                         instid: data.field.instid,
-                        name: data.field.name
+                        name: data.field.name,
+                        'SESSION_NAME':getCookie('SESSION_NAME'),
+                        'TOKEN':getCookie('TOKEN'),
                     },
                     async: false,
                     xhrFields: {
@@ -316,6 +320,8 @@
                 icon: 3,
                 title: '提示'
             }, function(index) {
+                data.field['SESSION_NAME']= getCookie('SESSION_NAME');
+                data.field['TOKEN']= getCookie('TOKEN');
                 $.ajax({
                     cache: true,
                     type: "post",
@@ -481,6 +487,8 @@
                 icon: 3,
                 title: '提示'
             }, function(index) {
+                data['SESSION_NAME']= getCookie('SESSION_NAME');
+                data['TOKEN']= getCookie('TOKEN');
                 $.ajax({
                     cache: true,
                     type: "post",
@@ -520,7 +528,7 @@
             if (data.field.id != null && data.field.id !== "") {
                 title = '确认提交修改';
                 userUrl = updInstitution;
-                isNameEdit = !!(menuIns.name !== data.field.name);
+                isNameEdit = !!(menuIns.name.trim() !== data.field.name.trim());
             } else {
                 title = '确认添加';
                 userUrl = addInstitution;
@@ -535,7 +543,9 @@
                     url: isname_institution,
                     data: {
                         utype: 1,
-                        name: data.field.name
+                        name: data.field.name,
+                        'SESSION_NAME':getCookie('SESSION_NAME'),
+                        'TOKEN':getCookie('TOKEN'),
                     },
                     async: false,
                     xhrFields: {
@@ -551,11 +561,14 @@
                 });
                 if (!isName) { return false;}
             }
-
+            // 添加仓库主类型去空格
+            data.field.name = data.field.name.replace(/^\s*|\s*$/g,"");
             layer.confirm(title, {
                 icon: 3,
                 title: '提示'
             }, function(index) {
+                data.field['SESSION_NAME']= getCookie('SESSION_NAME');
+                data.field['TOKEN']= getCookie('TOKEN');
                 $.ajax({
                     cache: true,
                     type: "post",

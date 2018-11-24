@@ -52,7 +52,7 @@
 </div>
 <!-- 是否评估按钮 -->
 <script type="text/html" id="checkboxTpl">
-    <input type="checkbox" name="lock" value="评估" title="评估" lay-filter="lockDemo" {{ d.aprice > 0 ? 'checked' : '' }}>
+    <input type="checkbox" name="isapp" value="{{d.id}}" title="评估" lay-filter="isapp" checked>
 </script>
 
 <script>
@@ -65,11 +65,8 @@
         var laytpl = layui.laytpl;
         var upload = layui.upload;
         var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 93); //内容区域所需减去的高度
-
         var assessLayer; // 评估-弹层
-
         form.render(); // 重置表单渲染
-
         form.on('submit(searchForm)', function(data) {
             var paramSearch = {};
             for (var key in data.field) {
@@ -115,38 +112,36 @@
                 pageName: 'offset', // 页码的参数名称，默认：page
                 limitName: 'limit' // 每页数据量的参数名，默认：limit
             },
-            cols: [
-                [ // 标题栏
-                    {
-                        field: 'LAY_TABLE_INDEX',
-                        title: '序号',
-                        width: 40,
-                        templet: function(d) {
-                            return d.LAY_TABLE_INDEX + 1;
-                        }
-                    }, {
-                        field: 'name', // 设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识
-                        title: '仓库主',
-                        event: 'click',
-                        style: 'color:#0063de',
-                        width: 266,
-                    }, {
-                        field: 'untreated',
-                        title: '未评估商品',
-                        width: 266,
-                        templet: function(d) {
-                            //默认无
-                            if (d.untreated > 0) {
-                                return '<span style="color:red;">' + d.untreated + '</span>';
-                            }
-                            return d.untreated;
-                        }
-                    }, {
-                        field: 'already',
-                        title: '已评估商品',
+            cols: [[ // 标题栏
+                {
+                    field: 'LAY_TABLE_INDEX',
+                    title: '序号',
+                    width: 40,
+                    templet: function(d) {
+                        return d.LAY_TABLE_INDEX + 1;
                     }
-                ]
-            ],
+                }, {
+                    field: 'name', // 设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识
+                    title: '仓库主',
+                    event: 'click',
+                    style: 'color:#0063de',
+                    width: 266,
+                }, {
+                    field: 'untreated',
+                    title: '未评估商品',
+                    width: 266,
+                    templet: function(d) {
+                        //默认无
+                        if (d.untreated > 0) {
+                            return '<span style="color:red;">' + d.untreated + '</span>';
+                        }
+                        return d.untreated;
+                    }
+                }, {
+                    field: 'already',
+                    title: '已评估商品',
+                }
+            ]],
             even: true, // 开启隔行背景
             page: true, // 是否显示分页
             limits: [100, 200, 500, 1000],
@@ -190,7 +185,6 @@
                         arr: selectDataInstall(specList) //规格列表
                     });
 
-
                     formSelects.data('originSelect', 'local', {
                         arr: selectDataInstall(CHDList) //产地列表
                     });
@@ -207,9 +201,9 @@
                             traditional: true,
                             success: function(data) {
                                 // console.log(data);
-                                if (data.status == 0) {
+                                if (data.status === 0) {
                                     //把接口数据转换为[{"name":str,"value":number}]格式
-                                    if (!Array.isArray(data.data) || data.data.length == 0) {
+                                    if (!Array.isArray(data.data) || data.data.length === 0) {
                                         // 判断arr是否为数组并保证内部有值
                                         return false;
                                     }
@@ -255,7 +249,7 @@
                         },
                         parseData: function(res) { //res 即为原始返回的数据
                             // console.log(res)
-                            if (res.status != 0) {
+                            if (res.status !== 0) {
                                 res.status = 0;
                                 res.data = []
                             }
@@ -270,63 +264,61 @@
                             pageName: 'offset', // 页码的参数名称，默认：page
                             limitName: 'limit' // 每页数据量的参数名，默认：limit
                         },
-                        cols: [
-                            [ // 标题栏
-                                {
-                                    field: 'LAY_TABLE_INDEX',
-                                    title: '序号',
-                                    width: 40,
-                                    templet: function(d) {
-                                        return d.LAY_TABLE_INDEX + 1;
-                                    }
-                                }, {
-                                    field: 'uuid',
-                                    title: '货物标识码',
-                                    width: 170,
-                                }, {
-                                    field: 'code',
-                                    title: '包号',
-                                    sort: true
-                                }, {
-                                    field: 'varieties',
-                                    title: '品种'
-                                }, {
-                                    field: 'spec',
-                                    title: '规格/厚度'
-                                }, {
-                                    field: 'levels',
-                                    title: '等级',
-                                    sort: true
-                                }, {
-                                    field: 'chang',
-                                    title: '长度'
-                                }, {
-                                    field: 'brand',
-                                    title: '品牌',
-                                    sort: true
-                                }, {
-                                    field: 'origin',
-                                    title: '产地',
-                                    sort: true
-                                }, {
-                                    field: 'pprice',
-                                    title: '采购单价'
-                                }, {
-                                    field:'lock',
-                                    title:'是否评估',
-                                    width:110,
-                                    templet: '#checkboxTpl',
-                                    unresize: true,
-                                }, {
-                                    field: 'aprice',
-                                    title: '评估单价',
-                                    edit: "text"
-                                }, {
-                                    field: 'remarks',
-                                    title: '备注',
+                        cols: [[ // 标题栏
+                            {
+                                field: 'LAY_TABLE_INDEX',
+                                title: '序号',
+                                width: 40,
+                                templet: function(d) {
+                                    return d.LAY_TABLE_INDEX + 1;
                                 }
-                            ]
-                        ],
+                            }, {
+                                field: 'uuid',
+                                title: '货物标识码',
+                                width: 170,
+                            }, {
+                                field: 'code',
+                                title: '包号',
+                                sort: true
+                            }, {
+                                field: 'varieties',
+                                title: '品种'
+                            }, {
+                                field: 'spec',
+                                title: '规格/厚度'
+                            }, {
+                                field: 'levels',
+                                title: '等级',
+                                sort: true
+                            }, {
+                                field: 'chang',
+                                title: '长度'
+                            }, {
+                                field: 'brand',
+                                title: '品牌',
+                                sort: true
+                            }, {
+                                field: 'origin',
+                                title: '产地',
+                                sort: true
+                            }, {
+                                field: 'pprice',
+                                title: '采购单价'
+                            }, {
+                                field:'isapp',
+                                title:'是否评估',
+                                width:110,
+                                templet: '#checkboxTpl',
+                                unresize: true,
+                            }, {
+                                field: 'aprice',
+                                title: '评估单价',
+                                edit: "text"
+                            }, {
+                                field: 'remarks',
+                                title: '备注',
+                            }
+                        ]],
                         page: false,
                         limit: null,
                         // limits: [10, 20, 30, 40, 50],
@@ -339,36 +331,40 @@
                         }
                     });
 
+                    //监听锁定操作
+                    form.on('checkbox(isapp)', function(obj){
+                        console.log(this.value + ":" + obj.elem.checked);
+                        // layer.tips(this.value + '-' + this.name + '：'+ obj.elem.checked, obj.othis);
+                    });
+
                     var apriceChangeValue = {}; //单元格编辑更改评估价格数据对象
 
                     //监听编辑
                     table.on('edit(tableContainer-from)', function(obj) {
                         // console.log(obj.value); //得到修改后的值
                         // console.log(obj.field); //当前编辑的字段名
-                        // console.log(obj.data); //所在行的所有相关数据
+                        console.log(obj.data); //所在行的所有相关数据
                         if (!obj.value || isNaN(obj.value)) {
                             layer.msg("估价金额只能为数字");
                         }
-
                         apriceChangeValue[obj.data.id] = obj.value;
                         console.log(apriceChangeValue);
                     });
 
                     $(".saveEvaluationPriceBtn").click(function() {
                         var status = true;
-                        console.log(apriceChangeValue);
+                        // console.log(apriceChangeValue);
                         //保存评估价
                         if ($.isEmptyObject(apriceChangeValue)) {
                             layer.msg("当前估价未作修改");
                         } else {
                             for (var key in apriceChangeValue) {
-                                if (isNaN(apriceChangeValue[key]) || apriceChangeValue[key] == "") {
-                                    console.log(1)
+                                if (isNaN(apriceChangeValue[key]) || apriceChangeValue[key] === "") {
                                     layer.msg("保存估价失败，金额只能为数字");
                                     status = false;
                                 }
                             }
-                            console.log(status)
+                            // console.log(status);
                             if (status) {
                                 status = editAprice(ownerid, apriceChangeValue, tableInsAssess); //提交评估单价
                                 if (status) {
@@ -385,7 +381,6 @@
                             } else {
                                 return false;
                             }
-
                         }
                     });
 
@@ -412,7 +407,9 @@
                             async: false,
                             data: {
                                 ownerid: ownerid,
-                                lbarr: JSON.stringify(apriceJson)
+                                lbarr: JSON.stringify(apriceJson),
+                                'SESSION_NAME': getCookie('SESSION_NAME'),
+                                'TOKEN': getCookie('TOKEN')
                             },
                             xhrFields: {
                                 withCredentials: true
@@ -423,7 +420,7 @@
                                 if (res.status === 1) {
                                     window.location.href = loginPageUrl;
                                 }
-                                if (res.status == 0) {
+                                if (res.status === 0) {
                                     layer.msg("评估单价设置成功");
                                     status = true;
                                 } else {
@@ -432,11 +429,9 @@
                             }
                         });
                         return status;
-                    };
-
+                    }
                 });
             }
         });
-
     });
 </script>

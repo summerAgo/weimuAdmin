@@ -329,7 +329,9 @@
                 url: preEntryexamineStock,
                 type: "POST",
                 data: {
-                    'ids': ids
+                    'ids': ids,
+                    'SESSION_NAME': getCookie('SESSION_NAME'),
+                    'TOKEN': getCookie('TOKEN')
                 },
                 traditional: true,
                 xhrFields: {

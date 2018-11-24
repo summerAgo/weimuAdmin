@@ -208,6 +208,8 @@
 
                     form.on('submit(formDemo)', function(data) {
                         data.field.stockmoney=curData.stockmoney;
+                        data.field['SESSION_NAME']= getCookie('SESSION_NAME');
+                        data.field['TOKEN']= getCookie('TOKEN');
                         $.ajax({
                             cache: true,
                             type: "POST",
