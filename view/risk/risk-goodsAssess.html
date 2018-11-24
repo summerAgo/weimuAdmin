@@ -206,7 +206,7 @@
                             async: false, //同步
                             traditional: true,
                             success: function(data) {
-                                console.log(data);
+                                // console.log(data);
                                 if (data.status == 0) {
                                     //把接口数据转换为[{"name":str,"value":number}]格式
                                     if (!Array.isArray(data.data) || data.data.length == 0) {
