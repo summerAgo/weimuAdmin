@@ -420,7 +420,7 @@
                                 if (res.status === 1) {
                                     window.location.href = loginPageUrl;
                                 }
-                                if (res.status == 0) {
+                                if (res.status === 0) {
                                     layer.msg("评估单价设置成功");
                                     status = true;
                                 } else {
@@ -429,11 +429,9 @@
                             }
                         });
                         return status;
-                    };
-
+                    }
                 });
             }
         });
-
     });
 </script>
