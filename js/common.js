@@ -66,3 +66,15 @@ Array.prototype.unique = function() {
     }
     return r;
 };
+//权限按钮生成
+function btnIsList(domObj,menuKey) {
+    var data = JSON.parse(sessionStorage.getItem("menuBtnData")); //获取按钮权限数据
+    var btnDom;
+    if (data !== null) {
+        var currentBtnData = data ? data[menuKey] : [];
+        for (var i = 0; i < currentBtnData.length; i++) {
+            btnDom = '<li class="layui-nav-item"><a href="javascript:;" class="' + currentBtnData[i].class + '"><i class="' + currentBtnData[i].icon + '"></i>' + currentBtnData[i].bname + '</a></li>';
+            domObj.append(btnDom);
+        }
+    }
+}

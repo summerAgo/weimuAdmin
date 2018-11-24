@@ -1,4 +1,4 @@
-<div class="table-page">
+<div class="table-page" id="base-infodata">
     <div class="trr-container">
         <div class="tree-box">
             <!--<div class="tree-header">
@@ -20,16 +20,15 @@
             <div class="table-content-title">
                 <div class="table-tools">
                     <ul class="layui-nav" lay-filter="talbe-tools">
-                        <li class="layui-nav-item">
+                        <!-- <li class="layui-nav-item">
                             <a id="toAdd" href="javascript:;"><i class="iconfont icon-tianjia"></i>添加</a>
-                            <!-- <a id="toExport" href="javascript:;">导出数据</a> -->
                         </li>
                         <li class="layui-nav-item">
                             <a href="javascript:;" class="updateBtn"><i class="iconfont icon-bianji"></i>修改</a>
                         </li>
                         <li class="layui-nav-item">
                             <a href="javascript:;" class="deleteBtn"><i class="iconfont icon-shanchu"></i>删除</a>
-                        </li>
+                        </li> -->
                     </ul>
                 </div>
             </div>
@@ -81,8 +80,12 @@
         var eleTree = layui.eleTree;
         var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 63); //内容区域所需减去的高度
 
-        var eaitLayer; //编辑-弹层
+        var menuKey = "a_18"; //当前页面key
+        var domObj = $("#base-infodata .table-tools").find("ul"); //当前页面容器
+        
+        btnIsList(domObj,menuKey);//按钮
 
+        var eaitLayer; //编辑-弹层
         form.render(); //重置表单渲染
         formSelects.render(); //下拉选项
 
@@ -154,7 +157,7 @@
         });
 
         // 点击添加商品
-        $("#toAdd").click(function() {
+        $(".toAdd").click(function() {
             var data = {};
             data["instid"] = menuIns.id;
             data["inaAllList"] = inaAllList;
@@ -200,8 +203,8 @@
             // data.field.supplier = window.currData.supplier; //
             /// var fromdata = $(".infodata_form").serialize();
             //var fromdataarr = $(".infodata_form").serializeArray();
-            var isNameAdd = false;// 判断添加是否同名标识
-            var isNameEdit = false;// 判断修改是否同名标识
+            var isNameAdd = false; // 判断添加是否同名标识
+            var isNameEdit = false; // 判断修改是否同名标识
             var isName = true; // 是否重名标识
 
             var id = data.field.id;
@@ -210,7 +213,7 @@
             if (undefined === id || '' === id) {
                 url = basicsInfoAdd; // 如果没有id，那么是添加
                 isNameAdd = true;
-            }else{
+            } else {
                 url = basicsInfoUpdate; // 否则为修改
                 isNameEdit = !!(tableData.name !== data.field.name);
             }
@@ -221,7 +224,7 @@
             }
             data.field.instid = ints;
             // 判供商品是否重复
-            if(isNameAdd || isNameEdit) {
+            if (isNameAdd || isNameEdit) {
                 $.ajax({
                     cache: true,
                     type: "get",
@@ -235,14 +238,16 @@
                         withCredentials: true
                     },
                     crossDomain: true,
-                    success: function (data) {
+                    success: function(data) {
                         if (data.status === 2) {
                             layer.msg('商品已存在');
                             isName = false;
                         }
                     }
                 });
-                if (!isName) {return false;}
+                if (!isName) {
+                    return false;
+                }
             }
 
             // 添加
