@@ -115,38 +115,36 @@
                 pageName: 'offset', // 页码的参数名称，默认：page
                 limitName: 'limit' // 每页数据量的参数名，默认：limit
             },
-            cols: [
-                [ // 标题栏
-                    {
-                        field: 'LAY_TABLE_INDEX',
-                        title: '序号',
-                        width: 40,
-                        templet: function(d) {
-                            return d.LAY_TABLE_INDEX + 1;
-                        }
-                    }, {
-                        field: 'name', // 设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识
-                        title: '仓库主',
-                        event: 'click',
-                        style: 'color:#0063de',
-                        width: 266,
-                    }, {
-                        field: 'untreated',
-                        title: '未评估商品',
-                        width: 266,
-                        templet: function(d) {
-                            //默认无
-                            if (d.untreated > 0) {
-                                return '<span style="color:red;">' + d.untreated + '</span>';
-                            }
-                            return d.untreated;
-                        }
-                    }, {
-                        field: 'already',
-                        title: '已评估商品',
+            cols: [[ // 标题栏
+                {
+                    field: 'LAY_TABLE_INDEX',
+                    title: '序号',
+                    width: 40,
+                    templet: function(d) {
+                        return d.LAY_TABLE_INDEX + 1;
                     }
-                ]
-            ],
+                }, {
+                    field: 'name', // 设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识
+                    title: '仓库主',
+                    event: 'click',
+                    style: 'color:#0063de',
+                    width: 266,
+                }, {
+                    field: 'untreated',
+                    title: '未评估商品',
+                    width: 266,
+                    templet: function(d) {
+                        //默认无
+                        if (d.untreated > 0) {
+                            return '<span style="color:red;">' + d.untreated + '</span>';
+                        }
+                        return d.untreated;
+                    }
+                }, {
+                    field: 'already',
+                    title: '已评估商品',
+                }
+            ]],
             even: true, // 开启隔行背景
             page: true, // 是否显示分页
             limits: [100, 200, 500, 1000],
