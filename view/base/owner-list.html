@@ -528,7 +528,7 @@
             if (data.field.id != null && data.field.id !== "") {
                 title = '确认提交修改';
                 userUrl = updInstitution;
-                isNameEdit = !!(menuIns.name !== data.field.name);
+                isNameEdit = !!(menuIns.name.trim() !== data.field.name.trim());
             } else {
                 title = '确认添加';
                 userUrl = addInstitution;
@@ -561,7 +561,8 @@
                 });
                 if (!isName) { return false;}
             }
-
+            // 添加仓库主类型去空格
+            data.field.name = data.field.name.replace(/^\s*|\s*$/g,"");
             layer.confirm(title, {
                 icon: 3,
                 title: '提示'
