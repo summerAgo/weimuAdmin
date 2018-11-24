@@ -219,7 +219,9 @@
                         url: delSupplier,
                         type: "post",
                         data: {
-                            "ids": rowId
+                            "ids": rowId,
+                             'SESSION_NAME':getCookie('SESSION_NAME'),
+                             'TOKEN':getCookie('TOKEN'),
                         },
                         traditional: true,
                         xhrFields: {
@@ -296,7 +298,9 @@
                     url: isname_supplier,
                     data: {
                         instid: data.field.instid,
-                        name: data.field.name
+                        name: data.field.name,
+                        'SESSION_NAME':getCookie('SESSION_NAME'),
+                        'TOKEN':getCookie('TOKEN'),
                     },
                     async: false,
                     xhrFields: {
@@ -317,6 +321,8 @@
                 icon: 3,
                 title: '提示'
             }, function(index) {
+                data.field['SESSION_NAME']= getCookie('SESSION_NAME');
+                data.field['TOKEN']= getCookie('TOKEN');
                 $.ajax({
                     cache: true,
                     type: "post",
@@ -485,6 +491,8 @@
                 icon: 3,
                 title: '提示'
             }, function(index) {
+                data['SESSION_NAME']= getCookie('SESSION_NAME');
+                data['TOKEN']= getCookie('TOKEN');
                 $.ajax({
                     cache: true,
                     type: "post",
@@ -541,7 +549,9 @@
                     url: isname_institution,
                     data: {
                         utype: 2,
-                        name: data.field.name
+                        name: data.field.name,
+                        'SESSION_NAME':getCookie('SESSION_NAME'),
+                        'TOKEN':getCookie('TOKEN'),
                     },
                     async: false,
                     xhrFields: {
@@ -562,6 +572,8 @@
                 icon: 3,
                 title: '提示'
             }, function(index) {
+                data.field['SESSION_NAME']= getCookie('SESSION_NAME');
+                data.field['TOKEN']= getCookie('TOKEN');
                 $.ajax({
                     cache: true,
                     type: "post",

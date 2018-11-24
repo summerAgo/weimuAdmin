@@ -444,7 +444,9 @@
                 url: preEntryexamineStock,
                 type: "post",
                 data: {
-                    'ids': ids
+                    'ids': ids,
+                     'SESSION_NAME':getCookie('SESSION_NAME'),
+                     'TOKEN':getCookie('TOKEN'),
                 },
                 traditional: true,
                 xhrFields: {
@@ -663,7 +665,9 @@
                     supplierid: supplierid,
                     suppliername: suppliername,
                     positionid: positionid,
-                    orderno: num
+                    orderno: num,
+                    'SESSION_NAME':getCookie('SESSION_NAME'),
+                    'TOKEN':getCookie('TOKEN'),
                 },
                 traditional: true,
                 success: function(res) {

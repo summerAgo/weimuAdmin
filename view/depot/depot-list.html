@@ -203,7 +203,9 @@
                     url: isname_depot,
                     data: {
                         ownerid: data.field.ownerid,
-                        name: data.field.name
+                        name: data.field.name,
+                        'SESSION_NAME':getCookie('SESSION_NAME'),
+                        'TOKEN':getCookie('TOKEN'),
                     },
                     async: false,
                     xhrFields: {
@@ -219,7 +221,8 @@
                 });
             }
             if (!isName) {return false;}
-
+            data.field['SESSION_NAME']= getCookie('SESSION_NAME');
+            data.field['TOKEN']= getCookie('TOKEN');
             $.ajax({
                 url: url,
                 type: "post",
@@ -288,7 +291,9 @@
                         url: depotDel,
                         type: "post",
                         data: {
-                            "ids": rowId
+                            "ids": rowId,
+                            'SESSION_NAME':getCookie('SESSION_NAME'),
+                            'TOKEN':getCookie('TOKEN'),
                         },
                         traditional: true,
                         xhrFields: {

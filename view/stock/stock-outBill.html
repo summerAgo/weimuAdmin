@@ -338,6 +338,8 @@
                         ids.push(checkStatus.data[i].orderno);
                     }
                     data["ids"] = ids.toString();
+                    data['SESSION_NAME']= getCookie('SESSION_NAME');
+                    data['TOKEN']= getCookie('TOKEN');
                     $.ajax({
                         cache: true,
                         type: "POST",

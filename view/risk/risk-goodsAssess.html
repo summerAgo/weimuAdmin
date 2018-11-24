@@ -415,6 +415,8 @@
                             data: {
                                 ownerid: ownerid,
                                 lbarr: JSON.stringify(apriceJson),
+                                'SESSION_NAME': getCookie('SESSION_NAME'),
+                                'TOKEN': getCookie('TOKEN')
                             },
                             xhrFields: {
                                 withCredentials: true

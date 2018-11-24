@@ -233,7 +233,9 @@
                 url: isname_position,
                 data: {
                     depotid: data.field.depotid,
-                    name: data.field.name
+                    name: data.field.name,
+                    'SESSION_NAME':getCookie('SESSION_NAME'),
+                    'TOKEN':getCookie('TOKEN'),
                 },
                 async: false,
                 xhrFields: {
@@ -248,7 +250,8 @@
                 }
             });
             if (!isName) {return false;}
-
+            data.field['SESSION_NAME']= getCookie('SESSION_NAME');
+            data.field['TOKEN']= getCookie('TOKEN');
             $.ajax({
                 url: url,
                 type: "POST",

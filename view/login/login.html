@@ -80,6 +80,8 @@
         var verifyCode = new GVerify("v_container");
         //监听提交
         form.on('submit(formLogin)', function (data) {
+            data.field['SESSION_NAME']= getCookie('SESSION_NAME');
+            data.field['TOKEN']= getCookie('TOKEN');
             $.ajax({
                 url: loginUrl,
                 type: "POST",

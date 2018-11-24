@@ -73,7 +73,7 @@
                 traditional: true,
                 success: function(data) {
                     console.log(data);
-                    if (data.status == 0) {
+                    if (data.status === 0) {
                         //把接口数据转换为[{"name":str,"value":number}]格式
                         if (!Array.isArray(data.data) || data.data.length == 0) {
                             // 判断arr是否为数组并保证内部有值
@@ -203,7 +203,9 @@
                         url: outDetails,
                         type: "get",
                         data: {
-                            orderno: curData.orderno // 单号
+                            orderno: curData.orderno, // 单号
+                            'SESSION_NAME': getCookie('SESSION_NAME'),
+                            'TOKEN': getCookie('TOKEN')
                         },
                         xhrFields: {
                             withCredentials: true
@@ -322,7 +324,9 @@
                     },
                     crossDomain: true,
                     data: {
-                        'orderno': sessionStorage.getItem("examineOrderID")
+                        'orderno': sessionStorage.getItem("examineOrderID"),
+                        'SESSION_NAME': getCookie('SESSION_NAME'),
+                        'TOKEN': getCookie('TOKEN')
                     },
                     error: function(request) {
                         layer.msg('修改失败');
@@ -359,7 +363,9 @@
                     },
                     crossDomain: true,
                     data: {
-                        'orderno': sessionStorage.getItem("examineOrderID")
+                        'orderno': sessionStorage.getItem("examineOrderID"),
+                        'SESSION_NAME': getCookie('SESSION_NAME'),
+                        'TOKEN': getCookie('TOKEN')
                     },
                     error: function(request) {
                         layer.msg('修改失败');
