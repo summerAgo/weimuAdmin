@@ -251,7 +251,7 @@
                         var a = $("input[name='cordonmoney']").val();
                         var b = $(this).val();
                         if (!a || !b || isNaN(a) || isNaN(b)) {
-                            layer.msg("金额只能为数组");
+                            // layer.msg("金额只能为数组");
                             return false;
                         } else {
                             $('div[data-name="proportion"]').html(compute(a, b));
@@ -262,7 +262,7 @@
                         var a = $(this).val();
                         var b = $("input[name='financingmoney']").val();
                         if (!a || !b || isNaN(a) || isNaN(b)) {
-                            layer.msg("金额只能为数组");
+                            // layer.msg("金额只能为数字");
                             return false;
                         } else {
                             $('div[data-name="proportion"]').html(compute(a, b));
