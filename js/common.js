@@ -1,5 +1,7 @@
 window.billBaseInfo; //预入库单基本信息：仓库主-仓库名称等;
 window.currData;//页面中当前选中行数据；
+
+var unitMoney = "（RMB）";
 //存cookie
 function setCookie(name, value, time) {
     var strsec = getsec(time);
@@ -81,5 +83,23 @@ function btnIsList(domObj,menuKey) {
             btnDom = '<li class="layui-nav-item"><a href="javascript:;" class="' + currentBtnData[i].classname + '"><i class="' + currentBtnData[i].icon + '"></i>' + currentBtnData[i].bname + '</a></li>';
             domObj.append(btnDom);
         }
+    }
+}
+
+// 金额添加逗号
+function formatNum(num) {
+    if(num) {
+        num = num.toString().replace(/\$|\,/g,'');
+        if('' === num || isNaN(num)){return 'Not a Number ! ';}
+        var sign = num.indexOf("-") > 0 ? '-' : '';
+        var cents = num.indexOf(".") > 0 ? num.substr(num.indexOf(".")) : '';
+        cents = cents.length>1 ? cents : '' ;
+        num = num.indexOf(".") > 0 ? num.substring(0,(num.indexOf("."))) : num ;
+        if('' === cents){ if(num.length > 1 && '0' === num.substr(0,1)){return 'Not a Number ! ';}}
+        else{if(num.length > 1 && '0' === num.substr(0,1)){return 'Not a Number ! ';}}
+        for (var i = 0; i < Math.floor((num.length-(1+i))/3); i++) {
+            num = num.substring(0,num.length-(4*i+3))+','+num.substring(num.length-(4*i+3));
+        }
+        return (sign + num + cents);
     }
 }

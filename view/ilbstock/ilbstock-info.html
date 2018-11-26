@@ -266,8 +266,7 @@
                         templet: function(d) {
                             return d.LAY_TABLE_INDEX + 1;
                         }
-                    },
-                    {
+                    }, {
                         type: 'checkbox'
                     }, {
                         field: 'orderno',
@@ -354,7 +353,7 @@
             limit: 500, //每页默认显示的数量
             done: function(res, curr, count) {
                 console.log(res);
-                var addtableBtn = '<div class="rightBotBtn" id="rightBox">合计总库存数量<span>' + res.znum + '</span>㎡ 总库存估价金额：<span>' + res.aprice + '</span>(RMB)</div>';
+                var addtableBtn = '<div class="rightBotBtn" id="rightBox">合计总库存数量<span>' + res.znum + '</span>㎡ 总库存估价金额：<span>' + formatNum(res.aprice) + '</span>(RMB)</div>';
                 if ($("#rightBox").length < 1) {
                     $(".layui-table-page").append(addtableBtn);
                 }

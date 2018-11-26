@@ -308,7 +308,11 @@
                                 sort: true
                             }, {
                                 field: 'pprice',
-                                title: '采购单价'
+                                width: 130,
+                                title: '采购单价' + unitMoney,
+                                templet: function (d) {
+                                    return formatNum(d.pprice);
+                                }
                             }, {
                                 field:'isapp',
                                 title:'是否评估',
@@ -317,7 +321,11 @@
                                 unresize: true,
                             }, {
                                 field: 'aprice',
-                                title: '评估单价',
+                                title: '评估单价'+ unitMoney,
+                                width: 130,
+                                templet: function (d) {
+                                    return formatNum(d.aprice) || "";
+                                },
                                 edit: "text"
                             }, {
                                 field: 'remarks',

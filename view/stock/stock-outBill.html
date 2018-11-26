@@ -280,8 +280,11 @@
                         width: 90
                     }, {
                         field: 'totalamount',
-                        title: '订单总金额',
-                        width: 90
+                        title: '订单总金额' + unitMoney,
+                        width: 150,
+                        templet: function (d) {
+                            return formatNum(d.totalamount);
+                        }
                     },{
                         field: 'createdate',
                         title: '申请出库日期'

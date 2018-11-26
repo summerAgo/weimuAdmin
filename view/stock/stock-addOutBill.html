@@ -350,7 +350,7 @@
                     }, {
                         field: 'ownername',
                         title: '仓库主'
-                    },  {
+                    }, {
                         field: 'uuid',
                         title: '货物标识码',
                         width: 170,
@@ -385,9 +385,13 @@
                     }, {
                         field: 'num',
                         title: '数量（m³）'
-                    },{
+                    }, {
                         field: 'aprice',
-                        title: '评估金额'
+                        title: '评估金额' + unitMoney,
+                        width: 130,
+                        templet: function (d) {
+                            return formatNum(d.aprice);
+                        }
                     }
                 ]
             ],

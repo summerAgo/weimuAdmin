@@ -234,16 +234,28 @@
                         title: '数量（m³）',
                     }, {
                         field: 'totalamount',
-                        title: '出货金额',
+                        title: '出货金额' + unitMoney,
+                        templet: function (d) {
+                            return formatNum(d.totalamount);
+                        }
                     }, {
                         field: 'stockmoney',
-                        title: '库存金额',
+                        title: '库存金额'+ unitMoney,
+                        templet: function (d) {
+                            return formatNum(d.stockmoney);
+                        }
                     }, {
                         field: 'financingmoney',
-                        title: '融资金额',
+                        title: '融资金额'+ unitMoney,
+                        templet: function (d) {
+                            return formatNum(d.financingmoney);
+                        }
                     }, {
                         field: 'cordonmoney',
-                        title: '警戒线',
+                        title: '警戒线'+ unitMoney,
+                        templet: function (d) {
+                            return formatNum(d.cordonmoney);
+                        }
                     }, {
                         field: 'createdate',
                         title: '审核时间',

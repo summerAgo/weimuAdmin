@@ -111,7 +111,7 @@
 
                 layer.close(index);
                 layer.close(addLayer); //关闭
-            })
+            });
             return false;
         });
 
@@ -137,57 +137,45 @@
                         width: 170,
                     }, {
                         field: 'code',
-                        title: '包号',
-                        sort: true
+                        title: '包号'
                     }, {
                         field: 'varieties',
-                        title: '品种',
-                        sort: true
+                        title: '品种'
                     }, {
                         field: 'levels',
-                        title: '等级',
-                        sort: true
+                        title: '等级'
                     }, {
                         field: 'spec',
-                        title: '规格',
-                        sort: true
+                        title: '规格'
                     }, {
                         field: 'pprice',
-                        title: '采购价',
-                        sort: true
+                        title: '采购价' + unitMoney,
+                        width: 130
                     }, {
                         field: 'num',
                         title: '数量（m³）',
-                        sort: true,
                         edit: "txt"
                     }, {
                         field: 'containernum',
-                        title: '货柜号',
-                        sort: true
+                        title: '货柜号'
                     }, {
                         field: 'origin',
-                        title: '产地',
-                        sort: true
+                        title: '产地'
                     }, {
                         field: 'brand',
-                        title: '品牌',
-                        sort: true
+                        title: '品牌'
                     }, {
                         field: 'billloading',
                         title: '提运单',
-                        sort: true
                     }, {
                         field: 'person',
-                        title: '负责人',
-                        sort: true
+                        title: '负责人'
                     }, {
                         field: 'createdate',
-                        title: '创建日期',
-                        sort: true
+                        title: '创建日期'
                     }, {
                         field: 'createuser',
-                        title: '创建人',
-                        sort: true
+                        title: '创建人'
                     }
                 ]
             ],

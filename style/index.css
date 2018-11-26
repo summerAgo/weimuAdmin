@@ -754,6 +754,12 @@ input.layui-input.layui-table-edit {
     color: #000;
 }
 
+.layui-table-header {
+    border-width: 0 0 1px;
+    overflow: hidden;
+    width: calc(100%);
+}
+
 .table-content-main .layui-table-view th {
     font-weight: bold
 }
