@@ -1,20 +1,20 @@
-<div class="table-page addOutBill">
+<div class="table-page addOutBill" id="stock-addOutBill">
 
     <div class="table-content-title layer-level">
         <div class="table-tools">
             <ul class="layui-nav topmenu" lay-filter="talbe-tools">
-                <li class="layui-nav-item">
-                    <a href="javascript:;" id="addGoodsBtn"><i class="iconfont icon-tianjiahuowu"></i>从库存添加货物</a>
+                <!-- <li class="layui-nav-item">
+                    <a href="javascript:;" class="addGoodsBtn"><i class="iconfont icon-tianjiahuowu"></i>从库存添加货物</a>
                 </li>
-                <li class="layui-nav-item" id="shoutlb">
+                <li class="layui-nav-item">
                     <a href="javascript:;" class="suboutlbBtn"><i class="iconfont icon-chuku"></i>出库</a>
                 </li>
                 <li class="layui-nav-item">
-                    <a href="javascript:;" id="deleteGoods" class="deleteBtn"><i class="iconfont icon-shanchu"></i>移除</a>
+                    <a href="javascript:;" class="deleteGoods"><i class="iconfont icon-shanchu"></i>移除</a>
                 </li>
                 <li class="layui-nav-item">
                     <a href="javascript:;" class="submissionBtn"><i class="iconfont icon-baocunxinzeng"></i>保存</a>
-                </li>
+                </li> -->
             </ul>
         </div>
     </div>
@@ -154,6 +154,11 @@
         var formSelects = layui.formSelects;
         var util = layui.util;
         var tableTopHeight = (parseInt($(".addOutBill .table-content-title").innerHeight()) + parseInt($(".addOutBill .content-header").innerHeight()) + 103); //内容区域所需减去的高度
+
+        var menuKey = "b_10"; //当前页面key
+        var domObj = $("#stock-addOutBill .table-tools").find("ul"); //当前页面容器
+        btnIsList(domObj, menuKey); //按钮权限
+
         formSelects.render(); //下拉选项
         element.render('talbe-tools'); //表格工具栏
         formSelects.btns(['select', 'remove'], {
@@ -212,12 +217,12 @@
         }, true);
 
         var outBill = JSON.parse(sessionStorage.getItem('addOutBill')); //获取所选择记录详情
-        console.log(outBill);
+        // console.log(outBill);
         var data = {};
         var pageData;
 
         if (outBill == null) {
-            $("#shoutlb").hide();
+            $(".suboutlbBtn").parent().hide();
             formSelects.undisabled('ownerSelect'); //启用
             formSelects.undisabled('depotSelect'); //启用
             $("input[name='estimatedate']").attr("disabled", false);
@@ -507,7 +512,7 @@
         });
 
         //移除货物
-        $("#deleteGoods").click(function() {
+        $(".deleteGoods").click(function() {
             //移除
             var checkStatus = table.checkStatus('tableContainer-addOutBill');
             if (checkStatus.data.length < 1) {
@@ -584,7 +589,7 @@
         });
 
         // 从库存添加货物
-        $("#addGoodsBtn").click(function() {
+        $(".addGoodsBtn").click(function() {
             var cargoowner = layui.formSelects.value('ownerSelect', "valStr");
             if (cargoowner === "") {
                 layer.msg('仓库主不能为空');
@@ -781,13 +786,15 @@
 
                 $("#addgoodList").click(function() {
                     var checkStatus = table.checkStatus('tableContainer-goodsList'); //表格选中状态
-                    console.log(tableData)
-                    if(tableData.length>1){
+                    console.log(tableData.length)
+                    if(tableData.length>0){
+                        console.log(11)
                         tableData = tableData.concat(checkStatus.data);
                     }else{
+                        console.log(22)
                         tableData = checkStatus.data;
                     }
-                    
+                    console.log(tableData)
                     layer.close(goodsListLayer); //关闭
                     // 刷新表格
                     // console.log(tableData);
@@ -801,8 +808,8 @@
 
                 //监听锁定操作
                 table.on('checkbox(tableContainer-goodsList)', function(obj) {
-                    console.log("xxxxx");
-                    console.log(obj);
+                    // console.log("xxxxx");
+                    // console.log(obj);
                     if (obj.checked) {
                         var aprice = obj.data.aprice;
                         if (aprice && aprice > 0) {

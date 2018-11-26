@@ -1,4 +1,4 @@
-<div class="table-page">
+<div class="table-page" id="risk-goodsAssess">
     <div class="table-content-title">
         <div class="table-tools">
             <ul class="layui-nav" lay-filter="talbe-tools">
@@ -13,9 +13,9 @@
                 <!-- <li class="layui-nav-item">
                     <a href="javascript:;"><i class="iconfont icon-pinggu"></i>评估</a>
                 </li> -->
-                <li class="layui-nav-item">
+                <!-- <li class="layui-nav-item">
                     <a href="javascript:;" class="refreshBtn"><i class="iconfont icon-shuaxin"></i>刷新</a>
-                </li>
+                </li> -->
             </ul>
         </div>
     </div>
@@ -71,6 +71,11 @@
         var laytpl = layui.laytpl;
         var upload = layui.upload;
         var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 93); //内容区域所需减去的高度
+        
+        var menuKey = "a_22"; //当前页面key
+        var domObj = $("#risk-goodsAssess .table-tools").find("ul"); //当前页面容器
+        btnIsList(domObj, menuKey); //按钮权限
+
         var assessLayer; // 评估-弹层
         form.render(); // 重置表单渲染
         form.on('submit(searchForm)', function(data) {

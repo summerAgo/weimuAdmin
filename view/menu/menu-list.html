@@ -1,10 +1,10 @@
-<div class="table-page">
+<div class="table-page" id="menu-list">
     <div class="table-content-title">
         <div class="table-tools">
             <ul class="layui-nav" lay-filter="talbe-tools">
-                <li class="layui-nav-item">
-                    <a href="javascript:;" class="creatUser" id="creatRole"><i class="iconfont icon-tianjia"></i>添加菜单</a>
-                </li>
+                <!-- <li class="layui-nav-item">
+                    <a href="javascript:;" class="creatRole"><i class="iconfont icon-tianjia"></i>添加菜单</a>
+                </li> -->
                 <!--<li class="layui-nav-item item-more">
                     <a href="javascript:;">数据导入导出</a>
                     <dl class="layui-nav-child">
@@ -16,12 +16,12 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;">打印</a>
                 </li> -->
-                <li class="layui-nav-item">
+                <!-- <li class="layui-nav-item">
                     <a href="javascript:;" class="editBtn"><i class="iconfont icon-bianji"></i>编辑</a>
                 </li>
                 <li class="layui-nav-item">
                     <a href="javascript:;" class="deleteBtn"><i class="iconfont icon-shanchu"></i>删除</a>
-                </li>
+                </li> -->
             </ul>
         </div>
     </div>
@@ -66,6 +66,10 @@
         var formSelects = layui.formSelects;
         var laytpl = layui.laytpl;
         var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 93); //内容区域所需减去的高度
+
+        var menuKey = "a_17"; //当前页面key
+        var domObj = $("#menu-list .table-tools").find("ul"); //当前页面容器
+        btnIsList(domObj, menuKey); //按钮权限
 
         var eaitLayer; //编辑-弹层
 
@@ -260,7 +264,7 @@
         });
 
         //弹出添加菜单
-        $("#creatRole").click(function() {
+        $(".creatRole").click(function() {
             var checkStatus = table.checkStatus('tableContainerMenu');
             var currData = {};
             console.log(currData.menulist);

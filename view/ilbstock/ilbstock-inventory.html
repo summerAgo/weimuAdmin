@@ -1,14 +1,14 @@
-<div class="table-page">
+<div class="table-page" id="ilbstock-inventory">
     <div class="table-content-title">
         <div class="table-tools">
             <ul class="layui-nav" lay-filter="talbe-tools">
-                <li class="layui-nav-item">
-                    <a id="addBtn" href="javascript:;"><i class="iconfont icon-tianjia"></i>新建盘点表</a>
-                </li>
+                <!-- <li class="layui-nav-item">
+                    <a href="javascript:;" class="addBtn"><i class="iconfont icon-tianjia"></i>新建盘点表</a>
+                </li> -->
                 <!-- <li class="layui-nav-item">
                     <a href="javascript:;">打印</a>
                 </li> -->
-                <li class="layui-nav-item">
+                <!-- <li class="layui-nav-item">
                     <a href="javascript:;" class="confirmBtn"><i class="iconfont icon-querenpandian"></i>确认盘点</a>
                 </li>
                 <li class="layui-nav-item">
@@ -16,7 +16,7 @@
                 </li>
                 <li class="layui-nav-item">
                     <a href="javascript:;"><i class="iconfont icon-shanchu"></i>删除</a>
-                </li>
+                </li> -->
             </ul>
         </div>
     </div>
@@ -81,6 +81,10 @@
         var upload = layui.upload;
         var laydate = layui.laydate;
         var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 103); //内容区域所需减去的高度
+        
+        var menuKey = "a_10"; //当前页面key
+        var domObj = $("#ilbstock-inventory .table-tools").find("ul"); //当前页面容器
+        btnIsList(domObj,menuKey);//按钮权限
 
         var inventoryLayer; // 审核-弹层
 
@@ -302,7 +306,7 @@
             }
         });
 
-        $("#addBtn").click(function() {
+        $(".addBtn").click(function() {
             sessionStorage.removeItem('inventoryParam');
             $.get('view/ilbstock/ilbstock-layerInventory.html', {}, function(str) { // 请求弹框
                 // 弹出弹框

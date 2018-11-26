@@ -1,19 +1,16 @@
-<div class="table-page">
+<div class="table-page" id="depot-list">
     <div class="table-content-title">
         <div class="table-tools">
             <ul class="layui-nav" lay-filter="talbe-tools">
-                <li class="layui-nav-item">
+                <!-- <li class="layui-nav-item">
                     <a href="javascript:;" class="addDepotBtn"><i class="iconfont icon-tianjia"></i>新增仓库</a>
                 </li>
-                <!-- <li class="layui-nav-item">
-                    <a id="toExport" href="javascript:;"><i class="iconfont icon-daochu"></i>导出</a>
-                </li> -->
                 <li class="layui-nav-item">
                     <a href="javascript:;" class="changeBtn"><i class="iconfont icon-bianji"></i>修改</a>
                 </li>
                 <li class="layui-nav-item">
                     <a href="javascript:;" class="deleteBtn"><i class="iconfont icon-shanchu"></i>删除</a>
-                </li>
+                </li> -->
             </ul>
         </div>
     </div>
@@ -69,6 +66,10 @@
         var laytpl = layui.laytpl;
         var upload = layui.upload;
         var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 93); //内容区域所需减去的高度
+        
+        var menuKey = "a_20"; //当前页面key
+        var domObj = $("#depot-list .table-tools").find("ul"); //当前页面容器
+        btnIsList(domObj, menuKey); //按钮权限
 
         var addDepotLayer; //编辑-弹层
 
