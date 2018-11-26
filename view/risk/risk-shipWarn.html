@@ -162,6 +162,9 @@
                             var financingmoney = d.financingmoney;
                             var cordonmoney = d.cordonmoney;
                             //默认无
+                            if(financingmoney == 0){
+                                return "0";
+                            }
                             if (financingmoney == null || cordonmoney == null) {
                                 return '<span style="color:red;">---</span>';
                             }
