@@ -168,7 +168,7 @@
                         title: '商品评估列表',
                         type: 1,
                         content: str, // 注意，如果str是object，那么需要字符拼接。
-                        area: ['80%', '80%'],
+                        area: ['80%', '78%'],
                     });
                     form.render(); // 重置表单渲染
                     formSelects.render(); // 下拉选项
@@ -332,7 +332,7 @@
                     });
 
                     //监听锁定操作
-                    form.on('checkbox(isapp)', function(obj){
+                    form.on('switch(isapp)', function(obj){
                         console.log(this.value + ":" + obj.elem.checked);
                         // layer.tips(this.value + '-' + this.name + '：'+ obj.elem.checked, obj.othis);
                     });

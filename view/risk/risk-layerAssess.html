@@ -1,3 +1,4 @@
+<!--商品评估列表-->
 <div class="table-page" id="risk-layerAssess">
     <div class="table-content-title layer-level">
         <div class="table-tools">
@@ -75,6 +76,7 @@
         <div class="table-content-main">
             <table class="layui-hide" id="tableContainer-from" lay-filter="tableContainer-from"></table>
         </div>
+        <div class="warning" style="float: right;"><i class="iconfont icon-gantanhao_icon"></i>商品（评估状态）：警戒线会根据评估单价审核出库    商品（不评估状态）：警戒线不参与审核出库</div>
     </div>
 </div>
 
@@ -86,6 +88,5 @@
         var table = layui.table;
         var formSelects = layui.formSelects;
         var laytpl = layui.laytpl;
-
     });
 </script>
