@@ -1,17 +1,15 @@
-<div class="table-page">
-
+<div class="table-page" id="stock-outBill">
     <div class="table-content-title">
         <div class="table-tools">
             <ul class="layui-nav" lay-filter="talbe-tools">
-                <li class="layui-nav-item">
+                <!-- <li class="layui-nav-item">
                     <a href="javascript:;" class="creatBillBtn"><i class="iconfont icon-tianjia"></i>新建申请出库单</a>
                 </li>
-                <!-- <li class="layui-nav-item">
+                <li class="layui-nav-item">
                     <a href="javascript:;"><i class="iconfont icon-dayin"></i>打印</a>
-                </li> -->
-                <li class="layui-nav-item"><a href="javascript:;" class="deleteBtn"><i class="iconfont icon-shanchu"></i>删除</a></li>
-                <li class="layui-nav-item"><a href="javascript:;" class="submOutBtn"><i class="iconfont icon-chuku"></i>出库</a>
                 </li>
+                <li class="layui-nav-item"><a href="javascript:;" class="deleteBtn"><i class="iconfont icon-shanchu"></i>删除</a></li>
+                <li class="layui-nav-item"><a href="javascript:;" class="submOutBtn"><i class="iconfont icon-chuku"></i>出库</a></li> -->
             </ul>
         </div>
     </div>
@@ -88,6 +86,10 @@
         var laytpl = layui.laytpl;
         var upload = layui.upload;
         var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 103); //内容区域所需减去的高度
+
+        var menuKey = "a_11"; //当前页面key
+        var domObj = $("#stock-outBill .table-tools").find("ul"); //当前页面容器
+        btnIsList(domObj, menuKey); //按钮权限
 
         var addLayer; //编辑-弹层
 
@@ -282,7 +284,7 @@
                         field: 'totalamount',
                         title: '订单总金额',
                         width: 90
-                    },{
+                    }, {
                         field: 'createdate',
                         title: '申请出库日期'
                     }, {
@@ -338,8 +340,8 @@
                         ids.push(checkStatus.data[i].orderno);
                     }
                     data["ids"] = ids.toString();
-                    data['SESSION_NAME']= getCookie('SESSION_NAME');
-                    data['TOKEN']= getCookie('TOKEN');
+                    data['SESSION_NAME'] = getCookie('SESSION_NAME');
+                    data['TOKEN'] = getCookie('TOKEN');
                     $.ajax({
                         cache: true,
                         type: "POST",
@@ -478,8 +480,8 @@
 
         //增删行数据
         function rowDataApi(url, data, funSuc, funErr) {
-            data['SESSION_NAME']= getCookie('SESSION_NAME');
-            data['TOKEN']= getCookie('TOKEN');
+            data['SESSION_NAME'] = getCookie('SESSION_NAME');
+            data['TOKEN'] = getCookie('TOKEN');
             $.ajax({
                 url: url,
                 type: "POST",

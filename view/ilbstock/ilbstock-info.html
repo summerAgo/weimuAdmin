@@ -1,13 +1,13 @@
-<div class="table-page">
+<div class="table-page" id="ilbstock-info">
     <div class="table-content-title">
         <div class="table-tools">
             <ul class="layui-nav" lay-filter="talbe-tools">
-                <li class="layui-nav-item">
-                    <a id="toExport" href="javascript:;"><i class="iconfont icon-daochu"></i> 导出数据</a>
+                <!-- <li class="layui-nav-item">
+                    <a href="javascript:;" class="toExport"><i class="iconfont icon-daochu"></i> 导出数据</a>
                 </li>
                 <li class="layui-nav-item">
                     <a href="javascript:;" class="refreshBtn"><i class="iconfont icon-shuaxin"></i>刷新</a>
-                </li>
+                </li> -->
                 <!-- <li class="layui-nav-item">
                     <a href="javascript:;"><i class="iconfont icon-dayin"></i> 打印</a>
                 </li> -->
@@ -116,6 +116,10 @@
         var formSelects = layui.formSelects;
         var laytpl = layui.laytpl;
         var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 103); //内容区域所需减去的高度
+        
+        var menuKey = "a_8"; //当前页面key
+        var domObj = $("#ilbstock-info .table-tools").find("ul"); //当前页面容器
+        btnIsList(domObj,menuKey);//按钮权限
 
         var eaitLayer; //编辑-弹层
 
@@ -366,7 +370,7 @@
         });
 
         //点击导出
-        $("#toExport").on('click', function(e) {
+        $(".toExport").on('click', function(e) {
             window.location.href = ilbstockExportUrl
         });
 

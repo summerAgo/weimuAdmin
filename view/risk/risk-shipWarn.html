@@ -1,4 +1,4 @@
-<div class="table-page">
+<div class="table-page" id="risk-shipWarn">
     <div class="table-content-title">
         <div class="table-tools">
             <ul class="layui-nav" lay-filter="talbe-tools">
@@ -11,9 +11,9 @@
                 <!-- <li class="layui-nav-item">
                     <a href="javascript:;"><i class="iconfont icon-bianji"></i>修改</a>
                 </li> -->
-                <li class="layui-nav-item">
+                <!-- <li class="layui-nav-item">
                     <a href="javascript:;" class="refreshBtn"><i class="iconfont icon-shuaxin"></i>刷新</a>
-                </li>
+                </li> -->
             </ul>
         </div>
     </div>
@@ -58,6 +58,10 @@
         var laytpl = layui.laytpl;
         var upload = layui.upload;
         var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 93); //内容区域所需减去的高度
+
+        var menuKey = "a_23"; //当前页面key
+        var domObj = $("#risk-shipWarn .table-tools").find("ul"); //当前页面容器
+        btnIsList(domObj, menuKey); //按钮权限
 
         var modifyLayer; // 出货警戒线修改- 弹层
 

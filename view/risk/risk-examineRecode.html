@@ -1,4 +1,4 @@
-<div class="table-page">
+<div class="table-page" id="risk-examineRecode">
     <div class="table-content-title">
         <div class="table-tools">
             <ul class="layui-nav" lay-filter="talbe-tools">
@@ -11,9 +11,9 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;"><i class="iconfont icon-shuaxin"></i>刷新</a>
                 </li> -->
-                <li class="layui-nav-item">
+                <!-- <li class="layui-nav-item">
                     <a href="javascript:;" class="refreshBtn"><i class="iconfont icon-shuaxin"></i>刷新</a>
-                </li>
+                </li> -->
             </ul>
         </div>
     </div>
@@ -64,6 +64,10 @@
         var laytpl = layui.laytpl;
         var upload = layui.upload;
         var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 93); //内容区域所需减去的高度
+
+        var menuKey = "a_25"; //当前页面key
+        var domObj = $("#risk-examineRecode .table-tools").find("ul"); //当前页面容器
+        btnIsList(domObj, menuKey); //按钮权限
 
         form.render(); // 重置表单渲染
         formSelects.render(); // 下拉选项

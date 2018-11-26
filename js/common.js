@@ -73,7 +73,7 @@ Array.prototype.unique = function() {
  */
 function btnIsList(domObj,menuKey) {
 
-    var data = JSON.parse(sessionStorage.getItem("menuBtnData")); //获取按钮权限数据
+    var data = JSON.parse(sessionStorage.getItem("buttonAuthority")); //获取按钮权限数据
     var btnDom;
     if (data !== null) {
         var currentBtnData = data ? data[menuKey] : [];

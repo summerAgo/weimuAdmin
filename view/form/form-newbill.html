@@ -1,17 +1,14 @@
-<div class="table-page formNewill">
+<div class="table-page formNewill" id="form-newbill">
     <div class="table-content-title layer-level">
         <div class="table-tools">
             <ul class="layui-nav" lay-filter="talbe-tools">
-                <li class="layui-nav-item">
-                    <a href="javascript:;" id="dowmTemp"><i class="iconfont icon-xiazaimuban"></i>下载模板</a>
-                </li>
-                <li class="layui-nav-item">
-                    <a href="javascript:;" id="toImport"><i class="iconfont icon-daoru"></i>导入数据</a>
-                </li>
                 <!-- <li class="layui-nav-item">
-                    <a href="javascript:;"><i class="iconfont icon-dayin"></i>打印</a>
-                </li> -->
+                    <a href="javascript:;" class="dowmTemp"><i class="iconfont icon-xiazaimuban"></i>下载模板</a>
+                </li>
                 <li class="layui-nav-item">
+                    <a href="javascript:;" class="toImport"><i class="iconfont icon-daoru"></i>导入数据</a>
+                </li> -->
+                <!-- <li class="layui-nav-item">
                     <a href="javascript:;" class="addGoodsBtn"><i class="iconfont icon-tianjiahuowu"></i>添加货物信息</a>
                 </li>
                 <li class="layui-nav-item">
@@ -23,7 +20,7 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;" class="subCancelBtn"><i class="iconfont icon-quxiao"></i>取消</a>
                 </li>
-                <li class="layui-nav-item"><a href="javascript:;" class="deleteBtnLayer"><i class="iconfont icon-shanchu"></i>删除</a></li>
+                <li class="layui-nav-item"><a href="javascript:;" class="deleteBtnLayer"><i class="iconfont icon-shanchu"></i>删除</a></li> -->
             </ul>
         </div>
     </div>
@@ -94,6 +91,10 @@
         var upload = layui.upload;
         var tableData = [];
         var addLayer; //添加-弹层
+
+        var menuKey = "b_11"; //当前页面key
+        var domObj = $("#form-newbill .table-tools").find("ul"); //当前页面容器
+        btnIsList(domObj, menuKey); //按钮权限
 
         form.render(); //重置表单渲染
         formSelects.render(); //下拉选项
@@ -686,11 +687,11 @@
         }
 
         //变更下载模板链接
-        $("#dowmTemp").attr("href", ilbstockImportTemp);
+        $(".dowmTemp").attr("href", ilbstockImportTemp);
 
         //导入
         var importLayer; //导入弹窗
-        $("#toImport").on('click', function(e) {
+        $(".toImport").on('click', function(e) {
             $.get("view/form/form-import.html", {}, function(str) {
                 importLayer = layer.open({
                     title: '文件上传',

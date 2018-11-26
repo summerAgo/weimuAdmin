@@ -1,4 +1,4 @@
-<div class="table-page">
+<div class="table-page" id="supplier-list">
     <div class="trr-container">
         <div class="tree-box">
             <div class="tree-header">
@@ -20,7 +20,7 @@
             <div class="table-content-title">
                 <div class="table-tools">
                     <ul class="layui-nav" lay-filter="talbe-tools">
-                        <li class="layui-nav-item">
+                        <!-- <li class="layui-nav-item">
                             <a href="javascript:;" class="creatUser"><i class="iconfont icon-tianjia"></i>添加供应商</a>
                         </li>
                         <li class="layui-nav-item">
@@ -28,7 +28,7 @@
                         </li>
                         <li class="layui-nav-item">
                             <a href="javascript:;" class="deleteBtn"><i class="iconfont icon-shanchu"></i>删除</a>
-                        </li>
+                        </li> -->
                     </ul>
                 </div>
             </div>
@@ -78,7 +78,9 @@
         var laytpl = layui.laytpl;
         var eleTree = layui.eleTree;
         var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 63); //内容区域所需减去的高度
-
+        var menuKey = "a_21"; //当前页面key
+        var domObj = $("#supplier-list .table-tools").find("ul"); //当前页面容器
+        btnIsList(domObj, menuKey); //按钮权限
         var eaitLayer; //编辑-弹层
 
         form.render(); //重置表单渲染

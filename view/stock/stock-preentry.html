@@ -1,8 +1,8 @@
-<div class="table-page">
+<div class="table-page" id="stock-preentry">
     <div class="table-content-title">
         <div class="table-tools">
             <ul class="layui-nav" lay-filter="talbe-tools">
-                <li class="layui-nav-item">
+                <!-- <li class="layui-nav-item">
                     <a href="javascript:;" class="creatBillBtn"><i class="iconfont icon-tianjia"></i>新建预入库单</a>
                 </li>
                 <li class="layui-nav-item">
@@ -10,7 +10,7 @@
                 </li>
                 <li class="layui-nav-item">
                     <a href="javascript:;" class="submissionBtn"><i class="iconfont icon-ruku"></i>入库</a>
-                </li>
+                </li> -->
                 <!-- <li class="layui-nav-item">
                     <a href="javascript:;">打印</a>
                 </li> -->
@@ -90,6 +90,10 @@
         var laytpl = layui.laytpl;
         var upload = layui.upload;
         var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 103); //内容区域所需减去的高度
+        
+        var menuKey = "a_12"; //当前页面key
+        var domObj = $("#stock-preentry .table-tools").find("ul"); //当前页面容器
+        btnIsList(domObj, menuKey); //按钮权限
 
         var eaitLayer; //编辑-弹层
 
