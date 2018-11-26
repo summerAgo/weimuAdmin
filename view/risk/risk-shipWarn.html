@@ -48,6 +48,12 @@
         </div>
     </div>
 </div>
+<style scode>
+    .form-right{
+        position: absolute;
+        left: 250px;
+    }
+</style>
 <script>
     layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'upload'], function() {
         var element = layui.element;
@@ -166,10 +172,7 @@
                             var financingmoney = d.financingmoney;
                             var cordonmoney = d.cordonmoney;
                             //默认无
-                            if(financingmoney == 0){
-                                return "0";
-                            }
-                            if (financingmoney == null || cordonmoney == null) {
+                            if (financingmoney == null || financingmoney == 0 || cordonmoney == null || cordonmoney == 0) {
                                 return '<span style="color:red;">---</span>';
                             }
                             var ratio = (cordonmoney / financingmoney) * 100;
