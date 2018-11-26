@@ -257,10 +257,10 @@
             var allAuthority = sessionStorage.getItem('allAuthority');
             console.log(allAuthority);
             data.field["allauth"] = allAuthority;
-            layer.confirm("确认权限?", {
-                icon: 3,
-                title: '提示'
-            }, function(index) {
+            // layer.confirm("确认权限?", {
+            //     icon: 3,
+            //     title: '提示'
+            // }, function(index) {
                 data.field['SESSION_NAME'] =getCookie("SESSION_NAME");
                 data.field['TOKEN'] =getCookie("TOKEN");
                 $.ajax({
@@ -288,7 +288,7 @@
                         });
                     }
                 });
-            });
+            // });
             return false;
         });
 
@@ -340,10 +340,10 @@
                 }
             }
 
-            layer.confirm(title, {
-                icon: 3,
-                title: '提示'
-            }, function(index) {
+            // layer.confirm(title, {
+            //     icon: 3,
+            //     title: '提示'
+            // }, function(index) {
                 data.field["SESSION_NAME"] = getCookie('SESSION_NAME');
                 data.field["TOKEN"] = getCookie('TOKEN');
                 $.ajax({
@@ -375,7 +375,7 @@
                         });
                     }
                 });
-            });
+            // });
             return false;
         });
 

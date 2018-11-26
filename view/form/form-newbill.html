@@ -75,10 +75,6 @@
     .table-page-form .table-form-item.table-form-item-btn {
         width: 140px;
     }
-
-    .table-content {
-        padding: 0 30px 30px;
-    }
 </style>
 <script>
     layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'upload'], function() {
@@ -91,6 +87,8 @@
         var upload = layui.upload;
         var tableData = [];
         var addLayer; //添加-弹层
+        var tableLayerHeight = (parseInt($(".layui-layer-page").innerHeight()) - parseInt($(".layui-layer-title").innerHeight()) - parseInt($(".table-page-header").innerHeight())  - 40); //内容区域所需减去的高度
+
 
         var menuKey = "b_11"; //当前页面key
         var domObj = $("#form-newbill .table-tools").find("ul"); //当前页面容器
@@ -285,8 +283,6 @@
         });
 
         form.on('submit(addGoodsForm)', function(data) {
-            console.log(data)
-            //return false;
             tableData.push(data.field);
             $(".rightBotBtn span").html(tableData.length); //当前选中了多少商品
             tableIns.reload({
@@ -302,21 +298,20 @@
 
         var tableIns = table.render({
             elem: '#tableContainer-from',
-            height: '500',
+            height: tableLayerHeight,
             data: tableData,
             cols: [
                 [ //标题栏
                     {
                         type: 'radio'
-                    },
-                    {
+                    }, {
                         field: 'LAY_TABLE_INDEX',
                         title: '序号',
                         width: 40,
                         templet: function(d) {
                             return d.LAY_TABLE_INDEX + 1;
                         }
-                    },  {
+                    }, {
                         field: 'uuid',
                         title: '货物标识码',
                         width: 170,
@@ -359,23 +354,10 @@
                         title: '数量（m³）',
                         event: "edit",
                         style: 'color:red;'
-                    },
-                    // {
-                    //     field: 'actualnum',
-                    //     title: '实际数量（m³）',
-                    //     sort: true,
-                    //     edit: "txt"
-                    // },
-                    {
+                    }, {
                         field: 'containernum',
                         title: '货柜号'
-                    },
-                    // {
-                    //     field: 'origin',
-                    //     title: '产地',
-                    //     sort: true
-                    // },
-                    {
+                    }, {
                         field: 'brand',
                         title: '品牌'
                     }, {
@@ -386,8 +368,8 @@
             ],
             even: true,
             page: false, //是否显示分页
-            limits: [tableData.length],
-            limit: tableData.length, //每页默认显示的数量
+            // limits: [tableData.length],
+            // limit: tableData.length, //每页默认显示的数量
             done: function(res, curr, count) {
                 // var addtableBtn = '<div class="rightBotBtn" id="form-rightBtn">已新增<span>' + count + '</span>个货物</div>';
                 //只有点击列表入库订单时才显示入库操作
@@ -398,11 +380,9 @@
                 } else {
                     $(".submissionLayBtn").hide();
                 }
-
                 // if ($("#form-rightBtn").length < 1) {
                 //     $("#tableContainer-from").siblings(".layui-form ").find(".layui-table-page").append(addtableBtn);
                 // }
-
                 $(".subConfirmBtn").unbind("click").bind("click", function() {
                     event.stopPropagation();
                     subConfun();
@@ -694,7 +674,7 @@
                     title: '文件上传',
                     type: 1,
                     content: str, //注意，如果str是object，那么需要字符拼接。
-                    area: ['800px', 'auto'],
+                    area: ['500px', '340px'],
                 });
                 var uploadInst = upload.render({ //上传实例
                     elem: '#importAddBtn',

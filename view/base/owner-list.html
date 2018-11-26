@@ -325,10 +325,10 @@
                 if (!isName) {return false;}
             }
 
-            layer.confirm(title, {
-                icon: 3,
-                title: '提示'
-            }, function(index) {
+            // layer.confirm(title, {
+            //     icon: 3,
+            //     title: '提示'
+            // }, function(index) {
                 data.field['SESSION_NAME']= getCookie('SESSION_NAME');
                 data.field['TOKEN']= getCookie('TOKEN');
                 $.ajax({
@@ -360,7 +360,7 @@
                         }
                     }
                 });
-            });
+            // });
             return false;
         });
 
@@ -574,10 +574,10 @@
             }
             // 添加仓库主类型去空格
             data.field.name = data.field.name.replace(/^\s*|\s*$/g,"");
-            layer.confirm(title, {
-                icon: 3,
-                title: '提示'
-            }, function(index) {
+            // layer.confirm(title, {
+            //     icon: 3,
+            //     title: '提示'
+            // }, function(index) {
                 data.field['SESSION_NAME']= getCookie('SESSION_NAME');
                 data.field['TOKEN']= getCookie('TOKEN');
                 $.ajax({
@@ -604,9 +604,8 @@
                         }
                     }
                 });
-            });
+            // });
             return false;
         });
-
-    });
+    })
 </script>

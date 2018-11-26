@@ -1,18 +1,74 @@
 <div class="edit-layer">
+    <div class="filed-title">请完善以下数据，完成最终的预入库操作</div>
     <fieldset class="layui-elem-field">
-        <legend>请完善以下数据，完成最终的预入库操作</legend>
         <div class="layui-field-box">
             <div class="layui-form-item">
-                <button type="button" class="layui-btn layui-btn-primary layui-btn-fluid" id="importAddBtn"><i
-                        class="layui-icon"></i>点击添加需上传文件（只允许上传后缀为xls，xlsx，xlsm的文件）
+                <button type="button" class="layui-btn layui-btn-primary layui-btn-fluid" id="importAddBtn">
+                    <i class="layui-icon"></i>点击上传
                 </button>
             </div>
+            <div class="filed-waring">（只允许上传后缀为xls，xlsx，xlsm的文件）</div>
         </div>
     </fieldset>
 </div>
 <style scoped>
     .edit-layer {
-        width: 500px;
-        margin: 20px auto 0;
+        width: 100%;
+        margin: 0 auto 0;
+        box-sizing: border-box;
+        padding: 0 20px;
+    }
+    .edit-layer .filed-waring{
+        color: #999;
+        font-size: 14px;
+        text-align: center;
+    }
+    .edit-layer .filed-title {
+        font-size: 16px;
+        color: #333;
+        text-align: center;
+        margin-top: 30px;
+        margin-bottom: 15px;
+    }
+    .edit-layer .layui-field-box {
+        padding: 10px 15px;
+        height: 188px;
+    }
+    .edit-layer .layui-elem-field {
+        border-radius: 4px;
+    }
+    .edit-layer .layui-btn-fluid {
+        width: 124px;
+        margin: 0 auto;
+        margin-top: 45px;
+    }
+    .edit-layer .layui-form-item {
+        text-align: center;
+    }
+    .edit-layer .layui-btn-primary {
+        border: 1px solid #C9C9C9;
+        background-color: #fff;
+        color: #555;
+    }
+    .edit-layer .layui-btn {
+        display: inline-block;
+        height: 38px;
+        line-height: 38px;
+        padding: 0 18px;
+        background-color: #0284ff;
+        color: #fff;
+        white-space: nowrap;
+        text-align: center;
+        font-size: 14px;
+        border: none;
+        border-radius: 2px;
+        cursor: pointer;
+    }
+    .edit-layer .layui-btn, .layui-input, .layui-select, .layui-textarea, .layui-upload-button {
+        outline: 0;
+        -webkit-appearance: none;
+        transition: all .3s;
+        -webkit-transition: all .3s;
+        box-sizing: border-box;
     }
 </style>
