@@ -215,41 +215,50 @@
             var dataType = JSON.parse(sessionStorage.getItem('positionCheck')); //获取本地所选仓库信息，判断是否为修改
             var url;
             var msg = "新建库位成功";
+            var isNameAdd = false;// 判断添加是否同名标识
+            var isNameEdit = false;// 判断修改是否同名标识
+            var isName = true; // 是否重名标识
             if (dataType) {
                 //如果是修改
                 url = positionUpdate;
                 data.field.id = dataType.id;
                 msg = "修改仓位成功";
+                isNameEdit = !!(dataType.name !== data.field.name);
             } else {
                 url = positionAdd;
+                isNameAdd = true;
             }
             data.field['depotid'] = depid;
 
             // 判供库位是否重复
-            var isName = true; // 重复标识
-            $.ajax({
-                cache: true,
-                type: "get",
-                url: isname_position,
-                data: {
-                    depotid: data.field.depotid,
-                    name: data.field.name,
-                    'SESSION_NAME':getCookie('SESSION_NAME'),
-                    'TOKEN':getCookie('TOKEN'),
-                },
-                async: false,
-                xhrFields: {
-                    withCredentials: true
-                },
-                crossDomain: true,
-                success: function(data) {
-                    if (data.status === 2) {
-                        layer.msg('库位已存在');
-                        isName = false;
+            if (isNameAdd || isNameEdit) {
+                $.ajax({
+                    cache: true,
+                    type: "get",
+                    url: isname_position,
+                    data: {
+                        depotid: data.field.depotid,
+                        name: data.field.name,
+                        'SESSION_NAME': getCookie('SESSION_NAME'),
+                        'TOKEN': getCookie('TOKEN'),
+                    },
+                    async: false,
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    success: function (data) {
+                        if (data.status === 2) {
+                            layer.msg('库位已存在');
+                            isName = false;
+                        }
                     }
+                });
+                if (!isName) {
+                    return false;
                 }
-            });
-            if (!isName) {return false;}
+            }
+
             data.field['SESSION_NAME']= getCookie('SESSION_NAME');
             data.field['TOKEN']= getCookie('TOKEN');
             $.ajax({
@@ -281,7 +290,7 @@
         });
 
         $(".changeBtn").click(function() {
-            //修改
+            //修改库位
             var checkStatus = table.checkStatus('tableContainer-positionList');
             if (checkStatus.data.length < 1) {
                 layer.msg("请选择需要编辑的信息");
@@ -295,7 +304,7 @@
                         type: 1,
                         content: str, //注意，如果str是object，那么需要字符拼接。
                         resize: false,
-                        area: ['800px', 'auto'],
+                        area: ['800px', '560px'],
                     });
                 });
             }
