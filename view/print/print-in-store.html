@@ -90,8 +90,7 @@
             async: false, //同步
             traditional: true,
             success: function(res) {
-                console.log(res.data);
-                orderData = res.data
+                orderData = res.data;
                 if (res.status == 0) {
                     orderData = res.data; // 对象迁移
                     orderDataList = orderData.list;
@@ -100,7 +99,7 @@
                     // layer.msg("请求失败");
                 }
             }
-        })
+        });
 
         for (var key in orderData) {
             $("." + key + ".data").html([orderData[key]])

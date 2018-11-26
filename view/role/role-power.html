@@ -122,7 +122,6 @@
                         accordion: true
                     });
 
-
                     allButtonData(function (res){//查询所有的按钮
                         allbutData = res.data;
                     });
@@ -137,10 +136,7 @@
                     console.log(allAuthority);
                     var val = JSON.stringify(allAuthority);
                     sessionStorage.setItem('allAuthority', val);
-                    
                  });
-
-                
             }
         });
 
@@ -255,6 +251,8 @@
 
         //查询角色权限
         function allMuneAuthority(data,success){
+            data['SESSION_NAME']= getCookie('SESSION_NAME');
+            data['TOKEN']= getCookie('TOKEN');
             $.ajax({
             //url: 'tree.json',
             url:rolegetAuthority,
@@ -312,19 +310,21 @@
          //查询所有的按钮
          function allButtonData(success){
             $.ajax({
-            url:buttonAllList,
-            dataType: 'json',
-            success: success
+                url:buttonAllList,
+                dataType: 'json',
+                success: success
             });
         } 
 
         //根据角色id查询所有的按钮权限
         function getButAuthorityAll(data,success){
+            data['SESSION_NAME']= getCookie('SESSION_NAME');
+            data['TOKEN']= getCookie('TOKEN');
             $.ajax({
-            url:getAuthorityAll,
-            data:data,
-            dataType: 'json',
-            success: success
+                url:getAuthorityAll,
+                data:data,
+                dataType: 'json',
+                success: success
             });
         }
 

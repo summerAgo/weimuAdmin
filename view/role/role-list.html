@@ -336,7 +336,6 @@
             }, function(index) {
                 data.field["SESSION_NAME"] = getCookie('SESSION_NAME');
                 data.field["TOKEN"] = getCookie('TOKEN');
-                console.log(data);
                 $.ajax({
                     cache: true,
                     type: "POST",
@@ -372,6 +371,8 @@
 
         //增删行数据
         function rowDataApi(url, data, funSuc, funErr) {
+            data['SESSION_NAME']= getCookie('SESSION_NAME');
+            data['TOKEN']= getCookie('TOKEN');
             $.ajax({
                 url: url,
                 type: "POST",

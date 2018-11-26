@@ -588,6 +588,8 @@
 
         //增删行数据
         function rowDataApi(url, data, funSuc, funErr) {
+            data['SESSION_NAME']= getCookie('SESSION_NAME');
+            data['TOKEN']= getCookie('TOKEN');
             $.ajax({
                 url: url,
                 type: "post",
