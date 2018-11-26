@@ -55,7 +55,12 @@
     <!-- <input type="checkbox" name="isapp" value="{{d.id}}" title="评估" lay-filter="isapp" checked> -->
     <input type="checkbox" name="isapp" value="{{d.id}}" lay-skin="switch" lay-text="评　估|不评估" lay-filter="isapp" checked>
 </script>
-
+<style scode>
+    .form-right{
+        position: absolute;
+        left: 250px;
+    }
+</style>
 <script>
     layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'upload'], function() {
         var element = layui.element;
