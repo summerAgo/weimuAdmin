@@ -283,13 +283,13 @@
                         title: '包号',
                         width: 100,
                     }, {
-                        field: 'code',
+                        field: 'aprice',
                         title: '评估状态',
                         templet: function(d) {
                             if (d.aprice <= 0 || null == d.aprice) {
                                 return '<span style="color:#0063de;">待评估</span>';
                             }
-                            return "已评估";
+                            return d.aprice;
                         },
                         width: 120,
                     }, {
