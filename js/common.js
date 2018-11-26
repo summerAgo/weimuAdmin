@@ -74,7 +74,6 @@ Array.prototype.unique = function() {
  * @param {*} menuKey 页面队友的key键
  */
 function btnIsList(domObj,menuKey) {
-
     var data = JSON.parse(sessionStorage.getItem("buttonAuthority")); //获取按钮权限数据
     var btnDom;
     if (data !== null) {
