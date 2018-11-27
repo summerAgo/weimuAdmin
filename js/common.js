@@ -83,7 +83,7 @@ Array.prototype.uniqueJson = function(key) {
         }
     }
     return result;
-}
+};
 //权限按钮生成
 /**
  * @param {*} domObj 按钮的目标存放dom容器
