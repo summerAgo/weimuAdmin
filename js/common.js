@@ -1,5 +1,5 @@
 window.billBaseInfo; //预入库单基本信息：仓库主-仓库名称等;
-window.currData;//页面中当前选中行数据；
+window.currData; //页面中当前选中行数据；
 
 var unitMoney = "（RMB）";
 //存cookie
@@ -15,10 +15,11 @@ function setCookie(name, value, time) {
  * @param name 参数的名称
  * @returns
  */
-function getTopInfo(name){
-    var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+function getTopInfo(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
     var r = window.location.search.substr(1).match(reg);
-    if(r!=null)return  unescape(r[2]); return null;
+    if (r != null) return unescape(r[2]);
+    return null;
 }
 
 function getsec(str) {
@@ -55,25 +56,40 @@ function delCookie(name) {
 }
 //数组去重
 Array.prototype.unique = function() {
-    // n为hash表，r为临时数组
-    var n = {}, r = [];
+    var result = [];
+    var hash = {};
     for (var i = 0; i < this.length; i++) {
-        // 如果hash表中没有当前项
-        if (!n[this[i]]) {
-            // 存入hash表
-            n[this[i]] = true;
-            // 把当前数组的当前项push到临时数组里面
-            r.push(this[i]); 
+        if (!hash[this[i]]) {
+            result.push(this[i]);
+            hash[this[i]] = 1;
         }
     }
-    return r;
-};
+    return result;
+}
+//数组JSON去重
+Array.prototype.uniqueJson = function(key) {
+    var result = [this[0]];
+    for (var i = 1; i < this.length; i++) {
+        var item = this[i];
+        var repeat = false;
+        for (var j = 0; j < result.length; j++) {
+            if (item[key] == result[j][key]) {
+                repeat = true;
+                break;
+            }
+        }
+        if (!repeat) {
+            result.push(item);
+        }
+    }
+    return result;
+}
 //权限按钮生成
 /**
  * @param {*} domObj 按钮的目标存放dom容器
  * @param {*} menuKey 页面队友的key键
  */
-function btnIsList(domObj,menuKey) {
+function btnIsList(domObj, menuKey) {
     var data = JSON.parse(sessionStorage.getItem("buttonAuthority")); //获取按钮权限数据
     var btnDom;
     if (data !== null) {
@@ -87,17 +103,26 @@ function btnIsList(domObj,menuKey) {
 
 // 金额添加逗号
 function formatNum(num) {
-    if(num) {
-        num = num.toString().replace(/\$|\,/g,'');
-        if('' === num || isNaN(num)){return 'Not a Number ! ';}
+    if (num) {
+        num = num.toString().replace(/\$|\,/g, '');
+        if ('' === num || isNaN(num)) {
+            return 'Not a Number ! ';
+        }
         var sign = num.indexOf("-") > 0 ? '-' : '';
         var cents = num.indexOf(".") > 0 ? num.substr(num.indexOf(".")) : '';
-        cents = cents.length>1 ? cents : '' ;
-        num = num.indexOf(".") > 0 ? num.substring(0,(num.indexOf("."))) : num ;
-        if('' === cents){ if(num.length > 1 && '0' === num.substr(0,1)){return 'Not a Number ! ';}}
-        else{if(num.length > 1 && '0' === num.substr(0,1)){return 'Not a Number ! ';}}
-        for (var i = 0; i < Math.floor((num.length-(1+i))/3); i++) {
-            num = num.substring(0,num.length-(4*i+3))+','+num.substring(num.length-(4*i+3));
+        cents = cents.length > 1 ? cents : '';
+        num = num.indexOf(".") > 0 ? num.substring(0, (num.indexOf("."))) : num;
+        if ('' === cents) {
+            if (num.length > 1 && '0' === num.substr(0, 1)) {
+                return 'Not a Number ! ';
+            }
+        } else {
+            if (num.length > 1 && '0' === num.substr(0, 1)) {
+                return 'Not a Number ! ';
+            }
+        }
+        for (var i = 0; i < Math.floor((num.length - (1 + i)) / 3); i++) {
+            num = num.substring(0, num.length - (4 * i + 3)) + ',' + num.substring(num.length - (4 * i + 3));
         }
         return (sign + num + cents);
     }

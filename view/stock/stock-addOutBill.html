@@ -786,15 +786,18 @@
 
                 $("#addgoodList").click(function() {
                     var checkStatus = table.checkStatus('tableContainer-goodsList'); //表格选中状态
-                    console.log(tableData.length)
+                    // console.log(tableData.length)
                     if(tableData.length>0){
-                        console.log(11)
+                        // console.log(checkStatus.data);
                         tableData = tableData.concat(checkStatus.data);
+                        // console.log(tableData)
+                        tableData = tableData.uniqueJson("id");
                     }else{
-                        console.log(22)
+                        // console.log(22)
                         tableData = checkStatus.data;
                     }
                     console.log(tableData)
+
                     layer.close(goodsListLayer); //关闭
                     // 刷新表格
                     // console.log(tableData);
