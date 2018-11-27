@@ -44,7 +44,6 @@
                     </div>
                 </div>
             </form>
-
         </div>
     </div>
     <div class="table-content">
@@ -153,7 +152,7 @@
                     // console.log(data);
                     if (data.status === 0) {
                         //把接口数据转换为[{"name":str,"value":number}]格式
-                        if (!Array.isArray(data.data) || data.data.length == 0) {
+                        if (!Array.isArray(data.data) || data.data.length === 0) {
                             // 判断arr是否为数组并保证内部有值
                             return false;
                         }
@@ -248,7 +247,6 @@
             loading: true
         });
 
-
         var numChangeValue = {}; //单元格编辑更改评估价格数据对象
         //监听编辑
         table.on('edit(tableContainer-layerInventory)', function(obj) {
@@ -258,21 +256,17 @@
             numChangeValue[obj.data.id] = obj.value;
             console.log(numChangeValue);
         });
-
         $(".saveBtn").click(function() {
             submitOrSave(depotData, numChangeValue, checkAdd)
         });
-
         $(".confirmBtn").click(function() {
             submitOrSave(depotData, numChangeValue, endInventory)
         });
-
         function submitOrSave(dataObj, valueArr, url) {
             if (!dataObj.ownerid || !dataObj.depotid) {
                 layer.msg('请选择仓库主和仓库并查询后再进行盘点操作');
                 return false;
             }
-
             var status = true;
             for (var key in numChangeValue) {
                 if (isNaN(numChangeValue[key]) || numChangeValue[key] === "") {
@@ -292,7 +286,6 @@
             } else {
                 return false;
             }
-
         }
 
         //保持提交  修改异常调整数据
@@ -321,7 +314,7 @@
                     if (res.status === 1) {
                         window.location.href = loginPageUrl;
                     }
-                    if (res.status == 0) {
+                    if (res.status === 0) {
                         status = true;
                     }
                     layer.msg(res.msg);
