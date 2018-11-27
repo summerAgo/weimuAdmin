@@ -29,6 +29,10 @@
                                 <option value="">仓库名称</option>
                             </select>
                         </div>
+                        <div class="table-form-item layui-input-inline">
+                            <span class="input-span">货物标识码</span>
+                            <input type="text" name="uuid" placeholder="货物标识码" autocomplete="off" class="layui-input">
+                        </div>
                     </div>
                     <div class="layui-form-item form-right">
                         <button type="reset" class="layui-btn layui-btn-md layui-btn-gray">
@@ -187,58 +191,55 @@
                 pageName: 'offset', //页码的参数名称，默认：page
                 limitName: 'limit' //每页数据量的参数名，默认：limit
             },
-            cols: [
-                [ //标题栏
-                    {
-                        field: 'LAY_TABLE_INDEX',
-                        title: '序号',
-                        width: 40,
-                        templet: function(d) {
-                            return d.LAY_TABLE_INDEX + 1;
-                        }
-                    },
-                    {
-                        field: 'num',
-                        title: '盘点前数量（m³）',
-                        width:150
-                    }, {
-                        field: 'num1',
-                        title: '盘点后数量（m³）',
-                        edit: "txt",
-                        style: "color:red;cursor: pointer",
-                        width: 150
-                    }, {
-                        field: 'uuid',
-                        title: '货物标识码',
-                        width: 170,
-                    }, {
-                        field: 'code',
-                        title: '包号'
-                    }, {
-                        field: 'varieties',
-                        title: '品种'
-                    }, {
-                        field: 'spec',
-                        title: '规格/厚度'
-                    }, {
-                        field: 'levels',
-                        title: '等级'
-                    }, {
-                        field: 'chang',
-                        title: '长度'
-                    }, {
-                        field: 'brand',
-                        title: '品牌'
-                    }, {
-                        field: 'origin',
-                        title: '产地'
-                    }, {
-                        field: 'pprice',
-                        title: '采购单价' + unitMoney,
-                        width: 130
+            cols: [ [ //标题栏
+                {
+                    field: 'LAY_TABLE_INDEX',
+                    title: '序号',
+                    width: 40,
+                    templet: function(d) {
+                        return d.LAY_TABLE_INDEX + 1;
                     }
-                ]
-            ],
+                }, {
+                    field: 'num',
+                    title: '盘点前数量（m³）',
+                    width:150
+                }, {
+                    field: 'num1',
+                    title: '盘点后数量（m³）',
+                    edit: "txt",
+                    style: "color:red;cursor: pointer",
+                    width: 150
+                }, {
+                    field: 'uuid',
+                    title: '货物标识码',
+                    width: 170,
+                }, {
+                    field: 'code',
+                    title: '包号'
+                }, {
+                    field: 'varieties',
+                    title: '品种'
+                }, {
+                    field: 'spec',
+                    title: '规格/厚度'
+                }, {
+                    field: 'levels',
+                    title: '等级'
+                }, {
+                    field: 'chang',
+                    title: '长度'
+                }, {
+                    field: 'brand',
+                    title: '品牌'
+                }, {
+                    field: 'origin',
+                    title: '产地'
+                }, {
+                    field: 'pprice',
+                    title: '采购单价' + unitMoney,
+                    width: 130
+                }
+            ]],
             even: true,
             page: true, //是否显示分页
             limits: [100, 200, 500, 1000],
