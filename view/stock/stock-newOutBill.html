@@ -219,73 +219,6 @@
             formSelects.undisabled('ownerSelect'); //启用
             formSelects.undisabled('depotSelect'); //启用
             $("input[name='estimatedate']").attr("disabled", false);
-            $('.util-container').hide(); //隐藏倒计时
-        } else {
-            if (outBill.status === 3) {
-                $(".topmenu").hide();
-            }
-            data["orderno"] = outBill.orderno;
-            data["ownerid"] = outBill.ownerid;
-            data["depotid"] = outBill.depotid;
-            data['SESSION_NAME'] = getCookie('SESSION_NAME');
-            data['TOKEN'] = getCookie('TOKEN');
-            $("#estimatedate").val(outBill.outdate);
-            $.ajax({
-                cache: true,
-                type: "get",
-                url: outHistoryOrderno,
-                data: data,
-                async: false,
-                success: function(res) {
-                    if (res.status === 0) {
-                        pageData = res;
-                        tableData = pageData.stocklist;
-                    }
-                }
-            });
-
-            data["vname"] = pageData.vname; //司机姓名
-            data["vehnum"] = pageData.vehnum; //车牌号
-            data["card"] = pageData.card; //司机身份证号
-
-            $("input[name='vname']").val(data.vname);
-            $("input[name='vehnum']").val(data.vehnum);
-            $("input[name='card']").val(data.card);
-
-            var addOutBill = sessionStorage.getItem("addOutBill");
-            var auditStatus = $(".audit-status");
-            if (addOutBill !== null) {
-                // 审核状态显示
-                if (outBill.status === 1 && outBill.isexamine === 1) {
-                    auditStatus.html("<span style='color: #ff3c4e;'>待审核</span>");
-                } else if (outBill.status === 1) {
-                    auditStatus.html("<span style='color: #666;'>正常待出库</span>");
-                } else if (outBill.status === 2) {
-                    auditStatus.html("<span style='color: #666;'>审核通过</span>");
-                } else {
-                    auditStatus.html("<span style='color: #ff3c4e;'>审核不通过</span>");
-                }
-            } else {
-                auditStatus.html("")
-            }
-
-            formSelects.data('ownerSelect', 'local', {
-                arr: [{
-                    "name": outBill.ownername,
-                    "value": outBill.ownerid,
-                    "selected": "selected"
-                }] //仓库主列表
-            });
-            formSelects.data('depotSelect', 'local', {
-                arr: [{
-                    "name": outBill.depname,
-                    "value": outBill.depotid,
-                    "selected": "selected"
-                }] //仓库主列表
-            });
-            formSelects.disabled('ownerSelect'); //禁用
-            formSelects.disabled('depotSelect'); //禁用
-            $("input[name='estimatedate']").attr("disabled", true)
         }
 
         function selectDataInstall(url, param, bool) {
@@ -477,6 +410,7 @@
                                 window.location.href = loginPageUrl;
                             }
                             if (res.status === 0) {
+                                goodsListArray = [];
                                 tableIns.reload({
                                     page: {
                                         curr: 1 //重新从第 1 页开始
@@ -519,7 +453,7 @@
                 for (var i = 0; i < checkData.length; i++) {
                     tableData.remove("id", checkData[i].id);
                 }
-                
+
                 goodsListArray = goodsListArray.concat(checkStatus.data);
 
                 tableIns.reload({
@@ -582,20 +516,6 @@
             });
         });
         var goodsListArray = []; //目标库存货物列表
-        $.ajax({
-            url: ilbstockListAll,
-            data: {
-                "ownerid": outBill.cargoowner,
-                "depotid": outBill.depotname
-            },
-            async: false,
-            type: "get",
-            success: function(data) {
-                if (data.status == 0) {
-                    goodsListArray = data.data; //目标库存货物列表赋值
-                }
-            }
-        });
 
         // 从库存添加货物
         $(".addGoodsBtn").click(function() {
@@ -617,6 +537,22 @@
                 return false;
             }
 
+            if (goodsListArray.length < 1) {
+                $.ajax({
+                    url: ilbstockListAll,
+                    data: {
+                        "ownerid": cargoowner,
+                        "depotid": depotname
+                    },
+                    async: false,
+                    type: "get",
+                    success: function(data) {
+                        if (data.status == 0) {
+                            goodsListArray = data.data; //目标库存货物列表赋值
+                        }
+                    }
+                });
+            }
             $.get('view/stock/stock-goodsList.html', {}, function(str) {
                 goodsListLayer = layer.open({
                     title: '库存货物列表',

@@ -525,7 +525,7 @@
         //新建申请出库单
         $(".creatBillBtn").click(function() {
             sessionStorage.removeItem('addOutBill');
-            $.get('view/stock/stock-addOutBill.html', {}, function(str) { // 请求弹框
+            $.get('view/stock/stock-newOutBill.html', {}, function(str) { // 请求弹框
                 addLayer = layer.open({
                     title: '新建申请出库单',
                     type: 1,

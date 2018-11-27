@@ -84,6 +84,20 @@ Array.prototype.uniqueJson = function(key) {
     }
     return result;
 }
+// //数组获取索引
+Array.prototype.indexGet = function(key,val) {
+    for (var i = 0; i < this.length; i++) {
+        if (this[i][key] == val) return i;
+    }
+    return -1;
+};
+//数组删除项
+Array.prototype.remove = function(key,val) {
+    var index = this.indexGet(key,val);
+    if (index > -1) {
+        this.splice(index, 1);
+    }
+};
 //权限按钮生成
 /**
  * @param {*} domObj 按钮的目标存放dom容器
