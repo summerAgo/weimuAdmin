@@ -115,43 +115,41 @@
                 pageName: 'offset', //页码的参数名称，默认：page
                 limitName: 'limit' //每页数据量的参数名，默认：limit
             },
-            cols: [
-                [ //标题栏
-                    {
-                        field: 'LAY_TABLE_INDEX',
-                        title: '序号',
-                        width: 40,
-                        templet: function(d) {
-                            return d.LAY_TABLE_INDEX + 1;
-                        }
-                    }, {
-                        type: 'checkbox'
-                    }, {
-                        field: 'code',
-                        title: '菜单KEY',
-                        event: 'click',
-                    }, {
-                        field: 'name',
-                        title: '菜单名称',
-                        event: 'click',
-                    }, {
-                        field: 'icon',
-                        title: '菜单图标',
-                    }, {
-                        field: 'sort',
-                        title: '排序',
-                    }, {
-                        field: 'url',
-                        title: '地址',
-                    }, {
-                        field: 'level',
-                        title: '菜单层级',
-                    }, {
-                        field: 'createdate',
-                        title: '创建时间',
+            cols: [[ //标题栏
+                {
+                    field: 'LAY_TABLE_INDEX',
+                    title: '序号',
+                    width: 40,
+                    templet: function(d) {
+                        return d.LAY_TABLE_INDEX + 1;
                     }
-                ]
-            ],
+                }, {
+                    type: 'checkbox'
+                }, {
+                    field: 'code',
+                    title: '菜单KEY',
+                    event: 'click',
+                }, {
+                    field: 'name',
+                    title: '菜单名称',
+                    event: 'click',
+                }, {
+                    field: 'icon',
+                    title: '菜单图标',
+                }, {
+                    field: 'sort',
+                    title: '排序',
+                }, {
+                    field: 'url',
+                    title: '地址',
+                }, {
+                    field: 'level',
+                    title: '菜单层级',
+                }, {
+                    field: 'createdate',
+                    title: '创建时间',
+                }
+            ]],
             even: true,
             page: true, //是否显示分页
             limits: [10, 20, 30, 40, 50],
@@ -267,7 +265,6 @@
         $(".creatRole").click(function() {
             var checkStatus = table.checkStatus('tableContainerMenu');
             var currData = {};
-            console.log(currData.menulist);
             $.ajax({
                 cache: true,
                 type: "get",
@@ -305,40 +302,35 @@
                 title = '确认添加';
                 userUrl = menuAdd;
             }
-            layer.confirm(title, {
-                icon: 3,
-                title: '提示'
-            }, function(index) {
-                data.field['SESSION_NAME']= getCookie('SESSION_NAME');
-                data.field['TOKEN']= getCookie('TOKEN');
-                $.ajax({
-                    cache: true,
-                    type: "POST",
-                    url: userUrl,
-                    data: data.field,
-                    async: false,
-                    xhrFields: {
-                        withCredentials: true
-                    },
-                    crossDomain: true,
-                    error: function(request) {
-                        layer.msg('提交失败');
-                        return false;
-                    },
-                    success: function(data) {
-                        if (data.status === 1) {
-                            window.location.href = loginPageUrl;
-                        }
-                        layer.close(eaitLayer);
-                        layer.msg('提交成功');
-                        // 刷新表格
-                        tableIns.reload({
-                            page: {
-                                curr: 1 //重新从第 1 页开始
-                            }
-                        });
+            data.field['SESSION_NAME']= getCookie('SESSION_NAME');
+            data.field['TOKEN']= getCookie('TOKEN');
+            $.ajax({
+                cache: true,
+                type: "POST",
+                url: userUrl,
+                data: data.field,
+                async: false,
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
+                error: function(request) {
+                    layer.msg('提交失败');
+                    return false;
+                },
+                success: function(data) {
+                    if (data.status === 1) {
+                        window.location.href = loginPageUrl;
                     }
-                });
+                    layer.close(eaitLayer);
+                    layer.msg('提交成功');
+                    // 刷新表格
+                    tableIns.reload({
+                        page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                    });
+                }
             });
             return false;
         });

@@ -211,7 +211,6 @@
         });
 
         formSelects.on('supplierSelectLayer', function(id, vals, val, isAdd, isDisabled) {
-
             if (isAdd) {
                 for (var i = 0; i < supplierData.length; i++) {
                     if (supplierData[i].id === val.value) {
@@ -300,76 +299,74 @@
             elem: '#tableContainer-from',
             height: tableLayerHeight,
             data: tableData,
-            cols: [
-                [ //标题栏
-                    {
-                        type: 'radio'
-                    }, {
-                        field: 'LAY_TABLE_INDEX',
-                        title: '序号',
-                        width: 40,
-                        templet: function(d) {
-                            return d.LAY_TABLE_INDEX + 1;
-                        }
-                    }, {
-                        field: 'uuid',
-                        title: '货物标识码',
-                        width: 170,
-                    }, {
-                        field: 'code',
-                        title: '包号'
-                    }, {
-                        field: 'varietiesName',
-                        title: '品种',
-                        templet: function(d) {
-                            console.log(d)
-                            if (!d.varietiesName) {
-                                return d.varieties
-                            }
-                            return d.varietiesName;
-                        }
-                    }, {
-                        field: 'levelsName',
-                        title: '等级',
-                        templet: function(d) {
-                            if (!d.levelsName) {
-                                return d.levels
-                            }
-                            return d.levelsName;
-                        }
-                    }, {
-                        field: 'specName',
-                        title: '规格',
-                        templet: function(d) {
-                            if (!d.specName) {
-                                return d.spec
-                            }
-                            return d.specName;
-                        }
-                    }, {
-                        field: 'pprice',
-                        title: '采购价（RMB）'
-                    }, {
-                        field: 'num',
-                        title: '数量（m³）',
-                        event: "edit",
-                        style: 'color:red;'
-                    }, {
-                        field: 'containernum',
-                        title: '货柜号'
-                    }, {
-                        field: 'brand',
-                        title: '品牌'
-                    }, {
-                        field: 'billloading',
-                        title: '提运单'
+            cols: [[ //标题栏
+                {
+                    type: 'radio'
+                }, {
+                    field: 'LAY_TABLE_INDEX',
+                    title: '序号',
+                    width: 40,
+                    templet: function(d) {
+                        return d.LAY_TABLE_INDEX + 1;
                     }
-                ]
-            ],
+                }, {
+                    field: 'uuid',
+                    title: '货物标识码',
+                    width: 170,
+                }, {
+                    field: 'code',
+                    title: '包号'
+                }, {
+                    field: 'varietiesName',
+                    title: '品种',
+                    templet: function(d) {
+                        console.log(d)
+                        if (!d.varietiesName) {
+                            return d.varieties
+                        }
+                        return d.varietiesName;
+                    }
+                }, {
+                    field: 'levelsName',
+                    title: '等级',
+                    templet: function(d) {
+                        if (!d.levelsName) {
+                            return d.levels
+                        }
+                        return d.levelsName;
+                    }
+                }, {
+                    field: 'specName',
+                    title: '规格',
+                    templet: function(d) {
+                        if (!d.specName) {
+                            return d.spec
+                        }
+                        return d.specName;
+                    }
+                }, {
+                    field: 'pprice',
+                    title: '采购价（RMB）'
+                }, {
+                    field: 'num',
+                    title: '数量（m³）',
+                    event: "edit",
+                    style: 'color:red;'
+                }, {
+                    field: 'containernum',
+                    title: '货柜号'
+                }, {
+                    field: 'brand',
+                    title: '品牌'
+                }, {
+                    field: 'billloading',
+                    title: '提运单'
+                }
+            ]],
             even: true,
-            page: false, //是否显示分页
-            // limits: [tableData.length],
-            // limit: tableData.length, //每页默认显示的数量
+            page: true, //是否显示分页
+            limits: [tableData.length],
+            limit: tableData.length, //每页默认显示的数量
             done: function(res, curr, count) {
                 // var addtableBtn = '<div class="rightBotBtn" id="form-rightBtn">已新增<span>' + count + '</span>个货物</div>';
                 //只有点击列表入库订单时才显示入库操作
@@ -415,7 +412,6 @@
                 return false;
             }
             var ids = []; //订单号
-            console.log(orderno.orderno);
             ids.push(orderno.orderno);
             //审核订单为库存
             $.ajax({

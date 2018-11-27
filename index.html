@@ -109,7 +109,6 @@
     <script src="js/common.js"></script>
     <script>
         var roleName = sessionStorage.getItem("rolename");
-
         if (!roleName) {
             //判断是否已登录
             window.location.href = localhost + "/view/login/login.html";
@@ -162,7 +161,6 @@
             laytpl(getTpl).render(data, function(html) {
                 view.innerHTML = html;
             });
-
 
             element.render("nav-tabs");//加载路由
             Q.reg([
@@ -229,6 +227,9 @@
                 }],
                 ['owner-list', function() {
                     container.load('/view/base/owner-list.html');
+                }],
+                ['cargo-list', function() {
+                    container.load('/view/base/cargo-list.html');
                 }],
                 ['supplier-list', function() {
                     container.load('/view/base/supplier-list.html');
@@ -325,28 +326,28 @@
             }
 
             var menuBtnData = {
-        "a_18": [{"bname":"添加","id":45,"menuid":18,"offset":0,"type":0,"class":"toAdd"}, {"bname":"编辑","id":46,"menuid":18,"offset":0,"type":0,"class":"updateBtn"}, {"bname":"删除","id":47,"menuid":18,"offset":0,"type":0,"class":"deleteBtn"}],
-        "a_17": [{"bname":"删除","id":35,"menuid":17,"offset":0,"type":0},{"bname":"添加菜单","id":33,"menuid":17,"offset":0,"type":0},{"bname":"编辑","id":34,"menuid":17,"offset":0,"type":0},{"bname":"查询","icon":"iconfont icon-sousuo","id":36,"menuid":17,"offset":0,"type":0}],
-        "a_19": [{"bname":"添加仓库主","id":37,"menuid":19,"offset":0,"type":0},{"bname":"编辑","id":38,"menuid":19,"offset":0,"type":0},{"bname":"删除","id":39,"menuid":19,"offset":0,"type":0}],
-        "a_14": [{"bname":"刷新","id":21,"menuid":14,"offset":0,"type":0},{"bname":"重置","icon":"layui-btn layui-btn-md layui-btn-gray","id":22,"menuid":14,"offset":0,"type":0}],
-        "a_25": [{"bname":"刷新","id":59,"menuid":25,"offset":0,"type":0},{"bname":"查询","icon":"iconfont icon-sousuo","id":60,"menuid":25,"offset":0,"type":0}],
-        "a_13": [{"bname":"刷新","id":18,"menuid":13,"offset":0,"type":0},{"bname":"查询","icon":"iconfont icon-sousuo","id":19,"menuid":13,"offset":0,"type":0},{"bname":"重置","icon":"layui-btn layui-btn-md layui-btn-gray","id":20,"menuid":13,"offset":0,"type":0}],
-        "a_24": [{"bname":"刷新","id":57,"menuid":24,"offset":0,"type":0},{"bname":"查询","icon":"iconfont icon-sousuo","id":58,"menuid":24,"offset":0,"type":0}],
-        "a_16": [{"bname":"添加角色","id":28,"menuid":16,"offset":0,"type":0},{"bname":"编辑","id":30,"menuid":16,"offset":0,"type":0},{"bname":"删除","id":31,"menuid":16,"offset":0,"type":0},{"bname":"权限设置","id":29,"menuid":16,"offset":0,"type":0}],
-        "a_15": [{"bname":"添加用户","id":23,"menuid":15,"offset":0,"type":0},{"bname":"重置密码","id":24,"menuid":15,"offset":0,"type":0},{"bname":"设置角色","id":25,"menuid":15,"offset":0,"type":0},{"bname":"编辑","id":26,"menuid":15,"offset":0,"type":0},{"bname":"删除","id":27,"menuid":15,"offset":0,"type":0}],
-        "a_10": [{"bname":"新建盘点","icon":"iconfont icon-tianjia","id":5,"menuid":10,"offset":0,"type":0},{"bname":"删除已盘点","id":6,"menuid":10,"offset":0,"type":0},{"bname":"删除","id":7,"menuid":10,"offset":0,"type":0},{"bname":"查询","icon":"iconfont icon-sousuo","id":8,"menuid":10,"offset":0,"type":0},{"bname":"重置","icon":"layui-btn layui-btn-md layui-btn-gray","id":9,"menuid":10,"offset":0,"type":0}],
-        "a_21": [{"bname":"添加供应商","id":41,"menuid":21,"offset":0,"type":0},{"bname":"编辑","id":42,"menuid":21,"offset":0,"type":0},{"bname":"删除","id":43,"menuid":21,"offset":0,"type":0},{"bname":"查询","icon":"iconfont icon-sousuo","id":44,"menuid":21,"offset":0,"type":0}],
-        "x_11": [{"bname":"下载模板","id":64,"menuid":11,"offset":0,"type":1},{"bname":"导入数据","icon":"iconfont icon-daoru","id":65,"menuid":11,"offset":0,"type":1},{"bname":"添加货物信息","icon":"iconfont icon-tianjiahuowu","id":66,"menuid":11,"offset":0,"type":1},{"bname":"保存","icon":"iconfont icon-baocun","id":67,"menuid":11,"offset":0,"type":1},{"bname":"取消","icon":"iconfont icon-quxiao","id":68,"menuid":11,"offset":0,"type":1},{"bname":"删除","icon":"iconfont icon-shanchu","id":69,"menuid":11,"offset":0,"type":1}],
-        "b_11": [{"bname":"下载模板","id":64,"menuid":11,"offset":0,"type":1},{"bname":"导入数据","icon":"iconfont icon-daoru","id":65,"menuid":11,"offset":0,"type":1},{"bname":"添加货物信息","icon":"iconfont icon-tianjiahuowu","id":66,"menuid":11,"offset":0,"type":1},{"bname":"保存","icon":"iconfont icon-baocun","id":67,"menuid":11,"offset":0,"type":1},{"bname":"取消","icon":"iconfont icon-quxiao","id":68,"menuid":11,"offset":0,"type":1},{"bname":"删除","icon":"iconfont icon-shanchu","id":69,"menuid":11,"offset":0,"type":1}],
-        "a_20": [{"bname":"新增仓库","id":49,"menuid":20,"offset":0,"type":0},{"bname":"编辑","id":50,"menuid":20,"offset":0,"type":0},{"bname":"删除","id":51,"menuid":20,"offset":0,"type":0}],
-        "x_10": [{"bname":"保存","icon":"iconfont icon-baocunxinzeng","id":63,"menuid":10,"offset":0,"type":1},{"bname":"从库存添加货物","icon":"iconfont icon-tianjiahuowu","id":61,"menuid":10,"offset":0,"type":1},{"bname":"移除","icon":"iconfont icon-shanchu","id":62,"menuid":10,"offset":0,"type":1}],
-        "b_10": [{"bname":"保存","icon":"iconfont icon-baocunxinzeng","id":63,"menuid":10,"offset":0,"type":1},{"bname":"从库存添加货物","icon":"iconfont icon-tianjiahuowu","id":61,"menuid":10,"offset":0,"type":1},{"bname":"移除","icon":"iconfont icon-shanchu","id":62,"menuid":10,"offset":0,"type":1}],
-        "a_12": [{"bname":"入库","id":14,"menuid":12,"offset":0,"type":0},{"bname":"删除","id":15,"menuid":12,"offset":0,"type":0},{"bname":"查询","icon":"iconfont icon-sousuo","id":16,"menuid":12,"offset":0,"type":0}],
-        "a_23": [{"bname":"刷新","id":55,"menuid":23,"offset":0,"type":0},{"bname":"查询","icon":"iconfont icon-sousuo","id":56,"menuid":23,"offset":0,"type":0}],
-        "a_11": [{"bname":"删除","id":11,"menuid":11,"offset":0,"type":0},{"bname":"查询","icon":"iconfont icon-sousuo","id":12,"menuid":11,"offset":0,"type":0}],
-        "a_22": [{"bname":"刷新","id":53,"menuid":22,"offset":0,"type":0},{"bname":"查询","icon":"iconfont icon-sousuo","id":54,"menuid":22,"offset":0,"type":0}],
-        "a_8": [{"bname":"导出","code":"gwqw","icon":"iconfont icon-daochu","id":1,"level":0,"menuid":8,"offset":0,"sort":0,"type":0},{"bname":"刷新","code":"gwq","id":2,"level":0,"menuid":8,"offset":0,"type":0},{"bname":"查询","code":"fgqq","icon":"iconfont icon-sousuo","id":3,"menuid":8,"offset":0,"type":0},{"bname":"重置","code":"geww","icon":"layui-btn layui-btn-md layui-btn-gray","id":4,"menuid":8,"offset":0,"type":0}]
-    };
+                "a_18": [{"bname":"添加","id":45,"menuid":18,"offset":0,"type":0,"class":"toAdd"}, {"bname":"编辑","id":46,"menuid":18,"offset":0,"type":0,"class":"updateBtn"}, {"bname":"删除","id":47,"menuid":18,"offset":0,"type":0,"class":"deleteBtn"}],
+                "a_17": [{"bname":"删除","id":35,"menuid":17,"offset":0,"type":0},{"bname":"添加菜单","id":33,"menuid":17,"offset":0,"type":0},{"bname":"编辑","id":34,"menuid":17,"offset":0,"type":0},{"bname":"查询","icon":"iconfont icon-sousuo","id":36,"menuid":17,"offset":0,"type":0}],
+                "a_19": [{"bname":"添加仓库主","id":37,"menuid":19,"offset":0,"type":0},{"bname":"编辑","id":38,"menuid":19,"offset":0,"type":0},{"bname":"删除","id":39,"menuid":19,"offset":0,"type":0}],
+                "a_14": [{"bname":"刷新","id":21,"menuid":14,"offset":0,"type":0},{"bname":"重置","icon":"layui-btn layui-btn-md layui-btn-gray","id":22,"menuid":14,"offset":0,"type":0}],
+                "a_25": [{"bname":"刷新","id":59,"menuid":25,"offset":0,"type":0},{"bname":"查询","icon":"iconfont icon-sousuo","id":60,"menuid":25,"offset":0,"type":0}],
+                "a_13": [{"bname":"刷新","id":18,"menuid":13,"offset":0,"type":0},{"bname":"查询","icon":"iconfont icon-sousuo","id":19,"menuid":13,"offset":0,"type":0},{"bname":"重置","icon":"layui-btn layui-btn-md layui-btn-gray","id":20,"menuid":13,"offset":0,"type":0}],
+                "a_24": [{"bname":"刷新","id":57,"menuid":24,"offset":0,"type":0},{"bname":"查询","icon":"iconfont icon-sousuo","id":58,"menuid":24,"offset":0,"type":0}],
+                "a_16": [{"bname":"添加角色","id":28,"menuid":16,"offset":0,"type":0},{"bname":"编辑","id":30,"menuid":16,"offset":0,"type":0},{"bname":"删除","id":31,"menuid":16,"offset":0,"type":0},{"bname":"权限设置","id":29,"menuid":16,"offset":0,"type":0}],
+                "a_15": [{"bname":"添加用户","id":23,"menuid":15,"offset":0,"type":0},{"bname":"重置密码","id":24,"menuid":15,"offset":0,"type":0},{"bname":"设置角色","id":25,"menuid":15,"offset":0,"type":0},{"bname":"编辑","id":26,"menuid":15,"offset":0,"type":0},{"bname":"删除","id":27,"menuid":15,"offset":0,"type":0}],
+                "a_10": [{"bname":"新建盘点","icon":"iconfont icon-tianjia","id":5,"menuid":10,"offset":0,"type":0},{"bname":"删除已盘点","id":6,"menuid":10,"offset":0,"type":0},{"bname":"删除","id":7,"menuid":10,"offset":0,"type":0},{"bname":"查询","icon":"iconfont icon-sousuo","id":8,"menuid":10,"offset":0,"type":0},{"bname":"重置","icon":"layui-btn layui-btn-md layui-btn-gray","id":9,"menuid":10,"offset":0,"type":0}],
+                "a_21": [{"bname":"添加供应商","id":41,"menuid":21,"offset":0,"type":0},{"bname":"编辑","id":42,"menuid":21,"offset":0,"type":0},{"bname":"删除","id":43,"menuid":21,"offset":0,"type":0},{"bname":"查询","icon":"iconfont icon-sousuo","id":44,"menuid":21,"offset":0,"type":0}],
+                "x_11": [{"bname":"下载模板","id":64,"menuid":11,"offset":0,"type":1},{"bname":"导入数据","icon":"iconfont icon-daoru","id":65,"menuid":11,"offset":0,"type":1},{"bname":"添加货物信息","icon":"iconfont icon-tianjiahuowu","id":66,"menuid":11,"offset":0,"type":1},{"bname":"保存","icon":"iconfont icon-baocun","id":67,"menuid":11,"offset":0,"type":1},{"bname":"取消","icon":"iconfont icon-quxiao","id":68,"menuid":11,"offset":0,"type":1},{"bname":"删除","icon":"iconfont icon-shanchu","id":69,"menuid":11,"offset":0,"type":1}],
+                "b_11": [{"bname":"下载模板","id":64,"menuid":11,"offset":0,"type":1},{"bname":"导入数据","icon":"iconfont icon-daoru","id":65,"menuid":11,"offset":0,"type":1},{"bname":"添加货物信息","icon":"iconfont icon-tianjiahuowu","id":66,"menuid":11,"offset":0,"type":1},{"bname":"保存","icon":"iconfont icon-baocun","id":67,"menuid":11,"offset":0,"type":1},{"bname":"取消","icon":"iconfont icon-quxiao","id":68,"menuid":11,"offset":0,"type":1},{"bname":"删除","icon":"iconfont icon-shanchu","id":69,"menuid":11,"offset":0,"type":1}],
+                "a_20": [{"bname":"新增仓库","id":49,"menuid":20,"offset":0,"type":0},{"bname":"编辑","id":50,"menuid":20,"offset":0,"type":0},{"bname":"删除","id":51,"menuid":20,"offset":0,"type":0}],
+                "x_10": [{"bname":"保存","icon":"iconfont icon-baocunxinzeng","id":63,"menuid":10,"offset":0,"type":1},{"bname":"从库存添加货物","icon":"iconfont icon-tianjiahuowu","id":61,"menuid":10,"offset":0,"type":1},{"bname":"移除","icon":"iconfont icon-shanchu","id":62,"menuid":10,"offset":0,"type":1}],
+                "b_10": [{"bname":"保存","icon":"iconfont icon-baocunxinzeng","id":63,"menuid":10,"offset":0,"type":1},{"bname":"从库存添加货物","icon":"iconfont icon-tianjiahuowu","id":61,"menuid":10,"offset":0,"type":1},{"bname":"移除","icon":"iconfont icon-shanchu","id":62,"menuid":10,"offset":0,"type":1}],
+                "a_12": [{"bname":"入库","id":14,"menuid":12,"offset":0,"type":0},{"bname":"删除","id":15,"menuid":12,"offset":0,"type":0},{"bname":"查询","icon":"iconfont icon-sousuo","id":16,"menuid":12,"offset":0,"type":0}],
+                "a_23": [{"bname":"刷新","id":55,"menuid":23,"offset":0,"type":0},{"bname":"查询","icon":"iconfont icon-sousuo","id":56,"menuid":23,"offset":0,"type":0}],
+                "a_11": [{"bname":"删除","id":11,"menuid":11,"offset":0,"type":0},{"bname":"查询","icon":"iconfont icon-sousuo","id":12,"menuid":11,"offset":0,"type":0}],
+                "a_22": [{"bname":"刷新","id":53,"menuid":22,"offset":0,"type":0},{"bname":"查询","icon":"iconfont icon-sousuo","id":54,"menuid":22,"offset":0,"type":0}],
+                "a_8": [{"bname":"导出","code":"gwqw","icon":"iconfont icon-daochu","id":1,"level":0,"menuid":8,"offset":0,"sort":0,"type":0},{"bname":"刷新","code":"gwq","id":2,"level":0,"menuid":8,"offset":0,"type":0},{"bname":"查询","code":"fgqq","icon":"iconfont icon-sousuo","id":3,"menuid":8,"offset":0,"type":0},{"bname":"重置","code":"geww","icon":"layui-btn layui-btn-md layui-btn-gray","id":4,"menuid":8,"offset":0,"type":0}]
+            };
 
             sessionStorage.setItem("menuBtnData", JSON.stringify(menuBtnData));
         });
