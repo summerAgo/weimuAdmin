@@ -80,44 +80,42 @@
                 pageName: 'offset', //页码的参数名称，默认：page
                 limitName: 'limit' //每页数据量的参数名，默认：limit
             },
-            cols: [
-                [ //标题栏
-                    {
-                        field: 'LAY_TABLE_INDEX',
-                        title: '序号',
-                        width: 40,
-                        templet: function(d) {
-                            return d.LAY_TABLE_INDEX + 1;
-                        }
-                    }, {
-                        field: 'id',
-                        title: 'ID',
-                        sort: true
-                    }, {
-                        field: 'varieties',
-                        title: '品种',
-                    }, {
-                        field: 'level',
-                        title: '等级',
-                    }, {
-                        field: 'remarks',
-                        title: '备注',
-                    }, {
-                        field: 'id',
-                        title: 'ID',
-                        sort: true
-                    }, {
-                        field: 'varieties',
-                        title: '品种',
-                    }, {
-                        field: 'level',
-                        title: '等级',
-                    }, {
-                        field: 'remarks',
-                        title: '备注',
+            cols: [[ //标题栏
+                {
+                    field: 'LAY_TABLE_INDEX',
+                    title: '序号',
+                    width: 40,
+                    templet: function(d) {
+                        return d.LAY_TABLE_INDEX + 1;
                     }
-                ]
-            ],
+                }, {
+                    field: 'id',
+                    title: 'ID',
+                    sort: true
+                }, {
+                    field: 'varieties',
+                    title: '品种',
+                }, {
+                    field: 'level',
+                    title: '等级',
+                }, {
+                    field: 'remarks',
+                    title: '备注',
+                }, {
+                    field: 'id',
+                    title: 'ID',
+                    sort: true
+                }, {
+                    field: 'varieties',
+                    title: '品种',
+                }, {
+                    field: 'level',
+                    title: '等级',
+                }, {
+                    field: 'remarks',
+                    title: '备注',
+                }
+            ]],
             even: true,
             page: true, //是否显示分页
             limits: [100, 200, 500, 1000],

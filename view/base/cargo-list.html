@@ -1,4 +1,4 @@
-<div class="table-page" id="owner-list">
+<div class="table-page" id="cargo-list">
     <div class="trr-container">
         <div class="tree-box">
             <div class="tree-header">
@@ -58,7 +58,7 @@
         </div>
     </div>
 </div>
-<style scode>
+<style scoped>
     .lay-table-content {
         padding: 0;
     }
@@ -85,8 +85,8 @@
         var eleTree = layui.eleTree;
         var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 63); //内容区域所需减去的高度
 
-        var menuKey = "a_19"; //当前页面key
-        var domObj = $("#owner-list .table-tools").find("ul"); //当前页面容器
+        var menuKey = "a_27"; //当前页面key
+        var domObj = $("#cargo-list .table-tools").find("ul"); //当前页面容器
         btnIsList(domObj, menuKey); //按钮权限
         var eaitLayer; //编辑-弹层
 
@@ -113,7 +113,7 @@
         var tableIns = table.render({
             elem: '#tableContainer-cargolist',
             height: 'full-' + tableTopHeight,
-            url: listOwner,
+            url: customerList,
             parseData: function(res) { //res 即为原始返回的数据
                 if (res.status !== 0) res.status = 0;
                 return {
@@ -222,7 +222,7 @@
 
                     //调用删除接口
                     $.ajax({
-                        url: delOwner,
+                        url: customerDelete,
                         type: "post",
                         data: {
                             "ids": rowId,
@@ -263,7 +263,7 @@
             $.get('view/base/cargo-add.html', {}, function(str) {
                 eaitLayer = layer.open({
                     title: '添加货权人',
-                    type: 1,
+                    type: 1, // 弹框类型
                     content: str,
                     resize: false,
                     area: ['800px', '560px'],
@@ -282,11 +282,11 @@
 
             if (data.field.id != null && data.field.id !== "") {
                 title = '确认提交修改';
-                userUrl = updOwner;
+                userUrl = customerUpdate;
                 isNameEdit = !!(userData.name !== data.field.name);
             } else {
                 title = '确认添加';
-                userUrl = addOwner;
+                userUrl = customerAdd;
                 data.field.id = null;
                 isNameAdd = true;
             }
@@ -301,7 +301,7 @@
                 $.ajax({
                     cache: true,
                     type: "get",
-                    url: isname_owner,
+                    url: customerIsName,
                     data: {
                         instid: data.field.instid,
                         name: data.field.name,
@@ -322,43 +322,37 @@
                 });
                 if (!isName) {return false;}
             }
-
-            // layer.confirm(title, {
-            //     icon: 3,
-            //     title: '提示'
-            // }, function(index) {
-                data.field['SESSION_NAME']= getCookie('SESSION_NAME');
-                data.field['TOKEN']= getCookie('TOKEN');
-                $.ajax({
-                    cache: true,
-                    type: "post",
-                    url: userUrl,
-                    data: data.field,
-                    async: false,
-                    xhrFields: {
-                        withCredentials: true
-                    },
-                    crossDomain: true,
-                    error: function(msg) {
-                        layer.msg('提交失败');
-                        return false;
-                    },
-                    success: function(res) {
-                        if (res.status === 0) {
-                            layer.close(eaitLayer);
-                            layer.msg('提交成功');
-                            // 刷新表格
-                            tableIns.reload({
-                                page: {
-                                    curr: 1 //重新从第 1 页开始
-                                }
-                            });
-                        } else if (res.status === 1) {
-                            window.location.href = loginPageUrl;
-                        }
+            data.field['SESSION_NAME']= getCookie('SESSION_NAME');
+            data.field['TOKEN']= getCookie('TOKEN');
+            $.ajax({
+                cache: true,
+                type: "post",
+                url: userUrl,
+                data: data.field,
+                async: false,
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
+                error: function(msg) {
+                    layer.msg('提交失败');
+                    return false;
+                },
+                success: function(res) {
+                    if (res.status === 0) {
+                        layer.close(eaitLayer);
+                        layer.msg('提交成功');
+                        // 刷新表格
+                        tableIns.reload({
+                            page: {
+                                curr: 1 //重新从第 1 页开始
+                            }
+                        });
+                    } else if (res.status === 1) {
+                        window.location.href = loginPageUrl;
                     }
-                });
-            // });
+                }
+            });
             return false;
         });
 
@@ -379,8 +373,8 @@
         //用户类型菜单树
         function listIns() {
             var data = {
-                "utype": 1
-            }; //1是货权人类型
+                "utype": 4
+            }; //4是货权人类型
             rowDataApi(listInstitution, data, function(res) {
                 var insData = res.data;
                 inaAllList = insData;
@@ -453,7 +447,7 @@
         $("#addins").click(function() {
             var data = {};
             data["insList"] = insList;
-            data["utype"] = 1;
+            data["utype"] = 4;
             window.currData = data;
             $.get('view/user/institution-add.html', {}, function(str) {
                 eaitLayer = layer.open({
@@ -469,7 +463,7 @@
         $("#updins").click(function() {
             var data = menuIns;
             data["insList"] = insList;
-            data["utype"] = 1;
+            data["utype"] = 4;
             window.currData = data; //全局对象存储当前选中行数据
             $.get('view/user/institution-add.html', {}, function(str) {
                 eaitLayer = layer.open({
@@ -501,7 +495,7 @@
                 $.ajax({
                     cache: true,
                     type: "post",
-                    url: delInstitution,
+                    url: customerDeleteMany,
                     data: data,
                     async: false,
                     xhrFields: {
@@ -551,7 +545,7 @@
                     type: "get",
                     url: isname_institution,
                     data: {
-                        utype: 1,
+                        utype: 4,
                         name: data.field.name,
                         'SESSION_NAME':getCookie('SESSION_NAME'),
                         'TOKEN':getCookie('TOKEN'),
