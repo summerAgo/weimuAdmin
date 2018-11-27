@@ -19,6 +19,12 @@
         </div>
     </div>
     <div class="layui-form-item layui-normal-line">
+        <label class="layui-form-label">菜单key</label>
+        <div class="layui-input-inline">
+            <input type="text" id="code" name="code" lay-verify="required" placeholder="菜单key" class="layui-input"  value="{{# if(d.code){}}{{d.code}}{{# }}}">
+        </div>
+    </div>
+    <div class="layui-form-item layui-normal-line">
         <label class="layui-form-label">菜单名称</label>
         <div class="layui-input-inline">
             <input type="text" id="name" name="name" lay-verify="required" placeholder="用户名" class="layui-input"  value="{{# if(d.name){}}{{d.name}}{{# }}}">
@@ -28,7 +34,7 @@
     <div class="layui-form-item layui-normal-line">
         <label class="layui-form-label">菜单图标</label>
         <div class="layui-input-inline">
-            <input type="text" id="icon" name="icon" lay-verify="required" placeholder="图标" class="layui-input"  value="{{# if(d.icon){}}{{d.icon}}{{# }}}">
+            <input type="text" id="icon" name="icon" lay-verify="" placeholder="图标" class="layui-input"  value="{{# if(d.icon){}}{{d.icon}}{{# }}}">
         </div>
     </div>
     <div class="layui-form-item layui-normal-line">

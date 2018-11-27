@@ -109,7 +109,6 @@
     <script src="js/common.js"></script>
     <script>
         var roleName = sessionStorage.getItem("rolename");
-
         if (!roleName) {
             //判断是否已登录
             window.location.href = localhost + "/view/login/login.html";
@@ -162,7 +161,6 @@
             laytpl(getTpl).render(data, function(html) {
                 view.innerHTML = html;
             });
-
 
             element.render("nav-tabs");//加载路由
             Q.reg([
@@ -229,6 +227,9 @@
                 }],
                 ['owner-list', function() {
                     container.load('/view/base/owner-list.html');
+                }],
+                ['cargo-list', function() {
+                    container.load('/view/base/cargo-list.html');
                 }],
                 ['supplier-list', function() {
                     container.load('/view/base/supplier-list.html');
@@ -322,6 +323,7 @@
                 delCookie("buttonAuthority");
                 history.replaceState({}, 'login', localhost + "/view/login/login.html");
                 window.location.href = localhost + "/view/login/login.html";
+            }
         });
     </script>
 </body>

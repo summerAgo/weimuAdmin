@@ -1,0 +1,204 @@
+<div id="formEditView"></div>
+<script id="formUser" type="text/html">
+    <form class="layui-form layer-open-form" action="">
+        <div class="layui-form-item layui-control-line">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit="" type="submit" lay-filter="addSubmit"><i class="iconfont icon-daochu"></i>保存</button>
+            </div>
+        </div>
+         <div class="layui-form-item layui-normal-line">
+            <label class="layui-form-label form-required">类型标识</label>
+            <div class="layui-input-inline">
+                <select name="instid" lay-verify="required" placeholder="必填项,请输入用户类型" xm-select="instidSelect" xm-select-radio="" ></select>
+            </div>
+        </div>
+        <div class="layui-form-item layui-normal-line">
+            <label class="layui-form-label form-required">名称</label>
+            <div class="layui-input-inline">
+                <input type="text" id="name" name="name" lay-verify="required" placeholder="必填项,请输入仓库主名" class="layui-input" value="{{d.name||''}}">
+                <input type="hidden" id="id" name="id" value="{{d.id||''}}">
+            </div>
+        </div>
+        <!-- <div class="layui-form-item layui-normal-line">
+        <label class="layui-form-label">助记码</label>
+        <div class="layui-input-inline">
+            <input type="text" id="mnemoniccode" name="mnemoniccode" placeholder="选填" value="{{d.mnemoniccode || ''}}" class="layui-input">
+        </div>
+    </div> -->
+        <div class="layui-form-item layui-normal-line">
+            <label class="layui-form-label">联系人</label>
+            <div class="layui-input-inline">
+                <input type="text" id="contacts" name="contacts" placeholder="选填" value="{{d.contacts||''}}" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item layui-normal-line">
+            <label class="layui-form-label">手机号</label>
+            <div class="layui-input-inline">
+                <input type="text" id="phone" name="phone" placeholder="选填" value="{{d.phone||''}}" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item layui-normal-line">
+            <label class="layui-form-label form-required">业务员</label>
+            <div class="layui-input-inline">
+                <select name="person" xm-select="person" xm-select-radio>
+                    <option value="">请选择</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item layui-normal-line">
+            <label class="layui-form-label form-required">风控人员</label>
+            <div class="layui-input-inline">
+                <select name="fkperson" xm-select="fkperson" xm-select-radio>
+                    <option value="">请选择</option>
+                </select>
+            </div>
+        </div>
+        <!-- <div class="layui-form-item layui-normal-line">
+        <label class="layui-form-label">风控备注</label>
+        <div class="layui-input-inline">
+            <input type="text" id="fkremarks" name="fkremarks" placeholder="选填" value="{{d.fkremarks || ''}}" class="layui-input">
+        </div>
+    </div> -->
+        <div class="layui-form-item layui-normal-line">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-inline">
+                <input type="text" id="remarks" name="remarks" placeholder="选填" value="{{d.remarks||''}}" class="layui-input">
+            </div>
+        </div>
+    </form>
+</script>
+<style scoped>
+    .layer-open-form .layui-form-item .layui-input-inline {
+        width: 200px;
+    }
+</style>
+<script>
+    layui.use(['form', 'jquery', 'element', 'layer', 'formSelects', 'laytpl', 'laydate'], function() {
+        var element = layui.element;
+        var form = layui.form;
+        var $ = layui.jquery;
+        var laytpl = layui.laytpl;
+        var laydate = layui.laydate;
+        var formSelects = layui.formSelects;
+        var data = window.currData;
+        if (data != null && data.id) { //不是空就是编辑
+            var getTpl = formUser.innerHTML,
+                view = document.getElementById('formEditView');
+            laytpl(getTpl).render(data, function(html) {
+                view.innerHTML = html;
+            });
+        } else {
+            var getTpl = formUser.innerHTML,
+                view = document.getElementById('formEditView');
+            var dataOff = data;
+            laytpl(getTpl).render(dataOff, function(html) {
+                view.innerHTML = html;
+            });
+        }
+
+        form.render(); //重置表单渲染
+
+        //日期时间选择器
+        laydate.render({
+            elem: '#birthday',
+            type: 'datetime',
+            max: 0,
+            change: function(val) {
+                console.log(val);
+            }
+        });
+
+        addinstidSel(data.inaAllList, data.instid);
+
+        function addinstidSel(inaAllList, instid) {
+            var arr = [];
+            var number = "";
+            for (var i = 0; i < inaAllList.length; i++) {
+                if (inaAllList[i].pid === 0) {
+                    var map = {};
+                    map["name"] = inaAllList[i].name;
+                    map["value"] = inaAllList[i].id;
+                    var children = [];
+
+                    for (var j = 0; j < inaAllList.length; j++) {
+                        if (inaAllList[i].id === inaAllList[j].pid) {
+                            var maptwo = {};
+                            maptwo["name"] = inaAllList[j].name;
+                            maptwo["value"] = inaAllList[j].id;
+                            children.push(maptwo);
+                            if (inaAllList[j].id === instid) {
+                                number = inaAllList[j].pid + "/";
+                            }
+                        }
+                    }
+                    map["children"] = children;
+                    arr.push(map);
+                }
+
+            }
+            console.log(arr);
+            layui.formSelects.data('instidSelect', 'local', {
+                arr: arr,
+                linkage: true
+            });
+            if (number.length === 0) {
+                number = instid + "/";
+            } else {
+                number = number + instid;
+            }
+            console.log(number);
+            layui.formSelects.value('instidSelect', [number]);
+        }
+
+        formSelects.data('person', 'local', {
+            arr: selectDataInstall(userdropdown)
+        });
+
+        formSelects.data('fkperson', 'local', {
+            arr: selectDataInstall(userdropdown)
+        });
+
+        if (data.person) {
+            formSelects.value('person', [data.person]);
+        }
+
+        if (data.fkperson) {
+            formSelects.value('fkperson', [data.fkperson]);
+        }
+
+        function selectDataInstall(url, param, bool) {
+            //下拉选框数据组装
+            var arr = [];
+            //获取列表数据
+            $.ajax({
+                url: url,
+                type: "get",
+                data: param,
+                async: false, //同步
+                traditional: true,
+                success: function(data) {
+                    // console.log(data);
+                    if (data.status === 0) {
+                        //把接口数据转换为[{"name":str,"value":number}]格式
+                        if (!Array.isArray(data.data) || data.data.length === 0) {
+                            // 判断arr是否为数组并保证内部有值
+                            return false;
+                        }
+                        for (var i = 0; i < data.data.length; i++) {
+                            arr.push({
+                                "name": data.data[i].username,
+                                "value": data.data[i].id
+                            })
+                        }
+                        if (bool) {
+                            arr[0].selected = "selected";
+                        }
+
+                    }
+                }
+            });
+            return arr;
+        }
+
+    });
+</script>
