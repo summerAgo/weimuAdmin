@@ -278,7 +278,7 @@
                             }
                         });
                     } else if (res.status === 1) {
-                        window.location.href = loginPageUrl;
+                        goLogin();// 跳转到登录页
                     }
                 }
             });
@@ -326,7 +326,7 @@
                                 });
                                 layer.msg(res.msg);
                             } else if (res.status === 1) {
-                                window.location.href = loginPageUrl;
+                                goLogin();// 跳转到登录页
                             }
                         }
                     });
@@ -513,7 +513,7 @@
                             layer.msg('提交成功');
                             listIns();
                         } else if (res.status === 1) {
-                            window.location.href = loginPageUrl;
+                            goLogin();// 跳转到登录页
                         }
                     }
                 });
@@ -560,7 +560,7 @@
                             layer.msg('提交成功');
                             listIns();
                         } else if (res.status === 1) {
-                            window.location.href = loginPageUrl;
+                            goLogin();// 跳转到登录页
                         }
                     }
                 });

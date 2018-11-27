@@ -249,8 +249,8 @@
                         layer.msg(msg);
                         layer.close(addDepotLayer);
                     } else if (res.status === 1) {
-                        layer.msg("提交异常");
-                        window.location.href = loginPageUrl;
+                        // layer.msg("提交异常");
+                        goLogin();// 跳转到登录页
                     }
                 }
             });
@@ -329,7 +329,7 @@
                                 });
                                 layer.msg(res.msg);
                             } else if (res.status === 1) {
-                                window.location.href = loginPageUrl;
+                                goLogin();// 跳转到登录页
                             }
                         }
                     });

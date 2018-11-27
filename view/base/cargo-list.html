@@ -246,7 +246,7 @@
                                 });
                                 layer.msg(res.msg);
                             } else if (res.status === 1) {
-                                window.location.href = loginPageUrl;
+                                goLogin();// 跳转到登录页
                             }
                         }
                     });
@@ -349,7 +349,7 @@
                             }
                         });
                     } else if (res.status === 1) {
-                        window.location.href = loginPageUrl;
+                        goLogin();// 跳转到登录页
                     }
                 }
             });
@@ -495,7 +495,7 @@
                 $.ajax({
                     cache: true,
                     type: "post",
-                    url: customerDeleteMany,
+                    url: delInstitution,
                     data: data,
                     async: false,
                     xhrFields: {
@@ -512,7 +512,7 @@
                             layer.msg('提交成功');
                             listIns();
                         } else if (res.status === 1) {
-                            window.location.href = loginPageUrl;
+                            goLogin();// 跳转到登录页
                         }
                     }
                 });
@@ -587,8 +587,8 @@
                         layer.close(eaitLayer);
                         layer.msg('提交成功');
                         listIns();
-                    } else if (res.status === 0) {
-                        window.location.href = loginPageUrl
+                    } else if (res.status === 1) {
+                        goLogin();// 跳转到登录页
                     }
                 }
             });

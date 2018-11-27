@@ -359,7 +359,7 @@
                     },
                     success: function(res) {
                         if (res.status === 1) {
-                            window.location.href = loginPageUrl;
+                            goLogin();// 跳转到登录页
                         }
                         if (res.status == 0) {
                             layer.msg(res.msg);
@@ -398,7 +398,7 @@
                     },
                     success: function(res) {
                         if (res.status === 1) {
-                            window.location.href = loginPageUrl;
+                            goLogin();// 跳转到登录页
                         }
                         if (res.status == 0) {
                             layer.msg(res.msg);

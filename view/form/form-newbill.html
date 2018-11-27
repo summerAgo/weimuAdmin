@@ -438,7 +438,7 @@
                         layer.msg("审核通过为库存");
                         layer.closeAll();
                     } else if (res.status === 1) {
-                        window.location.href = loginPageUrl;
+                        goLogin();// 跳转到登录页
                     }
                 }
             })
@@ -652,7 +652,7 @@
                         layer.closeAll();
                         //刷新当前列表
                     } else if (res.status === 1) {
-                        window.location.href = loginPageUrl;
+                        goLogin();// 跳转到登录页
                     }
                 },
                 error: function() {}
