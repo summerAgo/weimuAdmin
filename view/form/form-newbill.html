@@ -693,13 +693,14 @@
                                 }
                             });
                         } else {
-                            var msgstr = "以下行有问题:</br>";
+                            var msgstr = "------以下行有问题------</br></br>";
                             for(var i =0;i<res.data.length;i++){
                                 msgstr += res.data[i];
                             }
                             layer.msg(msgstr, {
                                 time: 60000, //60s后自动关闭
-                                btn: ['关闭']
+                                btn: ['关闭'],
+                                area:["100%","100%"]
                             });
                         }
                     }
