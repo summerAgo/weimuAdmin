@@ -693,7 +693,14 @@
                                 }
                             });
                         } else {
-                            layer.msg(res.msg)
+                            var msgstr = "";
+                            for(var i =0;i<res.data.length;i++){
+                                msgstr += res.data[i];
+                            }
+                            layer.msg(msgstr, {
+                                time: 60000, //60s后自动关闭
+                                btn: ['关闭']
+                            });
                         }
                     }
                 });
