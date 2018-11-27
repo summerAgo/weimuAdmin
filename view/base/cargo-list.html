@@ -520,7 +520,7 @@
             return false;
         });
 
-        // 添加和编辑用户类型
+        // 添加和编辑货权人类型
         form.on('submit(addInsSubmit)', function(data) {
             var title = "";
             var url = "";
@@ -566,37 +566,33 @@
             }
             // 添加货权人类型去空格
             data.field.name = data.field.name.replace(/^\s*|\s*$/g,"");
-            // layer.confirm(title, {
-            //     icon: 3,
-            //     title: '提示'
-            // }, function(index) {
-                data.field['SESSION_NAME']= getCookie('SESSION_NAME');
-                data.field['TOKEN']= getCookie('TOKEN');
-                $.ajax({
-                    cache: true,
-                    type: "post",
-                    url: userUrl,
-                    data: data.field,
-                    async: false,
-                    xhrFields: {
-                        withCredentials: true
-                    },
-                    crossDomain: true,
-                    error: function(msg) {
-                        layer.msg('提交失败');
-                        return false;
-                    },
-                    success: function(res) {
-                        if (res.status === 0) {
-                            layer.close(eaitLayer);
-                            layer.msg('提交成功');
-                            listIns();
-                        } else if (res.status === 0) {
-                            window.location.href = loginPageUrl
-                        }
+            data.field['SESSION_NAME']= getCookie('SESSION_NAME');
+            data.field['TOKEN']= getCookie('TOKEN');
+            $.ajax({
+                cache: true,
+                type: "post",
+                url: userUrl,
+                data: data.field,
+                async: false,
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
+                error: function(msg) {
+                    layer.msg('提交失败');
+                    return false;
+                },
+                success: function(res) {
+                    alert(1)
+                    if (res.status === 0) {
+                        layer.close(eaitLayer);
+                        layer.msg('提交成功');
+                        listIns();
+                    } else if (res.status === 0) {
+                        window.location.href = loginPageUrl
                     }
-                });
-            // });
+                }
+            });
             return false;
         });
     })
