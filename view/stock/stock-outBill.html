@@ -249,70 +249,68 @@
                 pageName: 'offset', //页码的参数名称，默认：page
                 limitName: 'limit' //每页数据量的参数名，默认：limit
             },
-            cols: [
-                [ //标题栏
-                    {
-                        field: 'LAY_TABLE_INDEX',
-                        title: '序号',
-                        width: 40,
-                        templet: function(d) {
-                            return d.LAY_TABLE_INDEX + 1;
-                        }
-                    }, {
-                        type: 'radio'
-                    }, {
-                        field: 'orderno',
-                        title: '单号',
-                        event: 'click',
-                        style: 'cursor: pointer;color:#0063de;',
-                        width: 200
-                    }, {
-                        field: 'ownername',
-                        title: '仓库主'
-                    }, {
-                        field: 'depname',
-                        title: '仓库名称'
-                    }, {
-                        field: 'num',
-                        title: '件数（包）',
-                        width: 90
-                    }, {
-                        field: 'volume',
-                        title: '数量（m³）',
-                        width: 90
-                    }, {
-                        field: 'totalamount',
-                        title: '订单总金额' + unitMoney,
-                        width: 150,
-                        templet: function (d) {
-                            return formatNum(d.totalamount);
-                        }
-                    }, {
-                        field: 'createdate',
-                        title: '申请出库日期'
-                    }, {
-                        field: 'status',
-                        title: '状态',
-                        width: 117,
-                        templet: function(d) {
-                            if (d.status === 1 && d.isexamine === 1) {
-                                return '<span style="color:#ff3c4e">待审核<span>';
-                            }
-                            if (d.status === 1) {
-                                return '正常待出库';
-                            }
-                            if (d.status === 2) {
-                                return '审核通过';
-                            }
-                            return '<span style="color:#ff3c4e">审核不通过<span>';
-                        }
-                    }, {
-                        field: 'remarks',
-                        title: '备注',
-                        width: 340
+            cols: [[ //标题栏
+                {
+                    field: 'LAY_TABLE_INDEX',
+                    title: '序号',
+                    width: 40,
+                    templet: function(d) {
+                        return d.LAY_TABLE_INDEX + 1;
                     }
-                ]
-            ],
+                }, {
+                    type: 'radio'
+                }, {
+                    field: 'orderno',
+                    title: '单号',
+                    event: 'click',
+                    style: 'cursor: pointer;color:#0063de;',
+                    width: 200
+                }, {
+                    field: 'ownername',
+                    title: '仓库主'
+                }, {
+                    field: 'depname',
+                    title: '仓库名称'
+                }, {
+                    field: 'num',
+                    title: '件数（包）',
+                    width: 90
+                }, {
+                    field: 'volume',
+                    title: '数量（m³）',
+                    width: 90
+                }, {
+                    field: 'totalamount',
+                    title: '订单总金额' + unitMoney,
+                    width: 150,
+                    templet: function (d) {
+                        return formatNum(d.totalamount);
+                    }
+                }, {
+                    field: 'createdate',
+                    title: '申请出库日期'
+                }, {
+                    field: 'status',
+                    title: '状态',
+                    width: 117,
+                    templet: function(d) {
+                        if (d.status === 1 && d.isexamine === 1) {
+                            return '<span style="color:#ff3c4e">待审核<span>';
+                        }
+                        if (d.status === 1) {
+                            return '正常待出库';
+                        }
+                        if (d.status === 2) {
+                            return '审核通过';
+                        }
+                        return '<span style="color:#ff3c4e">审核不通过<span>';
+                    }
+                }, {
+                    field: 'remarks',
+                    title: '备注',
+                    width: 340
+                }
+            ]],
             even: true,
             page: true, //是否显示分页
             limits: [100, 200, 500, 1000],
@@ -357,7 +355,7 @@
                         crossDomain: true,
                         success: function(res) {
                             if (res.status === 1) {
-                                window.location.href = loginPageUrl;
+                                goLogin();// 跳转到登录页
                             }
                             if (res.status === 0) {
                                 tableIns.reload({
@@ -375,12 +373,10 @@
                                 }
                                 if (res.noadopt) {
                                     //msgstr = msgstr+  "订单:"+res.noadopt+"<br/>请风控审核！";
-
                                     msgstr = msgstr + "请风控审核<br/>";
                                     $.each(res.noadopt, function(i, v) {
                                         msgstr = "   " + msgstr + v + "<br/>";
                                     });
-
                                 }
                                 layer.msg(msgstr, {
                                     time: 60000, //60s后自动关闭

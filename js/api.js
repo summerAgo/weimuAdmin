@@ -105,7 +105,7 @@ var basicsInfocode = pathUrl + "basics/info/isSelectByCode";//判断code是否�
 var listInstitution = pathUrl +"basics/institution/list";//查询分类
 var addInstitution = pathUrl +"basics/institution/add";//添加分类
 var updInstitution = pathUrl +"basics/institution/update";//修改分类
-var delInstitution = pathUrl +"basics/institution/deleteMany";//查询分类
+var delInstitution = pathUrl +"basics/institution/deleteMany";//删除分类
 
 var userAuthority = pathUrl + "sys/setAuthority";//设置用户对应角色(userid 角色id roleid[]菜单数组)
 

@@ -191,7 +191,7 @@
                             currData["menulist"] = res.data; //全局对象存储数据;
                             window.currData = currData;
                         } else if (res.status === 1) {
-                            window.location.href = loginPageUrl;
+                            goLogin();// 跳转到登录页
                         }
                     },
                     error: function(msg) {
@@ -253,7 +253,7 @@
                                 });
                                 layer.msg(res.msg);
                             } else if (res.status === 1) {
-                                window.location.href = loginPageUrl;
+                                goLogin();// 跳转到登录页
                             }
                         }
                     });

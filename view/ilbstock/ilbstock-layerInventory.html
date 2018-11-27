@@ -69,7 +69,6 @@
             depotid: 0
         };
         // var echoData = JSON.parse(sessionStorage.getItem('inventoryParam'));
-
         // if (echoData) {
         //     $(".layerInventory").hide();
         //     if (echoData.status == 1) {
@@ -80,6 +79,7 @@
         //     depotData.id = echoData.id;
         // }
 
+        // 新建盘点表 - 查询表单提交
         form.on('submit(searchForm-layer)', function(data) {
             var paramSearch = {};
             for (var key in data.field) {
@@ -90,7 +90,6 @@
             }
             depotData.ownerid = data.field.ownerid;
             depotData.depotid = data.field.depotid;
-
             tableIns.reload({
                 where: paramSearch, //接口参数
                 page: {
@@ -124,7 +123,6 @@
                 var depotList = selectDataInstall(depotDropdown, {
                     "ownerid": vals[0].value //仓库列表
                 }, false);
-
                 if (depotList.length < 1) {
                     formSelects.data('depotSelectLayer', 'local', {
                         arr: [] //清空仓库列表
@@ -254,11 +252,12 @@
                 layer.msg("数量只能为数字");
             }
             numChangeValue[obj.data.id] = obj.value;
-            console.log(numChangeValue);
         });
+        // 保存修改
         $(".saveBtn").click(function() {
             submitOrSave(depotData, numChangeValue, checkAdd)
         });
+        // 确认盘点
         $(".confirmBtn").click(function() {
             submitOrSave(depotData, numChangeValue, endInventory)
         });
@@ -288,10 +287,9 @@
             }
         }
 
-        //保持提交  修改异常调整数据
+        //保存提交  修改异常调整数据
         function editAprice(depotData, apriceJson, url) {
             //请求数据源示例
-            console.log(depotData)
             var status = false;
             $.ajax({
                 url: url,
@@ -306,13 +304,13 @@
                     'TOKEN': getCookie('TOKEN')
                 },
                 xhrFields: {
-                    withCredentials: true
+                    withCredentials: true,
                 },
                 crossDomain: true,
                 // traditional: true,
                 success: function(res) {
                     if (res.status === 1) {
-                        window.location.href = loginPageUrl;
+                        goLogin();// 跳转到登录页
                     }
                     if (res.status === 0) {
                         status = true;

@@ -65,7 +65,7 @@ Array.prototype.unique = function() {
         }
     }
     return result;
-}
+};
 //数组JSON去重
 Array.prototype.uniqueJson = function(key) {
     var result = [this[0]];
@@ -140,4 +140,12 @@ function formatNum(num) {
         }
         return (sign + num + cents);
     }
+}
+
+// 登录超时函数
+function goLogin() {
+    layer.alert('登录超时，请重新登录。', function(index){
+        window.location.href = loginPageUrl;
+        layer.close(index);
+    });
 }

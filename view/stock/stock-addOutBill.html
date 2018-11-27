@@ -474,7 +474,7 @@
                         crossDomain: true,
                         success: function(res) {
                             if (res.status === 1) {
-                                window.location.href = loginPageUrl;
+                                goLogin(); // 跳转到登录页
                             }
                             if (res.status === 0) {
                                 tableIns.reload({
@@ -483,7 +483,6 @@
                                     }
                                 });
                                 layer.closeAll();
-
                             }
                             layer.msg(res.msg);
                         }
@@ -519,7 +518,7 @@
                 for (var i = 0; i < checkData.length; i++) {
                     tableData.remove("id", checkData[i].id);
                 }
-                
+
                 goodsListArray = goodsListArray.concat(checkStatus.data);
 
                 tableIns.reload({
@@ -565,7 +564,7 @@
                     async: false,
                     success: function(res) {
                         if (res.status === 1) {
-                            window.location.href = loginPageUrl;
+                            goLogin(); // 跳转到登录页
                         }
                         if (res.status === 0) {
                             layer.msg("出库成功");

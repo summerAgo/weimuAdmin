@@ -438,7 +438,7 @@
                         layer.msg("审核通过为库存");
                         layer.closeAll();
                     } else if (res.status === 1) {
-                        window.location.href = loginPageUrl;
+                        goLogin();// 跳转到登录页
                     }
                 }
             })
@@ -652,7 +652,7 @@
                         layer.closeAll();
                         //刷新当前列表
                     } else if (res.status === 1) {
-                        window.location.href = loginPageUrl;
+                        goLogin();// 跳转到登录页
                     }
                 },
                 error: function() {}
@@ -693,13 +693,14 @@
                                 }
                             });
                         } else {
-                            var msgstr = "以下行有问题:</br>";
+                            var msgstr = "------以下行有问题------</br></br>";
                             for(var i =0;i<res.data.length;i++){
                                 msgstr += res.data[i];
                             }
                             layer.msg(msgstr, {
                                 time: 60000, //60s后自动关闭
-                                btn: ['关闭']
+                                btn: ['关闭'],
+                                area:["100%","100%"]
                             });
                         }
                     }
