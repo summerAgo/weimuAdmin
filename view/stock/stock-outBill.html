@@ -523,7 +523,7 @@
             sessionStorage.removeItem('addOutBill');
             $.get('view/stock/stock-newOutBill.html', {}, function(str) { // 请求弹框
                 addLayer = layer.open({
-                    title: '新建申请出库单',
+                    title: '新建出库单',
                     type: 1,
                     content: str, // 注意，如果str是object，那么需要字符拼接。
                     area: ['80%', '80%'],
