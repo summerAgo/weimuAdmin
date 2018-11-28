@@ -143,9 +143,104 @@
     border-top: 1px solid transparent;
 }
 
-.flow-path .w .title {
+.flow-path .title {
     font-size: 20px;
     margin-top: 25px;
     color: #333;
     text-align: center;
+}
+
+.flow-path .path-arrow {
+    position: relative;
+    width: 858px;
+    height: 329px;
+    margin: 0 auto;
+    margin-top: 40px;
+    background: url("../images/path-arrow-bg.png") no-repeat;
+}
+
+.flow-path .path-arrow dl {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+}
+
+.flow-path .path-arrow dl.dl-1 {
+    left: -14px;
+    top: 2px;
+}
+
+.flow-path .path-arrow dl.dl-2 {
+    left: 223px;
+    top: 2px;
+}
+
+.flow-path .path-arrow dl.dl-3 {
+    left: 461px;
+    top: 2px;
+}
+
+.flow-path .path-arrow dl.dl-4 {
+    left: 698px;
+    top: 2px;
+}
+
+.flow-path .path-arrow dl.dl-5 {
+    left: 698px;
+    top: 136px;
+}
+
+.flow-path .path-arrow dl.dl-6 {
+    left: 462px;
+    top: 137px;
+}
+
+.flow-path .path-arrow dl.dl-7 {
+    left: 224px;
+    top: 137px;
+}
+
+.flow-path .path-arrow dl.dl-8 {
+    left: -15px;
+    top: 137px;
+}
+
+.flow-path .path-arrow dl.dl-9 {
+    left: 104px;
+    top: 261px;
+}
+
+.flow-path .path-arrow dl dt {
+    width: 66px;
+    height: 66px;
+    background-color: #f2f9ff;
+    border-radius: 66px;
+    margin: 0 auto;
+    text-align: center;
+    line-height: 66px;
+}
+
+.flow-path .path-arrow dl dt .iconfont {
+    font-size: 40px;
+    color: #297cca;
+}
+
+.flow-path .path-arrow dl dd {
+    width: 100%;
+    font-size: 15px;
+    color: #333;
+    margin-top: 10px;
+    text-align: center;
+}
+
+.flow-path .path-arrow dl:hover dt {
+    background-color: #297cca;
+}
+
+.flow-path .path-arrow dl:hover dt .iconfont {
+    color: #fff;
+}
+
+.flow-path .path-arrow dl:hover dd {
+    color: #297cca;
 }

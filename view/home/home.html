@@ -22,7 +22,7 @@
             </div>
         </div>
         <div class="count-form-item">
-            <div class="form-item-lf"><i class="iconfont icon-shouyeruku"></i></div>
+            <div class="form-item-lf"><i class="iconfont icon-chuhuoshenqing1"></i></div>
             <div class="form-item-rt">
                 <span class="top" id="shipForm">310</span>
                 <span class="bot">出货申请（单）</span>
@@ -41,72 +41,51 @@
         <div class="flow-path">
             <div class="w">
                 <div class="title">系统操作流程图</div>
+                <div class="path-arrow">
+                    <dl class="dl-1">
+                        <dt><i class="iconfont icon-shouyeruku"></i></dt>
+                        <dd>新建仓库</dd>
+                    </dl>
+                    <dl class="dl-2">
+                        <dt><i class="iconfont icon-bianji"></i></dt>
+                        <dd>完善基础数据</dd>
+                    </dl>
+                    <dl class="dl-2">
+                        <dt><i class="iconfont icon-bianji"></i></dt>
+                        <dd>完善基础数据</dd>
+                    </dl>
+                    <dl class="dl-3">
+                        <dt><i class="iconfont icon-yuruku"></i></dt>
+                        <dd>预入库</dd>
+                    </dl>
+                    <dl class="dl-4">
+                        <dt><i class="iconfont icon-shouyeruku"></i></dt>
+                        <dd>入库</dd>
+                    </dl>
+                    <dl class="dl-5">
+                        <dt><i class="iconfont icon-cangkuguanli"></i></dt>
+                        <dd>库存</dd>
+                    </dl>
+                    <dl class="dl-6">
+                        <dt><i class="iconfont icon-pinggu"></i></dt>
+                        <dd>货品估值</dd>
+                    </dl>
+                    <dl class="dl-7">
+                        <dt><i class="iconfont icon-chuhuoshenqing"></i></dt>
+                        <dd>出货申请</dd>
+                    </dl>
+                    <dl class="dl-8">
+                        <dt><i class="iconfont icon-shouyechuhuo"></i></dt>
+                        <dd>出货</dd>
+                    </dl>
+                    <dl class="dl-9">
+                        <dt><i class="iconfont icon-fengkongguanli"></i></dt>
+                        <dd>风控审核</dd>
+                    </dl>
+                </div>
             </div>
-            <!--<a href="javascript:;">-->
-            <!--<dl>-->
-            <!--<dt data-img="xjck"><u></u></dt>-->
-            <!--<dd>新建仓库</dd>-->
-            <!--</dl>-->
-            <!--</a>-->
-            <!--<div class="arrow"></div>-->
-            <!--<a href="javascript:;">-->
-            <!--<dl>-->
-            <!--<dt data-img="jcsj"><u></u></dt>-->
-            <!--<dd>完善基础数据</dd>-->
-            <!--</dl>-->
-            <!--</a>-->
-            <!--<div class="arrow"></div>-->
-            <!--<a href="#!stock-preentry">-->
-            <!--<dl>-->
-            <!--<dt data-img="yrk"><u></u></dt>-->
-            <!--<dd>预入库</dd>-->
-            <!--</dl>-->
-            <!--</a>-->
-            <!--<div class="arrow"></div>-->
-            <!--<a href="javascript:;">-->
-            <!--<dl>-->
-            <!--<dt data-img="rk"><u></u></dt>-->
-            <!--<dd>入库</dd>-->
-            <!--</dl>-->
-            <!--</a>-->
-            <!--<div class="arrow"></div>-->
-            <!--<a href="javascript:;">-->
-            <!--<dl>-->
-            <!--<dt data-img="kc"><u></u></dt>-->
-            <!--<dd>库存</dd>-->
-            <!--</dl>-->
-            <!--</a>-->
         </div>
     </div>
-
-
-    <!--<div class="flow-title" style="margin-top: 40px;">-->
-        <!--<div class="main-title">出货流程</div>-->
-        <!--<div class="sub-title">/SHIPPING PROCESS</div>-->
-    <!--</div>-->
-
-    <!--<div class="flow-path">-->
-        <!--<a href="#!stock-outBill">-->
-            <!--<dl>-->
-                <!--<dt data-img="chsq"><u></u></dt>-->
-                <!--<dd>出货申请</dd>-->
-            <!--</dl>-->
-        <!--</a>-->
-        <!--<div class="arrow"></div>-->
-        <!--<a href="#!risk-goodsAssess">-->
-            <!--<dl>-->
-                <!--<dt data-img="fkgl"><u></u></dt>-->
-                <!--<dd>风控管理</dd>-->
-            <!--</dl>-->
-        <!--</a>-->
-        <!--<div class="arrow"></div>-->
-        <!--<a href="javascript:;">-->
-            <!--<dl>-->
-                <!--<dt data-img="ch"><u></u></dt>-->
-                <!--<dd>出货</dd>-->
-            <!--</dl>-->
-        <!--</a>-->
-    <!--</div>-->
 </div>
 <script>
     layui.use(['jquery'], function () {
@@ -114,26 +93,38 @@
         var contentHeight = parseInt($(".layui-body").innerHeight() - $(".content-header").innerHeight() - 42);
         $(".home-content").innerHeight(contentHeight);
 
-        //本周入库统计立方
-        $.get(weekInCount, {}, function(str) {
-            if(str.status == 0){
-                $("#weekInCount").html(str.data);
+//本周入库统计立方
+        $.get(
+            weekInCount,
+            {},
+            function (src) {
+                if (src.status === 0) {
+                    console.log(src.data)
+                    $("#weekInCount").html(src.data);
+                }
             }
-        });
-        
+        );
+
         //本周出库统计立方
-        $.get(weekOutCount, {}, function(str) {
-            if(str.status == 0){
-                $("#weekOutCount").html(str.data);
+        $.get(
+            weekOutCount,
+            {},
+            function (src) {
+                if (src.status === 0) {
+                    $("#weekOutCount").html(src.data);
+                }
             }
-        });
+        );
 
         //本周库存统计立方
-        $.get(weekStockCount, {}, function(str) {
-            if(str.status == 0){
-                $("#weekStockCount").html(str.data);
+        $.get(
+            weekStockCount,
+            {},
+            function (src) {
+                if (src.status === 0) {
+                    $("#weekStockCount").html(src.data);
+                }
             }
-        });
-
+        );
     });
 </script>
