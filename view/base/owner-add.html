@@ -38,7 +38,7 @@
             </div>
         </div>
         <div class="layui-form-item layui-normal-line">
-            <label class="layui-form-label form-required">业务员</label>
+            <label class="layui-form-label">业务员</label>
             <div class="layui-input-inline">
                 <select name="person" xm-select="person" xm-select-radio>
                     <option value="">请选择</option>
@@ -46,9 +46,17 @@
             </div>
         </div>
         <div class="layui-form-item layui-normal-line">
-            <label class="layui-form-label form-required">风控人员</label>
+            <label class="layui-form-label">风控人员</label>
             <div class="layui-input-inline">
                 <select name="fkperson" xm-select="fkperson" xm-select-radio>
+                    <option value="">请选择</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item layui-normal-line">
+            <label class="layui-form-label">货权人</label>
+            <div class="layui-input-inline">
+                <select name="customerid" xm-select="customerid" xm-select-radio>
                     <option value="">请选择</option>
                 </select>
             </div>
@@ -158,12 +166,21 @@
             arr: selectDataInstall(userdropdown)
         });
 
+        formSelects.data('customerid', 'local', {
+            arr: selectDataInstall(customerDropdown)
+        });
+        
+
         if (data.person) {
             formSelects.value('person', [data.person]);
         }
 
         if (data.fkperson) {
             formSelects.value('fkperson', [data.fkperson]);
+        }
+
+        if (data.customerid) {
+            formSelects.value('customerid', [data.customerid]);
         }
 
         function selectDataInstall(url, param, bool) {
@@ -186,7 +203,7 @@
                         }
                         for (var i = 0; i < data.data.length; i++) {
                             arr.push({
-                                "name": data.data[i].username,
+                                "name": data.data[i].username || data.data[i].name,
                                 "value": data.data[i].id
                             })
                         }
