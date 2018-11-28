@@ -1206,9 +1206,9 @@ div[xm-select-skin] .xm-select-title div.xm-select-label > span {
     background-color: #fffbe3;
 }*/
 
-.layui-table-total tr, .layui-table[lay-even] tr.layui-table-click:nth-child(even) {
-    background: #fffbe3;
-}
+/*.layui-table-total tr, .layui-table[lay-even] tr.layui-table-click:nth-child(even) {*/
+    /*background: #fffbe3;*/
+/*}*/
 
 .layui-table-total tr:hover, .layui-table[lay-even] tr:nth-child(even):hover {
     background-color: #f2f9ff;
@@ -1250,9 +1250,9 @@ div[xm-select-skin] .xm-select-title div.xm-select-label > span {
     text-align: center;
 }
 
-.layui-table .layui-table-click{
-    background-color: #fffbe3;
-}
+/*.layui-table .layui-table-click{*/
+    /*background-color: #fffbe3;*/
+/*}*/
 
 .layui-table-page .layui-laypage input:focus {
     border: 1px solid #0284ff !important;
