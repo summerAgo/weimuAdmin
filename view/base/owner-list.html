@@ -216,7 +216,7 @@
                 layer.msg("请选择需要删除的信息");
             } else {
                 layer.confirm('是否确认删除此条信息', {
-                    icon: 3,
+                    skin: 'layui-layer-wei',  //layui-layer-wei，维木class
                     title: '提示'
                 }, function(index) {
                     var rowId = [];
@@ -328,7 +328,7 @@
             }
 
             // layer.confirm(title, {
-            //     icon: 3,
+            //     skin: 'layui-layer-wei',  //layui-layer-wei，维木class
             //     title: '提示'
             // }, function(index) {
                 data.field['SESSION_NAME']= getCookie('SESSION_NAME');
@@ -497,9 +497,9 @@
                 "ids": ids.toString()
             };
             layer.confirm("是否删除类型", {
-                // skin: 'wei-class',
-                icon: 3,
-                title: '提示'
+                // icon: 3,
+                title: '提示',
+                skin: 'layui-layer-wei'  //layui-layer-wei，维木class
             }, function(index) {
                 data['SESSION_NAME']= getCookie('SESSION_NAME');
                 data['TOKEN']= getCookie('TOKEN');
@@ -578,7 +578,7 @@
             // 添加仓库主类型去空格
             data.field.name = data.field.name.replace(/^\s*|\s*$/g,"");
             // layer.confirm(title, {
-            //     icon: 3,
+            //     skin: 'layui-layer-wei',  //layui-layer-wei，维木class
             //     title: '提示'
             // }, function(index) {
                 data.field['SESSION_NAME']= getCookie('SESSION_NAME');

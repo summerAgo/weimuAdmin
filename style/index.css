@@ -1294,3 +1294,44 @@ div[xm-select-skin] .xm-select-title div.xm-select-label > span {
 /*body .wei-class .layui-layer-btn a {*/
     /*padding: 0 23px!important;*/
 /*}*/
+
+body .layui-layer-wei {
+    min-width: 350px;
+}
+
+body .layui-layer-wei .layui-layer-title {
+    background: #fff;
+    color: #333;
+    border-bottom: 1px solid #dfdfdf;
+    font-size: 16px;
+    line-height: 45px;
+    height: 45px;
+    font-weight: bold;
+}
+
+body .layui-layer-wei .layui-layer-content {
+    font-size: 16px;
+    color: #1e262f;
+}
+
+body .layui-layer-wei .layui-layer-btn {
+    padding: 0 20px 20px;
+}
+
+body .layui-layer-wei .layui-layer-btn a {
+    color: #fff;
+    padding: 0 23px;
+    border-radius: 4px;
+    margin: 5px 0px 0;
+}
+
+body .layui-layer-wei .layui-layer-btn .layui-layer-btn1 {
+    color: #333;
+    border: 1px solid #e7e7e7;
+}
+
+body .layui-layer-wei .layui-layer-btn .layui-layer-btn0 {
+    /*border: none;*/
+    background: #0284ff;
+    margin-right: 10px;
+}
