@@ -1279,6 +1279,7 @@ div[xm-select-skin] .xm-select-title div.xm-select-label > span {
     background-color: #0284ff !important;
 }
 
+.layui-table .layui-table-click,.layui-table[lay-even] tr:nth-child(even).layui-table-click{background: #fffbe3}
 /* 改变提示弹框样式 */
 /*.layui-layer-dialog {*/
     /*min-width: 300px!important;*/

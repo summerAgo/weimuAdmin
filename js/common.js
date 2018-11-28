@@ -109,7 +109,7 @@ function btnIsList(domObj, menuKey) {
     if (data !== null) {
         var currentBtnData = data ? data[menuKey] : [];
         for (var i = 0; i < currentBtnData.length; i++) {
-            btnDom = '<li class="layui-nav-item"><a href="javascript:;" class="' + currentBtnData[i].classname + '"><i class="' + currentBtnData[i].icon + '"></i>' + currentBtnData[i].bname + '</a></li>';
+            btnDom = '<li class="layui-nav-item"><a href="javascript:;" class="' + currentBtnData[i].classname || '' + '"><i class="' + currentBtnData[i].icon + '"></i>' + currentBtnData[i].bname + '</a></li>';
             domObj.append(btnDom);
         }
     }
