@@ -119,10 +119,10 @@
         var formSelects = layui.formSelects;
         var laytpl = layui.laytpl;
         var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 103); //内容区域所需减去的高度
-        
+
         var menuKey = "a_8"; //当前页面key
         var domObj = $("#ilbstock-info .table-tools").find("ul"); //当前页面容器
-        btnIsList(domObj,menuKey);//按钮权限
+        btnIsList(domObj, menuKey); //按钮权限
 
         var eaitLayer; //编辑-弹层
 
@@ -264,101 +264,103 @@
                 pageName: 'offset', //页码的参数名称，默认：page
                 limitName: 'limit' //每页数据量的参数名，默认：limit
             },
-            cols: [[ //标题栏
-                {
-                    field: 'LAY_TABLE_INDEX',
-                    title: '序号',
-                    width: 40,
-                    templet: function(d) {
-                        return d.LAY_TABLE_INDEX + 1;
-                    }
-                }, {
-                    type: 'checkbox',
-                }, {
-                    field: 'orderno',
-                    title: '入库单',
-                    style: 'cursor: pointer;color:#0063de;',
-                    width: 200
-                }, {
-                    field: 'uuid',
-                    title: '货物标识码',
-                    width: 206,
-                    style:'font-family: Consolas;font-size:16px'
-                }, {
-                    field: 'code',
-                    title: '包号',
-                    width: 100,
-                }, {
-                    field: 'aprice',
-                    title: '评估状态（RMB）',
-                    templet: function(d) {
-                        if (d.aprice <= 0 || null == d.aprice) {
-                            return '<span style="color:#0063de;">待评估</span>';
+            cols: [
+                [ //标题栏
+                    {
+                        field: 'LAY_TABLE_INDEX',
+                        title: '序号',
+                        width: 40,
+                        templet: function(d) {
+                            return d.LAY_TABLE_INDEX + 1;
                         }
-                        return d.aprice;
+                    }, {
+                        type: 'checkbox',
+                    }, {
+                        field: 'orderno',
+                        title: '入库单',
+                        style: 'cursor: pointer;color:#0063de;',
+                        width: 200
+                    }, {
+                        field: 'uuid',
+                        title: '货物标识码',
+                        width: 206,
+                        style: 'font-family: Consolas;font-size:16px'
+                    }, {
+                        field: 'code',
+                        title: '包号',
+                        width: 100,
+                    }, {
+                        field: 'aprice',
+                        title: '评估状态（RMB）',
+                        templet: function(d) {
+                            if (d.aprice <= 0 || null == d.aprice) {
+                                return '<span style="color:#0063de;">待评估</span>';
+                            }
+                            return d.aprice;
+                        },
+                        width: 138,
+                    }, {
+                        field: 'varieties',
+                        title: '品种',
+                        width: 100,
+                    }, {
+                        field: 'levels',
+                        title: '等级',
+                        width: 100,
+                    }, {
+                        field: 'spec',
+                        title: '规格',
+                        width: 100,
                     },
-                    width: 138,
-                }, {
-                    field: 'varieties',
-                    title: '品种',
-                    width: 100,
-                }, {
-                    field: 'levels',
-                    title: '等级',
-                    width: 100,
-                }, {
-                    field: 'spec',
-                    title: '规格',
-                    width: 100,
-                },
-                {
-                    field: 'chang',
-                    title: '长度',
-                    width: 100,
-                }, {
-                    field: 'num',
-                    title: '数量（m³）',
-                    width: 120,
-                }, {
-                    field: 'containernum',
-                    title: '货柜号',
-                    width: 150,
-                }, {
-                    field: 'origin',
-                    title: '产地',
-                    width: 150,
-                }, {
-                    field: 'brand',
-                    title: '品牌',
-                    width: 100,
-                }, {
-                    field: 'billloading',
-                    title: '提运单',
-                    width: 140,
-                }, {
-                    field: 'depname',
-                    title: '仓库',
-                    width: 150,
-                }, {
-                    field: 'createdate',
-                    title: '入库时间',
-                    width: 170,
-                }, {
-                    field: 'ownername',
-                    title: '仓库主',
-                    width: 100,
-                }, {
-                    field: 'remarks',
-                    title: '备注',
-                    width: 160,
-                }
-            ]],
+                    {
+                        field: 'chang',
+                        title: '长度',
+                        width: 100,
+                    }, {
+                        field: 'num',
+                        title: '数量（m³）',
+                        width: 120,
+                    }, {
+                        field: 'containernum',
+                        title: '货柜号',
+                        width: 150,
+                    }, {
+                        field: 'origin',
+                        title: '产地',
+                        width: 150,
+                    }, {
+                        field: 'brand',
+                        title: '品牌',
+                        width: 100,
+                    }, {
+                        field: 'billloading',
+                        title: '提运单',
+                        width: 140,
+                    }, {
+                        field: 'depname',
+                        title: '仓库',
+                        width: 150,
+                    }, {
+                        field: 'createdate',
+                        title: '入库时间',
+                        width: 170,
+                    }, {
+                        field: 'ownername',
+                        title: '仓库主',
+                        width: 100,
+                    }, {
+                        field: 'remarks',
+                        title: '备注',
+                        width: 160,
+                    }
+                ]
+            ],
             even: true,
             page: true, //是否显示分页
             limits: [500, 1000, 2000, 5000],
             limit: 500, //每页默认显示的数量
             done: function(res, curr, count) {
-                console.log(res);
+                // console.log(res);
                 var addtableBtn = '<div class="rightBotBtn" id="rightBox">合计总库存数量<span>' + res.znum + '</span>㎡ 总库存估价金额：<span>' + formatNum(res.aprice) + '</span>(RMB)</div>';
                 if ($("#rightBox").length < 1) {
                     $(".layui-table-page").append(addtableBtn);
