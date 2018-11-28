@@ -1,97 +1,112 @@
 <div class="home-content">
     <div class="count">
         <div class="count-item" data-color="green">
+            <div class="count-item-body" id="weekInCount">0</div>
             <div class="count-item-top">
                 <span class="top-l">本周入库量统计</span>
                 <span class="top-r">单位：m³</span>
             </div>
-            <div class="count-item-body" id="weekInCount">0</div>
         </div>
         <div class="count-item" data-color="blue">
+            <div class="count-item-body" id="weekOutCount">0</div>
             <div class="count-item-top">
                 <span class="top-l">本周出库量统计</span>
                 <span class="top-r">单位：m³</span>
             </div>
-            <div class="count-item-body" id="weekOutCount">0</div>
         </div>
         <div class="count-item" data-color="orange">
+            <div class="count-item-body" id="weekStockCount">0</div>
             <div class="count-item-top">
                 <span class="top-l">库存总数</span>
                 <span class="top-r">单位：m³</span>
             </div>
-            <div class="count-item-body" id="weekStockCount">0</div>
+        </div>
+        <div class="count-form-item">
+            <div class="form-item-lf"><i class="iconfont icon-shouyeruku"></i></div>
+            <div class="form-item-rt">
+                <span class="top" id="shipForm">310</span>
+                <span class="bot">出货申请（单）</span>
+            </div>
+        </div>
+        <div class="count-form-item">
+            <div class="form-item-lf"><i class="iconfont icon-shouyeruku"></i></div>
+            <div class="form-item-rt">
+                <span class="top" id="receiptForm">128</span>
+                <span class="bot">预入库（单）</span>
+            </div>
         </div>
     </div>
 
-    <div class="flow-title" style="margin-top: 40px;">
-        <div class="main-title">入库流程</div>
-        <div class="sub-title">/WAREHOURSIG PROCESS</div>
+    <div class="flow-path-out">
+        <div class="flow-path">
+            <div class="w">
+                <div class="title">系统操作流程图</div>
+            </div>
+            <!--<a href="javascript:;">-->
+            <!--<dl>-->
+            <!--<dt data-img="xjck"><u></u></dt>-->
+            <!--<dd>新建仓库</dd>-->
+            <!--</dl>-->
+            <!--</a>-->
+            <!--<div class="arrow"></div>-->
+            <!--<a href="javascript:;">-->
+            <!--<dl>-->
+            <!--<dt data-img="jcsj"><u></u></dt>-->
+            <!--<dd>完善基础数据</dd>-->
+            <!--</dl>-->
+            <!--</a>-->
+            <!--<div class="arrow"></div>-->
+            <!--<a href="#!stock-preentry">-->
+            <!--<dl>-->
+            <!--<dt data-img="yrk"><u></u></dt>-->
+            <!--<dd>预入库</dd>-->
+            <!--</dl>-->
+            <!--</a>-->
+            <!--<div class="arrow"></div>-->
+            <!--<a href="javascript:;">-->
+            <!--<dl>-->
+            <!--<dt data-img="rk"><u></u></dt>-->
+            <!--<dd>入库</dd>-->
+            <!--</dl>-->
+            <!--</a>-->
+            <!--<div class="arrow"></div>-->
+            <!--<a href="javascript:;">-->
+            <!--<dl>-->
+            <!--<dt data-img="kc"><u></u></dt>-->
+            <!--<dd>库存</dd>-->
+            <!--</dl>-->
+            <!--</a>-->
+        </div>
     </div>
 
-    <div class="flow-path">
-        <a href="javascript:;">
-            <dl>
-                <dt data-img="xjck"><u></u></dt>
-                <dd>新建仓库</dd>
-            </dl>
-        </a>
-        <div class="arrow"></div>
-        <a href="javascript:;">
-            <dl>
-                <dt data-img="jcsj"><u></u></dt>
-                <dd>完善基础数据</dd>
-            </dl>
-        </a>
-        <div class="arrow"></div>
-        <a href="#!stock-preentry">
-            <dl>
-                <dt data-img="yrk"><u></u></dt>
-                <dd>预入库</dd>
-            </dl>
-        </a>
-        <div class="arrow"></div>
-        <a href="javascript:;">
-            <dl>
-                <dt data-img="rk"><u></u></dt>
-                <dd>入库</dd>
-            </dl>
-        </a>
-        <div class="arrow"></div>
-        <a href="javascript:;">
-            <dl>
-                <dt data-img="kc"><u></u></dt>
-                <dd>库存</dd>
-            </dl>
-        </a>
-    </div>
 
-    <div class="flow-title" style="margin-top: 40px;">
-        <div class="main-title">出货流程</div>
-        <div class="sub-title">/SHIPPING PROCESS</div>
-    </div>
+    <!--<div class="flow-title" style="margin-top: 40px;">-->
+        <!--<div class="main-title">出货流程</div>-->
+        <!--<div class="sub-title">/SHIPPING PROCESS</div>-->
+    <!--</div>-->
 
-    <div class="flow-path">
-        <a href="#!stock-outBill">
-            <dl>
-                <dt data-img="chsq"><u></u></dt>
-                <dd>出货申请</dd>
-            </dl>
-        </a>
-        <div class="arrow"></div>
-        <a href="#!risk-goodsAssess">
-            <dl>
-                <dt data-img="fkgl"><u></u></dt>
-                <dd>风控管理</dd>
-            </dl>
-        </a>
-        <div class="arrow"></div>
-        <a href="javascript:;">
-            <dl>
-                <dt data-img="ch"><u></u></dt>
-                <dd>出货</dd>
-            </dl>
-        </a>
-    </div>
+    <!--<div class="flow-path">-->
+        <!--<a href="#!stock-outBill">-->
+            <!--<dl>-->
+                <!--<dt data-img="chsq"><u></u></dt>-->
+                <!--<dd>出货申请</dd>-->
+            <!--</dl>-->
+        <!--</a>-->
+        <!--<div class="arrow"></div>-->
+        <!--<a href="#!risk-goodsAssess">-->
+            <!--<dl>-->
+                <!--<dt data-img="fkgl"><u></u></dt>-->
+                <!--<dd>风控管理</dd>-->
+            <!--</dl>-->
+        <!--</a>-->
+        <!--<div class="arrow"></div>-->
+        <!--<a href="javascript:;">-->
+            <!--<dl>-->
+                <!--<dt data-img="ch"><u></u></dt>-->
+                <!--<dd>出货</dd>-->
+            <!--</dl>-->
+        <!--</a>-->
+    <!--</div>-->
 </div>
 <script>
     layui.use(['jquery'], function () {
