@@ -24,14 +24,14 @@
         <div class="count-form-item">
             <div class="form-item-lf"><i class="iconfont icon-chuhuoshenqing1"></i></div>
             <div class="form-item-rt">
-                <span class="top" id="shipForm">310</span>
+                <span class="top" id="shipForm"></span>
                 <span class="bot">出货申请（单）</span>
             </div>
         </div>
         <div class="count-form-item">
             <div class="form-item-lf"><i class="iconfont icon-shouyeruku"></i></div>
             <div class="form-item-rt">
-                <span class="top" id="receiptForm">128</span>
+                <span class="top" id="receiptForm"></span>
                 <span class="bot">预入库（单）</span>
             </div>
         </div>
@@ -125,6 +125,28 @@
                 }
             }
         );
-        
+
+        //入库单
+        $.get(
+            inOrderCount,
+            {},
+            function (src) {
+                if (src.status === 0) {
+                    $("#shipForm").html(src.data);
+                }
+            }
+        );
+
+        //出库单
+        $.get(
+            outOrderCount,
+            {},
+            function (src) {
+                if (src.status === 0) {
+                    $("#receiptForm").html(src.data);
+                }
+            }
+        );
+
     });
 </script>
