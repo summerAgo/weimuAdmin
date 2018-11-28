@@ -1280,26 +1280,17 @@ div[xm-select-skin] .xm-select-title div.xm-select-label > span {
 }
 
 /* 改变提示弹框样式 */
-/*.layui-layer-dialog {*/
+/*body .wei-class .layui-layer-dialog {*/
     /*min-width: 300px!important;*/
 /*}*/
 
-/*.layui-layer-btn .layui-layer-btn0 {*/
+/*body .wei-class .layui-layer-btn0 {*/
     /*border-color: #0284ff!important;*/
     /*background-color: #0284ff!important;*/
     /*color: #fff;*/
+    /*padding: 0 23px!important;*/
 /*}*/
 
-/*.layui-layer-btn a {*/
-    /*height: 28px;*/
-    /*line-height: 28px;*/
-    /*margin: 5px 10px 0;*/
+/*body .wei-class .layui-layer-btn a {*/
     /*padding: 0 23px!important;*/
-    /*border: 1px solid #dedede;*/
-    /*background-color: #fff;*/
-    /*color: #333;*/
-    /*border-radius: 2px;*/
-    /*font-weight: 400;*/
-    /*cursor: pointer;*/
-    /*text-decoration: none;*/
 /*}*/
