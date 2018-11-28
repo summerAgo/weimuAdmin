@@ -277,11 +277,12 @@
                 }, {
                     field: 'orderno',
                     title: '入库单',
-                    width: 190,
+                    style: 'cursor: pointer;color:#0063de;',
+                    width: 200
                 }, {
                     field: 'uuid',
                     title: '货物标识码',
-                    width: 170,
+                    width: 206,
                     style:'font-family: Consolas;font-size:16px'
                 }, {
                     field: 'code',
@@ -289,14 +290,14 @@
                     width: 100,
                 }, {
                     field: 'aprice',
-                    title: '评估状态',
+                    title: '评估状态（RMB）',
                     templet: function(d) {
                         if (d.aprice <= 0 || null == d.aprice) {
                             return '<span style="color:#0063de;">待评估</span>';
                         }
                         return d.aprice;
                     },
-                    width: 120,
+                    width: 138,
                 }, {
                     field: 'varieties',
                     title: '品种',
@@ -308,7 +309,7 @@
                 }, {
                     field: 'spec',
                     title: '规格',
-                    width: 60,
+                    width: 100,
                 },
                 {
                     field: 'chang',
