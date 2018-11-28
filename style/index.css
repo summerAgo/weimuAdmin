@@ -1281,26 +1281,58 @@ div[xm-select-skin] .xm-select-title div.xm-select-label > span {
 
 .layui-table .layui-table-click,.layui-table[lay-even] tr:nth-child(even).layui-table-click{background: #fffbe3}
 /* 改变提示弹框样式 */
-/*.layui-layer-dialog {*/
+/*body .wei-class .layui-layer-dialog {*/
     /*min-width: 300px!important;*/
 /*}*/
 
-/*.layui-layer-btn .layui-layer-btn0 {*/
+/*body .wei-class .layui-layer-btn0 {*/
     /*border-color: #0284ff!important;*/
     /*background-color: #0284ff!important;*/
     /*color: #fff;*/
+    /*padding: 0 23px!important;*/
 /*}*/
 
-/*.layui-layer-btn a {*/
-    /*height: 28px;*/
-    /*line-height: 28px;*/
-    /*margin: 5px 10px 0;*/
+/*body .wei-class .layui-layer-btn a {*/
     /*padding: 0 23px!important;*/
-    /*border: 1px solid #dedede;*/
-    /*background-color: #fff;*/
-    /*color: #333;*/
-    /*border-radius: 2px;*/
-    /*font-weight: 400;*/
-    /*cursor: pointer;*/
-    /*text-decoration: none;*/
 /*}*/
+
+body .layui-layer-wei {
+    min-width: 350px;
+}
+
+body .layui-layer-wei .layui-layer-title {
+    background: #fff;
+    color: #333;
+    border-bottom: 1px solid #dfdfdf;
+    font-size: 16px;
+    line-height: 45px;
+    height: 45px;
+    font-weight: bold;
+}
+
+body .layui-layer-wei .layui-layer-content {
+    font-size: 16px;
+    color: #1e262f;
+}
+
+body .layui-layer-wei .layui-layer-btn {
+    padding: 0 20px 20px;
+}
+
+body .layui-layer-wei .layui-layer-btn a {
+    color: #fff;
+    padding: 0 23px;
+    border-radius: 4px;
+    margin: 5px 0px 0;
+}
+
+body .layui-layer-wei .layui-layer-btn .layui-layer-btn1 {
+    color: #333;
+    border: 1px solid #e7e7e7;
+}
+
+body .layui-layer-wei .layui-layer-btn .layui-layer-btn0 {
+    /*border: none;*/
+    background: #0284ff;
+    margin-right: 10px;
+}

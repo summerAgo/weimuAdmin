@@ -332,7 +332,7 @@
             var checkStatus = table.checkStatus('tableContainers'); //表格选中状态
             if (checkStatus.data.length > 0) {
                 layer.confirm('是否确认出库', {
-                    icon: 3,
+                    skin: 'layui-layer-wei',  //layui-layer-wei，维木class
                     title: '提示'
                 }, function(index) {
                     var data = {};
@@ -421,7 +421,7 @@
         // form.on('submit(editForm)', function(data) {
         //     //编辑提交
         //     layer.confirm('确认提交修改', {
-        //         icon: 3,
+        //         skin: 'layui-layer-wei',  //layui-layer-wei，维木class
         //         title: '提示'
         //     }, function(index) {
         //         data.field.orderno = window.currData.orderno; //防止单号被篡改
@@ -448,7 +448,7 @@
                 layer.msg("请选择需要删除的信息");
             } else {
                 layer.confirm('是否确认删除此条信息', {
-                    icon: 3,
+                    skin: 'layui-layer-wei',  //layui-layer-wei，维木class
                     title: '提示'
                 }, function(index) {
                     var rowId = [];

@@ -95,7 +95,7 @@
 
         form.on('submit(addGoodsForm)', function(data) {
             layer.confirm('确认提交？', {
-                icon: 3,
+                skin: 'layui-layer-wei',  //layui-layer-wei，维木class
                 title: '提示'
             }, function(index) {
                 tableData.push(data.field);
@@ -213,7 +213,7 @@
                 layer.msg("请选择需要删除的信息");
             } else {
                 layer.confirm('是否确认删除此条信息', {
-                    icon: 3,
+                    skin: 'layui-layer-wei',  //layui-layer-wei，维木class
                     title: '提示'
                 }, function(index) {
                     var rowId = [];

@@ -270,7 +270,7 @@
         //配置用户角色提交
         form.on('submit(roleSubmit)', function(data) {
             layer.confirm("确认设置角色", {
-                icon: 3,
+                skin: 'layui-layer-wei',  //layui-layer-wei，维木class
                 title: '提示'
             }, function(index) {
                 data.field['SESSION_NAME'] =getCookie("SESSION_NAME");
@@ -316,7 +316,7 @@
         form.on('submit(resSubmit)', function(data) {
             var userData = window.currData;
             layer.confirm("重置密码", {
-                icon: 3,
+                skin: 'layui-layer-wei',  //layui-layer-wei，维木class
                 title: '提示'
             }, function(index) {
                 data.field['SESSION_NAME'] =getCookie("SESSION_NAME");
@@ -361,7 +361,7 @@
         form.on('submit(editForm)', function(data) {
             //编辑提交
             layer.confirm('确认提交修改', {
-                icon: 3,
+                skin: 'layui-layer-wei',  //layui-layer-wei，维木class
                 title: '提示'
             }, function(index) {
                 data.field.orderno = window.currData.orderno; //防止单号被篡改
@@ -388,7 +388,7 @@
                 layer.msg("请选择需要删除的信息");
             } else {
                 layer.confirm('是否确认删除此条信息', {
-                    icon: 3,
+                    skin: 'layui-layer-wei',  //layui-layer-wei，维木class
                     title: '提示'
                 }, function(index) {
                     var rowId = [];
@@ -722,7 +722,7 @@
                 'TOKEN': getCookie('TOKEN')
             };
             layer.confirm("是否删除类型", {
-                icon: 3,
+                skin: 'layui-layer-wei',  //layui-layer-wei，维木class
                 title: '提示'
             }, function(index) {
                 data['SESSION_NAME']= getCookie('SESSION_NAME');
@@ -802,7 +802,7 @@
             // 对输入的用户类型去空格
             data.field.name = data.field.name.replace(/^\s*|\s*$/g,"");
             // layer.confirm(title, {
-            //     icon: 3,
+            //     skin: 'layui-layer-wei',  //layui-layer-wei，维木class
             //     title: '提示'
             // }, function(index) {
                 data.field['SESSION_NAME'] =getCookie("SESSION_NAME");
