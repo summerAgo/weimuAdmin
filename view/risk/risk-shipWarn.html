@@ -215,6 +215,7 @@
                     laytpl(getTpl).render(curData, function(html) {
                         view.innerHTML = html;
                     });
+                    $('div[data-name="proportion"]').html(compute($("input[name='cordonmoney']").val(), $("input[name='financingmoney']").val()));
 
                     form.on('submit(formDemo)', function(data) {
                         data.field.stockmoney=curData.stockmoney;
@@ -257,30 +258,35 @@
                     $("input[name='financingmoney']").bind("input propertychange", function(event) {
                         var a = $("input[name='cordonmoney']").val();
                         var b = $(this).val();
-                        if (!a || !b || isNaN(a) || isNaN(b)) {
-                            // layer.msg("金额只能为数组");
-                            return false;
-                        } else {
+
+                        if(!isNaN(b) && !isNaN(a)){
                             $('div[data-name="proportion"]').html(compute(a, b));
+                        }else{
+                            $('div[data-name="proportion"]').html('<span style="color:red;">---</span>');
+                            return false;
                         }
+
                     });
 
                     $("input[name='cordonmoney']").bind("input propertychange", function(event) {
                         var a = $(this).val();
                         var b = $("input[name='financingmoney']").val();
-                        if (!a || !b || isNaN(a) || isNaN(b)) {
-                            // layer.msg("金额只能为数字");
-                            return false;
-                        } else {
+                        if(!isNaN(b) && !isNaN(a)){
                             $('div[data-name="proportion"]').html(compute(a, b));
+                        }else{
+                            $('div[data-name="proportion"]').html('<span style="color:red;">---</span>');
+                            return false;
                         }
                     });
 
-
+                    compute($("input[name='cordonmoney']").val(), $("input[name='financingmoney']").val())
+                    
                     function compute(a, b) {
-                        if (isNaN(a) || isNaN(b)) {
-                            return false;
+                        if (isNaN(a) || a == 0 || isNaN(b) || b == 0) {
+                            console.log(1);
+                            return '<span style="color:red;">---</span>';
                         } else {
+                            console.log(2);
                             return ((a / b) * 100).toFixed(2) + "%"
                         }
                     }
