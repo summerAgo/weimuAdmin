@@ -77,7 +77,10 @@
     layui.use(['form', 'jquery', 'element', 'layer'], function () {
         var form = layui.form;
         var $ = layui.jquery;
-        var verifyCode = new GVerify("v_container");
+        var verifyCode = new GVerify({
+            id:"v_container",
+            type:"number"
+        });
         //监听提交
         form.on('submit(formLogin)', function (data) {
             data.field['SESSION_NAME']= getCookie('SESSION_NAME');

@@ -170,6 +170,7 @@
         table.on('checkbox(tableContainerMenu)', function(obj) {
             var checkStatus = table.checkStatus('tableContainerMenu'); //表格选中状态
             $(".rightBotBtn span").html(checkStatus.data.length); //当前选中了多少条数据
+            console.log(this);
         });
 
         //编辑

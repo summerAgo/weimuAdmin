@@ -7,6 +7,8 @@ var printoutstore = localhost+"/view/print/print-out-store.html";
 var weekInCount = pathUrl + "home/weekInCount";//本周入库统计立方
 var weekOutCount = pathUrl + "home/weekOutCount";//本周出库统计立方
 var weekStockCount = pathUrl + "home/weekStockCount";//本周库存统计立方
+var inOrderCount = pathUrl + "home/inOrderCount";//预入库单
+var outOrderCount = pathUrl + "home/outOrderCount";//出货申请单
 
 //基础货物公共信息
 var commonBaseUrl = pathUrl + "c/goodsbasics/list"; //查询货物

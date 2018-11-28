@@ -547,7 +547,7 @@
     line-height: 30px;
     font-size: 14px;
     color: #333;
-    width: 86px;
+    width: 84px;
     text-align: right;
     padding-right: 10px;
 }
@@ -560,6 +560,17 @@
     flex: 1;
     border-radius: 2px;
     height: 30px;
+    font-weight: bold;
+}
+
+.table-page-form .table-form-item > input[type='text']::-webkit-input-placeholder {
+    font-weight: normal;
+}
+
+.table-page-form .layui-form-item.form-down-line .layui-input {
+    border: none;
+    border-bottom: 1px solid #bbb;
+    border-radius: 0;
 }
 
 .table-page-form .table-form-item > select {
@@ -570,6 +581,13 @@
     flex: 1;
     border-radius: 5px;
     height: 30px;
+    font-weight: bold;
+}
+
+.table-page-form .layui-form-item.form-down-line .xm-select-parent .xm-select {
+    border: none;
+    border-bottom: 1px solid #bbb;
+    border-radius: 0;
 }
 
 /*下拉框*/
@@ -763,11 +781,6 @@ input.layui-input.layui-table-edit {
 
 .table-content-main .layui-table-view th {
     font-weight: bold
-}
-
-.layui-table-total tr,
-.layui-table[lay-even] tr:nth-child(even) {
-    background: #f8f8f8
 }
 
 .layui-table-page .rightBotBtn {
@@ -1106,7 +1119,7 @@ div[xm-select-skin] .xm-select-title div.xm-select-label > span {
     height: 26px;
     line-height: 26px;
     min-width: 100px;
-    font-size: 16px;
+    font-size: 14px;
     color: #333;
     font-weight: bold;
     border-bottom: 1px solid #bbb;
@@ -1139,6 +1152,8 @@ div[xm-select-skin] .xm-select-title div.xm-select-label > span {
     font-size: 14px;
     color: #333;
     font-weight: bold;
+    border-bottom: 1px solid #bbb;
+    min-width: 156px;
 }
 
 .xm-select-linkage-group:nth-child(4n+1) {
@@ -1187,6 +1202,14 @@ div[xm-select-skin] .xm-select-title div.xm-select-label > span {
     background: #fafafa;
 }
 
+/*.layui-table-total tr, .layui-table[lay-even] tr.layui-form-checked:nth-child(even) {
+    background-color: #fffbe3;
+}*/
+
+.layui-table-total tr, .layui-table[lay-even] tr.layui-table-click:nth-child(even) {
+    background: #fffbe3;
+}
+
 .layui-table-total tr:hover, .layui-table[lay-even] tr:nth-child(even):hover {
     background-color: #f2f9ff;
 }
@@ -1211,16 +1234,24 @@ div[xm-select-skin] .xm-select-title div.xm-select-label > span {
     background-color: #f2f9ff;
 }
 
+/*.layui-table tbody tr.layui-form-checked {
+    background-color: #fffbe3;
+}*/
+
 .layui-table thead tr {
     background-color: #e8e8e8;
 }
 
-.layui-input {
-    border-color: #ddd;
+.layui-input:focus {
+    border-color: #0284ff !important;
 }
 
 .layui-table th {
     text-align: center;
+}
+
+.layui-table .layui-table-click{
+    background-color: #fffbe3;
 }
 
 .layui-table-page .layui-laypage input:focus {
@@ -1246,4 +1277,8 @@ div[xm-select-skin] .xm-select-title div.xm-select-label > span {
 
 .layui-form-checked span, .layui-form-checked:hover span {
     background-color: #0284ff !important;
+}
+
+.layui-layer-dialog {
+    min-width: 300px;
 }
