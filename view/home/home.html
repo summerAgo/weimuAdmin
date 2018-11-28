@@ -93,13 +93,12 @@
         var contentHeight = parseInt($(".layui-body").innerHeight() - $(".content-header").innerHeight() - 42);
         $(".home-content").innerHeight(contentHeight);
 
-//本周入库统计立方
+        //本周入库统计立方
         $.get(
             weekInCount,
             {},
             function (src) {
                 if (src.status === 0) {
-                    console.log(src.data)
                     $("#weekInCount").html(src.data);
                 }
             }
@@ -126,5 +125,6 @@
                 }
             }
         );
+        
     });
 </script>
