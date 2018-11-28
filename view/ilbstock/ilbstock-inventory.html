@@ -232,6 +232,7 @@
                 limitName: 'limit' // 每页数据量的参数名，默认：limit
             },
             cols: [[ // 标题栏
+                
                 {
                     field: 'LAY_TABLE_INDEX',
                     title: '序号',
@@ -239,7 +240,8 @@
                     templet: function(d) {
                         return d.LAY_TABLE_INDEX + 1;
                     }
-                }, {
+                },{type:'checkbox'},
+                 {
                     field: 'createdate',
                     title: '盘点时间',
                     width: 170,
@@ -322,6 +324,54 @@
                 });
             });
         });
+
+        // 确认盘点
+        $(".confirmBtn").click(function() {
+
+            var checkStatus = table.checkStatus('tableContainer'); //表格选中状态
+            var checkData = checkStatus.data;
+            // console.log(goodsListArray);
+            if (checkData.length > 0) {
+                editAprice(checkData, endInventory);
+            }
+
+        });
+
+
+        //保存提交  修改异常调整数据
+        function editAprice(datainfo, url) {
+            //请求数据源示例
+            var status = false;
+            console.log(datainfo);
+            $.ajax({
+                url: url,
+                type: "POST",
+                async: false,
+                data: {
+                    id: datainfo[0].id,
+                    //ownerid: depotData.ownerid,
+                    //depotid: depotData.depotid,
+                    //lbarr: JSON.stringify(apriceJson),
+                    'SESSION_NAME': getCookie('SESSION_NAME'),
+                    'TOKEN': getCookie('TOKEN')
+                },
+                xhrFields: {
+                    withCredentials: true,
+                },
+                crossDomain: true,
+                // traditional: true,
+                success: function(res) {
+                    if (res.status === 1) {
+                        goLogin();// 跳转到登录页
+                    }
+                    if (res.status === 0) {
+                        status = true;
+                    }
+                    layer.msg(res.msg);
+                }
+            });
+            return status;
+        }
 
     });
 </script>
