@@ -85,15 +85,15 @@ Array.prototype.uniqueJson = function(key) {
     return result;
 }
 // //数组获取索引
-Array.prototype.indexGet = function(key,val) {
+Array.prototype.indexGet = function(key, val) {
     for (var i = 0; i < this.length; i++) {
         if (this[i][key] == val) return i;
     }
     return -1;
 };
 //数组删除项
-Array.prototype.remove = function(key,val) {
-    var index = this.indexGet(key,val);
+Array.prototype.remove = function(key, val) {
+    var index = this.indexGet(key, val);
     if (index > -1) {
         this.splice(index, 1);
     }
@@ -109,8 +109,10 @@ function btnIsList(domObj, menuKey) {
     if (data !== null) {
         var currentBtnData = data ? data[menuKey] : [];
         for (var i = 0; i < currentBtnData.length; i++) {
-            btnDom = '<li class="layui-nav-item"><a href="javascript:;" class="' + currentBtnData[i].classname || '' + '"><i class="' + currentBtnData[i].icon + '"></i>' + currentBtnData[i].bname + '</a></li>';
-            domObj.append(btnDom);
+            if (currentBtnData[i] != null) {
+                btnDom = '<li class="layui-nav-item"><a href="javascript:;" class="' + currentBtnData[i].classname + '"><i class="' + currentBtnData[i].icon + '"></i>' + currentBtnData[i].bname + '</a></li>';
+                domObj.append(btnDom);
+            }
         }
     }
 }
@@ -144,7 +146,7 @@ function formatNum(num) {
 
 // 登录超时函数
 function goLogin() {
-    layer.alert('登录超时，请重新登录。', function(index){
+    layer.alert('登录超时，请重新登录。', function(index) {
         window.location.href = loginPageUrl;
         layer.close(index);
     });
