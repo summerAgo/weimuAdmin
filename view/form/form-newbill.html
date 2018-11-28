@@ -95,7 +95,7 @@
         btnIsList(domObj, menuKey); //按钮权限
 
         form.render(); //重置表单渲染
-        formSelects.render(); //下拉选项
+        // formSelects.render(); //下拉选项
         element.render('talbe-tools'); //表格工具栏
 
         formSelects.data('ownerSelectLayer', 'local', {
@@ -461,6 +461,7 @@
                     selected: "selected"
                 }]
             });
+
             if (orderno.positionname) {
                 formSelects.data('positionSelectLayer', 'local', {
                     arr: [{
@@ -471,23 +472,20 @@
                 });
             }
             if (orderno.origin) {
-                formSelects.data('originSelectLayer', 'local', {
-                    arr: [{
-                        "name": orderno.origin,
-                        "value": orderno.origin,
-                        selected: "selected"
-                    }]
-                });
+                formSelects.value('originSelectLayer', [orderno.origin]); 
+
             }
             if (orderno.supplierid) {
-                formSelects.data('supplierSelectLayer', 'local', {
-                    arr: [{
-                        "name": orderno.suppliername,
-                        "value": orderno.supplierid,
-                        selected: "selected"
-                    }]
-                });
+                formSelects.value('supplierSelectLayer', [orderno.supplierid]); 
+                // formSelects.data('supplierSelectLayer', 'local', {
+                //     arr: [{
+                //         "name": orderno.suppliername,
+                //         "value": orderno.supplierid,
+                //         selected: "selected"
+                //     }]
+                // });
             }
+
             $(".suppliernameLayer").val(orderno.suppliername);
             //禁用下拉框
             formSelects.disabled('ownerSelectLayer');
