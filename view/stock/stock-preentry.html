@@ -1,3 +1,4 @@
+<!-- 预入库主菜单 -->
 <div class="table-page" id="stock-preentry">
     <div class="table-content-title">
         <div class="table-tools">
@@ -71,7 +72,6 @@
                     </div>
                 </div>
             </form>
-
         </div>
     </div>
     <div class="table-content">
@@ -98,16 +98,16 @@
         var eaitLayer; //编辑-弹层
 
         form.render(); //重置表单渲染
-        formSelects.render(); //下拉选项
-        element.render('talbe-tools'); //表格工具栏
-        formSelects.btns(['select', 'remove'], {
-            show: 'name'
-        });
+        formSelects.render(); //重置下拉选项
+        element.render('talbe-tools'); //tab选项卡重置
+        formSelects.btns(['remove'], {show: 'name'});
 
+        // 初始化仓库主数据
         formSelects.data('ownerSelect', 'local', {
             arr: selectDataInstall(ownerDropdown) //仓库主列表
         });
 
+        // 点击仓库下拉框
         layui.formSelects.opened('depotSelect', function(id) {
             var ownerid = formSelects.value('ownerSelect', 'val'); //获取仓库主ID
             if (ownerid.length < 1) {
@@ -118,6 +118,7 @@
             }
         });
 
+        // 点击库位下拉框
         layui.formSelects.opened('positionSelect', function(id) {
             var depotid = formSelects.value('depotSelect', 'val'); //获取仓库ID
             if (depotid.length < 1) {
@@ -128,7 +129,7 @@
             }
         });
 
-        //监听
+        //监听仓库主的选中与取消
         formSelects.on('ownerSelect', function(id, vals, val, isAdd, isDisabled) {
             if (!isAdd) {
                 formSelects.data('depotSelect', 'local', {
@@ -141,7 +142,6 @@
                 var depotList = selectDataInstall(depotDropdown, {
                     "ownerid": vals[0].value //仓库列表
                 }, false);
-
                 if (depotList.length < 1) {
                     formSelects.data('depotSelect', 'local', {
                         arr: [] //清空仓库列表
@@ -163,7 +163,7 @@
             }
         }, true);
 
-        //监听
+        //监听仓库的选中与取消
         formSelects.on('depotSelect', function(id, vals, val, isAdd, isDisabled) {
             if (!isAdd) {
                 formSelects.data('positionSelect', 'local', {
@@ -194,7 +194,7 @@
                 url: url,
                 type: "get",
                 data: param,
-                async: false, //同步
+                async: false, // 同步
                 traditional: true,
                 success: function(data) {
                     // console.log(data);
@@ -219,6 +219,7 @@
             return arr;
         }
 
+        // 查询按钮点击
         form.on('submit(searchForm)', function(data) {
             var paramSearch = {};
             for (var key in data.field) {
@@ -316,6 +317,7 @@
             $(".rightBotBtn span").html(checkStatus.data.length); //当前选中了多少商品
         });
 
+        // 入库按钮点击
         $(".submissionBtn").click(function() {
             var checkStatus = table.checkStatus('tableContainer-preentry'); // 表格选中状态
             var datalist = checkStatus.data;
@@ -352,7 +354,7 @@
                     }
                     //请求过期，重新登陆
                     if (data.status === 1) {
-                        window.location.href = loginPageUrl;
+                        goLogin(); // 跳转到登录页
                     }
                 }
             })

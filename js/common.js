@@ -83,7 +83,7 @@ Array.prototype.uniqueJson = function(key) {
         }
     }
     return result;
-}
+};
 // //数组获取索引
 Array.prototype.indexGet = function(key, val) {
     for (var i = 0; i < this.length; i++) {
@@ -104,11 +104,11 @@ Array.prototype.remove = function(key, val) {
  * @param {*} menuKey 页面队友的key键
  */
 function btnIsList(domObj, menuKey) {
-    var data = JSON.parse(sessionStorage.getItem("buttonAuthority")); //获取按钮权限数据
+    var data = JSON.parse(sessionStorage.getItem("buttonAuthority")); //所有页面按钮权限数据存入buttonAuthority
     var btnDom;
     if (data !== null) {
-        var currentBtnData = data ? data[menuKey] : [];
-        for (var i = 0; i < currentBtnData.length; i++) {
+        var currentBtnData = data ? data[menuKey] : [];// 当前按钮数据 -- 根据当前页面key参数获得当前页面按钮数据
+        for (var i = 0; i < currentBtnData.length; i++) { // 渲染按钮模块
             if (currentBtnData[i] != null) {
                 btnDom = '<li class="layui-nav-item"><a href="javascript:;" class="' + currentBtnData[i].classname + '"><i class="' + currentBtnData[i].icon + '"></i>' + currentBtnData[i].bname + '</a></li>';
                 domObj.append(btnDom);
