@@ -440,6 +440,8 @@
                         layer.closeAll();
                     } else if (res.status === 1) {
                         goLogin();// 跳转到登录页
+                    }else{
+                        layer.msg(res.msg);
                     }
                 }
             })

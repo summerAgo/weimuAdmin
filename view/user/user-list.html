@@ -580,7 +580,7 @@
                 }
                 insList = val;
                 var treeData = [];
-                console.log(treeData);
+                // console.log(treeData);
                 var number = 0;
                 for (var i = 0; i < val.length; i++) {
                     var map = {};
@@ -605,8 +605,8 @@
                     map["children"] = children;
                     treeData.push(map);
                 }
-                console.log(treeData);
-                console.log(layui.tree);
+                // console.log(treeData);
+                // console.log(layui.tree);
                 $("#tree-nav").html("");
                 layui.tree({
                     elem: '#tree-nav',
