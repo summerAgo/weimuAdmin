@@ -1,40 +1,5 @@
-<div class="role-power">
-    <div class="layui-fluid">
-        <div class="layui-row">
-            <div class="layui-col-md4">
-                <div class="">
-                    <div>权限设置</div>
-                </div>
-                <!-- 此扩展能递归渲染一个权限树，点击深层次节点，父级节点中没有被选中的节点会被自动选中，单独点击父节点，子节点会全部 选中/去选中 -->
-                <div class="layui-form-item">
-                    <!-- <label class="layui-form-label">选择权限</label> -->
-                    <div class="">
-                        <div class="ele1" lay-filter="treeData"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="layui-col-md6">
-                <div class="">
-                    <div>基本信息 - 按钮权限</div>
-                    <div id="formEditView"></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script id="formUserRole" type="text/html">
-<form class="layui-form layer-open-form">
+<form class="layui-form">
     <div class="layui-field-box">
-        <input type="hidden" name="roleid" value="{{d.id}}"  >
-        {{#  layui.each(d.butAllData, function(index, item){ }}
-        <div class="layui-form-item">
-            <label class="layui-form-label">{{item.bname}}</label>
-            <div class="layui-input-block">
-                <input type="checkbox" name="menuid" value="{{item.id}}" {{# if(item.checked){}} checked {{#}}}   lay-filter="clickBut"   lay-skin="switch" lay-text="开启|关闭">
-            </div>
-        </div>
-        {{#  }); }}
         <div class="layui-form-item layui-control-line">
             <div class="layui-input-block">
                 <button class="layui-btn" lay-submit="" type="submit" lay-filter="roleSubmit"><i class="iconfont icon-daochu"></i>保存</button>
@@ -42,7 +7,161 @@
         </div>
     </div>
 </form>
+<div class="role-power">
+    <div class="layui-row">
+        <div class="layui-col-md4 role-lf">
+            <div class="role-title">权限设置</div>
+            <!-- 此扩展能递归渲染一个权限树，点击深层次节点，父级节点中没有被选中的节点会被自动选中，单独点击父节点，子节点会全部 选中/去选中 -->
+            <div class="layui-form-item">
+                <!-- <label class="layui-form-label">选择权限</label> -->
+                <div class="">
+                    <div class="ele1" lay-filter="treeData"></div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md8 role-rt">
+            <div class="role-title">按钮权限</div>
+            <div class="layui-tab">
+                <ul class="layui-tab-title">
+                    <li class="layui-this">预入库</li>
+                    <li>新建预入库</li>
+                    <li>添加货物信息</li>
+                </ul>
+                <div class="layui-tab-content">
+                    <div class="layui-tab-item layui-show">
+                        <div class="content-title">[新入库]所有权限按钮</div>
+                        <div class="content-cont">
+                            <div id="formEditView"></div>
+                        </div>
+                    </div>
+                    <div class="layui-tab-item">
+                        <div class="content-title">[新建预入库]所有权限按钮</div>
+                    </div>
+                    <div class="layui-tab-item">
+                        <div class="content-title">[添加货物信息]所有权限按钮</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script id="formUserRole" type="text/html">
+    <form class="layui-form">
+        <input type="hidden" name="roleid" value="{{d.id}}">
+        {{#  layui.each(d.butAllData, function(index, item){ }}
+        <div class="layui-form-item">
+            <label class="layui-form-label">{{item.bname}}</label>
+            <div class="layui-input-block">
+                <input type="checkbox" name="menuid" value="{{item.id}}" {{# if(item.checked){}} checked {{#}}}   lay-filter="clickBut"  lay-skin="switch" lay-text="开启|关闭">
+            </div>
+        </div>
+        {{#  }); }}
+    </form>
 </script>
+<style scoped>
+    .role-power .layui-tab-title {
+        position: relative;
+        left: 0;
+        height: 30px;
+        line-height: 30px;
+        white-space: nowrap;
+        font-size: 0;
+        border-bottom: none;
+    }
+    .role-power .layui-tab li {
+        flex: 0 0 auto;
+        line-height: 30px;
+        margin-right: 1px;
+        position: relative;
+        margin-top: -1px;
+        border: 1px solid #ddd;
+        margin-left: -2px;
+    }
+    .role-power .layui-tab-title li::before {
+        position: absolute;
+        content: '';
+        width: 0px;
+        height: 16px;
+        left: -2px;
+        top: 11px;
+        background-color: #ddd;
+    }
+    .role-power .layui-tab li:first-child {
+        font-size: 14px;
+        margin-left: 0px;
+    }
+    .role-power .layui-tab-title li.layui-this {
+        border: 1px solid #0284ff;
+    }
+    .role-power .layui-tab-title .layui-this:after {
+        position: absolute;
+        left: 0;
+        top: 0;
+        content: '';
+        width: 100%;
+        height: 30px;
+        border-width: 0px;
+        border-radius: 2px 2px 0 0;
+        box-sizing: border-box;
+        pointer-events: none;
+    }
+    .role-power .role-title{
+        font-size: 16px;
+        color: #333;
+        line-height: 45px;
+        font-weight: bold;
+    }
+    .layui-form-item {
+        margin-bottom: 0px;
+    }
+    .layui-field-box {
+        padding: 0 20px;
+    }
+    .role-power {
+        height: calc(100% - 71px);
+        padding: 0 20px;
+    }
+    .role-power .layui-row,
+    .role-power .layui-row .role-lf{
+        height: 100%;
+    }
+    .role-power .layui-row .role-lf{
+        padding-right: 20px;
+        border-right: 1px dashed #ccc;
+    }
+    .role-power .layui-row .role-rt{
+        padding-left: 20px;
+        height: 100%;
+    }
+    .role-power .layui-row .role-rt .layui-tab {
+        margin: 0;
+        height: calc(100% - 45px);
+    }
+    .role-power .layui-row .role-rt .layui-tab .layui-tab-content{
+        padding: 0;
+        height: calc(100% - 40px);
+        border: 1px solid #ddd;
+        margin-top: 10px;
+    }
+    .role-power .layui-row .role-rt .layui-tab .layui-tab-content .content-title{
+        height: 30px;
+        line-height: 30px;
+        padding-left: 20px;
+        background-color: #e8e8e8;
+        font-size: 15px;
+        font-weight: bold;
+        border-bottom: 1px solid #ddd;
+    }
+    .role-power .layui-row .role-rt .layui-tab .layui-tab-content .layui-tab-item{
+        height: 100%;
+    }
+    .role-power .layui-row .role-rt .layui-tab .layui-tab-content .content-cont{
+        height: calc(100% - 30px);
+        overflow-y: auto;
+        box-sizing: border-box;
+        padding: 10px;
+    }
+</style>
 <script type="text/javascript">
     layui.use(['jquery', 'authtree', 'form', 'layer', 'element', 'laytpl', 'laydate', "eleTree"], function () {
         var $ = layui.jquery;
@@ -60,22 +179,25 @@
             view.innerHTML = html;
         });
         form.render(); //重置表单渲染
+
         // 初始化(查询所有的菜单)
         $.ajax({
             //url: 'tree.json',
             url: menuAll,
             dataType: 'json',
             success: function (data) {
-                var roleAut = window.currData;
-                var roleData = {"roleid": roleAut.id};
-                //查询角色菜单权限
+                var roleAut = window.currData; //当前选中行数据
+                var roleData = {"roleid": roleAut.id};//赋值角色id
+                //根据角色id查询所有的按钮权限
                 getButAuthorityAll(roleData, function (res) {
-                    var allMenu = data.data;
-                    var ant = {};
+
+                    var allMenu = data.data;//所有菜单数据
+                    var ant = {}; // 所有按钮权限
                     if (res.status === 0) {
                         ant = res.data;
                     }
-                    for (var i = 0; i < allMenu.length; i++) {//组装数据树
+                    console.log(allMenu);
+                    for (var i = 0; i < allMenu.length; i++) { //组装数据树
                         if (allMenu[i].pid === 0) {
                             var map = {};
                             map["label"] = allMenu[i].name;
@@ -85,7 +207,7 @@
                             for (var k = 0; k < allMenu.length; k++) {
                                 if (allMenu[i].id === allMenu[k].pid) {
                                     var mapTwo = {};
-                                    mapTwo["label"] = allMenu[k].name
+                                    mapTwo["label"] = allMenu[k].name;
                                     mapTwo["value"] = allMenu[k].id;
                                     for (var key in ant) { //循环每个菜单
                                         if (allMenu[k].id === key) {
@@ -133,7 +255,7 @@
                         map[key] = butlist;
                         allAuthority.push(map);
                     }
-                    console.log(allAuthority);
+                    // console.log(allAuthority);
                     var val = JSON.stringify(allAuthority);
                     sessionStorage.setItem('allAuthority', val);
                 });
@@ -211,7 +333,6 @@
                         }
                         map[key] = butlist;
                         allAuthority[k] = map
-
                     }
                 }
             }
@@ -310,7 +431,7 @@
             });
         }
 
-        //根据角色id查询所有的按钮权限
+        //根据角色id（data）查询所有的按钮权限
         function getButAuthorityAll(data, success) {
             data['SESSION_NAME'] = getCookie('SESSION_NAME');
             data['TOKEN'] = getCookie('TOKEN');
