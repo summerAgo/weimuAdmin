@@ -80,16 +80,16 @@
         var menuKey = "a_16"; //当前页面key
         var domObj = $("#role-list .table-tools").find("ul"); //当前页面容器
         btnIsList(domObj, menuKey); //按钮权限
+        element.render('talbe-tools'); //按钮导航模块的局部更新
 
         var eaitLayer; //编辑-弹层
-
         form.render(); //重置表单渲染
-        formSelects.render(); //下拉选项
-        element.render('talbe-tools'); //表格工具栏
+        formSelects.render(); //重新渲染所有的已存在多选框
         formSelects.btns(['select', 'remove'], {
             show: 'name'
         });
 
+        // 表单搜索按钮点击
         form.on('submit(searchForm)', function(data) {
             var paramSearch = {};
             for (var key in data.field) {
@@ -107,6 +107,7 @@
             return false;
         });
 
+        // table表格渲染
         var tableIns = table.render({
             elem: '#tableContainerRole',
             height: 'full-' + tableTopHeight,
@@ -120,7 +121,7 @@
                     "data": res.data //解析数据列表
                 }
             },
-            request: {
+            request: { // 用于对分页请求的参数：page、limit重新设定名称
                 pageName: 'offset', //页码的参数名称，默认：page
                 limitName: 'limit' //每页数据量的参数名，默认：limit
             },
@@ -155,7 +156,7 @@
             loading: true
         });
 
-        //监听锁定操作
+        //监听table表格的锁定操作
         table.on('checkbox(tableContainerRole)', function(obj) {
             var checkStatus = table.checkStatus('tableContainerRole'); //表格选中状态
             $(".rightBotBtn span").html(checkStatus.data.length); //当前选中了多少条数据
@@ -252,7 +253,7 @@
             }
         });
 
-        //添加角色表单提交
+        //权限设置表单提交
         form.on('submit(roleSubmit)', function(data) {
             var allAuthority = sessionStorage.getItem('allAuthority');
             console.log(allAuthority);
@@ -311,8 +312,7 @@
                 isNameAdd = true;
             }
 
-            // 判断觉得名是否重复
-            var isName = true; // 是否有用户名标识
+            // 判断角色名是否重复
             if (isNameAdd || isNameEdit) {
                 $.ajax({
                     cache: true,
@@ -339,43 +339,36 @@
                     return false;
                 }
             }
-
-            // layer.confirm(title, {
-            //     skin: 'layui-layer-wei',  //layui-layer-wei，维木class
-            //     title: '提示'
-            // }, function(index) {
-                data.field["SESSION_NAME"] = getCookie('SESSION_NAME');
-                data.field["TOKEN"] = getCookie('TOKEN');
-                $.ajax({
-                    cache: true,
-                    type: "POST",
-                    url: userUrl,
-                    data: data.field,
-                    async: false,
-                    xhrFields: {
-                        withCredentials: true
-                    },
-                    crossDomain: true,
-                    error: function(request) {
-                        layer.msg('提交失败');
-                        return false;
-                    },
-                    success: function(data) {
-                        if (data.status === 1) {
-                            window.location.href = loginPageUrl;
-                        }
-
-                        layer.close(eaitLayer);
-                        layer.msg('提交成功');
-                        // 刷新表格
-                        tableIns.reload({
-                            page: {
-                                curr: 1 //重新从第 1 页开始
-                            }
-                        });
+            data.field["SESSION_NAME"] = getCookie('SESSION_NAME');
+            data.field["TOKEN"] = getCookie('TOKEN');
+            $.ajax({
+                cache: true,
+                type: "POST",
+                url: userUrl,
+                data: data.field,
+                async: false,
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
+                error: function(request) {
+                    layer.msg('提交失败');
+                    return false;
+                },
+                success: function(data) {
+                    if (data.status === 1) {
+                        window.location.href = loginPageUrl;
                     }
-                });
-            // });
+                    layer.close(eaitLayer);
+                    layer.msg('提交成功');
+                    // 刷新表格
+                    tableIns.reload({
+                        page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                    });
+                }
+            });
             return false;
         });
 
@@ -396,6 +389,7 @@
                 error: funErr
             })
         }
+
         //变更下载模板链接
         $("#dowmTemp").attr("href", ilbstockImportTemp);
 

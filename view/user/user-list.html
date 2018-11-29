@@ -79,7 +79,6 @@
     .lay-table-content {
         padding: 0;
     }
-
     .table-content-main {
         padding-right: 30px;
         padding-left: 30px;
@@ -89,6 +88,7 @@
         left: 250px;
     }
 </style>
+
 <script>
     layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'tree', 'eleTree'], function() {
         var element = layui.element;
@@ -147,38 +147,36 @@
                 pageName: 'offset', //页码的参数名称，默认：page
                 limitName: 'limit' //每页数据量的参数名，默认：limit
             },
-            cols: [
-                [ //标题栏
-                    {
-                        field: 'LAY_TABLE_INDEX',
-                        title: '序号',
-                        width: 40,
-                        templet: function(d) {
-                            return d.LAY_TABLE_INDEX + 1;
-                        }
-                    }, {
-                        type: 'checkbox'
-                    }, {
-                        field: 'username',
-                        title: '用户名',
-                    }, {
-                        field: 'phone',
-                        title: '联系电话',
-                    }, {
-                        field: 'rolename',
-                        title: '角色',
-                    }, {
-                        field: 'email',
-                        title: '邮箱',
-                    }, {
-                        field: 'remarks',
-                        title: '备注',
-                    }, {
-                        field: 'createdate',
-                        title: '创建时间',
+            cols: [[ //标题栏
+                {
+                    field: 'LAY_TABLE_INDEX',
+                    title: '序号',
+                    width: 40,
+                    templet: function(d) {
+                        return d.LAY_TABLE_INDEX + 1;
                     }
-                ]
-            ],
+                }, {
+                    type: 'checkbox'
+                }, {
+                    field: 'username',
+                    title: '用户名',
+                }, {
+                    field: 'phone',
+                    title: '联系电话',
+                }, {
+                    field: 'rolename',
+                    title: '角色',
+                }, {
+                    field: 'email',
+                    title: '邮箱',
+                }, {
+                    field: 'remarks',
+                    title: '备注',
+                }, {
+                    field: 'createdate',
+                    title: '创建时间',
+                }
+            ]],
             even: true,
             page: true, //是否显示分页
             limits: [100, 200, 500, 1000],

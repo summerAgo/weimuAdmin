@@ -58,7 +58,7 @@
                         </div>
                         <div class="table-form-item layui-input-inline">
                             <span class="input-span">产地</span>
-                            <select name="origin" xm-select="originSelect" xm-select-radio>
+                            <select name="origin" xm-select="originSelect" xm-select-radio="">
                                 <option value="">产地</option>
                             </select>
                         </div>
@@ -123,32 +123,35 @@
         var menuKey = "a_8"; //当前页面key
         var domObj = $("#ilbstock-info .table-tools").find("ul"); //当前页面容器
         btnIsList(domObj, menuKey); //按钮权限
+        element.render('talbe-tools'); //表格工具栏
 
         var eaitLayer; //编辑-弹层
 
         form.render(); //重置表单渲染
-        formSelects.render(); //下拉选项
-        element.render('talbe-tools'); //表格工具栏
+        formSelects.render();//重新渲染所有的已存在多选框
+
+        //自定义多选框btn
         formSelects.btns(['select', 'remove'], {
             show: 'name'
         });
-
+        // 品种多选数据赋值
         formSelects.data('selectVarieties', 'local', {
             arr: selectDataInstall(VTSList, null, 1) //品种列表
         });
-
+        // 等级多选数据赋值
         formSelects.data('selectLevels', 'local', {
             arr: selectDataInstall(levelsList, null, 1) //等级列表
         });
-
+        // 规格多选数据赋值
         formSelects.data('selectSpec', 'local', {
             arr: selectDataInstall(specList, null, 1) //规格列表
         });
-
+        // 仓库主多选数据赋值
         formSelects.data('ownerSelect', 'local', {
             arr: selectDataInstall(ownerDropdown, null, 0) //仓库主列表
         });
 
+        // 选择仓库时判断是否选中了仓库主，opened：打开下拉框的回调事件
         layui.formSelects.opened('depotSelect', function(id) {
             var ownerid = formSelects.value('ownerSelect', 'val'); //获取仓库主ID
             if (ownerid.length < 1) {
@@ -158,8 +161,15 @@
                 }); //如果仓库主为空则清空列表
             }
         });
-        //监听
+
+        // 监听select的选中与取消
         formSelects.on('ownerSelect', function(id, vals, val, isAdd, isDisabled) {
+            //id:           点击select的id
+            //vals:         当前select已选中的值
+            //val:          当前select点击的值
+            //isAdd:        当前操作选中or取消
+            //isDisabled:   当前选项是否是disabled
+            //如果return false, 那么将取消本次操作
             if (!isAdd) {
                 formSelects.data('depotSelect', 'local', {
                     arr: [] //清空仓库列表
@@ -168,7 +178,7 @@
                 var depotList = selectDataInstall(depotDropdown, {
                     "ownerid": vals[0].value //仓库列表
                 }, false);
-
+                // 判断仓库主名下是否有仓库
                 if (depotList.length < 1) {
                     formSelects.data('depotSelect', 'local', {
                         arr: [] //清空仓库列表
@@ -176,15 +186,18 @@
                     layer.msg("该仓库主下无仓库信息");
                     return false;
                 }
+                // 如果仓库主名下有仓库，渲染仓库select
                 formSelects.data('depotSelect', 'local', {
                     arr: depotList //仓库列表
                 });
             }
         }, true);
+
         formSelects.data('originSelect', 'local', {
             arr: selectDataInstall(CHDList, null, 1) //产地列表
         });
 
+        // 获取select数据函数
         function selectDataInstall(url, param, bool) {
             //下拉选框数据组装
             var arr = [];
@@ -203,7 +216,6 @@
                             // 判断arr是否为数组并保证内部有值
                             return false;
                         }
-
                         for (var i = 0; i < data.data.length; i++) {
                             var name = "";
                             if (data.data[i].name) {
@@ -222,6 +234,7 @@
             return arr;
         }
 
+        // 表单搜索按钮点击
         form.on('submit(searchForm)', function(data) {
             var paramSearch = {};
             for (var key in data.field) {
@@ -231,13 +244,15 @@
                 }
             }
             tableIns.reload({
-                where: paramSearch, //接口参数
+                where: paramSearch, //设定异步数据接口的额外参数
                 page: {
                     curr: 1 //重新从第 1 页开始
                 }
             });
             return false;
         });
+
+        // 刷新按钮
         $(".refreshBtn").click(function() {
             tableIns.reload({
                 page: {
@@ -245,6 +260,8 @@
                 }
             });
         });
+
+        // table表格渲染
         var tableIns = table.render({
             elem: '#tableContainer',
             height: 'full-' + tableTopHeight,
