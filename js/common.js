@@ -119,6 +119,7 @@ function btnIsList(domObj, menuKey) {
 
 // 金额添加逗号
 function formatNum(num) {
+    if(num === 0){return 0;}
     if (num) {
         num = num.toString().replace(/\$|\,/g, '');
         if ('' === num || isNaN(num)) {

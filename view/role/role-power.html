@@ -161,6 +161,9 @@
         box-sizing: border-box;
         padding: 10px;
     }
+    .role-power .layui-form-label {
+        width: 100px;
+    }
 </style>
 <script type="text/javascript">
     layui.use(['jquery', 'authtree', 'form', 'layer', 'element', 'laytpl', 'laydate', "eleTree"], function () {
@@ -190,7 +193,6 @@
                 var roleData = {"roleid": roleAut.id};//赋值角色id
                 //根据角色id查询所有的按钮权限
                 getButAuthorityAll(roleData, function (res) {
-
                     var allMenu = data.data;//所有菜单数据
                     var ant = {}; // 所有按钮权限
                     if (res.status === 0) {

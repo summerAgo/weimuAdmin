@@ -101,7 +101,6 @@
                     </div>
                 </div>
             </form>
-
         </div>
     </div>
     <div class="table-content">
@@ -328,8 +327,7 @@
                         field: 'spec',
                         title: '规格',
                         width: 100,
-                    },
-                    {
+                    }, {
                         field: 'chang',
                         title: '长度',
                         width: 100,
@@ -377,7 +375,6 @@
             limits: [500, 1000, 2000, 5000],
             limit: 500, //每页默认显示的数量
             done: function(res, curr, count) {
-                // console.log(res);
                 var addtableBtn = '<div class="rightBotBtn" id="rightBox">合计总库存数量<span>' + res.znum + '</span>㎡ 总库存估价金额：<span>' + formatNum(res.aprice) + '</span>(RMB)</div>';
                 if ($("#rightBox").length < 1) {
                     $(".layui-table-page").append(addtableBtn);
