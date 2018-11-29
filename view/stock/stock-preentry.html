@@ -344,6 +344,10 @@
                 },
                 crossDomain: true,
                 success: function(data) {
+                    //请求过期，重新登陆
+                    if (data.status === 1) {
+                        goLogin(); // 跳转到登录页
+                    }
                     if (data.status === 0) {
                         tableIns.reload({
                             page: {
@@ -352,10 +356,7 @@
                         });
                         layer.msg("审核通过为库存");
                     }
-                    //请求过期，重新登陆
-                    if (data.status === 1) {
-                        goLogin(); // 跳转到登录页
-                    }
+                    layer.msg(data.msg);
                 }
             })
         });
