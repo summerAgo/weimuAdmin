@@ -209,7 +209,8 @@
     top: 1px;
     text-align: center;
     font-size: 14px;
-    color: #c2c2c2;
+    /*color: #c2c2c2;*/
+    color: #edf5fb;
     transition: all .2s;
     -webkit-transition: all .2s;
 }
@@ -280,10 +281,6 @@
 
 .layui-tab .layui-this i {
     color: #fff;
-}
-
-.layui-tab li .layui-tab-close {
-    display: none;
 }
 
 .layui-tab li.layui-this .layui-tab-close {
