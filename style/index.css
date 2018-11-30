@@ -258,6 +258,14 @@
     font-size: 18px;
 }
 
+.layui-tab li:hover .layui-tab-close {
+    color: #fff!important;
+    background-color: #ff5722!important;
+    border-radius: 2px!important;
+    box-sizing: border-box!important;
+    font-weight: bold!important;
+}
+
 .layui-tab .layui-this {
     background-color: #0284ff;
     border-color: #0284ff;
