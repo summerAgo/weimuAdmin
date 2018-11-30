@@ -329,7 +329,7 @@
                 layer.msg("未选择入库项");
                 return false;
             }
-            //审核订单为库存
+            //审核订单为库存 == 入库
             $.ajax({
                 url: preEntryexamineStock,
                 type: "POST",
@@ -359,34 +359,6 @@
                     layer.msg(data.msg);
                 }
             })
-        });
-
-        //查看框里面的提交
-        form.on('submit(editForm)', function(data) {
-            //编辑提交
-            layer.confirm('确认提交修改', {
-                skin: 'layui-layer-wei',  //layui-layer-wei，维木class
-                title: '提示'
-            }, function(index) {
-                data.field.orderno = window.currData.orderno; //防止单号被篡改
-                data.field.origin = window.currData.origin; //
-                data.field.supplier = window.currData.supplier; //
-                rowDataApi(preEntryUpdate, data.field, function(data) {
-                    if (data.status === 1) {
-                        window.location.href = loginPageUrl;
-                    }
-
-                    layer.close(index);
-                    layer.close(eaitLayer); //关闭
-                    // 刷新表格
-                    tableIns.reload({
-                        page: {
-                            curr: 1 //重新从第 1 页开始
-                        }
-                    });
-                })
-            });
-            return false;
         });
 
         //编辑提交
