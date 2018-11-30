@@ -1231,8 +1231,7 @@ div[xm-select-skin] .xm-select-title div.xm-select-label > span {
 /*.layui-table-total tr, .layui-table[lay-even] tr.layui-table-click:nth-child(even) {*/
     /*background: #fffbe3;*/
 /*}*/
-
-.layui-table-total tr:hover, .layui-table[lay-even] tr:nth-child(even):hover {
+.layui-table-total tr:hover, .layui-table[lay-even] tr:hover {
     background-color: #f2f9ff;
 }
 
