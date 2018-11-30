@@ -22,10 +22,10 @@
             <form class="layui-form" action="">
                 <div class="form-box clearfix">
                     <div class="layui-form-item form-left">
-                        <div class="table-form-item layui-input-inline">
+                        <!-- <div class="table-form-item layui-input-inline">
                             <span class="input-span">订单号</span>
                             <input type="text" name="orderno" placeholder="订单号" autocomplete="off" class="layui-input">
-                        </div>
+                        </div> -->
                         <div class="table-form-item layui-input-inline">
                             <span class="input-span">货物标识码</span>
                             <input type="text" name="uuid" placeholder="货物标识码" autocomplete="off" class="layui-input">
@@ -349,6 +349,10 @@
                     }, {
                         field: 'depname',
                         title: '仓库',
+                        width: 150,
+                    }, {
+                        field: 'positionname',
+                        title: '库位',
                         width: 150,
                     }, {
                         field: 'createdate',

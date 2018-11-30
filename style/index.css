@@ -385,6 +385,10 @@
     transform: rotate(180deg);
 }
 
+.layui-tab-title li {
+    padding: 0 8px 0 15px;
+}
+
 /* 数据控制 nav*/
 
 .table-content-title {
@@ -1353,3 +1357,13 @@ body .layui-layer-wei .layui-layer-btn .layui-layer-btn0 {
     background: #0284ff;
     margin-right: 10px;
 }
+
+/* layui.tree */
+.layui-tree li a.active cite {
+    padding: 0 6px;
+    font-size: 14px;
+    font-style: normal;
+    color: #0284ff;
+}
+
+/*body .layui-tree-skin-weimu .layui-tree-branch{color: #EDCA50;}*/

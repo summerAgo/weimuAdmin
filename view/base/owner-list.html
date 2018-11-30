@@ -38,8 +38,8 @@
                         <div class="form-box">
                             <div class="layui-form-item form-left">
                                 <div class="table-form-item layui-input-inline">
-                                    <span id="titleIns" class="input-span">名称</span>
-                                    <input type="text" name="name" placeholder="名称" autocomplete="off" class="layui-input">
+                                    <span class="input-span">名称</span>
+                                    <input type="text" name="name" id="titleIns" placeholder="名称" autocomplete="off" class="layui-input">
                                     <input type="hidden" name="instid" id="instid" value="" autocomplete="off" class="layui-input">
                                 </div>
                             </div>
@@ -93,6 +93,327 @@
         form.render(); //重置表单渲染
         formSelects.render(); //下拉选项
 
+        /* 仓库主类型树结构 */
+        var insList = []; //用户类型顶级目录
+        var inaAllList = []; //用户类型所有的数据
+        var menuIns = {}; //用户类型被点击的数据
+        var firstId = ''; // table首次显示的数据id
+
+        //用户类型菜单树
+        function listIns() {
+            var data = {
+                "utype": 1
+            }; //1是仓库主类型
+            $.ajax({
+                type:"get",
+                url: listInstitution,
+                data: data,
+                cache:false,
+                async:false,
+                success: function (res) {
+                    var insData = res.data;// 该utype下的所有一二级菜单数据
+                    console.log(res);
+                    console.log(insData);
+                    inaAllList = insData;// 该utype下的所有一二级菜单数据
+                    // console.log(inaAllList);
+                    var val = [];// 缓存不同一级id下一级以及一级下的所有二级菜单
+                    // 遍历一级菜单
+                    for (var i = 0; i < insData.length; i++) {
+                        if (insData[i].pid === 0) {
+                            val.push(insData[i]);
+                        }
+                    }
+                    insList = val;// 缓存不同id下一级菜单
+                    var treeData = [];// 缓存树形菜单数据
+                    // console.log(insList);
+                    for (var i = 0; i < val.length; i++) {
+                        var map = {};
+                        firstId = val[0].id;
+                        map["name"] = val[i].name;
+                        map["id"] = val[i].id;
+                        map["pid"] = val[i].pid;
+                        map["spread"] = true;
+                        var children = [];
+                        for (var j = 0; j < insData.length; j++) {
+                            if (val[i].id === insData[j].pid) {
+                                var son = {};
+                                son["name"] = insData[j].name;
+                                son["id"] = insData[j].id;
+                                son["pid"] = insData[j].pid;
+                                children.push(son);
+                            }
+                        }
+                        map["children"] = children;
+                        treeData.push(map);
+                    }
+                    $('#tree-nav').html('');
+                    layui.tree({
+                        elem: '#tree-nav',
+                        skin: 'weimu',
+                        nodes: treeData,
+                        radio: true,
+                        showCheckbox: true,
+                        click: resTable
+                    });
+                },
+                error: function (err) {
+
+                }
+            })
+        }
+        listIns();// 初始化菜单树
+
+        (function () {
+            var lias = $(".layui-tree li a");
+            lias.each(function (i, val) {
+                if (i === 0) {
+                    $(this).addClass('active');
+                }
+                $(this).on("click",function () {
+                    lias.removeClass("active");
+                    $(this).addClass("active");
+                })
+            });
+        }());
+
+        // 根据菜单刷新表格
+        function resTable(d) {
+            menuIns = d;
+            // 刷新表格
+            $("#instid").val(menuIns.id);//隐藏域保存点击的菜单id
+            // $("#titleIns").val(menuIns.name);// 改变输入框里的数据
+            tableIns.reload({
+                where: {
+                    "instid": menuIns.id
+                },
+                page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+            });
+        }
+
+        //添加仓库主类型
+        $("#addins").click(function() {
+            var data = {};
+            data["insList"] = insList;
+            data["utype"] = 1;
+            window.currData = data;
+            $.get('view/user/institution-add.html', {}, function(str) {
+                eaitLayer = layer.open({
+                    title: '添加仓库主类型',
+                    type: 1,
+                    content: str,
+                    resize: false,
+                    area: ['800px', '560px'],
+                });
+            });
+        });
+        //编辑修改仓库主类型
+        $("#updins").click(function() {
+            var data = menuIns;
+            data["insList"] = insList;
+            data["utype"] = 1;
+            window.currData = data; //全局对象存储当前选中行数据
+            $.get('view/user/institution-add.html', {}, function(str) {
+                eaitLayer = layer.open({
+                    title: '修改仓库主类型',
+                    type: 1,
+                    content: str, //注意，如果str是object，那么需要字符拼接。
+                    resize: false,
+                    area: ['800px', '560px'],
+                });
+            });
+        });
+        //删除仓库主类型
+        $("#delins").click(function() {
+            if (!menuIns.id) {
+                layer.msg('请选择一条数据');
+                return;
+            }
+            var ids = [];
+            ids.push(menuIns.id);
+            var data = {
+                "ids": ids.toString()
+            };
+            layer.confirm("是否删除类型", {
+                // icon: 3,
+                title: '提示',
+                skin: 'layui-layer-wei'  //layui-layer-wei，维木class
+            }, function(index) {
+                data['SESSION_NAME']= getCookie('SESSION_NAME');
+                data['TOKEN']= getCookie('TOKEN');
+                $.ajax({
+                    cache: true,
+                    type: "post",
+                    url: delInstitution,
+                    data: data,
+                    async: false,
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    error: function(msg) {
+                        layer.msg('提交失败');
+                        return false;
+                    },
+                    success: function(res) {
+                        if (res.status === 0) {
+                            layer.close(eaitLayer);
+                            layer.msg('提交成功');
+                            listIns();
+                        } else if (res.status === 1) {
+                            goLogin();// 跳转到登录页
+                        }
+                    }
+                });
+            });
+            return false;
+        });
+
+        // 添加与编辑修改仓库主类型提交
+        form.on('submit(addInsSubmit)', function(data) {
+            var title = "";
+            var url = "";
+            var isNameAdd = false;// 判断添加是否同名标识
+            var isNameEdit = false;// 判断修改是否同名标识
+            var isName = true; // 是否重名标识
+            //编辑提交
+            if (data.field.id != null && data.field.id !== "") {
+                title = '确认提交修改';
+                userUrl = updInstitution;
+                isNameEdit = !!(menuIns.name.trim() !== data.field.name.trim());
+            } else {
+                title = '确认添加';
+                userUrl = addInstitution;
+                data.field.id = null;
+                isNameAdd = true;
+            }
+            // 判断仓库主类型是否重复
+            if (isNameAdd || isNameEdit) {
+                $.ajax({
+                    cache: true,
+                    type: "get",
+                    url: isname_institution,
+                    data: {
+                        utype: 1,
+                        name: data.field.name,
+                        'SESSION_NAME':getCookie('SESSION_NAME'),
+                        'TOKEN':getCookie('TOKEN'),
+                    },
+                    async: false,
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    success: function (data) {
+                        if (data.status === 2) {
+                            layer.msg('仓库主类型已存在');
+                            isName = false;
+                        }
+                    }
+                });
+                if (!isName) { return false;}
+            }
+            // 添加仓库主类型去空格
+            data.field.name = data.field.name.replace(/^\s*|\s*$/g,"");
+            // layer.confirm(title, {
+            //     skin: 'layui-layer-wei',  //layui-layer-wei，维木class
+            //     title: '提示'
+            // }, function(index) {
+            data.field['SESSION_NAME']= getCookie('SESSION_NAME');
+            data.field['TOKEN']= getCookie('TOKEN');
+            $.ajax({
+                cache: true,
+                type: "post",
+                url: userUrl,
+                data: data.field,
+                async: false,
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
+                error: function(msg) {
+                    layer.msg('提交失败');
+                    return false;
+                },
+                success: function(res) {
+                    if (res.status === 0) {
+                        layer.close(eaitLayer);
+                        layer.msg('提交成功');
+                        listIns();
+                    } else if (res.status === 0) {
+                        window.location.href = loginPageUrl
+                    }
+                }
+            });
+            // });
+            return false;
+        });
+        /* 仓库主类型树结构 */
+
+        /* table表格数据渲染 */
+        var tableIns = table.render({
+            elem: '#tableContainer-userlist',
+            height: 'full-' + tableTopHeight,
+            where: {
+                "instid": firstId
+            },
+            url: listOwner,
+            parseData: function(res) { //res 即为原始返回的数据
+                if (res.status !== 0) res.status = 0;
+                return {
+                    "code": res.status, //解析接口状态
+                    "msg": res.message, //解析提示文本
+                    "count": res.count, //解析数据长度
+                    "data": res.data //解析数据列表
+                }
+            },
+            request: {
+                pageName: 'offset', //页码的参数名称，默认：page
+                limitName: 'limit' //每页数据量的参数名，默认：limit
+            },
+            cols: [[ //标题栏
+                {
+                    field: 'LAY_TABLE_INDEX',
+                    title: '序号',
+                    width: 40,
+                    templet: function(d) {
+                        return d.LAY_TABLE_INDEX + 1;
+                    }
+                }, {
+                    type: 'checkbox'
+                }, {
+                    field: 'name',
+                    title: '名称',
+                }, {
+                    field: 'contacts',
+                    title: '联系人',
+                }, {
+                    field: 'personname',
+                    title: '业务员',
+                }, {
+                    field: 'fkpersonname',
+                    title: '风控人员',
+                }, {
+                    field: 'customername',
+                    title: '货权人'
+                }
+            ]],
+            even: true,
+            page: true, //是否显示分页
+            limits: [100, 200, 500, 1000],
+            limit: 100, //每页默认显示的数量
+            done: function(res, curr, count) {
+                var addtableBtn = '<div class="rightBotBtn">已经选择<span>0</span>个商品 </div>';
+                $(".layui-table-page").append(addtableBtn);
+            },
+            text: {
+                none: "无匹配数据"
+            },
+            loading: true
+        });
+
+        // 搜索查询内容
         form.on('submit(searchForm)', function(data) {
             var paramSearch = {};
             for (var key in data.field) {
@@ -110,74 +431,14 @@
             return false;
         });
 
-        var tableIns = table.render({
-            elem: '#tableContainer-userlist',
-            height: 'full-' + tableTopHeight,
-            url: listOwner,
-            parseData: function(res) { //res 即为原始返回的数据
-                if (res.status !== 0) res.status = 0;
-                return {
-                    "code": res.status, //解析接口状态
-                    "msg": res.message, //解析提示文本
-                    "count": res.count, //解析数据长度
-                    "data": res.data //解析数据列表
-                }
-            },
-            request: {
-                pageName: 'offset', //页码的参数名称，默认：page
-                limitName: 'limit' //每页数据量的参数名，默认：limit
-            },
-            cols: [
-                [ //标题栏
-                    {
-                        field: 'LAY_TABLE_INDEX',
-                        title: '序号',
-                        width: 40,
-                        templet: function(d) {
-                            return d.LAY_TABLE_INDEX + 1;
-                        }
-                    }, {
-                        type: 'checkbox'
-                    }, {
-                        field: 'name',
-                        title: '名称',
-                    }, {
-                        field: 'contacts',
-                        title: '联系人',
-                    }, {
-                        field: 'personname',
-                        title: '业务员',
-                    }, {
-                        field: 'fkpersonname',
-                        title: '风控人员',
-                    }, {
-                        field: 'customername',
-                        title: '货权人'
-                    }
-                ]
-            ],
-            even: true,
-            page: true, //是否显示分页
-            limits: [100, 200, 500, 1000],
-            limit: 100, //每页默认显示的数量
-            done: function(res, curr, count) {
-                var addtableBtn = '<div class="rightBotBtn">已经选择<span>0</span>个商品 </div>';
-                $(".layui-table-page").append(addtableBtn);
-            },
-            text: {
-                none: "无匹配数据"
-            },
-            loading: true
-        });
-
         //监听锁定操作
         table.on('checkbox(tableContainer-userlist)', function(obj) {
             var checkStatus = table.checkStatus('tableContainer-userlist'); //表格选中状态
             $(".rightBotBtn span").html(checkStatus.data.length); //当前选中了多少商品
         });
 
+        //编辑仓库主
         $(".editBtn").click(function() {
-            //编辑
             var checkStatus = table.checkStatus('tableContainer-userlist');
             if (checkStatus.data.length < 1) {
                 layer.msg("请选择需要编辑的信息");
@@ -200,8 +461,8 @@
             }
         });
 
+        // 刷新table表格
         $("#allRefresh").click(function() {
-            // 刷新表格
             tableIns.reload({
                 page: {
                     curr: 1 //重新从第 1 页开始
@@ -209,7 +470,7 @@
             });
         });
 
-        //删除
+        //删除仓库主
         $(".deleteBtn").click(function() {
             var checkStatus = table.checkStatus('tableContainer-userlist');
             if (checkStatus.data.length < 1) {
@@ -379,236 +640,6 @@
                 error: funErr
             })
         }
-        listIns();
-        //用户类型菜单树
-        function listIns() {
-            var data = {
-                "utype": 1
-            }; //1是仓库主类型
-            rowDataApi(listInstitution, data, function(res) {
-                var insData = res.data;
-                inaAllList = insData;
-                var val = [];
-                for (var i = 0; i < insData.length; i++) {
-                    if (insData[i].pid === 0) {
-                        val.push(insData[i]);
-                    }
-                }
-                insList = val;
-                var treeData = [];
-                console.log(treeData);
-                var number = 0;
-                for (var i = 0; i < val.length; i++) {
-                    var map = {};
-                    map["name"] = val[i].name;
-                    map["id"] = val[i].id;
-                    map["pid"] = val[i].pid;
-                    map["spread"] = true;
-                    var children = [];
-                    for (var j = 0; j < insData.length; j++) {
-                        if (val[i].id === insData[j].pid) {
-                            var son = {};
-                            son["name"] = insData[j].name;
-                            son["id"] = insData[j].id;
-                            son["pid"] = insData[j].pid;
-                            children.push(son);
-                            number++;
-                            if (number === 1) {
-                                menuIns = son;
-                            }
-                        }
-                    }
-                    map["children"] = children;
-                    treeData.push(map);
-                }
-                $('#tree-nav').html('');
-                layui.tree({
-                    elem: '#tree-nav',
-                    nodes: treeData,
-                    radio: true,
-                    showCheckbox: true,
-                    click: resTable
-                });
-            }, function(res) {
-                //失败
-            })
-        }
 
-        var insList = []; //用户类型顶级目录
-        var inaAllList = []; //用户类型所有的数据
-        var menuIns = {}; //用户类型被点击的数据
-        // 根据菜单刷新表格
-        function resTable(d) {
-            menuIns = d;
-            // 刷新表格
-            $("#instid").val(menuIns.id);
-            $("#titleIns").html(menuIns.name);
-            tableIns.reload({
-                where: {
-                    "instid": menuIns.id
-                },
-                page: {
-                    curr: 1 //重新从第 1 页开始
-                }
-            });
-        }
-
-        //添加仓库主类型
-        $("#addins").click(function() {
-            var data = {};
-            data["insList"] = insList;
-            data["utype"] = 1;
-            window.currData = data;
-            $.get('view/user/institution-add.html', {}, function(str) {
-                eaitLayer = layer.open({
-                    title: '添加仓库主类型',
-                    type: 1,
-                    content: str,
-                    resize: false,
-                    area: ['800px', '560px'],
-                });
-            });
-        });
-        //修改仓库主类型
-        $("#updins").click(function() {
-            var data = menuIns;
-            data["insList"] = insList;
-            data["utype"] = 1;
-            window.currData = data; //全局对象存储当前选中行数据
-            $.get('view/user/institution-add.html', {}, function(str) {
-                eaitLayer = layer.open({
-                    title: '修改仓库主类型',
-                    type: 1,
-                    content: str, //注意，如果str是object，那么需要字符拼接。
-                    resize: false,
-                    area: ['800px', '560px'],
-                });
-            });
-        });
-        //删除用户类型
-        $("#delins").click(function() {
-            if (!menuIns.id) {
-                layer.msg('请选择一条数据');
-                return;
-            }
-            var ids = [];
-            ids.push(menuIns.id);
-            var data = {
-                "ids": ids.toString()
-            };
-            layer.confirm("是否删除类型", {
-                // icon: 3,
-                title: '提示',
-                skin: 'layui-layer-wei'  //layui-layer-wei，维木class
-            }, function(index) {
-                data['SESSION_NAME']= getCookie('SESSION_NAME');
-                data['TOKEN']= getCookie('TOKEN');
-                $.ajax({
-                    cache: true,
-                    type: "post",
-                    url: delInstitution,
-                    data: data,
-                    async: false,
-                    xhrFields: {
-                        withCredentials: true
-                    },
-                    crossDomain: true,
-                    error: function(msg) {
-                        layer.msg('提交失败');
-                        return false;
-                    },
-                    success: function(res) {
-                        if (res.status === 0) {
-                            layer.close(eaitLayer);
-                            layer.msg('提交成功');
-                            listIns();
-                        } else if (res.status === 1) {
-                            goLogin();// 跳转到登录页
-                        }
-                    }
-                });
-            });
-            return false;
-        });
-
-        // 添加和编辑用户类型
-        form.on('submit(addInsSubmit)', function(data) {
-            var title = "";
-            var url = "";
-            var isNameAdd = false;// 判断添加是否同名标识
-            var isNameEdit = false;// 判断修改是否同名标识
-            var isName = true; // 是否重名标识
-            //编辑提交
-            if (data.field.id != null && data.field.id !== "") {
-                title = '确认提交修改';
-                userUrl = updInstitution;
-                isNameEdit = !!(menuIns.name.trim() !== data.field.name.trim());
-            } else {
-                title = '确认添加';
-                userUrl = addInstitution;
-                data.field.id = null;
-                isNameAdd = true;
-            }
-            // 判断仓库主类型是否重复
-            if (isNameAdd || isNameEdit) {
-                $.ajax({
-                    cache: true,
-                    type: "get",
-                    url: isname_institution,
-                    data: {
-                        utype: 1,
-                        name: data.field.name,
-                        'SESSION_NAME':getCookie('SESSION_NAME'),
-                        'TOKEN':getCookie('TOKEN'),
-                    },
-                    async: false,
-                    xhrFields: {
-                        withCredentials: true
-                    },
-                    crossDomain: true,
-                    success: function (data) {
-                        if (data.status === 2) {
-                            layer.msg('仓库主类型已存在');
-                            isName = false;
-                        }
-                    }
-                });
-                if (!isName) { return false;}
-            }
-            // 添加仓库主类型去空格
-            data.field.name = data.field.name.replace(/^\s*|\s*$/g,"");
-            // layer.confirm(title, {
-            //     skin: 'layui-layer-wei',  //layui-layer-wei，维木class
-            //     title: '提示'
-            // }, function(index) {
-                data.field['SESSION_NAME']= getCookie('SESSION_NAME');
-                data.field['TOKEN']= getCookie('TOKEN');
-                $.ajax({
-                    cache: true,
-                    type: "post",
-                    url: userUrl,
-                    data: data.field,
-                    async: false,
-                    xhrFields: {
-                        withCredentials: true
-                    },
-                    crossDomain: true,
-                    error: function(msg) {
-                        layer.msg('提交失败');
-                        return false;
-                    },
-                    success: function(res) {
-                        if (res.status === 0) {
-                            layer.close(eaitLayer);
-                            layer.msg('提交成功');
-                            listIns();
-                        } else if (res.status === 0) {
-                            window.location.href = loginPageUrl
-                        }
-                    }
-                });
-            // });
-            return false;
-        });
     })
 </script>
