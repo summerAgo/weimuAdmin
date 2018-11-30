@@ -209,11 +209,17 @@
     top: 1px;
     text-align: center;
     font-size: 14px;
-    /*color: #c2c2c2;*/
-    color: #edf5fb;
+    color: transparent;
     transition: all .2s;
     -webkit-transition: all .2s;
 }
+
+/*.layui-tab li:hover .layui-tab-close {*/
+    /*color: #999!important;*/
+    /*box-sizing: border-box!important;*/
+    /*font-weight: bold!important;*/
+/*}*/
+
 
 .layui-tab-title li {
     position: relative;
@@ -256,14 +262,6 @@
 .layui-tab li:first-child {
     color: #999;
     font-size: 18px;
-}
-
-.layui-tab li:hover .layui-tab-close {
-    color: #fff!important;
-    background-color: #ff5722!important;
-    border-radius: 2px!important;
-    box-sizing: border-box!important;
-    font-weight: bold!important;
 }
 
 .layui-tab .layui-this {
@@ -343,6 +341,21 @@
 
 .nav-tabs li:hover {
     color: #0284ff;
+}
+
+.nav-tabs .layui-tab-title li:hover .layui-tab-close {
+    color: #999;
+}
+
+.nav-tabs .layui-tab-title li.layui-this:hover .layui-tab-close {
+    color: #fff;
+    background-color: #ff3c4e;
+}
+
+.nav-tabs .layui-tab-title li .layui-tab-close:hover {
+    color: #fff;
+    font-weight: bold;
+    background-color: #ff3c4e;
 }
 
 .nav-tabs .layui-tab-title {
