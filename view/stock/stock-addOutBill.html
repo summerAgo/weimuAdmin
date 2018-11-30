@@ -361,6 +361,23 @@
                         field: 'chang',
                         title: '长度'
                     }, {
+                        field: 'aprice',
+                        title: '评估单价'+ unitMoney,
+                        width: 130,
+                        templet: function (d) {
+                            return formatNum(d.aprice) || "";
+                        },
+                    }, {
+                        field: 'num',
+                        title: '数量（m³）',
+                        width: 120,
+                    }, {
+                        field: "",
+                        title: "总金额",
+                        templet: function (d) {
+                            return formatNum(d.aprice * d.num);
+                        },
+                    }, {
                         field: 'depname',
                         title: '仓库名称'
                     }, {
@@ -375,7 +392,8 @@
                         title: '供应商'
                     }, {
                         field: 'num',
-                        title: '数量（m³）'
+                        title: '数量（m³）',
+                        width: 120,
                     }, {
                         field: 'aprice',
                         title: '评估金额' + unitMoney,
@@ -729,7 +747,8 @@
                                 title: '长度'
                             }, {
                                 field: 'num',
-                                title: '数量（m³）'
+                                title: '数量（m³）',
+                                width: 120,
                             }, {
                                 field: 'containernum',
                                 title: '货柜号',
