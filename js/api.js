@@ -29,6 +29,7 @@ var preEntryDelete = pathUrl + "order/warehousing/delete";//预入库删除
 var preEntryUpdate = pathUrl + "order/warehousing/update";//预入库编辑
 var preEntrygetByOrderno = pathUrl + "order/warehousing/getByOrderno?ish=1";//预入库单详情 ish:获取单号所有信息
 var preEntryexamineStock = pathUrl + "order/warehousing/examineStock";//预入库单审核为库存
+var preEntryexamineStockGoods = pathUrl + "order/warehousing/examineStockGoods";//选择预入库单中的货物入库为库存
 var entryHistory = preEntry + "?ishistory=1";//入库记录
 var getOrdernoDetails =  pathUrl + "order/outtreasury/getOrdernoDetails" //库存中查询货物 （仓库：depotid 仓库主：ownerid）
 

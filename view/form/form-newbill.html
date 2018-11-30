@@ -302,7 +302,7 @@
             data: tableData,
             cols: [[ //标题栏
                 {
-                    type: 'radio'
+                    type: 'checkbox'
                 }, {
                     field: 'LAY_TABLE_INDEX',
                     title: '序号',
@@ -413,16 +413,56 @@
             if (!orderno) {
                 return false;
             }
-            var ids = []; //订单号
-            ids.push(orderno.orderno);
+
+            var checkStatus = table.checkStatus('tableContainer-from'); //表格选中状态
+            var checkData = checkStatus.data;
+            console.log(checkData);
+            if(checkData.length < 1){
+                layer.msg("请选择货物");
+                return ;
+            }
+            var parent = $(".form-newbill");
+            var ownerid = parent.find("input[name='ownerid']").val();
+            var depotname = parent.find("input[name='depotid']").val();
+            var origin = parent.find("input[name='origin']").val();
+            var supplierid = parent.find("input[name='supplierid']").val();
+            var positionid = parent.find("input[name='positionid']").val();
+
+            var suppliername = parent.find("input[name='suppliername']").val();
+
+            if (null == ownerid || ownerid.length < 1) {
+                layer.msg("请选择仓库主");
+                return;
+            }
+            if (null == depotname || depotname.length < 1) {
+                layer.msg("请选择仓库");
+                return;
+            }
+            if (null == positionid || positionid.length < 1) {
+                layer.msg("请选择库位");
+                return;
+            }
+
+
+            var uuidlist = []; //货物uuid
+            for(var i=0;i<checkData.length;i++){
+                uuidlist.push(checkData[i].uuid);
+            }
+            
             //审核订单为库存
             $.ajax({
-                url: preEntryexamineStock,
+                url: preEntryexamineStockGoods,
                 type: "post",
                 data: {
-                    'ids': ids,
-                     'SESSION_NAME':getCookie('SESSION_NAME'),
-                     'TOKEN':getCookie('TOKEN'),
+                    'orderno':orderno.orderno,
+                    'uuidlist':uuidlist.toString(),
+                    'ownerid': ownerid,
+                    'depotid': depotname,
+                    'origin': origin,
+                    'supplierid': supplierid,
+                    'positionid': positionid,
+                    'SESSION_NAME':getCookie('SESSION_NAME'),
+                    'TOKEN':getCookie('TOKEN'),
                 },
                 traditional: true,
                 xhrFields: {
@@ -540,12 +580,12 @@
         });
 
         //监听表格复选框选择
-        var checkBoxTrDomArr;
-        table.on('radio(tableContainer-from)', function(obj) {
-            // console.log(obj)
-            checkBoxTrDomArr = obj;
-            // console.log(checkBoxTrDomArr)
-        });
+        // var checkBoxTrDomArr;
+        // table.on('checkbox(tableContainer-from)', function(obj) {
+        //     console.log(obj)
+        //     checkBoxTrDomArr = obj;
+        //     // console.log(checkBoxTrDomArr)
+        // });
 
         $(".deleteBtnLayer").click(function() {
             if (!checkBoxTrDomArr) {

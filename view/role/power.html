@@ -22,13 +22,13 @@
         <div class="layui-col-md8 role-rt">
             <div class="role-title">按钮权限</div>
             <div class="layui-tab">
-                <ul class="layui-tab-title zimenutab">
-                    <!-- <li class="layui-this">预入库</li>
+                <ul class="layui-tab-title">
+                    <li class="layui-this">预入库</li>
                     <li>新建预入库</li>
-                    <li>添加货物信息</li> -->
+                    <li>添加货物信息</li>
                 </ul>
-                <div class="layui-tab-content menutab-content">
-                    <!-- <div class="layui-tab-item layui-show">
+                <div class="layui-tab-content">
+                    <div class="layui-tab-item layui-show">
                         <div class="content-title">[新入库]所有权限按钮</div>
                         <div class="content-cont">
                             <div id="formEditView"></div>
@@ -39,7 +39,7 @@
                     </div>
                     <div class="layui-tab-item">
                         <div class="content-title">[添加货物信息]所有权限按钮</div>
-                    </div> -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -175,96 +175,122 @@
         var layer = layui.layer;
         var dataall = window.currData;
 
+        // 模板渲染
+        var getTpl = formUserRole.innerHTML,
+            view = document.getElementById('formEditView');
+        laytpl(getTpl).render(dataall, function (html) {
+            view.innerHTML = html;
+        });
+        form.render(); //重置表单渲染
 
-        function initForm(){
-            // 模板渲染
-            var getTpl = formUserRole.innerHTML,view = document.getElementById('formEditView');
-            laytpl(getTpl).render(dataall, function (html) {
-                view.innerHTML = html;
-            });
-            form.render(); //重置表单渲染
-        }        
+        var saveData = null;//最后提交后台的数据源
+        var roleAut = window.currData;
 
-        // 初始化(查询所有的菜单)
+        // 初始化封装请求参数
+        var where = [];
+        where['SESSION_NAME'] = getCookie('SESSION_NAME');
+        where['TOKEN'] = getCookie('TOKEN');
+        where['roleid'] = roleAut.id;  //赋值角色id
+
+        //查询菜单
         $.ajax({
-            //url: 'tree.json',
             url: menuAll,
             dataType: 'json',
             success: function (data) {
-                var roleAut = window.currData; //当前选中行数据
-                var roleData = {"roleid": roleAut.id};//赋值角色id
-                //根据角色id查询所有的按钮权限
-                getButAuthorityAll(roleData, function (res) {
+                if(data.status == 0){
                     var allMenu = data.data;//所有菜单数据
-                    var ant = {}; // 所有按钮权限
-                    if (res.status === 0) {
-                        ant = res.data;
-                    }
-                    console.log(allMenu);
-                    for (var i = 0; i < allMenu.length; i++) { //组装数据树
-                        if (allMenu[i].pid === 0) {
-                            var map = {};
-                            map["label"] = allMenu[i].name;
-                            map["value"] = allMenu[i].id;
-
-                            var list = [];
-                            for (var k = 0; k < allMenu.length; k++) {
-                                if (allMenu[i].id === allMenu[k].pid) {
-                                    var mapTwo = {};
-                                    mapTwo["label"] = allMenu[k].name;
-                                    mapTwo["value"] = allMenu[k].id;
-                                    for (var key in ant) { //循环每个菜单
-                                        if (allMenu[k].id === key) {
-                                            mapTwo["checked"] = true;
-                                            break;
-                                        } else {
-                                            mapTwo["checked"] = false;
-                                        }
-                                    }
-                                    list.push(mapTwo);
-                                }
-                            }
-                            if (list.length > 0) {
-                                map["children"] = list;
-                            } else {
-                                for (var key in ant) { //循环每个菜单
-                                    if (allMenu[i].id === key) {
-                                        map["checked"] = true;
-                                        break;
-                                    } else {
-                                        map["checked"] = false;
-                                    }
-                                }
-                            }
-                            trees.push(map);
-                        }
-                    }
-                    console.log(trees);
-                    eleTree.render({
-                        elem: '.ele1',
-                        data: trees,
-                        showCheckbox: true,
-                        drag: false,
-                        accordion: true
-                    });
-
-                    allButtonData(function (res) {//查询所有的按钮
-                        allbutData = res.data;
-                    });
-
-                    // allAuthority ;//所有的权限格式：[{'菜单id':[按钮id]}]
-                    for (var key in ant) { //循环每个菜单
-                        var map = {};
-                        var butlist = ant[key];
-                        map[key] = butlist;
-                        allAuthority.push(map);
-                    }
-                    // console.log(allAuthority);
-                    var val = JSON.stringify(allAuthority);
-                    sessionStorage.setItem('allAuthority', val);
-                });
+                    //根据角色id查询所有的按钮权限
+                    getButAuthorityAll(allMenu,where);
+                }
+                //请求错误
             }
         });
+
+        //根据角色id（data）查询所有的按钮权限
+        function getButAuthorityAll(allMenu,where) {
+            console.log(where);
+            $.ajax({
+                url: getAuthorityAll,
+                data: {
+                    'SESSION_NAME':getCookie('SESSION_NAME'),
+                    'roleid':roleAut.id
+                },
+                //dataType: 'json',
+                success: function (data) {
+                    if(data.status == 0){
+                        initAuth(allMenu,data.data);
+                    }
+                }
+            });
+        }
+
+        function initAuth(allMenu,ant){
+            //var ant = {}; // 所有按钮权限
+            console.log(allMenu);
+            for (var i = 0; i < allMenu.length; i++) { //组装数据树
+                if (allMenu[i].pid === 0) {
+                    var map = {};
+                    map["label"] = allMenu[i].name;
+                    map["value"] = allMenu[i].id;
+
+                    var list = [];
+                    for (var k = 0; k < allMenu.length; k++) {
+                        if (allMenu[i].id === allMenu[k].pid) {
+                            var mapTwo = {};
+                            mapTwo["label"] = allMenu[k].name;
+                            mapTwo["value"] = allMenu[k].id;
+                            for (var key in ant) { //循环每个菜单
+                                if (allMenu[k].id === key) {
+                                    mapTwo["checked"] = true;
+                                    break;
+                                } else {
+                                    mapTwo["checked"] = false;
+                                }
+                            }
+                            list.push(mapTwo);
+                        }
+                    }
+                    if (list.length > 0) {
+                        map["children"] = list;
+                    } else {
+                        for (var key in ant) { //循环每个菜单
+                            if (allMenu[i].id === key) {
+                                map["checked"] = true;
+                                break;
+                            } else {
+                                map["checked"] = false;
+                            }
+                        }
+                    }
+                    trees.push(map);
+                }
+            }
+            console.log(trees);
+            eleTree.render({
+                elem: '.ele1',
+                data: trees,
+                showCheckbox: true,
+                drag: false,
+                accordion: true
+            });
+
+            allButtonData(function (res) {//查询所有的按钮
+                allbutData = res.data;
+            });
+
+            // allAuthority ;//所有的权限格式：[{'菜单id':[按钮id]}]
+            for (var key in ant) { //循环每个菜单
+                var map = {};
+                var butlist = ant[key];
+                map[key] = butlist;
+                allAuthority.push(map);
+            }
+            // console.log(allAuthority);
+            var val = JSON.stringify(allAuthority);
+            sessionStorage.setItem('allAuthority', val);
+        }
+
+
 
         // eleTree.on("add(treeData)", function (data) {
         //     console.log(0);
@@ -294,13 +320,6 @@
             console.log(data);
             var cur = data.currentData;
             var isChoice = cur.checked;
-
-            //先把主菜单放到选项卡第一个，并生成对应内容器
-            $(".zimenutab").html("<li class='layui-this'>"+cur.label+"</li>");
-            $(".menutab-content").html('');
-            createButtonContent('.menutab-content',cur.label)
-            
-
             //是否有子节点
             if (cur.children) {
                 var children = cur.children;
@@ -376,29 +395,6 @@
             sessionStorage.setItem('allAuthority', val);
         }
 
-        function createButtonContent(classname,title){
-            var html = '<div class="layui-tab-item layui-show">'+
-                            '<div class="content-title">['+title+']所有权限按钮</div>'+
-                            '<div class="content-cont">'+
-                                '<div id="formEditView"></div>'+
-                            '</div>'+
-                        '</div>';
-            $(classname).append(html);
-        }
-
-        //查询角色权限
-        function allMuneAuthority(data, success) {
-            data['SESSION_NAME'] = getCookie('SESSION_NAME');
-            data['TOKEN'] = getCookie('TOKEN');
-            $.ajax({
-                //url: 'tree.json',
-                url: rolegetAuthority,
-                data: data,
-                dataType: 'json',
-                success: success
-            });
-        }
-
         var allbutData = [];//所有的按钮
         var menuid = null;//被点击的按钮id
         var allAuthority = [];//所有的权限格式：[{'菜单id':[按钮id]}]
@@ -406,6 +402,7 @@
 
         //查询菜单下面的按钮(menuid菜单id)
         function allbutton(menuid) {
+            menuid = menuid;
             var butAllData = [];
             for (var i = 0; i < allbutData.length; i++) {
                 if (allbutData[i].menuid === menuid) {
@@ -435,26 +432,16 @@
                 }
             }
             dataall["butAllData"] = butAllData;
-            initForm();
+            laytpl(getTpl).render(dataall, function (html) {
+                view.innerHTML = html;
+            });
+            form.render(); //重置表单渲染
         }
 
         //查询所有的按钮
         function allButtonData(success) {
             $.ajax({
                 url: buttonAllList,
-                dataType: 'json',
-                success: success
-            });
-        }
-
-        //根据角色id（data）查询所有的按钮权限
-        function getButAuthorityAll(data, success) {
-            data['SESSION_NAME'] = getCookie('SESSION_NAME');
-            data['TOKEN'] = getCookie('TOKEN');
-            data['type'] = 0;
-            $.ajax({
-                url: getAuthorityAll,
-                data: data,
                 dataType: 'json',
                 success: success
             });

@@ -97,8 +97,8 @@
                 success: function (data) {
                     if (data.status === 0) {
                         layer.msg("登录成功");
-                        setCookie("SESSION_NAME", data.SESSION_NAME, "h1");
-                        setCookie("TOKEN", data.TOKEN, "h1");
+                        setCookie("SESSION_NAME", data.SESSION_NAME, "h12");
+                        setCookie("TOKEN", data.TOKEN, "h12");
                         //该用户菜单权限JSON
                         sessionStorage.setItem("menuAuthority", JSON.stringify(data.menuAuthority));
                         //setCookie("menuAuthority", JSON.stringify(data.menuAuthority),"h12");
