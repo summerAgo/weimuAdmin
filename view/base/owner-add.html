@@ -13,6 +13,12 @@
             </div>
         </div>
         <div class="layui-form-item layui-normal-line">
+            <label class="layui-form-label form-required">仓库编码</label>
+            <div class="layui-input-inline">
+                <input type="text" id="code" name="code" lay-verify="required" placeholder="字母与数字固定长度4位" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item layui-normal-line">
             <label class="layui-form-label form-required">名称</label>
             <div class="layui-input-inline">
                 <input type="text" id="name" name="name" lay-verify="required" placeholder="必填项,请输入仓库主名" class="layui-input" value="{{d.name||''}}">

@@ -98,6 +98,7 @@
         var inaAllList = []; //用户类型所有的数据
         var menuIns = {}; //用户类型被点击的数据
         var firstId = ''; // table首次显示的数据id
+        var firstName = ''; // table首次显示的数据name
 
         //用户类型菜单树
         function listIns() {
@@ -112,8 +113,8 @@
                 async:false,
                 success: function (res) {
                     var insData = res.data;// 该utype下的所有一二级菜单数据
-                    console.log(res);
-                    console.log(insData);
+                    // console.log(res);
+                    // console.log(insData);
                     inaAllList = insData;// 该utype下的所有一二级菜单数据
                     // console.log(inaAllList);
                     var val = [];// 缓存不同一级id下一级以及一级下的所有二级菜单
@@ -129,6 +130,7 @@
                     for (var i = 0; i < val.length; i++) {
                         var map = {};
                         firstId = val[0].id;
+                        firstName = val[0].name;
                         map["name"] = val[i].name;
                         map["id"] = val[i].id;
                         map["pid"] = val[i].pid;
@@ -146,6 +148,8 @@
                         map["children"] = children;
                         treeData.push(map);
                     }
+                    menuIns = treeData[0];// 初始点击为第一条菜单
+                    // console.log(menuIns);
                     $('#tree-nav').html('');
                     layui.tree({
                         elem: '#tree-nav',
@@ -162,26 +166,29 @@
             })
         }
         listIns();// 初始化菜单树
-
-        (function () {
+        // console.log(firstId);
+        // console.log(firstName);
+        function treeActive() {
             var lias = $(".layui-tree li a");
             lias.each(function (i, val) {
-                if (i === 0) {
-                    $(this).addClass('active');
+                var _this = $(val);
+                if (_this.find("cite").text() === firstName) {
+                    _this.addClass('active');
                 }
-                $(this).on("click",function () {
+                _this.on("click",function () {
                     lias.removeClass("active");
-                    $(this).addClass("active");
+                    _this.addClass("active");
                 })
             });
-        }());
+        }
+        treeActive();
 
-        // 根据菜单刷新表格
+        // 点击菜单，根据菜单刷新表格
         function resTable(d) {
+            console.log(d);
             menuIns = d;
             // 刷新表格
             $("#instid").val(menuIns.id);//隐藏域保存点击的菜单id
-            // $("#titleIns").val(menuIns.name);// 改变输入框里的数据
             tableIns.reload({
                 where: {
                     "instid": menuIns.id
@@ -198,6 +205,7 @@
             data["insList"] = insList;
             data["utype"] = 1;
             window.currData = data;
+            console.log(window.currData);
             $.get('view/user/institution-add.html', {}, function(str) {
                 eaitLayer = layer.open({
                     title: '添加仓库主类型',
@@ -208,12 +216,14 @@
                 });
             });
         });
+
         //编辑修改仓库主类型
         $("#updins").click(function() {
             var data = menuIns;
             data["insList"] = insList;
             data["utype"] = 1;
             window.currData = data; //全局对象存储当前选中行数据
+            console.log(window.currData);
             $.get('view/user/institution-add.html', {}, function(str) {
                 eaitLayer = layer.open({
                     title: '修改仓库主类型',
@@ -224,8 +234,10 @@
                 });
             });
         });
+
         //删除仓库主类型
         $("#delins").click(function() {
+            console.log(menuIns);
             if (!menuIns.id) {
                 layer.msg('请选择一条数据');
                 return;
@@ -235,6 +247,7 @@
             var data = {
                 "ids": ids.toString()
             };
+            console.log(data);
             layer.confirm("是否删除类型", {
                 // icon: 3,
                 title: '提示',
@@ -341,6 +354,7 @@
                         layer.close(eaitLayer);
                         layer.msg('提交成功');
                         listIns();
+                        treeActive();
                     } else if (res.status === 0) {
                         window.location.href = loginPageUrl
                     }
