@@ -78,7 +78,7 @@
             for (var key in data.field) {
                 // 参数赋值
                 if (data.field[key] != "") {
-                    paramSearch[key] = data.field[key]
+                    paramSearch[key] = data.field[key].replace(/^\s*|\s*$/g,"");
                 }
             }
             // 表格重新加载
@@ -205,7 +205,7 @@
         table.on('tool(tableContainer)', function(obj) {
             var curData = obj.data;
             if (obj.event === 'click') {
-                // sessionStorage.setItem('layerModifyWarn', JSON.stringify(curData));    
+                // sessionStorage.setItem('layerModifyWarn', JSON.stringify(curData));
                 $.get('view/risk/risk-layerModifyWarn.html', {}, function(str) {
                     modifyLayer = layer.open({
                         title: '出货警戒线修改',
@@ -284,7 +284,7 @@
                     });
 
                     compute($("input[name='cordonmoney']").val(), $("input[name='financingmoney']").val())
-                    
+
                     function compute(a, b) {
                         if (isNaN(a) || a == 0 || isNaN(b) || b == 0) {
                             console.log(1);

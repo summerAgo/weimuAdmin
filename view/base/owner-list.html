@@ -185,7 +185,6 @@
 
         // 点击菜单，根据菜单刷新表格
         function resTable(d) {
-            console.log(d);
             menuIns = d;
             // 刷新表格
             $("#instid").val(menuIns.id);//隐藏域保存点击的菜单id
@@ -247,7 +246,6 @@
             var data = {
                 "ids": ids.toString()
             };
-            console.log(data);
             layer.confirm("是否删除类型", {
                 // icon: 3,
                 title: '提示',
@@ -274,6 +272,7 @@
                             layer.close(eaitLayer);
                             layer.msg('提交成功');
                             listIns();
+                            treeActive();
                         } else if (res.status === 1) {
                             goLogin();// 跳转到登录页
                         }
@@ -283,7 +282,7 @@
             return false;
         });
 
-        // 添加与编辑修改仓库主类型提交
+        // 添加与修改仓库主类型提交
         form.on('submit(addInsSubmit)', function(data) {
             var title = "";
             var url = "";
@@ -433,7 +432,7 @@
             for (var key in data.field) {
                 //参数赋值
                 if (data.field[key] !== "") {
-                    paramSearch[key] = data.field[key]
+                    paramSearch[key] = data.field[key].replace(/^\s*|\s*$/g,"");
                 }
             }
             tableIns.reload({
