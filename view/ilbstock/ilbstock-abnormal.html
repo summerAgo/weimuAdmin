@@ -220,7 +220,7 @@
             for (var key in data.field) {
                 // 参数赋值
                 if (data.field[key] !== "") {
-                    paramSearch[key] = data.field[key]
+                    paramSearch[key] = data.field[key].replace(/^\s*|\s*$/g,"");
                 }
             }
             // 表格重新加载
@@ -235,7 +235,7 @@
 
         var tableIns = table.render({
             elem: '#tableContainer',
-            height: 'full-' + tableTopHeight, // full -- 
+            height: 'full-' + tableTopHeight, // full --
             url: abnByidList, // 数据接口
             // 任意数据格式解析成 table 组件规定的数据格式
             parseData: function(res) { //res 即为原始返回的数据
@@ -298,11 +298,11 @@
                         field: 'pprice',
                         title: '采购单价'
                     }
-                    //, 
+                    //,
                     // {
                     //     field: 'username',
                     //     title: '创建人'
-                    // }, 
+                    // },
                     /*{
                         field: 'status',
                         title: '状态',

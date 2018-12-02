@@ -148,7 +148,7 @@
                     layer.msg("该仓库主下无仓库信息");
                     return false;
                 }
-                
+
                 formSelects.data('depotSelectOut', 'local', {
                     arr: depotList //仓库列表
                 });
@@ -222,7 +222,7 @@
             for (var key in data.field) {
                 //参数赋值
                 if (data.field[key] !== "") {
-                    paramSearch[key] = data.field[key]
+                    paramSearch[key] = data.field[key].replace(/^\s*|\s*$/g,"");
                 }
             }
             tableIns.reload({

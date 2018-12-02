@@ -81,7 +81,7 @@
         var upload = layui.upload;
         var laydate = layui.laydate;
         var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 103); //内容区域所需减去的高度
-        
+
         var menuKey = "a_10"; //当前页面key
         var domObj = $("#ilbstock-inventory .table-tools").find("ul"); //当前页面容器
         btnIsList(domObj,menuKey);//按钮权限
@@ -199,7 +199,7 @@
             for (var key in data.field) {
                 // 参数赋值
                 if (data.field[key] !== "") {
-                    paramSearch[key] = data.field[key]
+                    paramSearch[key] = data.field[key].replace(/^\s*|\s*$/g,"");
                 }
             }
             // 表格重新加载
@@ -214,7 +214,7 @@
 
         var tableIns = table.render({
             elem: '#tableContainer',
-            height: 'full-' + tableTopHeight, // full -- 
+            height: 'full-' + tableTopHeight, // full --
             url: checkList, // 数据接口
             // 任意数据格式解析成 table 组件规定的数据格式
             parseData: function(res) { //res 即为原始返回的数据
@@ -232,7 +232,7 @@
                 limitName: 'limit' // 每页数据量的参数名，默认：limit
             },
             cols: [[ // 标题栏
-                
+
                 {
                     field: 'LAY_TABLE_INDEX',
                     title: '序号',

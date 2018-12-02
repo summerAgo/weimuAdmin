@@ -66,7 +66,7 @@
         var laytpl = layui.laytpl;
         var upload = layui.upload;
         var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 93); //内容区域所需减去的高度
-        
+
         var menuKey = "a_20"; //当前页面key
         var domObj = $("#depot-list .table-tools").find("ul"); //当前页面容器
         btnIsList(domObj, menuKey); //按钮权限
@@ -81,7 +81,7 @@
             for (var key in data.field) {
                 //参数赋值
                 if (data.field[key] !== "") {
-                    paramSearch[key] = data.field[key]
+                    paramSearch[key] = data.field[key].replace(/^\s*|\s*$/g,"");
                 }
             }
             tableIns.reload({

@@ -121,7 +121,7 @@
             for (var key in data.field) {
                 //参数赋值
                 if (data.field[key] !== "") {
-                    paramSearch[key] = data.field[key]
+                    paramSearch[key] = data.field[key].replace(/^\s*|\s*$/g,"");
                 }
             }
             tableIns.reload({

@@ -3,7 +3,7 @@
     <!--<div class="table-content-title layer-level">
         <div class="table-tools layerInventoryTools">
             <ul class="layui-nav" lay-filter="talbe-tools">
-    
+
             </ul>
         </div>
     </div>-->
@@ -110,7 +110,7 @@
             for (var key in data.field) {
                 //参数赋值
                 if (data.field[key] !== "") {
-                    paramSearch[key] = data.field[key]
+                    paramSearch[key] = data.field[key].replace(/^\s*|\s*$/g,"");
                 }
             }
             depotData.ownerid = data.field.ownerid;
@@ -266,7 +266,7 @@
                     //         }else{
                     //             return "<span style='color:red'>"+v+"</span>";
                     //         }
-                            
+
                     //     }
                     // },
                     {

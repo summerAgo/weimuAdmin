@@ -49,7 +49,7 @@
         form.render(); //重置表单渲染
         form.on('submit(searchForm)', function(data) {
             var paramSearch = {};
-            paramSearch[data.field.searchType] = data.field.searchValue; //查询参数
+            paramSearch[data.field.searchType] = data.field.searchValue.replace(/^\s*|\s*$/g,"");//查询参数
             if (data.field.searchType === "reset") {
                 paramSearch = {};
             }
