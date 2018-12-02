@@ -241,8 +241,8 @@
                                 layer.msg('修改失败');
                             },
                             success: function(res) {
-                                if (res.status === 1) {
-                                    goLogin();// 跳转到登录页
+                                if (res.status == 1) {
+                                    goLogin(layer);// 跳转到登录页
                                 }
                                 if (res.status == 0) {
                                     layer.msg("保存修改成功");
@@ -252,8 +252,6 @@
                                             curr: 1 // 重新从第 1 页开始
                                         }
                                     });
-                                } else {
-                                    layer.msg("保存修改失败");
                                 }
                             }
                         });

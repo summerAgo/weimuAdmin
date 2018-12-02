@@ -737,6 +737,10 @@
                                 title: '评估状态',
                                 templet: function(d) {
                                     //默认无
+                                    if (d.isapp == 1) {
+                                        return '<span style="color:red;">不用评估</span>';
+                                    }
+                                    //默认无
                                     if (null == d.aprice || d.aprice < 0) {
                                         return '<span style="color:red;">未评估</span>';
                                     }
@@ -793,7 +797,7 @@
                         }
                         var i = 0;
                         $("#goodsList .layui-table-body.layui-table-main").find("input[name='layTableCheckbox']").each(function() {
-                            if (!res.data[i].aprice || data[item].aprice <= 0) {
+                            if (!res.data[i].aprice || data[i].aprice <= 0) {
                                 $(this).attr("disabled", 'disabled').removeAttr("checked");
                                 form.render('checkbox');
                             }
@@ -801,7 +805,7 @@
                         });
                         i = 0;
                         $("#goodsList .layui-table-fixed.layui-table-fixed-l").find(".layui-table-body").find("input[name='layTableCheckbox']").each(function() {
-                            if (!res.data[i].aprice || data[item].aprice <= 0) {
+                            if (!res.data[i].aprice || data[i].aprice <= 0) {
                                 $(this).attr("disabled", 'disabled').removeAttr("checked");
                                 form.render('checkbox');
                             }

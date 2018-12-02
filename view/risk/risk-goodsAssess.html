@@ -317,6 +317,8 @@
                                 width: 130,
                                 title: '采购单价' + unitMoney,
                                 templet: function (d) {
+                                    if(!d.pprice)
+                                    return "";
                                     return formatNum(d.pprice);
                                 }
                             }, {
@@ -352,21 +354,59 @@
 
                     //监听锁定操作
                     form.on('switch(isapp)', function(obj){
-                        console.log(this.value + ":" + obj.elem.checked);
+                        //console.log(this.value + ":" + obj.elem.checked);
+                        console.log(obj);
                         // layer.tips(this.value + '-' + this.name + '：'+ obj.elem.checked, obj.othis);
+                        var isapp = 1;
+                        if(obj.elem.checked){
+                            isapp = 0
+                        }
+                        var a = apriceChangeValue[this.value];
+                        if(a){
+                            apriceChangeValue[this.value] = {
+                                num : a.num,
+                                aprice : a.aprice,
+                                isapp : isapp
+                            };
+                        }else{
+                            apriceChangeValue[this.value] = {
+                                num : null,
+                                aprice : null,
+                                isapp : isapp
+                            };
+                        }
                     });
 
                     var apriceChangeValue = {}; //单元格编辑更改评估价格数据对象
+                    //var isapriceChangeValue = {}; //单元格编辑是否评估价格数据对象
+
 
                     //监听编辑
                     table.on('edit(tableContainer-from)', function(obj) {
                         // console.log(obj.value); //得到修改后的值
                         // console.log(obj.field); //当前编辑的字段名
-                        console.log(obj.data); //所在行的所有相关数据
+                        console.log(obj); //所在行的所有相关数据
+                        console.log(123);
                         if (!obj.value || isNaN(obj.value)) {
                             layer.msg("估价金额只能为数字");
                         }
-                        apriceChangeValue[obj.data.id] = obj.value;
+                        //apriceChangeValue[obj.data.id] = obj.value;
+                        var a = apriceChangeValue[obj.data.id];
+                        if(a){
+                            apriceChangeValue[obj.data.id] = {
+                                num : a.num,
+                                aprice : obj.value,
+                                isapp : a.isapp
+                            };
+                        }else{
+                            apriceChangeValue[obj.data.id] = {
+                                num : obj.data.num,
+                                aprice : obj.value,
+                                isapp : 0
+                            };
+                        }
+                        
+
                         console.log(apriceChangeValue);
                     });
 
@@ -378,7 +418,7 @@
                             layer.msg("当前估价未作修改");
                         } else {
                             for (var key in apriceChangeValue) {
-                                if (isNaN(apriceChangeValue[key]) || apriceChangeValue[key] === "") {
+                                if (isNaN(apriceChangeValue[key].aprice) || apriceChangeValue[key].aprice === "") {
                                     layer.msg("保存估价失败，金额只能为数字");
                                     status = false;
                                 }
@@ -420,6 +460,8 @@
                     function editAprice(ownerid, apriceJson, tableObj) {
                         //请求数据源示例
                         var status = false;
+                        console.log(apriceJson);
+                        
                         $.ajax({
                             url: saveEvaluationPrice,
                             type: "POST",
