@@ -284,7 +284,7 @@
 
         form.on('submit(addGoodsForm)', function(data) {
             tableData.push(data.field);
-            $(".rightBotBtn span").html(tableData.length); //当前选中了多少商品
+            $(".rightBotBtn span").html(tableData.length); //当前选中了多少货物
             tableIns.reload({
                 data: tableData,
                 limit: tableData.length,

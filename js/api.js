@@ -26,9 +26,10 @@ var ilbstockExportUrl = pathUrl + "lb/ilbstock/exportExcel"; //导出
 var ilbstockImportTemp = pathUrl + "template/预入库导入.xlsx"; //导入模板
 // 出入库
 var prebackinexamine = pathUrl + "order/warehousing/backinexamine";//反入库审核
+var preinlbdel = pathUrl + "order/warehousing/inlbdel";//入库单删除
 var preEntry = pathUrl + "order/warehousing/list";//预入库
 var preEntryAdd = pathUrl + "order/warehousing/add";//预入库新增
-var preEntryDelete = pathUrl + "order/warehousing/delete";//预入库删除
+var preEntryDelete = pathUrl + "order/warehousing/delete";//预入库单删除
 var preEntryUpdate = pathUrl + "order/warehousing/update";//预入库编辑
 var preEntrygetByOrderno = pathUrl + "order/warehousing/getByOrderno?ish=1";//预入库单详情 ish:获取单号所有信息
 var preEntryexamineStock = pathUrl + "order/warehousing/examineStock";//预入库单审核为库存
@@ -39,7 +40,7 @@ var getOrdernoDetails =  pathUrl + "order/outtreasury/getOrdernoDetails" //库�
 var outTreasuryAdd = pathUrl + "order/outtreasury/add";//增加出货申请
 var outHistory = pathUrl + "order/outtreasury/list?ishistory=1";//出库记录
 var outHistoryOrderno = pathUrl + "order/outtreasury/getByOrderno?ish=1";//出库详情 ish:获取单号所有信息
-var outRemove = pathUrl + "order/outtreasury/remove";//出货申请详情商品移除
+var outRemove = pathUrl + "order/outtreasury/remove";//出货申请详情货物移除
 var outStock = pathUrl + "order/outtreasury/outStock";//审核通过出库
 var outTreasuryDelete = pathUrl + "order/outtreasury/delete";//出库删除
 var outTreasury = pathUrl + "order/outtreasury/list";//出库列表
@@ -139,12 +140,12 @@ var menugetAuthority = pathUrl + "sys/menu/getAuthority";//查询菜单对应按
 var getAuthorityAll = pathUrl + "sys/role/getAuthorityAll";//根据角色id查询所有的按钮权限(roleid=2)
 var setAuthorityAll = pathUrl + "sys/role/setAuthorityAll";//添加角色权限 roleid角色id，allauth 权限[{'菜单id':[按钮id]}]
 //风控
-var riskList = pathUrl + "risk/control/riskList" //商品评估列表 
+var riskList = pathUrl + "risk/control/riskList" //货物评估列表 
 var outTreasuryList = pathUrl + "risk/control/outTreasuryList" //出货审核列表
 var setThroughOut = pathUrl + "risk/control/setThroughOut" //设置通过出货审核
 
 var outHistoryList = pathUrl + "risk/control/outHistoryList" //风控审核过的出货记录
-var saveEvaluationPrice = pathUrl + "risk/control/saveEvaluationPrice" //保存修改的商品评估价
+var saveEvaluationPrice = pathUrl + "risk/control/saveEvaluationPrice" //保存修改的货物评估价
 var outCordonList = pathUrl + "risk/control/outCordonList" //出货警戒线列表
 var outDetails = pathUrl + "risk/control/outHistoryDetail"//出货审核详情
 var outHistoryDetails = pathUrl + "risk/control/outHistoryDetails"//出货审核记录详情
@@ -165,7 +166,7 @@ var getByidList = pathUrl + "check/recordlist/getByidList";//查询盘点记录 
 var isname_supplier = pathUrl +"basics/supplier/isName";        //供应商验证    instid,name
 var isname_position = pathUrl +"basics/position/isName";        //库位验证      depotid,name
 var isname_institution = pathUrl +"basics/institution/isName";  //类型信息  utype:0员工1仓库主2供应商3基础数据 ,name
-var isname_info = pathUrl +"basics/info/isName";                //商品信息      instid,name
+var isname_info = pathUrl +"basics/info/isName";                //货物信息      instid,name
 var isname_depot = pathUrl +"basics/depot/isName";              //仓库验证      ownerid,name
 var isname_user = pathUrl +"sys/isName";                        //员工验证      instid,
 var isname_role = pathUrl +"sys/role/isName";                   //角色验证      rolename

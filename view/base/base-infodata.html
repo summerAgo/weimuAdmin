@@ -161,7 +161,7 @@
             loading: true
         });
 
-        // 点击添加商品
+        // 点击添加货物
         $(".toAdd").click(function() {
             var data = {};
             data["instid"] = menuIns.id;
@@ -169,7 +169,7 @@
             sessionStorage.setItem('base_infodata_data', JSON.stringify(data));
             $.get('view/form/form-infodata.html', {}, function(str) {
                 addLayer = layer.open({
-                    title: '添加商品',
+                    title: '添加货物',
                     type: 1,
                     content: str, //注意，如果str是object，那么需要字符拼接。
                     area: ['800px', '560px'],
@@ -178,7 +178,7 @@
             return false;
         });
 
-        // 点击修改商品
+        // 点击修改货物
         $(".updateBtn").click(function() {
             var checkStatus = table.checkStatus('tableContainer_baseinfo');
             if (checkStatus.data.length !== 1) {
@@ -190,7 +190,7 @@
                     data["inaAllList"] = inaAllList;
                     sessionStorage.setItem('base_infodata_data', JSON.stringify(data));
                     addLayer = layer.open({
-                        title: '添加商品信息',
+                        title: '添加货物信息',
                         type: 1,
                         content: str, //注意，如果str是object，那么需要字符拼接。
                         resize: false,
@@ -201,7 +201,7 @@
             }
         });
 
-        //修改商品表单提交
+        //修改货物表单提交
         form.on('submit(addinfodataForm)', function(data) {
             // data.field.orderno = window.currData.orderno; //防止单号被篡改
             // data.field.origin = window.currData.origin; //
@@ -228,7 +228,7 @@
                 ints = instid[0];
             }
             data.field.instid = ints;
-            // 判供商品是否重复
+            // 判供货物是否重复
             if (isNameAdd || isNameEdit) {
                 $.ajax({
                     cache: true,
@@ -247,7 +247,7 @@
                     crossDomain: true,
                     success: function(data) {
                         if (data.status === 2) {
-                            layer.msg('商品已存在');
+                            layer.msg('货物已存在');
                             isName = false;
                         }
                     }
@@ -285,7 +285,7 @@
             return false;
         });
 
-        //删除商品
+        //删除货物
         $(".deleteBtn").click(function() {
             var checkStatus = table.checkStatus('tableContainer_baseinfo');
             if (checkStatus.data.length < 1) {
@@ -361,15 +361,15 @@
             })
         }
 
-        var insList = []; //商品类型顶级目录
-        var menuIns = {}; //商品类型被点击的数据
+        var insList = []; //货物类型顶级目录
+        var menuIns = {}; //货物类型被点击的数据
 
         listIns();
-        //商品类型菜单树
+        //货物类型菜单树
         function listIns() {
             var data = {
                 "utype": 3
-            }; //3是商品类型
+            }; //3是货物类型
             rowDataApi(listInstitution, data, function(res) {
                 var insData = res.data;
                 inaAllList = insData;
@@ -419,9 +419,9 @@
             })
         }
 
-        var insList = []; //商品类型顶级目录
-        var inaAllList = []; //商品类型所有的数据
-        var menuIns = {}; //商品类型被点击的数据
+        var insList = []; //货物类型顶级目录
+        var inaAllList = []; //货物类型所有的数据
+        var menuIns = {}; //货物类型被点击的数据
 
         // 根据菜单刷新表格
         function resTable(d) {
@@ -439,7 +439,7 @@
             });
         }
 
-        //添加商品类型
+        //添加货物类型
         $("#addins").click(function() {
             var data = {};
             data["insList"] = insList;
@@ -447,7 +447,7 @@
             window.currData = data;
             $.get('view/user/institution-add.html', {}, function(str) {
                 eaitLayer = layer.open({
-                    title: '添加商品类型',
+                    title: '添加货物类型',
                     type: 1,
                     content: str,
                     resize: false,
@@ -456,7 +456,7 @@
             });
         });
 
-        //修改商品类型
+        //修改货物类型
         $("#updins").click(function() {
             var data = menuIns;
             data["insList"] = insList;
@@ -464,7 +464,7 @@
             window.currData = data; //全局对象存储当前选中行数据
             $.get('view/user/institution-add.html', {}, function(str) {
                 eaitLayer = layer.open({
-                    title: '修改商品类型',
+                    title: '修改货物类型',
                     type: 1,
                     content: str, //注意，如果str是object，那么需要字符拼接。
                     resize: false,
@@ -473,7 +473,7 @@
             });
         });
 
-        //删除商品类型
+        //删除货物类型
         $("#delins").click(function() {
 
             if (!menuIns.id) {
@@ -521,7 +521,7 @@
             return false;
         });
 
-        // 商品类型添加修改表单提交
+        // 货物类型添加修改表单提交
         form.on('submit(addInsSubmit)', function(data) {
             var title = "";
             var url = "";
