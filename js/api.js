@@ -45,6 +45,11 @@ var outStock = pathUrl + "order/outtreasury/outStock";//审核通过出库
 var outTreasuryDelete = pathUrl + "order/outtreasury/delete";//出库删除
 var outTreasury = pathUrl + "order/outtreasury/list";//出库列表
 // 仓库管理
+var bitdepotList = pathUrl + "basics/bitdepot/list";//大仓库列表
+var bitdepotAdd = pathUrl + "basics/bitdepot/add";//大仓库
+var bitdepotDele = pathUrl + "basics/bitdepot/delete";//大仓库
+var bitdepotUpda = pathUrl + "basics/bitdepot/update";//大仓库
+var bitdepotzhipai = pathUrl + "basics/bitdepot/zhipai";//大仓库指派库位
 var depotList = pathUrl + "basics/depot/list";//仓库列表
 var depotAdd = pathUrl + "basics/depot/add";//添加仓库
 var depotUpdate = pathUrl + "basics/depot/update";//修改仓库
