@@ -12,6 +12,9 @@
                     <a href="javascript:;" class="refreshBtn"><i class="iconfont icon-shuaxin"></i>刷新</a>
                 </li> -->
                 <li class="layui-nav-item">
+                    <a class="in-lb-del" href="javascript:;"><i class="iconfont icon-daochu"></i>删除</a>
+                </li>
+                <li class="layui-nav-item">
                     <a class="back-in-examine" href="javascript:;"><i class="iconfont icon-daochu"></i>反入库审核</a>
                 </li>
             </ul>
@@ -368,9 +371,50 @@
                 })
 
             });
-
         });
 
+        //删除
+        $(".in-lb-del").click(function() {
+            var checkStatus = table.checkStatus('tableContainer'); //表格选中状态
+            if (checkStatus.data.length < 1) {
+                layer.msg("请选择一条记录");
+                return;
+            }
+
+            layer.confirm('是否确认删除此条信息', {
+                skin: 'layui-layer-wei',  //layui-layer-wei，维木class
+                title: '提示'
+            }, function(index) {
+                $.ajax({
+                    url: prebackinexamine,
+                    type: "POST",
+                    data: {
+                        'SESSION_NAME': getCookie('SESSION_NAME'),
+                        'TOKEN': getCookie('TOKEN'),
+                        'orderno':checkStatus.data[0].orderno
+                    },
+                    //async: false, //同步
+                    traditional: true,
+                    success: function(data) {
+                        console.log(data);
+                        if (data.status === 1) {
+                            window.location.href = loginPageUrl;
+                        }
+                        if (data.status == 0) {
+                            layer.msg("删除成功");
+
+                            tableIns.reload({
+                                page: {
+                                    curr: 1 // 重新从第 1 页开始
+                                }
+                            });
+                        }
+                    }
+                })
+
+            });
+        });
+        
 
     });
 </script>
