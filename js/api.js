@@ -138,6 +138,7 @@ var menugetAuthority = pathUrl + "sys/menu/getAuthority";//查询菜单对应按
 
 var getAuthorityAll = pathUrl + "sys/role/getAuthorityAll";//根据角色id查询所有的按钮权限(roleid=2)
 var setAuthorityAll = pathUrl + "sys/role/setAuthorityAll";//添加角色权限 roleid角色id，allauth 权限[{'菜单id':[按钮id]}]
+var getMenuAll = pathUrl + "sys/menu/getMenuAll";//获取菜单类别列表
 //风控
 var riskList = pathUrl + "risk/control/riskList" //货物评估列表 
 var outTreasuryList = pathUrl + "risk/control/outTreasuryList" //出货审核列表
@@ -157,9 +158,7 @@ var checklbList = pathUrl + "check/recordlist/lblist";//查
 var checkList = pathUrl + "check/recordlist/list";//盘点记录列表
 var checkAdd = pathUrl + "check/recordlist/add";//盘点保存
 var endInventory = pathUrl + "check/recordlist/endInventory";//确认盘点
-
 var getByidList = pathUrl + "check/recordlist/getByidList";//查询盘点记录 参数cid
-
 
 /////验证
 var isname_supplier = pathUrl +"basics/supplier/isName";        //供应商验证    instid,name
