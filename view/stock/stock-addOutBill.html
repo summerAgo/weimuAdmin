@@ -409,7 +409,7 @@
             // limits: [tableData ? tableData.length : 0],
             // limit: tableData ? tableData.length : 0, //每页默认显示的数量
             done: function(res, curr, count) {
-                var addtableBtn = '<div class="rightBotBtn">共添加<span>' + count + '</span>个商品</div>';
+                var addtableBtn = '<div class="rightBotBtn">共添加<span>' + count + '</span>个货物</div>';
                 $("#tableContainer-addOutBill").siblings().find(".layui-table-page").append(addtableBtn);
                 $(".submissionBtn").unbind("click").bind("click", function() {
                     var cargoowner = layui.formSelects.value('ownerSelect', "valStr");
@@ -533,7 +533,7 @@
                 //     }
                 // }
 
-                //移除已选中商品
+                //移除已选中货物
                 for (var i = 0; i < checkData.length; i++) {
                     tableData.remove("id", checkData[i].id);
                 }
@@ -859,13 +859,13 @@
                     // console.log(obj);
                     if (obj.type == "all") {
                         var checkStatus = table.checkStatus('tableContainer-goodsList'); //表格选中状态
-                        $("#tableContainer-goodsList").parent().find(".rightBotBtn span").html(checkStatus.data.length); //当前选中了多少商品
+                        $("#tableContainer-goodsList").parent().find(".rightBotBtn span").html(checkStatus.data.length); //当前选中了多少货物
                     }
                     if (obj.checked) {
                         var aprice = obj.data.aprice;
                         if (aprice && aprice > 0) {
                             var checkStatus = table.checkStatus('tableContainer-goodsList'); //表格选中状态
-                            $("#tableContainer-goodsList").parent().find(".rightBotBtn span").html(checkStatus.data.length); //当前选中了多少商品
+                            $("#tableContainer-goodsList").parent().find(".rightBotBtn span").html(checkStatus.data.length); //当前选中了多少货物
                         }
                     }
                 });

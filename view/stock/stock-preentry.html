@@ -300,7 +300,7 @@
             limits: [100, 200, 500, 1000],
             limit: 100, //每页默认显示的数量
             done: function(res, curr, count) {
-                var addtableBtn = '<div class="rightBotBtn" id="rightPre">已经选择<span>0</span>个商品';
+                var addtableBtn = '<div class="rightBotBtn" id="rightPre">已经选择<span>0</span>个货物';
                 if ($("#rightPre").length < 1) {
                     $(".layui-table-page").append(addtableBtn);
                 }
@@ -314,7 +314,7 @@
         //监听锁定操作
         table.on('checkbox(tableContainer-preentry)', function(obj) {
             var checkStatus = table.checkStatus('tableContainer-preentry'); //表格选中状态
-            $(".rightBotBtn span").html(checkStatus.data.length); //当前选中了多少商品
+            $(".rightBotBtn span").html(checkStatus.data.length); //当前选中了多少货物
         });
 
         // 入库按钮点击

@@ -140,7 +140,7 @@
                         width: 266,
                     }, {
                         field: 'untreated',
-                        title: '未评估商品',
+                        title: '未评估货物',
                         width: 266,
                         templet: function(d) {
                             //默认无
@@ -151,7 +151,7 @@
                         }
                     }, {
                         field: 'already',
-                        title: '已评估商品',
+                        title: '已评估货物',
                     }
                 ]
             ],
@@ -177,7 +177,7 @@
             if (obj.event === 'click') {
                 $.get('view/risk/risk-layerAssess.html', {}, function(str) { // 弹出弹框
                     assessLayer = layer.open({
-                        title: '商品评估列表',
+                        title: '货物评估列表',
                         type: 1,
                         content: str, // 注意，如果str是object，那么需要字符拼接。
                         area: ['80%', '78%'],
