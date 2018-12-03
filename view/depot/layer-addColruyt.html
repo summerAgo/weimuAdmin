@@ -1,0 +1,135 @@
+<div id="colruytView"></div>
+<script id="colruytTle" type="text/html">
+    <form class="layui-form layer-open-form" action="">
+        <div class="layui-form-item layui-control-line">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="addColruytForm"><i class="iconfont icon-daochu"></i>保存</button>
+            </div>
+        </div>
+        <div class="layui-form-item layui-normal-line">
+            <label class="layui-form-label form-required">编号</label>
+            <div class="layui-input-inline">
+                <input type="text" name="code" placeholder="编号" value="{{d.code || ''}}" autocomplete="off" class="layui-input" lay-verify="required">
+            </div>
+        </div>
+        <div class="layui-form-item layui-normal-line">
+            <label class="layui-form-label form-required">仓库主</label>
+            <div class="layui-input-inline">
+                <!-- <input type="text" name="ownerid" placeholder="仓库主" value="{{d.ownerid || ''}}" autocomplete="off" class="layui-input" lay-verify="required"> -->
+                <select name="ownerid" xm-select="ownerSelect" xm-select-radio lay-verify="required">
+                    <option value="">选择仓库主</option>
+                </select>
+            </div>
+        </div>
+        <input type="hidden" name="type" value="0" >
+        <!-- <div class="layui-form-item layui-normal-line">
+            <label class="layui-form-label">仓库类型</label>
+            <div class="layui-input-inline">
+                <select name="type" xm-select="typeSelect" xm-select-radio lay-verify="required">
+                    <option value="">选择仓库类型</option>
+                </select>
+            </div>
+        </div> -->
+        <div class="layui-form-item layui-normal-line">
+            <label class="layui-form-label form-required">仓库名称</label>
+            <div class="layui-input-inline">
+                <input type="text" id="store-name" name="name" placeholder="仓库名称" value="{{d.name||''}}" autocomplete="off" class="layui-input" lay-verify="required">
+            </div>
+        </div>
+        <div class="layui-form-item layui-normal-line">
+            <label class="layui-form-label">地址</label>
+            <div class="layui-input-inline">
+                <input type="text" name="address" placeholder="地址" value="{{d.address||''}}" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item layui-normal-line">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-inline">
+                <input type="text" name="remarks" placeholder="备注" value="{{d.remarks||''}}" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+    </form>
+</script>
+
+<script>
+    layui.use(['form', 'jquery', 'element', 'layer', 'formSelects', 'laytpl', 'laydate'], function() {
+        var element = layui.element;
+        var form = layui.form;
+        var $ = layui.jquery;
+        var formSelects = layui.formSelects;
+        var laytpl = layui.laytpl;
+
+        var dataType = JSON.parse(sessionStorage.getItem('colruytCheck')) || {}; //获取本地所选仓库信息，判断是否为修改
+        // console.log(dataType)
+        // 渲染模板的内容
+        var getTpl = colruytTle.innerHTML,
+            view = document.getElementById('colruytView');
+        laytpl(getTpl).render(dataType, function(html) {
+            view.innerHTML = html;
+        });
+
+        formSelects.render();
+
+        formSelects.data('ownerSelect', 'local', {
+            arr: selectDataInstall(ownerDropdown) //仓库主列表
+        });
+
+        formSelects.data('typeSelect', 'local', {
+            arr: [{
+                name: "监管仓",
+                value: "1"
+            },
+                {
+                    name: "自有仓",
+                    value: "2"
+                },
+            ]
+        });
+
+
+        if (dataType.ownerid) {
+            formSelects.value('typeSelect', [dataType.type+1]);
+            formSelects.value('ownerSelect', [dataType.ownerid]);
+            console.log(dataType.type)
+        }
+
+
+        function selectDataInstall(url, param, bool) {
+            //下拉选框数据组装
+            var arr = [];
+            //获取列表数据
+            $.ajax({
+                url: url,
+                type: "get",
+                data: param,
+                async: false, //同步
+                traditional: true,
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
+                success: function(data) {
+                    // console.log(data);
+                    if (data.status === 0) {
+                        //把接口数据转换为[{"name":str,"value":number}]格式
+                        if (!Array.isArray(data.data) || data.data.length == 0) {
+                            // 判断arr是否为数组并保证内部有值
+                            return false;
+                        }
+                        for (var i = 0; i < data.data.length; i++) {
+                            arr.push({
+                                "name": data.data[i].name,
+                                "value": data.data[i].id
+                            })
+                        }
+                        if (bool) {
+                            arr[0].selected = "selected";
+                        }
+                    }
+                }
+            });
+            return arr;
+        }
+
+    });
+</script>
