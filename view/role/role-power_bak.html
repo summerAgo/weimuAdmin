@@ -21,25 +21,25 @@
         </div>
         <div class="layui-col-md8 role-rt">
             <div class="role-title">按钮权限</div>
-            <div class="layui-tab" lay-filter="tabsBtn">
+            <div class="layui-tab">
                 <ul class="layui-tab-title zimenutab">
-                    <!-- <li class="layui-this">预入库</li>
+                    <li class="layui-this">预入库</li>
                     <li>新建预入库</li>
-                    <li>添加货物信息</li> -->
+                    <li>添加货物信息</li>
                 </ul>
                 <div class="layui-tab-content menutab-content">
-                    <div class="layui-show">
+                    <div class="layui-tab-item layui-show">
                         <div class="content-title">[新入库]所有权限按钮</div>
                         <div class="content-cont">
                             <div class="formEditView"></div>
                         </div>
                     </div>
-                    <!-- <div class="layui-tab-item">
+                    <div class="layui-tab-item">
                         <div class="content-title">[新建预入库]所有权限按钮</div>
                     </div>
                     <div class="layui-tab-item">
                         <div class="content-title">[添加货物信息]所有权限按钮</div>
-                    </div> -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -169,7 +169,6 @@
     layui.use(['jquery', 'authtree', 'form', 'layer', 'element', 'laytpl', 'laydate', "eleTree"], function() {
         var $ = layui.jquery;
         var authtree = layui.authtree;
-        var element = layui.element;
         var eleTree = layui.eleTree;
         var form = layui.form;
         var laytpl = layui.laytpl;
@@ -182,12 +181,11 @@
         });
         form.render(); //重置表单渲染
 
-        var allMenu;
         // 初始化(查询所有的菜单)
         $.ajax({
             //url: 'tree.json',
-            // url: menuAll,
-            url: getMenuAll,
+            url: menuAll,
+            // url:getMenuAll,
             dataType: 'json',
             success: function(data) {
                 // console.log('window.currData:' + JSON.stringify(window.currData))
@@ -195,10 +193,10 @@
                 var roleData = {
                     "roleid": roleAut.id
                 };
-                // console.log(roleData)
+                console.log(roleData)
                 //查询角色菜单权限
                 getButAuthorityAll(roleData, function(res) {
-                    allMenu = data.data;
+                    var allMenu = data.data;
                     var ant = {};
                     if (res.status == 0) {
                         ant = res.data;
@@ -206,17 +204,15 @@
                     for (var i = 0; i < allMenu.length; i++) { //组装数据树
                         if (allMenu[i].pid == 0) {
                             var map = {};
-                            map["label"] = allMenu[i].name;
-                            map["value"] = allMenu[i].mid;
-                            map["valueid"] = allMenu[i].id;
+                            map["label"] = allMenu[i].name
+                            map["value"] = allMenu[i].id;
+
                             var list = [];
                             for (var k = 0; k < allMenu.length; k++) {
-                                if (allMenu[i].mid == allMenu[k].pid) {
+                                if (allMenu[i].id == allMenu[k].pid) {
                                     var mapTwo = {};
-                                    mapTwo["label"] = allMenu[k].name;
-                                    mapTwo["value"] = allMenu[k].mid;
-                                    mapTwo["valueid"] = allMenu[k].id;
-                                    mapTwo["type"] = 0;
+                                    mapTwo["label"] = allMenu[k].name
+                                    mapTwo["value"] = allMenu[k].id;
                                     for (var key in ant) { //循环每个菜单
                                         if (allMenu[k].id == key) {
                                             mapTwo["checked"] = true;
@@ -243,8 +239,7 @@
                             trees.push(map);
                         }
                     }
-                    // console.log(trees);
-
+                    console.log(trees);
                     eleTree.render({
                         elem: '.ele1',
                         data: trees,
@@ -264,9 +259,10 @@
                         map[key] = butlist;
                         allAuthority.push(map);
                     }
-                    // console.log(allAuthority);
+                    console.log(allAuthority);
                     var val = JSON.stringify(allAuthority);
                     sessionStorage.setItem('allAuthority', val);
+
                 });
             }
         });
@@ -288,87 +284,57 @@
 
         eleTree.on("toggleSlide(treeData)", function(data) { //点击树
             //console.log(3);
-            console.log(data);
+            //console.log(data);
             var cur = data.currentData;
             //if(!cur.children){
-            
             menuid = cur.value;
-            valueid = cur.valueid;
-            menutype = cur.type;
-            //判断当前权限的页面是否有多个弹窗
-            // console.log(allMenu)
-            // console.log(valueid)
-            var tabList = [];
-
-            for (var i = 0; i < allMenu.length; i++) {
-                if (allMenu[i].id == valueid) {
-                    tabList.push(tabli(allMenu[i], 0)); //生成第一个默认tab
-                    if (allMenu[i].id == valueid && allMenu[i].sonlist) {
-                        for (var x = 0; x < allMenu[i].sonlist.length; x++) {
-                            tabList.push(tabli(allMenu[i].sonlist[x]));
-                        }
-                    }
-                }
-            }
-            $(".zimenutab").html(""); //清空tabs
-            for (var k = 0; k < tabList.length; k++) {
-                $(".zimenutab").append(tabList[k]);
-            }
-
-            allbutton(cur.value, cur.valueid,menutype);
-
-            function tabli(obj, type) {
-                var li = '<li class="' + (type == 0 ? "layui-this" : "") + '" lay-id="' + obj.id + '" lay-mid="' + obj.mid + '">' + obj.name + '</li>';
-                return li;
-            }
+            allbutton(cur.value);
+            //}
         })
 
         eleTree.on("checkbox(treeData)", function(data) { //选中或者取消复选框
-            // console.log(4);
+            console.log(4);
             console.log(data);
             var cur = data.currentData;
             var isChoice = cur.checked
-            // console.log(isChoice)
             //是否有子节点
             if (cur.children) {
                 var children = cur.children;
                 for (var i = 0; i < children.length; i++) {
                     var child = children[i];
-                    muneAut(child.value, child.valueid, isChoice);
+                    muneAut(child.value, isChoice);
                 }
             } else {
-                muneAut(cur.value, cur.valueid, isChoice);
+                muneAut(cur.value, isChoice);
             }
             menuid = cur.value;
-            valueid = cur.valueid;
-            menutype = cur.type;
-            allbutton(cur.value, cur.valueid ,menutype);
+            allbutton(cur.value);
         });
 
         //根据选中以及取消菜单权限赋值menuid(菜单id)，isChoice(选中还是权限)
-        function muneAut(menuids, valueid, isChoice) {
-            // console.log("menuids:" + menuids);
-            // console.log("isChoice:" + isChoice);
-            // console.log(allAuthority);
+        function muneAut(menuids, isChoice) {
+            console.log("menuids:" + menuids);
+            console.log("isChoice:" + isChoice);
+            console.log(allAuthority);
             var number = 0; //是否已经存在权限里面,0:否，1：是
             var dellist = []; //要删除的id
             for (var k = 0; k < allAuthority.length; k++) {
                 var autData = allAuthority[k];
                 for (var key in autData) { //循环每个菜单的权限
-
-                    if (key == valueid) {
+                    if (key == menuids) {
                         var map = {};
                         number = 1;
                         var butlist = [];
-                        // console.log(key + "==" + valueid);
+                        console.log(key + "==" + menuids);
+                        console.log(key + "==" + menuids);
                         if (isChoice) {
-                            console.log(allbutData)
                             for (var i = 0; i < allbutData.length; i++) {
                                 var mapTwo = allbutData[i];
                                 if (mapTwo.menuid == menuids) {
                                     butlist.push(mapTwo.id);
                                 }
                             }
+
                         } else {
                             dellist.push(key);
                         }
@@ -388,12 +354,11 @@
                             butlist.push(maps.id);
                         }
                     }
-                    map[valueid] = butlist;
-                    // console.log(map[valueid])
+                    map[menuids] = butlist;
                     allAuthority.push(map)
                 }
             }
-
+            
             if (dellist.length > 0) { //删除数据
                 for (var i = 0; i < dellist.length; i++) {
                     for (var k = 0; k < allAuthority.length; k++) {
@@ -422,28 +387,22 @@
         }
 
         var allbutData = []; //所有的按钮
-        var menuid = null; //被点击的按钮mid
-        var valueid = null; //被点击的按钮id
-        var menutype = null;//是否为弹窗
+        var menuid = null; //被点击的按钮id
         var allAuthority = []; //所有的权限格式：[{'菜单id':[按钮id]}]
         var trees = []; //整个权限树
 
         //查询菜单下面的按钮(menuid菜单id)
-        function allbutton(menuid, valueids, mtype) {
+        function allbutton(menuid) {
             menuid = menuid;
-            valueid = valueids;
-            menutype = mtype;
-            console.log(mtype)
             var butAllData = [];
-            // console.log(allbutData)
             for (var i = 0; i < allbutData.length; i++) {
-                if (allbutData[i].menuid == menuid && allbutData[i].type == mtype) {
+                if (allbutData[i].menuid == menuid) {
                     var map = allbutData[i];
                     var check = 0; //是否需要选中
                     for (var j = 0; j < allAuthority.length; j++) { //循环权限
                         var but = allAuthority[j];
                         for (var key in but) { //循环每个菜单的权限
-                            if (key == valueids) {
+                            if (key == menuid) {
                                 var butlist = but[key];
                                 for (var k = 0; k < butlist.length; k++) { //循环菜单下面的按钮权限
                                     if (map.id == butlist[k]) {
@@ -464,7 +423,6 @@
                 }
             }
             dataall["butAllData"] = butAllData;
-
             laytpl(getTpl).render(dataall, function(html) {
                 view.innerHTML = html;
             });
@@ -498,7 +456,7 @@
             for (var i = 0; i < allAuthority.length; i++) {
                 var autData = allAuthority[i];
                 for (var key in autData) { //循环每个菜单的权限
-                    if (key == valueid) { //判断是否是被点击的id
+                    if (key == menuid) { //判断是否是被点击的id
                         autkey = key;
                         var butlist = autData[key];
                         if (data.elem.checked) { //开关是否开启，true或者false
@@ -520,17 +478,17 @@
                 var map = {};
                 var butlist = [];
                 butlist.push(data.value)
-                map[valueid] = butlist;
+                map[menuid] = butlist;
                 allAuthority.push(map);
                 toptrees();
                 alltrees();
             }
             var val = JSON.stringify(allAuthority);
             sessionStorage.setItem('allAuthority', val);
-            // console.log(data.elem); //得到checkbox原始DOM对象
-            // console.log(data.elem.checked); //开关是否开启，true或者false
-            // console.log(data.value); //开关value值，也可以通过data.elem.value得到
-            // console.log(data.othis); //得到美化后的DOM对象
+            console.log(data.elem); //得到checkbox原始DOM对象
+            console.log(data.elem.checked); //开关是否开启，true或者false
+            console.log(data.value); //开关value值，也可以通过data.elem.value得到
+            console.log(data.othis); //得到美化后的DOM对象
         });
 
         //顶级菜单增加权限
@@ -542,18 +500,18 @@
                 if (map.children) {
                     var children = map.children;
                     for (var j = 0; j < children.length; j++) { //二级菜单循环
-                        if (children[j].valueid == valueid) {
+                        if (children[j].value == menuid) {
                             for (var k = 0; k < allAuthority.length; k++) {
                                 var autData = allAuthority[k];
                                 var s = 0; //是否有已经有权限了
                                 for (var key in autData) { //循环每个菜单的权限
-                                    if (key == map.valueid) {
+                                    if (key == map.value) {
                                         number = 1;
                                         break;
                                     }
                                 }
                             }
-                            keys = map.valueid;
+                            keys = map.value;
                             break;
                         }
                     }
@@ -575,7 +533,7 @@
                     var children = map.children;
                     for (var j = 0; j < children.length; j++) { //二级菜单循环
                         var mapTwo = children[j];
-                        if (mapTwo.valueid == valueid) { //是否是被选中的菜单
+                        if (mapTwo.value == menuid) { //是否是被选中的菜单
                             map["spread"] = true;
                         }
                         for (var k = 0; k < allAuthority.length; k++) {
@@ -583,7 +541,7 @@
                             var s = 0; //是否有已经有权限了
                             for (var key in autData) { //循环每个菜单的按钮权限
 
-                                if (key == mapTwo.valueid) { //菜单是否有权限
+                                if (key == mapTwo.value) { //菜单是否有权限
                                     s = 1;
                                     mapTwo["checked"] = true;
                                     break;
@@ -609,18 +567,6 @@
                 }
             });
         }
-
-        //tab切换改变当前操作菜单id
-        element.on('tab(tabsBtn)', function(elem) {
-            valueid = $(this).attr('lay-id');
-            menuid = $(this).attr('lay-mid');
-            if(valueid.substring(0,1) == "b"){
-                menutype = 1;
-            }else{
-                menutype = 0;
-            }
-            allbutton(menuid, valueid,menutype);
-        });
-
+        
     });
 </script>
