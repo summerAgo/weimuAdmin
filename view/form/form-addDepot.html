@@ -7,58 +7,143 @@
             <button class="layui-btn" lay-submit lay-filter="addDepotForm"><i class="iconfont icon-daochu"></i>保存</button>
         </div>
     </div>
-    <div class="layui-form-item layui-normal-line">
-        <label class="layui-form-label form-required">编号</label>
-        <div class="layui-input-inline">
-            <input type="text" name="code" placeholder="编号" value="{{d.code || ''}}" autocomplete="off" class="layui-input" lay-verify="required">
+    <div class="layer-ownername-form">
+        <div class="layui-form-item layui-normal-line">
+            <label class="layui-form-label form-required">编号</label>
+            <div class="layui-input-inline">
+                <input type="text" name="code" placeholder="编号" value="{{d.code || ''}}" autocomplete="off" class="layui-input" lay-verify="required">
+            </div>
+        </div>
+        <div class="layui-form-item layui-normal-line">
+            <label class="layui-form-label form-required">所属大仓库</label>
+            <div class="layui-input-inline">
+                <!-- <input type="text" name="ownerid" placeholder="仓库主" value="{{d.ownerid || ''}}" autocomplete="off" class="layui-input" lay-verify="required"> -->
+                <select name="" xm-select="" xm-select-radio lay-verify="required">
+                    <option value="">选择大仓库</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item layui-normal-line">
+            <label class="layui-form-label form-required">仓库主</label>
+            <div class="layui-input-inline">
+                <!-- <input type="text" name="ownerid" placeholder="仓库主" value="{{d.ownerid || ''}}" autocomplete="off" class="layui-input" lay-verify="required"> -->
+                <select name="ownerid" xm-select="ownerSelect" xm-select-radio lay-verify="required">
+                    <option value="">选择仓库主</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item layui-normal-line">
+            <label class="layui-form-label form-required">仓库名称</label>
+            <div class="layui-input-inline">
+                <input type="text" id="store-name" name="name" placeholder="仓库名称" value="{{d.name||''}}" autocomplete="off" class="layui-input" lay-verify="required">
+            </div>
+        </div>
+        <div class="layui-form-item layui-normal-line">
+            <label class="layui-form-label form-required">物品所需估值</label>
+            <div class="layui-input-inline">
+                <input type="text" name="" placeholder="估值" value="{{d.price||''}}" autocomplete="off" class="layui-input" lay-verify="required">
+            </div>
+        </div>
+        <div class="layui-form-item layui-normal-line">
+            <label class="layui-form-label form-required">物品不需要估值</label>
+            <div class="layui-input-inline">
+                <input type="text" name="" placeholder="估值" value="{{d.price||''}}" autocomplete="off" class="layui-input" lay-verify="required">
+            </div>
+        </div>
+        <div class="layui-form-item layui-normal-line">
+            <label class="layui-form-label">地址</label>
+            <div class="layui-input-inline">
+                <input type="text" name="address" placeholder="地址" value="{{d.address||''}}" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item layui-normal-line">
+            <label class="layui-form-label">备注</label>
+            <div class="layui-input-inline">
+                <input type="text" name="remarks" placeholder="备注" value="{{d.remarks||''}}" autocomplete="off" class="layui-input">
+            </div>
         </div>
     </div>
-    <div class="layui-form-item layui-normal-line">
-        <label class="layui-form-label form-required">仓库主</label>
-        <div class="layui-input-inline">
-            <!-- <input type="text" name="ownerid" placeholder="仓库主" value="{{d.ownerid || ''}}" autocomplete="off" class="layui-input" lay-verify="required"> -->
-            <select name="ownerid" xm-select="ownerSelect" xm-select-radio lay-verify="required">
-                <option value="">选择仓库主</option>
-            </select>
-        </div>
-    </div>
-    <input type="hidden" name="type" value="0" >
-    <!-- <div class="layui-form-item layui-normal-line">
-        <label class="layui-form-label">仓库类型</label>
-        <div class="layui-input-inline">
-            <select name="type" xm-select="typeSelect" xm-select-radio lay-verify="required">
-                <option value="">选择仓库类型</option>
-            </select>
-        </div>
-    </div> -->
-    <div class="layui-form-item layui-normal-line">
-        <label class="layui-form-label form-required">仓库名称</label>
-        <div class="layui-input-inline">
-            <input type="text" id="store-name" name="name" placeholder="仓库名称" value="{{d.name||''}}" autocomplete="off" class="layui-input" lay-verify="required">
-        </div>
-    </div>
-    <div class="layui-form-item layui-normal-line">
-        <label class="layui-form-label">地址</label>
-        <div class="layui-input-inline">
-            <input type="text" name="address" placeholder="地址" value="{{d.address||''}}" autocomplete="off" class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item layui-normal-line">
-        <label class="layui-form-label">备注</label>
-        <div class="layui-input-inline">
-            <input type="text" name="remarks" placeholder="备注" value="{{d.remarks||''}}" autocomplete="off" class="layui-input">
+    <div class="layer-colruyt-form">
+        <div class="colruyt-title"><span class="search-name">大仓库：</span><span class="search-key">大岭山大岭山大岭山大岭山大岭山大岭山</span><span class="search-box"><input type="text" value="" placeholder="库位名称搜索"><i class="iconfont icon-sousuo" id="search-colruyt"></i></span></div>
+        <div class="table-content">
+            <div class="table-content-main">
+                <table class="layui-hide" id="table-depotList" lay-filter="table-depotList"></table>
+            </div>
         </div>
     </div>
 </form>
 </script>
+<style>
+    .layer-colruyt-form  .table-content {
+        padding: 20px 0;
+    }
+    .colruyt-title{
+        font-size: 16px;
+        font-weight: bold;
+        color: #333;
+        overflow: hidden;
+        line-height: 30px;
+    }
+    .colruyt-title .search-name {
+        float: left;
+        margin-right: 5px;
+    }
+    .colruyt-title .search-key {
+        float: left;
+        max-width: 180px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+    .colruyt-title .search-box {
+        font-size: 14px;
+        color: #999;
+        float: right;
+        width: 160px;
+        position: relative;
+    }
+    .colruyt-title .search-box>input[type="text"]{
+        border-width: 1px;
+        border-style: solid;
+        background-color: #fff;
+        border-radius: 2px;
+        display: block;
+        width: 100%;
+        padding-left: 10px;
+        height: 30px;
+        border-color: #ddd;
+        box-sizing: border-box;
+        font-weight: normal;
+        padding-right: 10px;
+    }
+    .colruyt-title .search-box>i.iconfont{
+        position: absolute;
+        right: 10px;
+        top: 1px;
+        cursor: pointer;
+    }
+    .layer-ownername-form {
+        float: left;
+        width: 320px;
+    }
+    .layer-colruyt-form{
+        float: left;
+        width: 420px;
+    }
 
+    .layer-ownername-form .layui-form-item .layui-form-label {
+        width: 110px;
+    }
+</style>
 <script>
-    layui.use(['form', 'jquery', 'element', 'layer', 'formSelects', 'laytpl', 'laydate'], function() {
+    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate'], function() {
         var element = layui.element;
         var form = layui.form;
         var $ = layui.jquery;
+        var table = layui.table;
         var formSelects = layui.formSelects;
         var laytpl = layui.laytpl;
+        var tableTopHeight = (parseInt($(".layui-layer-page").innerHeight()) - parseInt($(".layui-layer-title").innerHeight()) - parseInt($("#depotView").innerHeight()) - parseInt($(".layer-colruyt-form").innerHeight()) - 56); //内容区域所需减去的高度
 
         var dataType = JSON.parse(sessionStorage.getItem('depotCheck')) || {}; //获取本地所选仓库信息，判断是否为修改
         // console.log(dataType)
@@ -130,5 +215,42 @@
             return arr;
         }
 
+        var tableIns = table.render({
+            elem: '#table-depotList',
+            height: 'full-' + tableTopHeight,
+            url: depotList,
+            parseData: function(res) { //res 即为原始返回的数据
+                if (res.status !== 0) res.status = 0;
+                return {
+                    "code": res.status, //解析接口状态
+                    "msg": res.message, //解析提示文本
+                    "count": res.count, //解析数据长度
+                    "data": res.data //解析数据列表
+                }
+            },
+            request: {
+                pageName: 'offset', //页码的参数名称，默认：page
+                limitName: 'limit' //每页数据量的参数名，默认：limit
+            },
+            cols: [[ //标题栏
+                {
+                    type: 'checkbox'
+                }, {
+                    field: 'code',
+                    title: '仓库编号',
+                }, {
+                    field: 'name',
+                    title: '仓库名称'
+                }
+            ]],
+            even: true,
+            done: function(res, curr, count) {
+
+            },
+            text: {
+                none: "无匹配数据"
+            },
+            loading: true
+        });
     });
 </script>

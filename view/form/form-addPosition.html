@@ -6,40 +6,42 @@
                 <button class="layui-btn" lay-submit lay-filter="addPositionForm"><i class="iconfont icon-daochu"></i>保存</button>
             </div>
         </div>
-        <div class="layui-form-item layui-normal-line">
-            <label class="layui-form-label form-required">编号</label>
-            <div class="layui-input-inline">
-                <input type="text" name="code" placeholder="编号" value="{{d.code||''}}" autocomplete="off" class="layui-input" lay-verify="required">
+        <div class="layer-address-form">
+            <div class="layui-form-item layui-normal-line">
+                <label class="layui-form-label form-required">编号</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="code" placeholder="编号" value="{{d.code||''}}" autocomplete="off" class="layui-input" lay-verify="code">
+                </div>
             </div>
-        </div>
-        <div class="layui-form-item layui-normal-line">
-            <label class="layui-form-label form-required">库位名称</label>
-            <div class="layui-input-inline">
-                <input type="text" name="name" placeholder="库位名称" value="{{d.name||''}}" autocomplete="off" class="layui-input" lay-verify="required">
+            <div class="layui-form-item layui-normal-line">
+                <label class="layui-form-label form-required">库位名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="name" placeholder="库位名称" value="{{d.name||''}}" autocomplete="off" class="layui-input" lay-verify="required">
+                </div>
             </div>
-        </div>
-        <div class="layui-form-item layui-normal-line">
-            <label class="layui-form-label">面积</label>
-            <div class="layui-input-inline">
-                <input type="text" name="acreage" placeholder="面积" value="{{d.acreage||''}}" autocomplete="off" class="layui-input" >
+            <div class="layui-form-item layui-normal-line">
+                <label class="layui-form-label">地址</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="address" placeholder="地址" value="{{d.address||''}}" autocomplete="off" class="layui-input" >
+                </div>
             </div>
-        </div>
-        <div class="layui-form-item layui-normal-line">
-            <label class="layui-form-label">地址</label>
-            <div class="layui-input-inline">
-                <input type="text" name="address" placeholder="地址" value="{{d.address||''}}" autocomplete="off" class="layui-input" >
+            <div class="layui-form-item layui-normal-line">
+                <label class="layui-form-label">总面积(m³)</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="acreage" placeholder="总面积" value="{{d.acreage||''}}" autocomplete="off" class="layui-input" >
+                </div>
             </div>
-        </div>
-        <!-- <div class="layui-form-item">
-            <label class="layui-form-label">负责人</label>
-            <div class="layui-input-block">
-                <input type="text" name="person" placeholder="负责人" value="{{d.person||''}}" autocomplete="off" class="layui-input" >
-            </div>
-        </div> -->
-        <div class="layui-form-item layui-normal-line">
-            <label class="layui-form-label">备注</label>
-            <div class="layui-input-inline">
-                <input type="text" name="remarks" placeholder="备注" value="{{d.remarks||''}}" autocomplete="off" class="layui-input">
+            <!-- <div class="layui-form-item">
+                <label class="layui-form-label">负责人</label>
+                <div class="layui-input-block">
+                    <input type="text" name="person" placeholder="负责人" value="{{d.person||''}}" autocomplete="off" class="layui-input" >
+                </div>
+            </div> -->
+            <div class="layui-form-item layui-normal-line">
+                <label class="layui-form-label">备注</label>
+                <div class="layui-input-inline">
+                    <textarea name="remarks" placeholder="备注" value="{{d.remarks||''}}" autocomplete="off" class="layui-textarea"></textarea>
+                </div>
             </div>
         </div>
     </form>
@@ -54,12 +56,16 @@
         var laytpl = layui.laytpl;
         
         var dataType = JSON.parse(sessionStorage.getItem('positionCheck')) || {};//获取本地所选仓库信息，判断是否为修改
-        console.log(dataType);
+
         // 渲染模板的内容
         var getTpl = depotTle.innerHTML,
             view = document.getElementById('positionView');
         laytpl(getTpl).render(dataType, function(html) {
             view.innerHTML = html;
+        });
+        //编码自定义验证规则
+        form.verify({
+            code: [/^[a-zA-Z0-9]{4}$/,'编号必须4位，字母或数字组合']
         });
     });
 </script>

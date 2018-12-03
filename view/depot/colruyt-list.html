@@ -2,15 +2,18 @@
     <div class="table-content-title">
         <div class="table-tools">
             <ul class="layui-nav" lay-filter="talbe-tools">
-                <!-- <li class="layui-nav-item">
-                    <a href="javascript:;" class="addColruytBtn"><i class="iconfont icon-tianjia"></i>新增仓库</a>
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="addColruytBtn"><i class="iconfont icon-tianjia"></i>新增大仓库</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="depotDetail"><i class="iconfont icon-querenpandian"></i>库位详情</a>
                 </li>
                 <li class="layui-nav-item">
                     <a href="javascript:;" class="changeBtn"><i class="iconfont icon-bianji"></i>修改</a>
                 </li>
                 <li class="layui-nav-item">
                     <a href="javascript:;" class="deleteBtn"><i class="iconfont icon-shanchu"></i>删除</a>
-                </li> -->
+                </li>
             </ul>
         </div>
     </div>
@@ -20,12 +23,12 @@
                 <div class="form-box clearfix">
                     <div class="layui-form-item form-left">
                         <div class="table-form-item layui-input-inline">
-                            <span class="input-span">大仓库名称</span>
-                            <input type="text" name="name" placeholder="仓库名称" autocomplete="off" class="layui-input">
-                        </div>
-                        <div class="table-form-item layui-input-inline">
                             <span class="input-span">大仓库编号</span>
                             <input type="text" name="code" placeholder="仓库编号" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <span class="input-span">大仓库名称</span>
+                            <input type="text" name="name" placeholder="仓库名称" autocomplete="off" class="layui-input">
                         </div>
                         <!-- <div class="table-form-item layui-input-inline">
                             <span class="input-span">管仓</span>
@@ -66,10 +69,9 @@
         var laytpl = layui.laytpl;
         var upload = layui.upload;
         var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 93); //内容区域所需减去的高度
-
-        var menuKey = "a_20"; //当前页面key
-        var domObj = $("#colruyt-list .table-tools").find("ul"); //当前页面容器
-        btnIsList(domObj, menuKey); //按钮权限
+        // var menuKey = "a_20"; //当前页面key
+        // var domObj = $("#colruyt-list .table-tools").find("ul"); //当前页面容器
+        // btnIsList(domObj, menuKey); //按钮权限
 
         var addColruytLayer; //编辑-弹层
 
@@ -110,47 +112,33 @@
                 pageName: 'offset', //页码的参数名称，默认：page
                 limitName: 'limit' //每页数据量的参数名，默认：limit
             },
-            cols: [
-                [ //标题栏
-                    {
-                        field: 'LAY_TABLE_INDEX',
-                        title: '序号',
-                        width: 40,
-                        templet: function(d) {
-                            return d.LAY_TABLE_INDEX + 1;
-                        }
-                    }, {
-                        type: 'checkbox'
-                    }, {
-                        field: 'code',
-                        title: '大仓库编号',
-                    }, {
-                        field: 'name',
-                        title: '大仓库名称',
-                        event: 'click',
-                        style: 'cursor: pointer;color:#0063de;',
-                    }, {
-                        field: 'address',
-                        title: '地址',
-                    }, {
-                        field: 'acreage',
-                        title: '总面积'
-                    }, {
-                        field: 'remarks',
-                        title: '备注',
+            cols: [[ //标题栏
+                {
+                    field: 'LAY_TABLE_INDEX',
+                    title: '序号',
+                    width: 40,
+                    templet: function(d) {
+                        return d.LAY_TABLE_INDEX + 1;
                     }
-                    //,{
-                    //     field: 'status',
-                    //     title: '状态',
-                    //     templet:function(d){
-                    //         if(d.status == 0){
-                    //             return '正常';
-                    //         }
-                    //         return '已删除';
-                    //     }
-                    // }
-                ]
-            ],
+                }, {
+                    type: 'radio'
+                }, {
+                    field: 'code',
+                    title: '大仓库编号',
+                }, {
+                    field: 'name',
+                    title: '大仓库名称',
+                }, {
+                    field: 'address',
+                    title: '地址',
+                }, {
+                    field: 'acreage',
+                    title: '总面积'
+                }, {
+                    field: 'remarks',
+                    title: '备注',
+                }
+            ]],
             even: true,
             page: true, //是否显示分页
             limits: [100, 200, 500, 1000],
@@ -173,7 +161,7 @@
                     type: 1,
                     content: str, //注意，如果str是object，那么需要字符拼接。
                     resize: false,
-                    area: ['800px', '560px'],
+                    area: ['640px', '500px'],
                 });
             });
         });
@@ -183,45 +171,14 @@
             var url;
             var msg = "新建大仓库成功";
             data.field.type = data.field.type.replace(/^\s*|\s*$/g,"");
-            var isNameAdd = false;// 判断添加是否同名标识
-            var isNameEdit = false;// 判断修改是否同名标识
-            var isName = true; // 是否重名标识
             //如果是修改
             if (dataType) {
-                url = colruytUpdate;
+                url = bitdepotUpda;
                 data.field.id = dataType.id;
                 msg = "修改大仓库成功";
-                isNameEdit = !!(dataType.name !== data.field.name);
             } else {
-                isNameAdd = true;
-                url = colruytAdd;
+                url = bitdepotAdd;
             }
-            // 判供仓库是否重复
-            if (isNameAdd || isNameEdit) {
-                $.ajax({
-                    cache: true,
-                    type: "get",
-                    url: isname_colruyt,
-                    data: {
-                        ownerid: data.field.ownerid,
-                        name: data.field.name,
-                        'SESSION_NAME':getCookie('SESSION_NAME'),
-                        'TOKEN':getCookie('TOKEN'),
-                    },
-                    async: false,
-                    xhrFields: {
-                        withCredentials: true
-                    },
-                    crossDomain: true,
-                    success: function (data) {
-                        if (data.status === 2) {
-                            layer.msg('大仓库已存在');
-                            isName = false;
-                        }
-                    }
-                });
-            }
-            if (!isName) {return false;}
             data.field['SESSION_NAME']= getCookie('SESSION_NAME');
             data.field['TOKEN']= getCookie('TOKEN');
             $.ajax({
@@ -241,9 +198,8 @@
                             }
                         });
                         layer.msg(msg);
-                        layer.close(addcolruytLayer);
+                        layer.close(addColruytLayer);
                     } else if (res.status === 1) {
-                        // layer.msg("提交异常");
                         goLogin();// 跳转到登录页
                     }
                 }
@@ -251,22 +207,34 @@
             return false;
         });
 
+        //库位详情
+        $(".depotDetail").click(function() {
+            var checkStatus = table.checkStatus('table-colruytList');//获取选中行状态
+            console.log(checkStatus);
+            if (checkStatus.data.length < 1) {
+                layer.msg("请选择需要编辑的信息");
+            } else {
+                sessionStorage.setItem('colruytCheck', JSON.stringify(checkStatus.data[0])); //将所选仓库信息存储到本地作为回显
+                location.hash = "#!depot-position/";
+            }
+        });
+
         //修改
         $(".changeBtn").click(function() {
-            var checkStatus = table.checkStatus('table-colruytList');
+            var checkStatus = table.checkStatus('table-colruytList');//获取选中行状态
             if (checkStatus.data.length < 1) {
                 layer.msg("请选择需要编辑的信息");
             } else if (checkStatus.data.length > 1) {
                 layer.msg("请选择需要编辑的单条信息");
             } else {
                 sessionStorage.setItem('colruytCheck', JSON.stringify(checkStatus.data[0])); //将所选仓库信息存储到本地作为回显
-                $.get('view/form/form-addColruyt.html', {}, function(str) {
+                $.get('view/depot/layer-addColruyt.html', {}, function(str) {
                     addColruytLayer = layer.open({
                         title: '修改',
                         type: 1,
                         content: str, //注意，如果str是object，那么需要字符拼接。
                         resize: false,
-                        area: ['800px', '560px'],
+                        area: ['640px', '500px'],
                     });
                 });
             }
@@ -289,10 +257,10 @@
                     });
                     //调用删除接口
                     $.ajax({
-                        url: colruytDel,
+                        url: bitdepotDele,
                         type: "post",
                         data: {
-                            "ids": rowId,
+                            "id": rowId,
                             'SESSION_NAME':getCookie('SESSION_NAME'),
                             'TOKEN':getCookie('TOKEN'),
                         },
@@ -328,16 +296,6 @@
                         }
                     });
                 });
-            }
-        });
-
-        //监听单元格点击事件
-        table.on('tool(table-colruytList)', function(obj) {
-            var data = obj.data;
-            if (obj.event === 'click') {
-                data.type = "colruytPosition";
-                location.hash = "#!colruyt-position/";
-                sessionStorage.setItem('colruytPosition', JSON.stringify(data)); //将当前仓库的库位信息存储在本地
             }
         });
 

@@ -20,12 +20,12 @@
                 <div class="form-box clearfix">
                     <div class="layui-form-item form-left">
                         <div class="table-form-item layui-input-inline">
-                            <span class="input-span">仓库名称</span>
-                            <input type="text" name="name" placeholder="仓库名称" autocomplete="off" class="layui-input">
-                        </div>
-                        <div class="table-form-item layui-input-inline">
                             <span class="input-span">仓库编号</span>
                             <input type="text" name="code" placeholder="仓库编号" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <span class="input-span">仓库名称</span>
+                            <input type="text" name="name" placeholder="仓库名称" autocomplete="off" class="layui-input">
                         </div>
                         <!-- <div class="table-form-item layui-input-inline">
                             <span class="input-span">管仓</span>
@@ -110,53 +110,39 @@
                 pageName: 'offset', //页码的参数名称，默认：page
                 limitName: 'limit' //每页数据量的参数名，默认：limit
             },
-            cols: [
-                [ //标题栏
-                    {
-                        field: 'LAY_TABLE_INDEX',
-                        title: '序号',
-                        width: 40,
-                        templet: function(d) {
-                            return d.LAY_TABLE_INDEX + 1;
-                        }
-                    }, {
-                        type: 'checkbox'
-                    }, {
-                        field: 'code',
-                        title: '仓库编号',
-                    }, {
-                        field: 'name',
-                        title: '仓库名称',
-                        event: 'click',
-                        style: 'cursor: pointer;color:#0063de;',
-                    }, {
-                        field: 'ownername',
-                        title: '仓库主',
-                    }, {
-                        field: 'address',
-                        title: '地址',
-                    }, {
-                        field: 'type',
-                        title: '仓库类型',
-                        templet: function(d) {
-                            return '监管仓';
-                        }
-                    }, {
-                        field: 'remarks',
-                        title: '备注',
+            cols: [[ //标题栏
+                {
+                    field: 'LAY_TABLE_INDEX',
+                    title: '序号',
+                    width: 40,
+                    templet: function(d) {
+                        return d.LAY_TABLE_INDEX + 1;
                     }
-                    //,{
-                    //     field: 'status',
-                    //     title: '状态',
-                    //     templet:function(d){
-                    //         if(d.status == 0){
-                    //             return '正常';
-                    //         }
-                    //         return '已删除';
-                    //     }
-                    // }
-                ]
-            ],
+                }, {
+                    type: 'checkbox'
+                }, {
+                    field: 'code',
+                    title: '仓库编号',
+                }, {
+                    field: 'name',
+                    title: '仓库名称'
+                }, {
+                    field: 'ownername',
+                    title: '仓库主',
+                }, {
+                    field: 'address',
+                    title: '地址',
+                }, {
+                    field: 'type',
+                    title: '仓库类型',
+                    templet: function(d) {
+                        return '监管仓';
+                    }
+                }, {
+                    field: 'remarks',
+                    title: '备注',
+                }
+            ]],
             even: true,
             page: true, //是否显示分页
             limits: [100, 200, 500, 1000],
@@ -338,14 +324,14 @@
         });
 
         //监听单元格点击事件
-        table.on('tool(tableContainer-depotList)', function(obj) {
-            var data = obj.data;
-            if (obj.event === 'click') {
-                data.type = "depotPosition";
-                location.hash = "#!depot-position/";
-                sessionStorage.setItem('depotPosition', JSON.stringify(data)); //将当前仓库的库位信息存储在本地
-            }
-        });
+        // table.on('tool(tableContainer-depotList)', function(obj) {
+        //     var data = obj.data;
+        //     if (obj.event === 'click') {
+        //         data.type = "depotPosition";
+        //         location.hash = "#!depot-position/";
+        //         sessionStorage.setItem('depotPosition', JSON.stringify(data)); //将当前仓库的库位信息存储在本地
+        //     }
+        // });
 
     });
 </script>

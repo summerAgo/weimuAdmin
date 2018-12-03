@@ -44,6 +44,7 @@ var outRemove = pathUrl + "order/outtreasury/remove";//出货申请详情货物�
 var outStock = pathUrl + "order/outtreasury/outStock";//审核通过出库
 var outTreasuryDelete = pathUrl + "order/outtreasury/delete";//出库删除
 var outTreasury = pathUrl + "order/outtreasury/list";//出库列表
+
 // 仓库管理
 var bitdepotList = pathUrl + "basics/bitdepot/list";//大仓库列表
 var bitdepotAdd = pathUrl + "basics/bitdepot/add";//大仓库
