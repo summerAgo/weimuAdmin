@@ -56,7 +56,7 @@
     <input type="checkbox" name="isapp" value="{{d.id}}" lay-skin="switch" lay-text="评　估|不评估" lay-filter="isapp" checked>
 </script>
 <style scode>
-    .position-form-right.form-right{
+    .position-form-right.form-right {
         position: absolute;
         left: 250px;
     }
@@ -83,7 +83,7 @@
             for (var key in data.field) {
                 // 参数赋值
                 if (data.field[key] !== "") {
-                    paramSearch[key] = data.field[key].replace(/^\s*|\s*$/g,"");
+                    paramSearch[key] = data.field[key].replace(/^\s*|\s*$/g, "");
                 }
             }
             // 表格重新加载
@@ -123,36 +123,38 @@
                 pageName: 'offset', // 页码的参数名称，默认：page
                 limitName: 'limit' // 每页数据量的参数名，默认：limit
             },
-            cols: [[ // 标题栏
-                {
-                    field: 'LAY_TABLE_INDEX',
-                    title: '序号',
-                    width: 40,
-                    templet: function(d) {
-                        return d.LAY_TABLE_INDEX + 1;
-                    }
-                }, {
-                    field: 'name', // 设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识
-                    title: '仓库主',
-                    event: 'click',
-                    style: 'color:#0063de',
-                    width: 266,
-                }, {
-                    field: 'untreated',
-                    title: '未评估商品',
-                    width: 266,
-                    templet: function(d) {
-                        //默认无
-                        if (d.untreated > 0) {
-                            return '<span style="color:red;">' + d.untreated + '</span>';
+            cols: [
+                [ // 标题栏
+                    {
+                        field: 'LAY_TABLE_INDEX',
+                        title: '序号',
+                        width: 40,
+                        templet: function(d) {
+                            return d.LAY_TABLE_INDEX + 1;
                         }
-                        return d.untreated;
+                    }, {
+                        field: 'name', // 设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识
+                        title: '仓库主',
+                        event: 'click',
+                        style: 'color:#0063de;cursor: pointer;',
+                        width: 266,
+                    }, {
+                        field: 'untreated',
+                        title: '未评估商品',
+                        width: 266,
+                        templet: function(d) {
+                            //默认无
+                            if (d.untreated > 0) {
+                                return '<span style="color:red;">' + d.untreated + '</span>';
+                            }
+                            return d.untreated;
+                        }
+                    }, {
+                        field: 'already',
+                        title: '已评估商品',
                     }
-                }, {
-                    field: 'already',
-                    title: '已评估商品',
-                }
-            ]],
+                ]
+            ],
             even: true, // 开启隔行背景
             page: true, // 是否显示分页
             limits: [100, 200, 500, 1000],
@@ -274,72 +276,74 @@
                             pageName: 'offset', // 页码的参数名称，默认：page
                             limitName: 'limit' // 每页数据量的参数名，默认：limit
                         },
-                        cols: [[ // 标题栏
-                            {
-                                field: 'LAY_TABLE_INDEX',
-                                title: '序号',
-                                width: 40,
-                                templet: function(d) {
-                                    return d.LAY_TABLE_INDEX + 1;
+                        cols: [
+                            [ // 标题栏
+                                {
+                                    field: 'LAY_TABLE_INDEX',
+                                    title: '序号',
+                                    width: 40,
+                                    templet: function(d) {
+                                        return d.LAY_TABLE_INDEX + 1;
+                                    }
+                                }, {
+                                    field: 'uuid',
+                                    title: '货物标识码',
+                                    width: 206,
+                                    style: 'font-family: Consolas;font-size:16px'
+                                }, {
+                                    field: 'code',
+                                    title: '包号',
+                                    sort: true
+                                }, {
+                                    field: 'varieties',
+                                    title: '品种'
+                                }, {
+                                    field: 'spec',
+                                    title: '规格/厚度'
+                                }, {
+                                    field: 'levels',
+                                    title: '等级',
+                                    sort: true
+                                }, {
+                                    field: 'chang',
+                                    title: '长度'
+                                }, {
+                                    field: 'brand',
+                                    title: '品牌',
+                                    sort: true
+                                }, {
+                                    field: 'origin',
+                                    title: '产地',
+                                    sort: true
+                                }, {
+                                    field: 'pprice',
+                                    width: 130,
+                                    title: '采购单价' + unitMoney,
+                                    templet: function(d) {
+                                        if (!d.pprice)
+                                            return "";
+                                        return formatNum(d.pprice);
+                                    }
+                                }, {
+                                    field: 'isapp',
+                                    title: '是否评估',
+                                    width: 110,
+                                    templet: '#checkboxTpl',
+                                    unresize: true,
+                                }, {
+                                    field: 'aprice',
+                                    title: '评估单价' + unitMoney,
+                                    width: 130,
+                                    templet: function(d) {
+                                        return formatNum(d.aprice) || "";
+                                    },
+                                    edit: "text"
+                                }, {
+                                    field: 'remarks',
+                                    title: '备注',
                                 }
-                            }, {
-                                field: 'uuid',
-                                title: '货物标识码',
-                                width: 206,
-                                style:'font-family: Consolas;font-size:16px'
-                            }, {
-                                field: 'code',
-                                title: '包号',
-                                sort: true
-                            }, {
-                                field: 'varieties',
-                                title: '品种'
-                            }, {
-                                field: 'spec',
-                                title: '规格/厚度'
-                            }, {
-                                field: 'levels',
-                                title: '等级',
-                                sort: true
-                            }, {
-                                field: 'chang',
-                                title: '长度'
-                            }, {
-                                field: 'brand',
-                                title: '品牌',
-                                sort: true
-                            }, {
-                                field: 'origin',
-                                title: '产地',
-                                sort: true
-                            }, {
-                                field: 'pprice',
-                                width: 130,
-                                title: '采购单价' + unitMoney,
-                                templet: function (d) {
-                                    if(!d.pprice)
-                                    return "";
-                                    return formatNum(d.pprice);
-                                }
-                            }, {
-                                field:'isapp',
-                                title:'是否评估',
-                                width:110,
-                                templet: '#checkboxTpl',
-                                unresize: true,
-                            }, {
-                                field: 'aprice',
-                                title: '评估单价'+ unitMoney,
-                                width: 130,
-                                templet: function (d) {
-                                    return formatNum(d.aprice) || "";
-                                },
-                                edit: "text"
-                            }, {
-                                field: 'remarks',
-                                title: '备注',
-                            }
-                        ]],
+                            ]
+                        ],
                         page: false,
                         limit: null,
                         // limits: [10, 20, 30, 40, 50],
@@ -353,26 +357,26 @@
                     });
 
                     //监听锁定操作
-                    form.on('switch(isapp)', function(obj){
+                    form.on('switch(isapp)', function(obj) {
                         //console.log(this.value + ":" + obj.elem.checked);
                         console.log(obj);
                         // layer.tips(this.value + '-' + this.name + '：'+ obj.elem.checked, obj.othis);
                         var isapp = 1;
-                        if(obj.elem.checked){
+                        if (obj.elem.checked) {
                             isapp = 0
                         }
                         var a = apriceChangeValue[this.value];
-                        if(a){
+                        if (a) {
                             apriceChangeValue[this.value] = {
-                                num : a.num,
-                                aprice : a.aprice,
-                                isapp : isapp
+                                num: a.num,
+                                aprice: a.aprice,
+                                isapp: isapp
                             };
-                        }else{
+                        } else {
                             apriceChangeValue[this.value] = {
-                                num : null,
-                                aprice : null,
-                                isapp : isapp
+                                num: null,
+                                aprice: null,
+                                isapp: isapp
                             };
                         }
                     });
@@ -392,17 +396,17 @@
                         }
                         //apriceChangeValue[obj.data.id] = obj.value;
                         var a = apriceChangeValue[obj.data.id];
-                        if(a){
+                        if (a) {
                             apriceChangeValue[obj.data.id] = {
-                                num : a.num,
-                                aprice : obj.value,
-                                isapp : a.isapp
+                                num: a.num,
+                                aprice: obj.value,
+                                isapp: a.isapp
                             };
-                        }else{
+                        } else {
                             apriceChangeValue[obj.data.id] = {
-                                num : obj.data.num,
-                                aprice : obj.value,
-                                isapp : 0
+                                num: obj.data.num,
+                                aprice: obj.value,
+                                isapp: 0
                             };
                         }
 
@@ -479,7 +483,7 @@
                             // traditional: true,
                             success: function(res) {
                                 if (res.status === 1) {
-                                    goLogin();// 跳转到登录页
+                                    goLogin(); // 跳转到登录页
                                 }
                                 if (res.status === 0) {
                                     layer.msg("评估单价设置成功");
