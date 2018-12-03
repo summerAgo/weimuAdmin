@@ -26,9 +26,10 @@ var ilbstockExportUrl = pathUrl + "lb/ilbstock/exportExcel"; //导出
 var ilbstockImportTemp = pathUrl + "template/预入库导入.xlsx"; //导入模板
 // 出入库
 var prebackinexamine = pathUrl + "order/warehousing/backinexamine";//反入库审核
+var preinlbdel = pathUrl + "order/warehousing/inlbdel";//入库单删除
 var preEntry = pathUrl + "order/warehousing/list";//预入库
 var preEntryAdd = pathUrl + "order/warehousing/add";//预入库新增
-var preEntryDelete = pathUrl + "order/warehousing/delete";//预入库删除
+var preEntryDelete = pathUrl + "order/warehousing/delete";//预入库单删除
 var preEntryUpdate = pathUrl + "order/warehousing/update";//预入库编辑
 var preEntrygetByOrderno = pathUrl + "order/warehousing/getByOrderno?ish=1";//预入库单详情 ish:获取单号所有信息
 var preEntryexamineStock = pathUrl + "order/warehousing/examineStock";//预入库单审核为库存
@@ -44,6 +45,11 @@ var outStock = pathUrl + "order/outtreasury/outStock";//审核通过出库
 var outTreasuryDelete = pathUrl + "order/outtreasury/delete";//出库删除
 var outTreasury = pathUrl + "order/outtreasury/list";//出库列表
 // 仓库管理
+var bitdepotList = pathUrl + "basics/bitdepot/list";//大仓库列表
+var bitdepotAdd = pathUrl + "basics/bitdepot/add";//大仓库
+var bitdepotDele = pathUrl + "basics/bitdepot/delete";//大仓库
+var bitdepotUpda = pathUrl + "basics/bitdepot/update";//大仓库
+var bitdepotzhipai = pathUrl + "basics/bitdepot/zhipai";//大仓库指派库位
 var depotList = pathUrl + "basics/depot/list";//仓库列表
 var depotAdd = pathUrl + "basics/depot/add";//添加仓库
 var depotUpdate = pathUrl + "basics/depot/update";//修改仓库

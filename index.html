@@ -225,6 +225,10 @@
                     container.load('/view/depot/colruyt-list.html');
                 }],
                 ///////////////////
+                ['stock-newOutBill', function() {
+                    container.load('/view/stock/stock-newOutBill.html');
+                }],
+                ///////////////////
                 ['depot-position', function() {
                     container.load('/view/depot/depot-position.html');
                 }],
@@ -290,6 +294,8 @@
                                     title = "出库单详情";
                                 } else if (vid === "depot-position") {
                                     title = "库位详情";
+                                } else if (vid === "stock-newOutBill") {
+                                    title = "新建出库单";
                                 }
                                 element.tabAdd('nav-tabs', {
                                     title: dom.html() || title,
