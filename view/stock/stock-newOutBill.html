@@ -1,5 +1,5 @@
 <div class="table-page addOutBill" id="stock-addOutBill">
-    <div class="table-content-title layer-level">
+    <div class="table-content-title">
         <div class="table-tools">
             <ul class="layui-nav topmenu" lay-filter="talbe-tools">
                 <!-- <li class="layui-nav-item">
@@ -113,22 +113,31 @@
     <div class="table-content">
         <div class="table-content-main">
             <table class="layui-hide" id="tableContainer-addOutBill" lay-filter="tableContainer-addOutBill"></table>
+            <div class="table-bottom-data">已经选择<span class="data">0</span>个商品</div>
         </div>
     </div>
 </div>
 <style scoped>
+    .table-bottom-data {
+        line-height: 50px;
+        font-size: 15px;
+        color: #333;
+    }
+    .table-bottom-data .data{
+        font-size: 18px;
+        color: #ff3c4e;
+        margin: 0 5px;
+        font-weight: bold;
+    }
     .layer-title small {
         font-size: 14px;
     }
-
     .layer-title li {
         flex: 0 0 280px;
     }
-
     .table-page h3 {
         padding-left: 0;
     }
-
     .util-container * {
         display: inline-block
     }
@@ -185,7 +194,7 @@
             }
         });
 
-        //监听
+        //监听仓库主选择
         formSelects.on('ownerSelect', function(id, vals, val, isAdd, isDisabled) {
             if (!isAdd) {
                 formSelects.data('depotSelect', 'local', {
@@ -210,7 +219,6 @@
         }, true);
 
         var outBill = JSON.parse(sessionStorage.getItem('addOutBill')); //获取所选择记录详情
-        // console.log(outBill);
         var data = {};
         var pageData;
 
@@ -390,6 +398,7 @@
                             }
                         }
                     }
+                    //增加出货申请单
                     preData['SESSION_NAME'] = getCookie('SESSION_NAME');
                     preData['TOKEN'] = getCookie('TOKEN');
                     $.ajax({
@@ -417,8 +426,8 @@
                                         curr: 1 //重新从第 1 页开始
                                     }
                                 });
-                                layer.closeAll();
-
+                                // layer.closeAll();
+                                // 添加出货申请单成功
                             }
                             layer.msg(res.msg);
                         }
@@ -518,6 +527,13 @@
         });
         var goodsListArray = []; //目标库存货物列表
 
+        //监听新建出库单列表锁定操作
+        table.on('checkbox(tableContainer-addOutBill)', function(obj) {
+            var checkStatus = table.checkStatus('tableContainer-addOutBill'); //表格选中状态
+            var dataSpan = $("#tableContainer-addOutBill").siblings(".table-bottom-data").find("span");
+            dataSpan.html(checkStatus.data.length); //当前选中了多少商品
+        });
+
         // 从库存添加货物
         $(".addGoodsBtn").click(function() {
             var cargoowner = layui.formSelects.value('ownerSelect', "valStr");
@@ -614,6 +630,7 @@
                 //     return arr;
                 // }
 
+                // 库存货物列表
                 var tableInsGood = table.render({
                     elem: '#tableContainer-goodsList',
                     // height: 'full-' + tableTopHeight,
@@ -763,23 +780,33 @@
                     });
                 });
 
-                //监听锁定操作
+                //监听库存货物列表锁定操作
                 table.on('checkbox(tableContainer-goodsList)', function(obj) {
                     // console.log("xxxxx");
                     // console.log(obj);
-                    if (obj.type == "all") {
-                        var checkStatus = table.checkStatus('tableContainer-goodsList'); //表格选中状态
-                        $("#tableContainer-goodsList").parent().find(".rightBotBtn span").html(checkStatus.data.length); //当前选中了多少货物
-                    }
-                    if (obj.checked) {
-                        var aprice = obj.data.aprice;
-                        if (aprice && aprice > 0) {
-                            var checkStatus = table.checkStatus('tableContainer-goodsList'); //表格选中状态
-                            $("#tableContainer-goodsList").parent().find(".rightBotBtn span").html(checkStatus.data.length); //当前选中了多少货物
-                        }
-                    }
+                    var checkStatus = table.checkStatus('tableContainer-goodsList'); //表格选中状态
+                    var dataSpan = $("#tableContainer-goodsList").siblings(".table-bottom-data").find("span");
+                    // if (obj.type === "all") {
+                    dataSpan.html(checkStatus.data.length); //当前选中了多少商品
+                    // }
+                    // if (obj.checked) {
+                    //     var aprice = obj.data.aprice;
+                    //     if (aprice && aprice > 0) {
+                    //         dataSpan.html(checkStatus.data.length); //当前选中了多少商品
+                    //     }
+                    // }
+                    // if (obj.type == "all") {
+                    //     var checkStatus = table.checkStatus('tableContainer-goodsList'); //表格选中状态
+                    //     $("#tableContainer-goodsList").parent().find(".rightBotBtn span").html(checkStatus.data.length); //当前选中了多少货物
+                    // }
+                    // if (obj.checked) {
+                    //     var aprice = obj.data.aprice;
+                    //     if (aprice && aprice > 0) {
+                    //         var checkStatus = table.checkStatus('tableContainer-goodsList'); //表格选中状态
+                    //         $("#tableContainer-goodsList").parent().find(".rightBotBtn span").html(checkStatus.data.length); //当前选中了多少货物
+                    //     }
+                    // }
                 });
-
             });
         });
 
