@@ -24,19 +24,30 @@ var ilbstocklblist = pathUrl + "lb/ilbstock/lblist";//查询出货时信息
 var ilbstockImportUrl = pathUrl + "lb/ilbstock/importExcel"; //导入
 var ilbstockExportUrl = pathUrl + "lb/ilbstock/exportExcel"; //导出
 var ilbstockImportTemp = pathUrl + "template/预入库导入.xlsx"; //导入模板
-// 出入库
-var prebackinexamine = pathUrl + "order/warehousing/backinexamine";//反入库审核
-var preinlbdel = pathUrl + "order/warehousing/inlbdel";//入库单删除
-var preEntry = pathUrl + "order/warehousing/list";//预入库
-var preEntryAdd = pathUrl + "order/warehousing/add";//预入库新增
-var preEntryDelete = pathUrl + "order/warehousing/delete";//预入库单删除
-var preEntryUpdate = pathUrl + "order/warehousing/update";//预入库编辑
-var preEntrygetByOrderno = pathUrl + "order/warehousing/getByOrderno?ish=1";//预入库单详情 ish:获取单号所有信息
-var preEntryexamineStock = pathUrl + "order/warehousing/examineStock";//预入库单审核为库存
-var preEntryexamineStockGoods = pathUrl + "order/warehousing/examineStockGoods";//选择预入库单中的货物入库为库存
-var entryHistory = preEntry + "?ishistory=1";//入库记录
-var getOrdernoDetails =  pathUrl + "order/outtreasury/getOrdernoDetails" //库存中查询货物 （仓库：depotid 仓库主：ownerid）
 
+// 预入库
+var preinlbdel = pathUrl + "order/prewarehousing/inlbdel";//入库单删除
+var preEntry = pathUrl + "order/prewarehousing/list";//预入库
+var preEntryAdd = pathUrl + "order/prewarehousing/add";//预入库新增
+var preEntryDelete = pathUrl + "order/prewarehousing/delete";//预入库单删除
+var preEntryUpdate = pathUrl + "order/prewarehousing/update";//预入库编辑
+var preEntrygetByOrderno = pathUrl + "order/prewarehousing/getByOrderno?ish=1";//预入库单详情 ish:获取单号所有信息
+var preEntryexamineStock = pathUrl + "order/prewarehousing/examineStock";//预入库单审核为库存
+var preEntryexamineStockGoods = pathUrl + "order/prewarehousing/examineStockGoods";//选择预入库单中的货物入库为库存
+
+// 入库
+var backinexamine = pathUrl + "order/warehousing/backinexamine";//反入库审核
+var inlbdel = pathUrl + "order/warehousing/inlbdel";//入库单删除
+var inEntry = pathUrl + "order/warehousing/list";//入库
+var inEntryAdd = pathUrl + "order/warehousing/add";//预入库新增
+var inEntryDelete = pathUrl + "order/warehousing/delete";//预入库单删除
+var inEntryUpdate = pathUrl + "order/warehousing/update";//预入库编辑
+var inEntrygetByOrderno = pathUrl + "order/warehousing/getByOrderno?ish=1";//预入库单详情 ish:获取单号所有信息
+var inEntryexamineStock = pathUrl + "order/warehousing/examineStock";//预入库单审核为库存
+var inEntryexamineStockGoods = pathUrl + "order/warehousing/examineStockGoods";//选择预入库单中的货物入库为库存
+var inentryHistory = preEntry + "?ishistory=1";//入库记录
+
+var getOrdernoDetails =  pathUrl + "order/outtreasury/getOrdernoDetails" //库存中查询货物 （仓库：depotid 仓库主：ownerid）
 var outTreasuryAdd = pathUrl + "order/outtreasury/add";//增加出货申请
 var outHistory = pathUrl + "order/outtreasury/list?ishistory=1";//出库记录
 var outHistoryOrderno = pathUrl + "order/outtreasury/getByOrderno?ish=1";//出库详情 ish:获取单号所有信息

@@ -316,11 +316,8 @@
         $(".submissionBtn").click(function() {
             var checkStatus = table.checkStatus('tableContainer-preentry'); // 表格选中状态
             var datalist = checkStatus.data;
-            var ids = [];
-            for (var i = 0; i < datalist.length; i++) {
-                ids.push(datalist[i].orderno);
-            }
-            if (ids.length < 1) {
+        
+            if (datalist.length < 1) {
                 layer.msg("未选择入库项");
                 return false;
             }
@@ -329,7 +326,7 @@
                 url: preEntryexamineStock,
                 type: "POST",
                 data: {
-                    'ids': ids,
+                    'orderno': datalist[0].orderno,
                     'SESSION_NAME': getCookie('SESSION_NAME'),
                     'TOKEN': getCookie('TOKEN')
                 },

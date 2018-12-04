@@ -251,7 +251,7 @@
         var tableIns = table.render({
             elem: '#tableContainer',
             height: 'full-' + tableTopHeight,
-            url: entryHistory,
+            url: inEntry,
             parseData: function(res) { //res 即为原始返回的数据
                 if (res.status !== 0) res.status = 0;
                 return {
@@ -344,7 +344,7 @@
                 title: '提示'
             }, function(index) {
                 $.ajax({
-                    url: prebackinexamine,
+                    url: backinexamine,
                     type: "POST",
                     data: {
                         'SESSION_NAME': getCookie('SESSION_NAME'),
@@ -386,7 +386,7 @@
                 title: '提示'
             }, function(index) {
                 $.ajax({
-                    url: prebackinexamine,
+                    url: inlbdel,
                     type: "POST",
                     data: {
                         'SESSION_NAME': getCookie('SESSION_NAME'),
