@@ -401,7 +401,7 @@
                     });
                     //调删除接口
                     rowDataApi(preEntryDelete, {
-                        "ids": rowId
+                        "orderno": rowId
                     }, function(data) {
                         if (data.status === 1) {
                             window.location.href = loginPageUrl;
