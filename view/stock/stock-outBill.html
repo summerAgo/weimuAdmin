@@ -525,7 +525,7 @@
         //新建出库单
         $(".creatBillBtn").click(function() {
             sessionStorage.removeItem('addOutBill');//移除点击table表格带入的数据
-            /*$.get('view/stock/stock-newOutBill.html', {}, function(str) { // 请求弹框
+            $.get('view/stock/stock-newOutBill.html', {}, function(str) { // 请求弹框
                 addLayer = layer.open({
                     title: '新建出库单',
                     type: 1,
@@ -539,8 +539,8 @@
                         });
                     }
                 });
-            })*/
-            location.hash = "#!stock-newOutBill/";
+            });
+            // location.hash = "#!stock-newOutBill/";
         })
 
     });
