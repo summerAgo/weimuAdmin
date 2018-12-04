@@ -1,3 +1,4 @@
+<!--大仓库库位详情-->
 <div class="table-page">
     <div class="table-content-title">
         <div class="table-tools">
@@ -50,10 +51,6 @@
 
 <script id="detailsTitle" type="text/html">
     <div class="store-bread-item">
-        <span>编号：</span>
-        <span>{{d.code||''}}</span>
-    </div>
-    <div class="store-bread-item">
         <span>大仓库：</span>
         <span>{{d.name||''}}</span>
     </div>
@@ -80,14 +77,14 @@
 
         var addPositionLayer; //编辑-弹层
 
-        //仓库ID
-        var depid = null;
+        //大仓库ID
+        var bitdepotid = null;
 
         //先获取到大仓库信息,如果为空则异常
         var depotPosition = JSON.parse(sessionStorage.getItem('colruytCheck'));
 
         if (null != depotPosition) {
-            depid = depotPosition.id;
+            bitdepotid = depotPosition.id;
         } else {
             //提示报错。异常
         }
@@ -123,12 +120,13 @@
             return false;
         });
 
+        // 库位详情table表单
         var tableIns = table.render({
             elem: '#tableContainer-positionList',
             height: 'full-' + tableTopHeight,
             url: positionList,
             where: {
-                'depotid': depid
+                'bitdepotid': bitdepotid
             },
             parseData: function(res) { //res 即为原始返回的数据
                 if (res.status !== 0) res.status = 0;
@@ -152,11 +150,11 @@
                         return d.LAY_TABLE_INDEX + 1;
                     }
                 }, {
-                    type: 'checkbox'
-                }, {
+                    type: 'radio'
+                },/* {
                     field: 'code',
                     title: '库位编号',
-                }, {
+                }, */{
                     field: 'name',
                     title: '库位名称',
                 }, {
@@ -183,6 +181,7 @@
             loading: true
         });
 
+        // 添加库位按钮
         $(".addPositionBtn").click(function() {
             // 打开添加弹窗
             sessionStorage.removeItem('positionCheck'); //点击新建仓库删除本地存储所选仓库信息
@@ -197,6 +196,7 @@
             });
         });
 
+        // 保存添加的库位信息
         form.on('submit(addPositionForm)', function(data) {
             var dataType = JSON.parse(sessionStorage.getItem('positionCheck')); //获取本地所选仓库信息，判断是否为修改
             var url;
@@ -207,14 +207,13 @@
             if (dataType) {
                 //如果是修改
                 url = positionUpdate;
-                data.field.id = dataType.id;
-                msg = "修改仓位成功";
+                msg = "修改库位成功";
                 isNameEdit = !!(dataType.name !== data.field.name);
             } else {
                 url = positionAdd;
                 isNameAdd = true;
             }
-            data.field['depotid'] = depid;
+            data.field['bitdepotid'] = bitdepotid;
 
             // 判供库位是否重复
             if (isNameAdd || isNameEdit) {
@@ -223,7 +222,7 @@
                     type: "get",
                     url: isname_position,
                     data: {
-                        depotid: data.field.depotid,
+                        bitdepotid: data.field.bitdepotid,
                         name: data.field.name,
                         'SESSION_NAME': getCookie('SESSION_NAME'),
                         'TOKEN': getCookie('TOKEN'),
@@ -275,8 +274,8 @@
             return false;
         });
 
+        //修改库位按钮点击
         $(".changeBtn").click(function() {
-            //修改库位
             var checkStatus = table.checkStatus('tableContainer-positionList');
             if (checkStatus.data.length < 1) {
                 layer.msg("请选择需要编辑的信息");
@@ -296,8 +295,8 @@
             }
         });
 
+        // 删除库位信息
         $(".deleteBtn").click(function() {
-            // 删除
             var checkStatus = table.checkStatus('tableContainer-positionList');
             if (checkStatus.data.length < 1) {
                 layer.msg("请选择需要删除的信息");

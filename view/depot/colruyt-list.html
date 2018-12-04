@@ -22,10 +22,10 @@
             <form class="layui-form" action="">
                 <div class="form-box clearfix">
                     <div class="layui-form-item form-left">
-                        <div class="table-form-item layui-input-inline">
+                        <!--<div class="table-form-item layui-input-inline">
                             <span class="input-span">大仓库编号</span>
                             <input type="text" name="code" placeholder="仓库编号" autocomplete="off" class="layui-input">
-                        </div>
+                        </div>-->
                         <div class="table-form-item layui-input-inline">
                             <span class="input-span">大仓库名称</span>
                             <input type="text" name="name" placeholder="仓库名称" autocomplete="off" class="layui-input">
@@ -56,7 +56,7 @@
 <style scode>
     .form-right{
         position: absolute;
-        left: 510px;
+        left: 250px;
     }
 </style>
 <script>
@@ -78,6 +78,7 @@
         form.render(); //重置表单渲染
         formSelects.render(); //下拉选项
 
+        // 监听表单查询按钮
         form.on('submit(searchForm)', function(data) {
             var paramSearch = {};
             for (var key in data.field) {
@@ -122,10 +123,10 @@
                     }
                 }, {
                     type: 'radio'
-                }, {
+                },/* {
                     field: 'code',
                     title: '大仓库编号',
-                }, {
+                }, */{
                     field: 'name',
                     title: '大仓库名称',
                 }, {
@@ -157,7 +158,7 @@
             sessionStorage.removeItem('colruytCheck'); //点击新建仓库删除本地存储所选仓库信息
             $.get('view/depot/layer-addColruyt.html', {}, function(str) {
                 addColruytLayer = layer.open({
-                    title: '添加大仓库',
+                    title: '新增大仓库',
                     type: 1,
                     content: str, //注意，如果str是object，那么需要字符拼接。
                     resize: false,
@@ -166,19 +167,51 @@
             });
         });
 
+        // 新建大仓库弹框保存操作
         form.on('submit(addColruytForm)', function(data) {
-            var dataType = JSON.parse(sessionStorage.getItem('colruytCheck')); //获取本地所选仓库信息，判断是否为修改
+            console.log(data);
+            var dataType = JSON.parse(sessionStorage.getItem('colruytCheck')); //获取本地所选大仓库信息，判断是否为修改
             var url;
             var msg = "新建大仓库成功";
-            data.field.type = data.field.type.replace(/^\s*|\s*$/g,"");
+            var isNameAdd = false;// 判断添加是否同名标识
+            var isNameEdit = false;// 判断修改是否同名标识
+            var isName = true; // 是否重名标识
             //如果是修改
             if (dataType) {
                 url = bitdepotUpda;
                 data.field.id = dataType.id;
                 msg = "修改大仓库成功";
+                isNameEdit = !!(dataType.name !== data.field.name);
             } else {
                 url = bitdepotAdd;
+                isNameAdd = true;
             }
+            // 判供大仓库是否重复
+            if (isNameAdd || isNameEdit) {
+                $.ajax({
+                    cache: true,
+                    type: "get",
+                    url: isname_bitdepot,
+                    data: {
+                        name: data.field.name,
+                        'SESSION_NAME':getCookie('SESSION_NAME'),
+                        'TOKEN':getCookie('TOKEN'),
+                    },
+                    async: false,
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    success: function (data) {
+                        if (data.status === 2) {
+                            layer.msg('仓库已存在');
+                            isName = false;
+                        }
+                    }
+                });
+            }
+            if (!isName) {return false;}
+
             data.field['SESSION_NAME']= getCookie('SESSION_NAME');
             data.field['TOKEN']= getCookie('TOKEN');
             $.ajax({
