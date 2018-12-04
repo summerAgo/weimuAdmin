@@ -168,22 +168,22 @@
 
 .flow-path .path-arrow dl.dl-1 {
     left: -14px;
-    top: 2px;
+    top: 1px;
 }
 
 .flow-path .path-arrow dl.dl-2 {
     left: 223px;
-    top: 2px;
+    top: 1px;
 }
 
 .flow-path .path-arrow dl.dl-3 {
     left: 461px;
-    top: 2px;
+    top: 1px;
 }
 
 .flow-path .path-arrow dl.dl-4 {
     left: 698px;
-    top: 2px;
+    top: 1px;
 }
 
 .flow-path .path-arrow dl.dl-5 {
@@ -193,27 +193,27 @@
 
 .flow-path .path-arrow dl.dl-6 {
     left: 462px;
-    top: 137px;
+    top: 136px;
 }
 
 .flow-path .path-arrow dl.dl-7 {
     left: 224px;
-    top: 137px;
+    top: 136px;
 }
 
 .flow-path .path-arrow dl.dl-8 {
     left: -15px;
-    top: 137px;
+    top: 136px;
 }
 
 .flow-path .path-arrow dl.dl-9 {
     left: 104px;
-    top: 261px;
+    top: 260px;
 }
 
 .flow-path .path-arrow dl dt {
-    width: 66px;
-    height: 66px;
+    width: 68px;
+    height: 68px;
     background-color: #f2f9ff;
     border-radius: 66px;
     margin: 0 auto;

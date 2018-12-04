@@ -961,6 +961,14 @@ body .layui-tree-skin-shihuang .layui-tree-branch {
     margin-right: 10px;
 }
 
+.layer-address-form .layui-form-item .layui-input-inline {
+    width: 370px;
+}
+
+.layer-address-form .layui-form-item .layui-form-label {
+    width: 100px;
+}
+
 .xm-select-parent .xm-select-title {
     position: relative;
     min-height: 30px;
