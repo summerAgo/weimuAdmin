@@ -51,7 +51,7 @@
 
 <script id="detailsTitle" type="text/html">
     <div class="store-bread-item">
-        <span>大仓库：</span>
+        <span>大仓库名称：</span>
         <span>{{d.name||''}}</span>
     </div>
     <div class="store-bread-item">
@@ -159,7 +159,7 @@
                     title: '库位名称',
                 }, {
                     field: 'acreage',
-                    title: '总面积（m³）',
+                    title: '总面积',
                 }, {
                     field: 'address',
                     title: '地址',
@@ -196,7 +196,7 @@
             });
         });
 
-        // 保存添加的库位信息
+        // 保存添加修改库位信息
         form.on('submit(addPositionForm)', function(data) {
             var dataType = JSON.parse(sessionStorage.getItem('positionCheck')); //获取本地所选仓库信息，判断是否为修改
             var url;
@@ -208,13 +208,13 @@
                 //如果是修改
                 url = positionUpdate;
                 msg = "修改库位成功";
+                data.field['id'] = dataType.id;// 添加修改库位的id到data
                 isNameEdit = !!(dataType.name !== data.field.name);
             } else {
                 url = positionAdd;
                 isNameAdd = true;
             }
-            data.field['bitdepotid'] = bitdepotid;
-
+            data.field['bitdepotid'] = bitdepotid;// 添加大仓库id到data
             // 判供库位是否重复
             if (isNameAdd || isNameEdit) {
                 $.ajax({
