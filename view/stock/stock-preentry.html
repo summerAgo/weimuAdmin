@@ -282,12 +282,7 @@
                 }, {
                     field: 'origin',
                     title: '产地'
-                },
-                //  {
-                //     field: 'suppliername',
-                //     title: '供应商'
-                // } ,
-                {
+                }, {
                     field: 'volume',
                     title: '数量（m³）'
                 }, {
@@ -444,6 +439,7 @@
             // container.load('/view/stock/stock-newbill.html');
             sessionStorage.removeItem('newbill_orderno');
             tankuang("新建预入库单");
+            // location.hash = "#!stock-addPrebill/";
         });
 
         table.on('tool(tableContainer-preentry)', function(obj) {
