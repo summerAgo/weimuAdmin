@@ -151,7 +151,6 @@
                 }
 
             }
-            console.log(arr);
             layui.formSelects.data('instidSelect', 'local', {
                 arr: arr,
                 linkage: true
@@ -177,17 +176,12 @@
             arr: selectDataInstall(customerDropdown)
         });
 
-        if (data.person) {
-            formSelects.value('person', [data.person]);
-        }
-
-        if (data.fkperson) {
-            formSelects.value('fkperson', [data.fkperson]);
-        }
-
-        if (data.customerid) {
-            formSelects.value('customerid', [data.customerid]);
-        }
+        // 业务员select数据回填
+        data.person && formSelects.value('person', [data.person]);
+        // 风控人员select数据回填
+        data.fkperson && formSelects.value('fkperson', [data.fkperson]);
+        // 货权人select数据回填
+        data.customerid && formSelects.value('customerid', [data.customerid]);
 
         function selectDataInstall(url, param, bool) {
             //下拉选框数据组装

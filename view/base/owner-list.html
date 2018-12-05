@@ -453,6 +453,7 @@
         //编辑仓库主
         $(".editBtn").click(function() {
             var checkStatus = table.checkStatus('tableContainer-userlist');
+            console.log(checkStatus);
             if (checkStatus.data.length < 1) {
                 layer.msg("请选择需要编辑的信息");
             } else if (checkStatus.data.length > 1) {
