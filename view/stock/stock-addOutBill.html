@@ -213,7 +213,7 @@
         // console.log(outBill);
         var data = {};
         var pageData;
-
+        var dataAipUrl = preoutHistoryOrderno;//历史出货单接口
         if (outBill == null) {
             $(".suboutlbBtn").parent().hide();
             formSelects.undisabled('ownerSelect'); //启用
@@ -221,19 +221,22 @@
             $("input[name='estimatedate']").attr("disabled", false);
             $('.util-container').hide(); //隐藏倒计时
         } else {
-            if (outBill.status === 3) {
-                $(".topmenu").hide();
+            if (outBill.status == 3 && outBill.isexamine == 3) {
+                $(".topmenu").hide();//如果是审核不通过出库单隐藏操作按钮
+                dataAipUrl = outfailoutlist;
             }
+            //回显
             data["orderno"] = outBill.orderno;
             data["ownerid"] = outBill.ownerid;
             data["depotid"] = outBill.depotid;
             data['SESSION_NAME'] = getCookie('SESSION_NAME');
             data['TOKEN'] = getCookie('TOKEN');
             $("#estimatedate").val(outBill.outdate);
+            
             $.ajax({
                 cache: true,
                 type: "get",
-                url: preoutHistoryOrderno,
+                url: dataAipUrl,
                 data: data,
                 async: false,
                 success: function(res) {
@@ -243,6 +246,7 @@
                     }
                 }
             });
+
             if(pageData){
                 data["vname"] = pageData.vname; //司机姓名
                 data["vehnum"] = pageData.vehnum; //车牌号
@@ -254,9 +258,9 @@
 
             }
             
-            var addOutBill = sessionStorage.getItem("addOutBill");
+            // var addOutBill = sessionStorage.getItem("addOutBill");
             var auditStatus = $(".audit-status");
-            if (addOutBill !== null) {
+            if (outBill !== null) {
                 // 审核状态显示
                 if (outBill.status === 1 && outBill.isexamine === 1) {
                     auditStatus.html("<span style='color: #ff3c4e;'>待审核</span>");
