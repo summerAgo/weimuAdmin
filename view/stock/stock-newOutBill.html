@@ -279,9 +279,6 @@
                     }, {
                         type: 'checkbox',
                     }, {
-                        field: 'ownername',
-                        title: '仓库主'
-                    }, {
                         field: 'uuid',
                         title: '货物标识码',
                         width: 206,
@@ -302,9 +299,6 @@
                         field: 'chang',
                         title: '长度'
                     }, {
-                        field: 'depname',
-                        title: '仓库名称'
-                    }, {
                         field: 'billloading',
                         title: '提运单',
                         width: 150
@@ -322,7 +316,7 @@
                         title: '评估金额' + unitMoney,
                         width: 130,
                         templet: function(d) {
-                            return formatNum(d.aprice);
+                            return formatNum(d.aprice)|| "";
                         }
                     }
                 ]
@@ -404,7 +398,7 @@
                     $.ajax({
                         cache: true,
                         type: "POST",
-                        url: outTreasuryAdd,
+                        url: preoutTreasuryAdd,
                         async: false,
                         data: preData,
                         error: function(request) {
@@ -426,7 +420,7 @@
                                         curr: 1 //重新从第 1 页开始
                                     }
                                 });
-                                // layer.closeAll();
+                                layer.closeAll();
                                 // 添加出货申请单成功
                             }
                             layer.msg(res.msg);
@@ -496,7 +490,7 @@
                 $.ajax({
                     cache: true,
                     type: "POST",
-                    url: outStock,
+                    url: preoutStock,
                     xhrFields: {
                         withCredentials: true
                     },

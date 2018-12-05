@@ -35,13 +35,13 @@
                                 <option value="">选择仓库</option>
                             </select>
                         </div>
-                        <div class="table-form-item layui-input-inline">
+                        <!-- <div class="table-form-item layui-input-inline">
                             <span class="input-span">库位</span>
                             <select name="positionid" xm-select="positionSelectOut" xm-select-radio>
                                 <option value="">选择库位</option>
                             </select>
-                        </div>
-                        <div class="table-form-item layui-input-inline">
+                        </div> -->
+                        <!-- <div class="table-form-item layui-input-inline">
                             <span class="input-span">产地</span>
                             <select name="origin" xm-select="originSelectOut" xm-select-radio>
                                 <option value="">选择产地</option>
@@ -56,7 +56,7 @@
                         <div class="table-form-item layui-input-inline">
                             <span class="input-span">提运单</span>
                             <input type="text" name="billloading" placeholder="提运单" autocomplete="off" class="layui-input">
-                        </div>
+                        </div> -->
                     </div>
                     <div class="layui-form-item form-right">
                         <button type="reset" class="layui-btn layui-btn-md layui-btn-gray">
@@ -237,7 +237,7 @@
         var tableIns = table.render({
             elem: '#tableContainers',
             height: 'full-' + tableTopHeight,
-            url: outTreasury,
+            url: preoutTreasury,
             parseData: function(res) { //res 即为原始返回的数据
                 if (res.status !== 0) res.status = 0;
                 return {
@@ -350,7 +350,7 @@
                     $.ajax({
                         cache: true,
                         type: "POST",
-                        url: outStock,
+                        url: preoutStock,
                         data: data,
                         async: false,
                         xhrFields: {

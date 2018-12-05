@@ -233,7 +233,7 @@
             $.ajax({
                 cache: true,
                 type: "get",
-                url: outHistoryOrderno,
+                url: preoutHistoryOrderno,
                 data: data,
                 async: false,
                 success: function(res) {
@@ -243,15 +243,17 @@
                     }
                 }
             });
+            if(pageData){
+                data["vname"] = pageData.vname; //司机姓名
+                data["vehnum"] = pageData.vehnum; //车牌号
+                data["card"] = pageData.card; //司机身份证号
 
-            data["vname"] = pageData.vname; //司机姓名
-            data["vehnum"] = pageData.vehnum; //车牌号
-            data["card"] = pageData.card; //司机身份证号
+                $("input[name='vname']").val(data.vname);
+                $("input[name='vehnum']").val(data.vehnum);
+                $("input[name='card']").val(data.card);
 
-            $("input[name='vname']").val(data.vname);
-            $("input[name='vehnum']").val(data.vehnum);
-            $("input[name='card']").val(data.card);
-
+            }
+            
             var addOutBill = sessionStorage.getItem("addOutBill");
             var auditStatus = $(".audit-status");
             if (addOutBill !== null) {
@@ -338,9 +340,6 @@
                     }, {
                         type: 'checkbox',
                     }, {
-                        field: 'ownername',
-                        title: '仓库主'
-                    }, {
                         field: 'uuid',
                         title: '货物标识码',
                         width: 206,
@@ -375,8 +374,11 @@
                         field: "",
                         title: "总金额",
                         templet: function (d) {
-                            return formatNum(d.aprice * d.num);
+                            return formatNum(d.totalamount) || "";
                         },
+                    }, {
+                        field: 'ownername',
+                        title: '仓库主'
                     }, {
                         field: 'depname',
                         title: '仓库名称'
@@ -394,13 +396,6 @@
                         field: 'num',
                         title: '数量（m³）',
                         width: 120,
-                    }, {
-                        field: 'aprice',
-                        title: '评估金额' + unitMoney,
-                        width: 130,
-                        templet: function(d) {
-                            return formatNum(d.aprice);
-                        }
                     }
                 ]
             ],
@@ -480,7 +475,7 @@
                     $.ajax({
                         cache: true,
                         type: "POST",
-                        url: outTreasuryAdd,
+                        url: preoutTreasuryAdd,
                         async: false,
                         data: preData,
                         error: function(request) {
@@ -570,7 +565,7 @@
                 $.ajax({
                     cache: true,
                     type: "POST",
-                    url: outStock,
+                    url: preoutStock,
                     xhrFields: {
                         withCredentials: true
                     },
@@ -738,7 +733,7 @@
                                 templet: function(d) {
                                     //默认无
                                     if (d.isapp == 1) {
-                                        return '<span style="color:red;">不用评估</span>';
+                                        return '<span>不用评估</span>';
                                     }
                                     //默认无
                                     if (null == d.aprice || d.aprice < 0) {
@@ -797,7 +792,7 @@
                         }
                         var i = 0;
                         $("#goodsList .layui-table-body.layui-table-main").find("input[name='layTableCheckbox']").each(function() {
-                            if (!res.data[i].aprice || data[i].aprice <= 0) {
+                            if ((!res.data[i].aprice || data[i].aprice <= 0) && data[i].isapp==0) {
                                 $(this).attr("disabled", 'disabled').removeAttr("checked");
                                 form.render('checkbox');
                             }
@@ -805,7 +800,7 @@
                         });
                         i = 0;
                         $("#goodsList .layui-table-fixed.layui-table-fixed-l").find(".layui-table-body").find("input[name='layTableCheckbox']").each(function() {
-                            if (!res.data[i].aprice || data[i].aprice <= 0) {
+                            if ((!res.data[i].aprice || data[i].aprice <= 0) && data[i].isapp==0) {
                                 $(this).attr("disabled", 'disabled').removeAttr("checked");
                                 form.render('checkbox');
                             }

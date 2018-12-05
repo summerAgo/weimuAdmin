@@ -15,7 +15,7 @@
                     <a class="in-lb-del" href="javascript:;"><i class="iconfont icon-daochu"></i>删除</a>
                 </li>
                 <li class="layui-nav-item">
-                    <a class="back-in-examine" href="javascript:;"><i class="iconfont icon-daochu"></i>反入库审核</a>
+                    <a class="back-in-examine" href="javascript:;"><i class="iconfont icon-daochu"></i>弃入库</a>
                 </li>
             </ul>
         </div>
@@ -331,7 +331,7 @@
             }
         });
 
-        //反预入库审核
+        //弃入库
         $(".back-in-examine").click(function() {
             var checkStatus = table.checkStatus('tableContainer'); //表格选中状态
             if (checkStatus.data.length < 1) {
@@ -339,7 +339,7 @@
                 return;
             }
 
-            layer.confirm('是否确认反入库此条信息', {
+            layer.confirm('是否确认把此单转为预入库状态!', {
                 skin: 'layui-layer-wei',  //layui-layer-wei，维木class
                 title: '提示'
             }, function(index) {
@@ -359,7 +359,7 @@
                             window.location.href = loginPageUrl;
                         }
                         if (data.status == 0) {
-                            layer.msg("反预入库成功");
+                            layer.msg("弃入库操作成功!");
 
                             tableIns.reload({
                                 page: {

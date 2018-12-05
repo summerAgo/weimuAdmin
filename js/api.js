@@ -51,14 +51,14 @@ var inentryHistory = preEntry + "?ishistory=1";//入库记录
 var inprintinjk = pathUrl+"/order/warehousing/prinware";
 
 //预出库
-var pregetOrdernoDetails =  pathUrl + "order/outtreasury/getOrdernoDetails" //库存中查询货物 （仓库：depotid 仓库主：ownerid）
-var preoutTreasuryAdd = pathUrl + "order/outtreasury/add";//增加出货申请
-var preoutHistory = pathUrl + "order/outtreasury/list?ishistory=1";//出库记录
-var preoutHistoryOrderno = pathUrl + "order/outtreasury/getByOrderno?ish=1";//出库详情 ish:获取单号所有信息
-var preoutRemove = pathUrl + "order/outtreasury/remove";//出货申请详情货物移除
-var preoutStock = pathUrl + "order/outtreasury/outStock";//审核通过出库
-var preoutTreasuryDelete = pathUrl + "order/outtreasury/delete";//出库删除
-var preoutTreasury = pathUrl + "order/outtreasury/list";//出库列表
+var pregetOrdernoDetails =  pathUrl + "order/preouttreasury/getOrdernoDetails" //库存中查询货物 （仓库：depotid 仓库主：ownerid）
+var preoutTreasuryAdd = pathUrl + "order/preouttreasury/add";//增加出货申请
+var preoutHistory = pathUrl + "order/preouttreasury/list?ishistory=1";//出库记录
+var preoutHistoryOrderno = pathUrl + "order/preouttreasury/getByOrderno?ish=1";//出库详情 ish:获取单号所有信息
+var preoutRemove = pathUrl + "order/preouttreasury/remove";//出货申请详情货物移除
+var preoutStock = pathUrl + "order/preouttreasury/outStock";//审核通过出库
+var preoutTreasuryDelete = pathUrl + "order/preouttreasury/delete";//出库删除
+var preoutTreasury = pathUrl + "order/preouttreasury/list";//出库列表
 
 //出库
 var getOrdernoDetails =  pathUrl + "order/outtreasury/getOrdernoDetails" //库存中查询货物 （仓库：depotid 仓库主：ownerid）
