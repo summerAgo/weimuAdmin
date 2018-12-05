@@ -62,7 +62,7 @@
     </div>
 </div>
 <style scode>
-    .form-right{
+    .form-right {
         position: absolute;
         left: 250px;
     }
@@ -95,7 +95,7 @@
             for (var key in data.field) {
                 //参数赋值
                 if (data.field[key] !== "") {
-                    paramSearch[key] = data.field[key].replace(/^\s*|\s*$/g,"");
+                    paramSearch[key] = data.field[key].replace(/^\s*|\s*$/g, "");
                 }
             }
             tableIns.reload({
@@ -134,9 +134,9 @@
                         templet: function(d) {
                             return d.LAY_TABLE_INDEX + 1;
                         }
-                    },{
+                    }, {
                         type: 'checkbox'
-                    },{
+                    }, {
                         field: 'rolename',
                         title: '角色名称',
                     }
@@ -190,7 +190,7 @@
                 layer.msg("请选择需要删除的信息");
             } else {
                 layer.confirm('是否确认删除此条信息', {
-                    skin: 'layui-layer-wei',  //layui-layer-wei，维木class
+                    skin: 'layui-layer-wei', //layui-layer-wei，维木class
                     title: '提示'
                 }, function(index) {
                     var rowId = [];
@@ -242,6 +242,7 @@
                 layer.msg("请选择需要1条数据");
             } else {
                 window.currData = checkStatus.data[0];
+                console.log(window.currData)
                 $.get('view/role/role-power.html', {}, function(str) {
                     eaitLayer = layer.open({
                         title: '设置角色权限',
@@ -256,29 +257,31 @@
         //权限设置表单提交
         form.on('submit(roleSubmit)', function(data) {
             var allAuthority = sessionStorage.getItem('allAuthority');
-            console.log(allAuthority);
+            console.log(data.field);
             data.field["allauth"] = allAuthority;
+            data.field["roleid"] = window.currData.id;
             // layer.confirm("确认权限?", {
             //     skin: 'layui-layer-wei',  //layui-layer-wei，维木class
             //     title: '提示'
             // }, function(index) {
-                data.field['SESSION_NAME'] =getCookie("SESSION_NAME");
-                data.field['TOKEN'] =getCookie("TOKEN");
-                $.ajax({
-                    cache: true,
-                    type: "POST",
-                    url: setAuthorityAll,
-                    data: data.field,
-                    async: false,
-                    xhrFields: {
-                        withCredentials: true
-                    },
-                    crossDomain: true,
-                    error: function(request) {
-                        layer.msg('提交失败');
-                        return false;
-                    },
-                    success: function(data) {
+            data.field['SESSION_NAME'] = getCookie("SESSION_NAME");
+            data.field['TOKEN'] = getCookie("TOKEN");
+            $.ajax({
+                cache: true,
+                type: "POST",
+                url: setAuthorityAll,
+                data: data.field,
+                async: false,
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
+                error: function(request) {
+                    layer.msg('提交失败');
+                    return false;
+                },
+                success: function(data) {
+                    if (data.status == 0) {
                         layer.close(eaitLayer);
                         layer.msg('提交成功');
                         // 刷新表格
@@ -287,8 +290,11 @@
                                 curr: 1 //重新从第 1 页开始
                             }
                         });
+                    }else{
+                        layer.msg(data.msg);
                     }
-                });
+                }
+            });
             // });
             return false;
         });
@@ -298,8 +304,8 @@
             var userData = window.currData;
             var title = "";
             var userUrl = "";
-            var isNameAdd = false;// 判断添加是否同名标识
-            var isNameEdit = false;// 判断修改是否同名标识
+            var isNameAdd = false; // 判断添加是否同名标识
+            var isNameEdit = false; // 判断修改是否同名标识
             var isName = true; // 是否重名标识
 
             if (userData != null) {
@@ -328,7 +334,7 @@
                         withCredentials: true
                     },
                     crossDomain: true,
-                    success: function (data) {
+                    success: function(data) {
                         if (data.status === 2) {
                             layer.msg('角色已存在');
                             isName = false;
@@ -374,8 +380,8 @@
 
         //增删行数据
         function rowDataApi(url, data, funSuc, funErr) {
-            data['SESSION_NAME']= getCookie('SESSION_NAME');
-            data['TOKEN']= getCookie('TOKEN');
+            data['SESSION_NAME'] = getCookie('SESSION_NAME');
+            data['TOKEN'] = getCookie('TOKEN');
             $.ajax({
                 url: url,
                 type: "POST",
@@ -389,14 +395,5 @@
                 error: funErr
             })
         }
-
-        //变更下载模板链接
-        $("#dowmTemp").attr("href", ilbstockImportTemp);
-
-        //点击导出
-        $("#toExport").on('click', function(e) {
-            window.location.href = ilbstockExportUrl
-        });
-
     });
 </script>
