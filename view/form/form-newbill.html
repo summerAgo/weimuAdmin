@@ -123,13 +123,13 @@
                 formSelects.data(id, 'local', {
                     arr: []
                 }); //如果仓库为空则清空列表
-            } else {
+            } /*else { //如果仓库id不为，根据仓库id查询库位列表，并赋值库位select
                 formSelects.data(id, 'local', {
                     arr: selectDataInstall(positionDropdown, {
                         "depotid": depotid
                     }, false, 0) //仓库列表
                 });
-            }
+            }*/
         });
 
         // 监听仓库主select的选中与取消
@@ -142,10 +142,11 @@
                     arr: [] //清空库位列表
                 });
             } else {
+                //  获取仓库下拉数据
                 var depotList = selectDataInstall(depotDropdown, {
                     "ownerid": vals[0].value //仓库列表
                 }, false, 0);
-
+                console.log(depotList);//仓库下拉数据
                 if (depotList.length < 1) {
                     formSelects.data('depotSelectLayer', 'local', {
                         arr: [] //清空仓库列表
@@ -156,11 +157,10 @@
                     layer.msg("该仓库主下无仓库信息");
                     return false;
                 }
-
+                // 根据仓库主id：ownerid查询的仓库数据depotList，初始化仓库select数据
                 formSelects.data('depotSelectLayer', 'local', {
                     arr: depotList //仓库列表
                 });
-
                /* formSelects.data('positionSelectLayer', 'local', {
                     arr: selectDataInstall(positionDropdown, {
                         "depotid": depotList[0].value
@@ -169,18 +169,58 @@
             }
         }, true);
 
-        // 监听仓库select的选中与取消
+        //监听仓库的选中与取消
         formSelects.on('depotSelectLayer', function(id, vals, val, isAdd, isDisabled) {
+            //id:           点击select的id
+            //vals:         当前select已选中的值
+            //val:          当前select点击的值
+            //isAdd:        当前操作选中or取消
+            //isDisabled:   当前选项是否是disabled
+            //如果return false, 那么将取消本次操作
             if (!isAdd) {
                 formSelects.data('positionSelectLayer', 'local', {
                     arr: [] //仓库列表
                 });
             } else {
-                formSelects.data('positionSelectLayer', 'local', {
+               /* formSelects.data('positionSelectLayer', 'local', {
                     arr: selectDataInstall(positionDropdown, {
                         "depotid": vals[0].value
                     }, false, 0) //仓库列表
+                });*/
+                var bitdepotid = vals[0].bitdepotid;
+                var positiondIds = vals[0].position;
+                var arr1 = [];
+                positiondIds && (arr1 = positiondIds.split(","));
+                var arr = [];
+
+                $.ajax({
+                    url: positiondropdown,
+                    type: "get",
+                    data: bitdepotid,
+                    async: false, // 同步
+                    traditional: true,
+                    success: function(data) {
+                        if (data.status === 0) {
+                            //把接口数据转换为[{"name":str,"value":number}]格式
+                            if (!Array.isArray(data.data) || data.data.length === 0) {
+                                // 判断arr是否为数组并保证内部有值
+                                return false;
+                            }
+                            for (var i = 0; i < data.data.length; i++) {
+                                for (var k = 0; k < arr1.length; k++) {
+                                    if (data.data[i].id === parseInt(arr1[k])) {
+                                        arr.push({
+                                            "name": data.data[i].name,
+                                            "value": data.data[i].id,
+                                        });
+                                    }
+                                }
+                            }
+                        }
+                    }
                 });
+                // 库位数据初始化
+                formSelects.data('positionSelectLayer', 'local', { arr });
             }
         }, true);
 
@@ -230,9 +270,8 @@
             }
         });
 
-        // 供应商列表数据后台请求
+        //下拉选框数据组装
         function selectDataInstall(url, param, bool, type) {
-            //下拉选框数据组装
             var arr = [];
             //获取列表数据
             $.ajax({
@@ -257,12 +296,16 @@
                             if (type === 0) {
                                 arr.push({
                                     "name": data.data[i].name,
-                                    "value": data.data[i].id
+                                    "value": data.data[i].id,
+                                    "bitdepotid": data.data[i].bitdepotid,
+                                    "position": data.data[i].position,
                                 })
                             } else {
                                 arr.push({
                                     "name": data.data[i].name,
-                                    "value": data.data[i].name
+                                    "value": data.data[i].name,
+                                    "bitdepotid": data.data[i].bitdepotid,
+                                    "position": data.data[i].position,
                                 })
                             }
                         }
@@ -505,6 +548,7 @@
 
         // 如果有数据，表名是点击预入库table表格进来的
         if (orderno) {
+            console.log(orderno);
             $(".layui-elem-quote").html("预入库订单号：" + orderno.orderno);
             //仓库主select下拉框赋值
             formSelects.data('ownerSelectLayer', 'local', {
@@ -522,8 +566,32 @@
                     selected: "selected"
                 }]
             });
-
-            if (orderno.positionname) {
+            
+            if (orderno.positionid) {
+                var bitdepotid = orderno.bitdepotid;
+                var positionid = orderno.positionid;
+                orderno.positionname = null;
+                $.ajax({
+                    url: positiondropdown,
+                    type: "get",
+                    data: bitdepotid,
+                    async: false, // 同步
+                    traditional: true,
+                    success: function(data) {
+                        if (data.status === 0) {
+                            //把接口数据转换为[{"name":str,"value":number}]格式
+                            if (!Array.isArray(data.data) || data.data.length === 0) {
+                                // 判断arr是否为数组并保证内部有值
+                                return false;
+                            }
+                            for (var i = 0; i < data.data.length; i++) {
+                                if (data.data[i].id === positionid) {
+                                    orderno.positionname = data.data[i].name;
+                                }
+                            }
+                        }
+                    }
+                });
                 //库位select下拉框赋值
                 formSelects.data('positionSelectLayer', 'local', {
                     arr: [{
@@ -533,6 +601,7 @@
                     }]
                 });
             }
+
             // 设置产地select的选中值
             if (orderno.origin) {
                 formSelects.value('originSelectLayer', [orderno.origin]);
