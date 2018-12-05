@@ -11,14 +11,13 @@
         <div class="layui-form-item layui-normal-line">
             <label class="layui-form-label form-required">编号</label>
             <div class="layui-input-inline">
-                <input type="text" name="code" placeholder="编号" value="{{d.code || ''}}" autocomplete="off" class="layui-input" lay-verify="required">
+                <input type="text" name="code" placeholder="编号" value="{{d.code || ''}}" autocomplete="off" class="layui-input" lay-verify="code">
             </div>
         </div>
         <div class="layui-form-item layui-normal-line">
             <label class="layui-form-label form-required">所属大仓库</label>
             <div class="layui-input-inline">
-                <!-- <input type="text" name="ownerid" placeholder="仓库主" value="{{d.ownerid || ''}}" autocomplete="off" class="layui-input" lay-verify="required"> -->
-                <select name="" xm-select="" xm-select-radio lay-verify="required">
+                <select name="bitdepotid" xm-select="positiondropdown" xm-select-radio lay-verify="required">
                     <option value="">选择大仓库</option>
                 </select>
             </div>
@@ -26,7 +25,6 @@
         <div class="layui-form-item layui-normal-line">
             <label class="layui-form-label form-required">仓库主</label>
             <div class="layui-input-inline">
-                <!-- <input type="text" name="ownerid" placeholder="仓库主" value="{{d.ownerid || ''}}" autocomplete="off" class="layui-input" lay-verify="required"> -->
                 <select name="ownerid" xm-select="ownerSelect" xm-select-radio lay-verify="required">
                     <option value="">选择仓库主</option>
                 </select>
@@ -39,15 +37,11 @@
             </div>
         </div>
         <div class="layui-form-item layui-normal-line">
-            <label class="layui-form-label form-required">物品所需估值</label>
+            <label class="layui-form-label form-required">物品是否估值</label>
             <div class="layui-input-inline">
-                <input type="text" name="" placeholder="估值" value="{{d.price||''}}" autocomplete="off" class="layui-input" lay-verify="required">
-            </div>
-        </div>
-        <div class="layui-form-item layui-normal-line">
-            <label class="layui-form-label form-required">物品不需要估值</label>
-            <div class="layui-input-inline">
-                <input type="text" name="" placeholder="估值" value="{{d.price||''}}" autocomplete="off" class="layui-input" lay-verify="required">
+                <select name="isapp" xm-select="isapp" xm-select-radio lay-verify="required">
+                    <option value="">估值选择</option>
+                </select>
             </div>
         </div>
         <div class="layui-form-item layui-normal-line">
@@ -64,10 +58,14 @@
         </div>
     </div>
     <div class="layer-colruyt-form">
-        <div class="colruyt-title"><span class="search-name">大仓库：</span><span class="search-key">大岭山大岭山大岭山大岭山大岭山大岭山</span><span class="search-box"><input type="text" value="" placeholder="库位名称搜索"><i class="iconfont icon-sousuo" id="search-colruyt"></i></span></div>
+        <div class="colruyt-title">
+            <span class="search-name">大仓库：</span>
+            <span class="search-key"></span>
+            <span class="search-box"><input type="text" value="" placeholder="大库位名称搜索"><i class="iconfont icon-sousuo search-colruyt"></i></span>
+        </div>
         <div class="table-content">
             <div class="table-content-main">
-                <table class="layui-hide" id="table-depotList" lay-filter="table-depotList"></table>
+                <table class="layui-hide" id="table-layer-depotList" lay-filter="table-layer-depotList"></table>
             </div>
         </div>
     </div>
@@ -146,6 +144,12 @@
         var tableTopHeight = (parseInt($(".layui-layer-page").innerHeight()) - parseInt($(".layui-layer-title").innerHeight()) - parseInt($("#depotView").innerHeight()) - parseInt($(".layer-colruyt-form").innerHeight()) - 56); //内容区域所需减去的高度
 
         var dataType = JSON.parse(sessionStorage.getItem('depotCheck')) || {}; //获取本地所选仓库信息，判断是否为修改
+
+        var bitdepotid = 0;// 刚进入弹框，设置一个默认的大仓库id
+        //编码自定义验证规则
+        form.verify({
+            code: [/^[a-zA-Z0-9]{4}$/,'编号必须4位，字母或数字组合']
+        });
         // console.log(dataType)
         // 渲染模板的内容
         var getTpl = depotTle.innerHTML,
@@ -156,30 +160,84 @@
 
         formSelects.render();
 
+        // 大仓库数据初始化
+        formSelects.data('positiondropdown', 'local', {
+            arr: selectDataInstall(bitdepotList)
+        });
+
+        // 仓库主数据初始化
         formSelects.data('ownerSelect', 'local', {
-            arr: selectDataInstall(ownerDropdown) //仓库主列表
+            arr: selectDataInstall(ownerDropdown)
         });
 
-        formSelects.data('typeSelect', 'local', {
-            arr: [{
-                    name: "监管仓",
-                    value: "1"
-                },
-                {
-                    name: "自有仓",
-                    value: "2"
-                },
-            ]
+        // 物品是否估值数据初始化
+        formSelects.data('isapp', 'local', {
+            arr: [{"name":"估值","value":"0"},{"name":"不估值","value":"1"}]
         });
 
+        // 监听是否估值select选项选中与否
+        formSelects.on('isapp', function(id, vals, val, isAdd, isDisabled){
+            //id:           点击select的id
+            //vals:         当前select已选中的值
+            //val:          当前select点击的值
+            //isAdd:        当前操作选中or取消
+            //isDisabled:   当前选项是否是disabled
+            console.log(val.value);
+        }, true);
 
-        if (dataType.ownerid) {
-            formSelects.value('typeSelect', [dataType.type+1]);
-            formSelects.value('ownerSelect', [dataType.ownerid]);
+        // 监听大仓库选择与否
+        formSelects.on('positiondropdown', function(id, vals, val, isAdd, isDisabled){
+            bitdepotid = val.value;
+            $(".search-key").html(val.name);
+            tableIns.reload({
+                where: { //设定异步数据接口的额外参数，任意设
+                    bitdepotid : val.value
+                }
+                ,page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+            });
+        }, true);
+
+        // 如果是编辑，那么回填数据
+        if (JSON.stringify(dataType) !== "{}") {
+            //所属大仓库回填
+            /*if (dataType.ownerid) {
+                formSelects.value('ownerSelect', [dataType.ownerid]);
+            }*/
+            //仓库主回填
+            if (dataType.ownerid) {
+                formSelects.value('ownerSelect', [dataType.ownerid]);
+            }
         }
 
+        // 库位搜索按钮点击
+        $(".search-colruyt").click(function () {
+            var _this = $(this);
+            var sinput = _this.siblings("input");
+            var value = sinput.val().trim();
+            if (value === "" || value == null || value === undefined ) {
+                sinput.val("");
+                layer.msg("请填写大库位名");
+                return false;
+            } else if (!bitdepotid) {
+                sinput.val("");
+                layer.msg("请选择大仓库");
+                return false;
+            } else {
+                tableIns.reload({
+                    where: { //设定异步数据接口的额外参数，任意设
+                        name : value
+                    }
+                    ,page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                });
+            }
+        });
+
+        //下拉选框数据组装
         function selectDataInstall(url, param, bool) {
-            //下拉选框数据组装
             var arr = [];
             //获取列表数据
             $.ajax({
@@ -215,10 +273,14 @@
             return arr;
         }
 
+        // 库位表格渲染
         var tableIns = table.render({
-            elem: '#table-depotList',
+            elem: '#table-layer-depotList',
             height: 'full-' + tableTopHeight,
-            url: depotList,
+            url: positionList,
+            where:{
+                bitdepotid: bitdepotid
+            },
             parseData: function(res) { //res 即为原始返回的数据
                 if (res.status !== 0) res.status = 0;
                 return {
@@ -244,6 +306,9 @@
                 }
             ]],
             even: true,
+            page: true, //是否显示分页
+            limits: [10, 20, 50, 100],
+            limit: 10, //每页默认显示的数量
             done: function(res, curr, count) {
 
             },
@@ -252,5 +317,6 @@
             },
             loading: true
         });
+
     });
 </script>

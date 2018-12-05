@@ -12,12 +12,12 @@
                 <select name="instid" lay-verify="required" placeholder="必填项,请输入用户类型" xm-select="instidSelect" xm-select-radio="" ></select>
             </div>
         </div>
-        <div class="layui-form-item layui-normal-line">
+       <!-- <div class="layui-form-item layui-normal-line">
             <label class="layui-form-label form-required">仓库编码</label>
             <div class="layui-input-inline">
                 <input type="text" id="code" name="code" lay-verify="required" placeholder="字母与数字固定长度4位" class="layui-input">
             </div>
-        </div>
+        </div>-->
         <div class="layui-form-item layui-normal-line">
             <label class="layui-form-label form-required">名称</label>
             <div class="layui-input-inline">
@@ -61,9 +61,9 @@
             </div>
         </div>
         <div class="layui-form-item layui-normal-line">
-            <label class="layui-form-label">货权人</label>
+            <label class="layui-form-label form-required">货权人</label>
             <div class="layui-input-inline">
-                <select name="customerid" xm-select="customerid" xm-select-radio>
+                <select name="customerid" xm-select="customerid" xm-select-radio lay-verify="required">
                     <option value="">请选择</option>
                 </select>
             </div>

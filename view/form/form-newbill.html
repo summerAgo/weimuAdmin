@@ -161,11 +161,11 @@
                     arr: depotList //仓库列表
                 });
 
-                formSelects.data('positionSelectLayer', 'local', {
+               /* formSelects.data('positionSelectLayer', 'local', {
                     arr: selectDataInstall(positionDropdown, {
                         "depotid": depotList[0].value
                     }, false, 0) //库位列表
-                });
+                });*/
             }
         }, true);
 
@@ -208,7 +208,6 @@
         });
 
         if (!(supplierData instanceof Array)) {
-            console.log(supplierData);
             console.log("供应商列表为空");
         }
 
@@ -536,8 +535,7 @@
             }
             // 设置产地select的选中值
             if (orderno.origin) {
-                formSelects.value('originSelectLayer', [orderno.origin]); 
-
+                formSelects.value('originSelectLayer', [orderno.origin]);
             }
             // 设置供应商select的选中值
             if (orderno.supplierid) {

@@ -138,13 +138,7 @@
                 }, {
                     field: '',
                     title: '所属库位',
-                },/* {
-                    field: 'type',
-                    title: '仓库类型',
-                    templet: function(d) {
-                        return '监管仓';
-                    }
-                }, */{
+                }, {
                     field: 'remarks',
                     title: '备注',
                 }
@@ -165,22 +159,24 @@
         // 打开添加弹窗
         $(".addDepotBtn").click(function() {
             sessionStorage.removeItem('depotCheck'); //点击新建仓库删除本地存储所选仓库信息
+            console.log();
             $.get('view/form/form-addDepot.html', {}, function(str) {
                 addDepotLayer = layer.open({
                     title: '添加仓库',
                     type: 1,
                     content: str, //注意，如果str是object，那么需要字符拼接。
                     resize: false,
-                    area: ['800px', '560px'],
+                    area: ['800px', '600px'],
                 });
             });
         });
 
+        // 保存新建仓库按钮
         form.on('submit(addDepotForm)', function(data) {
             var dataType = JSON.parse(sessionStorage.getItem('depotCheck')); //获取本地所选仓库信息，判断是否为修改
             var url;
             var msg = "新建仓库成功";
-            data.field.type = data.field.type.replace(/^\s*|\s*$/g,"");
+            // data.field.type = data.field.type.replace(/^\s*|\s*$/g,"");
             var isNameAdd = false;// 判断添加是否同名标识
             var isNameEdit = false;// 判断修改是否同名标识
             var isName = true; // 是否重名标识
@@ -194,6 +190,18 @@
                 isNameAdd = true;
                 url = depotAdd;
             }
+            // 监听库位选择情况
+            var checkDepot = table.checkStatus('table-layer-depotList');
+            var positionArr = [];
+            $.each(checkDepot.data, function(i, v) {
+                positionArr.push(v.id);//获取所选库位id
+            });
+            if(positionArr.length <= 0 ){
+                layer.msg("请选择库位");
+                return false;
+            }
+            data.field.position = positionArr.join();
+            console.log(data.field.position);
             // 判供仓库是否重复
             if (isNameAdd || isNameEdit) {
                 $.ajax({
@@ -241,7 +249,7 @@
                         layer.msg(msg);
                         layer.close(addDepotLayer);
                     } else if (res.status === 1) {
-                        // layer.msg("提交异常");
+                        layer.msg("提交异常");
                         goLogin();// 跳转到登录页
                     }
                 }
@@ -252,6 +260,7 @@
         //修改
         $(".changeBtn").click(function() {
             var checkStatus = table.checkStatus('tableContainer-depotList');
+            console.log(checkStatus);
             if (checkStatus.data.length < 1) {
                 layer.msg("请选择需要编辑的信息");
             } else if (checkStatus.data.length > 1) {
@@ -264,7 +273,7 @@
                         type: 1,
                         content: str, //注意，如果str是object，那么需要字符拼接。
                         resize: false,
-                        area: ['800px', '560px'],
+                        area: ['800px', '600px'],
                     });
                 });
             }
