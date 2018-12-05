@@ -1,4 +1,4 @@
-<div class="table-page" id="cargo-list">
+<div class="table-page" id="user-list">
     <div class="trr-container">
         <div class="tree-box">
             <div class="tree-header">
@@ -17,13 +17,31 @@
             <ul id="commonTree3" class="dtree" data-id="0"></ul>
         </div>
         <div class="table-content lay-table-content">
+            <!--按钮-->
             <div class="table-content-title">
                 <div class="table-tools">
                     <ul class="layui-nav" lay-filter="talbe-tools">
                         <!-- <li class="layui-nav-item">
-                            <a href="javascript:;" class="creatUser"><i class="iconfont icon-tianjia"></i>添加货权人</a>
+                            <a href="javascript:;" class="creatUser"><i class="iconfont icon-zengjiajiaose"></i>添加用户</a>
                         </li>
                         <li class="layui-nav-item">
+                            <a href="javascript:;" class="resetPas"><i class="iconfont icon-zhongzhi"></i>重置密码</a>
+                        </li>
+                        <li class="layui-nav-item">
+                            <a href="javascript:;" class="userRole"><i class="iconfont icon-jiaoseshezhi"></i>设置角色</a>
+                        </li> -->
+                        <!--<li class="layui-nav-item item-more">
+                            <a href="javascript:;">数据导入导出</a>
+                            <dl class="layui-nav-child">
+                                <dd><a id="dowmTemp" href="javascript:;">下载模板</a></dd>
+                                <dd><a id="toImport" href="javascript:;">导入数据</a></dd>
+                                <dd><a id="toExport" href="javascript:;">导出数据</a></dd>
+                            </dl>
+                        </li>
+                        <li class="layui-nav-item">
+                            <a href="javascript:;">打印</a>
+                        </li> -->
+                        <!-- <li class="layui-nav-item">
                             <a href="javascript:;" class="editBtn"><i class="iconfont icon-bianji"></i>编辑</a>
                         </li>
                         <li class="layui-nav-item">
@@ -32,14 +50,15 @@
                     </ul>
                 </div>
             </div>
+            <!--搜索-->
             <div class="table-page-header">
                 <div class="table-page-form">
                     <form class="layui-form" action="">
                         <div class="form-box">
                             <div class="layui-form-item form-left">
                                 <div class="table-form-item layui-input-inline">
-                                    <span id="titleIns" class="input-span">名称</span>
-                                    <input type="text" name="name" placeholder="名称" autocomplete="off" class="layui-input">
+                                    <span class="input-span" id="titleIns">用户名</span>
+                                    <input type="text" name="username" placeholder="用户名" autocomplete="off" class="layui-input">
                                     <input type="hidden" name="instid" id="instid" value="" autocomplete="off" class="layui-input">
                                 </div>
                             </div>
@@ -52,13 +71,14 @@
                     </form>
                 </div>
             </div>
+            <!--table表格-->
             <div class="table-content-main">
-                <table class="layui-hide" id="tableContainer-cargolist" lay-filter="tableContainer-cargolist"></table>
+                <table class="layui-hide lay-table" id="tableContainer-userlist" lay-filter="tableContainer-userlist"></table>
             </div>
         </div>
     </div>
 </div>
-<style scoped>
+<style scode>
     .lay-table-content {
         padding: 0;
     }
@@ -75,7 +95,7 @@
 </style>
 
 <script>
-    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'tree', 'eleTree', 'dtree'], function() {
+    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'tree', 'eleTree'], function() {
         var element = layui.element;
         var form = layui.form;
         var $ = layui.jquery;
@@ -83,16 +103,20 @@
         var formSelects = layui.formSelects;
         var laytpl = layui.laytpl;
         var eleTree = layui.eleTree;
-        var dtree = layui.dtree;
         var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 63); //内容区域所需减去的高度
 
-        var menuKey = "a_27"; //当前页面key
-        var domObj = $("#cargo-list .table-tools").find("ul"); //当前页面容器
+        var menuKey = "a_15"; //当前页面key
+        var domObj = $("#user-list .table-tools").find("ul"); //当前页面容器
         btnIsList(domObj, menuKey); //按钮权限
+
         var eaitLayer; //编辑-弹层
 
         form.render(); //重置表单渲染
         formSelects.render(); //下拉选项
+        element.render('talbe-tools'); //表格工具栏
+        formSelects.btns(['select', 'remove'], {
+            show: 'name'
+        });
 
         form.on('submit(searchForm)', function(data) {
             var paramSearch = {};
@@ -112,9 +136,9 @@
         });
 
         var tableIns = table.render({
-            elem: '#tableContainer-cargolist',
+            elem: '#tableContainer-userlist',
             height: 'full-' + tableTopHeight,
-            url: customerList,
+            url: userList,
             parseData: function(res) { //res 即为原始返回的数据
                 if (res.status !== 0) res.status = 0;
                 return {
@@ -140,17 +164,23 @@
                     }, {
                         type: 'checkbox'
                     }, {
-                        field: 'name',
-                        title: '名称',
+                        field: 'username',
+                        title: '用户名',
                     }, {
-                        field: 'contacts',
-                        title: '联系人',
+                        field: 'phone',
+                        title: '联系电话',
                     }, {
-                        field: 'personname',
-                        title: '业务员',
+                        field: 'rolename',
+                        title: '角色',
                     }, {
-                        field: 'fkpersonname',
-                        title: '风控人员',
+                        field: 'email',
+                        title: '邮箱',
+                    }, {
+                        field: 'remarks',
+                        title: '备注',
+                    }, {
+                        field: 'createdate',
+                        title: '创建时间',
                     }
                 ]
             ],
@@ -159,7 +189,7 @@
             limits: [100, 200, 500, 1000],
             limit: 100, //每页默认显示的数量
             done: function(res, curr, count) {
-                var addtableBtn = '<div class="rightBotBtn">已经选择<span>0</span>个货物 </div>';
+                var addtableBtn = '<div class="rightBotBtn">已经选择<span>0</span>个货物</div>';
                 $(".layui-table-page").append(addtableBtn);
             },
             text: {
@@ -168,15 +198,15 @@
             loading: true
         });
 
-        //监听锁定操作
-        table.on('checkbox(tableContainer-cargolist)', function(obj) {
-            var checkStatus = table.checkStatus('tableContainer-cargolist'); //表格选中状态
-            $(".rightBotBtn span").html(checkStatus.data.length); //当前选中了多少货物
+        //监听表格CheckBox锁定操作
+        table.on('checkbox(tableContainer-userlist)', function(obj) {
+            var checkStatus = table.checkStatus('tableContainer-userlist'); // 表格选中状态
+            $(".rightBotBtn span").html(checkStatus.data.length); // 当前选中了多少货物
         });
 
         $(".editBtn").click(function() {
-            //编辑
-            var checkStatus = table.checkStatus('tableContainer-cargolist');
+            //编辑表格用户信息
+            var checkStatus = table.checkStatus('tableContainer-userlist');
             if (checkStatus.data.length < 1) {
                 layer.msg("请选择需要编辑的信息");
             } else if (checkStatus.data.length > 1) {
@@ -186,9 +216,9 @@
                 data["instid"] = menuIns.id;
                 data["inaAllList"] = inaAllList;
                 window.currData = data; //全局对象存储当前选中行数据
-                $.get('view/base/cargo-add.html', {}, function(str) {
+                $.get('view/user/user-add.html', {}, function(str) {
                     eaitLayer = layer.open({
-                        title: '编辑',
+                        title: '编辑用户',
                         type: 1,
                         content: str, //注意，如果str是object，那么需要字符拼接。
                         resize: false,
@@ -198,8 +228,129 @@
             }
         });
 
+        //重置密码
+        $(".resetPas").click(function() {
+            //编辑
+            var checkStatus = table.checkStatus('tableContainer-userlist');
+            if (checkStatus.data.length < 1) {
+                layer.msg("请选择需要重置的信息");
+            } else if (checkStatus.data.length > 1) {
+                layer.msg("请选择需要重置的单条信息");
+            } else {
+                window.currData = checkStatus.data[0]; //全局对象存储当前选中行数据
+                $.get('view/user/user-resetPassword.html', {}, function(str) {
+                    eaitLayer = layer.open({
+                        title: '重置密码',
+                        type: 1,
+                        content: str, //注意，如果str是object，那么需要字符拼接。
+                        resize: false,
+                        area: ['800px', '560px'],
+                    });
+                });
+            }
+        });
+
+        //设置角色
+        $(".userRole").click(function() {
+            //编辑
+            var checkStatus = table.checkStatus('tableContainer-userlist');
+            if (checkStatus.data.length < 1) {
+                layer.msg("请选择需要重置的信息");
+            } else if (checkStatus.data.length > 1) {
+                layer.msg("请选择需要重置的单条信息");
+            } else {
+                window.currData = checkStatus.data[0]; //全局对象存储当前选中行数据
+                $.get('view/user/user-userRole.html', {}, function(str) {
+                    eaitLayer = layer.open({
+                        title: '设置角色',
+                        type: 1,
+                        content: str, //注意，如果str是object，那么需要字符拼接。
+                        resize: false,
+                        area: ['800px', '560px']
+                    });
+                });
+            }
+        });
+
+        //设置角色提交
+        form.on('submit(roleSubmit)', function(data) {
+            // layer.confirm("确认设置角色", {
+            //     skin: 'layui-layer-wei',  //layui-layer-wei，维木class
+            //     title: '提示'
+            // }, function(index) {
+            data.field['SESSION_NAME'] = getCookie("SESSION_NAME");
+            data.field['TOKEN'] = getCookie("TOKEN");
+            $.ajax({
+                cache: true,
+                type: "POST",
+                url: userAuthority,
+                data: data.field,
+                async: false,
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
+                error: function(request) {
+                    layer.msg('提交失败');
+                    return false;
+                },
+                success: function(data) {
+                    if (data.status === 0) {
+                        layer.close(eaitLayer);
+                        layer.msg('提交成功');
+                        // 刷新表格
+                        tableIns.reload({
+                            page: {
+                                curr: 1 //重新从第 1 页开始
+                            }
+                        });
+                    }
+                    if (data.status === 1) {
+                        window.location.href = loginPageUrl;
+                    }
+                }
+            });
+            // });
+            return false;
+        });
+
+        //重置用户密码表单提交
+        form.on('submit(resSubmit)', function(data) {
+            var userData = window.currData;
+            layer.confirm("重置密码", {
+                skin: 'layui-layer-wei', //layui-layer-wei，维木class
+                title: '提示'
+            }, function(index) {
+                data.field['SESSION_NAME'] = getCookie("SESSION_NAME");
+                data.field['TOKEN'] = getCookie("TOKEN");
+                $.ajax({
+                    cache: true,
+                    type: "POST",
+                    url: userPas,
+                    data: data.field,
+                    async: false,
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    error: function(request) {
+                        layer.msg('重置失败');
+                        return false;
+                    },
+                    success: function(data) {
+                        if (data.status === 1) {
+                            window.location.href = loginPageUrl;
+                        }
+                        layer.close(eaitLayer);
+                        layer.msg('重置成功');
+                    }
+                });
+            });
+            return false;
+        });
+
         $("#allRefresh").click(function() {
-            // 刷新表格
+            // 刷新表格按钮
             tableIns.reload({
                 page: {
                     curr: 1 //重新从第 1 页开始
@@ -207,9 +358,32 @@
             });
         });
 
-        //删除
+        form.on('submit(editForm)', function(data) {
+            //编辑修改提交
+            layer.confirm('确认提交修改', {
+                skin: 'layui-layer-wei', //layui-layer-wei，维木class
+                title: '提示'
+            }, function(index) {
+                data.field.orderno = window.currData.orderno; //防止单号被篡改
+                data.field.origin = window.currData.origin; //
+                data.field.supplier = window.currData.supplier; //
+                rowDataApi(preEntryUpdate, data.field, function(data) {
+                    layer.close(index);
+                    layer.close(eaitLayer); //关闭
+                    // 刷新表格
+                    tableIns.reload({
+                        page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                    });
+                })
+            });
+            return false;
+        });
+
         $(".deleteBtn").click(function() {
-            var checkStatus = table.checkStatus('tableContainer-cargolist');
+            //删除
+            var checkStatus = table.checkStatus('tableContainer-userlist');
             if (checkStatus.data.length < 1) {
                 layer.msg("请选择需要删除的信息");
             } else {
@@ -222,15 +396,14 @@
                         //获取所选行数ID
                         rowId.push(v.id);
                     });
-
                     //调用删除接口
                     $.ajax({
-                        url: customerDelete,
+                        url: userDel,
                         type: "post",
                         data: {
                             "ids": rowId,
                             'SESSION_NAME': getCookie('SESSION_NAME'),
-                            'TOKEN': getCookie('TOKEN'),
+                            'TOKEN': getCookie('TOKEN')
                         },
                         traditional: true,
                         xhrFields: {
@@ -257,16 +430,16 @@
             }
         });
 
-        //弹出添加货权人
+        //弹出添加用户
         $(".creatUser").click(function() {
             var data = {};
             data["instid"] = menuIns.id;
             data["inaAllList"] = inaAllList;
             window.currData = data;
-            $.get('view/base/cargo-add.html', {}, function(str) {
+            $.get('view/user/user-add.html', {}, function(str) {
                 eaitLayer = layer.open({
-                    title: '添加货权人',
-                    type: 1, // 弹框类型
+                    title: '添加用户',
+                    type: 1,
                     content: str,
                     resize: false,
                     area: ['800px', '560px'],
@@ -274,7 +447,7 @@
             });
         });
 
-        //添加货权人表单提交
+        //添加用户表单提交
         form.on('submit(addSubmit)', function(data) {
             var userData = window.currData;
             var title = "";
@@ -282,34 +455,34 @@
             var isNameAdd = false; // 判断添加是否同名标识
             var isNameEdit = false; // 判断修改是否同名标识
             var isName = true; // 是否重名标识
-
             if (data.field.id != null && data.field.id !== "") {
                 title = '确认提交修改';
-                userUrl = customerUpdate;
-                isNameEdit = !!(userData.name !== data.field.name);
+                userUrl = userUpdate;
+                isNameEdit = !!(userData.username !== data.field.username);
             } else {
                 title = '确认添加';
-                userUrl = customerAdd;
+                userUrl = userAdd;
                 data.field.id = null;
                 isNameAdd = true;
             }
+            // console.log(data.field.instid );
             var instid = data.field.instid.split("/");
             var ints = instid[instid.length - 1];
             if (ints === "") {
                 ints = instid[0];
             }
             data.field.instid = ints;
-            // 判断货权人是否重复
+            // 判断是否用户重复
             if (isNameAdd || isNameEdit) {
                 $.ajax({
                     cache: true,
                     type: "get",
-                    url: customerIsName,
+                    url: isname_user,
                     data: {
                         instid: data.field.instid,
-                        name: data.field.name,
+                        username: data.field.username,
                         'SESSION_NAME': getCookie('SESSION_NAME'),
-                        'TOKEN': getCookie('TOKEN'),
+                        'TOKEN': getCookie('TOKEN')
                     },
                     async: false,
                     xhrFields: {
@@ -318,7 +491,7 @@
                     crossDomain: true,
                     success: function(data) {
                         if (data.status === 2) {
-                            layer.msg('货权人已存在');
+                            layer.msg('用户名已存在');
                             isName = false;
                         }
                     }
@@ -327,8 +500,13 @@
                     return false;
                 }
             }
-            data.field['SESSION_NAME'] = getCookie('SESSION_NAME');
-            data.field['TOKEN'] = getCookie('TOKEN');
+
+            // layer.confirm(title, {
+            //     icon: 3,
+            //     title: '提示'
+            // }, function(index) {
+            data.field['SESSION_NAME'] = getCookie("SESSION_NAME");
+            data.field['TOKEN'] = getCookie("TOKEN");
             $.ajax({
                 cache: true,
                 type: "post",
@@ -339,128 +517,120 @@
                     withCredentials: true
                 },
                 crossDomain: true,
-                error: function(msg) {
+                error: function(request) {
                     layer.msg('提交失败');
                     return false;
                 },
-                success: function(res) {
-                    if (res.status === 0) {
-                        layer.close(eaitLayer);
-                        layer.msg('提交成功');
-                        // 刷新表格
-                        tableIns.reload({
-                            page: {
-                                curr: 1 //重新从第 1 页开始
-                            }
-                        });
-                    } else if (res.status === 1) {
-                        goLogin(); // 跳转到登录页
+                success: function(data) {
+                    if (data.status === 1) {
+                        window.location.href = loginPageUrl;
                     }
+                    layer.close(eaitLayer);
+                    layer.msg('提交成功');
+                    // 刷新表格
+                    tableIns.reload({
+                        page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                    });
                 }
             });
+            // });
             return false;
         });
 
+        //增删行数据
+        function rowDataApi(url, data, funSuc, funErr) {
+            data['SESSION_NAME'] = getCookie('SESSION_NAME');
+            data['TOKEN'] = getCookie('TOKEN');
+            $.ajax({
+                url: url,
+                type: "get",
+                data: data,
+                traditional: true,
+                success: funSuc,
+                error: funErr
+            })
+        }
+
+        //变更下载模板链接
+        $("#dowmTemp").attr("href", ilbstockImportTemp);
+
+        //点击导出
+        $("#toExport").on('click', function(e) {
+            window.location.href = ilbstockExportUrl
+        });
 
         var insList = []; //用户类型顶级目录
         var inaAllList = []; //用户类型所有的数据
         var menuIns = {}; //用户类型被点击的数据
-        // 根据菜单刷新表格
-        //菜单树
+
+        listIns(); // 初始化菜单树
+        //用户类型菜单树
         function listIns() {
-            var treeData = [];
             var data = {
-                "utype": 4
-            }; //1是仓库主类型
-            $.ajax({
-                type: "get",
-                url: listInstitution,
-                data: data,
-                cache: false,
-                async: false,
-                success: function(res) {
-                    console.log(res);
-                    var insData = res.data;
-                    for (var i = 0; i < insData.length; i++) {
-                        //生成樹形一級菜單
-                        if (insData[i].pid == 0) {
-                            (function() {
-                                var item = {};
-                                item["id"] = insData[i].id;
-                                item["title"] = insData[i].name;
-                                item["basicData"] = {
-                                    "pid": insData[i].pid
-                                };
-                                item["isLast"] = true;
-                                item["parentId"] = 0;
-                                item["level"] = 1;
-                                treeData.push(item);
-                            })();
-                        }
+                "utype": 0
+            }; //0是用户类型
+            rowDataApi(listInstitution, data, function(res) {
+                var insData = res.data; // 该utype下的所有一二级菜单数据
+                console.log(res);
+                inaAllList = insData; // 该utype下的所有一二级菜单数据
+                var val = []; // 缓存不同一级id下一级以及一级下的所有二级菜单
+                // 遍历一级菜单
+                for (var i = 0; i < insData.length; i++) {
+                    if (insData[i].pid === 0) {
+                        val.push(insData[i]);
                     }
-
-                    // insList = treeData;
-                    for (var x = 0; x < treeData.length; x++) {
-                        insList[x] = {};
-                        insList[x].id = treeData[x].id
-                        insList[x].name = treeData[x].title
-                        insList[x].pid = treeData[x].basicData.pid
-                    }
-
-                    firstId = insList[0].id;
-
-                    for (var k = 0; k < treeData.length; k++) {
-                        //循环生成二级菜单
-                        for (var i = 0; i < insData.length; i++) {
-                            if (treeData[k].id == insData[i].pid) {
-                                if (!Array.isArray(treeData[k]["children"])) {
-                                    treeData[k]["children"] = [];
-                                    treeData[k]["isLast"] = false;
-                                };
-                                (function() {
-                                    var item = {};
-                                    item["id"] = insData[i].id;
-                                    item["title"] = insData[i].name;
-                                    item["isLast"] = true;
-                                    item["parentId"] = treeData[k].id;
-                                    item["basicData"] = {
-                                        "pid": insData[i].pid
-                                    };
-                                    // item["basicData"].push({
-                                    //     "pid": insData[i].pid
-                                    // });
-                                    item["level"] = 2;
-                                    treeData[k]["children"].push(item);
-                                })()
+                }
+                insList = val; // 缓存不同id下一级二级菜单
+                var treeData = []; // 缓存树形菜单数据
+                // console.log(insList);
+                var number = 0; // 标识是否有二级菜单
+                // 遍历一二级菜单
+                for (var i = 0; i < val.length; i++) {
+                    var map = {};
+                    map["name"] = val[i].name;
+                    map["id"] = val[i].id;
+                    map["pid"] = val[i].pid;
+                    map["spread"] = true; //
+                    var children = [];
+                    for (var j = 0; j < insData.length; j++) {
+                        if (val[i].id === insData[j].pid) {
+                            var son = {};
+                            son["name"] = insData[j].name;
+                            son["id"] = insData[j].id;
+                            son["pid"] = insData[j].pid;
+                            children.push(son);
+                            number++;
+                            if (number === 1) {
+                                menuIns = son;
                             }
                         }
                     }
-
-                    dtree.render({
-                        elem: "#commonTree3",
-                        data: treeData,
-                        icon: "2",
-                        checkbar: true
-                    });
+                    map["children"] = children;
+                    treeData.push(map);
                 }
+                // console.log(treeData);
+                // console.log(layui.tree);
+                $("#tree-nav").html("");
+                layui.tree({
+                    elem: '#tree-nav',
+                    nodes: treeData,
+                    showCheckbox: true,
+                    click: resTable
+                });
+            }, function(res) {
+                //失败
             })
         }
-        listIns();
 
-        dtree.on("node('commonTree3')", function(param) {
-            // 树形点击
-            resTable(param)
-        });
-
-        // 点击菜单，根据菜单刷新表格
-        function resTable(data) {
+        // 根据菜单刷新表格
+        function resTable(d) {
+            // console.log(d)
+            menuIns = d;
             // 刷新表格
-            // console.log(data)
-            menuIns.id = data.nodeId;
-            menuIns.name = data.context;
-            menuIns.pid = JSON.parse(data.basicData).pid;
-            // console.log(menuIns)
-            $("#instid").val(menuIns.id); //隐藏域保存点击的菜单id
+            $("#instid").val(menuIns.id);
+            $("#titleIns").html(menuIns.name);
             tableIns.reload({
                 where: {
                     "instid": menuIns.id
@@ -471,15 +641,15 @@
             });
         }
 
-        //添加货权人类型
+        //添加用户类型
         $("#addins").click(function() {
             var data = {};
             data["insList"] = insList;
-            data["utype"] = 4;
+            data["utype"] = 0;
             window.currData = data;
             $.get('view/user/institution-add.html', {}, function(str) {
                 eaitLayer = layer.open({
-                    title: '添加货权人类型',
+                    title: '添加用户类型',
                     type: 1,
                     content: str,
                     resize: false,
@@ -487,15 +657,15 @@
                 });
             });
         });
-        //修改货权人类型
+        //修改用户类型
         $("#updins").click(function() {
             var data = menuIns;
             data["insList"] = insList;
-            data["utype"] = 4;
+            data["utype"] = 0;
             window.currData = data; //全局对象存储当前选中行数据
             $.get('view/user/institution-add.html', {}, function(str) {
                 eaitLayer = layer.open({
-                    title: '修改货权人类型',
+                    title: '修改用户类型',
                     type: 1,
                     content: str, //注意，如果str是object，那么需要字符拼接。
                     resize: false,
@@ -512,7 +682,9 @@
             var ids = [];
             ids.push(menuIns.id);
             var data = {
-                "ids": ids.toString()
+                "ids": ids.toString(),
+                'SESSION_NAME': getCookie('SESSION_NAME'),
+                'TOKEN': getCookie('TOKEN')
             };
             layer.confirm("是否删除类型", {
                 skin: 'layui-layer-wei', //layui-layer-wei，维木class
@@ -548,7 +720,7 @@
             return false;
         });
 
-        // 添加和编辑货权人类型
+        // 添加用户类型表单提交
         form.on('submit(addInsSubmit)', function(data) {
             var title = "";
             var url = "";
@@ -566,17 +738,17 @@
                 data.field.id = null;
                 isNameAdd = true;
             }
-            // 判断货权人类型是否重复
+            // 判断用户类型是否重复
             if (isNameAdd || isNameEdit) {
                 $.ajax({
                     cache: true,
                     type: "get",
                     url: isname_institution,
                     data: {
-                        utype: 4,
+                        utype: 0,
                         name: data.field.name,
                         'SESSION_NAME': getCookie('SESSION_NAME'),
-                        'TOKEN': getCookie('TOKEN'),
+                        'TOKEN': getCookie('TOKEN')
                     },
                     async: false,
                     xhrFields: {
@@ -585,7 +757,7 @@
                     crossDomain: true,
                     success: function(data) {
                         if (data.status === 2) {
-                            layer.msg('货权人类型已存在');
+                            layer.msg('用户类型已存在');
                             isName = false;
                         }
                     }
@@ -594,10 +766,14 @@
                     return false;
                 }
             }
-            // 添加货权人类型去空格
+            // 对输入的用户类型去空格
             data.field.name = data.field.name.replace(/^\s*|\s*$/g, "");
-            data.field['SESSION_NAME'] = getCookie('SESSION_NAME');
-            data.field['TOKEN'] = getCookie('TOKEN');
+            // layer.confirm(title, {
+            //     skin: 'layui-layer-wei',  //layui-layer-wei，维木class
+            //     title: '提示'
+            // }, function(index) {
+            data.field['SESSION_NAME'] = getCookie("SESSION_NAME");
+            data.field['TOKEN'] = getCookie("TOKEN");
             $.ajax({
                 cache: true,
                 type: "post",
@@ -622,7 +798,8 @@
                     }
                 }
             });
+            // });
             return false;
         });
-    })
+    });
 </script>

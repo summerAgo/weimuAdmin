@@ -20,7 +20,7 @@
             <select name="pid" lay-verify="required" xm-select="pid" xm-select-height="12px">
                 <option value="0">顶级菜单</option>
                 {{#  layui.each(d.insList, function(index, item){ }}
-                     <option {{# if(d.pid && d.pid == item.id ){}} selected {{# }}} value="{{item.id}}">{{ item.name }}</option>
+                     <option {{# if(d.pid && d.pid == item.id ){}} selected {{# }}} value="{{item.id}}">{{item.name}}</option>
                 {{#  }); }}
             </select>
         </div>
@@ -36,7 +36,8 @@
         var laytpl = layui.laytpl;
         var laydate = layui.laydate;
         var  data= window.currData;
-		if(data!=null){//不是空就是编辑
+        if(data!=null){//不是空就是编辑
+            console.log(data);
 			var getTpl = formUser.innerHTML,
 			view = document.getElementById('formEditView');
 			laytpl(getTpl).render(data, function(html) {

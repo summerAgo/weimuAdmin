@@ -14,7 +14,7 @@
                     </button>
                 </div>
             </div>
-            <div id="tree-nav"></div>
+            <ul id="commonTree3" class="dtree" data-id="0"></ul>
         </div>
         <div class="table-content lay-table-content">
             <!--按钮-->
@@ -82,18 +82,20 @@
     .lay-table-content {
         padding: 0;
     }
+
     .table-content-main {
         padding-right: 30px;
         padding-left: 30px;
     }
-    .form-right{
+
+    .form-right {
         position: absolute;
         left: 250px;
     }
 </style>
 
 <script>
-    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'tree', 'eleTree'], function() {
+    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'tree', 'eleTree','dtree'], function() {
         var element = layui.element;
         var form = layui.form;
         var $ = layui.jquery;
@@ -101,6 +103,7 @@
         var formSelects = layui.formSelects;
         var laytpl = layui.laytpl;
         var eleTree = layui.eleTree;
+        var dtree = layui.dtree;
         var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 63); //内容区域所需减去的高度
 
         var menuKey = "a_15"; //当前页面key
@@ -121,7 +124,7 @@
             for (var key in data.field) {
                 //参数赋值
                 if (data.field[key] !== "") {
-                    paramSearch[key] = data.field[key].replace(/^\s*|\s*$/g,"");
+                    paramSearch[key] = data.field[key].replace(/^\s*|\s*$/g, "");
                 }
             }
             tableIns.reload({
@@ -150,36 +153,38 @@
                 pageName: 'offset', //页码的参数名称，默认：page
                 limitName: 'limit' //每页数据量的参数名，默认：limit
             },
-            cols: [[ //标题栏
-                {
-                    field: 'LAY_TABLE_INDEX',
-                    title: '序号',
-                    width: 40,
-                    templet: function(d) {
-                        return d.LAY_TABLE_INDEX + 1;
+            cols: [
+                [ //标题栏
+                    {
+                        field: 'LAY_TABLE_INDEX',
+                        title: '序号',
+                        width: 40,
+                        templet: function(d) {
+                            return d.LAY_TABLE_INDEX + 1;
+                        }
+                    }, {
+                        type: 'checkbox'
+                    }, {
+                        field: 'username',
+                        title: '用户名',
+                    }, {
+                        field: 'phone',
+                        title: '联系电话',
+                    }, {
+                        field: 'rolename',
+                        title: '角色',
+                    }, {
+                        field: 'email',
+                        title: '邮箱',
+                    }, {
+                        field: 'remarks',
+                        title: '备注',
+                    }, {
+                        field: 'createdate',
+                        title: '创建时间',
                     }
-                }, {
-                    type: 'checkbox'
-                }, {
-                    field: 'username',
-                    title: '用户名',
-                }, {
-                    field: 'phone',
-                    title: '联系电话',
-                }, {
-                    field: 'rolename',
-                    title: '角色',
-                }, {
-                    field: 'email',
-                    title: '邮箱',
-                }, {
-                    field: 'remarks',
-                    title: '备注',
-                }, {
-                    field: 'createdate',
-                    title: '创建时间',
-                }
-            ]],
+                ]
+            ],
             even: true,
             page: true, //是否显示分页
             limits: [100, 200, 500, 1000],
@@ -274,8 +279,8 @@
             //     skin: 'layui-layer-wei',  //layui-layer-wei，维木class
             //     title: '提示'
             // }, function(index) {
-            data.field['SESSION_NAME'] =getCookie("SESSION_NAME");
-            data.field['TOKEN'] =getCookie("TOKEN");
+            data.field['SESSION_NAME'] = getCookie("SESSION_NAME");
+            data.field['TOKEN'] = getCookie("TOKEN");
             $.ajax({
                 cache: true,
                 type: "POST",
@@ -314,11 +319,11 @@
         form.on('submit(resSubmit)', function(data) {
             var userData = window.currData;
             layer.confirm("重置密码", {
-                skin: 'layui-layer-wei',  //layui-layer-wei，维木class
+                skin: 'layui-layer-wei', //layui-layer-wei，维木class
                 title: '提示'
             }, function(index) {
-                data.field['SESSION_NAME'] =getCookie("SESSION_NAME");
-                data.field['TOKEN'] =getCookie("TOKEN");
+                data.field['SESSION_NAME'] = getCookie("SESSION_NAME");
+                data.field['TOKEN'] = getCookie("TOKEN");
                 $.ajax({
                     cache: true,
                     type: "POST",
@@ -357,7 +362,7 @@
         form.on('submit(editForm)', function(data) {
             //编辑修改提交
             layer.confirm('确认提交修改', {
-                skin: 'layui-layer-wei',  //layui-layer-wei，维木class
+                skin: 'layui-layer-wei', //layui-layer-wei，维木class
                 title: '提示'
             }, function(index) {
                 data.field.orderno = window.currData.orderno; //防止单号被篡改
@@ -384,7 +389,7 @@
                 layer.msg("请选择需要删除的信息");
             } else {
                 layer.confirm('是否确认删除此条信息', {
-                    skin: 'layui-layer-wei',  //layui-layer-wei，维木class
+                    skin: 'layui-layer-wei', //layui-layer-wei，维木class
                     title: '提示'
                 }, function(index) {
                     var rowId = [];
@@ -418,7 +423,7 @@
                                 });
                                 layer.msg(res.msg);
                             } else if (res.status === 1) {
-                                goLogin();// 跳转到登录页
+                                goLogin(); // 跳转到登录页
                             }
                         }
                     });
@@ -448,8 +453,8 @@
             var userData = window.currData;
             var title = "";
             var userUrl = "";
-            var isNameAdd = false;// 判断添加是否同名标识
-            var isNameEdit = false;// 判断修改是否同名标识
+            var isNameAdd = false; // 判断添加是否同名标识
+            var isNameEdit = false; // 判断修改是否同名标识
             var isName = true; // 是否重名标识
             if (data.field.id != null && data.field.id !== "") {
                 title = '确认提交修改';
@@ -485,7 +490,7 @@
                         withCredentials: true
                     },
                     crossDomain: true,
-                    success: function (data) {
+                    success: function(data) {
                         if (data.status === 2) {
                             layer.msg('用户名已存在');
                             isName = false;
@@ -501,8 +506,8 @@
             //     icon: 3,
             //     title: '提示'
             // }, function(index) {
-            data.field['SESSION_NAME'] =getCookie("SESSION_NAME");
-            data.field['TOKEN'] =getCookie("TOKEN");
+            data.field['SESSION_NAME'] = getCookie("SESSION_NAME");
+            data.field['TOKEN'] = getCookie("TOKEN");
             $.ajax({
                 cache: true,
                 type: "post",
@@ -537,8 +542,8 @@
 
         //增删行数据
         function rowDataApi(url, data, funSuc, funErr) {
-            data['SESSION_NAME']= getCookie('SESSION_NAME');
-            data['TOKEN']= getCookie('TOKEN');
+            data['SESSION_NAME'] = getCookie('SESSION_NAME');
+            data['TOKEN'] = getCookie('TOKEN');
             $.ajax({
                 url: url,
                 type: "get",
@@ -560,109 +565,103 @@
         var insList = []; //用户类型顶级目录
         var inaAllList = []; //用户类型所有的数据
         var menuIns = {}; //用户类型被点击的数据
-
-        listIns();// 初始化菜单树
-        //用户类型菜单树
+        
+        
+        //菜单树
         function listIns() {
+            var treeData = [];
             var data = {
                 "utype": 0
-            }; //0是用户类型
-            rowDataApi(listInstitution, data, function(res) {
-                var insData = res.data;// 该utype下的所有一二级菜单数据
-                console.log(res);
-                inaAllList = insData;// 该utype下的所有一二级菜单数据
-                var val = []; // 缓存不同一级id下一级以及一级下的所有二级菜单
-                // 遍历一级菜单
-                for (var i = 0; i < insData.length; i++) {
-                    if (insData[i].pid === 0) {
-                        val.push(insData[i]);
+            }; //1是仓库主类型
+            $.ajax({
+                type: "get",
+                url: listInstitution,
+                data: data,
+                cache: false,
+                async: false,
+                success: function(res) {
+                    console.log(res);
+                    var insData = res.data;
+                    for (var i = 0; i < insData.length; i++) {
+                        //生成樹形一級菜單
+                        if (insData[i].pid == 0) {
+                            (function() {
+                                var item = {};
+                                item["id"] = insData[i].id;
+                                item["title"] = insData[i].name;
+                                item["basicData"] = {
+                                    "pid": insData[i].pid
+                                };
+                                item["isLast"] = true;
+                                item["parentId"] = 0;
+                                item["level"] = 1;
+                                treeData.push(item);
+                            })();
+                        }
                     }
-                }
-                insList = val;// 缓存不同id下一级二级菜单
-                var treeData = [];// 缓存树形菜单数据
-                // console.log(insList);
-                var number = 0; // 标识是否有二级菜单
-                // 遍历一二级菜单
-                for (var i = 0; i < val.length; i++) {
-                    var map = {};
-                    map["name"] = val[i].name;
-                    map["id"] = val[i].id;
-                    map["pid"] = val[i].pid;
-                    map["spread"] = true; //
-                    var children = [];
-                    for (var j = 0; j < insData.length; j++) {
-                        if (val[i].id === insData[j].pid) {
-                            var son = {};
-                            son["name"] = insData[j].name;
-                            son["id"] = insData[j].id;
-                            son["pid"] = insData[j].pid;
-                            children.push(son);
-                            number++;
-                            if (number === 1) {
-                                menuIns = son;
+
+                    // insList = treeData;
+                    for (var x = 0; x < treeData.length; x++) {
+                        insList[x] = {};
+                        insList[x].id = treeData[x].id
+                        insList[x].name = treeData[x].title
+                        insList[x].pid = treeData[x].basicData.pid
+                    }
+
+                    firstId = insList[0].id;
+
+                    for (var k = 0; k < treeData.length; k++) {
+                        //循环生成二级菜单
+                        for (var i = 0; i < insData.length; i++) {
+                            if (treeData[k].id == insData[i].pid) {
+                                if (!Array.isArray(treeData[k]["children"])) {
+                                    treeData[k]["children"] = [];
+                                    treeData[k]["isLast"] = false;
+                                };
+                                (function() {
+                                    var item = {};
+                                    item["id"] = insData[i].id;
+                                    item["title"] = insData[i].name;
+                                    item["isLast"] = true;
+                                    item["parentId"] = treeData[k].id;
+                                    item["basicData"] = {
+                                        "pid": insData[i].pid
+                                    };
+                                    // item["basicData"].push({
+                                    //     "pid": insData[i].pid
+                                    // });
+                                    item["level"] = 2;
+                                    treeData[k]["children"].push(item);
+                                })()
                             }
                         }
                     }
-                    map["children"] = children;
-                    treeData.push(map);
+
+                    dtree.render({
+                        elem: "#commonTree3",
+                        data: treeData,
+                        icon: "2",
+                        checkbar: true
+                    });
                 }
-                // console.log(treeData);
-                // console.log(layui.tree);
-                $("#tree-nav").html("");
-                layui.tree({
-                    elem: '#tree-nav',
-                    nodes: treeData,
-                    showCheckbox: true,
-                    click: resTable
-                });
-            }, function(res) {
-                //失败
             })
         }
+        listIns();
 
-        /* var treeData = [ //节点
-             {
-                 name: '常用文件夹',
-                 id: 1,
-                 spread: true,
-                 children: [{
-                     name: '所有未读',
-                     id: 11
-                 }, {
-                     name: '置顶邮件',
-                     id: 12
-                 }, {
-                     name: '标签邮件',
-                     id: 13
-                 }]
-             }, {
-                 name: '我的邮箱',
-                 id: 2,
-                 spread: true,
-                 children: [{
-                     name: 'QQ邮箱',
-                     id: 21
-                 }, {
-                     name: '阿里云邮',
-                     id: 22
-                 }]
-             }
-         ];
-         // 树形菜单
-         layui.tree({
-             elem: '#tree-nav',
-             nodes: treeData,
-             showCheckbox: true,
-             click: resTable
-         });*/
+        dtree.on("node('commonTree3')", function(param) {
+            // 树形点击
+            resTable(param)
+        });
 
-        // 根据菜单刷新表格
-        function resTable(d) {
-            // console.log(d)
-            menuIns = d;
+        // 点击菜单，根据菜单刷新表格
+        function resTable(data) {
             // 刷新表格
-            $("#instid").val(menuIns.id);
-            $("#titleIns").html(menuIns.name);
+            // console.log(data)
+            menuIns.id = data.nodeId;
+            menuIns.name = data.context;
+            menuIns.pid = JSON.parse(data.basicData).pid;
+            // console.log(menuIns)
+            $("#instid").val(menuIns.id); //隐藏域保存点击的菜单id
             tableIns.reload({
                 where: {
                     "instid": menuIns.id
@@ -719,11 +718,11 @@
                 'TOKEN': getCookie('TOKEN')
             };
             layer.confirm("是否删除类型", {
-                skin: 'layui-layer-wei',  //layui-layer-wei，维木class
+                skin: 'layui-layer-wei', //layui-layer-wei，维木class
                 title: '提示'
             }, function(index) {
-                data['SESSION_NAME']= getCookie('SESSION_NAME');
-                data['TOKEN']= getCookie('TOKEN');
+                data['SESSION_NAME'] = getCookie('SESSION_NAME');
+                data['TOKEN'] = getCookie('TOKEN');
                 $.ajax({
                     cache: true,
                     type: "post",
@@ -744,7 +743,7 @@
                             layer.msg('提交成功');
                             listIns();
                         } else if (res.status === 1) {
-                            goLogin();// 跳转到登录页
+                            goLogin(); // 跳转到登录页
                         }
                     }
                 });
@@ -756,8 +755,8 @@
         form.on('submit(addInsSubmit)', function(data) {
             var title = "";
             var url = "";
-            var isNameAdd = false;// 判断添加是否同名标识
-            var isNameEdit = false;// 判断修改是否同名标识
+            var isNameAdd = false; // 判断添加是否同名标识
+            var isNameEdit = false; // 判断修改是否同名标识
             var isName = true; // 是否重名标识
             //编辑提交
             if (data.field.id != null && data.field.id !== "") {
@@ -787,47 +786,49 @@
                         withCredentials: true
                     },
                     crossDomain: true,
-                    success: function (data) {
+                    success: function(data) {
                         if (data.status === 2) {
                             layer.msg('用户类型已存在');
                             isName = false;
                         }
                     }
                 });
-                if (!isName) { return false; }
+                if (!isName) {
+                    return false;
+                }
             }
             // 对输入的用户类型去空格
-            data.field.name = data.field.name.replace(/^\s*|\s*$/g,"");
+            data.field.name = data.field.name.replace(/^\s*|\s*$/g, "");
             // layer.confirm(title, {
             //     skin: 'layui-layer-wei',  //layui-layer-wei，维木class
             //     title: '提示'
             // }, function(index) {
-                data.field['SESSION_NAME'] =getCookie("SESSION_NAME");
-                data.field['TOKEN'] =getCookie("TOKEN");
-                $.ajax({
-                    cache: true,
-                    type: "post",
-                    url: userUrl,
-                    data: data.field,
-                    async: false,
-                    xhrFields: {
-                        withCredentials: true
-                    },
-                    crossDomain: true,
-                    error: function(msg) {
-                        layer.msg('提交失败');
-                        return false;
-                    },
-                    success: function(res) {
-                        if (res.status === 0) {
-                            layer.close(eaitLayer);
-                            layer.msg('提交成功');
-                            listIns();
-                        } else if (res.status === 1) {
-                            goLogin();// 跳转到登录页
-                        }
+            data.field['SESSION_NAME'] = getCookie("SESSION_NAME");
+            data.field['TOKEN'] = getCookie("TOKEN");
+            $.ajax({
+                cache: true,
+                type: "post",
+                url: userUrl,
+                data: data.field,
+                async: false,
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
+                error: function(msg) {
+                    layer.msg('提交失败');
+                    return false;
+                },
+                success: function(res) {
+                    if (res.status === 0) {
+                        layer.close(eaitLayer);
+                        layer.msg('提交成功');
+                        listIns();
+                    } else if (res.status === 1) {
+                        goLogin(); // 跳转到登录页
                     }
-                });
+                }
+            });
             // });
             return false;
         });

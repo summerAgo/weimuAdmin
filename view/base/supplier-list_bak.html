@@ -14,7 +14,7 @@
                     </button>
                 </div>
             </div>
-            <ul id="commonTree3" class="dtree" data-id="0"></ul>
+            <div id="tree-nav"></div>
         </div>
         <div class="table-content lay-table-content">
             <div class="table-content-title">
@@ -74,7 +74,7 @@
     }
 </style>
 <script>
-    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'tree', 'eleTree','dtree'], function() {
+    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'tree', 'eleTree'], function() {
         var element = layui.element;
         var form = layui.form;
         var $ = layui.jquery;
@@ -82,7 +82,6 @@
         var formSelects = layui.formSelects;
         var laytpl = layui.laytpl;
         var eleTree = layui.eleTree;
-        var dtree = layui.dtree;
         var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 63); //内容区域所需减去的高度
         var menuKey = "a_21"; //当前页面key
         var domObj = $("#supplier-list .table-tools").find("ul"); //当前页面容器
@@ -378,105 +377,71 @@
             })
         }
 
-        var insList = []; //供应商类型顶级目录
-        var inaAllList = []; //供应商类型所有的数据
-        var menuIns = {}; //供应商类型被点击的数据
-        
-        //菜单树
+        listIns();
+
+        //供应商类型菜单树
         function listIns() {
-            var treeData = [];
             var data = {
                 "utype": 2
-            }; //1是仓库主类型
-            $.ajax({
-                type: "get",
-                url: listInstitution,
-                data: data,
-                cache: false,
-                async: false,
-                success: function(res) {
-                    console.log(res);
-                    var insData = res.data;
-                    for (var i = 0; i < insData.length; i++) {
-                        //生成樹形一級菜單
-                        if (insData[i].pid == 0) {
-                            (function() {
-                                var item = {};
-                                item["id"] = insData[i].id;
-                                item["title"] = insData[i].name;
-                                item["basicData"] = {
-                                    "pid": insData[i].pid
-                                };
-                                item["isLast"] = true;
-                                item["parentId"] = 0;
-                                item["level"] = 1;
-                                treeData.push(item);
-                            })();
-                        }
+            }; //2是供应商类型
+            rowDataApi(listInstitution, data, function(res) {
+                var insData = res.data;
+                inaAllList = insData;
+                var val = [];
+                for (var i = 0; i < insData.length; i++) {
+                    if (insData[i].pid === 0) {
+                        val.push(insData[i]);
                     }
-
-                    // insList = treeData;
-                    for (var x = 0; x < treeData.length; x++) {
-                        insList[x] = {};
-                        insList[x].id = treeData[x].id
-                        insList[x].name = treeData[x].title
-                        insList[x].pid = treeData[x].basicData.pid
-                    }
-
-                    firstId = insList[0].id;
-
-                    for (var k = 0; k < treeData.length; k++) {
-                        //循环生成二级菜单
-                        for (var i = 0; i < insData.length; i++) {
-                            if (treeData[k].id == insData[i].pid) {
-                                if (!Array.isArray(treeData[k]["children"])) {
-                                    treeData[k]["children"] = [];
-                                    treeData[k]["isLast"] = false;
-                                };
-                                (function() {
-                                    var item = {};
-                                    item["id"] = insData[i].id;
-                                    item["title"] = insData[i].name;
-                                    item["isLast"] = true;
-                                    item["parentId"] = treeData[k].id;
-                                    item["basicData"] = {
-                                        "pid": insData[i].pid
-                                    };
-                                    // item["basicData"].push({
-                                    //     "pid": insData[i].pid
-                                    // });
-                                    item["level"] = 2;
-                                    treeData[k]["children"].push(item);
-                                })()
+                }
+                insList = val;
+                var treeData = [];
+                var number = 0;
+                for (var i = 0; i < val.length; i++) {
+                    var map = {};
+                    map["name"] = val[i].name;
+                    map["id"] = val[i].id;
+                    map["pid"] = val[i].pid;
+                    map["spread"] = true;
+                    var children = [];
+                    for (var j = 0; j < insData.length; j++) {
+                        if (val[i].id === insData[j].pid) {
+                            var son = {};
+                            son["name"] = insData[j].name;
+                            son["id"] = insData[j].id;
+                            son["pid"] = insData[j].pid;
+                            children.push(son);
+                            number++;
+                            if (number === 1) {
+                                menuIns = son;
                             }
                         }
                     }
-
-                    dtree.render({
-                        elem: "#commonTree3",
-                        data: treeData,
-                        icon: "2",
-                        checkbar: true
-                    });
+                    map["children"] = children;
+                    treeData.push(map);
                 }
+                // console.log(treeData);
+                $('#tree-nav').html("");
+                layui.tree({
+                    elem: '#tree-nav',
+                    nodes: treeData,
+                    showCheckbox: true,
+                    click: resTable
+                });
+            }, function(res) {
+                //失败
             })
         }
-        listIns();
 
-        dtree.on("node('commonTree3')", function(param) {
-            // 树形点击
-            resTable(param)
-        });
-
-        // 点击菜单，根据菜单刷新表格
-        function resTable(data) {
+        var insList = []; //供应商类型顶级目录
+        var inaAllList = []; //供应商类型所有的数据
+        var menuIns = {}; //供应商类型被点击的数据
+        // 根据菜单刷新表格
+        function resTable(d) {
+            // console.log(d);
+            menuIns = d;
             // 刷新表格
-            // console.log(data)
-            menuIns.id = data.nodeId;
-            menuIns.name = data.context;
-            menuIns.pid = JSON.parse(data.basicData).pid;
-            // console.log(menuIns)
-            $("#instid").val(menuIns.id); //隐藏域保存点击的菜单id
+            $("#instid").val(menuIns.id);
+            $("#titleIns").html(menuIns.name);
             tableIns.reload({
                 where: {
                     "instid": menuIns.id

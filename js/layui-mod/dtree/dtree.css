@@ -20,8 +20,8 @@
 .nav-tree-ul-sid{display: none;}
 
 /* 图标及复选框*/
-.iconfont{cursor: pointer;}
-.iconfont-special{margin: 0 4px;}
+.dtreeiconfont{cursor: pointer;}
+.dtreeiconfont-special{margin: 0 4px;}
 .nav-tree-checkbox-div{display: inline-block;}
 .nav-tree-checkbox-div>i.iconfont{display: inline-block;margin: 0px 1px;}
 .nav-tree-checkbox-div>i.iconfont:last-child{margin-right: 4px;}
@@ -35,8 +35,8 @@
 /* 规则属性*/
 .nav-show {display: block!important;}
 .nav-this {}
-.icon-hide {opacity:0;filter:Alpha(opacity=0);}
-.icon-null-open,.icon-null-close,.icon-null{margin: 0 2px;}
+.dtreeicon-hide {opacity:0;filter:Alpha(opacity=0);}
+.dtreeicon-null-open,.dtreeicon-null-close,.dtreeicon-null{margin: 0 2px;}
 
 /* 简单适配*/
 @media screen and (max-width:1700px) and (min-width:1300px){	

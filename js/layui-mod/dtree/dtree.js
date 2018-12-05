@@ -10,11 +10,11 @@ layui.define(['jquery','layer','element','form'], function(exports) {
 	
 	// 树的公共定义样式汇总
 	var LI_NAV_CHILD = "nav-tree-ul-sid", LI_NAV_ITEM = "nav-tree-item", 
-		LI_DIV_ITEM = "nav-tree-div", ICONFONT = "iconfont", ICONFONTSPECIAL="iconfont-special", 
-		LI_DIV_MENUBAR = "dtree-menubar",LI_DIV_MENUBAR_DOWN = "icon-move-down", LI_DIV_MENUBAR_UP = "icon-move-up", LI_DIV_MENUBAR_REFRESH = "icon-refresh", LI_DIV_MENUBAR_DELETE = "icon-delete1", LI_DIV_MENUBAR_SEARCH = "icon-search_list_light",
-		LI_DIV_TOOLBAR = "nav-tree-toolbar-div", TOOLBAR_SHOW = "nav-tree-toolbar-div-show", LI_DIV_TOOLBAR_ADD = "icon-roundadd", LI_DIV_TOOLBAR_EDIT = "icon-bianji", LI_DIV_TOOLBAR_DEL = "icon-roundclose",
-		LI_DIV_SPREAD_LAST = "icon-dian",
-		LI_DIV_CHECKBAR = "nav-tree-checkbox-div", LI_DIV_CHECKBAR_ON = "icon-fuxuankuangxuanzhong", LI_DIV_CHECKBAR_OUT = "icon-fuxuankuang", LI_DIV_CHECKBAR_NOALL = "icon-fuxuankuang-banxuan",
+		LI_DIV_ITEM = "nav-tree-div", ICONFONT = "dtreeiconfont", ICONFONTSPECIAL="dtreeiconfont-special", 
+		LI_DIV_MENUBAR = "dtree-menubar",LI_DIV_MENUBAR_DOWN = "dtreeicon-move-down", LI_DIV_MENUBAR_UP = "dtreeicon-move-up", LI_DIV_MENUBAR_REFRESH = "dtreeicon-refresh", LI_DIV_MENUBAR_DELETE = "dtreeicon-delete1", LI_DIV_MENUBAR_SEARCH = "dtreeicon-search_list_light",
+		LI_DIV_TOOLBAR = "nav-tree-toolbar-div", TOOLBAR_SHOW = "nav-tree-toolbar-div-show", LI_DIV_TOOLBAR_ADD = "dtreeicon-roundadd", LI_DIV_TOOLBAR_EDIT = "dtreeicon-bianji", LI_DIV_TOOLBAR_DEL = "dtreeicon-roundclose",
+		LI_DIV_SPREAD_LAST = "dtreeicon-dian",
+		LI_DIV_CHECKBAR = "nav-tree-checkbox-div", LI_DIV_CHECKBAR_ON = "dtreeicon-fuxuankuangxuanzhong", LI_DIV_CHECKBAR_OUT = "dtreeicon-fuxuankuang", LI_DIV_CHECKBAR_NOALL = "dtreeicon-fuxuankuang-banxuan",
 		LI_CLICK_CHECKBAR = "d-click-checkbar",		//绑定点击复选框时需要用到
 		LI_DIV_TEXT_CLASS = "t-click", UL_ROOT="dtree";
 	
@@ -22,16 +22,16 @@ layui.define(['jquery','layer','element','form'], function(exports) {
 	var DTREE = "dtree-",			//自定义样式前缀
 		ITEMTHIS = "-item-this",	//自定义样式当前行选中后缀
 		ITEM = "-item",				//自定义样式当前行后缀
-		IFONT = "-iconfont",		//自定义样式图标样式后缀
+		IFONT = "-dtreeiconfont",		//自定义样式图标样式后缀
 		FICON = "-ficon",			//自定义样式一级图标样式后缀
-		ICON = "-icon",				//自定义样式二级图标样式后缀
+		ICON = "-dtreeicon",				//自定义样式二级图标样式后缀
 		CBOX = "-checkbox",			//自定义样式复选框样式后缀
 		CHS = "-choose";			//自定义样式复选框选中样式后缀
 	
 	// 树的公共指定
 	var NAV_THIS = "nav-this",	//当前节点
 		NAV_SHOW = "nav-show",	//显示子节点
-		ICON_HIDE = "icon-hide", //隐藏dot图标
+		ICON_HIDE = "dtreeicon-hide", //隐藏dot图标
 		$BODY = $("body"),		//body选择器
 		MOD_NAME = "dtree",		//模块名称
 		VERSION = "v2.4.5",		//版本	
@@ -39,27 +39,27 @@ layui.define(['jquery','layer','element','form'], function(exports) {
 	
 	// 树的一级节点图标集合
 	var firstIconArray = {
-		"-1": {"open": "icon-null-open", "close": "icon-null-close"},			//未指定
-		"0" : {"open": "icon-jian", "close": "icon-jia"},
-		"1" : {"open": "icon-xiangxia1", "close": "icon-xiangyou"}
+		"-1": {"open": "dtreeicon-null-open", "close": "dtreeicon-null-close"},			//未指定
+		"0" : {"open": "dtreeicon-jian", "close": "dtreeicon-jia"},
+		"1" : {"open": "dtreeicon-xiangxia1", "close": "dtreeicon-xiangyou"}
 	};
 	
 	// 树的二级节点图标集合
 	var nodeIconArray = {
-		"-1": {"open": "icon-null-open", "close": "icon-null-close"},			//未指定
-		"0" : {"open": "icon-wenjianjiazhankai", "close": "icon-weibiaoti5"}
+		"-1": {"open": "dtreeicon-null-open", "close": "dtreeicon-null-close"},			//未指定
+		"0" : {"open": "dtreeicon-wenjianjiazhankai", "close": "dtreeicon-weibiaoti5"}
 	};
 	
 	var leafIconArray = {
-		"-1": "icon-null",			//未指定
-		"0" : "icon-weibiaoti5", 		//文件夹
-		"1" : "icon-yonghu",			//人员
-		"2" : "icon-fenzhijigou",		//机构
-		"3" : "icon-fenguangbaobiao",	//报表
-		"4" : "icon-xinxipilu",			//信息
-		"5" : "icon-shuye1",				//叶子
-		"6" : "icon-caidan_xunzhang",	//勋章
-		"7" : "icon-normal-file"		//文件
+		"-1": "dtreeicon-null",			//未指定
+		"0" : "dtreeicon-weibiaoti5", 		//文件夹
+		"1" : "dtreeicon-yonghu",			//人员
+		"2" : "dtreeicon-fenzhijigou",		//机构
+		"3" : "dtreeicon-fenguangbaobiao",	//报表
+		"4" : "dtreeicon-xinxipilu",			//信息
+		"5" : "dtreeicon-shuye1",				//叶子
+		"6" : "dtreeicon-caidan_xunzhang",	//勋章
+		"7" : "dtreeicon-normal-file"		//文件
 	};
 	
 	// 树自定义操作事件名称集合	绑定d-*的事件
@@ -205,7 +205,7 @@ layui.define(['jquery','layer','element','form'], function(exports) {
 			treeId: "id",			//节点ID
 			parentId: "parentId",	//父节点ID
 			title: "title",		//节点名称
-			iconClass: "iconClass",		//自定义图标
+			iconClass: "dtreeiconClass",		//自定义图标
 			childName: "children",	//子节点名称
 			isLast: "isLast",		//是否最后一级节点
 			level: "level",			//层级
