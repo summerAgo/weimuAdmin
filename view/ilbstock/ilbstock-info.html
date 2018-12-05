@@ -144,19 +144,19 @@
         });
         // 品种多选数据赋值
         formSelects.data('selectVarieties', 'local', {
-            arr: selectDataInstall(VTSList, null, 1) //品种列表
+            arr: selectDataInstall(VTSList, null, 1,1) //品种列表
         });
         // 等级多选数据赋值
         formSelects.data('selectLevels', 'local', {
-            arr: selectDataInstall(levelsList, null, 1) //等级列表
+            arr: selectDataInstall(levelsList, null, 1,1) //等级列表
         });
         // 规格多选数据赋值
         formSelects.data('selectSpec', 'local', {
-            arr: selectDataInstall(specList, null, 1) //规格列表
+            arr: selectDataInstall(specList, null, 1,1) //规格列表
         });
         // 仓库主多选数据赋值
         formSelects.data('ownerSelect', 'local', {
-            arr: selectDataInstall(ownerDropdown, null, 0) //仓库主列表
+            arr: selectDataInstall(ownerDropdown, null, 0,0) //仓库主列表
         });
 
         // 选择仓库时判断是否选中了仓库主，opened：打开下拉框的回调事件
@@ -185,7 +185,7 @@
             } else {
                 var depotList = selectDataInstall(depotDropdown, {
                     "ownerid": vals[0].value //仓库列表
-                }, false);
+                }, false,0);
                 // 判断仓库主名下是否有仓库
                 if (depotList.length < 1) {
                     formSelects.data('depotSelect', 'local', {
@@ -202,11 +202,11 @@
         }, true);
 
         formSelects.data('originSelect', 'local', {
-            arr: selectDataInstall(CHDList, null, 1) //产地列表
+            arr: selectDataInstall(CHDList, null, 1,1) //产地列表
         });
 
         // 获取select数据函数
-        function selectDataInstall(url, param, bool) {
+        function selectDataInstall(url, param, bool,type) {
             //下拉选框数据组装
             var arr = [];
             //获取列表数据
@@ -226,15 +226,27 @@
                         }
                         for (var i = 0; i < data.data.length; i++) {
                             var name = "";
+
+
                             if (data.data[i].name) {
                                 name = data.data[i].name;
                             } else {
                                 name = data.data[i].username;
                             }
-                            arr.push({
-                                "name": name,
-                                "value": data.data[i].id
-                            })
+
+                            if(type == 0){//查询value=id
+                                arr.push({
+                                    "name": name,
+                                    "value": data.data[i].id
+                                })
+                            }
+                            if(type == 1){//查询value=name
+                                arr.push({
+                                    "name": name,
+                                    "value": name
+                                })
+                            }
+                            
                         }
                     }
                 }
