@@ -12,7 +12,7 @@
                     <a href="javascript:;" class="refreshBtn"><i class="iconfont icon-shuaxin"></i>刷新</a>
                 </li> -->
                 <li class="layui-nav-item">
-                    <a class="back-in-examine" href="javascript:;"><i class="iconfont icon-daochu"></i>弃审</a>
+                    <a class="back-out-examine" href="javascript:;"><i class="iconfont icon-daochu"></i>弃审</a>
                 </li>
             </ul>
         </div>
@@ -329,20 +329,93 @@
                 })
             }
         });
+        
+        
+        //弃出库
+        $(".back-out-examine").click(function() {
+            var checkStatus = table.checkStatus('tableContainer'); //表格选中状态
+            if (checkStatus.data.length < 1) {
+                layer.msg("请选择一条记录");
+                return;
+            }
+
+            layer.confirm('是否确认把此单转为出库申请状态!', {
+                skin: 'layui-layer-wei',  //layui-layer-wei，维木class
+                title: '提示'
+            }, function(index) {
+                $.ajax({
+                    url: backoutexamine,
+                    type: "POST",
+                    data: {
+                        'SESSION_NAME': getCookie('SESSION_NAME'),
+                        'TOKEN': getCookie('TOKEN'),
+                        'orderno':checkStatus.data[0].orderno
+                    },
+                    //async: false, //同步
+                    traditional: true,
+                    success: function(data) {
+                        console.log(data);
+                        if (data.status === 1) {
+                            window.location.href = loginPageUrl;
+                        }
+                        if (data.status == 0) {
+                            layer.msg("弃入库操作成功!");
+
+                            tableIns.reload({
+                                page: {
+                                    curr: 1 // 重新从第 1 页开始
+                                }
+                            });
+                        }
+                    }
+                })
+
+            });
+        });
+
+        //删除
+        $(".in-lb-del").click(function() {
+            var checkStatus = table.checkStatus('tableContainer'); //表格选中状态
+            if (checkStatus.data.length < 1) {
+                layer.msg("请选择一条记录");
+                return;
+            }
+
+            layer.confirm('是否确认删除此条信息', {
+                skin: 'layui-layer-wei',  //layui-layer-wei，维木class
+                title: '提示'
+            }, function(index) {
+                $.ajax({
+                    url: inlbdel,
+                    type: "POST",
+                    data: {
+                        'SESSION_NAME': getCookie('SESSION_NAME'),
+                        'TOKEN': getCookie('TOKEN'),
+                        'orderno':checkStatus.data[0].orderno
+                    },
+                    //async: false, //同步
+                    traditional: true,
+                    success: function(data) {
+                        console.log(data);
+                        if (data.status === 1) {
+                            window.location.href = loginPageUrl;
+                        }
+                        if (data.status == 0) {
+                            layer.msg("删除成功");
+
+                            tableIns.reload({
+                                page: {
+                                    curr: 1 // 重新从第 1 页开始
+                                }
+                            });
+                        }
+                    }
+                })
+
+            });
+        });
+
+
 
     });
-
-    function dayin() {
-        var Width = window.innerWidth;
-        var Height = window.innerHeight;
-
-        var winhtml = "http://192.168.10.201:8000/view/print/print-out-store.html"; //需打印的数据源(包括html)
-        //弹出准备打印窗口
-        var wind = window.open(winhtml, '打印', 'height=' + Height + ', width=' + Width + ', top=100, left=100, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no');
-        //将需打印的内容放在准备打印窗口中
-        wind.document.body.innerHTML = winhtml;
-        //开始打印
-        wind.print();
-        return false;
-    }
 </script>
