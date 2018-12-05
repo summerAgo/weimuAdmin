@@ -139,9 +139,11 @@
                     arr: [] //清空库位列表
                 });
             } else {
+                //  获取仓库下拉数据
                 var depotList = selectDataInstall(depotDropdown, {
                     "ownerid": vals[0].value //仓库列表
                 }, false);
+                console.log(depotList);
                 if (depotList.length < 1) {
                     formSelects.data('depotSelect', 'local', {
                         arr: [] //清空仓库列表
@@ -152,29 +154,73 @@
                     layer.msg("该仓库主下无仓库信息");
                     return false;
                 }
+                // 根据仓库主id：ownerid查询的仓库数据depotList，初始化仓库select数据
                 formSelects.data('depotSelect', 'local', {
                     arr: depotList //仓库列表
                 });
-                formSelects.data('positionSelect', 'local', {
+
+                /*formSelects.data('positionSelect', 'local', {
                     arr: selectDataInstall(positionDropdown, {
                         "depotid": depotList[0].value
                     }, false) //库位列表
-                });
+                });*/
             }
         }, true);
 
         //监听仓库的选中与取消
         formSelects.on('depotSelect', function(id, vals, val, isAdd, isDisabled) {
+            //id:           点击select的id
+            //vals:         当前select已选中的值
+            //val:          当前select点击的值
+            //isAdd:        当前操作选中or取消
+            //isDisabled:   当前选项是否是disabled
+            //如果return false, 那么将取消本次操作
             if (!isAdd) {
                 formSelects.data('positionSelect', 'local', {
-                    arr: [] //仓库列表
+                    arr: [] //仓库列表清空
                 });
             } else {
-                formSelects.data('positionSelect', 'local', {
+                // var positionList = selectDataInstall(positionDropdown, {
+                //     "depotid": vals[0].value //仓库列表
+                // }, false);
+                console.log(vals);
+
+                var bitdepotid = vals[0].bitdepotid;
+                var positiondIds = vals[0].position;
+                var arr1 = positiondIds.split(",");
+                var arr = [];
+
+                $.ajax({
+                    url: positiondropdown,
+                    type: "get",
+                    data: bitdepotid,
+                    async: false, // 同步
+                    traditional: true,
+                    success: function(data) {
+                        // console.log(data);
+                        if (data.status === 0) {
+                            //把接口数据转换为[{"name":str,"value":number}]格式
+                            if (!Array.isArray(data.data) || data.data.length === 0) {
+                                // 判断arr是否为数组并保证内部有值
+                                return false;
+                            }
+                            for (var i = 0; i < data.data.length; i++) {
+                                arr.push({
+                                    "name": data.data[i].name,
+                                    "value": data.data[i].id,
+                                });
+                            }
+                        }
+                    }
+                });
+
+                console.log(arr);
+
+                /*formSelects.data('positionSelect', 'local', {
                     arr: selectDataInstall(positionDropdown, {
                         "depotid": vals[0].value
                     }, false) //仓库列表
-                });
+                });*/
             }
         }, true);
 
@@ -207,8 +253,10 @@
                         for (var i = 0; i < data.data.length; i++) {
                             arr.push({
                                 "name": data.data[i].name,
-                                "value": data.data[i].id
-                            })
+                                "value": data.data[i].id,
+                                "bitdepotid": data.data[i].bitdepotid,
+                                "position": data.data[i].position,
+                            });
                         }
                         if (bool) {
                             arr[0].selected = "selected";
