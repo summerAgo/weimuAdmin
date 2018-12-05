@@ -61,6 +61,7 @@ var preoutTreasuryDelete = pathUrl + "order/preouttreasury/delete";//出库删�
 var preoutTreasury = pathUrl + "order/preouttreasury/list";//出库列表
 
 //出库
+var backoutexamine = pathUrl + "order/outtreasury/backoutexamine";//反出库审核
 var getOrdernoDetails =  pathUrl + "order/outtreasury/getOrdernoDetails" //库存中查询货物 （仓库：depotid 仓库主：ownerid）
 var outTreasuryAdd = pathUrl + "order/outtreasury/add";//增加出货申请
 var outHistory = pathUrl + "order/outtreasury/list?ishistory=1";//出库记录
@@ -69,6 +70,7 @@ var outRemove = pathUrl + "order/outtreasury/remove";//出货申请详情货物�
 var outStock = pathUrl + "order/outtreasury/outStock";//审核通过出库
 var outTreasuryDelete = pathUrl + "order/outtreasury/delete";//出库删除
 var outTreasury = pathUrl + "order/outtreasury/list";//出库列表
+var outfailoutlist = pathUrl + "order/outtreasury/failoutlist";//出库列表
 
 // 仓库管理
 var bitdepotList = pathUrl + "basics/bitdepot/list";//大仓库列表

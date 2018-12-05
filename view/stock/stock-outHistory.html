@@ -11,6 +11,9 @@
                 <!-- <li class="layui-nav-item">
                     <a href="javascript:;" class="refreshBtn"><i class="iconfont icon-shuaxin"></i>刷新</a>
                 </li> -->
+                <li class="layui-nav-item">
+                    <a class="back-in-examine" href="javascript:;"><i class="iconfont icon-daochu"></i>弃审</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -263,8 +266,9 @@
                         templet: function(d) {
                             return d.LAY_TABLE_INDEX + 1;
                         }
-                    },
-                    {
+                    },{
+                        type: 'radio'
+                    }, {
                         field: 'orderno',
                         title: '单号',
                         event: 'click',
