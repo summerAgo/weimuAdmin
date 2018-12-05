@@ -256,14 +256,19 @@
 
         //权限设置表单提交
         form.on('submit(roleSubmit)', function(data) {
-            var allAuthority = sessionStorage.getItem('allAuthority');
-            console.log(data.field);
+            var allAuthority = JSON.parse(sessionStorage.getItem('allAuthority'));
+
+            for(var n = 0;n<allAuthority.length;n++){
+                for(var key in allAuthority[n]){
+                    console.log(allAuthority[n][key])
+                    allAuthority[n][key] = allAuthority[n][key].map(Number);
+                }
+            }
+            
+            allAuthority = JSON.stringify(allAuthority);
             data.field["allauth"] = allAuthority;
             data.field["roleid"] = window.currData.id;
-            // layer.confirm("确认权限?", {
-            //     skin: 'layui-layer-wei',  //layui-layer-wei，维木class
-            //     title: '提示'
-            // }, function(index) {
+
             data.field['SESSION_NAME'] = getCookie("SESSION_NAME");
             data.field['TOKEN'] = getCookie("TOKEN");
             $.ajax({
