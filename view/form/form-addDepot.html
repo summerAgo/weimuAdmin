@@ -306,11 +306,13 @@
             loading: true
         });
 
-        // 如果是编辑，那么回填select数据
+        // 回填数据，如果是编辑，那么回填select数据
         if (JSON.stringify(dataType) !== "{}") {
             //所属大仓库回填
             if (dataType.bitdepotid) {
                 formSelects.value('positiondropdown', [dataType.bitdepotid]);
+                var selectData = formSelects.value('positiondropdown', dataType.bitdepotid+'');
+                $(".search-key").html(selectData[0].name);
                 tableIns.reload({
                     where: { //设定异步数据接口的额外参数，任意设
                         bitdepotid : dataType.bitdepotid

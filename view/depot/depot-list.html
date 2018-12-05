@@ -133,10 +133,10 @@
                     field: 'address',
                     title: '地址',
                 }, {
-                    field: '',
+                    field: 'bitdepotid',
                     title: '所属大仓库',
                 }, {
-                    field: '',
+                    field: 'position',
                     title: '所属库位',
                 }, {
                     field: 'remarks',
@@ -179,6 +179,8 @@
             // data.field.type = data.field.type.replace(/^\s*|\s*$/g,"");
             var isNameAdd = false;// 判断添加是否同名标识
             var isNameEdit = false;// 判断修改是否同名标识
+            var isCodeAdd = false;// 判断添加是否同编号标识
+            var isCodeEdit = false;// 判断修改是否同编号标识
             var isName = true; // 是否重名标识
             //如果是修改
             if (dataType) {
@@ -186,8 +188,10 @@
                 data.field.id = dataType.id;
                 msg = "修改仓库成功";
                 isNameEdit = !!(dataType.name !== data.field.name);
+                isCodeEdit = !!(dataType.code !== data.field.code);
             } else {
                 isNameAdd = true;
+                isCodeAdd = true;
                 url = depotAdd;
             }
             // 监听库位选择情况
@@ -201,7 +205,32 @@
                 return false;
             }
             data.field.position = positionArr.join();
-            console.log(data.field.position);
+            // 判供编号是否重复
+            if (isCodeAdd || isCodeEdit) {
+                $.ajax({
+                    cache: true,
+                    type: "get",
+                    url: iscode_depot,
+                    data: {
+                        ownerid: data.field.ownerid,
+                        code: data.field.code,
+                        'SESSION_NAME':getCookie('SESSION_NAME'),
+                        'TOKEN':getCookie('TOKEN'),
+                    },
+                    async: false,
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    success: function (data) {
+                        if (data.status === 2) {
+                            layer.msg('编号已存在');
+                            isName = false;
+                        }
+                    }
+                });
+                if (!isName) {return false;}
+            }
             // 判供仓库是否重复
             if (isNameAdd || isNameEdit) {
                 $.ajax({
@@ -226,8 +255,9 @@
                         }
                     }
                 });
+                if (!isName) {return false;}
             }
-            if (!isName) {return false;}
+
             data.field['SESSION_NAME']= getCookie('SESSION_NAME');
             data.field['TOKEN']= getCookie('TOKEN');
             $.ajax({
