@@ -87,7 +87,7 @@
         var upload = layui.upload;
         var tableData = [];
         var addLayer; //添加-弹层
-        var tableLayerHeight = (parseInt($(".layui-layer-page").innerHeight()) - parseInt($(".layui-layer-title").innerHeight()) - parseInt($(".table-page-header").innerHeight())  - 40); //内容区域所需减去的高度
+        var tableLayerHeight = (parseInt($(".layui-layer-page").innerHeight()) - parseInt($(".layui-layer-title").innerHeight()) - parseInt($(".table-page-header").innerHeight()) - 40); //内容区域所需减去的高度
 
 
         var menuKey = "b_11"; //当前页面key
@@ -123,13 +123,14 @@
                 formSelects.data(id, 'local', {
                     arr: []
                 }); //如果仓库为空则清空列表
-            } /*else { //如果仓库id不为，根据仓库id查询库位列表，并赋值库位select
-                formSelects.data(id, 'local', {
-                    arr: selectDataInstall(positionDropdown, {
-                        "depotid": depotid
-                    }, false, 0) //仓库列表
-                });
-            }*/
+            }
+            /*else { //如果仓库id不为，根据仓库id查询库位列表，并赋值库位select
+                           formSelects.data(id, 'local', {
+                               arr: selectDataInstall(positionDropdown, {
+                                   "depotid": depotid
+                               }, false, 0) //仓库列表
+                           });
+                       }*/
         });
 
         // 监听仓库主select的选中与取消
@@ -146,7 +147,7 @@
                 var depotList = selectDataInstall(depotDropdown, {
                     "ownerid": vals[0].value //仓库列表
                 }, false, 0);
-                console.log(depotList);//仓库下拉数据
+                console.log(depotList); //仓库下拉数据
                 if (depotList.length < 1) {
                     formSelects.data('depotSelectLayer', 'local', {
                         arr: [] //清空仓库列表
@@ -161,11 +162,11 @@
                 formSelects.data('depotSelectLayer', 'local', {
                     arr: depotList //仓库列表
                 });
-               /* formSelects.data('positionSelectLayer', 'local', {
-                    arr: selectDataInstall(positionDropdown, {
-                        "depotid": depotList[0].value
-                    }, false, 0) //库位列表
-                });*/
+                /* formSelects.data('positionSelectLayer', 'local', {
+                     arr: selectDataInstall(positionDropdown, {
+                         "depotid": depotList[0].value
+                     }, false, 0) //库位列表
+                 });*/
             }
         }, true);
 
@@ -182,11 +183,11 @@
                     arr: [] //仓库列表
                 });
             } else {
-               /* formSelects.data('positionSelectLayer', 'local', {
-                    arr: selectDataInstall(positionDropdown, {
-                        "depotid": vals[0].value
-                    }, false, 0) //仓库列表
-                });*/
+                /* formSelects.data('positionSelectLayer', 'local', {
+                     arr: selectDataInstall(positionDropdown, {
+                         "depotid": vals[0].value
+                     }, false, 0) //仓库列表
+                 });*/
                 var bitdepotid = vals[0].bitdepotid;
                 var positiondIds = vals[0].position;
                 var arr1 = [];
@@ -220,7 +221,9 @@
                     }
                 });
                 // 库位数据初始化
-                formSelects.data('positionSelectLayer', 'local', { arr });
+                formSelects.data('positionSelectLayer', 'local', {
+                    arr
+                });
             }
         }, true);
 
@@ -353,74 +356,76 @@
             elem: '#tableContainer-from',
             height: tableLayerHeight,
             data: tableData,
-            cols: [[ //标题栏
-                {
-                    type: 'checkbox'
-                }, {
-                    field: 'LAY_TABLE_INDEX',
-                    title: '序号',
-                    width: 40,
-                    templet: function(d) {
-                        return d.LAY_TABLE_INDEX + 1;
-                    }
-                }, {
-                    field: 'uuid',
-                    title: '货物标识码',
-                    width: 206,
-                    style:'font-family: Consolas;font-size:16px'
-                }, {
-                    field: 'code',
-                    title: '包号'
-                }, {
-                    field: 'varietiesName',
-                    title: '品种',
-                    templet: function(d) {
-                        // console.log(d)
-                        if (!d.varietiesName) {
-                            return d.varieties
+            cols: [
+                [ //标题栏
+                    {
+                        type: 'checkbox'
+                    }, {
+                        field: 'LAY_TABLE_INDEX',
+                        title: '序号',
+                        width: 40,
+                        templet: function(d) {
+                            return d.LAY_TABLE_INDEX + 1;
                         }
-                        return d.varietiesName;
-                    }
-                }, {
-                    field: 'levelsName',
-                    title: '等级',
-                    templet: function(d) {
-                        if (!d.levelsName) {
-                            return d.levels
+                    }, {
+                        field: 'uuid',
+                        title: '货物标识码',
+                        width: 206,
+                        style: 'font-family: Consolas;font-size:16px'
+                    }, {
+                        field: 'code',
+                        title: '包号'
+                    }, {
+                        field: 'varietiesName',
+                        title: '品种',
+                        templet: function(d) {
+                            // console.log(d)
+                            if (!d.varietiesName) {
+                                return d.varieties
+                            }
+                            return d.varietiesName;
                         }
-                        return d.levelsName;
-                    }
-                }, {
-                    field: 'specName',
-                    title: '规格',
-                    templet: function(d) {
-                        if (!d.specName) {
-                            return d.spec
+                    }, {
+                        field: 'levelsName',
+                        title: '等级',
+                        templet: function(d) {
+                            if (!d.levelsName) {
+                                return d.levels
+                            }
+                            return d.levelsName;
                         }
-                        return d.specName;
+                    }, {
+                        field: 'specName',
+                        title: '规格',
+                        templet: function(d) {
+                            if (!d.specName) {
+                                return d.spec
+                            }
+                            return d.specName;
+                        }
+                    }, {
+                        field: 'pprice',
+                        title: '采购价（RMB）'
+                    }, {
+                        field: 'chang',
+                        title: '长度'
+                    }, {
+                        field: 'num',
+                        title: '数量（m³）',
+                        event: "edit",
+                        style: 'color:red;'
+                    }, {
+                        field: 'containernum',
+                        title: '货柜号'
+                    }, {
+                        field: 'brand',
+                        title: '品牌'
+                    }, {
+                        field: 'billloading',
+                        title: '提运单'
                     }
-                }, {
-                    field: 'pprice',
-                    title: '采购价（RMB）'
-                }, {
-                    field: 'chang',
-                    title: '长度'
-                }, {
-                    field: 'num',
-                    title: '数量（m³）',
-                    event: "edit",
-                    style: 'color:red;'
-                }, {
-                    field: 'containernum',
-                    title: '货柜号'
-                }, {
-                    field: 'brand',
-                    title: '品牌'
-                }, {
-                    field: 'billloading',
-                    title: '提运单'
-                }
-            ]],
+                ]
+            ],
             even: true,
             page: true, //是否显示分页
             limits: [tableData.length],
@@ -475,9 +480,9 @@
             var checkStatus = table.checkStatus('tableContainer-from'); //表格选中状态
             var checkData = checkStatus.data;
             console.log(checkData);
-            if(checkData.length < 1){
+            if (checkData.length < 1) {
                 layer.msg("请选择货物");
-                return ;
+                return;
             }
             var parent = $(".form-newbill");
             var ownerid = parent.find("input[name='ownerid']").val();
@@ -503,24 +508,24 @@
 
 
             var uuidlist = []; //货物uuid
-            for(var i=0;i<checkData.length;i++){
+            for (var i = 0; i < checkData.length; i++) {
                 uuidlist.push(checkData[i].uuid);
             }
-            
+
             //审核订单为库存
             $.ajax({
                 url: preEntryexamineStockGoods,
                 type: "post",
                 data: {
-                    'orderno':orderno.orderno,
-                    'uuidlist':uuidlist.toString(),
+                    'orderno': orderno.orderno,
+                    'uuidlist': uuidlist.toString(),
                     'ownerid': ownerid,
                     'depotid': depotname,
                     'origin': origin,
                     'supplierid': supplierid,
                     'positionid': positionid,
-                    'SESSION_NAME':getCookie('SESSION_NAME'),
-                    'TOKEN':getCookie('TOKEN'),
+                    'SESSION_NAME': getCookie('SESSION_NAME'),
+                    'TOKEN': getCookie('TOKEN'),
                 },
                 traditional: true,
                 xhrFields: {
@@ -535,11 +540,17 @@
                                 curr: 1 //重新从第 1 页开始
                             }
                         });
-                        layer.msg("审核通过为库存");
-                        layer.closeAll();
+                        // layer.msg("审核通过为库存");
+                        layer.msg('审核通过为库存', {
+                            // icon: 1,
+                            time: 1500 //2秒关闭（如果不配置，默认是3秒）
+                        }, function() {
+                            layer.closeAll();
+                        });
+
                     } else if (res.status === 1) {
-                        goLogin();// 跳转到登录页
-                    }else{
+                        goLogin(); // 跳转到登录页
+                    } else {
                         layer.msg(res.msg);
                     }
                 }
@@ -608,7 +619,7 @@
             }
             // 设置供应商select的选中值
             if (orderno.supplierid) {
-                formSelects.value('supplierSelectLayer', [orderno.supplierid]); 
+                formSelects.value('supplierSelectLayer', [orderno.supplierid]);
                 // formSelects.data('supplierSelectLayer', 'local', {
                 //     arr: [{
                 //         "name": orderno.suppliername,
@@ -681,7 +692,7 @@
                 layer.msg("请选择需要删除的信息");
             } else {
                 layer.confirm('是否确认删除此条信息', {
-                    skin: 'layui-layer-wei',  //layui-layer-wei，维木class
+                    skin: 'layui-layer-wei', //layui-layer-wei，维木class
                     title: '提示'
                 }, function(index) {
                     checkBoxTrDomArr.del();
@@ -693,8 +704,8 @@
 
         //增删行数据
         function rowDataApi(url, data, funSuc, funErr) {
-            data['SESSION_NAME']= getCookie('SESSION_NAME');
-            data['TOKEN']= getCookie('TOKEN');
+            data['SESSION_NAME'] = getCookie('SESSION_NAME');
+            data['TOKEN'] = getCookie('TOKEN');
             $.ajax({
                 url: url,
                 type: "post",
@@ -773,8 +784,8 @@
                     suppliername: suppliername,
                     positionid: positionid,
                     orderno: num,
-                    'SESSION_NAME':getCookie('SESSION_NAME'),
-                    'TOKEN':getCookie('TOKEN'),
+                    'SESSION_NAME': getCookie('SESSION_NAME'),
+                    'TOKEN': getCookie('TOKEN'),
                 },
                 traditional: true,
                 success: function(res) {
@@ -783,7 +794,7 @@
                         layer.closeAll();
                         //刷新当前列表
                     } else if (res.status === 1) {
-                        goLogin();// 跳转到登录页
+                        goLogin(); // 跳转到登录页
                     }
                 },
                 error: function() {}
@@ -825,13 +836,13 @@
                             });
                         } else {
                             var msgstr = "------以下行有问题------</br></br>";
-                            for(var i =0;i<res.data.length;i++){
+                            for (var i = 0; i < res.data.length; i++) {
                                 msgstr += res.data[i];
                             }
                             layer.msg(msgstr, {
                                 time: 60000, //60s后自动关闭
                                 btn: ['关闭'],
-                                area:["100%","100%"]
+                                area: ["100%", "100%"]
                             });
                         }
                     }
