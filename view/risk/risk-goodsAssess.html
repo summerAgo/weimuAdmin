@@ -8,7 +8,6 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;"><i class="iconfont icon-dayin"></i>打印</a>
                 </li>
-
                  -->
                 <!-- <li class="layui-nav-item">
                     <a href="javascript:;"><i class="iconfont icon-pinggu"></i>评估</a>
@@ -231,7 +230,7 @@
                         return arr;
                     }
                     form.on('submit(searchAssessForm)', function(data) {
-                        console.log(data);
+                        // console.log(data);
                         var paramSearch = {
                             "ownerid": curData.id
                         };
@@ -359,7 +358,7 @@
                     //监听锁定操作
                     form.on('switch(isapp)', function(obj) {
                         //console.log(this.value + ":" + obj.elem.checked);
-                        console.log(obj);
+                        // console.log(obj);
                         // layer.tips(this.value + '-' + this.name + '：'+ obj.elem.checked, obj.othis);
                         var isapp = 1;
                         if (obj.elem.checked) {
@@ -390,7 +389,6 @@
                         // console.log(obj.value); //得到修改后的值
                         // console.log(obj.field); //当前编辑的字段名
                         console.log(obj); //所在行的所有相关数据
-                        console.log(123);
                         if (!obj.value || isNaN(obj.value)) {
                             layer.msg("估价金额只能为数字");
                         }
@@ -409,8 +407,6 @@
                                 isapp: 0
                             };
                         }
-
-
                         console.log(apriceChangeValue);
                     });
 
@@ -464,8 +460,7 @@
                     function editAprice(ownerid, apriceJson, tableObj) {
                         //请求数据源示例
                         var status = false;
-                        console.log(apriceJson);
-
+                        // console.log(apriceJson);
                         $.ajax({
                             url: saveEvaluationPrice,
                             type: "POST",

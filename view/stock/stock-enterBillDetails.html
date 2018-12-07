@@ -229,9 +229,9 @@
 
         //打印
         $("#ondayin").on('click', function(e) {
-            var orderno = billDetails.data.orderno
+            var orderno = billDetails.data.orderno;
             var url;
-            if (billDetails.type == "outHistory") {
+            if (billDetails.type === "outHistory") {
                 url = printoutstore;
             } else {
                 url = printinstore;

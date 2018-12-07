@@ -147,11 +147,10 @@
 
 .index-side .layui-nav .layui-nav-child a::after {
     font-family: "iconfont" !important;
-    content: "\e664";
+    content: "\e69c";
     position: absolute;
     right: 10px;
     top: 0;
-    font-family: Tahoma;
     line-height: 40px;
     font-size: 10px;
 }
@@ -176,6 +175,7 @@
 
 .index-side .layui-nav .layui-nav-more::after {
     content: "\e660";
+    font-size: 10px;
 }
 
 .index-side .layui-nav-itemed .layui-nav-more::after {
@@ -933,9 +933,9 @@ body .layui-tree-skin-shihuang .layui-tree-branch {
     min-height: 30px;
 }
 
-.layui-normal-line.layui-form-item {
-    height: 30px;
-}
+/*.layui-normal-line.layui-form-item {*/
+    /*height: 30px;*/
+/*}*/
 
 .layui-normal-line.layui-form-item .layui-form-label {
     height: 30px;

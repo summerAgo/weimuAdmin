@@ -47,13 +47,15 @@
         <div class="layui-form-item layui-normal-line">
             <label class="layui-form-label">地址</label>
             <div class="layui-input-inline">
-                <input type="text" name="address" placeholder="地址" value="{{d.address||''}}" autocomplete="off" class="layui-input">
+                <textarea name="address" placeholder="地址" value="{{d.address||''}}" autocomplete="off" class="layui-textarea"></textarea>
+                <!--<input type="text" name="address" placeholder="地址" value="{{d.address||''}}" autocomplete="off" class="layui-input">-->
             </div>
         </div>
         <div class="layui-form-item layui-normal-line">
             <label class="layui-form-label">备注</label>
             <div class="layui-input-inline">
-                <input type="text" name="remarks" placeholder="备注" value="{{d.remarks||''}}" autocomplete="off" class="layui-input">
+                <textarea name="remarks" placeholder="备注" value="{{d.remarks||''}}" autocomplete="off" class="layui-textarea"></textarea>
+                <!--<input type="text" name="remarks" placeholder="备注" value="{{d.remarks||''}}" autocomplete="off" class="layui-input">-->
             </div>
         </div>
     </div>
@@ -70,6 +72,7 @@
         </div>
     </div>
 </form>
+<div class="warning" style="position: absolute;bottom: 0px;left: 30px;"><i class="iconfont icon-gantanhao_icon"></i>如果修改了仓库【编号】，该仓库下新产生的订单号(仓库编号部分)也会跟随改变</div>
 </script>
 <style>
     .layer-colruyt-form  .table-content {
@@ -122,10 +125,10 @@
     }
     .layer-ownername-form {
         float: left;
-        width: 320px;
+        width: 300px;
     }
     .layer-colruyt-form{
-        float: left;
+        float: right;
         width: 420px;
     }
 
@@ -182,7 +185,7 @@
             //val:          当前select点击的值
             //isAdd:        当前操作选中or取消
             //isDisabled:   当前选项是否是disabled
-            console.log(val.value);
+            // console.log(val.value);
         }, true);
 
         // 监听大仓库选择与否
@@ -285,12 +288,12 @@
             cols: [[ //标题栏
                 {
                     type: 'checkbox'
-                }, /*{
+                },/*{
                     field: 'code',
                     title: '库位编号',
                 }, */{
                     field: 'name',
-                    title: '库位名称'
+                    title: '库位名称',
                 }
             ]],
             even: true,
@@ -298,7 +301,10 @@
             limits: [10, 20, 50, 100],
             limit: 10, //每页默认显示的数量
             done: function(res, curr, count) {
-
+                /*res.data[0]["LAY_CHECKED"]='true';*/
+                if (res.data) {
+                    res.data[0]["LAY_CHECKED"]='true';
+                }
             },
             text: {
                 none: "无匹配数据"
@@ -310,9 +316,8 @@
         if (JSON.stringify(dataType) !== "{}") {
             //所属大仓库回填
             if (dataType.bitdepotid) {
-                formSelects.value('positiondropdown', [dataType.bitdepotid]);
-                var selectData = formSelects.value('positiondropdown', dataType.bitdepotid+'');
-                $(".search-key").html(selectData[0].name);
+                formSelects.value('positiondropdown', [dataType.bitdepotid]); // 设置大仓库选中值
+                $(".search-key").html(dataType.bitname || null);// 弹框右侧大仓库名称回填
                 tableIns.reload({
                     where: { //设定异步数据接口的额外参数，任意设
                         bitdepotid : dataType.bitdepotid

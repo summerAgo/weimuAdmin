@@ -745,7 +745,10 @@
             tableData = table.cache["tableContainer-from"];
 
             var arr = JSON.stringify(tableData);
-            // console.log(arr);
+            if (tableData.length === 0) {
+                layer.msg("请添加货物信息");
+                return;
+            }
             //第二步，提交到后台
             var num;
             if (!orderno) {
