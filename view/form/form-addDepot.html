@@ -297,7 +297,7 @@
                     //如果后台没有给data，强行声明data为数组
                     res.data = []
                 }
-
+                // 库位表格回写
                 if (positionArr.length > 0) {
                     for (var i = 0; i < res.data.length; i++) {
                         for (var x = 0; x < positionArr.length; x++) {
@@ -324,9 +324,9 @@
                         type: 'checkbox'
                     },
                     /*{
-                                        field: 'code',
-                                        title: '库位编号',
-                                    }, */
+                        field: 'code',
+                        title: '库位编号',
+                    }, */
                     {
                         field: 'name',
                         title: '库位名称',
