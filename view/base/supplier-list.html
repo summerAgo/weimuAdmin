@@ -68,13 +68,13 @@
         padding-left: 30px;
     }
 
-    .form-right{
+    .form-right {
         position: absolute;
         left: 250px;
     }
 </style>
 <script>
-    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'tree', 'eleTree','dtree'], function() {
+    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'tree', 'eleTree', 'dtree'], function() {
         var element = layui.element;
         var form = layui.form;
         var $ = layui.jquery;
@@ -96,12 +96,19 @@
             show: 'name'
         });
 
+        var insList = []; //用户类型顶级目录
+        var inaAllList = []; //用户类型所有的数据
+        var menuIns = {}; //用户类型被点击的数据
+        var firstId = ''; // table首次显示的数据id
+        var firstName = ''; // table首次显示的数据name
+        
+        listIns();
         form.on('submit(searchForm)', function(data) {
             var paramSearch = {};
             for (var key in data.field) {
                 //参数赋值
                 if (data.field[key] !== "") {
-                    paramSearch[key] = data.field[key].replace(/^\s*|\s*$/g,"");
+                    paramSearch[key] = data.field[key].replace(/^\s*|\s*$/g, "");
                 }
             }
             tableIns.reload({
@@ -182,6 +189,7 @@
                 layer.msg("请选择需要编辑的单条信息");
             } else {
                 var data = checkStatus.data[0];
+                console.log(checkStatus.data[0])
                 data["instid"] = menuIns.id;
                 data["inaAllList"] = inaAllList;
                 window.currData = data; //全局对象存储当前选中行数据
@@ -214,7 +222,7 @@
                 layer.msg("请选择需要删除的信息");
             } else {
                 layer.confirm('是否确认删除此条信息', {
-                    skin: 'layui-layer-wei',  //layui-layer-wei，维木class
+                    skin: 'layui-layer-wei', //layui-layer-wei，维木class
                     title: '提示'
                 }, function(index) {
                     var rowId = [];
@@ -228,8 +236,8 @@
                         type: "post",
                         data: {
                             "ids": rowId,
-                             'SESSION_NAME':getCookie('SESSION_NAME'),
-                             'TOKEN':getCookie('TOKEN'),
+                            'SESSION_NAME': getCookie('SESSION_NAME'),
+                            'TOKEN': getCookie('TOKEN'),
                         },
                         traditional: true,
                         xhrFields: {
@@ -248,7 +256,7 @@
                                 });
                                 layer.msg(res.msg);
                             } else if (res.status === 1) {
-                                goLogin();// 跳转到登录页
+                                goLogin(); // 跳转到登录页
                             }
                         }
                     });
@@ -278,8 +286,8 @@
             var checkStatus = table.checkStatus('tableContainer-supplierlist');
             var title = "";
             var userUrl = "";
-            var isNameAdd = false;// 判断添加是否同名标识
-            var isNameEdit = false;// 判断修改是否同名标识
+            var isNameAdd = false; // 判断添加是否同名标识
+            var isNameEdit = false; // 判断修改是否同名标识
             var isName = true; // 是否重名标识
 
             if (data.field.id != null && data.field.id !== "") {
@@ -307,8 +315,8 @@
                     data: {
                         instid: data.field.instid,
                         name: data.field.name,
-                        'SESSION_NAME':getCookie('SESSION_NAME'),
-                        'TOKEN':getCookie('TOKEN'),
+                        'SESSION_NAME': getCookie('SESSION_NAME'),
+                        'TOKEN': getCookie('TOKEN'),
                     },
                     async: false,
                     xhrFields: {
@@ -322,52 +330,54 @@
                         }
                     }
                 });
-                if (!isName) {return false;}
+                if (!isName) {
+                    return false;
+                }
             }
 
             // layer.confirm(title, {
             //     skin: 'layui-layer-wei',  //layui-layer-wei，维木class
             //     title: '提示'
             // }, function(index) {
-                data.field['SESSION_NAME']= getCookie('SESSION_NAME');
-                data.field['TOKEN']= getCookie('TOKEN');
-                $.ajax({
-                    cache: true,
-                    type: "post",
-                    url: userUrl,
-                    data: data.field,
-                    async: false,
-                    xhrFields: {
-                        withCredentials: true
-                    },
-                    crossDomain: true,
-                    error: function(errMsg) {
-                        layer.msg('提交失败');
-                        return false;
-                    },
-                    success: function(res) {
-                        if (res.status === 0) {
-                            layer.close(eaitLayer);
-                            layer.msg('提交成功');
-                            // 刷新表格
-                            tableIns.reload({
-                                page: {
-                                    curr: 1 //重新从第 1 页开始
-                                }
-                            });
-                        } else if (res.status === 1) {
-                            goLogin();// 跳转到登录页
-                        }
+            data.field['SESSION_NAME'] = getCookie('SESSION_NAME');
+            data.field['TOKEN'] = getCookie('TOKEN');
+            $.ajax({
+                cache: true,
+                type: "post",
+                url: userUrl,
+                data: data.field,
+                async: false,
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
+                error: function(errMsg) {
+                    layer.msg('提交失败');
+                    return false;
+                },
+                success: function(res) {
+                    if (res.status === 0) {
+                        layer.close(eaitLayer);
+                        layer.msg('提交成功');
+                        // 刷新表格
+                        tableIns.reload({
+                            page: {
+                                curr: 1 //重新从第 1 页开始
+                            }
+                        });
+                    } else if (res.status === 1) {
+                        goLogin(); // 跳转到登录页
                     }
-                });
+                }
+            });
             // });
             return false;
         });
 
         //增删行数据
         function rowDataApi(url, data, funSuc, funErr) {
-            data['SESSION_NAME']= getCookie('SESSION_NAME');
-            data['TOKEN']= getCookie('TOKEN');
+            data['SESSION_NAME'] = getCookie('SESSION_NAME');
+            data['TOKEN'] = getCookie('TOKEN');
             $.ajax({
                 url: url,
                 type: "get",
@@ -378,10 +388,6 @@
             })
         }
 
-        var insList = []; //供应商类型顶级目录
-        var inaAllList = []; //供应商类型所有的数据
-        var menuIns = {}; //供应商类型被点击的数据
-        
         //菜单树
         function listIns() {
             var treeData = [];
@@ -397,6 +403,7 @@
                 success: function(res) {
                     console.log(res);
                     var insData = res.data;
+                    inaAllList = res.data;
                     for (var i = 0; i < insData.length; i++) {
                         //生成樹形一級菜單
                         if (insData[i].pid == 0) {
@@ -422,8 +429,6 @@
                         insList[x].name = treeData[x].title
                         insList[x].pid = treeData[x].basicData.pid
                     }
-
-                    firstId = insList[0].id;
 
                     for (var k = 0; k < treeData.length; k++) {
                         //循环生成二级菜单
@@ -452,6 +457,13 @@
                         }
                     }
 
+                    for (var s = 0; s < treeData.length; s++) {
+                        if (treeData[s].children && treeData[s].children.length > 0) {
+                            firstId = treeData[s].children[0].id;
+                            break;
+                        }
+                    }
+
                     dtree.render({
                         elem: "#commonTree3",
                         data: treeData,
@@ -461,7 +473,6 @@
                 }
             })
         }
-        listIns();
 
         dtree.on("node('commonTree3')", function(param) {
             // 树形点击
@@ -532,11 +543,11 @@
                 "ids": ids.toString()
             };
             layer.confirm("是否删除类型", {
-                skin: 'layui-layer-wei',  //layui-layer-wei，维木class
+                skin: 'layui-layer-wei', //layui-layer-wei，维木class
                 title: '提示'
             }, function(index) {
-                data['SESSION_NAME']= getCookie('SESSION_NAME');
-                data['TOKEN']= getCookie('TOKEN');
+                data['SESSION_NAME'] = getCookie('SESSION_NAME');
+                data['TOKEN'] = getCookie('TOKEN');
                 $.ajax({
                     cache: true,
                     type: "post",
@@ -557,7 +568,7 @@
                             layer.msg('提交成功');
                             listIns();
                         } else if (res.status === 1) {
-                            goLogin();// 跳转到登录页
+                            goLogin(); // 跳转到登录页
                         }
                     }
                 });
@@ -570,8 +581,8 @@
             var title = "";
             var url = "";
 
-            var isNameAdd = false;// 判断添加是否同名标识
-            var isNameEdit = false;// 判断修改是否同名标识
+            var isNameAdd = false; // 判断添加是否同名标识
+            var isNameEdit = false; // 判断修改是否同名标识
             var isName = true; // 是否重名标识
 
             if (data.field.id != null && data.field.id !== "") {
@@ -594,8 +605,8 @@
                     data: {
                         utype: 2,
                         name: data.field.name,
-                        'SESSION_NAME':getCookie('SESSION_NAME'),
-                        'TOKEN':getCookie('TOKEN'),
+                        'SESSION_NAME': getCookie('SESSION_NAME'),
+                        'TOKEN': getCookie('TOKEN'),
                     },
                     async: false,
                     xhrFields: {
@@ -609,40 +620,42 @@
                         }
                     }
                 });
-                if (!isName) {return false;}
+                if (!isName) {
+                    return false;
+                }
             }
             // 添加供应商类型去空格
-            data.field.name = data.field.name.replace(/^\s*|\s*$/g,"");
+            data.field.name = data.field.name.replace(/^\s*|\s*$/g, "");
             // layer.confirm(title, {
             //     skin: 'layui-layer-wei',  //layui-layer-wei，维木class
             //     title: '提示'
             // }, function(index) {
-                data.field['SESSION_NAME']= getCookie('SESSION_NAME');
-                data.field['TOKEN']= getCookie('TOKEN');
-                $.ajax({
-                    cache: true,
-                    type: "post",
-                    url: userUrl,
-                    data: data.field,
-                    async: false,
-                    xhrFields: {
-                        withCredentials: true
-                    },
-                    crossDomain: true,
-                    error: function(msg) {
-                        layer.msg('提交失败');
-                        return false;
-                    },
-                    success: function(res) {
-                        if (res.status === 0) {
-                            layer.close(eaitLayer);
-                            layer.msg('提交成功');
-                            listIns();
-                        } else if (res.status === 1) {
-                            goLogin();// 跳转到登录页
-                        }
+            data.field['SESSION_NAME'] = getCookie('SESSION_NAME');
+            data.field['TOKEN'] = getCookie('TOKEN');
+            $.ajax({
+                cache: true,
+                type: "post",
+                url: userUrl,
+                data: data.field,
+                async: false,
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
+                error: function(msg) {
+                    layer.msg('提交失败');
+                    return false;
+                },
+                success: function(res) {
+                    if (res.status === 0) {
+                        layer.close(eaitLayer);
+                        layer.msg('提交成功');
+                        listIns();
+                    } else if (res.status === 1) {
+                        goLogin(); // 跳转到登录页
                     }
-                });
+                }
+            });
             // });
             return false;
         });
