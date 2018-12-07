@@ -198,15 +198,6 @@
             }
         });
 
-        $("#allRefresh").click(function() {
-            // 刷新表格
-            tableIns.reload({
-                page: {
-                    curr: 1 //重新从第 1 页开始
-                }
-            });
-        });
-
         //删除
         $(".deleteBtn").click(function() {
             var checkStatus = table.checkStatus('tableContainer-cargolist');
@@ -365,7 +356,7 @@
         var insList = []; //用户类型顶级目录
         var inaAllList = []; //用户类型所有的数据
         var menuIns = {}; //用户类型被点击的数据
-        // 根据菜单刷新表格
+
         //菜单树
         function listIns() {
             var treeData = [];
@@ -381,6 +372,7 @@
                 success: function(res) {
                     console.log(res);
                     var insData = res.data;
+                    inaAllList = res.data;
                     for (var i = 0; i < insData.length; i++) {
                         //生成樹形一級菜單
                         if (insData[i].pid == 0) {
@@ -406,8 +398,6 @@
                         insList[x].name = treeData[x].title
                         insList[x].pid = treeData[x].basicData.pid
                     }
-
-                    firstId = insList[0].id;
 
                     for (var k = 0; k < treeData.length; k++) {
                         //循环生成二级菜单
@@ -436,6 +426,12 @@
                         }
                     }
 
+                    if(treeData[0].children&&treeData[0].children.length){
+                        firstId = treeData[0].children[0].id;
+                    }else{
+                        firstId = treeData[0].id;
+                    }
+                    console.log(firstId)
                     dtree.render({
                         elem: "#commonTree3",
                         data: treeData,

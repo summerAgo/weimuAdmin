@@ -93,19 +93,19 @@
             var arr = [];
             var number = "";
             for (var i = 0; i < inaAllList.length; i++) {
-                if (inaAllList[i].pid === 0) {
+                if (inaAllList[i].pid == 0) {
                     var map = {};
                     map["name"] = inaAllList[i].name;
                     map["value"] = inaAllList[i].id;
                     var children = [];
 
                     for (var j = 0; j < inaAllList.length; j++) {
-                        if (inaAllList[i].id === inaAllList[j].pid) {
+                        if (inaAllList[i].id == inaAllList[j].pid) {
                             var maptwo = {};
                             maptwo["name"] = inaAllList[j].name;
                             maptwo["value"] = inaAllList[j].id;
                             children.push(maptwo);
-                            if (inaAllList[j].id === instid) {
+                            if (inaAllList[j].id == instid) {
                                 number = inaAllList[j].pid + "/";
                             }
                         }
@@ -120,7 +120,7 @@
                 arr: arr,
                 linkage: true
             });
-            if (number.length === 0) {
+            if (number.length == 0) {
                 number = instid + "/";
             } else {
                 number = number + instid;
