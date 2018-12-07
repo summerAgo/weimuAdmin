@@ -1,7 +1,7 @@
 <!-- 仓库设置 新增仓库 -->
 <div id="depotView"></div>
 <script id="depotTle" type="text/html">
-<form class="layui-form layer-open-form" action="">
+    <form class="layui-form layer-open-form" action="">
     <div class="layui-form-item layui-control-line">
         <div class="layui-input-block">
             <button class="layui-btn" lay-submit lay-filter="addDepotForm"><i class="iconfont icon-daochu"></i>保存</button>
@@ -75,20 +75,23 @@
 <div class="warning" style="position: absolute;bottom: 0px;left: 30px;"><i class="iconfont icon-gantanhao_icon"></i>如果修改了仓库【编号】，该仓库下新产生的订单号(仓库编号部分)也会跟随改变</div>
 </script>
 <style>
-    .layer-colruyt-form  .table-content {
+    .layer-colruyt-form .table-content {
         padding: 20px 0;
     }
-    .colruyt-title{
+
+    .colruyt-title {
         font-size: 16px;
         font-weight: bold;
         color: #333;
         overflow: hidden;
         line-height: 30px;
     }
+
     .colruyt-title .search-name {
         float: left;
         margin-right: 5px;
     }
+
     .colruyt-title .search-key {
         float: left;
         max-width: 180px;
@@ -96,6 +99,7 @@
         text-overflow: ellipsis;
         white-space: nowrap;
     }
+
     .colruyt-title .search-box {
         font-size: 14px;
         color: #999;
@@ -103,7 +107,8 @@
         width: 160px;
         position: relative;
     }
-    .colruyt-title .search-box>input[type="text"]{
+
+    .colruyt-title .search-box>input[type="text"] {
         border-width: 1px;
         border-style: solid;
         background-color: #fff;
@@ -117,17 +122,20 @@
         font-weight: normal;
         padding-right: 10px;
     }
-    .colruyt-title .search-box>i.iconfont{
+
+    .colruyt-title .search-box>i.iconfont {
         position: absolute;
         right: 10px;
         top: 1px;
         cursor: pointer;
     }
+
     .layer-ownername-form {
         float: left;
         width: 300px;
     }
-    .layer-colruyt-form{
+
+    .layer-colruyt-form {
         float: right;
         width: 420px;
     }
@@ -148,10 +156,10 @@
 
         var dataType = JSON.parse(sessionStorage.getItem('depotCheck')) || {}; //获取本地所选仓库信息，判断是否为修改
 
-        var bitdepotid = 0;// 刚进入弹框，设置一个默认的大仓库id
+        var bitdepotid = 0; // 刚进入弹框，设置一个默认的大仓库id
         //编码自定义验证规则
         form.verify({
-            code: [/^[a-zA-Z0-9]{4}$/,'编号必须4位，字母或数字组合']
+            code: [/^[a-zA-Z0-9]{4}$/, '编号必须4位，字母或数字组合']
         });
         // console.log(dataType)
         // 渲染模板的内容
@@ -175,11 +183,17 @@
 
         // 物品是否估值数据初始化
         formSelects.data('isvipSelect', 'local', {
-            arr: [{"name":"估值","value":"0"},{"name":"不估值","value":"1"}]
+            arr: [{
+                "name": "估值",
+                "value": "0"
+            }, {
+                "name": "不估值",
+                "value": "1"
+            }]
         });
 
         // 监听是否估值select选项选中与否
-        formSelects.on('isvipSelect', function(id, vals, val, isAdd, isDisabled){
+        formSelects.on('isvipSelect', function(id, vals, val, isAdd, isDisabled) {
             //id:           点击select的id
             //vals:         当前select已选中的值
             //val:          当前select点击的值
@@ -189,25 +203,25 @@
         }, true);
 
         // 监听大仓库选择与否
-        formSelects.on('positiondropdown', function(id, vals, val, isAdd, isDisabled){
+        formSelects.on('positiondropdown', function(id, vals, val, isAdd, isDisabled) {
             bitdepotid = val.value;
             $(".search-key").html(val.name);
             tableIns.reload({
                 where: { //设定异步数据接口的额外参数，任意设
-                    bitdepotid : val.value
-                }
-                ,page: {
+                    bitdepotid: val.value
+                },
+                page: {
                     curr: 1 //重新从第 1 页开始
                 }
             });
         }, true);
 
         // 库位搜索按钮点击
-        $(".search-colruyt").click(function () {
+        $(".search-colruyt").click(function() {
             var _this = $(this);
             var sinput = _this.siblings("input");
             var value = sinput.val().trim();
-            if (value === "" || value == null || value === undefined ) {
+            if (value === "" || value == null || value === undefined) {
                 sinput.val("");
                 layer.msg("请填写大库位名");
                 return false;
@@ -218,9 +232,9 @@
             } else {
                 tableIns.reload({
                     where: { //设定异步数据接口的额外参数，任意设
-                        name : value
-                    }
-                    ,page: {
+                        name: value
+                    },
+                    page: {
                         curr: 1 //重新从第 1 页开始
                     }
                 });
@@ -237,10 +251,10 @@
                 data: param,
                 async: false, //同步
                 traditional: true,
-                xhrFields: {
-                    withCredentials: true
+                xhrFields: {
+                    withCredentials: true
                 },
-                crossDomain: true,
+                crossDomain: true,
                 success: function(data) {
                     // console.log(data);
                     if (data.status === 0) {
@@ -264,16 +278,35 @@
             return arr;
         }
 
+        var positionArr = [];
+        if (dataType && dataType.position) {
+            positionArr = dataType.position.split(',');
+        } //库位
+        console.log(positionArr);
         // 库位表格渲染
         var tableIns = table.render({
             elem: '#table-layer-depotList',
             height: 'full-' + tableTopHeight,
             url: positionList,
-            where:{
+            where: {
                 bitdepotid: bitdepotid
             },
             parseData: function(res) { //res 即为原始返回的数据
-                if (res.status !== 0) res.status = 0;
+                if (res.status != 0) res.status = 0;
+                if (!res.data) {
+                    //如果后台没有给data，强行声明data为数组
+                    res.data = []
+                }
+
+                if (positionArr.length > 0) {
+                    for (var i = 0; i < res.data.length; i++) {
+                        for (var x = 0; x < positionArr.length; x++) {
+                            if(res.data[i].id == positionArr[x]){
+                                res.data[i]["LAY_CHECKED"] = 'true';
+                            }
+                        }
+                    }
+                }
                 return {
                     "code": res.status, //解析接口状态
                     "msg": res.message, //解析提示文本
@@ -285,26 +318,34 @@
                 pageName: 'offset', //页码的参数名称，默认：page
                 limitName: 'limit' //每页数据量的参数名，默认：limit
             },
-            cols: [[ //标题栏
-                {
-                    type: 'checkbox'
-                },/*{
-                    field: 'code',
-                    title: '库位编号',
-                }, */{
-                    field: 'name',
-                    title: '库位名称',
-                }
-            ]],
+            cols: [
+                [ //标题栏
+                    {
+                        type: 'checkbox'
+                    },
+                    /*{
+                                        field: 'code',
+                                        title: '库位编号',
+                                    }, */
+                    {
+                        field: 'name',
+                        title: '库位名称',
+                    }
+                ]
+            ],
             even: true,
             page: true, //是否显示分页
             limits: [10, 20, 50, 100],
             limit: 10, //每页默认显示的数量
             done: function(res, curr, count) {
                 /*res.data[0]["LAY_CHECKED"]='true';*/
-                if (res.data) {
-                    res.data[0]["LAY_CHECKED"]='true';
-                }
+                // if (res.data) {
+                //     res.data[0]["LAY_CHECKED"]='true';
+                // }
+                // for(var i = 0;i<res.length;i++){
+                //     res.data[i]["LAY_CHECKED"]='true';
+                // }
+                // form.render('checkbox');
             },
             text: {
                 none: "无匹配数据"
@@ -317,12 +358,12 @@
             //所属大仓库回填
             if (dataType.bitdepotid) {
                 formSelects.value('positiondropdown', [dataType.bitdepotid]); // 设置大仓库选中值
-                $(".search-key").html(dataType.bitname || null);// 弹框右侧大仓库名称回填
+                $(".search-key").html(dataType.bitname || null); // 弹框右侧大仓库名称回填
                 tableIns.reload({
                     where: { //设定异步数据接口的额外参数，任意设
-                        bitdepotid : dataType.bitdepotid
-                    }
-                    ,page: {
+                        bitdepotid: dataType.bitdepotid
+                    },
+                    page: {
                         curr: 1 //重新从第 1 页开始
                     }
                 });
@@ -330,8 +371,8 @@
             //仓库主回填
             dataType.ownerid && formSelects.value('ownerSelect', [dataType.ownerid]);
             //物品是否估值回填
-            if (dataType.isvip === 0 || dataType.isvip === 1 ) {
-                formSelects.value('isvipSelect', [dataType.isvip+'']);
+            if (dataType.isvip === 0 || dataType.isvip === 1) {
+                formSelects.value('isvipSelect', [dataType.isvip + '']);
             }
         }
 
