@@ -109,24 +109,24 @@
         });
 
         addinstidSel(data.inaAllList, data.instid);
-
+        console.log(data)
         function addinstidSel(inaAllList, instid) {
             var arr = [];
             var number = "";
             for (var i = 0; i < inaAllList.length; i++) {
-                if (inaAllList[i].pid === 0) {
+                if (inaAllList[i].pid == 0) {
                     var map = {};
                     map["name"] = inaAllList[i].name;
                     map["value"] = inaAllList[i].id;
                     var children = [];
 
                     for (var j = 0; j < inaAllList.length; j++) {
-                        if (inaAllList[i].id === inaAllList[j].pid) {
+                        if (inaAllList[i].id == inaAllList[j].pid) {
                             var maptwo = {};
                             maptwo["name"] = inaAllList[j].name;
                             maptwo["value"] = inaAllList[j].id;
                             children.push(maptwo);
-                            if (inaAllList[j].id === instid) {
+                            if (inaAllList[j].id == instid) {
                                 number = inaAllList[j].pid + "/";
                             }
                         }
@@ -141,7 +141,7 @@
                 arr: arr,
                 linkage: true
             });
-            if (number.length === 0) {
+            if (number.length == 0) {
                 number = instid + "/";
             } else {
                 number = number + instid;
@@ -178,9 +178,9 @@
                 traditional: true,
                 success: function(data) {
                     // console.log(data);
-                    if (data.status === 0) {
+                    if (data.status == 0) {
                         //把接口数据转换为[{"name":str,"value":number}]格式
-                        if (!Array.isArray(data.data) || data.data.length === 0) {
+                        if (!Array.isArray(data.data) || data.data.length == 0) {
                             // 判断arr是否为数组并保证内部有值
                             return false;
                         }

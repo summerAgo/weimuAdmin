@@ -7,6 +7,12 @@
             </div>
         </div>
         <div class="layui-form-item layui-normal-line">
+            <label class="layui-form-label">用户名</label>
+            <div class="layui-input-inline">
+                <input type="text" name="username" placeholder="用户名" value="{{d.username||''}}" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item layui-normal-line">
             <label class="layui-form-label">角色</label>
             <div class="layui-input-inline">
                 <input type="hidden" id="userid" name="userid"   value="{{# if(d.id){}} {{d.id}} {{# }}}">

@@ -95,7 +95,7 @@
 </style>
 
 <script>
-    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'tree', 'eleTree','dtree'], function() {
+    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'tree', 'eleTree', 'dtree'], function() {
         var element = layui.element;
         var form = layui.form;
         var $ = layui.jquery;
@@ -217,6 +217,7 @@
                 data["instid"] = menuIns.id;
                 data["inaAllList"] = inaAllList;
                 window.currData = data; //全局对象存储当前选中行数据
+                console.log(data)
                 $.get('view/user/user-add.html', {}, function(str) {
                     eaitLayer = layer.open({
                         title: '编辑用户',
@@ -565,8 +566,8 @@
         var insList = []; //用户类型顶级目录
         var inaAllList = []; //用户类型所有的数据
         var menuIns = {}; //用户类型被点击的数据
-        
-        
+
+
         //菜单树
         function listIns() {
             var treeData = [];
@@ -582,6 +583,7 @@
                 success: function(res) {
                     console.log(res);
                     var insData = res.data;
+                    inaAllList = res.data;
                     for (var i = 0; i < insData.length; i++) {
                         //生成樹形一級菜單
                         if (insData[i].pid == 0) {
@@ -607,8 +609,6 @@
                         insList[x].name = treeData[x].title
                         insList[x].pid = treeData[x].basicData.pid
                     }
-
-                    firstId = insList[0].id;
 
                     for (var k = 0; k < treeData.length; k++) {
                         //循环生成二级菜单
@@ -636,7 +636,12 @@
                             }
                         }
                     }
-
+                    for (var s = 0; s < treeData.length; s++) {
+                        if (treeData[s].children && treeData[s].children.length > 0) {
+                            firstId = treeData[s].children[0].id;
+                            break;
+                        }
+                    }
                     dtree.render({
                         elem: "#commonTree3",
                         data: treeData,

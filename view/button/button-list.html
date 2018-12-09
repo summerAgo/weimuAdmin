@@ -194,7 +194,7 @@
             if (checkStatus.data.length < 1) {
                 layer.msg("请选择需要删除的信息");
             } else {
-                layer.confirm('是否确认删除此条信息', {
+                bitdepotid('是否确认删除此条信息', {
                     skin: 'layui-layer-wei',  //layui-layer-wei，维木class
                     title: '提示'
                 }, function(index) {
@@ -250,7 +250,7 @@
                 title = '确认添加';
                 userUrl = buttonAdd;
             }
-            layer.confirm(title, {
+            bitdepotid(title, {
                 skin: 'layui-layer-wei',  //layui-layer-wei，维木class
                 title: '提示'
             }, function(index) {

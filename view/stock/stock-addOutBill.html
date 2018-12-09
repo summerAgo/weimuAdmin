@@ -350,19 +350,24 @@
                         style:'font-family: Consolas;font-size:16px'
                     }, {
                         field: 'code',
-                        title: '包号'
+                        title: '包号',
+                        width: 150,
                     }, {
                         field: 'varieties',
-                        title: '品种'
+                        title: '品种',
+                        width: 120,
                     }, {
                         field: 'spec',
-                        title: '规格'
+                        title: '规格',
+                        width: 120,
                     }, {
                         field: 'levels',
-                        title: '等级'
+                        title: '等级',
+                        width: 120,
                     }, {
                         field: 'chang',
-                        title: '长度'
+                        title: '长度',
+                        width: 120,
                     }, {
                         field: 'aprice',
                         title: '评估单价'+ unitMoney,
@@ -377,25 +382,30 @@
                     }, {
                         field: "",
                         title: "总金额",
+                        width: 130,
                         templet: function (d) {
                             return formatNum(d.totalamount) || "";
                         },
                     }, {
                         field: 'ownername',
-                        title: '仓库主'
+                        title: '仓库主',
+                        width: 120,
                     }, {
                         field: 'depname',
-                        title: '仓库名称'
+                        title: '仓库名称',
+                        width: 180,
                     }, {
                         field: 'billloading',
                         title: '提运单',
                         width: 150
                     }, {
                         field: 'origin',
-                        title: '产地'
+                        title: '产地',
+                        width: 180,
                     }, {
                         field: 'supplier',
-                        title: '供应商'
+                        title: '供应商',
+                        width: 160,
                     }, {
                         field: 'num',
                         title: '数量（m³）',

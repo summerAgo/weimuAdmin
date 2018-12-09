@@ -8,6 +8,8 @@
     <link type="text/css" rel="stylesheet" href="./reset.css">
     <link type="text/css" rel="stylesheet" href="./print.css">
     <link type="text/css" rel="stylesheet" href="../../style/iconfont/iconfont.css">
+    <script src="../../js/localhost.js"></script>
+    <script src="../../js/api.js"></script>
     <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
 </head>
 
@@ -82,7 +84,7 @@
         var orderData = null;
         //获取列表数据
         $.ajax({
-            url: printinjk,
+            url: inprintinjk,
             type: "get",
             data: {
                 orderno: orderno
@@ -91,10 +93,9 @@
             traditional: true,
             success: function(res) {
                 orderData = res.data;
-                if (res.status == 0) {
+                if (res.status === 0) {
                     orderData = res.data; // 对象迁移
                     orderDataList = orderData.list;
-
                 } else {
                     // layer.msg("请求失败");
                 }
@@ -105,7 +106,8 @@
             $("." + key + ".data").html([orderData[key]])
         }
 
-        $(".number").html(orderDataList.length);
+        $(".number").html(orderDataList.length);//赋值件数
+        // 数量合计
         $(".total-num").html(function() {
             var count = 0;
             for(var i=0;i<orderDataList.length;i++){
@@ -133,6 +135,7 @@
         var date = getNowFormatDate();
         $(".data.date").html(date);
 
+        /* table表格赋值 */
         var h = {},
             arrRear = [];
         for (var i = 0; i < orderDataList.length; i++) {
@@ -188,7 +191,6 @@
                 trs += trB;
             }
         }
-
         trHeader.after(trs);
         window.print();
     </script>

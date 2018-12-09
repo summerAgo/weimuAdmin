@@ -182,6 +182,7 @@
             var isCodeAdd = false;// 判断添加是否同编号标识
             var isCodeEdit = false;// 判断修改是否同编号标识
             var isName = true; // 是否重名标识
+
             //如果是修改
             if (dataType) {
                 url = depotUpdate;
@@ -257,35 +258,69 @@
                 });
                 if (!isName) {return false;}
             }
-
             data.field['SESSION_NAME']= getCookie('SESSION_NAME');
             data.field['TOKEN']= getCookie('TOKEN');
-            $.ajax({
-                url: url,
-                type: "post",
-                data: data.field,
-                xhrFields: {
-                    withCredentials: true
-                },
-                crossDomain: true,
-                success: function(res) {
-                    if (res.status === 0) {
-                        sessionStorage.removeItem('depotCheck'); //操作成功删除本地存储
-                        tableIns.reload({
-                            page: {
-                                curr: 1 //重新从第 1 页开始
+            if (isCodeEdit) {
+                layer.confirm('仓库【编号】修改了之后，该仓库下新产生的订单号(仓库编号部分)也会跟随改变！', {
+                    btn: ["确认修改","取消"],
+                    skin: 'layui-layer-wei',
+                    title: '提示'
+                }, function(index) {
+                    $.ajax({
+                        url: url,
+                        type: "post",
+                        data: data.field,
+                        xhrFields: {
+                            withCredentials: true
+                        },
+                        crossDomain: true,
+                        success: function(res) {
+                            if (res.status === 0) {
+                                sessionStorage.removeItem('depotCheck'); //操作成功删除本地存储
+                                tableIns.reload({
+                                    page: {
+                                        curr: 1 //重新从第 1 页开始
+                                    }
+                                });
+                                layer.msg(msg);
+                                layer.close(addDepotLayer);
+                            } else if (res.status === 1) {
+                                layer.msg("提交异常");
+                                goLogin();// 跳转到登录页
                             }
-                        });
-                        layer.msg(msg);
-                        layer.close(addDepotLayer);
-                    } else if (res.status === 1) {
-                        layer.msg("提交异常");
-                        goLogin();// 跳转到登录页
+                        }
+                    });
+                });
+                return false;
+            }else {
+                $.ajax({
+                    url: url,
+                    type: "post",
+                    data: data.field,
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    success: function(res) {
+                        if (res.status === 0) {
+                            sessionStorage.removeItem('depotCheck'); //操作成功删除本地存储
+                            tableIns.reload({
+                                page: {
+                                    curr: 1 //重新从第 1 页开始
+                                }
+                            });
+                            layer.msg(msg);
+                            layer.close(addDepotLayer);
+                        } else if (res.status === 1) {
+                            layer.msg("提交异常");
+                            goLogin();// 跳转到登录页
+                        }
                     }
-                }
-            });
-            return false;
+                });
+                return false;
+            }
         });
+
 
         //修改
         $(".changeBtn").click(function() {
