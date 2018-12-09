@@ -317,6 +317,9 @@
                         field: 'aprice',
                         title: '评估状态（RMB）',
                         templet: function(d) {
+                            if (d.isapp == 1) {
+                                return '<span>不用评估</span>';
+                            }
                             if (d.aprice <= 0 || null == d.aprice) {
                                 return '<span style="color:#0063de;">待评估</span>';
                             }
