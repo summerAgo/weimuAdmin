@@ -308,7 +308,8 @@
                         }
                     }
                 }
-                this.limit = res.data.length;
+                pageBig = res.data.length;
+                console.log(pageBig);
                 return {
                     "code": res.status, //解析接口状态
                     "msg": res.message, //解析提示文本
@@ -336,7 +337,7 @@
                 ]
             ],
             even: true,
-            page: true, //是否显示分页
+            page: false, //是否显示分页
             limits: [pageBig],
             limit: pageBig, //每页默认显示的数量
             done: function(res, curr, count) {
