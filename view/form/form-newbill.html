@@ -578,40 +578,41 @@
                 }]
             });
 
-            if (orderno.positionid) {
-                var bitdepotid = orderno.bitdepotid;
-                var positionid = orderno.positionid;
-                orderno.positionname = null;
-                $.ajax({
-                    url: positiondropdown,
-                    type: "get",
-                    data: bitdepotid,
-                    async: false, // 同步
-                    traditional: true,
-                    success: function(data) {
-                        if (data.status === 0) {
-                            //把接口数据转换为[{"name":str,"value":number}]格式
-                            if (!Array.isArray(data.data) || data.data.length === 0) {
-                                // 判断arr是否为数组并保证内部有值
-                                return false;
-                            }
-                            for (var i = 0; i < data.data.length; i++) {
-                                if (data.data[i].id === positionid) {
-                                    orderno.positionname = data.data[i].name;
+            // 库位初始化
+            var bitdepotid = orderno.bitdepotid;
+            var positiondIds = orderno.position;
+            var arr1 = [];
+            positiondIds && (arr1 = positiondIds.split(","));
+            var arr = [];
+
+            $.ajax({
+                url: positiondropdown,
+                type: "get",
+                data: bitdepotid,
+                async: false, // 同步
+                traditional: true,
+                success: function(data) {
+                    if (data.status === 0) {
+                        //把接口数据转换为[{"name":str,"value":number}]格式
+                        if (!Array.isArray(data.data) || data.data.length === 0) {
+                            // 判断arr是否为数组并保证内部有值
+                            return false;
+                        }
+                        for (var i = 0; i < data.data.length; i++) {
+                            for (var k = 0; k < arr1.length; k++) {
+                                if (data.data[i].id === parseInt(arr1[k])) {
+                                    arr.push({
+                                        "name": data.data[i].name,
+                                        "value": data.data[i].id,
+                                    });
                                 }
                             }
                         }
                     }
-                });
-                //库位select下拉框赋值
-                formSelects.data('positionSelectLayer', 'local', {
-                    arr: [{
-                        "name": orderno.positionname,
-                        "value": orderno.positionid,
-                        selected: "selected"
-                    }]
-                });
-            }
+                }
+            });
+            // 库位数据初始化
+            formSelects.data('positionSelectLayer', 'local', { arr });
 
             // 设置产地select的选中值
             if (orderno.origin) {
