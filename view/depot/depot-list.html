@@ -135,8 +135,8 @@
                     templet: function(d) {
                         if (d.isvip === 0) {
                             return "不估值"
-                        }else {
-                            return "估值"
+                        }else if (d.isvip === 1){
+                            return "要估值"
                         }
                     }
                 }, {
