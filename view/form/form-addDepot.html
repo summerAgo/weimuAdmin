@@ -286,7 +286,8 @@
         // 库位表格渲染
         var tableIns = table.render({
             elem: '#table-layer-depotList',
-            height: 'full-' + tableTopHeight,
+            // height: 'full-' + tableTopHeight,
+            height: 390,
             url: positionList,
             where: {
                 bitdepotid: bitdepotid
@@ -334,7 +335,7 @@
                 ]
             ],
             even: true,
-            page: true, //是否显示分页
+            page: false, //是否显示分页
             limits: [10, 20, 50, 100],
             limit: 10, //每页默认显示的数量
             done: function(res, curr, count) {
