@@ -282,13 +282,13 @@
         if (dataType && dataType.position) {
             positionArr = dataType.position.split(',');
         } //库位
-        console.log(positionArr);
+        var pageBig = 0;//去掉分页用
         // 库位表格渲染
         var tableIns = table.render({
             elem: '#table-layer-depotList',
             // height: 'full-' + tableTopHeight,
             height: 390,
-            url: positionList,
+            url: positiondropdown,
             where: {
                 bitdepotid: bitdepotid
             },
@@ -308,6 +308,7 @@
                         }
                     }
                 }
+                this.limit = res.data.length;
                 return {
                     "code": res.status, //解析接口状态
                     "msg": res.message, //解析提示文本
@@ -335,9 +336,9 @@
                 ]
             ],
             even: true,
-            page: false, //是否显示分页
-            limits: [10, 20, 50, 100],
-            limit: 10, //每页默认显示的数量
+            page: true, //是否显示分页
+            limits: [pageBig],
+            limit: pageBig, //每页默认显示的数量
             done: function(res, curr, count) {
                 
             },
