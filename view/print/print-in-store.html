@@ -160,11 +160,12 @@
         var trs = '';
 
         for (var k = 0; k < arrRear.length; k++) {
+
             var len = arrRear[k].data.length;
             var arrOll = arrRear[k].data;
             var arrBod = arrOll.slice(1);
             var trH = '<tr>' +
-                '<td rowspan="' + len + '">' + arrOll[0].containernum + '</td>' +
+                '<td rowspan="' + len + '">' + (arrOll[0].containernum == null ? "" : arrOll[0].containernum) + '</td>' +
                 '<td>' + arrOll[0].code + '</td>' +
                 '<td>' + arrOll[0].varieties + '</td>' +
                 '<td>' + arrOll[0].spec + '</td>' +
@@ -173,7 +174,7 @@
                 '<td>' + arrOll[0].brand + '</td>' +
                 '<td>' + arrOll[0].origin + '</td>' +
                 '<td>' + arrOll[0].num + '</td>' +
-                '<td>' + arrOll[0].remarks + '</td>' +
+                '<td>' + (arrOll[0].remarks == null ? "" : arrOll[0].remarks) + '</td>' +
                 '</tr>';
             trs += trH;
             for (var n = 0; n < arrBod.length; n++) {
@@ -186,7 +187,7 @@
                     '<td>' + arrBod[n].brand + '</td>' +
                     '<td>' + arrBod[n].origin + '</td>' +
                     '<td>' + arrBod[n].num + '</td>' +
-                    '<td>' + arrBod[n].remarks + '</td>' +
+                    '<td>' + (arrOll[0].remarks == null ? "" : arrOll[0].remarks) + '</td>' +
                     '</tr>';
                 trs += trB;
             }
