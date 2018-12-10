@@ -584,7 +584,6 @@
             var arr1 = [];
             positiondIds && (arr1 = positiondIds.split(","));
             var arr = [];
-
             $.ajax({
                 url: positiondropdown,
                 type: "get",
@@ -613,6 +612,8 @@
             });
             // 库位数据初始化
             formSelects.data('positionSelectLayer', 'local', { arr });
+            //设置库位select下拉框赋值
+           (orderno.positionid) &&  formSelects.value('positionSelectLayer', [orderno.positionid]);
 
             // 设置产地select的选中值
             if (orderno.origin) {
