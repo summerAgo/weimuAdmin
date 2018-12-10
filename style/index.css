@@ -1107,6 +1107,7 @@ div[xm-select-skin] .xm-select-title div.xm-select-label > span {
 
 .xm-select-linkage li:hover {
     border-color: #0284ff;
+    background-color: #f5f5f5;
 }
 
 .layui-form-radio > i:hover,
