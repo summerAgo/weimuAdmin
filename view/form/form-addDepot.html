@@ -309,7 +309,6 @@
                     }
                 }
                 pageBig = res.data.length;
-                console.log(pageBig);
                 return {
                     "code": res.status, //解析接口状态
                     "msg": res.message, //解析提示文本
@@ -341,7 +340,7 @@
             limits: [pageBig],
             limit: pageBig, //每页默认显示的数量
             done: function(res, curr, count) {
-                
+
             },
             text: {
                 none: "无匹配数据"

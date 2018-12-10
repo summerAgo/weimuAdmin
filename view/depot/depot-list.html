@@ -129,6 +129,16 @@
                 }, {
                     field: 'ownername',
                     title: '仓库主',
+                },  {
+                    field: 'isvip',
+                    title: '估值',
+                    templet: function(d) {
+                        if (d.isvip === 0) {
+                            return "不估值"
+                        }else {
+                            return "估值"
+                        }
+                    }
                 }, {
                     field: 'address',
                     title: '地址',
