@@ -1275,7 +1275,8 @@ div[xm-select-skin] .xm-select-title div.xm-select-label > span {
     background-color: #e8e8e8;
 }
 
-.layui-input:focus {
+.layui-input:focus,
+.layui-textarea:focus {
     border-color: #0284ff !important;
 }
 
