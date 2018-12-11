@@ -4,13 +4,14 @@
         <div class="layui-form-item layui-control-line">
             <div class="layui-input-block">
                 <button class="layui-btn" lay-submit lay-filter="addSubmit"><i class="iconfont icon-daochu"></i>保存</button>
-                <button class="layui-btn layui-btn-primary" type="reset"><i class="iconfont icon-zhongzhi"></i>重置</button>
+                <button class="layui-btn addKeep" lay-submit lay-filter="addKeepSubmit"><i class="iconfont icon-daochu"></i>保存新增</button>
+                <!--<button class="layui-btn layui-btn-primary" type="reset"><i class="iconfont icon-zhongzhi"></i>重置</button>-->
             </div>
         </div>
         <div class="layui-form-item layui-normal-line">
             <label class="layui-form-label form-required">角色名称</label>
             <div class="layui-input-inline">
-                <input type="text" id="rolename" name="rolename" lay-verify="required" placeholder="必填项,请输入用户名" class="layui-input"  value="{{# if(d.rolename){}}{{d.rolename}}{{# }}}">
+                <input type="text" id="rolename" name="rolename" lay-verify="required" placeholder="请输入用户名" class="layui-input"  value="{{# if(d.rolename){}}{{d.rolename}}{{# }}}">
                 <input type="hidden" id="id" name="id"  value="{{# if(d.id){}}{{d.id}}{{# }}}">
             </div>
         </div>
@@ -40,7 +41,6 @@
         var laytpl = layui.laytpl;
         var laydate = layui.laydate;
         var data = window.currData;
-
         // layui.laytpl模板引擎 -- 渲染模版
         var getTpl = formUser.innerHTML,
             view = document.getElementById('formEditView');
@@ -48,6 +48,7 @@
             laytpl(getTpl).render(data, function (html) {
                 view.innerHTML = html;
             });
+            $("#formEditView .addKeep").hide();// 隐藏保存添加按钮
         } else { // 添加角色
             var dataOff = {};
             laytpl(getTpl).render(dataOff, function (html) {
@@ -55,6 +56,7 @@
             });
         }
         form.render(); //重置表单渲染 -- 更新全部
+
         //日期时间选择器
         laydate.render({
             elem: '#birthday',

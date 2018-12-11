@@ -152,3 +152,8 @@ function goLogin() {
         layer.close(index);
     });
 }
+
+// 车牌号小写改大写
+function toUpperCase(obj){
+    obj.value = obj.value.toUpperCase()
+}

@@ -396,6 +396,8 @@
             page: true, //是否显示分页
             limits: [500, 1000, 2000, 5000],
             limit: 500, //每页默认显示的数量
+            toolbar: '.layui-nav',
+            defaultToolbar: ['exports'],
             done: function(res, curr, count) {
                 var addtableBtn = '<div class="rightBotBtn" id="rightBox">合计总库存数量<span>' + res.znum + '</span>㎡ 总库存估价金额：<span>' + formatNum(res.aprice) + '</span>(RMB)</div>';
                 if ($("#rightBox").length < 1) {
@@ -409,9 +411,8 @@
         });
 
         //点击导出
-        $(".toExport").on('click', function(e) {
+        /*$(".toExport").on('click', function(e) {
             window.location.href = ilbstockExportUrl
-        });
-
+        });*/
     });
 </script>
