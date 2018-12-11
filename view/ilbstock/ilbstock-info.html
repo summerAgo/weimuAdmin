@@ -88,6 +88,7 @@
                                 <option value="">评估状态</option>
                                 <option value="2">已评估</option>
                                 <option value="1">未评估</option>
+                                <option value="3">不评估</option>
                             </select>
                         </div>
                     </div>
@@ -350,11 +351,11 @@
                         title: '数量',
                         width: 100,
                     }, {
-                        field: '',
+                        field: 'aprice',
                         title: '估值单价',
                         width: 100,
                     }, {
-                        field: '',
+                        field: 'totalamount',
                         title: '估值总金额',
                         width: 100,
                     }, {
@@ -411,8 +412,9 @@
         });
 
         //点击导出
-        /*$(".toExport").on('click', function(e) {
-            window.location.href = ilbstockExportUrl
-        });*/
+        $(".toExport").on('click', function(e) {
+            //在地址后面携带参数给后台  实现条件导出：如 window.location.href = ilbstockExportUrl+"?name=&type="
+            window.location.href = ilbstockExportUrl;
+        });
     });
 </script>
