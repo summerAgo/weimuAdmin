@@ -44,6 +44,10 @@
         <span>仓库名称：</span>
         <span>{{d.data.depname}}</span>
     </div>
+    <div class="lay-bread-item">
+        <span>库位：</span>
+        <span>{{d.data.positionname}}</span>
+    </div>
     {{# if(d.data.outdate){}}
         <div class="lay-bread-item">
             <span>出库时间：</span>
@@ -176,10 +180,10 @@
         }, {
             field: "num",
             title: "数量（m³）"
-        }, {
+        },/* {
             field: "positionname",
             title: "库位"
-        }, {
+        }, */{
             field: "updauser",
             title: "操作员"
         }, {
