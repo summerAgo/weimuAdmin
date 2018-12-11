@@ -129,7 +129,7 @@
                 }, {
                     field: 'ownername',
                     title: '仓库主',
-                },  {
+                }, {
                     field: 'isvip',
                     title: '估值',
                     templet: function(d) {
@@ -140,14 +140,15 @@
                         }
                     }
                 }, {
-                    field: 'address',
-                    title: '地址',
-                }, {
                     field: 'bitname',
                     title: '所属大仓库',
                 }, {
                     field: 'positionname',
                     title: '所属库位',
+                }, {
+                    field: 'address',
+                    title: '地址',
+                    width: 300,
                 }, {
                     field: 'remarks',
                     title: '备注',
@@ -330,7 +331,6 @@
                 return false;
             }
         });
-
 
         //修改
         $(".changeBtn").click(function() {

@@ -219,7 +219,6 @@
                         for (var i = 0; i < data.data.length; i++) {
                             var name = "";
 
-
                             if (data.data[i].name) {
                                 name = data.data[i].name;
                             } else {
@@ -314,11 +313,15 @@
                         title: '包号',
                         width: 100,
                     }, {
+                        field: 'billloading',
+                        title: '提运单',
+                        width: 140,
+                    }, {
                         field: 'aprice',
-                        title: '评估状态（RMB）',
+                        title: '估值状态',
                         templet: function(d) {
-                            if (d.isapp == 1) {
-                                return '<span>不用评估</span>';
+                            if (d.isapp === 1) {
+                                return '<span>不估值</span>';
                             }
                             if (d.aprice <= 0 || null == d.aprice) {
                                 return '<span style="color:#0063de;">待评估</span>';
@@ -347,6 +350,14 @@
                         title: '数量',
                         width: 100,
                     }, {
+                        field: '',
+                        title: '估值单价',
+                        width: 100,
+                    }, {
+                        field: '',
+                        title: '估值总金额',
+                        width: 100,
+                    }, {
                         field: 'containernum',
                         title: '货柜号',
                         width: 150,
@@ -358,10 +369,6 @@
                         field: 'brand',
                         title: '品牌',
                         width: 100,
-                    }, {
-                        field: 'billloading',
-                        title: '提运单',
-                        width: 140,
                     }, {
                         field: 'depname',
                         title: '仓库',
