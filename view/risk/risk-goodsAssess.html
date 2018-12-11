@@ -51,8 +51,8 @@
 </div>
 <!-- 是否评估按钮 -->
 <script type="text/html" id="checkboxTpl">
-    <!-- <input type="checkbox" name="isapp" value="{{d.id}}" title="评估" lay-filter="isapp" checked> -->
-    <input type="checkbox" name="isapp" value="{{d.id}}" lay-skin="switch" lay-text="评　估|不评估" lay-filter="isapp" checked>
+    <!-- -->
+    <input type="checkbox" name="isapp" value="{{d.isapp}}" lay-skin="switch" lay-text="要估值|不估值" lay-filter="isapp" {{ d.isapp == 0 ? '' : 'checked' }}>
 </script>
 <style scode>
     .position-form-right.form-right {
