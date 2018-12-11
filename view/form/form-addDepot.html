@@ -47,14 +47,13 @@
         <div class="layui-form-item layui-normal-line">
             <label class="layui-form-label">地址</label>
             <div class="layui-input-inline">
-                <textarea name="address" placeholder="地址" value="{{d.address||''}}" autocomplete="off" class="layui-textarea"></textarea>
-                <!--<input type="text" name="address" placeholder="地址" value="{{d.address||''}}" autocomplete="off" class="layui-input">-->
+                <textarea name="address" placeholder="地址" value="{{d.address || ''}}" autocomplete="off" class="layui-textarea">{{d.address || ''}}</textarea>
             </div>
         </div>
         <div class="layui-form-item layui-normal-line">
             <label class="layui-form-label">备注</label>
             <div class="layui-input-inline">
-                <textarea name="remarks" placeholder="备注" value="{{d.remarks||''}}" autocomplete="off" class="layui-textarea"></textarea>
+                <textarea name="remarks" placeholder="备注" autocomplete="off" class="layui-textarea">{{d.remarks||''}}</textarea>
                 <!--<input type="text" name="remarks" placeholder="备注" value="{{d.remarks||''}}" autocomplete="off" class="layui-input">-->
             </div>
         </div>
@@ -159,6 +158,7 @@
         var tableTopHeight = (parseInt($(".layui-layer-page").innerHeight()) - parseInt($(".layui-layer-title").innerHeight()) - parseInt($("#depotView").innerHeight()) - parseInt($(".layer-colruyt-form").innerHeight()) - 56); //内容区域所需减去的高度
 
         var dataType = JSON.parse(sessionStorage.getItem('depotCheck')) || {}; //获取本地所选仓库信息，判断是否为修改
+        console.log(dataType);
 
         var bitdepotid = 0; // 刚进入弹框，设置一个默认的大仓库id
         //编码自定义验证规则
