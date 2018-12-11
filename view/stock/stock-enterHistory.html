@@ -274,9 +274,9 @@
                         templet: function(d) {
                             return d.LAY_TABLE_INDEX + 1;
                         }
-                    },{
+                    }, {
                         type: 'radio'
-                    },{
+                    }, {
                         field: 'orderno',
                         title: '单号',
                         event: 'click',
@@ -324,6 +324,10 @@
                     orderno: obj.data.orderno
                 }, function(data) {
                     // console.log(data);
+                    if (!data.stocklist) {
+                        layer.msg("数据有异常！");
+                        return false;
+                    }
                     data.type = "entryHistory";
                     location.hash = "#!stock-enterBillDetails/";
                     sessionStorage.setItem('enterBillDetails', JSON.stringify(data));

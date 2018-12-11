@@ -324,6 +324,10 @@
                     orderno: obj.data.orderno
                 }, function(data) {
                     // console.log(data);
+                    if (!data.stocklist) {
+                        layer.msg("数据有异常！");
+                        return false;
+                    }
                     data.type = "outHistory"; // 区分是出库记录还是入库记录的区别
                     location.hash = "#!stock-outBillDetails/";
                     sessionStorage.setItem('outBillDetails', JSON.stringify(data));
