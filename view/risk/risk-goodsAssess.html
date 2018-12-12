@@ -150,7 +150,10 @@
                         }
                     }, {
                         field: 'already',
-                        title: '已评估货物',
+                        title: '已估值货物',
+                    }, {
+                        field: 'noalready',
+                        title: '不估值货物',
                     }
                 ]
             ],
@@ -358,11 +361,11 @@
                     //监听锁定操作
                     form.on('switch(isapp)', function(obj) {
                         //console.log(this.value + ":" + obj.elem.checked);
-                        // console.log(obj);
+                        console.log(obj);
                         // layer.tips(this.value + '-' + this.name + '：'+ obj.elem.checked, obj.othis);
-                        var isapp = 1;
+                        var isapp = 0;//默认评估
                         if (obj.elem.checked) {
-                            isapp = 0
+                            isapp = 1
                         }
                         var a = apriceChangeValue[this.value];
                         if (a) {

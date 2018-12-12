@@ -325,7 +325,7 @@
                             if (d.isapp === 1) {
                                 return '<span>不估值</span>';
                             }
-                            if (d.isapp === 0 && (d.aprice === null || d.aprice === 0)) {
+                            if (d.isapp === 0 && (!d.aprice || d.aprice === 0)) {
                                 return '<span>未估值</span>';
                             }
                             if (d.isapp === 0 && d.aprice > 0) {
@@ -416,8 +416,27 @@
         //点击导出
         $(".toExport").on('click', function(e) {
             //在地址后面携带参数给后台  实现条件导出：如 window.location.href = ilbstockExportUrl+"?name=&type="
-            var str = "?";
+            var str = "?isstatus=1&";
             var arr = [];
+            
+            //toExportParm  报错。这个是哪里来的。
+            $(".table-page-form input").each(function (i,v){
+                var val = $(this).val();
+                if(val){
+                    arr.push($(this).attr("name")+"="+val);
+                }        
+            });
+            $(".table-page-form select").each(function (i,v){
+                var val = $(this).val();
+                if(val){
+                    arr.push($(this).attr("name")+"="+val);
+                }
+            });
+            str += arr.join("&");
+            window.location.href = ilbstockExportUrl + str;
+            return;
+
+
             if(!$.isEmptyObject(toExportParm)){
                 for(var i in toExportParm){
                     arr.push(i+"="+toExportParm[i]);

@@ -243,14 +243,15 @@
 
         //打印
         $("#ondayin").on('click', function(e) {
-            var orderno = billDetails.data.orderno;
+            //var orderno = billDetails.data.orderno;
+            //var preorderno = billDetails.data.preorderno;
             var url;
             if (billDetails.type === "outHistory") {
                 url = printoutstore;
             } else {
                 url = printinstore;
             }
-            sessionStorage.setItem('dayin_orderno', orderno);
+            sessionStorage.setItem('dayin_orderno', JSON.stringify(billDetails.data));
             window.open(url, '打印', 'height=800, width=1100, top=100, left=100, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no');
         });
 

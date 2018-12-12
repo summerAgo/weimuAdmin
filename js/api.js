@@ -85,6 +85,7 @@ var depotDel = pathUrl + "basics/depot/delete";//删除仓库
 //库位
 var positionList = pathUrl + "basics/position/list";//库位列表  bitdepotid=大仓库ID 有分页
 var positiondropdown = pathUrl + "basics/position/dropdown";//库位下拉 bitdepotid=大仓库ID 没有分页
+var positionnotusedropdown = pathUrl + "basics/position/notusedropdown";//库位下拉(筛选出已使用的库位) bitdepotid=大仓库ID 没有分页
 var positionAdd = pathUrl + "basics/position/add";//添加库位    bitdepotid=大仓库ID
 var positionUpdate = pathUrl + "basics/position/update";//修改库位
 var positionDel = pathUrl + "basics/position/delete";//删除库位

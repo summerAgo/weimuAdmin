@@ -62,7 +62,7 @@
         <div class="colruyt-title">
             <span class="search-name">大仓库：</span>
             <span class="search-key"></span>
-            <span class="search-box"><input type="text" value="" placeholder="大库位名称搜索"><i class="iconfont icon-sousuo search-colruyt"></i></span>
+            <span class="search-box"><input type="text" value="" placeholder="库位名称搜索"><i class="iconfont icon-sousuo search-colruyt"></i></span>
         </div>
         <div class="table-content">
             <div class="table-content-main">
@@ -225,17 +225,14 @@
             var _this = $(this);
             var sinput = _this.siblings("input");
             var value = sinput.val().trim();
-            if (value === "" || value == null || value === undefined) {
-                sinput.val("");
-                layer.msg("请填写大库位名");
-                return false;
-            } else if (!bitdepotid) {
+            if (!bitdepotid) {
                 sinput.val("");
                 layer.msg("请选择大仓库");
                 return false;
             } else {
                 tableIns.reload({
                     where: { //设定异步数据接口的额外参数，任意设
+                        bitdepotid: bitdepotid,
                         name: value
                     },
                     page: {
