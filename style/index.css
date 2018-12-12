@@ -1,3 +1,4 @@
+*{outline:none;}
 .clearfix:before,
 .clearfix:after {
     content: "";
@@ -838,10 +839,174 @@ input.layui-input.layui-table-edit {
     overflow: auto
 }
 
+/* 修改树形菜单 */
 .tree-header {
     display: flex;
     background: #d9d9d9
 }
+
+.tree-header .layui-btn-group {
+    height: 50px;
+    line-height: 50px;
+    background-color: #eee;
+    width: 100%;
+    box-sizing: border-box;
+    padding-left: 20px;
+}
+
+.tree-header .header-btn-group {
+    height: 50px;
+    line-height: 50px;
+    background-color: #eee;
+    width: 100%;
+    box-sizing: border-box;
+    padding-left: 20px;
+    border-bottom: 1px solid #ddd;
+}
+
+.tree-header .header-btn-group >i {
+    font-size: 16px;
+    color: #333;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.tree-header .header-btn-group >i:hover {
+    color: #0284ff;
+}
+.dtree {
+    width: 190px;
+}
+
+.nav-tree-item {
+    line-height: 44px;
+    padding-left: 0px;
+}
+
+.dtree>.nav-tree-item {
+    line-height: 44px;
+    padding-left: 0px;
+}
+
+.nav-tree-item cite {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.nav-tree-item {
+    color: #353535;
+}
+
+.nav-tree-ul-sid .nav-tree-item cite {
+    font-weight: normal;
+}
+
+.nav-tree-ul-sid .nav-tree-item {
+    color: #666;
+}
+
+.nav-tree-div.dtree-theme-item {
+    padding-left: 16px;
+    box-sizing: border-box;
+    border-left: 4px solid transparent;
+    transition: all .3s;
+    -webkit-transition: all .3s;
+}
+
+.nav-tree-div.dtree-theme-item:hover {
+    border-left: 4px solid #0284ff;
+}
+
+.nav-tree-ul-sid .nav-tree-div.dtree-theme-item {
+    padding-left: 0px;
+    border-left: 0px solid transparent;
+}
+
+.nav-tree-ul-sid .nav-tree-div.dtree-theme-item:hover {
+    border-left: 0px solid #0284ff;
+}
+
+.nav-tree-ul-sid .nav-tree-item {
+    padding-left: 30px;
+}
+
+.dtree-theme-item-this {
+    background-color: #edf5fb!important;
+}
+
+.nav-tree-ul-sid .dtree-theme-item-this {
+    background-color: transparent!important;
+}
+
+.dtree>.nav-tree-item>.dtree-theme-item .dtreeiconfont.dtree-theme-dtreeiconfont.dtree-theme-ficon {
+    position: absolute;
+    right: 10px;
+    font-size: 10px;
+}
+
+.dtree>.nav-tree-item>.dtree-theme-item .nav-tree-ul-sid .dtreeiconfont.dtree-theme-dtreeiconfont.dtree-theme-ficon {
+    position: absolute;
+    left: 10px;
+}
+
+.nav-tree-div.dtree-theme-item {
+    color: #666;
+    border-bottom: 1px solid #dddddd;
+}
+
+.nav-tree-ul-sid .nav-tree-item .dtree-theme-item {
+    border-bottom: 1px solid #dddddd;
+}
+
+.nav-tree-ul-sid .nav-tree-item .dtree-theme-item::after {
+    font-family: "iconfont" !important;
+    content: "\e69c";
+    position: absolute;
+    right: 10px;
+    top: 3px;
+    line-height: 40px;
+    font-size: 10px;
+    color: #b0b0b0;
+}
+
+.dtree-theme-ficon {
+    color: #666!important;
+}
+
+.nav-tree-div.dtree-theme-item:hover {
+    background-color: #edf5fb!important;
+}
+
+.nav-tree-ul-sid .nav-tree-div.dtree-theme-item:hover {
+    background-color: transparent!important;
+}
+
+.nav-tree-ul-sid .nav-tree-item:last-child .dtree-theme-item {
+    border-bottom: 0px solid #dddddd;
+}
+
+.nav-tree-ul-sid.nav-show .d-click-checkbar.nav-tree-item:last-child{
+    border-bottom: 1px solid #dddddd;
+}
+
+.nav-tree-div.dtree-theme-item:hover,
+.nav-tree-div.dtree-theme-item:hover::after {
+    color: #0284ff;
+}
+
+.nav-tree-div.dtree-theme-item:hover .dtree-theme-ficon {
+    color: #0284ff!important;
+}
+
+.nav-this.dtree-theme-item-this.nav-tree-div.dtree-theme-item,
+.nav-this.dtree-theme-item-this.nav-tree-div.dtree-theme-item::after {
+    color: #0284ff;
+}
+
+.nav-this.dtree-theme-item-this .dtree-theme-ficon {
+    color: #0284ff!important;
+}
+
 
 body .layui-tree-skin-shihuang .layui-tree-branch {
     color: #0284ff;

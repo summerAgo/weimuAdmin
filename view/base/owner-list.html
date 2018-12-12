@@ -2,16 +2,10 @@
     <div class="trr-container">
         <div class="tree-box">
             <div class="tree-header">
-                <div class="layui-btn-group">
-                    <button class="layui-btn layui-btn-sm layui-btn-primary" id="addins">
-                        <i class="layui-icon">&#xe654;</i>
-                    </button>
-                    <button class="layui-btn layui-btn-sm layui-btn-primary" id="updins">
-                        <i class="layui-icon">&#xe642;</i>
-                    </button>
-                    <button class="layui-btn layui-btn-sm layui-btn-primary" id="delins">
-                        <i class="layui-icon">&#xe640;</i>
-                    </button>
+                <div class="header-btn-group">
+                    <i class="iconfont icon-tianjialeibie" id="addins"></i>
+                    <i class="iconfont icon-xiugaileibie" id="updins"></i>
+                    <i class="iconfont icon-shanchu" id="delins"></i>
                 </div>
             </div>
             <ul id="commonTree3" class="dtree" data-id="0"></ul>
@@ -142,8 +136,6 @@
                         insList[x].pid = treeData[x].basicData.pid
                     }
 
-                    
-
                     for (var k = 0; k < treeData.length; k++) {
                         //循环生成二级菜单
                         for (var i = 0; i < insData.length; i++) {
@@ -151,7 +143,7 @@
                                 if (!Array.isArray(treeData[k]["children"])) {
                                     treeData[k]["children"] = [];
                                     treeData[k]["isLast"] = false;
-                                };
+                                }
                                 (function() {
                                     var item = {};
                                     item["id"] = insData[i].id;
@@ -178,11 +170,21 @@
                         }
                     }
 
-                    dtree.render({
+                    /*dtree.render({
                         elem: "#commonTree3",
                         data: treeData,
                         icon: "2",
                         checkbar: true
+                    });*/
+
+                    dtree.render({
+                        elem: "#commonTree3",
+                        data: treeData,
+                        firstIconArray: {"2":{"open":"iconfont icon-jian","close":"iconfont icon-jia"}}, // 自定扩展的一级非最后一级图标，从2开始
+                        ficon: "2", // 使用
+                        nodeIconArray:{"1":{"open":"iconfont icon-yijileibie","close":"iconfont icon-yijileibie"}},  // 自定扩展的二级非最后一级图标，从1开始
+                        icon: ["1","-1"], // 使用
+                        checkbar: true // 不启用复选框
                     });
                 }
             })
