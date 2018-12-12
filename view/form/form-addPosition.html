@@ -21,6 +21,12 @@
                 </div>
             </div>
             <div class="layui-form-item layui-normal-line">
+                <label class="layui-form-label">库位编号</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="code" placeholder="库位编号" value="{{d.code||''}}" autocomplete="off" class="layui-input" lay-verify="required">
+                </div>
+            </div>
+            <div class="layui-form-item layui-normal-line">
                 <label class="layui-form-label">地址</label>
                 <div class="layui-input-inline">
                     <input type="text" name="address" placeholder="地址" value="{{d.address||''}}" autocomplete="off" class="layui-input" >
@@ -55,8 +61,8 @@
         var $ = layui.jquery;
         var formSelects = layui.formSelects;
         var laytpl = layui.laytpl;
-        
-        var dataType = JSON.parse(sessionStorage.getItem('positionCheck')) || {};//获取本地所选仓库信息，判断是否为修改
+
+        var dataType = JSON.parse(sessionStorage.getItem('positionCheck')) || {}; //获取本地所选仓库信息，判断是否为修改
 
         // 渲染模板的内容
         var getTpl = depotTle.innerHTML,
@@ -66,7 +72,7 @@
         });
         //编码自定义验证规则
         form.verify({
-            code: [/^[a-zA-Z0-9]{4}$/,'编号必须4位，字母或数字组合']
+            code: [/^[a-zA-Z0-9]{4}$/, '编号必须4位，字母或数字组合']
         });
     });
 </script>
