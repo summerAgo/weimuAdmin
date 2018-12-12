@@ -245,7 +245,7 @@
             });
             return arr;
         }
-        var toExportParm = {};//存储查询条件，用于导出
+
         // 表单搜索按钮点击
         form.on('submit(searchForm)', function(data) {
             var paramSearch = {};
@@ -255,7 +255,7 @@
                     paramSearch[key] = data.field[key].replace(/^\s*|\s*$/g,"");
                 }
             }
-            toExportParm = paramSearch;
+            console.log(paramSearch);
             tableIns.reload({
                 where: paramSearch, //设定异步数据接口的额外参数
                 page: {
@@ -325,8 +325,11 @@
                             if (d.isapp === 1) {
                                 return '<span>不估值</span>';
                             }
-                            if (d.aprice <= 0 || null == d.aprice) {
-                                return '<span style="color:#0063de;">待评估</span>';
+                            if (d.isapp === 0 && (d.aprice === null || d.aprice === 0)) {
+                                return '<span>未估值</span>';
+                            }
+                            if (d.isapp === 0 && d.aprice > 0) {
+                                return '<span>已估值</span>';
                             }
                             return d.aprice;
                         },
@@ -425,6 +428,7 @@
                 window.location.href = ilbstockExportUrl
             }
         });
+
 
     });
 </script>
