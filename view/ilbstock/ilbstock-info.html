@@ -245,7 +245,7 @@
             });
             return arr;
         }
-
+        var toExportParm = {};//存储查询条件，用于导出
         // 表单搜索按钮点击
         form.on('submit(searchForm)', function(data) {
             var paramSearch = {};
@@ -255,7 +255,7 @@
                     paramSearch[key] = data.field[key].replace(/^\s*|\s*$/g,"");
                 }
             }
-            console.log(paramSearch);
+            toExportParm = paramSearch;
             tableIns.reload({
                 where: paramSearch, //设定异步数据接口的额外参数
                 page: {
@@ -413,7 +413,17 @@
         //点击导出
         $(".toExport").on('click', function(e) {
             //在地址后面携带参数给后台  实现条件导出：如 window.location.href = ilbstockExportUrl+"?name=&type="
-            window.location.href = ilbstockExportUrl+'?origin="北美"';
+            var str = "?";
+            var arr = [];
+            if(!$.isEmptyObject(toExportParm)){
+                for(var i in toExportParm){
+                    arr.push(i+"="+toExportParm[i]);
+                }
+                str += arr.join("&");
+                window.location.href = ilbstockExportUrl + str;
+            }else{
+                window.location.href = ilbstockExportUrl
+            }
         });
 
     });
