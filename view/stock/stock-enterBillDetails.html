@@ -228,7 +228,8 @@
 
         //点击导出
         $("#toExport").on('click', function(e) {
-            window.location.href = ilbstockExportUrl+"?orderno="+billDetails.data.orderno+"&name=入库单导出";
+            // window.location.href = ilbstockExportUrl+"?orderno="+billDetails.data.orderno+"&name=入库单导出";
+            table.exportFile(tableIns.config.id, tableIns.config.data);
         });
 
         //打印
