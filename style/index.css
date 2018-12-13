@@ -52,6 +52,38 @@
     background: url(../images/header-version.png) no-repeat left center;
 }
 
+.layui-nav-guide {
+    position: absolute;
+    /*float: right;*/
+    right: 190px;
+    top: 20px;
+    color: #333;
+    cursor: pointer;
+}
+
+.layui-nav-guide:hover {
+    color: #0078ea;
+}
+
+.layui-nav-guide i.iconfont {
+    margin-right: 5px;
+}
+
+.layui-nav-guide .operation-guide {
+    position: relative;
+}
+
+.layui-nav-guide .operation-guide::after {
+    content: '';
+    position: absolute;
+    width: 1px;
+    height: 16px;
+    right: -15px;
+    top: 2px;
+    background-color: #666;
+    /*border-right: 1px solid #333;*/
+}
+
 .layui-nav .layui-nav-item .msgtips {
     position: relative;
     padding: 0 20px 0 0;
