@@ -47,7 +47,7 @@
         var laytpl = layui.laytpl;
         var laydate = layui.laydate;
         var data = window.currData;
-        console.log(data)
+
         if (data != null && data.id) { //不是空就是编辑
             var getTpl = formUser.innerHTML,
                 view = document.getElementById('formEditView');
@@ -69,9 +69,7 @@
                     });
                 }
             });
-
         }
-
         form.render(); //重置表单渲染
 
         //日期时间选择器
@@ -83,7 +81,6 @@
                 console.log(val);
             }
         });
-
 
     });
 </script>

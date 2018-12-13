@@ -12,12 +12,6 @@
                 <select name="instid" lay-verify="required" placeholder="必填项,请输入用户类型" xm-select="instidSelect" xm-select-radio="" ></select>
             </div>
         </div>
-       <!-- <div class="layui-form-item layui-normal-line">
-            <label class="layui-form-label form-required">仓库编码</label>
-            <div class="layui-input-inline">
-                <input type="text" id="code" name="code" lay-verify="required" placeholder="字母与数字固定长度4位" class="layui-input">
-            </div>
-        </div>-->
         <div class="layui-form-item layui-normal-line">
             <label class="layui-form-label form-required">名称</label>
             <div class="layui-input-inline">
@@ -25,12 +19,6 @@
                 <input type="hidden" id="id" name="id" value="{{d.id||''}}">
             </div>
         </div>
-        <!-- <div class="layui-form-item layui-normal-line">
-        <label class="layui-form-label">助记码</label>
-        <div class="layui-input-inline">
-            <input type="text" id="mnemoniccode" name="mnemoniccode" placeholder="选填" value="{{d.mnemoniccode || ''}}" class="layui-input">
-        </div>
-    </div> -->
         <div class="layui-form-item layui-normal-line">
             <label class="layui-form-label">联系人</label>
             <div class="layui-input-inline">
@@ -44,7 +32,6 @@
             </div>
         </div>
         <div class="layui-form-item layui-normal-line">
-
             <label class="layui-form-label ">业务员</label>
             <div class="layui-input-inline">
                 <select name="person" xm-select="person" xm-select-radio>
@@ -68,12 +55,6 @@
                 </select>
             </div>
         </div>
-        <!-- <div class="layui-form-item layui-normal-line">
-        <label class="layui-form-label">风控备注</label>
-        <div class="layui-input-inline">
-            <input type="text" id="fkremarks" name="fkremarks" placeholder="选填" value="{{d.fkremarks || ''}}" class="layui-input">
-        </div>
-    </div> -->
         <div class="layui-form-item layui-normal-line">
             <label class="layui-form-label">备注</label>
             <div class="layui-input-inline">
@@ -110,7 +91,6 @@
                 view.innerHTML = html;
             });
         }
-
         form.render(); //重置表单渲染
 
         //日期时间选择器
@@ -122,11 +102,10 @@
                 console.log(val);
             }
         });
-        console.log(window.currData)
+        console.log(window.currData);
 
         addinstidSel(data.inaAllList, data.instid);
         function addinstidSel(inaAllList, instid) {
-            console.log(instid)
             var arr = [];
             var number = "";
             for (var i = 0; i < inaAllList.length; i++) {
