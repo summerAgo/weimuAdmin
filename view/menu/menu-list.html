@@ -22,6 +22,9 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;" class="deleteBtn"><i class="iconfont icon-shanchu"></i>删除</a>
                 </li> -->
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="toExport"><i class="iconfont icon-daochu"></i>导出</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -154,6 +157,7 @@
             page: true, //是否显示分页
             limits: [30,60,90],
             limit: 30, //每页默认显示的数量
+            title: "菜单管理",
             done: function(res, curr, count) {
                 var addtableBtn = '<div class="rightBotBtn" id="rightBox">已经选择<span>0</span>个数据</div>';
                 if ($("#rightBox").length < 1) {
@@ -353,8 +357,8 @@
         $("#dowmTemp").attr("href", ilbstockImportTemp);
 
         //点击导出
-        $("#toExport").on('click', function(e) {
-            window.location.href = ilbstockExportUrl
+        $(".toExport").on('click', function(e) {
+            table.exportFile(tableIns.config.id, tableIns.config.data,"xls");
         });
 
         // table.on('tool(tableContainerMenu)', function(obj) {

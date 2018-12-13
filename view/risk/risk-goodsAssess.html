@@ -15,6 +15,9 @@
                 <!-- <li class="layui-nav-item">
                     <a href="javascript:;" class="refreshBtn"><i class="iconfont icon-shuaxin"></i>刷新</a>
                 </li> -->
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="toExport"><i class="iconfont icon-daochu"></i>导出</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -158,6 +161,7 @@
             page: true, // 是否显示分页
             limits: [100, 200, 500, 1000],
             limit: 100, //每页默认显示的数量
+            title: "货物估值",
             done: function(res, curr, count) { // 数据渲染完的回调
 
             },
@@ -347,6 +351,7 @@
                         limit: null,
                         // limits: [10, 20, 30, 40, 50],
                         even: true, // 开启隔行背景
+                        title: '货物评估列表',
                         done: function(res, curr, count) { // 数据渲染完的回调
 
                         },
@@ -382,7 +387,6 @@
 
                     var apriceChangeValue = {}; //单元格编辑更改评估价格数据对象
                     //var isapriceChangeValue = {}; //单元格编辑是否评估价格数据对象
-
 
                     //监听编辑
                     table.on('edit(tableContainer-from)', function(obj) {
@@ -490,8 +494,19 @@
                         });
                         return status;
                     }
+
+                    //点击导出
+                    $(".toExportBtn").on('click', function(e) {
+                        table.exportFile(tableInsAssess.config.id, tableInsAssess.config.data,"xls");
+                    });
                 });
             }
         });
+
+        //点击导出
+        $(".toExport").on('click', function(e) {
+            table.exportFile(tableIns.config.id, tableIns.config.data,"xls");
+        });
+
     });
 </script>

@@ -374,7 +374,7 @@
     border-bottom: 1px solid #ddd;
     background-color: #edf5fb;
     cursor: pointer;
-    height: 38px;
+    height: 40px;
     line-height: 38px;
     border-top: none;
 }
@@ -1545,4 +1545,7 @@ body .layui-layer-wei .layui-layer-btn .layui-layer-btn0 {
     color: #0284ff;
 }
 
+.rightBotBtn{
+    font-weight: bold;
+}
 /*body .layui-tree-skin-weimu .layui-tree-branch{color: #EDCA50;}*/

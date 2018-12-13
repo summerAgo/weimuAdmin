@@ -23,6 +23,9 @@
                         <li class="layui-nav-item">
                             <a href="javascript:;" class="deleteBtn"><i class="iconfont icon-shanchu"></i>删除</a>
                         </li> -->
+                        <li class="layui-nav-item">
+                            <a href="javascript:;" class="toExport"><i class="iconfont icon-daochu"></i>导出</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -152,6 +155,7 @@
             page: true, //是否显示分页
             limits: [100, 200, 500, 1000],
             limit: 100, //每页默认显示的数量
+            title: "货权人",
             done: function(res, curr, count) {
                 var addtableBtn = '<div class="rightBotBtn">已经选择<span>0</span>个货物 </div>';
                 $(".layui-table-page").append(addtableBtn);
@@ -346,7 +350,6 @@
             return false;
         });
 
-
         var insList = []; //用户类型顶级目录
         var inaAllList = []; //用户类型所有的数据
         var menuIns = {}; //用户类型被点击的数据
@@ -388,8 +391,8 @@
                     // insList = treeData;
                     for (var x = 0; x < treeData.length; x++) {
                         insList[x] = {};
-                        insList[x].id = treeData[x].id
-                        insList[x].name = treeData[x].title
+                        insList[x].id = treeData[x].id;
+                        insList[x].name = treeData[x].title;
                         insList[x].pid = treeData[x].basicData.pid
                     }
 
@@ -623,6 +626,11 @@
                 }
             });
             return false;
+        });
+
+        //点击导出
+        $(".toExport").on('click', function(e) {
+            table.exportFile(tableIns.config.id, tableIns.config.data,"xls");
         });
     })
 </script>

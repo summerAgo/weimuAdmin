@@ -12,6 +12,9 @@
                     <a href="javascript:;" class="changeBtn"><i class="iconfont icon-bianji"></i>修改</a>
                 </li>
                 <li class="layui-nav-item">
+                    <a href="javascript:;" class="toExport"><i class="iconfont icon-daochu"></i>导出</a>
+                </li>
+                <li class="layui-nav-item">
                     <a href="javascript:;" class="deleteBtn"><i class="iconfont icon-shanchu"></i>删除</a>
                 </li>
             </ul>
@@ -144,6 +147,7 @@
             page: true, //是否显示分页
             limits: [100, 200, 500, 1000],
             limit: 100, //每页默认显示的数量
+            title: "大仓库",
             done: function(res, curr, count) {
 
             },
@@ -169,7 +173,6 @@
 
         // 新建大仓库弹框保存操作
         form.on('submit(addColruytForm)', function(data) {
-            console.log(data);
             var dataType = JSON.parse(sessionStorage.getItem('colruytCheck')); //获取本地所选大仓库信息，判断是否为修改
             var url;
             var msg = "新建大仓库成功";
@@ -332,5 +335,9 @@
             }
         });
 
+        //点击导出
+        $(".toExport").on('click', function(e) {
+            table.exportFile(tableIns.config.id, tableIns.config.data,"xls");
+        });
     });
 </script>

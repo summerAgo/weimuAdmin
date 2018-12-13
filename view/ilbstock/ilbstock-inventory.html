@@ -17,6 +17,9 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;"><i class="iconfont icon-shanchu"></i>删除</a>
                 </li> -->
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="toExport"><i class="iconfont icon-daochu"></i>导出</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -272,6 +275,7 @@
             even: true, // 开启隔行背景
             page: false, // 是否显示分页
             limit: null, // 每页默认显示的数量
+            title: "盘点记录",
             done: function(res, curr, count) { // 数据渲染完的回调
 
             },
@@ -372,6 +376,11 @@
             });
             return status;
         }
+
+        //点击导出
+        $(".toExport").on('click', function(e) {
+            table.exportFile(tableIns.config.id, tableIns.config.data);
+        });
 
     });
 </script>

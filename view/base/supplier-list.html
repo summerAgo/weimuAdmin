@@ -23,6 +23,9 @@
                         <li class="layui-nav-item">
                             <a href="javascript:;" class="deleteBtn"><i class="iconfont icon-shanchu"></i>删除</a>
                         </li> -->
+                        <li class="layui-nav-item">
+                            <a href="javascript:;" class="toExport"><i class="iconfont icon-daochu"></i>导出</a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -158,6 +161,7 @@
             page: true, //是否显示分页
             limits: [100, 200, 500, 1000],
             limit: 100, //每页默认显示的数量
+            title: "供应商",
             done: function(res, curr, count) {
                 var addtableBtn = '<div class="rightBotBtn">已经选择<span>0</span>个货物 </div>';
                 $(".layui-table-page").append(addtableBtn);
@@ -663,6 +667,11 @@
             });
             // });
             return false;
+        });
+
+        //点击导出
+        $(".toExport").on('click', function(e) {
+            table.exportFile(tableIns.config.id, tableIns.config.data,"xls");
         });
     });
 </script>

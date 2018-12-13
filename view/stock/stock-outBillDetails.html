@@ -203,10 +203,13 @@
         }];
 
         var tableClos; //表格字段赋值
+        var title = '';
         if (billDetails.type === "outHistory") {
             tableClos = outCols;
+            title="出库单详情";
         } else {
             tableClos = entryCols;
+            title="入库单详情";
         }
 
         var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 103); //内容区域所需减去的高度
@@ -222,6 +225,7 @@
             page: true, //是否显示分页
             limits: [billDetails.stocklist.length],
             limit: billDetails.stocklist.length, //每页默认显示的数量
+            title: title,
             done: function(res, curr, count) {
                 var addtableBtn = '<div class="rightBotBtn" id="rightDetails">合计： 件数<span>' + billDetails.znum + '</span>包 数量：<span>' + billDetails.cube + '</span>m³</div>';
                 if($("#rightDetails").length < 1){
@@ -236,7 +240,6 @@
 
         //点击导出
         $("#toExport").on('click', function(e) {
-            console.log(tableIns.config.id);
             // window.location.href = ilbstockExportUrl+"?outorderno="+billDetails.data.orderno;
             table.exportFile(tableIns.config.id, tableIns.config.data);
         });

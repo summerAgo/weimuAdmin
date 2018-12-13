@@ -11,6 +11,9 @@
                 <!-- <li class="layui-nav-item">
                     <a href="javascript:;" class="refreshBtn"><i class="iconfont icon-shuaxin"></i>刷新</a>
                 </li> -->
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="toExport"><i class="iconfont icon-daochu"></i>导出</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -206,6 +209,7 @@
             page: true, // 是否显示分页
             limits: [100, 200, 500, 1000],
             limit: 100, //每页默认显示的数量
+            title: "异常审核",
             done: function(res, curr, count) { // 数据渲染完的回调
 
             },
@@ -417,7 +421,12 @@
                     }
                 });
             });
-        }
+        };
+
+        //点击导出
+        $(".toExport").on('click', function(e) {
+            table.exportFile(tableIns.config.id, tableIns.config.data,"xls");
+        });
 
     });
 </script>

@@ -14,7 +14,9 @@
                 <!-- <li class="layui-nav-item">
                     <a class="back-in-examine" href="javascript:;"><i class="iconfont icon-daochu"></i>弃审</a>
                 </li> -->
-
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="toExport"><i class="iconfont icon-daochu"></i>导出</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -214,7 +216,7 @@
 
                     }
                 }
-            })
+            });
             return arr;
         }
 
@@ -307,6 +309,7 @@
             page: true, //是否显示分页
             limits: [100, 200, 500, 1000],
             limit: 100, //每页默认显示的数量
+            title: "出库记录",
             done: function(res, curr, count) {
 
             },
@@ -420,7 +423,10 @@
             });
         });
 
-
+        //点击导出
+        $(".toExport").on('click', function(e) {
+            table.exportFile(tableInss.config.id, tableInss.config.data,"xls");
+        });
 
     });
 </script>
