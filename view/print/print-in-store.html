@@ -76,7 +76,7 @@
             <div class="sign-item"><i>日期：</i><span class="data date"></span></div>
         </div>
     </div>
-
+    <script src="/js/common.js"></script>
     <script>
         var orderno = sessionStorage.getItem('dayin_orderno');
         var trHeader = $(".table-header");
@@ -87,7 +87,9 @@
             url: inprintinjk,
             type: "get",
             data: {
-                orderno: orderno
+                orderno: orderno,
+                'SESSION_NAME':getCookie('SESSION_NAME'),
+                'TOKEN':getCookie('TOKEN'),
             },
             async: false, //同步
             traditional: true,

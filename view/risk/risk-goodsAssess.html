@@ -55,7 +55,7 @@
 <!-- 是否评估按钮 -->
 <script type="text/html" id="checkboxTpl">
     <!-- -->
-    <input type="checkbox" name="isapp" value="{{d.isapp}}" lay-skin="switch" lay-text="要估值|不估值" lay-filter="isapp" {{ d.isapp == 0 ? '' : 'checked' }}>
+    <input type="checkbox" name="isapp" value="{{d.id}}" lay-skin="switch" lay-text="要估值|不估值" lay-filter="isapp" {{ d.isapp==0?'checked':''}}>
 </script>
 <style scode>
     .position-form-right.form-right {
@@ -153,7 +153,10 @@
                         }
                     }, {
                         field: 'already',
-                        title: '已评估货物',
+                        title: '已估值货物',
+                    }, {
+                        field: 'noalready',
+                        title: '不估值货物',
                     }
                 ]
             ],
@@ -365,10 +368,9 @@
                         //console.log(this.value + ":" + obj.elem.checked);
                         // console.log(obj);
                         // layer.tips(this.value + '-' + this.name + '：'+ obj.elem.checked, obj.othis);
-                        var isapp = 1;
-                        if (obj.elem.checked) {
-                            isapp = 0
-                        }
+                        console.log(obj)
+                        var isapp;
+                        obj.elem.checked ? isapp = 0 : isapp = 1;
                         var a = apriceChangeValue[this.value];
                         if (a) {
                             apriceChangeValue[this.value] = {

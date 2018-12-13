@@ -76,9 +76,9 @@
             <div class="sign-item"><i>日期：</i><span class="data date"></span></div>
         </div>
     </div>
-
+    <script src="/js/common.js"></script>
     <script>
-        var orderno = sessionStorage.getItem('dayin_orderno');
+        var orderno = JSON.parse(sessionStorage.getItem('dayin_orderno'));
         var trHeader = $(".table-header");
         var orderDataList = [];
         var orderData = null; // 非table数据
@@ -87,7 +87,10 @@
             url: printoutjk,
             type: "get",
             data: {
-                orderno: orderno
+                orderno: orderno.orderno,
+                preorderno: orderno.preorderno,
+                'SESSION_NAME':getCookie('SESSION_NAME'),
+                'TOKEN':getCookie('TOKEN'),
             },
             async: false, //同步
             traditional: true,
