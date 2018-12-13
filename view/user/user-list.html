@@ -164,7 +164,10 @@
                     }, {
                         field: 'username',
                         title: '用户名',
-                    }, {
+                    },/* {
+                        field: 'instname',
+                        title: '类型',
+                    }, */{
                         field: 'phone',
                         title: '联系电话',
                     }, {
@@ -212,7 +215,8 @@
                 layer.msg("请选择需要编辑的单条信息");
             } else {
                 var data = checkStatus.data[0];
-                data["instid"] = menuIns.id;
+                // data["instid"] = menuIns.id;
+                data["instid"] = checkStatus.data[0].instid;
                 data["inaAllList"] = inaAllList;
                 window.currData = data; //全局对象存储当前选中行数据
                 console.log(data)

@@ -190,7 +190,8 @@
             } else {
                 $.get('view/form/form-infodata.html', {}, function(str) {
                     var data = checkStatus.data[0];
-                    data["instid"] = menuIns.id;
+                    // data["instid"] = menuIns.id;
+                    data["instid"] = checkStatus.data[0].instid;
                     data["inaAllList"] = inaAllList;
                     sessionStorage.setItem('base_infodata_data', JSON.stringify(data));
                     addLayer = layer.open({

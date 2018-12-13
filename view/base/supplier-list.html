@@ -187,8 +187,8 @@
                 layer.msg("请选择需要编辑的单条信息");
             } else {
                 var data = checkStatus.data[0];
-                console.log(checkStatus.data[0])
-                data["instid"] = menuIns.id;
+                // data["instid"] = menuIns.id;
+                data["instid"] = checkStatus.data[0].instid ? checkStatus.data[0].instid : menuIns.id;// 因供应商，后台还没给instid字段，暂时这样处理
                 data["inaAllList"] = inaAllList;
                 window.currData = data; //全局对象存储当前选中行数据
                 $.get('view/base/supplier-add.html', {}, function(str) {
