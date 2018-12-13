@@ -95,8 +95,8 @@
         var insList = []; //用户类型顶级目录
         var inaAllList = []; //用户类型所有的数据
         var menuIns = {}; //用户类型被点击的数据
-        var firstId = ''; // table首次显示的数据id
-        var firstName = ''; // table首次显示的数据name
+        // var firstId = ''; // table首次显示的数据id
+        // var firstName = ''; // table首次显示的数据name
 
         function listIns() {
             var treeData = [];
@@ -165,20 +165,6 @@
                             }
                         }
                     }
-                    
-                    for(var s = 0;s<treeData.length;s++){
-                        if(treeData[s].children &&treeData[s].children.length>0){
-                            firstId = treeData[s].children[0].id;
-                            break;
-                        }
-                    }
-
-                    /*dtree.render({
-                        elem: "#commonTree3",
-                        data: treeData,
-                        icon: "2",
-                        checkbar: true
-                    });*/
 
                     dtree.render({
                         elem: "#commonTree3",
@@ -393,9 +379,9 @@
         var tableIns = table.render({
             elem: '#tableContainer-userlist',
             height: 'full-' + tableTopHeight,
-            where: {
-                "instid": firstId
-            },
+            // where: {
+            //     "instid": firstId
+            // },
             url: listOwner,
             parseData: function(res) { //res 即为原始返回的数据
                 if (res.status !== 0) res.status = 0;
@@ -422,8 +408,11 @@
                     }, {
                         type: 'checkbox'
                     }, {
-                        field: 'name',
-                        title: '名称',
+                    field: 'name',
+                    title: '名称',
+                    }, {
+                        field: 'instname',
+                        title: '类型',
                     }, {
                         field: 'contacts',
                         title: '联系人',
@@ -488,7 +477,8 @@
                 layer.msg("请选择需要编辑的单条信息");
             } else {
                 var data = checkStatus.data[0];
-                data["instid"] = menuIns.id;
+                // data["instid"] = menuIns.id;
+                data["instid"] = checkStatus.data[0].instid;
                 data["inaAllList"] = inaAllList;
                 window.currData = data; //全局对象存储当前选中行数据
                 $.get('view/base/owner-add.html', {}, function(str) {

@@ -16,10 +16,16 @@
             <label class="layui-form-label">角色</label>
             <div class="layui-input-inline">
                 <input type="hidden" id="userid" name="userid"   value="{{# if(d.id){}} {{d.id}} {{# }}}">
-                <select name="roleid" lay-verify="required" >
+                <select name="roleid">
+                    <option value="0">请选择</option>
                     {{#  layui.each(d.rolelist, function(index, item){ }}
-						<option {{# if(d.pid && d.pid == item.id ){}} selected {{# }}} value="{{item.id}}">{{item.rolename}}</option>
-					{{#  }); }}
+						<!--<option {{# if(d.pid && d.pid == item.id ){}} selected {{# }}} value="{{item.id}}">{{item.rolename}}</option>-->
+                        {{#  if(d.rolename == item.rolename){ }}
+                            <option selected value="{{item.id}}">{{item.rolename}}</option>
+                        {{#  } else { }}
+                            <option value="{{item.id}}">{{item.rolename}}</option>
+                        {{#  } }}
+                    {{#  }); }}
                 </select>
             </div>
         </div>
@@ -41,6 +47,7 @@
         var laytpl = layui.laytpl;
         var laydate = layui.laydate;
         var data = window.currData;
+        console.log(data)
         if (data != null && data.id) { //不是空就是编辑
             var getTpl = formUser.innerHTML,
                 view = document.getElementById('formEditView');
@@ -51,10 +58,12 @@
                 async: false,
                 error: function(request) {
                     layer.msg('重置失败');
-                    return;
+                    return false;
                 },
                 success: function(res) {
                     data["rolelist"] = res.data;
+                    data["rolename"] = data["rolename"].replace(/^\s*|\s*$/g,"");
+                    console.log(data);
                     laytpl(getTpl).render(data, function(html) {
                         view.innerHTML = html;
                     });
