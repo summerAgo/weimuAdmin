@@ -48,9 +48,9 @@
             </div>
         </div>
         <div class="layui-form-item layui-normal-line">
-            <label class="layui-form-label form-required">货权人</label>
+            <label class="layui-form-label">货权人</label>
             <div class="layui-input-inline">
-                <select name="customerid" xm-select="customerid" xm-select-radio lay-verify="required">
+                <select name="customerid" xm-select="customerid" xm-select-radio>
                     <option value="">请选择</option>
                 </select>
             </div>
@@ -103,7 +103,6 @@
             }
         });
         console.log(window.currData);
-
         addinstidSel(data.inaAllList, data.instid);
         function addinstidSel(inaAllList, instid) {
             var arr = [];
