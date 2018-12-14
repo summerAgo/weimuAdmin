@@ -84,12 +84,13 @@ body {
 .write-info .write-item {
     float: left;
     display: flex;
-    width: 32%;
+    /*width: 32%;*/
     padding-right: 2%;
     margin-bottom: 20px;
+    box-sizing: border-box;
 }
 
-.write-info .write-item:nth-child(3),
+/*.write-info .write-item:nth-child(3),
 .write-info .write-item:nth-child(6) {
     padding-right: 0;
 }
@@ -97,13 +98,53 @@ body {
 .write-info .write-item:nth-child(2),
 .write-info .write-item:nth-child(5) {
     padding-left: -10%;
+}*/
+
+.write-info .write-item.item-ownername,
+.write-info .write-item.item-depname {
+    width: 270px;
+}
+
+.write-info .write-item.item-billloading,
+.write-info .write-item.item-vehnum {
+    width: 260px;
+}
+
+.write-info .write-item.item-number {
+    width: 190px;
+}
+
+.write-info .write-item.item-createdate {
+    width: 330px;
+}
+
+.write-info .write-item.item-address {
+    width: 780px;
 }
 
 .write-info .write-item>i {
     float: left;
-    width: 100px;
     font-size: 18px;
     text-align: right;
+}
+
+.write-info .write-item.item-ownername>i,
+.write-info .write-item.item-depname>i{
+    width: 90px;
+}
+
+.write-info .write-item.item-billloading>i,
+.write-info .write-item.item-vehnum>i,
+.write-info .write-item.item-address>i{
+    width: 80px;
+}
+
+.write-info .write-item.item-number>i{
+    width: 60px;
+}
+
+.write-info .write-item.item-createdate>i{
+    width: 94px;
 }
 
 .write-info .write-item>span {
@@ -114,6 +155,12 @@ body {
     border-bottom: 1px solid #221815;
     font-size: 16px;
     line-height: 20px;
+}
+
+.write-info .write-item.item-address>span {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
 }
 
 /*  表格样式  */
