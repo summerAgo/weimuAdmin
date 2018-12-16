@@ -243,7 +243,7 @@
                     templet: function(d) {
                         return d.LAY_TABLE_INDEX + 1;
                     }
-                },{type:'checkbox'},
+                },{type:'radio'},
                  {
                     field: 'createdate',
                     title: '盘点时间',
@@ -257,7 +257,7 @@
                     event: 'click',
                     style: 'color:#0063de;cursor: pointer;'
                 }, {
-                    field: 'username',
+                    field: 'createuser',
                     title: '盘点人'
                 }, {
                     field: 'status',
@@ -285,7 +285,7 @@
             loading: true // 是否显示加载条，默认true
         });
 
-        // 监听出库单点击事件
+        // 监听列表点击事件
         table.on('tool(tableContainer)', function(obj) {
             var curData = obj.data;
             if (obj.event === 'click') {
@@ -336,14 +336,14 @@
             var checkData = checkStatus.data;
             // console.log(goodsListArray);
             if (checkData.length > 0) {
-                editAprice(checkData, endInventory);
+                qdeditAprice(checkData, endInventory);
             }
 
         });
 
 
         //保存提交  修改异常调整数据
-        function editAprice(datainfo, url) {
+        function qdeditAprice(datainfo, url) {
             //请求数据源示例
             var status = false;
             console.log(datainfo);
