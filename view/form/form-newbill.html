@@ -695,14 +695,17 @@
         });
 
         //监听表格复选框选择
-        var checkBoxTrDomArr;
+        var checkBoxTrDomArr = [];
         table.on('checkbox(tableContainer-from)', function(obj) {
-            checkBoxTrDomArr = obj;
+            checkBoxTrDomArr.push(obj);
             // console.log(checkBoxTrDomArr)
         });
 
         // 删除选中入库货物信息
         $(".deleteBtnLayer").click(function() {
+            if (checkBoxTrDomArr.length == 0) {
+                return false
+            }
             if (!checkBoxTrDomArr) {
                 layer.msg("请选择需要删除的信息");
             } else {
@@ -710,11 +713,14 @@
                     skin: 'layui-layer-wei', //layui-layer-wei，维木class
                     title: '提示'
                 }, function(index) {
-                    checkBoxTrDomArr.del();
+                    for(var i=0;i<checkBoxTrDomArr.length;i++){
+                        checkBoxTrDomArr[i].del();
+                    }
                     layer.close(index);
                     var rowId = [];
                 });
             }
+
         });
 
         //增删行数据
