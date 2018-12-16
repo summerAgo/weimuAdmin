@@ -268,6 +268,8 @@
                     auditStatus.html("<span style='color: #666;'>正常待出库</span>");
                 } else if (outBill.status === 2) {
                     auditStatus.html("<span style='color: #666;'>审核通过</span>");
+                } else if (outBill.status === 4) {
+                    auditStatus.html("<span style='color: #666;'>已出库</span>");
                 } else {
                     auditStatus.html("<span style='color: #ff3c4e;'>审核不通过</span>");
                 }
