@@ -111,7 +111,7 @@ function btnIsList(domObj, menuKey) {
         currentBtnData.sort(compare("sort"));
         for (var i = 0; i < currentBtnData.length; i++) { // 渲染按钮模块
             if (currentBtnData[i] != null) {
-                btnDom = '<li class="layui-nav-item"><a href="javascript:;" class="' + currentBtnData[i].classname + '"><i class="' + currentBtnData[i].icon + '"></i>' + currentBtnData[i].bname + '</a></li>';
+                btnDom = '<li class="layui-nav-item"><a href="javascript:;" class="'+currentBtnData[i].classname+'"><i class="'+currentBtnData[i].icon+'"></i>'+currentBtnData[i].bname+'</a></li>';
                 domObj.append(btnDom);
             }
         }

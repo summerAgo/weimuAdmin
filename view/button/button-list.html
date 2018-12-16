@@ -142,19 +142,28 @@
                     {
                         field: 'id',
                         title: 'ID',
-                        sort: true
                     }, {
                         field: 'bname',
                         title: '按钮名称',
-                        sort: true
                     }, {
                         field: 'sort',
                         title: '排序',
-                        sort: true
+                    }, {
+                        field: 'type',
+                        title: '父子页面',
+                        templet: function(d) {
+                            if (d.type === 0) {
+                                return "<span>父页面</span>"
+                            }else if (d.type === 1) {
+                                return "<span>子页面</span>"
+                            }
+                        }
+                    },  {
+                        field: 'classname',
+                        title: '事件类名',
                     }, {
                         field: 'url',
                         title: '链接地址',
-                        sort: true
                     }
                 ]
             ],

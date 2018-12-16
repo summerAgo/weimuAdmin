@@ -14,8 +14,16 @@
             <label class="layui-form-label">页面类型</label>
             <div class="layui-input-block">
                 <select name="type">
-                    <option value="0">父页面</option>
-                    <option value="1">子页面</option>
+                    {{#  if(d.type === 0){ }}
+                        <option value="0" selected="selected">父页面</option>
+                    {{#  } else { }}
+                        <option value="0">父页面</option>
+                    {{#  } }}
+                    {{#  if(d.type === 1){ }}
+                        <option value="1" selected="selected">子页面</option>
+                    {{#  } else { }}
+                        <option value="0">子页面</option>
+                    {{#  } }}
                 </select>
             </div>
         </div>
@@ -61,23 +69,22 @@
 </style>
 
 <script>
-    layui.use(['form', 'jquery', 'element', 'layer', 'laytpl', 'laydate'], function() {
+    layui.use(['form', 'jquery', 'element', 'layer', 'formSelects' , 'laytpl', 'laydate'], function() {
         var element = layui.element;
         var form = layui.form;
         var $ = layui.jquery;
         var laytpl = layui.laytpl;
         var laydate = layui.laydate;
         var  data= window.currData;
-		if(data!=null){//不是空就是编辑
-			var getTpl = formUser.innerHTML,
-			view = document.getElementById('formEditView');
+
+        var getTpl = formUser.innerHTML,
+            view = document.getElementById('formEditView');
+		if(data != null){//不是空就是编辑
 			laytpl(getTpl).render(data, function(html) {
             	view.innerHTML = html;
         	});
 		}else{
-			var getTpl = formUser.innerHTML,
-			view = document.getElementById('formEditView');
-			var dataOff={};
+			var dataOff = {};
 			laytpl(getTpl).render(dataOff, function(html) {
 				view.innerHTML = html;
 			});
@@ -94,5 +101,6 @@
                 console.log(val);
             }
         });
+
     });
 </script>
