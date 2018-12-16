@@ -98,7 +98,7 @@
             $(".owner-name").html(echoData.ownername);
             $(".dep-name").html(echoData.depname);
             $(".create-date").html(echoData.createdate);
-            $(".user-name").html(echoData.username);
+            $(".user-name").html(echoData.createuser);
 
             depotData.ownerid = echoData.ownerid;
             depotData.depotid = echoData.depotid;
@@ -243,12 +243,13 @@
                         style: "cursor: pointer",
                         width:150,
                         templet: function(d) {
-                            var num = d.num;
-                            var num1= d.num1;
-                            if(num !== num1){
-                                return "<span style='color:red'>"+num1+"</span>";
+                            if(d.num1 == undefined){
+                                return d.num;
+                            }
+                            if(d.num !== d.num1){
+                                return "<span style='color:red'>"+d.num1+"</span>";
                             }else{
-                                return num1;
+                                return d.num1;
                             }
                         }
                     },
