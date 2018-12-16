@@ -193,7 +193,7 @@
             if (checkStatus.data.length < 1) {
                 layer.msg("请选择需要删除的信息");
             } else {
-                bitdepotid('是否确认删除此条信息', {
+                layer.open('是否确认删除此条信息', {
                     skin: 'layui-layer-wei',  //layui-layer-wei，维木class
                     title: '提示'
                 }, function(index) {
@@ -237,8 +237,9 @@
             });
         });
 
-        //添加角色表单提交
+        //添加按钮表单提交
         form.on('submit(addSubmit)', function(data) {
+            //debugger;
             var userData = window.currData;
             var title = "";
             var userUrl = "";
@@ -249,11 +250,7 @@
                 title = '确认添加';
                 userUrl = buttonAdd;
             }
-            bitdepotid(title, {
-                skin: 'layui-layer-wei',  //layui-layer-wei，维木class
-                title: '提示'
-            }, function(index) {
-                data.field['SESSION_NAME']= getCookie('SESSION_NAME');
+            data.field['SESSION_NAME']= getCookie('SESSION_NAME');
                 data.field['TOKEN']= getCookie('TOKEN');
                 $.ajax({
                     cache: true,
@@ -285,7 +282,6 @@
                         }
                     }
                 });
-            });
             return false;
         });
 

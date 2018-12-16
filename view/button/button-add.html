@@ -10,16 +10,37 @@
                 <input type="hidden" id="menuid" name="menuid"   value="{{# if(d.menuid){}} {{d.menuid}} {{# }}}">
             </div>
         </div>
-		<div class="layui-form-item">
-            <label class="layui-form-label">链接地址</label>
+        <div class="layui-form-item">
+            <label class="layui-form-label">页面类型</label>
             <div class="layui-input-block">
-                <input type="text" id="url" name="url" placeholder="选填" value="{{# if(d.url){}} {{d.url}} {{# }}}" class="layui-input">
+                <select name="type">
+                    <option value="0">父页面</option>
+                    <option value="1">子页面</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">后台接口地址</label>
+            <div class="layui-input-block">
+                <input type="text" id="interfacename" name="interfacename" placeholder="选填" value="{{# if(d.interfacename){}}{{d.interfacename}}{{# }}}" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">事件类名</label>
+            <div class="layui-input-block">
+                <input type="text" id="classname" name="classname" placeholder="选填" value="{{# if(d.classname){}}{{d.classname}}{{# }}}" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">图标</label>
+            <div class="layui-input-block">
+                <input type="text" id="icon" name="icon" placeholder="选填" value="{{# if(d.icon){}}{{d.icon}}{{# }}}" class="layui-input">
             </div>
         </div>
 		<div class="layui-form-item">
             <label class="layui-form-label">排序</label>
             <div class="layui-input-block">
-                <input type="text" id="sort" name="sort" placeholder="选填" value="{{# if(d.sort){}} {{d.sort}} {{# }}}" class="layui-input">
+                <input type="text" id="sort" name="sort" placeholder="选填" value="{{# if(d.sort){}}{{d.sort}}{{# }}}" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">

@@ -194,6 +194,8 @@ var setOutCordon = pathUrl + "risk/control/setOutCordon"//修改警戒线设置
 var checklbList = pathUrl + "check/recordlist/lblist";//查
 var checkList = pathUrl + "check/recordlist/list";//盘点记录列表
 var checkAdd = pathUrl + "check/recordlist/add";//盘点保存
+var checkdele = pathUrl + "check/recordlist/delete";//盘点删除
+var checkdelealready = pathUrl + "check/recordlist/alreadydelete";//已盘点删除
 var endInventory = pathUrl + "check/recordlist/endInventory";//确认盘点
 var getByidList = pathUrl + "check/recordlist/getByidList";//查询盘点记录 参数cid
 
