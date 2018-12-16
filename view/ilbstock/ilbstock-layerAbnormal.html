@@ -107,7 +107,7 @@
 
             depotData.ownerid = echoData.ownerid;
             depotData.depotid = echoData.depotid;
-            depotData.cid = echoData.id;
+            depotData.id = echoData.id;
         }
 
         form.on('submit(searchForm-layer)', function(data) {
@@ -217,7 +217,7 @@
             where: depotData, // 接口的其他参数
             parseData: function(res) { //res 即为原始返回的数据
                 //if (res.status !== 0) res.status = 0;
-                sessionStorage.setItem('pageLength', JSON.stringify(res.data.length));
+                // sessionStorage.setItem('pageLength', JSON.stringify(res.data.length));
                 return {
                     "code": res.status, //解析接口状态
                     "msg": res.msg, //解析提示文本
@@ -313,7 +313,7 @@
             // limits: [0],
             // limit: 0, //每页默认显示的数量
             done: function(res, curr, count) {
-                console.log(sessionStorage.getItem("pageLength"));
+                // console.log(sessionStorage.getItem("pageLength"));
             },
             // loading: true
         });
