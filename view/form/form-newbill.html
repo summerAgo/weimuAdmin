@@ -695,31 +695,47 @@
         });
 
         //监听表格复选框选择
-        var checkBoxTrDomArr = [];
+        var checkBoxTrDom = {};
+        checkBoxTrDom.arr = [];
         table.on('checkbox(tableContainer-from)', function(obj) {
-            checkBoxTrDomArr.push(obj);
-            // console.log(checkBoxTrDomArr)
+            if (obj.checked) {
+                checkBoxTrDom.type = obj.type;
+                checkBoxTrDom.arr.push(obj);
+            }
+
+            console.log(checkBoxTrDom)
         });
 
         // 删除选中入库货物信息
         $(".deleteBtnLayer").click(function() {
-            if (checkBoxTrDomArr.length == 0) {
-                return false
+            var checkStatus = table.checkStatus('tableContainer-from');
+            var checkData = checkStatus.data;
+            if (checkData.length == 0 || checkBoxTrDom.arr.length == 0) {
+                layer.msg("请选择要删除的信息");
+                checkBoxTrDom.arr = [];
+                return false;
             }
-            if (!checkBoxTrDomArr) {
-                layer.msg("请选择需要删除的信息");
-            } else {
-                layer.confirm('是否确认删除此条信息', {
-                    skin: 'layui-layer-wei', //layui-layer-wei，维木class
-                    title: '提示'
-                }, function(index) {
-                    for(var i=0;i<checkBoxTrDomArr.length;i++){
-                        checkBoxTrDomArr[i].del();
+
+            layer.confirm('是否确认删除此条信息', {
+                skin: 'layui-layer-wei', //layui-layer-wei，维木class
+                title: '提示'
+            }, function(index) {
+                if (checkBoxTrDom.type == "one") {
+                    for (var i = 0; i < checkBoxTrDom.arr.length; i++) {
+                        checkBoxTrDom.arr[i].del();
                     }
-                    layer.close(index);
-                    var rowId = [];
-                });
-            }
+                } else if (checkBoxTrDom.type == "all") {
+                    tableData = [];
+                    tableIns.reload({
+                        data: tableData,
+                        page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                    });
+                }
+                layer.close(index);
+                // var rowId = [];
+            });
 
         });
 

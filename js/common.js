@@ -108,7 +108,7 @@ function btnIsList(domObj, menuKey) {
     var btnDom;
     if (data !== null) {
         var currentBtnData = data ? data[menuKey] : [];// 当前按钮数据 -- 根据当前页面key参数获得当前页面按钮数据
-        currentBtnData.sort(compare("sort"));
+        // currentBtnData.sort(compare("sort"));
         for (var i = 0; i < currentBtnData.length; i++) { // 渲染按钮模块
             if (currentBtnData[i] != null) {
                 btnDom = '<li class="layui-nav-item"><a href="javascript:;" class="'+currentBtnData[i].classname+'"><i class="'+currentBtnData[i].icon+'"></i>'+currentBtnData[i].bname+'</a></li>';
