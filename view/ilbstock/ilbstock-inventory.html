@@ -269,6 +269,7 @@
                         if (d.status === 1) {
                             return "已完成";
                         }
+                        return "已删除";
                     }
                 }
             ]],
@@ -392,6 +393,11 @@
                     }
                     if (res.status === 0) {
                         status = true;
+                        tableIns.reload({
+                            page: {
+                                curr: 1 // 重新从第 1 页开始
+                            }
+                        });
                     }
                     layer.msg(res.msg);
                 }
