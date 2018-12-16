@@ -80,6 +80,16 @@
             show: 'name'
         });
 
+        var menuData = sessionStorage.getItem('menuData');
+        var where = {};
+        var menuid = null;
+        if (menuData != null) {
+            var array = JSON.parse(menuData);
+            menuid = array.id;
+            where["menuid"] = array.id;
+            console.log(where);
+        }
+
         form.on('submit(searchForm)', function(data) {
             var paramSearch = {};
             for (var key in data.field) {
@@ -88,6 +98,7 @@
                     paramSearch[key] = data.field[key].replace(/^\s*|\s*$/g,"");
                 }
             }
+            paramSearch["menuid"] = menuid;
             tableIns.reload({
                 where: paramSearch, //接口参数
                 page: {
@@ -97,14 +108,6 @@
             return false;
         });
 
-        var buttonData = sessionStorage.getItem('buttonData');
-        var where = {};
-        var menuid = null;
-        if (buttonData != null) {
-            var array = JSON.parse(buttonData);
-            menuid = array.id;
-            where["menuid"] = array.id;
-        }
         var tableIns = table.render({
             elem: '#tableContainer',
             height: 'full-' + tableTopHeight,
