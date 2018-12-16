@@ -1,13 +1,43 @@
 <div class="table-page">
+    <div class="table-content-title">
+        <div class="table-tools">
+            <ul class="layui-nav" lay-filter="talbe-tools">
+                <li class="layui-nav-item">
+                    <a href="javascript:;" id="creatRole"><i class="iconfont icon-tianjia"></i>添加按钮</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="editBtn"><i class="iconfont icon-bianji"></i>编辑</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="deleteBtn"><i class="iconfont icon-shanchu"></i>删除</a>
+                </li>
+                <!--<li class="layui-nav-item item-more">
+                    <a href="javascript:;">数据导入导出</a>
+                    <dl class="layui-nav-child">
+                        <dd><a id="dowmTemp" href="javascript:;">下载模板</a></dd>
+                        <dd><a id="toImport" href="javascript:;">导入数据</a></dd>
+                        <dd><a id="toExport" href="javascript:;">导出数据</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">打印</a>
+                </li> -->
+            </ul>
+            <!--<ul class="layui-layout-right">
+                <li><a href="javascript:;" class="editBtn">编辑</a></li>
+                <li><a href="javascript:;" class="deleteBtn">删除</a></li>
+            </ul>-->
+        </div>
+    </div>
     <div class="table-page-header">
         <div class="table-page-form">
             <form class="layui-form" action="">
-                <div class="form-box">
+                <div class="form-box clearfix">
                     <div class="layui-form-item form-left">
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">按钮名称</span>
                             <input type="text" name="rolename" placeholder="按钮名称" autocomplete="off" class="layui-input">
                         </div>
-
                     </div>
                     <div class="layui-form-item form-right">
                         <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="searchForm">
@@ -20,35 +50,17 @@
         </div>
     </div>
     <div class="table-content">
-        <div class="table-content-title">
-            <div class="table-tools">
-                <ul class="layui-nav" lay-filter="talbe-tools">
-                    <li class="layui-nav-item">
-                        <a href="javascript:;" id="creatRole">添加按钮</a>
-                    </li>
-                    <!--<li class="layui-nav-item item-more">
-                        <a href="javascript:;">数据导入导出</a>
-                        <dl class="layui-nav-child">
-                            <dd><a id="dowmTemp" href="javascript:;">下载模板</a></dd>
-                            <dd><a id="toImport" href="javascript:;">导入数据</a></dd>
-                            <dd><a id="toExport" href="javascript:;">导出数据</a></dd>
-                        </dl>
-                    </li>
-                    <li class="layui-nav-item">
-                        <a href="javascript:;">打印</a>
-                    </li> -->
-                </ul>
-                <ul class="layui-layout-right">
-                    <li><a href="javascript:;" class="editBtn">编辑</a></li>
-                    <li><a href="javascript:;" class="deleteBtn">删除</a></li>
-                </ul>
-            </div>
-        </div>
         <div class="table-content-main">
             <table class="layui-hide" id="tableContainer" lay-filter="tableContainer"></table>
         </div>
     </div>
 </div>
+<style scode>
+    .form-right{
+        position: absolute;
+        left: 250px;
+    }
+</style>
 <script>
     layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate'], function() {
         var element = layui.element;
