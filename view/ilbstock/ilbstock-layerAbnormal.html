@@ -1,12 +1,17 @@
 <!--点击 盘点记录 进入页面-->
 <div class="table-page">
-    <!--<div class="table-content-title layer-level">
-        <div class="table-tools layerInventoryTools">
+    <div class="table-content-title layer-level layerInventoryTools">
+        <div class="table-tools">
             <ul class="layui-nav" lay-filter="talbe-tools">
-
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="saveBtn"><i class="iconfont icon-baocun"></i>保存修改</a>
+                </li>
+                <!--<li class="layui-nav-item">-->
+                <!--<a href="javascript:;" class="confirmBtn"><i class="iconfont icon-querenpandian"></i>确认盘点</a>-->
+                <!--</li>-->
             </ul>
         </div>
-    </div>-->
+    </div>
     <div class="table-page-header">
         <div class="table-page-form table-page-info">
             <div class="store-bread-crumb" id="details-title">
@@ -66,7 +71,7 @@
     </div>
 </div>
 <style scoped>
-    .table-content{
+    .table-content {
         padding-bottom: 30px;
     }
 </style>
@@ -91,10 +96,10 @@
         var echoData = JSON.parse(sessionStorage.getItem('inventoryParam'));
 
         if (echoData) {
-            // $(".layerInventory").hide();
-            // if (echoData.status == 1) {
-            //     $(".layerInventoryTools").hide();
-            // }
+            if(echoData.status != 0){
+                $(".layerInventoryTools").hide();
+            }
+
             $(".owner-name").html(echoData.ownername);
             $(".dep-name").html(echoData.depname);
             $(".create-date").html(echoData.createdate);
@@ -110,7 +115,7 @@
             for (var key in data.field) {
                 //参数赋值
                 if (data.field[key] !== "") {
-                    paramSearch[key] = data.field[key].replace(/^\s*|\s*$/g,"");
+                    paramSearch[key] = data.field[key].replace(/^\s*|\s*$/g, "");
                 }
             }
             depotData.ownerid = data.field.ownerid;
@@ -196,13 +201,13 @@
             return arr;
         }
         var apiurl;
-        switch(echoData.status){
+        switch (echoData.status) {
             case 0:
-            apiurl = checklbList;
-            break;
+                apiurl = checklbList;
+                break;
             case 1:
-            apiurl = getByidList;
-            break;
+                apiurl = getByidList;
+                break;
         }
         var tableData;
         var tableIns = table.render({
@@ -236,19 +241,20 @@
                     }, {
                         field: 'num',
                         title: '盘点前数量（m³）',
-                        width:150
+                        width: 150
                     }, {
                         field: 'num1',
                         title: '盘点后数量（m³）',
                         style: "cursor: pointer",
-                        width:150,
+                        edit: "txt",
+                        width: 150,
                         templet: function(d) {
-                            if(d.num1 == undefined){
+                            if (d.num1 == undefined) {
                                 return d.num;
                             }
-                            if(d.num !== d.num1){
-                                return "<span style='color:red'>"+d.num1+"</span>";
-                            }else{
+                            if (d.num != d.num1) {
+                                return "<span style='color:red'>" + d.num1 + "</span>";
+                            } else {
                                 return d.num1;
                             }
                         }
@@ -274,7 +280,7 @@
                         field: 'uuid',
                         title: '货物标识码',
                         width: 206,
-                        style:'font-family: Consolas;font-size:16px'
+                        style: 'font-family: Consolas;font-size:16px'
                     }, {
                         field: 'code',
                         title: '包号'
@@ -372,8 +378,8 @@
                     ownerid: depotData.ownerid,
                     depotid: depotData.depotid,
                     lbarr: JSON.stringify(apriceJson),
-                    'SESSION_NAME':getCookie("SESSION_NAME"),
-                    'TOKEN':getCookie("TOKEN")
+                    'SESSION_NAME': getCookie("SESSION_NAME"),
+                    'TOKEN': getCookie("TOKEN")
                 },
                 xhrFields: {
                     withCredentials: true
@@ -382,7 +388,7 @@
                 // traditional: true,
                 success: function(res) {
                     if (res.status === 1) {
-                        goLogin();// 跳转到登录页
+                        goLogin(); // 跳转到登录页
                     }
                     if (res.status === 0) {
                         status = true;
