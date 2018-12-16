@@ -374,6 +374,10 @@
                                     curr: 1 // 重新从第 1 页开始
                                 }
                             });
+                        }else{
+                            layer.closeAll();
+                            
+                            layer.msg(data.msg);
                         }
                     }
                 })
@@ -416,7 +420,10 @@
                                     curr: 1 // 重新从第 1 页开始
                                 }
                             });
+                        }else{
+                            layer.msg(data.msg);
                         }
+                        
                     }
                 })
 

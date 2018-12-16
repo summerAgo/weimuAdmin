@@ -387,10 +387,10 @@
                                 }
                                 if (res.noadopt) {
                                     //msgstr = msgstr+  "订单:"+res.noadopt+"<br/>请风控审核！";
-                                    msgstr = msgstr + "已出库，或请风控审核<br/>";
-                                    $.each(res.noadopt, function(i, v) {
-                                        msgstr = "   " + msgstr + v + "<br/>";
-                                    });
+                                    msgstr = "该订单已出库或需要风控审核<br/>";
+                                    // $.each(res.noadopt, function(i, v) {
+                                    //     msgstr = "   " + msgstr + v + "<br/>";
+                                    // });
                                 }
                                 layer.msg(msgstr, {
                                     time: 60000, //60s后自动关闭
