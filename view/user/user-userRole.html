@@ -17,10 +17,10 @@
             <div class="layui-input-inline">
                 <input type="hidden" id="userid" name="userid"   value="{{# if(d.id){}} {{d.id}} {{# }}}">
                 <select name="roleid">
-                    <option value="">请选择</option>
+                    <option value="0">请选择</option>
                     {{#  layui.each(d.rolelist, function(index, item){ }}
 						<!--<option {{# if(d.pid && d.pid == item.id ){}} selected {{# }}} value="{{item.id}}">{{item.rolename}}</option>-->
-                        {{#  if(d.rolename == item.rolename){ }}
+                        {{#  if(d.roleid == item.id){ }}
                             <option selected value="{{item.id}}">{{item.rolename}}</option>
                         {{#  } else { }}
                             <option value="{{item.id}}">{{item.rolename}}</option>
