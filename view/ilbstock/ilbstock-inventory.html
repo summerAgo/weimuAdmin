@@ -87,7 +87,7 @@
 
         var menuKey = "a_10"; //当前页面key
         var domObj = $("#ilbstock-inventory .table-tools").find("ul"); //当前页面容器
-        btnIsList(domObj,menuKey);//按钮权限
+        btnIsList(domObj, menuKey); //按钮权限
 
         var inventoryLayer; // 审核-弹层
 
@@ -202,7 +202,7 @@
             for (var key in data.field) {
                 // 参数赋值
                 if (data.field[key] !== "") {
-                    paramSearch[key] = data.field[key].replace(/^\s*|\s*$/g,"");
+                    paramSearch[key] = data.field[key].replace(/^\s*|\s*$/g, "");
                 }
             }
             // 表格重新加载
@@ -234,44 +234,48 @@
                 pageName: 'offset', // 页码的参数名称，默认：page
                 limitName: 'limit' // 每页数据量的参数名，默认：limit
             },
-            cols: [[ // 标题栏
-                {
-                    field: 'LAY_TABLE_INDEX',
-                    title: '序号',
-                    width: 40,
-                    templet: function(d) {
-                        return d.LAY_TABLE_INDEX + 1;
-                    }
-                },{type:'radio'},
-                 {
-                    field: 'createdate',
-                    title: '盘点时间',
-                    width: 180,
-                }, {
-                    field: 'ownername',
-                    title: '仓库主'
-                }, {
-                    field: 'depname',
-                    title: '仓库名称',
-                    event: 'click',
-                    style: 'color:#0063de;cursor: pointer;'
-                }, {
-                    field: 'createuser',
-                    title: '盘点人'
-                }, {
-                    field: 'status',
-                    title: '状态',
-                    templet: function(d) {
-                        if (d.status === 0) {
-                            return "<span style='color:red'>正在盘点</span>";
+            cols: [
+                [ // 标题栏
+                    {
+                        field: 'LAY_TABLE_INDEX',
+                        title: '序号',
+                        width: 40,
+                        templet: function(d) {
+                            return d.LAY_TABLE_INDEX + 1;
                         }
-                        if (d.status === 1) {
-                            return "已完成";
+                    }, {
+                        type: 'radio'
+                    },
+                    {
+                        field: 'createdate',
+                        title: '盘点时间',
+                        width: 180,
+                    }, {
+                        field: 'ownername',
+                        title: '仓库主'
+                    }, {
+                        field: 'depname',
+                        title: '仓库名称',
+                        event: 'click',
+                        style: 'color:#0063de;cursor: pointer;'
+                    }, {
+                        field: 'createuser',
+                        title: '盘点人'
+                    }, {
+                        field: 'status',
+                        title: '状态',
+                        templet: function(d) {
+                            if (d.status === 0) {
+                                return "<span style='color:red'>正在盘点</span>";
+                            }
+                            if (d.status === 1) {
+                                return "已完成";
+                            }
+                            return "已删除";
                         }
-                        return "已删除";
                     }
-                }
-            ]],
+                ]
+            ],
             even: true, // 开启隔行背景
             page: false, // 是否显示分页
             limit: null, // 每页默认显示的数量
@@ -340,26 +344,32 @@
             }
         });
 
-        
+
         // 删除盘点
         $(".dele_pd").click(function() {
-
             var checkStatus = table.checkStatus('tableContainer'); //表格选中状态
             var checkData = checkStatus.data;
-            // console.log(goodsListArray);
-            if (checkData.length > 0) {
-                qdeditAprice(checkData, checkdele);
+            if (checkData.length <= 0) {
+                layer.msg("请选择需要删除的信息");
+            } else {
+                layer.confirm('是否确认删除此已盘点?', function(index) {
+                    qdeditAprice(checkData, checkdele);
+                    layer.close(index);
+                });
             }
         });
 
         // 删除已盘点
         $(".dele_already_pd").click(function() {
-
             var checkStatus = table.checkStatus('tableContainer'); //表格选中状态
             var checkData = checkStatus.data;
-            // console.log(goodsListArray);
-            if (checkData.length > 0) {
-                qdeditAprice(checkData, checkdelealready);
+            if (checkData.length <= 0) {
+                layer.msg("请选择需要删除的信息");
+            } else {
+                layer.confirm('是否确认删除此已盘点?', function(index) {
+                    qdeditAprice(checkData, checkdelealready);
+                    layer.close(index);
+                });
             }
         });
 
@@ -388,7 +398,7 @@
                 // traditional: true,
                 success: function(res) {
                     if (res.status === 1) {
-                        goLogin();// 跳转到登录页
+                        goLogin(); // 跳转到登录页
                     }
                     if (res.status === 0) {
                         status = true;
