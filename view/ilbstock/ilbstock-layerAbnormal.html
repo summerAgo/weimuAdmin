@@ -357,7 +357,6 @@
                 status = editAprice(dataObj, tableDataArr, url);
                 if (status) {
                     numChangeValue = {};
-                    layer.closeAll();
                 }
             } else {
                 return false;
@@ -393,7 +392,12 @@
                     if (res.status === 0) {
                         status = true;
                     }
-                    layer.msg(res.msg);
+                    layer.msg(res.msg,{
+                        time: 1000,
+                        end:function(e){
+                            layer.closeAll();
+                        }
+                    });
                 }
             });
             return status;
