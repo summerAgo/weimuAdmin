@@ -41,7 +41,7 @@
                         </div>
                         <div class="table-form-item layui-input-inline">
                             <span class="input-span">车牌号</span>
-                            <input type="text" name="vehnum" placeholder="车牌号" autocomplete="off" class="layui-input"  style="text-transform:uppercase" onblur="toUpperCase(this)">
+                            <input type="text" name="vehnum" placeholder="车牌号" autocomplete="off" class="layui-input" style="text-transform:uppercase" onblur="toUpperCase(this)">
                         </div>
                         <div class="table-form-item layui-input-inline">
                             <span class="input-span">司机姓名</span>
@@ -123,21 +123,26 @@
         font-size: 15px;
         color: #333;
     }
-    .table-bottom-data .data{
+
+    .table-bottom-data .data {
         font-size: 18px;
         color: #ff3c4e;
         margin: 0 5px;
         font-weight: bold;
     }
+
     .layer-title small {
         font-size: 14px;
     }
+
     .layer-title li {
         flex: 0 0 280px;
     }
+
     .table-page h3 {
         padding-left: 0;
     }
+
     .util-container * {
         display: inline-block
     }
@@ -218,6 +223,30 @@
             }
         }, true);
 
+        var depotSelectValue; //仓库id
+        //监听仓库选择
+        formSelects.on('depotSelect', function(id, vals, val, isAdd, isDisabled) {
+            // console.log(vals)
+            // console.log(val)
+            // console.log(isAdd)
+            console.log(depotSelectValue)
+            if (isAdd) {
+                //如果仓库值改变
+                if (val.value !== depotSelectValue) {
+                    depotSelectValue = val.value;
+                    goodsListArray = [];
+                    tableData = [];
+                    tableIns.reload({
+                        data: tableData,
+                        page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                    });
+                    console.log(depotSelectValue)
+                }
+            }
+        });
+
         var outBill = JSON.parse(sessionStorage.getItem('addOutBill')); //获取所选择记录详情
         var data = {};
         var pageData;
@@ -282,7 +311,7 @@
                         field: 'uuid',
                         title: '货物标识码',
                         width: 206,
-                        style:'font-family: Consolas;font-size:16px'
+                        style: 'font-family: Consolas;font-size:16px'
                     }, {
                         field: 'code',
                         title: '包号'
@@ -316,7 +345,7 @@
                         title: '评估金额' + unitMoney,
                         width: 130,
                         templet: function(d) {
-                            return formatNum(d.aprice)|| "";
+                            return formatNum(d.aprice) || "";
                         }
                     }
                 ]
@@ -482,7 +511,7 @@
         //点击确认出库
         $(".suboutlbBtn").click(function() {
             layer.confirm('是否确认出库', {
-                skin: 'layui-layer-wei',  //layui-layer-wei，维木class
+                skin: 'layui-layer-wei', //layui-layer-wei，维木class
                 title: '提示'
             }, function(index) {
                 var ids = [];
@@ -564,6 +593,7 @@
                     }
                 });
             }
+
             $.get('view/stock/stock-goodsList.html', {}, function(str) {
                 goodsListLayer = layer.open({
                     title: '库存货物列表',
@@ -647,7 +677,7 @@
                                 field: 'uuid',
                                 title: '货物标识码',
                                 width: 206,
-                                style:'font-family: Consolas;font-size:16px'
+                                style: 'font-family: Consolas;font-size:16px'
                             }, {
                                 field: 'code',
                                 title: '包号',
@@ -731,7 +761,7 @@
                         }
                         var i = 0;
                         $("#goodsList .layui-table-body.layui-table-main").find("input[name='layTableCheckbox']").each(function() {
-                            if ((!res.data[i].aprice || data[i].aprice <= 0) && data[i].isapp == 0 ) {
+                            if ((!res.data[i].aprice || data[i].aprice <= 0) && data[i].isapp == 0) {
                                 $(this).attr("disabled", 'disabled').removeAttr("checked");
                                 form.render('checkbox');
                             }
@@ -739,7 +769,7 @@
                         });
                         i = 0;
                         $("#goodsList .layui-table-fixed.layui-table-fixed-l").find(".layui-table-body").find("input[name='layTableCheckbox']").each(function() {
-                            if ((!res.data[i].aprice || data[i].aprice <= 0) && data[i].isapp == 0 ) {
+                            if ((!res.data[i].aprice || data[i].aprice <= 0) && data[i].isapp == 0) {
                                 $(this).attr("disabled", 'disabled').removeAttr("checked");
                                 form.render('checkbox');
                             }

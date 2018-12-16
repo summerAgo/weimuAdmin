@@ -312,6 +312,9 @@
                             if (d.status === 4) {
                                 return '已出库';
                             }
+                            if (d.status === -1) {
+                                return '已删除';
+                            }
                             return '<span style="color:#ff3c4e">审核不通过<span>';
                         }
                     }, {
@@ -468,7 +471,7 @@
                         rowId.push(v.orderno);
                     });
                     //调删除接口
-                    rowDataApi(outTreasuryDelete, {
+                    rowDataApi(preoutTreasuryDelete, {
                         "ids": rowId
                     }, function(data) {
                         if (data.status === 1) {
