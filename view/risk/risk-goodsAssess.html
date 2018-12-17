@@ -297,10 +297,6 @@
                                     width: 206,
                                     style: 'font-family: Consolas;font-size:16px'
                                 }, {
-                                    field: 'code',
-                                    title: '包号',
-                                    sort: true
-                                }, {
                                     field: 'varieties',
                                     title: '品种'
                                 }, {
@@ -313,6 +309,24 @@
                                 }, {
                                     field: 'chang',
                                     title: '长度'
+                                }, {
+                                    field: 'isapp',
+                                    title: '是否评估',
+                                    width: 110,
+                                    templet: '#checkboxTpl',
+                                    unresize: true,
+                                }, {
+                                    field: 'aprice',
+                                    title: '估值单价' + unitMoney,
+                                    width: 130,
+                                    templet: function(d) {
+                                        return formatNum(d.aprice) || "";
+                                    },
+                                    edit: "text"
+                                }, {
+                                    field: 'code',
+                                    title: '包号',
+                                    sort: true
                                 }, {
                                     field: 'brand',
                                     title: '品牌',
@@ -330,20 +344,6 @@
                                             return "";
                                         return formatNum(d.pprice);
                                     }
-                                }, {
-                                    field: 'isapp',
-                                    title: '是否评估',
-                                    width: 110,
-                                    templet: '#checkboxTpl',
-                                    unresize: true,
-                                }, {
-                                    field: 'aprice',
-                                    title: '估值单价' + unitMoney,
-                                    width: 130,
-                                    templet: function(d) {
-                                        return formatNum(d.aprice) || "";
-                                    },
-                                    edit: "text"
                                 }, {
                                     field: 'remarks',
                                     title: '备注',

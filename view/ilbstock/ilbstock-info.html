@@ -315,25 +315,17 @@
                         title: '包号',
                         width: 100,
                     }, {
-                        field: 'billloading',
-                        title: '提运单',
-                        width: 140,
+                        field: 'ownername',
+                        title: '仓库主',
+                        width: 100,
                     }, {
-                        field: 'aprice',
-                        title: '估值状态',
-                        templet: function(d) {
-                            if (d.isapp === 1) {
-                                return '<span>不估值</span>';
-                            }
-                            if (d.isapp === 0 && (!d.aprice || d.aprice === 0)) {
-                                return '<span>未估值</span>';
-                            }
-                            if (d.isapp === 0 && d.aprice > 0) {
-                                return '<span>已估值</span>';
-                            }
-                            return d.aprice;
-                        },
-                        width: 138,
+                        field: 'depname',
+                        title: '仓库',
+                        width: 150,
+                    }, {
+                        field: 'positionname',
+                        title: '库位',
+                        width: 150,
                     }, {
                         field: 'varieties',
                         title: '品种',
@@ -359,6 +351,22 @@
                         title: '估值单价' + unitMoney,
                         width: 140,
                     }, {
+                        field: 'aprice',
+                        title: '估值状态',
+                        templet: function(d) {
+                            if (d.isapp === 1) {
+                                return '<span>不估值</span>';
+                            }
+                            if (d.isapp === 0 && (!d.aprice || d.aprice === 0)) {
+                                return '<span>未估值</span>';
+                            }
+                            if (d.isapp === 0 && d.aprice > 0) {
+                                return '<span>已估值</span>';
+                            }
+                            return d.aprice;
+                        },
+                        width: 138,
+                    }, {
                         field: 'totalamount',
                         title: '估值总金额' + unitMoney,
                         width: 150,
@@ -375,21 +383,13 @@
                         title: '品牌',
                         width: 100,
                     }, {
-                        field: 'depname',
-                        title: '仓库',
-                        width: 150,
-                    }, {
-                        field: 'positionname',
-                        title: '库位',
-                        width: 150,
-                    }, {
                         field: 'createdate',
                         title: '入库时间',
                         width: 170,
                     }, {
-                        field: 'ownername',
-                        title: '仓库主',
-                        width: 100,
+                        field: 'billloading',
+                        title: '提运单',
+                        width: 140,
                     }, {
                         field: 'remarks',
                         title: '备注',
