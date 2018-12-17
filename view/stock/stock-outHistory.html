@@ -47,24 +47,23 @@
                                 <option value="">库位</option>
                             </select>
                         </div>
-                        <div class="table-form-item layui-input-inline">
+                        <!-- <div class="table-form-item layui-input-inline">
                             <span class="input-span">产地</span>
                             <select name="origin" xm-select="originSelect" xm-select-radio>
                                 <option value="">产地</option>
                             </select>
-                        </div>
+                        </div> -->
                         <!-- <div class="table-form-item layui-input-inline">
                             <span class="input-span">供应商</span>
                             <select name="supplierid" xm-select="supplierSelect" xm-select-radio>
                                 <option value="">供应商</option>
                             </select>
                         </div> -->
-                        <div class="table-form-item layui-input-inline">
+                        <!-- <div class="table-form-item layui-input-inline">
                             <span class="input-span">提运单</span>
                             <input type="text" name="billloading" placeholder="提运单" autocomplete="off" class="layui-input">
                             <input type="text" name="ishistory" hidden value="1">
-                            <!-- 隐藏域 ishistory：1 历史记录 -->
-                        </div>
+                        </div> -->
                     </div>
                     <div class="layui-form-item form-right">
                         <button type="reset" class="layui-btn layui-btn-md layui-btn-gray">
@@ -178,9 +177,9 @@
             }
         }, true);
 
-        formSelects.data('originSelect', 'local', {
-            arr: selectDataInstall(CHDList) //产地列表
-        });
+        // formSelects.data('originSelect', 'local', {
+        //     arr: selectDataInstall(CHDList) //产地列表
+        // });
 
         // formSelects.data('supplierSelect', 'local', {
         //     arr: selectDataInstall(dropSupplier) //供应商列表

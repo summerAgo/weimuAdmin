@@ -62,12 +62,11 @@
                                 <option value="">供应商</option>
                             </select>
                         </div> -->
-                        <div class="table-form-item layui-input-inline">
+                        <!-- <div class="table-form-item layui-input-inline">
                             <span class="input-span">提运单</span>
                             <input type="text" name="billloading" placeholder="提运单" autocomplete="off" class="layui-input">
                             <input type="text" name="ishistory" hidden value="1">
-                            <!-- 隐藏域 ishistory：1 历史记录 -->
-                        </div>
+                        </div> -->
                     </div>
                     <div class="layui-form-item form-right">
                         <button type="reset" class="layui-btn layui-btn-md layui-btn-gray">
@@ -291,6 +290,9 @@
                     }, {
                         field: 'depname',
                         title: '仓库名称'
+                    },{
+                        field: 'positionname',
+                        title: '库位'
                     }, {
                         field: 'num',
                         title: '件数（包）'
