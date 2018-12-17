@@ -704,8 +704,6 @@
                 checkBoxTrDom.type = obj.type;
                 checkBoxTrDom.arr.push(obj);
             }
-
-            console.log(checkBoxTrDom)
         });
 
         // 删除选中入库货物信息
@@ -724,8 +722,19 @@
             }, function(index) {
                 if (checkBoxTrDom.type == "one") {
                     for (var i = 0; i < checkBoxTrDom.arr.length; i++) {
+                        //table删除选中行并更新dom
                         checkBoxTrDom.arr[i].del();
                     }
+                    
+                    for (i = 0; i < table.cache["tableContainer-from"].length; i++) {
+                        //获取操作后的表格数据并赋值给tableData
+                        if(Array.isArray(table.cache["tableContainer-from"][i]) && table.cache["tableContainer-from"][i].length == 0){
+                            table.cache["tableContainer-from"].splice(i,1);
+                            i--;
+                        }
+                    }
+                    tableData = table.cache["tableContainer-from"];
+
                 } else if (checkBoxTrDom.type == "all") {
                     tableData = [];
                     tableIns.reload({
