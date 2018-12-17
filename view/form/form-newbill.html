@@ -338,8 +338,10 @@
 
         // 保存添加货物信息
         form.on('submit(addGoodsForm)', function(data) {
+            console.log(tableData)
             tableData.push(data.field);
-            $(".rightBotBtn span").html(tableData.length); //当前选中了多少货物
+            console.log(tableData)
+            // $(".rightBotBtn span").html(tableData.length); //当前选中了多少货物
             tableIns.reload({
                 data: tableData,
                 limit: tableData.length,
