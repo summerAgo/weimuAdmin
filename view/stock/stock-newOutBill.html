@@ -160,7 +160,7 @@
         var laydate = layui.laydate;
         var layer = layui.layer;
         var formSelects = layui.formSelects;
-        var tableTopHeight = (parseInt($(".addOutBill .table-content-title").innerHeight()) + parseInt($(".addOutBill .content-header").innerHeight()) + 103); //内容区域所需减去的高度
+        var tableTopHeight = (parseInt($("#stock-addOutBill .table-page-header").innerHeight()) + parseInt($("#stock-addOutBill .table-page-header").innerHeight()) + 200); //内容区域所需减去的高度
 
         var menuKey = "b_10"; //当前页面key
         var domObj = $("#stock-addOutBill .table-tools").find("ul"); //当前页面容器
@@ -348,12 +348,14 @@
                 ]
             ],
             even: true,
-            // page: true, //是否显示分页
-            // limits: [tableData ? tableData.length : 0],
-            // limit: tableData ? tableData.length : 0, //每页默认显示的数量
+            page: true, //是否显示分页
+            limits: [50,100,150,200,500],
+            limit: 50, //每页默认显示的数量
             done: function(res, curr, count) {
                 var addtableBtn = '<div class="rightBotBtn">共添加<span>' + count + '</span>个货物</div>';
-                $("#tableContainer-addOutBill").siblings().find(".layui-table-page").append(addtableBtn);
+                if($("#addOutBillRight").length<1){
+                    $("#tableContainer-addOutBill").siblings().find(".layui-table-page").append(addtableBtn);
+                }
                 $(".submissionBtn").unbind("click").bind("click", function() {
                     var cargoowner = layui.formSelects.value('ownerSelect', "valStr");
                     if (cargoowner === "") {
@@ -736,8 +738,8 @@
                             }
                         ]
                     ],
-                    even: false,
-                    page: false, //是否显示分页
+                    even: true,
+                    page: true, //是否显示分页
                     limits: [100, 200, 500, 1000],
                     limit: 100, //每页默认显示的数量
                     done: function(res, curr, count) {
