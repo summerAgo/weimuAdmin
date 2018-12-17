@@ -46,7 +46,7 @@
             <div class="header-version"></div>
             <div class="layui-nav-guide"><span class="operation-guide"><i class="iconfont icon-bangzhu"></i>操作指南</span></div>
             <ul class="layui-nav layui-layout-right">
-                 <!--<li class="layui-nav-item">
+                <!--<li class="layui-nav-item">
                     <a href="javascript:;" class="msgtips"><i class="iconfont icon-lingdang"></i><span class="msgcount">9</span></a>
                 </li>-->
                 <li class="layui-nav-item">
@@ -89,15 +89,15 @@
                 {{# if(item.pid == 0){ }}
                     <li class="layui-nav-item">
                         {{#  if(item.code){ }}
-                            <a href="#!{{item.code}}"><i class="iconfont {{ item.icon}}"></i>{{item.name}}</a>
+                            <a href="#!{{item.code}}"><i class="iconfont {{item.icon}}"></i>{{item.name}}</a>
                         {{#  } else { }}
-                            <a href="javascript:;"><i class="iconfont {{ item.icon}}"></i>{{item.name}}</a>
+                            <a href="javascript:;"><i class="iconfont {{item.icon}}"></i>{{item.name}}</a>
                         {{#  } }}
                         {{# if(item.child){}}
                             <dl class="layui-nav-child">
                                 {{# layui.each(d.list, function(indexx, itemx){ }}
                                     {{# if(itemx.pid == item.id){}}
-                                        <dd><a href="#!{{ itemx.code }}">{{ itemx.name }}</a></dd>
+                                        <dd><a href="#!{{itemx.code}}">{{itemx.name}}</a></dd>
                                     {{# }}}
                                 {{# }); }}
                             </dl>
@@ -166,12 +166,12 @@
             var data = { //数据
                 "list": menuArr
             };
-            // console.log(data);
+            console.log(data);
             laytpl(getTpl).render(data, function(html) {
                 view.innerHTML = html;
             });
 
-            element.render("nav-tabs");//加载路由
+            element.render("nav-tabs"); //加载路由
             Q.reg([
                 //注册页面
                 ['home', function() {
@@ -350,4 +350,5 @@
         });
     </script>
 </body>
+
 </html>
