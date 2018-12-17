@@ -104,6 +104,7 @@ var roleAdd = pathUrl + "sys/role/add";//添加角色
 var roleUpdate = pathUrl + "sys/role/update";//修改角色
 var roleDel = pathUrl + "sys/role/deleteMany";//删除角色
 var roleAuthority = pathUrl + "sys/role/setAuthority";//设置角色对应菜单(roleid 角色id        menuId[]菜单数组)
+var setByAuthority = pathUrl + "sys/role/setByAuthority";// 角色单独发送菜单信息
 //菜单
 var menuList = pathUrl + "sys/menu/list";//菜单列表
 var menuAdd = pathUrl + "sys/menu/add";//添加菜单

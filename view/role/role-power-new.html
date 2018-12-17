@@ -1,0 +1,675 @@
+<form class="layui-form">
+    <div class="layui-field-box">
+        <div class="layui-form-item layui-control-line">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit="" type="submit" lay-filter="roleSubmit"><i class="iconfont icon-daochu"></i>保存</button>
+            </div>
+        </div>
+    </div>
+</form>
+<div class="role-power">
+    <div class="layui-row">
+        <div class="layui-col-md4 role-lf">
+            <div class="role-title">权限设置kkk</div>
+            <!-- 此扩展能递归渲染一个权限树，点击深层次节点，父级节点中没有被选中的节点会被自动选中，单独点击父节点，子节点会全部 选中/去选中 -->
+            <div class="layui-form-item">
+                <!-- <label class="layui-form-label">选择权限</label> -->
+                <div class="">
+                    <div class="ele1" lay-filter="treeData"></div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-md8 role-rt">
+            <div class="role-title">按钮权限</div>
+            <div class="layui-tab" lay-filter="tabsBtn">
+                <ul class="layui-tab-title zimenutab">
+                    <!-- <li class="layui-this">预入库</li>
+                    <li>新建预入库</li>
+                    <li>添加货物信息</li> -->
+                </ul>
+                <div class="layui-tab-content menutab-content">
+                    <div class="layui-show">
+                        <div class="content-title">[新入库]所有权限按钮</div>
+                        <div class="content-cont">
+                            <div class="formEditView"></div>
+                        </div>
+                    </div>
+                    <!-- <div class="layui-tab-item">
+                        <div class="content-title">[新建预入库]所有权限按钮</div>
+                    </div>
+                    <div class="layui-tab-item">
+                        <div class="content-title">[添加货物信息]所有权限按钮</div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script id="formUserRole" type="text/html">
+    <form class="layui-form">
+        <input type="hidden" name="roleid" value="{{d.id}}">
+        {{#  layui.each(d.butAllData, function(index, item){ }}
+        <div class="layui-form-item">
+            <label class="layui-form-label">{{item.bname}}</label>
+            <div class="layui-input-block">
+                <input type="checkbox" name="buttonid" value="{{item.id}}" {{# if(item.checked){}} checked {{#}}}  lay-filter="clickBut"  lay-skin="switch" lay-text="开启|关闭">
+            </div>
+        </div>
+        {{#  }); }}
+    </form>
+</script>
+<style scoped>
+    .role-power .layui-tab-title {
+        position: relative;
+        left: 0;
+        height: 30px;
+        line-height: 30px;
+        white-space: nowrap;
+        font-size: 0;
+        border-bottom: none;
+    }
+    .role-power .layui-tab li {
+        flex: 0 0 auto;
+        line-height: 30px;
+        margin-right: 1px;
+        position: relative;
+        margin-top: -1px;
+        border: 1px solid #ddd;
+        margin-left: -2px;
+    }
+    .role-power .layui-tab-title li::before {
+        position: absolute;
+        content: '';
+        width: 0px;
+        height: 16px;
+        left: -2px;
+        top: 11px;
+        background-color: #ddd;
+    }
+    .role-power .layui-tab li:first-child {
+        font-size: 14px;
+        margin-left: 0px;
+    }
+    .role-power .layui-tab-title li.layui-this {
+        border: 1px solid #0284ff;
+    }
+    .role-power .layui-tab-title .layui-this:after {
+        position: absolute;
+        left: 0;
+        top: 0;
+        content: '';
+        width: 100%;
+        height: 30px;
+        border-width: 0px;
+        border-radius: 2px 2px 0 0;
+        box-sizing: border-box;
+        pointer-events: none;
+    }
+    .role-power .role-title{
+        font-size: 16px;
+        color: #333;
+        line-height: 45px;
+        font-weight: bold;
+    }
+    .layui-form-item {
+        margin-bottom: 0px;
+    }
+    .layui-field-box {
+        padding: 0 20px;
+    }
+    .role-power {
+        height: calc(100% - 71px);
+        padding: 0 20px;
+    }
+    .role-power .layui-row,
+    .role-power .layui-row .role-lf{
+        height: 100%;
+    }
+    .role-power .layui-row .role-lf{
+        padding-right: 20px;
+        border-right: 1px dashed #ccc;
+    }
+    .role-power .layui-row .role-rt{
+        padding-left: 20px;
+        height: 100%;
+    }
+    .role-power .layui-row .role-rt .layui-tab {
+        margin: 0;
+        height: calc(100% - 45px);
+    }
+    .role-power .layui-row .role-rt .layui-tab .layui-tab-content{
+        padding: 0;
+        height: calc(100% - 40px);
+        border: 1px solid #ddd;
+        margin-top: 10px;
+    }
+    .role-power .layui-row .role-rt .layui-tab .layui-tab-content .content-title{
+        height: 30px;
+        line-height: 30px;
+        padding-left: 20px;
+        background-color: #e8e8e8;
+        font-size: 15px;
+        font-weight: bold;
+        border-bottom: 1px solid #ddd;
+    }
+    .role-power .layui-row .role-rt .layui-tab .layui-tab-content .layui-tab-item{
+        height: 100%;
+    }
+    .role-power .layui-row .role-rt .layui-tab .layui-tab-content .content-cont{
+        height: calc(100% - 30px);
+        overflow-y: auto;
+        box-sizing: border-box;
+        padding: 10px;
+    }
+    .role-power .layui-form-label {
+        width: 100px;
+    }
+</style>
+<script type="text/javascript">
+    layui.use(['jquery', 'authtree', 'form', 'layer', 'element', 'laytpl', 'laydate', "eleTree"], function() {
+        var $ = layui.jquery;
+        var authtree = layui.authtree;
+        var element = layui.element;
+        var eleTree = layui.eleTree;
+        var form = layui.form;
+        var laytpl = layui.laytpl;
+        var layer = layui.layer;
+        var dataall = window.currData;
+        var getTpl = formUserRole.innerHTML,
+            view = $(".formEditView")[0];
+        laytpl(getTpl).render(dataall, function(html) {
+            view.innerHTML = html;
+        });
+        form.render(); //重置表单渲染
+
+        var allMenu;
+        // 初始化(查询所有的菜单)
+        $.ajax({
+            //url: 'tree.json',
+            // url: menuAll,
+            url: getMenuAll,
+            dataType: 'json',
+            success: function(data) {
+                // console.log('window.currData:' + JSON.stringify(window.currData))
+                var roleAut = window.currData;
+                var roleData = {
+                    "roleid": roleAut.id
+                };
+                // console.log(roleData)
+                //查询角色菜单权限
+                getButAuthorityAll(roleData, function(res) {
+                    allMenu = data.data;
+                    var ant = {};
+                    if (res.status == 0) {
+                        ant = res.data;
+                    }
+                    for (var i = 0; i < allMenu.length; i++) { //组装数据树
+                        if (allMenu[i].pid == 0) {
+                            var map = {};
+                            map["label"] = allMenu[i].name;
+                            map["value"] = allMenu[i].mid;
+                            map["valueid"] = allMenu[i].id;
+                            var list = [];
+                            for (var k = 0; k < allMenu.length; k++) {
+                                if (allMenu[i].mid == allMenu[k].pid) {
+                                    var mapTwo = {};
+                                    mapTwo["label"] = allMenu[k].name;
+                                    mapTwo["value"] = allMenu[k].mid;
+                                    mapTwo["valueid"] = allMenu[k].id;
+                                    mapTwo["type"] = 0;
+                                    for (var key in ant) { //循环每个菜单
+                                        if (allMenu[k].id == key) {
+                                            mapTwo["checked"] = true;
+                                            break;
+                                        } else {
+                                            mapTwo["checked"] = false;
+                                        }
+                                    }
+                                    list.push(mapTwo);
+                                }
+                            }
+                            if (list.length > 0) {
+                                map["children"] = list;
+                            } else {
+                                for (var key in ant) { //循环每个菜单
+                                    if (allMenu[i].id == key) {
+                                        map["checked"] = true;
+                                        break;
+                                    } else {
+                                        map["checked"] = false;
+                                    }
+                                }
+                            }
+                            trees.push(map);
+                        }
+                    }
+                    // console.log(trees);
+
+                    eleTree.render({
+                        elem: '.ele1',
+                        data: trees,
+                        showCheckbox: true,
+                        drag: false,
+                        accordion: true
+                    });
+
+                    allButtonData(function(res) { //查询所有的按钮
+                        allbutData = res.data;
+                    });
+
+                    // allAuthority ;//所有的权限格式：[{'菜单id':[按钮id]}]
+                    for (var key in ant) { //循环每个菜单
+                        var map = {};
+                        var butlist = ant[key];
+                        map[key] = butlist;
+                        allAuthority.push(map);
+                    }
+                    // console.log(allAuthority);
+                    var val = JSON.stringify(allAuthority);
+                    sessionStorage.setItem('allAuthority', val);
+                });
+            }
+        });
+
+        // eleTree.on("add(treeData)", function(data) {
+        //     console.log(0);
+        //     console.log(data);
+        //     // 若后台修改，则重新获取后台数据，然后重载
+        //     // eleTree.reload(".ele1", {where: {data: JSON.stringify(data.data)}})
+        // })
+        // eleTree.on("edit(treeData)", function(data) {
+        //     console.log(1);
+        //     console.log(data);
+        // })
+        // eleTree.on("remove(treeData)", function(data) {
+        //     console.log(2);
+        //     console.log(data);
+        // })
+
+        eleTree.on("toggleSlide(treeData)", function(data) { //点击树
+            // console.log(3);
+            // console.log(data);
+            var cur = data.currentData;
+            //if(!cur.children){
+            
+            menuid = cur.value;
+            valueid = cur.valueid;
+            menutype = cur.type;
+            //判断当前权限的页面是否有多个弹窗
+            // console.log(allMenu)
+            // console.log(valueid)
+            var tabList = [];
+
+            for (var i = 0; i < allMenu.length; i++) {
+                if (allMenu[i].id == valueid) {
+                    tabList.push(tabli(allMenu[i], 0)); //生成第一个默认tab
+                    if (allMenu[i].id == valueid && allMenu[i].sonlist) {
+                        for (var x = 0; x < allMenu[i].sonlist.length; x++) {
+                            tabList.push(tabli(allMenu[i].sonlist[x]));
+                        }
+                    }
+                }
+            }
+            $(".zimenutab").html(""); //清空tabs
+            for (var k = 0; k < tabList.length; k++) {
+                $(".zimenutab").append(tabList[k]);
+            }
+
+            allbutton(cur.value, cur.valueid,menutype);
+
+            function tabli(obj, type) {
+                var li = '<li class="' + (type == 0 ? "layui-this" : "") + '" lay-id="' + obj.id + '" lay-mid="' + obj.mid + '">' + obj.name + '</li>';
+                return li;
+            }
+
+        });
+
+        eleTree.on("checkbox(treeData)", function(data) { //选中或者取消复选框
+            console.log(data);
+            var cur = data.currentData;
+            var isChoice = !!cur.checked;
+            console.log(isChoice)
+            //是否有子节点
+            if (cur.children) {
+                var children = cur.children;
+                for (var i = 0; i < children.length; i++) {
+                    var child = children[i];
+                    muneAut(child.value, child.valueid, isChoice);
+                }
+            } else {
+                muneAut(cur.value, cur.valueid, isChoice);
+            }
+            menuid = cur.value;
+            valueid = cur.valueid;
+            menutype = cur.type;
+            allbutton(cur.value, cur.valueid ,menutype);
+
+            //var typeCode = valueid.substring(0,1);
+            if(cur.children){
+                for (var i = 0; i< cur.children.length; i++) {
+                    var f = 0;
+                    if (cur.children[i].checked) {
+                       f = 1;
+                    }
+                    menuAjax({
+                        roleid: dataall.id,
+                        menuid: cur.children[i].value,
+                        //buttonid: 1,
+                        typeCode: 0,
+                        checked: f
+                    });
+                }
+            }
+            menuAjax({
+                roleid: dataall.id,
+                menuid: cur.value,
+                //buttonid: 1,
+                typeCode: 0,
+                checked: isChoice?0:1
+            })
+
+        });
+
+        
+        function menuAjax(data) {
+            data['SESSION_NAME']= getCookie('SESSION_NAME');
+            data['TOKEN']= getCookie('TOKEN');
+            $.ajax({
+                type: "post",
+                url: setByAuthority,
+                data: data,
+                dataType: 'json',
+                success: function (res) {
+                    console.log(res);
+                }
+            });
+        }
+        
+        //根据选中以及取消菜单权限赋值menuid(菜单id)，isChoice(选中还是权限)
+        function muneAut(menuids, valueid, isChoice) {
+            // console.log("menuids:" + menuids);
+            // console.log("isChoice:" + isChoice);
+            // console.log(allAuthority);
+            var number = 0; //是否已经存在权限里面,0:否，1：是
+            var dellist = []; //要删除的id
+            for (var k = 0; k < allAuthority.length; k++) {
+                var autData = allAuthority[k];
+                for (var key in autData) { //循环每个菜单的权限
+                    if (key == valueid) {
+                        var map = {};
+                        number = 1;
+                        var butlist = [];
+                        // console.log(key + "==" + valueid);
+                        if (isChoice) {
+                            for (var i = 0; i < allbutData.length; i++) {
+                                var mapTwo = allbutData[i];
+                                if (mapTwo.menuid == menuids) {
+                                    butlist.push(mapTwo.id);
+                                }
+                            }
+                        } else {
+                            dellist.push(key);
+                        }
+                        map[key] = butlist;
+                        allAuthority[k] = map
+                    }
+                }
+            }
+
+            if (number == 0) { //原本权限里面没有权限
+                var butlist = [];
+                var map = {};
+                if (isChoice) {
+                    for (var i = 0; i < allbutData.length; i++) {
+                        var maps = allbutData[i];
+                        if (maps.menuid == menuids) {
+                            butlist.push(maps.id);
+                        }
+                    }
+                    map[valueid] = butlist;
+                    // console.log(map[valueid])
+                    allAuthority.push(map)
+                }
+            }
+
+            if (dellist.length > 0) { //删除数据
+                for (var i = 0; i < dellist.length; i++) {
+                    for (var k = 0; k < allAuthority.length; k++) {
+                        var autData = allAuthority[k];
+                        for (var key in autData) { //循环每个菜单的权限
+                            if (key == dellist[i]) {
+                                allAuthority.splice(k, k + 1); //删除
+                            }
+                        }
+                    }
+                }
+            }
+            var val = JSON.stringify(allAuthority);
+            sessionStorage.setItem('allAuthority', val);
+        }
+
+        //查询角色权限
+        function allMuneAuthority(data, success) {
+            $.ajax({
+                //url: 'tree.json',
+                url: rolegetAuthority,
+                data: data,
+                dataType: 'json',
+                success: success
+            });
+        }
+
+        var allbutData = []; //所有的按钮
+        var menuid = null; //被点击的按钮mid
+        var valueid = null; //被点击的按钮id
+        var menutype = null;//是否为弹窗
+        var allAuthority = []; //所有的权限格式：[{'菜单id':[按钮id]}]
+        var trees = []; //整个权限树
+
+        //查询菜单下面的按钮(menuid菜单id)
+        function allbutton(menuid, valueids, mtype) {
+            menuid = menuid;
+            valueid = valueids;
+            menutype = mtype;
+            var butAllData = [];
+            // console.log(allbutData)
+            for (var i = 0; i < allbutData.length; i++) {
+                if (allbutData[i].menuid == menuid && allbutData[i].type == mtype) {
+                    var map = allbutData[i];
+                    var check = 0; //是否需要选中
+                    for (var j = 0; j < allAuthority.length; j++) { //循环权限
+                        var but = allAuthority[j];
+                        for (var key in but) { //循环每个菜单的权限
+                            if (key == valueids) {
+                                var butlist = but[key];
+                                for (var k = 0; k < butlist.length; k++) { //循环菜单下面的按钮权限
+                                    if (map.id == butlist[k]) {
+                                        check = 1;
+                                        break;
+                                    }
+                                }
+                                break;
+                            }
+                        }
+                    }
+                    if (check == 1) {
+                        map["checked"] = "checked";
+                    } else {
+                        map["checked"] = null;
+                    }
+                    butAllData.push(map);
+                }
+            }
+            dataall["butAllData"] = butAllData;
+
+            laytpl(getTpl).render(dataall, function(html) {
+                view.innerHTML = html;
+            });
+            form.render(); //重置表单渲染
+        }
+
+        //查询所有的按钮
+        function allButtonData(success) {
+            $.ajax({
+                url: buttonAllList,
+                dataType: 'json',
+                success: success
+            });
+        }
+
+        //根据角色id查询所有的按钮权限
+        function getButAuthorityAll(data, success) {
+            data['SESSION_NAME'] = getCookie('SESSION_NAME');
+            data['TOKEN'] = getCookie('TOKEN');
+            $.ajax({
+                url: getAuthorityAll,
+                data: data,
+                dataType: 'json',
+                success: success
+            });
+        }
+
+        //获取按钮权限取消和添加
+        form.on('switch(clickBut)', function(data) {
+            console.log(data);
+            var autkey = null; //菜单原本是否添加过权限
+            for (var i = 0; i < allAuthority.length; i++) {
+                var autData = allAuthority[i];
+                for (var key in autData) { //循环每个菜单的权限
+                    if (key == valueid) { //判断是否是被点击的id
+                        autkey = key;
+                        var butlist = autData[key];
+                        if (data.elem.checked) { //开关是否开启，true或者false
+                            butlist.push(data.value);
+                        } else {
+                            for (var h = 0; h < butlist.length; h++) {
+                                if (butlist[h] == data.value) {
+                                    butlist.splice(h, h + 1); //删除
+                                }
+                            }
+                        }
+                        var map = {};
+                        map[key] = butlist
+                        allAuthority[i] = map;
+                    }
+                }
+            }
+            if (autkey == null) { //原本没有添加过菜单权限
+                var map = {};
+                var butlist = [];
+                butlist.push(data.value)
+                map[valueid] = butlist;
+                allAuthority.push(map);
+                toptrees();
+                alltrees();
+            }
+            var val = JSON.stringify(allAuthority);
+            sessionStorage.setItem('allAuthority', val);
+            // console.log(data.elem); //得到checkbox原始DOM对象
+            // console.log(data.elem.checked); //开关是否开启，true或者false
+            // console.log(data.value); //开关value值，也可以通过data.elem.value得到
+            // console.log(data.othis); //得到美化后的DOM对象
+
+            // 设置按钮权限
+            var typeCode = valueid.substring(0,1);
+            menuAjax({
+                roleid: dataall.id,
+                menuid: menuid,
+                buttonid: data.value,
+                typeCode: typeCode,
+                checked: data.elem.checked?0:1
+            })
+
+        });
+
+        //顶级菜单增加权限
+        function toptrees() {
+            var number = 0; //顶级菜单是否原本就有数据,0是没有，1是有
+            var keys = null; //顶级菜单id
+            for (var i = 0; i < trees.length; i++) { //循环菜单
+                var map = trees[i];
+                if (map.children) {
+                    var children = map.children;
+                    for (var j = 0; j < children.length; j++) { //二级菜单循环
+                        if (children[j].valueid == valueid) {
+                            for (var k = 0; k < allAuthority.length; k++) {
+                                var autData = allAuthority[k];
+                                var s = 0; //是否有已经有权限了
+                                for (var key in autData) { //循环每个菜单的权限
+                                    if (key == map.valueid) {
+                                        number = 1;
+                                        break;
+                                    }
+                                }
+                            }
+                            keys = map.valueid;
+                            break;
+                        }
+                    }
+                }
+            }
+            if (number == 0) {
+                var map = {};
+                var butlist = [];
+                map[keys] = butlist;
+                allAuthority.push(map);
+            }
+        }
+
+        //权限数据重新获取
+        function alltrees() {
+            for (var i = 0; i < trees.length; i++) { //循环菜单
+                var map = trees[i];
+                if (map.children) {
+                    var children = map.children;
+                    for (var j = 0; j < children.length; j++) { //二级菜单循环
+                        var mapTwo = children[j];
+                        if (mapTwo.valueid == valueid) { //是否是被选中的菜单
+                            map["spread"] = true;
+                        }
+                        for (var k = 0; k < allAuthority.length; k++) {
+                            var autData = allAuthority[k];
+                            var s = 0; //是否有已经有权限了
+                            for (var key in autData) { //循环每个菜单的按钮权限
+
+                                if (key == mapTwo.valueid) { //菜单是否有权限
+                                    s = 1;
+                                    mapTwo["checked"] = true;
+                                    break;
+                                } else {
+                                    mapTwo["checked"] = false;
+                                }
+                            }
+                            if (s == 1) {
+                                break;
+                            } else {
+                                mapTwo["checked"] = false;
+                            }
+                        }
+                        children[j] = mapTwo;
+                    }
+                    map["children"] = children;
+                }
+                trees[i] = map;
+            }
+            eleTree.reload(".ele1", {
+                where: {
+                    data: trees
+                }
+            });
+        }
+
+        //tab切换改变当前操作菜单id
+        element.on('tab(tabsBtn)', function(elem) {
+            valueid = $(this).attr('lay-id');
+            menuid = $(this).attr('lay-mid');
+            if(valueid.substring(0,1) == "b"){
+                menutype = 1;
+            }else{
+                menutype = 0;
+            }
+            allbutton(menuid, valueid,menutype);
+        });
+
+    });
+</script>
