@@ -356,7 +356,7 @@
         $(".submissionBtn").click(function() {
             var checkStatus = table.checkStatus('tableContainer-preentry'); // 表格选中状态
             var datalist = checkStatus.data;
-        
+
             if (datalist.length < 1) {
                 layer.msg("未选择入库项");
                 return false;

@@ -1,5 +1,5 @@
 <div class="table-page addOutBill" id="stock-addOutBill">
-    <div class="table-content-title layer-level">
+    <div class="table-content-title layer-level butlistbox">
         <div class="table-tools">
             <ul class="layui-nav topmenu" lay-filter="talbe-tools">
                 <!-- <li class="layui-nav-item">
@@ -146,7 +146,7 @@
         var laydate = layui.laydate;
         var layer = layui.layer;
         var formSelects = layui.formSelects;
-        var tableTopHeight = (parseInt($(".addOutBill .table-content-title").innerHeight()) + parseInt($(".addOutBill .content-header").innerHeight()) + 103); //内容区域所需减去的高度
+        var tableTopHeight = (parseInt($("#stock-addOutBill .table-page-header").innerHeight()) + parseInt($("#stock-addOutBill .table-page-header").innerHeight()) + 200); //内容区域所需减去的高度
 
         var menuKey = "b_10"; //当前页面key
         var domObj = $("#stock-addOutBill .table-tools").find("ul"); //当前页面容器
@@ -210,19 +210,20 @@
         }, true);
 
         var outBill = JSON.parse(sessionStorage.getItem('addOutBill')); //获取所选择记录详情
-        // console.log(outBill);
+        console.log(outBill);
         var data = {};
         var pageData;
-        var dataAipUrl = preoutHistoryOrderno;//历史出货单接口
+        var dataAipUrl = preoutHistoryOrderno; //历史出货单接口
         if (outBill == null) {
-            $(".suboutlbBtn").parent().hide();
-            formSelects.undisabled('ownerSelect'); //启用
-            formSelects.undisabled('depotSelect'); //启用
-            $("input[name='estimatedate']").attr("disabled", false);
-            $('.util-container').hide(); //隐藏倒计时
+            return false;
         } else {
+            if (outBill.status == 4) {
+                //已出库隐藏按钮
+                $(".butlistbox").hide();
+            }
+
             if (outBill.status == 3 && outBill.isexamine == 3) {
-                $(".topmenu").hide();//如果是审核不通过出库单隐藏操作按钮
+                $(".topmenu").hide(); //如果是审核不通过出库单隐藏操作按钮
                 dataAipUrl = outfailoutlist;
             }
             //回显
@@ -232,7 +233,7 @@
             data['SESSION_NAME'] = getCookie('SESSION_NAME');
             data['TOKEN'] = getCookie('TOKEN');
             $("#estimatedate").val(outBill.outdate);
-            
+
             $.ajax({
                 cache: true,
                 type: "get",
@@ -247,7 +248,7 @@
                 }
             });
 
-            if(pageData){
+            if (pageData) {
                 data["vname"] = pageData.vname; //司机姓名
                 data["vehnum"] = pageData.vehnum; //车牌号
                 data["card"] = pageData.card; //司机身份证号
@@ -257,7 +258,7 @@
                 $("input[name='card']").val(data.card);
 
             }
-            
+
             // var addOutBill = sessionStorage.getItem("addOutBill");
             var auditStatus = $(".audit-status");
             if (outBill !== null) {
@@ -349,7 +350,7 @@
                         field: 'uuid',
                         title: '货物标识码',
                         width: 206,
-                        style:'font-family: Consolas;font-size:16px'
+                        style: 'font-family: Consolas;font-size:16px'
                     }, {
                         field: 'code',
                         title: '包号',
@@ -372,9 +373,9 @@
                         width: 120,
                     }, {
                         field: 'aprice',
-                        title: '评估单价'+ unitMoney,
+                        title: '评估单价' + unitMoney,
                         width: 130,
-                        templet: function (d) {
+                        templet: function(d) {
                             return formatNum(d.aprice) || "";
                         },
                     }, {
@@ -385,7 +386,7 @@
                         field: "",
                         title: "总金额",
                         width: 130,
-                        templet: function (d) {
+                        templet: function(d) {
                             return formatNum(d.totalamount) || "";
                         },
                     }, {
@@ -573,7 +574,7 @@
         //点击确认出库
         $(".suboutlbBtn").click(function() {
             layer.confirm('是否确认出库', {
-                skin: 'layui-layer-wei',  //layui-layer-wei，维木class
+                skin: 'layui-layer-wei', //layui-layer-wei，维木class
                 title: '提示'
             }, function(index) {
                 var ids = [];
@@ -611,12 +612,14 @@
                 });
             });
         });
+
         var goodsListArray = []; //目标库存货物列表
+
         $.ajax({
             url: ilbstockListAll,
             data: {
-                "ownerid": outBill.cargoowner,
-                "depotid": outBill.depotname
+                "ownerid": outBill.ownerid,
+                "depotid": outBill.depotid
             },
             async: false,
             type: "get",
@@ -729,7 +732,7 @@
                                 field: 'uuid',
                                 title: '货物标识码',
                                 width: 206,
-                                style:'font-family: Consolas;font-size:16px'
+                                style: 'font-family: Consolas;font-size:16px'
                             }, {
                                 field: 'code',
                                 title: '包号',
@@ -814,7 +817,7 @@
                         }
                         var i = 0;
                         $("#goodsList .layui-table-body.layui-table-main").find("input[name='layTableCheckbox']").each(function() {
-                            if ((!res.data[i].aprice || data[i].aprice <= 0) && data[i].isapp==0) {
+                            if ((!res.data[i].aprice || data[i].aprice <= 0) && data[i].isapp == 0) {
                                 $(this).attr("disabled", 'disabled').removeAttr("checked");
                                 form.render('checkbox');
                             }
@@ -822,7 +825,7 @@
                         });
                         i = 0;
                         $("#goodsList .layui-table-fixed.layui-table-fixed-l").find(".layui-table-body").find("input[name='layTableCheckbox']").each(function() {
-                            if ((!res.data[i].aprice || data[i].aprice <= 0) && data[i].isapp==0) {
+                            if ((!res.data[i].aprice || data[i].aprice <= 0) && data[i].isapp == 0) {
                                 $(this).attr("disabled", 'disabled').removeAttr("checked");
                                 form.render('checkbox');
                             }
