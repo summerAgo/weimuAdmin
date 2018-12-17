@@ -84,6 +84,7 @@
         var trHeader = $(".table-header");
         var orderDataList = [];
         var orderData = null;
+        var size = 12;  //默认打印12条数据一页
         //获取列表数据
         $.ajax({
             url: inprintinjk,
@@ -96,7 +97,6 @@
             async: false, //同步
             traditional: true,
             success: function(res) {
-                orderData = res.data;
                 if (res.status === 0) {
                     orderData = res.data; // 对象迁移
                     orderDataList = orderData.list;
@@ -105,7 +105,7 @@
                 }
             }
         });
-
+        //设置表单信息
         for (var key in orderData) {
             $("." + key + ".data").html([orderData[key]])
         }
@@ -162,12 +162,13 @@
         }
 
         var trs = '';
-
+        var num_i = 0;
         for (var k = 0; k < arrRear.length; k++) {
 
             var len = arrRear[k].data.length;
             var arrOll = arrRear[k].data;
             var arrBod = arrOll.slice(1);
+            //
             var trH = '<tr>' +
                 '<td rowspan="' + len + '">' + (arrOll[0].containernum == null ? "" : arrOll[0].containernum) + '</td>' +
                 '<td>' + arrOll[0].code + '</td>' +
@@ -181,6 +182,11 @@
                 '<td>' + (arrOll[0].remarks == null ? "" : arrOll[0].remarks) + '</td>' +
                 '</tr>';
             trs += trH;
+            // num_i++;
+            // if(num_i%size == 0){
+            //     console.log(1);
+            //     trs += '<div style="page-break-before:always;"><br /></div>';
+            // }
             for (var n = 0; n < arrBod.length; n++) {
                 var trB = '<tr>' +
                     '<td>' + arrBod[n].code + '</td>' +
@@ -194,6 +200,11 @@
                     '<td>' + (arrBod[n].remarks == null ? "" : arrBod[n].remarks) + '</td>' +
                     '</tr>';
                 trs += trB;
+                // num_i++;
+                // if(num_i%size == 0){
+                //     console.log(2);
+                //     trs += '<div style="page-break-before:always;"><br /></div>';
+                // }
             }
         }
         trHeader.after(trs);

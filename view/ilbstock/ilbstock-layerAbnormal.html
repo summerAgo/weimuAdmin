@@ -107,7 +107,7 @@
 
             depotData.ownerid = echoData.ownerid;
             depotData.depotid = echoData.depotid;
-            depotData.id = echoData.id;
+            depotData.cid = echoData.id;
         }
 
         form.on('submit(searchForm-layer)', function(data) {
@@ -249,7 +249,7 @@
                         edit: "txt",
                         width: 150,
                         templet: function(d) {
-                            if (d.num1 == undefined) {
+                            if (d.num1 == undefined || d.num1 == 0) {
                                 return d.num;
                             }
                             if (d.num != d.num1) {
@@ -373,7 +373,7 @@
                 type: "POST",
                 async: false,
                 data: {
-                    id: depotData.id,
+                    id: depotData.cid,
                     ownerid: depotData.ownerid,
                     depotid: depotData.depotid,
                     lbarr: JSON.stringify(apriceJson),
