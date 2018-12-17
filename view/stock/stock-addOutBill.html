@@ -372,16 +372,31 @@
                         title: '长度',
                         width: 120,
                     }, {
+                        field: 'num',
+                        title: '数量（m³）',
+                        width: 120,
+                    }, {
                         field: 'aprice',
-                        title: '评估单价' + unitMoney,
+                        title: '评估状态',
+                        width: 130,
+                        templet: function(d) {
+                            //默认无
+                            if (d.isapp == 1) {
+                                return '<span>不用评估</span>';
+                            }
+                            //默认无
+                            if (null == d.aprice || d.aprice < 0) {
+                                return '<span style="color:red;">未评估</span>';
+                            }
+                            return d.aprice;
+                        }
+                    }, {
+                        field: 'aprice',
+                        title: '估值单价' + unitMoney,
                         width: 130,
                         templet: function(d) {
                             return formatNum(d.aprice) || "";
                         },
-                    }, {
-                        field: 'num',
-                        title: '数量（m³）',
-                        width: 120,
                     }, {
                         field: "",
                         title: "总金额",
@@ -389,14 +404,6 @@
                         templet: function(d) {
                             return formatNum(d.totalamount) || "";
                         },
-                    }, {
-                        field: 'ownername',
-                        title: '仓库主',
-                        width: 120,
-                    }, {
-                        field: 'depname',
-                        title: '仓库名称',
-                        width: 180,
                     }, {
                         field: 'billloading',
                         title: '提运单',
@@ -409,10 +416,6 @@
                         field: 'supplier',
                         title: '供应商',
                         width: 160,
-                    }, {
-                        field: 'num',
-                        title: '数量（m³）',
-                        width: 120,
                     }
                 ]
             ],

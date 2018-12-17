@@ -338,7 +338,7 @@
                                     unresize: true,
                                 }, {
                                     field: 'aprice',
-                                    title: '评估单价' + unitMoney,
+                                    title: '估值单价' + unitMoney,
                                     width: 130,
                                     templet: function(d) {
                                         return formatNum(d.aprice) || "";
@@ -431,7 +431,7 @@
                             }
                             // console.log(status);
                             if (status) {
-                                status = editAprice(ownerid, apriceChangeValue, tableInsAssess); //提交评估单价
+                                status = editAprice(ownerid, apriceChangeValue, tableInsAssess); //提交估值单价
                                 if (status) {
                                     apriceChangeValue = {}; //如果提交成功清空估价数组
                                     layer.close(assessLayer); //关闭估价弹窗
@@ -487,7 +487,7 @@
                                     goLogin(); // 跳转到登录页
                                 }
                                 if (res.status === 0) {
-                                    layer.msg("评估单价设置成功");
+                                    layer.msg("估值单价设置成功");
                                     status = true;
                                 } else {
                                     layer.msg(res.msg);
