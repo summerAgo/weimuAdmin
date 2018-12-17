@@ -226,10 +226,7 @@
         var depotSelectValue; //仓库id
         //监听仓库选择
         formSelects.on('depotSelect', function(id, vals, val, isAdd, isDisabled) {
-            // console.log(vals)
-            // console.log(val)
-            // console.log(isAdd)
-            // console.log(depotSelectValue)
+
             if (isAdd) {
                 //如果仓库值改变
                 if (val.value !== depotSelectValue) {
@@ -242,15 +239,15 @@
                             curr: 1 //重新从第 1 页开始
                         }
                     });
-                    // console.log(depotSelectValue)
                 }
             }
         });
 
         var outBill = JSON.parse(sessionStorage.getItem('addOutBill')); //获取所选择记录详情
+
         var data = {};
         var pageData;
-
+        
         if (outBill == null) {
             $(".suboutlbBtn").parent().hide();
             formSelects.undisabled('ownerSelect'); //启用
