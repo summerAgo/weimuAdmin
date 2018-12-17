@@ -574,12 +574,14 @@
                         return false;
                     },
                     success: function(res) {
+                        layer.close(eaitLayer);
                         if (res.status === 0) {
-                            layer.close(eaitLayer);
                             layer.msg('提交成功');
                             listIns();
                         } else if (res.status === 1) {
                             goLogin(); // 跳转到登录页
+                        }else{
+                            layer.msg(res.msg);
                         }
                     }
                 });
