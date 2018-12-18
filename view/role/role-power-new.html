@@ -291,7 +291,7 @@
             // console.log(data);
             var cur = data.currentData;
             //if(!cur.children){
-            
+
             menuid = cur.value;
             valueid = cur.valueid;
             menutype = cur.type;
@@ -315,7 +315,7 @@
                 $(".zimenutab").append(tabList[k]);
             }
 
-            allbutton(cur.value, cur.valueid,menutype);
+            allbutton(cur.value, cur.valueid, menutype);
 
             function tabli(obj, type) {
                 var li = '<li class="' + (type == 0 ? "layui-this" : "") + '" lay-id="' + obj.id + '" lay-mid="' + obj.mid + '">' + obj.name + '</li>';
@@ -330,15 +330,15 @@
             var isChoice = !!cur.checked;
             console.log(isChoice)
             //是否有子节点
-            if (cur.children) {
-                var children = cur.children;
-                for (var i = 0; i < children.length; i++) {
-                    var child = children[i];
-                    muneAut(child.value, child.valueid, isChoice);
-                }
-            } else {
-                muneAut(cur.value, cur.valueid, isChoice);
-            }
+            // if (cur.children) {
+            //     var children = cur.children;
+            //     for (var i = 0; i < children.length; i++) {
+            //         var child = children[i];
+            //         muneAut(child.value, child.valueid, isChoice);
+            //     }
+            // } else {
+            //     muneAut(cur.value, cur.valueid, isChoice);
+            // }
             menuid = cur.value;
             valueid = cur.valueid;
             menutype = cur.type;
@@ -346,11 +346,11 @@
             // allbutton(cur.value, cur.valueid ,menutype);
 
             //var typeCode = valueid.substring(0,1);
-            if(cur.children){
-                for (var i = 0; i< cur.children.length; i++) {
+            if (cur.children) {
+                for (var i = 0; i < cur.children.length; i++) {
                     var f = 0;
                     if (cur.children[i].checked) {
-                       f = 1;
+                        f = 1;
                     }
                     menuAjax({
                         roleid: dataall.id,
@@ -361,31 +361,32 @@
                     });
                 }
             }
+
             menuAjax({
                 roleid: dataall.id,
                 menuid: cur.value,
                 //buttonid: 1,
                 typeCode: 0,
-                checked: isChoice?0:1
+                checked: isChoice ? 0 : 1
             })
 
         });
 
-        
+
         function menuAjax(data) {
-            data['SESSION_NAME']= getCookie('SESSION_NAME');
-            data['TOKEN']= getCookie('TOKEN');
+            data['SESSION_NAME'] = getCookie('SESSION_NAME');
+            data['TOKEN'] = getCookie('TOKEN');
             $.ajax({
                 type: "post",
                 url: setByAuthority,
                 data: data,
                 dataType: 'json',
-                success: function (res) {
+                success: function(res) {
                     console.log(res);
                 }
             });
         }
-        
+
         //根据选中以及取消菜单权限赋值menuid(菜单id)，isChoice(选中还是权限)
         function muneAut(menuids, valueid, isChoice) {
             // console.log("menuids:" + menuids);
@@ -463,7 +464,7 @@
         var allbutData = []; //所有的按钮
         var menuid = null; //被点击的按钮mid
         var valueid = null; //被点击的按钮id
-        var menutype = null;//是否为弹窗
+        var menutype = null; //是否为弹窗
         var allAuthority = []; //所有的权限格式：[{'菜单id':[按钮id]}]
         var trees = []; //整个权限树
 
@@ -572,13 +573,13 @@
             // console.log(data.othis); //得到美化后的DOM对象
 
             // 设置按钮权限
-            var typeCode = valueid.substring(0,1);
+            var typeCode = valueid.substring(0, 1);
             menuAjax({
                 roleid: dataall.id,
                 menuid: menuid,
                 buttonid: data.value,
                 typeCode: typeCode,
-                checked: data.elem.checked?0:1
+                checked: data.elem.checked ? 0 : 1
             })
 
         });
@@ -664,12 +665,12 @@
         element.on('tab(tabsBtn)', function(elem) {
             valueid = $(this).attr('lay-id');
             menuid = $(this).attr('lay-mid');
-            if(valueid.substring(0,1) == "b"){
+            if (valueid.substring(0, 1) == "b") {
                 menutype = 1;
-            }else{
+            } else {
                 menutype = 0;
             }
-            allbutton(menuid, valueid,menutype);
+            allbutton(menuid, valueid, menutype);
         });
 
     });
