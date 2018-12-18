@@ -11,7 +11,7 @@
         <div class="layui-form-item layui-normal-line">
             <label class="layui-form-label form-required">编号</label>
             <div class="layui-input-inline">
-                <input type="text" name="code" placeholder="编号" value="{{d.code || ''}}" autocomplete="off" class="layui-input" lay-verify="code">
+                <input type="text" name="code" placeholder="编号(只能为四位)" value="{{d.code || ''}}" autocomplete="off" class="layui-input" lay-verify="required | code">
             </div>
         </div>
         <div class="layui-form-item layui-normal-line">
