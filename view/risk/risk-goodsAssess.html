@@ -10,7 +10,7 @@
                 </li>
                  -->
                 <!-- <li class="layui-nav-item">
-                    <a href="javascript:;"><i class="iconfont icon-pinggu"></i>评估</a>
+                    <a href="javascript:;"><i class="iconfont icon-pinggu"></i>估值</a>
                 </li> -->
                 <!-- <li class="layui-nav-item">
                     <a href="javascript:;" class="refreshBtn"><i class="iconfont icon-shuaxin"></i>刷新</a>
@@ -52,7 +52,7 @@
         </div>
     </div>
 </div>
-<!-- 是否评估按钮 -->
+<!-- 是否估值按钮 -->
 <script type="text/html" id="checkboxTpl">
     <!-- -->
     <input type="checkbox" name="isapp" value="{{d.id}}" lay-skin="switch" lay-text="要估值|不估值" lay-filter="isapp" {{ d.isapp==0?'checked':''}}>
@@ -78,7 +78,7 @@
         var domObj = $("#risk-goodsAssess .table-tools").find("ul"); //当前页面容器
         btnIsList(domObj, menuKey); //按钮权限
 
-        var assessLayer; // 评估-弹层
+        var assessLayer; // 估值-弹层
         form.render(); // 重置表单渲染
         form.on('submit(searchForm)', function(data) {
             var paramSearch = {};
@@ -183,7 +183,7 @@
             if (obj.event === 'click') {
                 $.get('view/risk/risk-layerAssess.html', {}, function(str) { // 弹出弹框
                     assessLayer = layer.open({
-                        title: '货物评估列表',
+                        title: '货物估值列表',
                         type: 1,
                         content: str, // 注意，如果str是object，那么需要字符拼接。
                         area: ['80%', '78%'],
@@ -311,7 +311,7 @@
                                     title: '长度'
                                 }, {
                                     field: 'isapp',
-                                    title: '是否评估',
+                                    title: '是否估值',
                                     width: 110,
                                     templet: '#checkboxTpl',
                                     unresize: true,
@@ -354,7 +354,7 @@
                         limit: null,
                         // limits: [10, 20, 30, 40, 50],
                         even: true, // 开启隔行背景
-                        title: '货物评估列表',
+                        title: '货物估值列表',
                         done: function(res, curr, count) { // 数据渲染完的回调
 
                         },
@@ -387,8 +387,8 @@
                         }
                     });
 
-                    var apriceChangeValue = {}; //单元格编辑更改评估价格数据对象
-                    //var isapriceChangeValue = {}; //单元格编辑是否评估价格数据对象
+                    var apriceChangeValue = {}; //单元格编辑更改估值价格数据对象
+                    //var isapriceChangeValue = {}; //单元格编辑是否估值价格数据对象
 
                     //监听编辑
                     table.on('edit(tableContainer-from)', function(obj) {
@@ -419,7 +419,7 @@
                     $(".saveEvaluationPriceBtn").click(function() {
                         var status = true;
                         // console.log(apriceChangeValue);
-                        //保存评估价
+                        //保存估值价
                         if ($.isEmptyObject(apriceChangeValue)) {
                             layer.msg("当前估价未作修改");
                         } else {
@@ -451,7 +451,7 @@
 
                     $(".cancelBtn").click(function() {
                         if (!$.isEmptyObject(apriceChangeValue)) {
-                            layer.confirm('有未提交的评估价格', function(index) {
+                            layer.confirm('有未提交的估值价格', function(index) {
                                 //do something
                                 layer.close(index);
                                 apriceChangeValue = {};

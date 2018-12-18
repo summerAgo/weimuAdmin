@@ -178,12 +178,12 @@ var getAuthorityAll = pathUrl + "sys/role/getAuthorityAll";//根据角色id查�
 var setAuthorityAll = pathUrl + "sys/role/setAuthorityAll";//添加角色权限 roleid角色id，allauth 权限[{'菜单id':[按钮id]}]
 var getMenuAll = pathUrl + "sys/menu/getMenuAll";//获取菜单类别列表
 //风控
-var riskList = pathUrl + "risk/control/riskList" //货物评估列表 
+var riskList = pathUrl + "risk/control/riskList" //货物估值列表 
 var outTreasuryList = pathUrl + "risk/control/outTreasuryList" //出货审核列表
 var setThroughOut = pathUrl + "risk/control/setThroughOut" //设置通过出货审核
 
 var outHistoryList = pathUrl + "risk/control/outHistoryList" //风控审核过的出货记录
-var saveEvaluationPrice = pathUrl + "risk/control/saveEvaluationPrice" //保存修改的货物评估价
+var saveEvaluationPrice = pathUrl + "risk/control/saveEvaluationPrice" //保存修改的货物估值价
 var outCordonList = pathUrl + "risk/control/outCordonList" //出货警戒线列表
 var outDetails = pathUrl + "risk/control/outHistoryDetail"//出货审核详情
 var outHistoryDetails = pathUrl + "risk/control/outHistoryDetails"//出货审核记录详情

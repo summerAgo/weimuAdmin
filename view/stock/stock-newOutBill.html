@@ -113,7 +113,7 @@
     <div class="table-content">
         <div class="table-content-main">
             <table class="layui-hide" id="tableContainer-addOutBill" lay-filter="tableContainer-addOutBill"></table>
-            <div class="table-bottom-data">已经选择<span class="data">0</span>个商品</div>
+            <div class="table-bottom-data">已经选择<span class="data">0</span>个货物</div>
         </div>
     </div>
 </div>
@@ -339,7 +339,7 @@
                         title: '数量（m³）'
                     }, {
                         field: 'aprice',
-                        title: '评估金额' + unitMoney,
+                        title: '估值金额' + unitMoney,
                         width: 130,
                         templet: function(d) {
                             return formatNum(d.aprice) || "";
@@ -553,7 +553,7 @@
         table.on('checkbox(tableContainer-addOutBill)', function(obj) {
             var checkStatus = table.checkStatus('tableContainer-addOutBill'); //表格选中状态
             var dataSpan = $("#tableContainer-addOutBill").siblings(".table-bottom-data").find("span");
-            dataSpan.html(checkStatus.data.length); //当前选中了多少商品
+            dataSpan.html(checkStatus.data.length); //当前选中了多少货物
         });
 
         // 从库存添加货物
@@ -695,15 +695,15 @@
                                 title: '规格'
                             }, {
                                 field: 'aprice',
-                                title: '评估状态',
+                                title: '估值状态',
                                 width: 130,
                                 templet: function(d) {
                                     if (d.isapp == 1) {
-                                        return '<span>不用评估</span>';
+                                        return '<span>不用估值</span>';
                                     }
                                     //默认无
                                     if (null == d.aprice || d.aprice < 0) {
-                                        return '<span style="color:red;">未评估</span>';
+                                        return '<span style="color:red;">未估值</span>';
                                     }
                                     return d.aprice;
                                 }
@@ -818,12 +818,12 @@
                     var checkStatus = table.checkStatus('tableContainer-goodsList'); //表格选中状态
                     var dataSpan = $("#tableContainer-goodsList").siblings(".table-bottom-data").find("span");
                     // if (obj.type === "all") {
-                    dataSpan.html(checkStatus.data.length); //当前选中了多少商品
+                    dataSpan.html(checkStatus.data.length); //当前选中了多少货物
                     // }
                     // if (obj.checked) {
                     //     var aprice = obj.data.aprice;
                     //     if (aprice && aprice > 0) {
-                    //         dataSpan.html(checkStatus.data.length); //当前选中了多少商品
+                    //         dataSpan.html(checkStatus.data.length); //当前选中了多少货物
                     //     }
                     // }
                     // if (obj.type == "all") {

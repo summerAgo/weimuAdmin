@@ -377,16 +377,16 @@
                         width: 120,
                     }, {
                         field: 'aprice',
-                        title: '评估状态',
+                        title: '估值状态',
                         width: 130,
                         templet: function(d) {
                             //默认无
                             if (d.isapp == 1) {
-                                return '<span>不用评估</span>';
+                                return '<span>不用估值</span>';
                             }
                             //默认无
                             if (null == d.aprice || d.aprice < 0) {
-                                return '<span style="color:red;">未评估</span>';
+                                return '<span style="color:red;">未估值</span>';
                             }
                             return d.aprice;
                         }
@@ -757,16 +757,16 @@
                                 title: '规格'
                             }, {
                                 field: 'aprice',
-                                title: '评估状态',
+                                title: '估值状态',
                                 width: 130,
                                 templet: function(d) {
                                     //默认无
                                     if (d.isapp == 1) {
-                                        return '<span>不用评估</span>';
+                                        return '<span>不用估值</span>';
                                     }
                                     //默认无
                                     if (null == d.aprice || d.aprice < 0) {
-                                        return '<span style="color:red;">未评估</span>';
+                                        return '<span style="color:red;">未估值</span>';
                                     }
                                     return d.aprice;
                                 }
