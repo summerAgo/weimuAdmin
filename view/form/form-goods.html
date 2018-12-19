@@ -104,7 +104,6 @@
             view.innerHTML = html;
         });
 
-
         formSelects.data('selectVarieties', 'local', {
             arr: selectDataInstall(VTSList) //品种列表
         });
@@ -114,11 +113,7 @@
             if(val.value == 1){
                 return false;
             }
-        }); 
-
-
-
-        
+        });
 
         formSelects.data('selectLevels', 'local', {
             arr: selectDataInstall(levelsList) //等级列表
@@ -129,8 +124,7 @@
             if(val.value == 1){
                 return false;
             }
-        }); 
-
+        });
 
         formSelects.data('selectSpec', 'local', {
             arr: selectDataInstall(specList) //规格列表
@@ -141,10 +135,8 @@
             if(val.value == 1){
                 return false;
             }
-        }); 
+        });
 
-
-       
         formSelects.data('ownerSelect', 'local', {
             arr: selectDataInstall(ownerDropdown) //仓库主列表
         });
