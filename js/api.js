@@ -98,6 +98,8 @@ var userUpdate = pathUrl + "sys/update";//修改用户
 var userDel = pathUrl + "sys/deleteMany";//删除用户
 var userPas = pathUrl + "sys/resetPassword";//重置密码
 var userExit = pathUrl + "sys/exit";//退出登陆
+var usergetSessionAnth = pathUrl +"sys/getSessionAnth";   
+
 //角色
 var roleList = pathUrl + "sys/role/list";//角色列表
 var roleAdd = pathUrl + "sys/role/add";//添加角色

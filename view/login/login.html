@@ -82,6 +82,15 @@
             id:"v_container",
             type:"number"
         });
+        var cahonetime = "12h";
+
+        var SESSION_NAME = getCookie("SESSION_NAME");
+        console.log(SESSION_NAME)
+        if (SESSION_NAME) {
+            //判断是否已登录
+            window.location.href = localhost;//跳转首页
+        }
+
         //监听提交
         form.on('submit(formLogin)', function (data) {
             data.field['SESSION_NAME']= getCookie('SESSION_NAME');
@@ -95,19 +104,19 @@
                 },
                 crossDomain: true,
                 success: function (data) {
-                    if (data.status === 0) {
+                    if (data.status == 0) {
                         layer.msg("登录成功");
-                        setCookie("SESSION_NAME", data.SESSION_NAME, "h12");
-                        setCookie("TOKEN", data.TOKEN, "h12");
+                        setCookie("SESSION_NAME", data.SESSION_NAME, cahonetime);
+                        setCookie("TOKEN", data.TOKEN, cahonetime);
+
                         //该用户菜单权限JSON
                         sessionStorage.setItem("menuAuthority", JSON.stringify(data.menuAuthority));
-                        //setCookie("menuAuthority", JSON.stringify(data.menuAuthority),"h12");
 
                         //该用户按钮权限JSON
                         sessionStorage.setItem("buttonAuthority", JSON.stringify(data.buttonAuthority));
-                        //setCookie("buttonAuthority", JSON.stringify(data.buttonAuthority),"h12");
+
                         //该用户角色数组
-                        sessionStorage.setItem("rolename", data.rolename);
+                        sessionStorage.setItem("roleName", data.roleName);
                         history.replaceState({}, 'index', localhost);//修改浏览器地址
                         window.location.href = localhost;//跳转首页
                     } else {

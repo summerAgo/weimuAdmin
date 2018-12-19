@@ -114,9 +114,9 @@
     <script src="js/api.js"></script>
     <script src="js/common.js"></script>
     <script>
-        var roleName = sessionStorage.getItem("rolename");
+        
         var SESSION_NAME = getCookie("SESSION_NAME");
-        if (!roleName || !SESSION_NAME) {
+        if (!SESSION_NAME) {
             //判断是否已登录
             window.location.href = localhost + "/view/login/login.html";
         }
@@ -135,10 +135,41 @@
                 laytpl = layui.laytpl;
             var container = $('.content-body'); //页面容器
             // var userInfo = JSON.parse(getCookie('userInfo')); //获取session中用户信息
+            //每次刷新拉取用户权限
+            var roleName = "";
+            $.ajax({
+                    url: usergetSessionAnth,
+                    type: "GET",
+                    async: false,
+                    data: {
+                        'SESSION_NAME': SESSION_NAME,
+                        'TOKEN': getCookie('TOKEN')
+                    },
+                    success: function(res) {
+                        if (res.status === 0) {
+                            //该用户菜单权限JSON
+                            sessionStorage.setItem("menuAuthority", JSON.stringify(res.data.menuAuthority));
+
+                            //该用户按钮权限JSON
+                            sessionStorage.setItem("buttonAuthority", JSON.stringify(res.data.buttonAuthority));
+
+                            //该用户角色数组
+                            sessionStorage.setItem("roleName", res.data.roleName);
+                            roleName = res.data.roleName;
+                        }else{
+                            //如果该用户没有权限。则回到登陆页面
+                            goLogin(); // 跳转到登录页
+                        }
+                    }
+                });
+
+
             $(".rolename").html(roleName);
 
             //该用户菜单权限JSON
             var menujson = JSON.parse(sessionStorage.getItem("menuAuthority"));
+            console.log("-------------------------------------------");
+            console.log(menujson);
             // console.log(menujson);
             var menuArr = []; //菜单显示
             var menuRoute = []; //路由
@@ -335,9 +366,9 @@
             function signOut() {
                 //退出登录
                 delCookie("SESSION_NAME");
-                delCookie("rolename");
-                delCookie("menuAuthority");
-                delCookie("buttonAuthority");
+                sessionStorage.removeItem("roleName");
+                sessionStorage.removeItem("menuAuthority");
+                sessionStorage.removeItem("buttonAuthority");
                 history.replaceState({}, 'login', localhost + "/view/login/login.html");
                 window.location.href = localhost + "/view/login/login.html";
             }
