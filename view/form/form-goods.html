@@ -46,9 +46,9 @@
             </div>
         </div>
         <div class="layui-form-item layui-normal-line">
-            <label class="layui-form-label form-required">长度 </label>
-            <div class="layui-input-inline">
-                <input type="text" name="chang" placeholder="长度" autocomplete="off" class="layui-input" lay-verify="required">
+            <label class="layui-form-label">数量(m³)</label>
+            <div class="layui-input-inline form-required">
+                <input type="text" name="num" placeholder="数量（m³）" autocomplete="off" class="layui-input" lay-verify="required | number">
             </div>
         </div>
         <div class="layui-form-item layui-normal-line">
@@ -58,18 +58,18 @@
             </div>
             <div class="layui-form-mid layui-word-aux">(RMB)</div>
         </div>
-        <div class="layui-form-item layui-normal-line">
-            <label class="layui-form-label">数量(m³)</label>
-            <div class="layui-input-inline">
-                <input type="text" name="num" placeholder="数量（m³）" autocomplete="off" class="layui-input" lay-verify="number">
-            </div>
-        </div>
         <!-- <div class="layui-form-item layui-normal-line">
             <label class="layui-form-label">实际数量 <span class="layui-badge-dot"></span></label>
             <div class="layui-input-block">
                 <input type="text" name="actualnum" placeholder="实际数量" autocomplete="off" class="layui-input" lay-verify="required">
             </div>
         </div> -->
+        <div class="layui-form-item layui-normal-line">
+            <label class="layui-form-label">长度 </label>
+            <div class="layui-input-inline">
+                <input type="text" name="chang" placeholder="长度" autocomplete="off" class="layui-input" lay-verify="">
+            </div>
+        </div>
         <div class="layui-form-item layui-normal-line">
             <label class="layui-form-label">货柜号</label>
             <div class="layui-input-inline">
