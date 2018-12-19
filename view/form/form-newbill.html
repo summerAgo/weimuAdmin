@@ -342,6 +342,7 @@
             tableData.push(data.field);
             console.log(tableData)
             // $(".rightBotBtn span").html(tableData.length); //当前选中了多少货物
+            tableData = createNum1(tableData);//num1
             tableIns.reload({
                 data: tableData,
                 limit: tableData.length,
@@ -413,9 +414,18 @@
                         title: '长度'
                     }, {
                         field: 'num',
-                        title: '数量（m³）',
+                        title: '数量（m³）'
+                    }, {
+                        field: 'num1',
+                        title: '实际数量（m³）',
                         event: "edit",
-                        style: 'color:red;'
+                        style: 'color:red;',
+                        templet: function(d) {
+                            if (!d.num1) {
+                                return d.num
+                            };
+                            return d.num1;
+                        }
                     }, {
                         field: 'containernum',
                         title: '货柜号'
@@ -680,7 +690,7 @@
                 layer.prompt({
                     formType: 2,
                     title: '修改包号为' + data.code + '的数量',
-                    value: data.num
+                    value: data.num1
                 }, function(value, index) {
                     if (!value || isNaN(value)) {
                         layer.msg("请输入数字");
@@ -689,7 +699,7 @@
                     layer.msg("修改成功");
                     layer.close(index);
                     obj.update({
-                        num: value
+                        num1: value
                     });
                 });
 
@@ -725,11 +735,11 @@
                         //table删除选中行并更新dom
                         checkBoxTrDom.arr[i].del();
                     }
-                    
+
                     for (i = 0; i < table.cache["tableContainer-from"].length; i++) {
                         //获取操作后的表格数据并赋值给tableData
-                        if(Array.isArray(table.cache["tableContainer-from"][i]) && table.cache["tableContainer-from"][i].length == 0){
-                            table.cache["tableContainer-from"].splice(i,1);
+                        if (Array.isArray(table.cache["tableContainer-from"][i]) && table.cache["tableContainer-from"][i].length == 0) {
+                            table.cache["tableContainer-from"].splice(i, 1);
                             i--;
                         }
                     }
@@ -878,6 +888,7 @@
                             for (var k = 0; k < res.data.length; k++) {
                                 tableData.push(res.data[k]);
                             }
+                            tableData = createNum1(tableData);//num1
                             tableIns.reload({
                                 data: tableData,
                                 limit: tableData.length,
@@ -906,5 +917,16 @@
             window.location.href = ilbstockExportUrl
         });
 
+        /**
+         * 生成num1（实际数量字段）
+         */
+        function createNum1(arr) {
+            for (var i = 0; i < arr.length; i++) {
+                if(arr[i].num1 == undefined || arr[i].num1 == null){
+                    arr[i].num1 = arr[i].num;
+                }
+            }
+            return arr;
+        }
     });
 </script>
