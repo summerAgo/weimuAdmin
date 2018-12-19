@@ -164,10 +164,19 @@ function formatNum(num) {
 
 // 登录超时函数
 function goLogin() {
-    layer.alert('登录超时，请重新登录。', function(index) {
+    layer.alert('登录超时或该用户在别处登陆，请重新登录。', function(index) {
+        clearSeesion();
         window.location.href = loginPageUrl;
         layer.close(index);
     });
+}
+
+function clearSeesion(){
+    delCookie("TOKEN");
+    delCookie("SESSION_NAME");
+    sessionStorage.removeItem("roleName");
+    sessionStorage.removeItem("menuAuthority");
+    sessionStorage.removeItem("buttonAuthority");
 }
 
 // 车牌号小写改大写
