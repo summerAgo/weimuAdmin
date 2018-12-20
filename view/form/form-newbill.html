@@ -856,7 +856,11 @@
                 success: function(res) {
                     if (res.status === 0) {
                         layer.msg("提交成功");
-                        //layer.closeAll();
+                        console.log(orderno);
+                        if (!orderno) {
+                            layer.closeAll();
+                        }
+                        //
                         //刷新当前列表
                     } else if (res.status === 1) {
                         goLogin(); // 跳转到登录页
