@@ -183,3 +183,14 @@ function clearSeesion(){
 function toUpperCase(obj){
     obj.value = obj.value.toUpperCase()
 }
+
+/**
+ * 数组JSON中的值清楚结尾.0字符
+ */
+function objValueMake(arr,key){
+    if(arr.length==0){return false;}
+    for(var i=0;i<arr.length;i++){
+        arr[i][key] = arr[i][key].replace(/\.0$/,"");
+    }
+    return arr;
+}

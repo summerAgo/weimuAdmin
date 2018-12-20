@@ -343,6 +343,7 @@
             console.log(tableData)
             // $(".rightBotBtn span").html(tableData.length); //当前选中了多少货物
             tableData = createNum1(tableData);//num1
+            tableData = objValueMake(tableData,'chang');//长度去.0
             tableIns.reload({
                 data: tableData,
                 limit: tableData.length,
@@ -812,7 +813,7 @@
             // }
 
             tableData = table.cache["tableContainer-from"];
-
+            
             var arr = JSON.stringify(tableData);
             if (tableData.length === 0) {
                 layer.msg("请添加货物信息");
@@ -889,6 +890,7 @@
                                 tableData.push(res.data[k]);
                             }
                             tableData = createNum1(tableData);//num1
+                            tableData = objValueMake(tableData,'chang');//长度去.0
                             tableIns.reload({
                                 data: tableData,
                                 limit: tableData.length,
