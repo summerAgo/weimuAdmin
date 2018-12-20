@@ -427,6 +427,9 @@
                             };
                             return d.num1;
                         }
+                    },{
+                        field: 'pieces',
+                        title: '片数'
                     }, {
                         field: 'containernum',
                         title: '货柜号'
@@ -853,7 +856,7 @@
                 success: function(res) {
                     if (res.status === 0) {
                         layer.msg("提交成功");
-                        layer.closeAll();
+                        //layer.closeAll();
                         //刷新当前列表
                     } else if (res.status === 1) {
                         goLogin(); // 跳转到登录页

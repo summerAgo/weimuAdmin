@@ -50,10 +50,12 @@
                 <td>品牌</td>
                 <td>产地</td>
                 <td>数量(m³)</td>
+                <td>片数</td>
                 <td>备注</td>
             </tr>
             <tr class="bottom">
                 <td class="total">合计</td>
+                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -179,6 +181,7 @@
                 '<td>' + arrOll[0].brand + '</td>' +
                 '<td>' + arrOll[0].origin + '</td>' +
                 '<td>' + arrOll[0].num + '</td>' +
+                '<td>' + arrOll[0].pieces + '</td>' +
                 '<td>' + (arrOll[0].remarks == null ? "" : arrOll[0].remarks) + '</td>' +
                 '</tr>';
             trs += trH;
@@ -197,6 +200,7 @@
                     '<td>' + arrBod[n].brand + '</td>' +
                     '<td>' + arrBod[n].origin + '</td>' +
                     '<td>' + arrBod[n].num + '</td>' +
+                    '<td>' + arrBod[0].pieces + '</td>' +
                     '<td>' + (arrBod[n].remarks == null ? "" : arrBod[n].remarks) + '</td>' +
                     '</tr>';
                 trs += trB;

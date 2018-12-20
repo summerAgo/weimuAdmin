@@ -383,6 +383,9 @@
                 dataType: 'json',
                 success: function(res) {
                     console.log(res);
+                    if (res.status == 1) {
+                        goLogin(); // 跳转到登录页
+                    }
                 }
             });
         }
