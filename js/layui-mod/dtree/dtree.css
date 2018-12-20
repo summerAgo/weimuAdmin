@@ -47,7 +47,7 @@
 /* 默认风格*/
 .dtree-theme-item-this{background-color: #d2d2d2!important;}
 .dtree-theme-item:hover{background-color: #eaeceb!important;}
-.dtree-theme-item cite{font-size:12px!important;}
+.dtree-theme-item cite{font-size:14px!important;}
 .dtree-theme-item:hover cite{color:#0284ff!important;}
 
 .dtree-theme-iconfont{font-size: 16px!important;}
