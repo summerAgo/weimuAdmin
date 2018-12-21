@@ -820,7 +820,7 @@
             if (tableData.length > 0) {
                 // 出库单已有货物
                 tableData = tableData.concat(checkStatus.data);
-                tableData = tableData.uniqueJson("id");
+                tableData = tableData.uniqueJson("uuid");
             } else {
                 tableData = checkStatus.data;
             }
@@ -842,10 +842,35 @@
             if (checkData.length < 1) {
                 layer.msg("请选择需要移除的信息");
             } else {
+                const newuuidarr = [];
                 //移除已选中货物
                 for (var i = 0; i < checkData.length; i++) {
-                    tableData.remove("id", checkData[i].id);
+                    tableData.remove("uuid", checkData[i].uuid);
+                    newuuidarr.push(checkData[i].uuid);
                 }
+                //如果不是新建单，则从后台移除该货物
+                if (outBill != null) {
+                    var preData = {};
+                    preData['SESSION_NAME'] = getCookie('SESSION_NAME');
+                    preData['TOKEN'] = getCookie('TOKEN');
+                    preData['uuidarr'] = newuuidarr.toString();
+                    $.ajax({
+                        cache: true,
+                        type: "POST",
+                        url: preoutRemove,
+                        async: false,
+                        data: preData,
+                        success: function(res) {
+                            if (res.status == 1) {
+                                goLogin();
+                            }
+                            if (res.status != 0 && res.status == 1) {
+                                layer.msg("移除失败，请关闭当前页面，重新操作！");
+                            }
+                        }
+                    });
+                }
+
                 tableOutBill.reload({
                     data: tableData,
                     page: {
