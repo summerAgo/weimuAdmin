@@ -17,6 +17,9 @@
                 <!--<li class="layui-nav-item">
                     <a href="javascript:;" class="toExport"><i class="iconfont icon-daochu"></i>导出</a>
                 </li>-->
+                <!-- <li class="layui-nav-item">
+                    <a href="javascript:;" class="toBatchExport"><i class="iconfont icon-daochu"></i>批量导出</a>
+                </li> -->
             </ul>
         </div>
     </div>
@@ -345,7 +348,7 @@
                             return d.LAY_TABLE_INDEX + 1;
                         }
                     }, {
-                        type: 'radio'
+                        type: 'checkbox'
                     }, {
                         field: 'orderno',
                         title: '单号',
@@ -417,7 +420,7 @@
         //弃出库
         $(".back-out-examine").click(function() {
             var checkStatus = table.checkStatus('tableContainer'); //表格选中状态
-            if (checkStatus.data.length < 1) {
+            if (checkStatus.data.length != 1) {
                 layer.msg("请选择一条记录");
                 return;
             }
@@ -459,7 +462,7 @@
         //删除
         $(".in-lb-del").click(function() {
             var checkStatus = table.checkStatus('tableContainer'); //表格选中状态
-            if (checkStatus.data.length < 1) {
+            if (checkStatus.data.length != 1) {
                 layer.msg("请选择一条记录");
                 return;
             }
@@ -498,10 +501,26 @@
             });
         });
 
-        //点击导出
+        //导出列表货物
+        $(".toBatchExport").on('click', function(e) {
+            var checkStatus = table.checkStatus('tableContainer');
+            var checkData = checkStatus.data;
+            if(checkData.length > 0){
+                const neworder = [];
+                for (let index = 0; index < checkData.length; index++) {
+                    const element = checkData[index];
+                    neworder.push(element.orderno);
+                }
+                window.location.href = outbatchExport+"?orderarr="+neworder.toString();
+            }else{
+                layer.msg("请选择记录");
+            }
+        });
+
+        //导出列表
         $(".toExport").on('click', function(e) {
             table.exportFile(tableInss.config.id, tableInss.config.data, "xls");
         });
-
+        
     });
 </script>

@@ -49,6 +49,7 @@ var inEntryexamineStock = pathUrl + "order/warehousing/examineStock";//预入库
 var inEntryexamineStockGoods = pathUrl + "order/warehousing/examineStockGoods";//选择预入库单中的货物入库为库存
 var inentryHistory = preEntry + "?ishistory=1";//入库记录
 var inprintinjk = pathUrl+"/order/warehousing/prinware";
+var inbatchExport = pathUrl + "order/warehousing/batchExport";//根据单号批量导出
 
 //预出库
 var pregetOrdernoDetails =  pathUrl + "order/preouttreasury/getOrdernoDetails" //库存中查询货物 （仓库：depotid 仓库主：ownerid）
@@ -59,6 +60,9 @@ var preoutRemove = pathUrl + "order/preouttreasury/remove";//出货申请详情�
 var preoutStock = pathUrl + "order/preouttreasury/outStock";//审核通过出库
 var preoutTreasuryDelete = pathUrl + "order/preouttreasury/delete";//出库删除
 var preoutTreasury = pathUrl + "order/preouttreasury/list";//出库列表
+var preoutgetByOrder = pathUrl + "order/preouttreasury/getByOrder";//根据orderno单号查询信息
+
+
 
 //出库
 var backoutexamine = pathUrl + "order/outtreasury/backoutexamine";//反出库审核
@@ -71,6 +75,8 @@ var outStock = pathUrl + "order/outtreasury/outStock";//审核通过出库
 var outTreasuryDelete = pathUrl + "order/outtreasury/delete";//出库删除
 var outTreasury = pathUrl + "order/outtreasury/list";//出库列表
 var outfailoutlist = pathUrl + "order/outtreasury/failoutlist";//出库列表
+var outbatchExport = pathUrl + "order/outtreasury/batchExport";//根据单号批量导出
+
 
 // 仓库管理
 var bitdepotList = pathUrl + "basics/bitdepot/list";//大仓库列表

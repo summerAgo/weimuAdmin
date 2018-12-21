@@ -335,12 +335,14 @@
 
         // 确认盘点
         $(".confirmBtn").click(function() {
-
             var checkStatus = table.checkStatus('tableContainer'); //表格选中状态
             var checkData = checkStatus.data;
             // console.log(goodsListArray);
             if (checkData.length > 0) {
-                qdeditAprice(checkData, endInventory);
+                layer.confirm('你确认结束该盘点吗？目前盘点阶段是可以出入库的，请仔细核对在填写完实际盘点数之后，有没有再次操作出入货，如果有一定要重新核对所填写的实际盘点数，再进行结束盘点的操作，避免生成不正确的库存数！', function(index) {
+                    qdeditAprice(checkData, endInventory);
+                    layer.close(index);
+                }); 
             }
         });
 
