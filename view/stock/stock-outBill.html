@@ -179,13 +179,13 @@
             }
         }, true);
 
-        formSelects.data('originSelectOut', 'local', {
-            arr: selectDataInstall(CHDList) //产地列表
-        });
+        // formSelects.data('originSelectOut', 'local', {
+        //     arr: selectDataInstall(CHDList) //产地列表
+        // });
 
-        formSelects.data('supplierSelectOut', 'local', {
-            arr: selectDataInstall(dropSupplier) //供应商列表
-        });
+        // formSelects.data('supplierSelectOut', 'local', {
+        //     arr: selectDataInstall(dropSupplier) //供应商列表
+        // });
 
         function selectDataInstall(url, param, bool) {
             //下拉选框数据组装
@@ -512,14 +512,16 @@
         table.on('tool(tableContainers)', function(obj) {
             //监听单元格点击事件
             var data = obj.data;
+            var pageUrl = 'view/stock/stock-addOutBill.html';
             if (obj.event === 'click') {
+                if(data.status == 4 || data.status == 3){pageUrl = 'view/stock/stock-addOutBill_bak.html';}
                 sessionStorage.setItem('addOutBill', JSON.stringify(data));
-                $.get('view/stock/stock-addOutBill.html', {}, function(str) { // 请求弹框
+                $.get(pageUrl, {}, function(str) { // 请求弹框
                     addLayer = layer.open({
                         title: '出货申请单详情',
                         type: 1,
                         content: str, // 注意，如果str是object，那么需要字符拼接。
-                        area: ['80%', '80%'],
+                        area: ['99%', '99%'],
                         end: function() {
                             tableIns.reload({
                                 page: {
@@ -535,12 +537,12 @@
         //新建出库单
         $(".creatBillBtn").click(function() {
             sessionStorage.removeItem('addOutBill');//移除点击table表格带入的数据
-            $.get('view/stock/stock-newOutBill.html', {}, function(str) { // 请求弹框
+            $.get('view/stock/stock-addOutBill.html', {}, function(str) { // 请求弹框
                 addLayer = layer.open({
                     title: '新建出库单',
                     type: 1,
                     content: str, // 注意，如果str是object，那么需要字符拼接。
-                    area: ['80%', '80%'],
+                    area: ['99%', '99%'],
                     end: function() {
                         tableIns.reload({
                             page: {

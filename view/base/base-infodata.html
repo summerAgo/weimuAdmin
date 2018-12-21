@@ -133,18 +133,20 @@
             },
             cols: [
                 [ //标题栏
+                    // {
+                    //     field: 'LAY_TABLE_INDEX',
+                    //     title: '序号',
+                    //     width: 40,
+                    //     templet: function(d) {
+                    //         return d.LAY_TABLE_INDEX + 1;
+                    //     }
+                    // }, 
                     {
-                        field: 'LAY_TABLE_INDEX',
-                        title: '序号',
-                        width: 40,
-                        templet: function(d) {
-                            return d.LAY_TABLE_INDEX + 1;
-                        }
-                    }, {
                         type: 'checkbox'
                     }, {
                         field: 'name',
                         title: '名称',
+                        sort:true
                     }, {
                         field: 'instname',
                         title: '所属目录',
