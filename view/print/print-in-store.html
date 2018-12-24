@@ -62,8 +62,8 @@
                 <td></td>
                 <td></td>
                 <td></td>
-                <td></td>
                 <td class="total-num"></td>
+                <td></td>
                 <td></td>
             </tr>
         </table>
@@ -181,7 +181,7 @@
                 '<td>' + arrOll[0].brand + '</td>' +
                 '<td>' + arrOll[0].origin + '</td>' +
                 '<td>' + arrOll[0].num + '</td>' +
-                '<td>' + arrOll[0].pieces + '</td>' +
+                '<td>' + (arrOll[0].pieces == null ? "" : arrOll[0].pieces) + '</td>' +
                 '<td>' + (arrOll[0].remarks == null ? "" : arrOll[0].remarks) + '</td>' +
                 '</tr>';
             trs += trH;
@@ -200,7 +200,7 @@
                     '<td>' + arrBod[n].brand + '</td>' +
                     '<td>' + arrBod[n].origin + '</td>' +
                     '<td>' + arrBod[n].num + '</td>' +
-                    '<td>' + arrBod[0].pieces + '</td>' +
+                    '<td>' + (arrBod[n].pieces == null ? "" : arrBod[n].pieces) + '</td>' +
                     '<td>' + (arrBod[n].remarks == null ? "" : arrBod[n].remarks) + '</td>' +
                     '</tr>';
                 trs += trB;

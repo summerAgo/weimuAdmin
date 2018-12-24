@@ -239,7 +239,7 @@
         formSelects.btns(['select', 'remove'], {
             show: 'name'
         });
-
+        var updaData = [];  //修改回显货物
         var tableData = []; //本地的货物列表
         var ownerid; //仓库主ID
         var depotid; //仓库ID
@@ -388,7 +388,10 @@
                 success: function(res) {
                     if (res.status === 0) {
                         pageData = res;
-                        tableData = pageData.stocklist;
+                        tableData = pageData.data;
+                        for (let index = 0; index < tableData.length; index++) {
+                            updaData.push(tableData[index]);
+                        }
                     }
                 }
             });
@@ -442,7 +445,7 @@
             $("input[name='estimatedate']").attr("disabled", true)
         }
 
-        function selectDataInstall(url, param, bool) {
+        function selectDataInstall(url, param, bool,type) {
             //下拉选框数据组装
             var arr = [];
             //获取列表数据
@@ -461,10 +464,18 @@
                             return false;
                         }
                         for (var i = 0; i < data.data.length; i++) {
-                            arr.push({
-                                "name": data.data[i].name,
-                                "value": data.data[i].id
-                            })
+                            if(type == 1){
+                                arr.push({
+                                    "name": data.data[i].name,
+                                    "value": data.data[i].name
+                                })
+                            }else{
+                                arr.push({
+                                    "name": data.data[i].name,
+                                    "value": data.data[i].id
+                                })
+                            }
+                            
                         }
                         if (bool) {
                             arr[0].selected = "selected";
@@ -508,12 +519,33 @@
                 "depotid": depotid || 0
             },
             parseData: function(res) { //res 即为原始返回的数据
+
+                //把查询出来的货物与已申请的货物  合并
+                var newtabledata = [];
+                if(null != res.data){
+                    newtabledata = res.data
+                }
+                
+                console.log(updaData);
+                //if(null != updaData && updaData.length > 0){
+                    for(var i =0 ;i<updaData.length;i++){
+                        var tableobj = updaData[i];
+                        if(isArr(tableobj.uuid,tableData)){
+                            tableobj["LAY_CHECKED"] = true;
+                        }else{
+                            tableobj["LAY_CHECKED"] = false;
+                        }
+                        newtabledata.push(tableobj);
+                    }
+                //}
+                
+
                 if (res.status !== 0) res.status = 0;
                 return {
                     "code": res.status, //解析接口状态
                     "msg": res.message, //解析提示文本
                     "count": res.count, //解析数据长度
-                    "data": res.data, //解析数据列表
+                    "data": newtabledata, //解析数据列表
                     "aprice": res.aprice, //解析数据列表
                     "znum": res.znum //解析数据列表
                 }
@@ -577,6 +609,9 @@
                         field: 'num',
                         title: '数量（m³）',
                         width: 120,
+                    },{
+                        field: 'pieces',
+                        title: '片数'
                     }, {
                         field: 'containernum',
                         title: '货柜号',
@@ -804,14 +839,15 @@
                         goLogin();
                     }
                     if (res.status == 0) {
-                        layer.msg(res.msg, {
-                            icon: 1,
-                            time: 2000
-                        }, function() {
-                            layer.closeAll();
-                        });
+                        
                     }
-                    layer.msg(res.msg);
+                    layer.closeAll();
+                    layer.msg(res.msg, {
+                        icon: 1,
+                        time: 2000
+                    }, function() {
+                        
+                    });
                 }
             });
         });
@@ -823,16 +859,34 @@
             if (checkData.length == 0) {
                 return false;
             }
-
+            
             if (tableData.length > 0) {
-                // 出库单已有货物
-                tableData = tableData.concat(checkStatus.data);
-                tableData = tableData.uniqueJson("uuid");
-            } else {
-                tableData = checkStatus.data;
-            }
+                for(var i=0;i < checkData.length;i++){
+                    var v = checkData[i];
+                    var isf = true;
+                    for(var j=0;j<tableData.length;j++){
+                        if(v.uuid == tableData[j].uuid){
+                            isf = false;
+                        }
+                    }
+                    if(isf){
+                        tableData.push(v);
+                    }
+                }
 
-            tableData = checkData;
+                // console.log("sssssssss");
+                // console.log(tableData);
+                // console.log(checkStatus.data);
+                // // 出库单已有货物
+                // tableData = tableData.concat(checkStatus.data);
+                // console.log(tableData);
+                // tableData = tableData.uniqueJson("uuid");
+                // console.log(tableData);
+            } else {
+                tableData = checkData;
+            }
+            console.log(tableData);
+            //tableData = checkData;
             tableOutBill.reload({
                 data: tableData,
                 page: {
@@ -843,41 +897,59 @@
         });
 
         $(".deleteGoods").click(function() {
+            console.log(updaData);
             //移除
             var checkStatus = table.checkStatus('tableContainer-addOutBill');
             var checkData = checkStatus.data;
             if (checkData.length < 1) {
                 layer.msg("请选择需要移除的信息");
             } else {
-                const newuuidarr = [];
+                //const newuuidarr = [];
+                console.log(checkData.length);
                 //移除已选中货物
                 for (var i = 0; i < checkData.length; i++) {
                     tableData.remove("uuid", checkData[i].uuid);
-                    newuuidarr.push(checkData[i].uuid);
+                    //newuuidarr.push(checkData[i].uuid);
                 }
                 //如果不是新建单，则从后台移除该货物
-                if (outBill != null) {
-                    var preData = {};
-                    preData['SESSION_NAME'] = getCookie('SESSION_NAME');
-                    preData['TOKEN'] = getCookie('TOKEN');
-                    preData['uuidarr'] = newuuidarr.toString();
-                    $.ajax({
-                        cache: true,
-                        type: "POST",
-                        url: preoutRemove,
-                        async: false,
-                        data: preData,
-                        success: function(res) {
-                            if (res.status == 1) {
-                                goLogin();
-                            }
-                            if (res.status != 0 && res.status == 1) {
-                                layer.msg("移除失败，请关闭当前页面，重新操作！");
-                            }
-                        }
-                    });
-                }
+                // if (outBill != null) {
+                //     var preData = {};
+                //     preData['SESSION_NAME'] = getCookie('SESSION_NAME');
+                //     preData['TOKEN'] = getCookie('TOKEN');
+                //     preData['uuidarr'] = newuuidarr.toString();
+                //     preData['orderno'] = outBill.orderno;
+                //     $.ajax({
+                //         cache: true,
+                //         type: "POST",
+                //         url: preoutRemove,
+                //         async: false,
+                //         data: preData,
+                //         success: function(res) {
+                //             if (res.status == 1) {
+                //                 goLogin();
+                //             }
+                //             if (res.status != 0 && res.status == 1) {
+                //                 layer.msg("移除失败，请关闭当前页面，重新操作！");
+                //             }
+                //         }
+                //     });
+                // }
+                //更新查询列表
+                // ownerid = formSelects.value('ownerSelect', 'valStr');
+                // depotid = formSelects.value('depotSelect', 'valStr');
 
+                // //搜索货物
+                // data.field.ownerid = ownerid;
+                // data.field.depotid = depotid;
+
+                // tableInsGood.reload({
+                //     where: {},
+                //     page: {
+                //         curr: 1 //重新从第 1 页开始
+                //     }
+                // });
+
+                console.log(updaData);
                 tableOutBill.reload({
                     data: tableData,
                     page: {
@@ -896,4 +968,12 @@
         }
 
     });
+    function isArr(v,arr){
+        for(var i =0;i<arr.length;i++){
+            if(v == arr[i].uuid){
+                return true;
+            }
+        }
+        return false;
+    }
 </script>

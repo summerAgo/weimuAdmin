@@ -342,7 +342,7 @@
             tableData.push(data.field);
             console.log(tableData)
             // $(".rightBotBtn span").html(tableData.length); //当前选中了多少货物
-            tableData = createNum1(tableData);//num1
+            tableData = createNum(tableData);//num1
             tableData = objValueMake(tableData,'chang');//长度去.0
             tableIns.reload({
                 data: tableData,
@@ -414,18 +414,18 @@
                         field: 'chang',
                         title: '长度'
                     }, {
-                        field: 'num',
-                        title: '数量（m³）'
+                        field: 'codenum',
+                        title: '码单数量（m³）'
                     }, {
-                        field: 'num1',
+                        field: 'num',
                         title: '实际数量（m³）',
                         event: "edit",
                         style: 'color:red;',
                         templet: function(d) {
-                            if (!d.num1) {
-                                return d.num
+                            if (!d.num) {
+                                return d.codenum
                             };
-                            return d.num1;
+                            return d.num;
                         }
                     },{
                         field: 'pieces',
@@ -694,7 +694,7 @@
                 layer.prompt({
                     formType: 2,
                     title: '修改包号为' + data.code + '的数量',
-                    value: data.num1
+                    value: data.codenum
                 }, function(value, index) {
                     if (!value || isNaN(value)) {
                         layer.msg("请输入数字");
@@ -703,7 +703,7 @@
                     layer.msg("修改成功");
                     layer.close(index);
                     obj.update({
-                        num1: value
+                        num: value
                     });
                 });
 
@@ -836,10 +836,7 @@
                 //dataType: "json",
                 //contentType: "application/json",
                 async: false,
-                xhrFields: {
-                    withCredentials: true
-                },
-                crossDomain: true,
+
                 data: {
                     lbarr: arr.toString(),
                     ownerid: cargoowner,
@@ -850,7 +847,7 @@
                     positionid: positionid,
                     orderno: num,
                     'SESSION_NAME': getCookie('SESSION_NAME'),
-                    'TOKEN': getCookie('TOKEN'),
+                    'TOKEN': getCookie('TOKEN')
                 },
                 traditional: true,
                 success: function(res) {
@@ -896,7 +893,7 @@
                             for (var k = 0; k < res.data.length; k++) {
                                 tableData.push(res.data[k]);
                             }
-                            tableData = createNum1(tableData);//num1
+                            tableData = createNum(tableData);//num
                             tableData = objValueMake(tableData,'chang');//长度去.0
                             tableIns.reload({
                                 data: tableData,
@@ -927,12 +924,12 @@
         });
 
         /**
-         * 生成num1（实际数量字段）
+         * 生成num（实际数量字段）
          */
-        function createNum1(arr) {
+        function createNum(arr) {
             for (var i = 0; i < arr.length; i++) {
-                if(arr[i].num1 == undefined || arr[i].num1 == null){
-                    arr[i].num1 = arr[i].num;
+                if(arr[i].num == undefined || arr[i].num == null){
+                    arr[i].num = arr[i].codenum;
                 }
             }
             return arr;
