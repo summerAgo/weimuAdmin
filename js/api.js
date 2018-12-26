@@ -208,6 +208,13 @@ var checkdelealready = pathUrl + "check/recordlist/alreadydelete";//已盘点删
 var endInventory = pathUrl + "check/recordlist/endInventory";//确认盘点
 var getByidList = pathUrl + "check/recordlist/getByidList";//查询盘点记录 参数cid
 
+
+//库存调整单
+var adjustlist = pathUrl +"order/adjust/list";
+var adjustadd = pathUrl +"order/adjust/add";
+var adjustadcomplete= pathUrl +"order/adjust/adcomplete";
+
+
 /////验证
 var isname_supplier = pathUrl +"basics/supplier/isName";        //供应商验证        instid,name
 var isname_position = pathUrl +"basics/position/isName";        //库位验证          depotid,name

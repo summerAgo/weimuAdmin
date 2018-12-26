@@ -28,9 +28,9 @@
                         </li>
                         <li class="layui-nav-item">
                             <a href="javascript:;" class="deleteBtn"><i class="iconfont icon-shanchu"></i>删除</a>
-                        </li>
-                        <li class="layui-nav-item">
-                            <a href="javascript:;" class="toExport"><i class="iconfont icon-daochu"></i>导出</a>
+                        </li> -->
+                        <!-- <li class="layui-nav-item">
+                            <a href="javascript:;" class="toImport"><i class="iconfont icon-daochu"></i>导入</a>
                         </li> -->
                     </ul>
                 </div>
@@ -627,6 +627,55 @@
             return false;
         });
 
+
+        //导入
+        // var importLayer; //导入弹窗
+        // $(".toImport").on('click', function(e) {
+        //     $.get("view/form/form-import.html", {}, function(str) {
+        //         importLayer = layer.open({
+        //             title: '文件上传',
+        //             type: 1,
+        //             content: str, //注意，如果str是object，那么需要字符拼接。
+        //             area: ['500px', '340px'],
+        //         });
+        //         var uploadInst = upload.render({ //上传实例
+        //             elem: '#importAddBtn',
+        //             url: pathUrl+"/basics/position/importExcel",
+        //             multiple: false,
+        //             accept: 'file', //普通文件
+        //             exts: 'xls|xlsx|xlsm|xlt|xltx|xltm', //只允许上传后缀
+        //             done: function(res) {
+        //                 if (res.status === 0) {
+        //                     layer.msg("上传成功");
+        //                     layer.close(importLayer);
+        //                     for (var k = 0; k < res.data.length; k++) {
+        //                         tableData.push(res.data[k]);
+        //                     }
+        //                     tableData = createNum(tableData);//num
+        //                     tableData = objValueMake(tableData,'chang');//长度去.0
+        //                     tableIns.reload({
+        //                         data: tableData,
+        //                         limit: tableData.length,
+        //                         page: {
+        //                             curr: 1 //重新从第 1 页开始
+        //                         }
+        //                     });
+        //                 } else {
+        //                     var msgstr = "------以下行有问题------</br></br>";
+        //                     for (var i = 0; i < res.data.length; i++) {
+        //                         msgstr += res.data[i];
+        //                     }
+        //                     layer.msg(msgstr, {
+        //                         time: 60000, //60s后自动关闭
+        //                         btn: ['关闭'],
+        //                         area: ["100%", "100%"]
+        //                     });
+        //                 }
+        //             }
+        //         });
+        //     })
+        // });
+        
         //点击导出
         $(".toExport").on('click', function(e) {
             table.exportFile(tableIns.config.id, tableIns.config.data,"xls");
