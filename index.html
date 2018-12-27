@@ -86,24 +86,20 @@
     <script id="menuTlp" type="text/html">
         <ul class="layui-nav layui-nav-tree" lay-filter="index-side" lay-shrink="all">
             {{# layui.each(d.list, function(index, item){ }}
-                {{# if(item.pid == 0){ }}
                     <li class="layui-nav-item">
                         {{#  if(item.code){ }}
                             <a href="#!{{item.code}}"><i class="iconfont {{item.icon}}"></i>{{item.name}}</a>
                         {{#  } else { }}
                             <a href="javascript:;"><i class="iconfont {{item.icon}}"></i>{{item.name}}</a>
                         {{#  } }}
-                        {{# if(item.child){}}
+                        {{# if(item.ischild){}}
                             <dl class="layui-nav-child">
-                                {{# layui.each(d.list, function(indexx, itemx){ }}
-                                    {{# if(itemx.pid == item.id){}}
+                                {{# layui.each(item.child, function(indexx, itemx){ }}
                                         <dd><a href="#!{{itemx.code}}">{{itemx.name}}</a></dd>
-                                    {{# }}}
                                 {{# }); }}
                             </dl>
                         {{# } }}
                     </li>
-                {{# } }}
             {{# }); }}
         </ul>
     </script>
@@ -114,6 +110,17 @@
     <script src="js/api.js"></script>
     <script src="js/common.js"></script>
     <script>
+        function obtainchildList(id,arr){
+            var newarr = [];
+            for (let index = 0; index < arr.length; index++) {
+                const a = arr[index];
+                if(id == a.pid){
+                    newarr.push(a);
+                }
+            }
+            return newarr;
+        }
+
         var SESSION_NAME = getCookie("SESSION_NAME");
         if (!SESSION_NAME) {
             clearSeesion();
@@ -168,32 +175,40 @@
 
             //该用户菜单权限JSON
             var menujson = JSON.parse(sessionStorage.getItem("menuAuthority"));
-            // console.log(menujson);
+            //console.log(menujson);
             var menuArr = []; //菜单显示
             var menuRoute = []; //路由
+
             for (var key in menujson) {
                 var json = JSON.parse(menujson[key]);
-                if (json) {
-                    var v = [json.code, function() {
-                        container.load(json.url);
-                    }]
-                    // menuRoute.push(v);
-                }
                 menuArr.push(json);
             }
+
             // console.log(menuArr);
+            //标识每个菜单是否有子集
+            var newSortList = [];
             for (var i = 0; i < menuArr.length; i++) {
-                for (var x = 0; x < menuArr.length; x++) {
-                    if (menuArr[x].pid === menuArr[i].id) {
-                        menuArr[i].child = true;
+                const a = menuArr[i];
+                if(a.pid == 0 || a.pid == undefined){
+                    const zilist = obtainchildList(a.id,menuArr);//得到该父节点下面的数据
+                    if(zilist.length  > 0){
+                        zilist.sort(function(a1,b1) {
+                            return a1.sort - b1.sort;
+                        });
+                        a['ischild'] = true;
+                        a['child'] = zilist;
+                    }else{
+                        a['ischild'] = false;
                     }
+                    newSortList.push(a);
                 }
             }
+
             // 左侧菜单模板渲染
             var getTpl = menuTlp.innerHTML,
                 view = document.getElementById('menuview');
             var data = { //数据
-                "list": menuArr
+                "list": newSortList
             };
             console.log(data);
             laytpl(getTpl).render(data, function(html) {
