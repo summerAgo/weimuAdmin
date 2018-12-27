@@ -387,12 +387,34 @@
                 layer.msg("请选择一条需要调整的数据");
             } else {
                 layer.confirm('是否确认完成此调整?', function(index) {
-                    var data = [];
-                    data['SESSION_NAME'] = getCookie('SESSION_NAME');
-                    data['TOKEN'] = getCookie('TOKEN');
-                    data['orderno'] = checkData[0].orderno;
-                    qdeditAprice(data, adjustadcomplete);
+                    var datainfo = {};
+                    datainfo['SESSION_NAME'] = getCookie('SESSION_NAME');
+                    datainfo['TOKEN'] = getCookie('TOKEN');
+                    datainfo['orderno'] = checkData[0].orderno;
+                    //qdeditAprice(data, adjustadcomplete);
                     layer.close(index);
+                    $.ajax({
+                        url: adjustadcomplete,
+                        type: "POST",
+                        async: false,
+                        data: datainfo,
+                        success: function(res) {
+                            if (res.status === 1) {
+                                goLogin(); // 跳转到登录页
+                            }
+                            if (res.status === 0) {
+                                //status = true;
+                                tableIns.reload({
+                                    page: {
+                                        curr: 1 // 重新从第 1 页开始
+                                    }
+                                });
+                            }
+                            layer.msg(res.msg);
+                        }
+                    });
+
+                    
                 });
             }
         });
@@ -428,11 +450,6 @@
                 type: "POST",
                 async: false,
                 data: datainfo,
-                xhrFields: {
-                    withCredentials: true,
-                },
-                crossDomain: true,
-                // traditional: true,
                 success: function(res) {
                     if (res.status === 1) {
                         goLogin(); // 跳转到登录页
