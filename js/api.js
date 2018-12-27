@@ -214,6 +214,7 @@ var adjustlist = pathUrl +"order/adjust/list";
 var adjustadd = pathUrl +"order/adjust/add";
 var adjustadcomplete= pathUrl +"order/adjust/adcomplete";       //完成调整
 var adjustagetOrderinfo= pathUrl +"order/adjust/getOrderinfo";  //点击列表，进入调整单详情
+var adjustdeleteByOrderno= pathUrl +"order/adjust/deleteByOrderno";  //点击列表，进入调整单详情
 
 
 
