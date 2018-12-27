@@ -17,7 +17,7 @@
             <label class="layui-form-label form-required">品种</label>
             <div class="layui-input-inline">
                 <!-- <input type="text" name="varieties" placeholder="品种" autocomplete="off" class="layui-input" lay-verify="required"> -->
-                <select name="varieties" xm-select="selectVarieties" xm-select-radio lay-verify="required">
+                <select name="varieties" xm-select="selectVarietiesGoods" xm-select-radio lay-verify="required">
                     <option value="">品种</option>
                 </select>
                 <input type="hidden" name="varietiesName" id="varietiesName" value="">
@@ -28,7 +28,7 @@
             <div class="layui-input-inline">
                 <!-- <input type="text" name="spec" placeholder="规格/厚度" autocomplete="off" class="layui-input" lay-verify="required"> -->
                 <div class="table-form-item layui-input-inline">
-                    <select name="spec" xm-select="selectSpec" xm-select-radio lay-verify="required">
+                    <select name="spec" xm-select="selectSpecGoods" xm-select-radio lay-verify="required">
                         <option value="">规格</option>
                     </select>
                     <input type="hidden" name="specName" id="specName" value="">
@@ -39,7 +39,7 @@
             <label class="layui-form-label form-required">等级</label>
             <div class="layui-input-inline">
                 <!-- <input type="text" name="levels" placeholder="等级" autocomplete="off" class="layui-input" lay-verify="required"> -->
-                <select name="levels" xm-select="selectLevels" xm-select-radio lay-verify="required">
+                <select name="levels" xm-select="selectLevelsGoods" xm-select-radio lay-verify="required">
                     <option value="">等级</option>
                 </select>
                 <input type="hidden" name="levelsName" id="levelsName" value="">
@@ -52,7 +52,7 @@
             </div>
         </div>
         <div class="layui-form-item layui-normal-line">
-            <label class="layui-form-label form-required">片数</label>
+            <label class="layui-form-label">片数</label>
             <div class="layui-input-inline">
                 <input type="text" name="pieces" placeholder="片数" autocomplete="off" class="layui-input" lay-verify="number">
             </div>
@@ -110,33 +110,33 @@
             view.innerHTML = html;
         });
 
-        formSelects.data('selectVarieties', 'local', {
+        formSelects.data('selectVarietiesGoods', 'local', {
             arr: selectDataInstall(VTSList) //品种列表
         });
 
-        layui.formSelects.on('selectVarieties', function(id, vals, val, isAdd, isDisabled){
+        layui.formSelects.on('selectVarietiesGoods', function(id, vals, val, isAdd, isDisabled){
             $("#varietiesName").val(val.name);
             if(val.value == 1){
                 return false;
             }
         });
 
-        formSelects.data('selectLevels', 'local', {
+        formSelects.data('selectLevelsGoods', 'local', {
             arr: selectDataInstall(levelsList) //等级列表
         });
 
-        layui.formSelects.on('selectLevels', function(id, vals, val, isAdd, isDisabled){
+        layui.formSelects.on('selectLevelsGoods', function(id, vals, val, isAdd, isDisabled){
             $("#levelsName").val(val.name);
             if(val.value == 1){
                 return false;
             }
         });
 
-        formSelects.data('selectSpec', 'local', {
+        formSelects.data('selectSpecGoods', 'local', {
             arr: selectDataInstall(specList) //规格列表
         });
 
-        layui.formSelects.on('selectSpec', function(id, vals, val, isAdd, isDisabled){
+        layui.formSelects.on('selectSpecGoods', function(id, vals, val, isAdd, isDisabled){
             $("#specName").val(val.name);
             if(val.value == 1){
                 return false;

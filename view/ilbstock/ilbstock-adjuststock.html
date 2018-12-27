@@ -1,4 +1,4 @@
-<div class="table-page addOutBill" id="stock-addOutBill">
+<div class="table-page adjuststock" id="ilbstock-adjuststock">
     <div class="table-content">
         <div class="serverContainer goodsContainer">
             <div class="table-page-header">
@@ -80,7 +80,7 @@
                 <div class="table-content-main" id="goodsList">
                     <table id="tableContainer-goodsList" lay-filter="tableContainer-goodsList"></table>
                     <div class="botBtnBox">
-                        <a href="javascript:;" class="addGoodsBtn">∨ 添加货物</a>
+                        <a href="javascript:;" class="addGoodsBtn subBtnAdj">∨ 添加货物</a>
                     </div>
                 </div>
             </div>
@@ -90,14 +90,14 @@
             <div class="containerTitle">
                 <h3 class="titleTxt">货物调整单</h3>
                 <div class="leftCon">
-                    <a href="javascript:;" class="submissionBtn"><i class="iconfont icon-baocunxinzeng"></i>保存调整单</a>
+                    <a href="javascript:;" class="submissionBtn subBtnAdj"><i class="iconfont icon-baocunxinzeng"></i>保存调整单</a>
                 </div>
                 <div class="rightCon">单据号：<span class="goodsCount">0</span></div>
             </div>
             <div class="table-subbox">
                 <div class="table-subbox-title">
                     <span>调整前的货物：</span>
-                    <a href="javascript:;" class="deleteGoods">∧ 移出货物</a>
+                    <a href="javascript:;" class="deleteGoods subBtnAdj">∧ 移出货物</a>
                     <div class="rightCon">调整前货物总共<span class="goodsCount">0</span>个</div>
                 </div>
                 <div class="table-content-main">
@@ -108,9 +108,9 @@
             <div class="table-subbox">
                 <div class="table-subbox-title">
                     <span>调整后的货物：</span>
-                    <!-- <a href="javascript:;" class="importBtnAdj"><i class="iconfont icon-daoru"></i> 导入货物</a> -->
-                    <a href="javascript:;" class="addBtnAdj"><i class="iconfont icon-tianjia"></i> 新建货物</a>
-                    <a href="javascript:;" class="deleBtnAdj"><i class="iconfont icon-shanchu"></i> 删除货物</a>
+                    <a href="javascript:;" class="importBtnAdj subBtnAdj"><i class="iconfont icon-daoru"></i> 导入货物</a>
+                    <a href="javascript:;" class="addBtnAdj subBtnAdj"><i class="iconfont icon-tianjia"></i> 新建货物</a>
+                    <a href="javascript:;" class="deleBtnAdj subBtnAdj"><i class="iconfont icon-shanchu"></i> 删除货物</a>
                     <div class="rightCon">调整后货物总共<span class="goodsCount">0</span>个</div>
                 </div>
                 <div class="table-content-main">
@@ -122,6 +122,7 @@
     </div>
 </div>
 <style scoped>
+    #ilbstock-adjuststock{padding:5px 0;}
     .layer-title small {
         font-size: 14px;
     }
@@ -200,7 +201,7 @@
         margin: 0 10px 10px;
         border: 1px solid #ccc;
         border-width: 1px 0 0 0;
-        position:relative
+        position: relative
     }
 
     .table-subbox-title {
@@ -216,7 +217,12 @@
         display: inline-block
     }
 
-    .table-subbox .rightCon span{width:auto;color:#ff3c4e;font-weight:bold}
+    .table-subbox .rightCon span {
+        width: auto;
+        color: #ff3c4e;
+        font-weight: bold
+    }
+    .table-page-form .table-form-item{width:255px;}
 </style>
 
 <script>
@@ -309,7 +315,7 @@
                 if (val.value !== depotSelectValue) {
                     depotSelectValue = val.value;
                     tableData2 = [];
-                    
+
                     // table1.reload({
                     //     where: {
                     //         "ownerid": ownerid,
@@ -420,13 +426,13 @@
             } else {
                 auditStatus.html("")
             }
-  
+
             formSelects.disabled('ownerSelects'); //禁用
             formSelects.disabled('depotSelect'); //禁用
             $("input[name='estimatedate']").attr("disabled", true)
         }
 
-        function selectDataInstall(url, param, bool,type) {
+        function selectDataInstall(url, param, bool, type) {
             //下拉选框数据组装
             var arr = [];
             //获取列表数据
@@ -445,18 +451,18 @@
                             return false;
                         }
                         for (var i = 0; i < data.data.length; i++) {
-                            if(type == 1){
+                            if (type == 1) {
                                 arr.push({
                                     "name": data.data[i].name,
                                     "value": data.data[i].name
                                 })
-                            }else{
+                            } else {
                                 arr.push({
                                     "name": data.data[i].name,
                                     "value": data.data[i].id
                                 })
                             }
-                            
+
                         }
                         if (bool) {
                             arr[0].selected = "selected";
@@ -794,8 +800,8 @@
             var preData = {
                 "ownerid": ownerid,
                 "depotid": depotid,
-                "modifyBefore": uuidlist2.toString(),//调整前uuid数组
-                "modifyAfter" : JSON.stringify(tableData3)
+                "modifyBefore": uuidlist2.toString(), //调整前uuid数组
+                "modifyAfter": JSON.stringify(tableData3)
             };
 
             var outBill = JSON.parse(sessionStorage.getItem('adjustParam'));
@@ -804,7 +810,7 @@
                 preData["orderno"] = outBill.orderno;
             }
 
-        
+
             //增加申请单
             preData['SESSION_NAME'] = getCookie('SESSION_NAME');
             preData['TOKEN'] = getCookie('TOKEN');
@@ -826,7 +832,7 @@
                     });
 
                     if (res.status == 0) {
-                        
+
                     }
                 },
                 error: function(request) {
@@ -891,7 +897,7 @@
                     type: 1,
                     content: str, //注意，如果str是object，那么需要字符拼接。
                     resize: false,
-                    area: ['800px', '560px']
+                    area: ['800px', '700px']
                 });
             });
             form.render();
@@ -904,7 +910,7 @@
             tableData3.push(data.field);
             console.log(tableData3)
             // $(".rightBotBtn span").html(tableData.length); //当前选中了多少货物
-            tableData3 = createNum(tableData3);//codenum
+            tableData3 = createNum(tableData3); //codenum
             //tableData = objValueMake(tableData,'chang');//长度去.0
 
             table3.reload({
@@ -917,7 +923,7 @@
             layer.close(addLayer); //关闭
             return false;
         });
-        
+
         /**
          * tableData长度变化改变显示数量
          */
@@ -927,9 +933,9 @@
         /**
          * 生成num（实际数量字段）
          */
-         function createNum(arr) {
+        function createNum(arr) {
             for (var i = 0; i < arr.length; i++) {
-                if(arr[i].num == undefined || arr[i].num == null){
+                if (arr[i].num == undefined || arr[i].num == null) {
                     arr[i].num = arr[i].codenum;
                 }
             }
