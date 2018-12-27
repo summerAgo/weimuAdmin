@@ -143,7 +143,10 @@
     </div>
 </div>
 <style scoped>
-    .billNumber{display: none;}
+    .billNumber {
+        display: none;
+    }
+
     .rightSelect {
         position: absolute;
         right: 0;
@@ -437,6 +440,9 @@
         var adjustParam = JSON.parse(sessionStorage.getItem('adjustParam')); //获取所选择记录详情
         console.log(adjustParam);
         if (adjustParam != null) {
+            if (adjustParam.status == 1 || adjustParam.status == -1) {
+                $(".submissionBtn").hide();
+            }
             var parmdata = {};
             var pageData;
             var dataAipUrl = adjustagetOrderinfo; //调整单接口
@@ -762,7 +768,7 @@
                         field: 'billloading',
                         title: '提运单',
                         width: 150
-                    }, 
+                    },
                     // {
                     //     field: 'origin',
                     //     title: '产地'
@@ -804,6 +810,10 @@
                 return false;
             }
 
+            var origin = layui.formSelects.value('originSelectAdju2', "valStr");
+            var supplierid = layui.formSelects.value('supplierSelectAdju', "valStr");
+            var supplier = $(".suppliernameAdju").val();
+
             var uuidlist2 = [];
             if (tableData2.length == 0) {
                 layer.msg('调整前货物不能为空');
@@ -821,13 +831,15 @@
             var preData = {
                 "ownerid": ownerid,
                 "depotid": depotid,
+                "origin": origin,
+                "supplierid": supplierid,
+                "supplier": supplier,
                 "modifyBefore": uuidlist2.toString(), //调整前uuid数组
                 "modifyAfter": JSON.stringify(tableData3)
             };
 
             var outBill = JSON.parse(sessionStorage.getItem('adjustParam'));
             if (outBill != null) {
-                // var array = JSON.parse(outBill);
                 preData["orderno"] = outBill.orderno;
             }
 
