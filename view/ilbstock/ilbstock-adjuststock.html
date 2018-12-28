@@ -111,6 +111,12 @@
                         <div class="form-box clearfix">
                             <div class="layui-form-item form-left form-down-line">
                                 <div class="table-form-item layui-input-inline">
+                                    <span class="input-span">库位</span>
+                                    <select name="positionid" xm-select="positionSelectAdju" xm-select-radio>
+                                        <option value="">库位</option>
+                                    </select>
+                                </div>
+                                <div class="table-form-item layui-input-inline">
                                     <span class="input-span">产地</span>
                                     <select name="origin" xm-select="originSelectAdju2" xm-select-radio>
                                         <option value="">产地</option>
@@ -265,6 +271,10 @@
         width: 50px;
     }
 
+    .rightSelect.table-page-form .table-form-item {
+        width: 200px;
+    }
+
     .table-page-form .table-form-item.rightConCount {
         margin: 0;
         width: auto;
@@ -290,6 +300,7 @@
         var upload = layui.upload;
 
         formSelects.render('depotSelectAdju'); //下拉选项
+        formSelects.render("positionSelectAdju"); //下拉选项
         formSelects.btns(['remove'], {
             show: 'name'
         });
@@ -306,7 +317,7 @@
 
         //下拉框
         formSelects.data('ownerSelectAdju', 'local', {
-            arr: selectDataInstall(ownerDropdown) //仓库主列表
+            arr: selectDataInstall(ownerDropdown, null, null, 0) //仓库主列表
         });
 
         layui.formSelects.opened('depotSelectAdju', function(id) {
@@ -319,7 +330,7 @@
             }
         });
 
-        layui.formSelects.opened('positionSelect', function(id) {
+        layui.formSelects.opened('positionSelectAdju', function(id) {
             var depotid = formSelects.value('depotSelectAdju', 'val'); //获取仓库ID
             if (depotid.length < 1) {
                 layer.msg("请先选择仓库");
@@ -335,14 +346,21 @@
                 formSelects.data('depotSelectAdju', 'local', {
                     arr: [] //清空仓库列表
                 });
+                formSelects.data('positionSelectAdju', 'local', {
+                    arr: [] //清空库位列表
+                });
             } else {
+                console.log(vals)
                 var depotList = selectDataInstall(depotDropdown, {
                     "ownerid": vals[0].value //仓库列表
-                }, false);
-
+                }, false,0);
+                console.log(depotList); //仓库下拉数据
                 if (depotList.length < 1) {
                     formSelects.data('depotSelectAdju', 'local', {
                         arr: [] //清空仓库列表
+                    });
+                    formSelects.data('positionSelectAdju', 'local', {
+                        arr: [] //清空库位列表
                     });
                     layer.msg("该仓库主下无仓库信息");
                     return false;
@@ -356,7 +374,50 @@
 
         //监听仓库选择
         formSelects.on('depotSelectAdju', function(id, vals, val, isAdd, isDisabled) {
-            if (isAdd) {
+            if (!isAdd) {
+                formSelects.data('positionSelectAdju', 'local', {
+                    arr: [] //仓库列表
+                });
+            } else {
+                
+                console.log(vals);
+                // var bitdepotid = vals[0].bitdepotid;
+                // var positiondIds = vals[0].position;
+                // var arr1 = [];
+                // positiondIds && (arr1 = positiondIds.split(","));
+                // var arr = [];
+
+                // $.ajax({
+                //     url: positiondropdown,
+                //     type: "get",
+                //     data: bitdepotid,
+                //     async: false, // 同步
+                //     traditional: true,
+                //     success: function(data) {
+                //         if (data.status === 0) {
+                //             //把接口数据转换为[{"name":str,"value":number}]格式
+                //             if (!Array.isArray(data.data) || data.data.length === 0) {
+                //                 // 判断arr是否为数组并保证内部有值
+                //                 return false;
+                //             }
+                //             for (var i = 0; i < data.data.length; i++) {
+                //                 for (var k = 0; k < arr1.length; k++) {
+                //                     if (data.data[i].id === parseInt(arr1[k])) {
+                //                         arr.push({
+                //                             "name": data.data[i].name,
+                //                             "value": data.data[i].id,
+                //                         });
+                //                     }
+                //                 }
+                //             }
+                //         }
+                //     }
+                // });
+
+                // // 库位数据初始化
+                // formSelects.data('positionSelectAdju', 'local', {
+                //     arr
+                // });
                 ownerid = formSelects.value('ownerSelectAdju', 'valStr');
                 depotid = val.value;
                 //如果仓库值改变重新获取数据
@@ -493,8 +554,8 @@
             $(".goodsCount3").html(tableData3.length);
         }
 
+        //下拉选框数据组装
         function selectDataInstall(url, param, bool, type) {
-            //下拉选框数据组装
             var arr = [];
             //获取列表数据
             $.ajax({
@@ -503,6 +564,10 @@
                 data: param,
                 async: false, //同步
                 traditional: true,
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
                 success: function(data) {
                     // console.log(data);
                     if (data.status === 0) {
@@ -512,15 +577,19 @@
                             return false;
                         }
                         for (var i = 0; i < data.data.length; i++) {
-                            if (type == 1) {
+                            if (type === 0) {
                                 arr.push({
                                     "name": data.data[i].name,
-                                    "value": data.data[i].name
+                                    "value": data.data[i].id,
+                                    "bitdepotid": data.data[i].bitdepotid,
+                                    "position": data.data[i].position,
                                 })
                             } else {
                                 arr.push({
                                     "name": data.data[i].name,
-                                    "value": data.data[i].id
+                                    "value": data.data[i].name,
+                                    "bitdepotid": data.data[i].bitdepotid,
+                                    "position": data.data[i].position,
                                 })
                             }
                         }
