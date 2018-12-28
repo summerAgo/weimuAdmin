@@ -462,7 +462,8 @@
                 data: parmdata,
                 async: false,
                 success: function(res) {
-                    if (res.status === 0) {
+                    if (res.status == 0) {
+                        console.log(res)
                         pageData = res;
                         tableData2 = pageData.frontarr;
                         tableData3 = pageData.afterarr;
@@ -481,6 +482,10 @@
                     "selected": "selected"
                 }] //仓库主列表
             });
+
+            formSelects.value('originSelectAdju2', [adjustParam.origin]);
+            formSelects.value('supplierSelectAdju', [adjustParam.supplierid]);
+
             formSelects.disabled('ownerSelectAdju'); //禁用
             formSelects.disabled('depotSelectAdju'); //禁用
             $(".billNumber").show().find("span").html(adjustParam.orderno);
