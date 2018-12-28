@@ -350,11 +350,10 @@
                     arr: [] //清空库位列表
                 });
             } else {
-                console.log(vals)
                 var depotList = selectDataInstall(depotDropdown, {
                     "ownerid": vals[0].value //仓库列表
-                }, false,0);
-                console.log(depotList); //仓库下拉数据
+                }, false, 0);
+                // console.log(depotList); //仓库下拉数据
                 if (depotList.length < 1) {
                     formSelects.data('depotSelectAdju', 'local', {
                         arr: [] //清空仓库列表
@@ -379,45 +378,43 @@
                     arr: [] //仓库列表
                 });
             } else {
-                
-                console.log(vals);
-                // var bitdepotid = vals[0].bitdepotid;
-                // var positiondIds = vals[0].position;
-                // var arr1 = [];
-                // positiondIds && (arr1 = positiondIds.split(","));
-                // var arr = [];
+                var bitdepotid = vals[0].bitdepotid;
+                var positiondIds = vals[0].position;
+                var arr1 = [];
+                positiondIds && (arr1 = positiondIds.split(","));
+                var arr = [];
 
-                // $.ajax({
-                //     url: positiondropdown,
-                //     type: "get",
-                //     data: bitdepotid,
-                //     async: false, // 同步
-                //     traditional: true,
-                //     success: function(data) {
-                //         if (data.status === 0) {
-                //             //把接口数据转换为[{"name":str,"value":number}]格式
-                //             if (!Array.isArray(data.data) || data.data.length === 0) {
-                //                 // 判断arr是否为数组并保证内部有值
-                //                 return false;
-                //             }
-                //             for (var i = 0; i < data.data.length; i++) {
-                //                 for (var k = 0; k < arr1.length; k++) {
-                //                     if (data.data[i].id === parseInt(arr1[k])) {
-                //                         arr.push({
-                //                             "name": data.data[i].name,
-                //                             "value": data.data[i].id,
-                //                         });
-                //                     }
-                //                 }
-                //             }
-                //         }
-                //     }
-                // });
+                $.ajax({
+                    url: positiondropdown,
+                    type: "get",
+                    data: bitdepotid,
+                    async: false, // 同步
+                    traditional: true,
+                    success: function(data) {
+                        if (data.status === 0) {
+                            //把接口数据转换为[{"name":str,"value":number}]格式
+                            if (!Array.isArray(data.data) || data.data.length === 0) {
+                                // 判断arr是否为数组并保证内部有值
+                                return false;
+                            }
+                            for (var i = 0; i < data.data.length; i++) {
+                                for (var k = 0; k < arr1.length; k++) {
+                                    if (data.data[i].id === parseInt(arr1[k])) {
+                                        arr.push({
+                                            "name": data.data[i].name,
+                                            "value": data.data[i].id,
+                                        });
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
 
-                // // 库位数据初始化
-                // formSelects.data('positionSelectAdju', 'local', {
-                //     arr
-                // });
+                // 库位数据初始化
+                formSelects.data('positionSelectAdju', 'local', {
+                    arr
+                });
                 ownerid = formSelects.value('ownerSelectAdju', 'valStr');
                 depotid = val.value;
                 //如果仓库值改变重新获取数据
@@ -434,7 +431,7 @@
                     $(".goodsCount2").html(tableData2.length);
                 }
             }
-        });
+        }, true);
 
         // 品种多选数据赋值
         formSelects.data('selectVarietiesAdju', 'local', {
@@ -508,9 +505,6 @@
             var pageData;
             var dataAipUrl = adjustagetOrderinfo; //调整单接口
 
-            ownerid = adjustParam.ownerid;
-            depotid = adjustParam.depotid;
-
             //回显
             parmdata["orderno"] = adjustParam.orderno;
             parmdata['SESSION_NAME'] = getCookie('SESSION_NAME');
@@ -543,6 +537,48 @@
                     "selected": "selected"
                 }] //仓库主列表
             });
+
+            // 库位初始化
+            var bitdepotid = adjustParam.bitdepotid;
+            var positiondIds = adjustParam.position;
+            var arr1 = [];
+            positiondIds && (arr1 = positiondIds.split(","));
+            var arr = [];
+            $.ajax({
+                url: positiondropdown,
+                type: "get",
+                data: bitdepotid,
+                async: false, // 同步
+                traditional: true,
+                success: function(data) {
+                    if (data.status === 0) {
+                        //把接口数据转换为[{"name":str,"value":number}]格式
+                        if (!Array.isArray(data.data) || data.data.length === 0) {
+                            // 判断arr是否为数组并保证内部有值
+                            return false;
+                        }
+                        for (var i = 0; i < data.data.length; i++) {
+                            for (var k = 0; k < arr1.length; k++) {
+                                if (data.data[i].id === parseInt(arr1[k])) {
+                                    arr.push({
+                                        "name": data.data[i].name,
+                                        "value": data.data[i].id,
+                                    });
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            console.log(arr)
+            // 库位数据初始化
+            formSelects.data('positionSelectAdju', 'local', {
+                arr
+            });
+            //设置库位select下拉框赋值
+            if(adjustParam.positionid){
+                formSelects.value('positionSelectAdju', [adjustParam.positionid]);
+            }
 
             formSelects.value('originSelectAdju2', [adjustParam.origin]);
             formSelects.value('supplierSelectAdju', [adjustParam.supplierid]);
@@ -842,7 +878,7 @@
                         field: 'billloading',
                         title: '柜号',
                         width: 150
-                    },{
+                    }, {
                         field: 'brand',
                         width: 130,
                         title: '品牌'
@@ -888,6 +924,7 @@
                 return false;
             }
 
+            var positionid = layui.formSelects.value('positionSelectAdju', "valStr");
             var origin = layui.formSelects.value('originSelectAdju2', "valStr");
             var supplierid = layui.formSelects.value('supplierSelectAdju', "valStr");
             var supplier = $(".suppliernameAdju").val();
@@ -912,6 +949,7 @@
                 "origin": origin,
                 "supplierid": supplierid,
                 "supplier": supplier,
+                "positionid": positionid,
                 "modifyBefore": uuidlist2.toString(), //调整前uuid数组
                 "modifyAfter": JSON.stringify(tableData3)
             };
