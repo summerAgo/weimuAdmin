@@ -334,6 +334,9 @@
                             if (d.status == 1) {
                                 return "已完成";
                             }
+                            if (d.status == -1) {
+                                return "已删除";
+                            }
                         }
                     }, {
                         field: 'null',
@@ -440,6 +443,42 @@
                                 goLogin(); // 跳转到登录页
                             }
                             if (res.status == 0) {
+                                layer.close(index);
+                                tableIns.reload({
+                                    page: {
+                                        curr: 1 // 重新从第 1 页开始
+                                    }
+                                });
+                            }
+                            layer.msg(res.msg);
+                        }
+                    });
+                });
+            }
+        });
+
+        //放弃调整
+        $(".waiver").click(function() {
+            var checkStatus = table.checkStatus('tableContainer'); //表格选中状态
+            var checkData = checkStatus.data;
+            if (checkData.length != 1) {
+                layer.msg("请选择一条需要调整的数据");
+            } else {
+                layer.confirm('是否确认删除此调整?', function(index) {
+                    var datainfo = {};
+                    datainfo['SESSION_NAME'] = getCookie('SESSION_NAME');
+                    datainfo['TOKEN'] = getCookie('TOKEN');
+                    datainfo['orderno'] = checkData[0].orderno;
+                    $.ajax({
+                        url: adjustgive,
+                        type: "POST",
+                        async: false,
+                        data: datainfo,
+                        success: function(res) {
+                            if (res.status === 1) {
+                                goLogin(); // 跳转到登录页
+                            }
+                            if (res.status === 0) {
                                 layer.close(index);
                                 tableIns.reload({
                                     page: {
