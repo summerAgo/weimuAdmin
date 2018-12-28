@@ -58,7 +58,7 @@
                             <span class="input-span">货物标识码</span>
                             <input type="text" name="uuid" placeholder="货物标识码" autocomplete="off" class="layui-input">
                         </div>
-                        
+
                         <div class="table-form-item layui-input-inline">
                             <span class="input-span">包号</span>
                             <input type="text" name="code" placeholder="包号" autocomplete="off" class="layui-input">
@@ -95,7 +95,7 @@
                                 <option value="">产地</option>
                             </select>
                         </div>
-                        
+
                     </div>
                     <div class="layui-form-item form-right">
                         <button type="reset" class="layui-btn layui-btn-md layui-btn-gray">
@@ -132,7 +132,7 @@
         var menuKey = "a_29"; //当前页面key
         var domObj = $("#stock-addOutBill .table-tools").find("ul"); //当前页面容器
         btnIsList(domObj, menuKey); //按钮权限
-        
+
         form.render(); // 重置表单渲染
         formSelects.render(); // 下拉选项
         element.render('talbe-tools'); // 表格工具栏
@@ -154,15 +154,15 @@
 
         // 品种多选数据赋值
         formSelects.data('selectVarieties1', 'local', {
-            arr: selectDataInstall(VTSList, null, 0,1) //品种列表
+            arr: selectDataInstall(VTSList, null, 0, 1) //品种列表
         });
         // 等级多选数据赋值
         formSelects.data('selectLevels1', 'local', {
-            arr: selectDataInstall(levelsList, null, 0,1) //等级列表
+            arr: selectDataInstall(levelsList, null, 0, 1) //等级列表
         });
         // 规格多选数据赋值
         formSelects.data('selectSpec1', 'local', {
-            arr: selectDataInstall(specList, null, 0,1) //规格列表
+            arr: selectDataInstall(specList, null, 0, 1) //规格列表
         });
 
         layui.formSelects.opened('depotSelect', function(id) {
@@ -203,7 +203,7 @@
         }, true);
 
 
-        function selectDataInstall(url, param, bool,type) {
+        function selectDataInstall(url, param, bool, type) {
             //下拉选框数据组装
             var arr = [];
             //获取列表数据
@@ -229,13 +229,13 @@
                             } else {
                                 name = data.data[i].username;
                             }
-                            
-                            if(type == 1){
+
+                            if (type == 1) {
                                 arr.push({
                                     "name": name,
                                     "value": name
                                 })
-                            }else{
+                            } else {
                                 arr.push({
                                     "name": name,
                                     "value": data.data[i].id
@@ -261,7 +261,7 @@
             for (var key in data.field) {
                 // 参数赋值
                 if (data.field[key] !== "") {
-                    paramSearch[key] = data.field[key].replace(/^\s*|\s*$/g,"");
+                    paramSearch[key] = data.field[key].replace(/^\s*|\s*$/g, "");
                 }
             }
             // 表格重新加载
@@ -304,17 +304,17 @@
                         }
                     }, {
                         type: 'radio'
-                    },{
+                    }, {
                         field: 'orderno',
                         title: '单号',
                         width: 206,
                         event: 'click',
                         style: 'font-family: Consolas;font-size:16px;cursor: pointer;color:#0063de;'
-                    },{
+                    }, {
                         field: 'createdate',
                         title: '时间',
                         width: 206
-                    },  {
+                    }, {
                         field: 'ownername',
                         title: '仓库主',
                         width: 206
@@ -414,12 +414,45 @@
                             layer.msg(res.msg);
                         }
                     });
-
-                    
                 });
             }
         });
 
+        //调整完成
+        $(".deleBtn").click(function() {
+            var checkStatus = table.checkStatus('tableContainer'); //表格选中状态
+            var checkData = checkStatus.data;
+            if (checkData.length != 1) {
+                layer.msg("请选择一条需要调整的数据");
+            } else {
+                layer.confirm('是否确认删除此调整?', function(index) {
+                    var datainfo = {};
+                    datainfo['SESSION_NAME'] = getCookie('SESSION_NAME');
+                    datainfo['TOKEN'] = getCookie('TOKEN');
+                    datainfo['orderno'] = checkData[0].orderno;
+                    $.ajax({
+                        url: adjustdeleteByOrderno,
+                        type: "POST",
+                        async: false,
+                        data: datainfo,
+                        success: function(res) {
+                            if (res.status === 1) {
+                                goLogin(); // 跳转到登录页
+                            }
+                            if (res.status === 0) {
+                                layer.close(index);
+                                tableIns.reload({
+                                    page: {
+                                        curr: 1 // 重新从第 1 页开始
+                                    }
+                                });
+                            }
+                            layer.msg(res.msg);
+                        }
+                    });
+                });
+            }
+        });
 
         $("#addBtn").click(function() {
             sessionStorage.removeItem('adjustParam');
