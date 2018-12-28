@@ -215,9 +215,9 @@
                 traditional: true,
                 success: function(data) {
                     // console.log(data);
-                    if (data.status === 0) {
+                    if (data.status == 0) {
                         //把接口数据转换为[{"name":str,"value":number}]格式
-                        if (!Array.isArray(data.data) || data.data.length === 0) {
+                        if (!Array.isArray(data.data) || data.data.length == 0) {
                             // 判断arr是否为数组并保证内部有值
                             return false;
                         }
@@ -400,10 +400,10 @@
                         async: false,
                         data: datainfo,
                         success: function(res) {
-                            if (res.status === 1) {
+                            if (res.status == 1) {
                                 goLogin(); // 跳转到登录页
                             }
-                            if (res.status === 0) {
+                            if (res.status == 0) {
                                 //status = true;
                                 tableIns.reload({
                                     page: {
@@ -436,10 +436,10 @@
                         async: false,
                         data: datainfo,
                         success: function(res) {
-                            if (res.status === 1) {
+                            if (res.status == 1) {
                                 goLogin(); // 跳转到登录页
                             }
-                            if (res.status === 0) {
+                            if (res.status == 0) {
                                 layer.close(index);
                                 tableIns.reload({
                                     page: {
@@ -485,10 +485,10 @@
                 async: false,
                 data: datainfo,
                 success: function(res) {
-                    if (res.status === 1) {
+                    if (res.status == 1) {
                         goLogin(); // 跳转到登录页
                     }
-                    if (res.status === 0) {
+                    if (res.status == 0) {
                         status = true;
                         tableIns.reload({
                             page: {
