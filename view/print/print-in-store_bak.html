@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>打印入库单</title>
+    <!-- <link type="text/css" rel="stylesheet" href="./reset.css"> -->
+    <link type="text/css" rel="stylesheet" href="./print.css">
+    <link type="text/css" rel="stylesheet" href="../../style/iconfont/iconfont.css">
+    <script src="../../js/localhost.js"></script>
+    <script src="../../js/api.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+</head>
+
+<body>
+    <div class="w">
+        <div class="header">
+            <div class="h-left">
+                <embed class="logo" src="../../images/logo.svg">
+                <span class="p-title">入库单</span>
+            </div>
+            <div class="h-right">
+                <embed class="rightNumber" src="../../images/NO.svg">
+                <span class="numb data orderno"></span>
+            </div>
+        </div>
+    </div>
+    <div class="w">
+        <div class="write-info">
+            <div class="write-item item-ownername"><i>客户：</i><span class="data ownername"></span></div>
+            <div class="write-item item-billloading"><i>提运单：</i><span class="data billloading"></span></div>
+            <div class="write-item item-number"><i>件数：</i><span class="data number"></span></div>
+            <div class="write-item item-createdate"><i>入库日期：</i><span class="data createdate"></span></div>
+        </div>
+        <div class="write-info">
+            <div class="write-item item-depname"><i>仓库名称：</i><span class="data depname"></span></div>
+            <div class="write-item item-address"><i>地址：</i><span class="data address"></span></div>
+        </div>
+    </div>
+    <div class="w" style="padding: 0 20px;">
+        <table class="weimu-table">
+            <tr class="table-header">
+                <td>货柜号/批次号</td>
+                <td>包号</td>
+                <td>品种</td>
+                <td>规格/厚度</td>
+                <td>等级</td>
+                <td>长度</td>
+                <td>品牌</td>
+                <td>产地</td>
+                <td>数量(m³)</td>
+                <td>片数</td>
+                <td>备注</td>
+            </tr>
+            <tr class="bottom">
+                <td class="total">合计</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="total-num"></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+    <div class="w">
+        <div class="careful"><i class="icon iconfont icon-gantanhao_icon"></i>注意：如对数据有异议，请在签收后24小时内书面告知，并协商解决，否则即视为认可。</div>
+    </div>
+
+    <div class="w">
+        <div class="sign-info">
+            <div class="sign-item"><i>监管方：</i><span class="data regulators"></span></div>
+            <div class="sign-item"><i>客户签章：</i><span class="data"></span></div>
+            <div class="sign-item"><i>联系人/电话：</i><span class="data phone"></span></div>
+            <div class="sign-item"><i>日期：</i><span class="data date"></span></div>
+        </div>
+    </div>
+    <script src="/js/common.js"></script>
+    <script>
+        var orderno = sessionStorage.getItem('dayin_orderno');
+        var trHeader = $(".table-header");
+        var orderDataList = [];
+        var orderData = null;
+        var size = 12; //默认打印12条数据一页
+        //获取列表数据
+        $.ajax({
+            url: inprintinjk,
+            type: "get",
+            data: {
+                orderno: orderno,
+                'SESSION_NAME': getCookie('SESSION_NAME'),
+                'TOKEN': getCookie('TOKEN'),
+            },
+            async: false, //同步
+            traditional: true,
+            success: function(res) {
+                if (res.status === 0) {
+                    orderData = res.data; // 对象迁移
+                    orderDataList = orderData.list;
+                } else {
+                    // layer.msg("请求失败");
+                }
+            }
+        });
+        //设置表单信息
+        for (var key in orderData) {
+            $("." + key + ".data").html([orderData[key]])
+        }
+
+        $(".number").html(orderDataList.length); //赋值件数
+        // 数量合计
+        $(".total-num").html(function() {
+            var count = 0;
+            for (var i = 0; i < orderDataList.length; i++) {
+                count += orderDataList[i].num
+            }
+            return count.toFixed(4);
+        });
+
+        function getNowFormatDate() {
+            var date = new Date();
+            var seperator1 = "-";
+            var year = date.getFullYear();
+            var month = date.getMonth() + 1;
+            var strDate = date.getDate();
+            if (month >= 1 && month <= 9) {
+                month = "0" + month;
+            }
+            if (strDate >= 0 && strDate <= 9) {
+                strDate = "0" + strDate;
+            }
+            var currentdate = year + seperator1 + month + seperator1 + strDate;
+            return currentdate;
+        }
+
+        var date = getNowFormatDate();
+        $(".data.date").html(date);
+
+        /* table表格赋值 */
+        var h = {},
+            arrRear = [];
+        for (var i = 0; i < orderDataList.length; i++) {
+            var ai = orderDataList[i];
+            if (!h[ai.containernum]) {
+                arrRear.push({
+                    containernum: ai.containernum,
+                    data: [ai]
+                });
+                h[ai.containernum] = ai;
+            } else {
+                for (var j = 0; j < arrRear.length; j++) {
+                    var dj = arrRear[j];
+                    if (dj.containernum == ai.containernum) {
+                        dj.data.push(ai);
+                        break;
+                    }
+                }
+            }
+        }
+
+        var trs = '';
+        var num_i = 0;
+        for (var k = 0; k < arrRear.length; k++) {
+
+            var len = arrRear[k].data.length;
+            var arrOll = arrRear[k].data;
+            var arrBod = arrOll.slice(1);
+
+            var trH = '<tr>' +
+                '<td rowspan="' + len + '">' + (arrOll[0].containernum == null ? "" : arrOll[0].containernum) + '</td>' +
+                '<td>' + arrOll[0].code + '</td>' +
+                '<td>' + arrOll[0].varieties + '</td>' +
+                '<td>' + arrOll[0].spec + '</td>' +
+                '<td>' + arrOll[0].levels + '</td>' +
+                '<td>' + arrOll[0].chang + '</td>' +
+                '<td>' + arrOll[0].brand + '</td>' +
+                '<td>' + arrOll[0].origin + '</td>' +
+                '<td>' + arrOll[0].num + '</td>' +
+                '<td>' + (arrOll[0].pieces == null ? "" : arrOll[0].pieces) + '</td>' +
+                '<td>' + (arrOll[0].remarks == null ? "" : arrOll[0].remarks) + '</td>' +
+                '</tr>';
+            trs += trH;
+
+            for (var n = 0; n < arrBod.length; n++) {
+                var trB = '<tr>' +
+                    '<td>' + arrBod[n].code + '</td>' +
+                    '<td>' + arrBod[n].varieties + '</td>' +
+                    '<td>' + arrBod[n].spec + '</td>' +
+                    '<td>' + arrBod[n].levels + '</td>' +
+                    '<td>' + arrBod[n].chang + '</td>' +
+                    '<td>' + arrBod[n].brand + '</td>' +
+                    '<td>' + arrBod[n].origin + '</td>' +
+                    '<td>' + arrBod[n].num + '</td>' +
+                    '<td>' + (arrBod[n].pieces == null ? "" : arrBod[n].pieces) + '</td>' +
+                    '<td>' + (arrBod[n].remarks == null ? "" : arrBod[n].remarks) + '</td>' +
+                    '</tr>';
+                trs += trB;
+            }
+        }
+        trHeader.after(trs);
+        window.print();
+    </script>
+</body>
+
+</html>
