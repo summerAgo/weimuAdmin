@@ -4,7 +4,7 @@
 .app {
     font-family: "Microsoft YaHei", Helvetica Neue, Helvetica, Tahoma, Arial, sans-serif;
     font-size: 12pt;
-    padding:5mm;
+    padding:0 5mm;
 }
 .printBox{height:100%;position: relative;}
 .printCount{position: absolute;right:0;bottom:-2mm; font-size:9pt}
