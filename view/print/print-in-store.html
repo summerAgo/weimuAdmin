@@ -12,7 +12,8 @@
 
 <body>
     <div class="app" v-cloak>
-        <div class="printBox" v-for="items in listArr">
+        <div class="printBox" v-for="(items,index) in listArr">
+            <div class="printCount">{{index + 1}}/{{listArr.length}}</div>
             <div class="printHeader">
                 <img class="logo" src="../../images/logo.svg">
                 <h1 class="title">入库单</h1>
