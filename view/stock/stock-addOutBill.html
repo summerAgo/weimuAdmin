@@ -130,6 +130,7 @@
                 <h3 class="titleTxt">出库申请单</h3>
                 <div class="leftCon">
                     <a href="javascript:;" class="submissionBtn"><i class="iconfont icon-baocunxinzeng"></i>保存出库单</a>
+                    <a href="javascript:;" class="dayinBtn"><i class="iconfont icon-dayin"></i>打印</a>
                 </div>
                 <div class="rightCon">总共<span class="goodsCount">0</span>个货物</div>
             </div>
@@ -137,6 +138,7 @@
                 <table id="tableContainer-addOutBill" lay-filter="tableContainer-addOutBill"></table>
             </div>
         </div>
+
     </div>
 </div>
 <style scoped>
@@ -225,6 +227,8 @@
     .rightCon span {
         color: #ff3c4e
     }
+
+    .leftCon .dayinBtn{display:none;}
 </style>
 
 <script>
@@ -246,7 +250,7 @@
         formSelects.btns(['select', 'remove'], {
             show: 'name'
         });
-        var updaData = [];  //修改回显货物
+        var updaData = []; //修改回显货物
         var tableData = []; //本地的货物列表
         var ownerid; //仓库主ID
         var depotid; //仓库ID
@@ -366,6 +370,7 @@
         var dataAipUrl = preoutHistoryOrderno; //历史出货单接口
 
         if (outBill != null) {
+            $(".dayinBtn").show();
             ownerid = outBill.ownerid;
             depotid = outBill.depotid;
 
@@ -452,7 +457,7 @@
             $("input[name='estimatedate']").attr("disabled", true)
         }
 
-        function selectDataInstall(url, param, bool,type) {
+        function selectDataInstall(url, param, bool, type) {
             //下拉选框数据组装
             var arr = [];
             //获取列表数据
@@ -471,18 +476,18 @@
                             return false;
                         }
                         for (var i = 0; i < data.data.length; i++) {
-                            if(type == 1){
+                            if (type == 1) {
                                 arr.push({
                                     "name": data.data[i].name,
                                     "value": data.data[i].name
                                 })
-                            }else{
+                            } else {
                                 arr.push({
                                     "name": data.data[i].name,
                                     "value": data.data[i].id
                                 })
                             }
-                            
+
                         }
                         if (bool) {
                             arr[0].selected = "selected";
@@ -512,7 +517,6 @@
                     }
                 });
             }
-
             return false;
         });
 
@@ -529,23 +533,23 @@
 
                 //把查询出来的货物与已申请的货物  合并
                 var newtabledata = [];
-                if(null != res.data){
+                if (null != res.data) {
                     newtabledata = res.data
                 }
-                
+
                 console.log(updaData);
                 //if(null != updaData && updaData.length > 0){
-                    for(var i =0 ;i<updaData.length;i++){
-                        var tableobj = updaData[i];
-                        if(isArr(tableobj.uuid,tableData)){
-                            tableobj["LAY_CHECKED"] = true;
-                        }else{
-                            tableobj["LAY_CHECKED"] = false;
-                        }
-                        newtabledata.push(tableobj);
+                for (var i = 0; i < updaData.length; i++) {
+                    var tableobj = updaData[i];
+                    if (isArr(tableobj.uuid, tableData)) {
+                        tableobj["LAY_CHECKED"] = true;
+                    } else {
+                        tableobj["LAY_CHECKED"] = false;
                     }
+                    newtabledata.push(tableobj);
+                }
                 //}
-                
+
 
                 if (res.status !== 0) res.status = 0;
                 return {
@@ -616,7 +620,7 @@
                         field: 'num',
                         title: '数量（m³）',
                         width: 120,
-                    },{
+                    }, {
                         field: 'pieces',
                         title: '片数'
                     }, {
@@ -846,14 +850,14 @@
                         goLogin();
                     }
                     if (res.status == 0) {
-                        
+
                     }
                     layer.closeAll();
                     layer.msg(res.msg, {
                         icon: 1,
                         time: 2000
                     }, function() {
-                        
+
                     });
                 }
             });
@@ -866,17 +870,17 @@
             if (checkData.length == 0) {
                 return false;
             }
-            
+
             if (tableData.length > 0) {
-                for(var i=0;i < checkData.length;i++){
+                for (var i = 0; i < checkData.length; i++) {
                     var v = checkData[i];
                     var isf = true;
-                    for(var j=0;j<tableData.length;j++){
-                        if(v.uuid == tableData[j].uuid){
+                    for (var j = 0; j < tableData.length; j++) {
+                        if (v.uuid == tableData[j].uuid) {
                             isf = false;
                         }
                     }
-                    if(isf){
+                    if (isf) {
                         tableData.push(v);
                     }
                 }
@@ -974,13 +978,19 @@
             $(".goodsCount").html(tableData.length);
         }
 
+        $(".dayinBtn").click(function() {
+            window.open(printout, '打印', 'height=800, width=1100, top=100, left=100, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no');
+        });
+
     });
-    function isArr(v,arr){
-        for(var i =0;i<arr.length;i++){
-            if(v == arr[i].uuid){
+
+    function isArr(v, arr) {
+        for (var i = 0; i < arr.length; i++) {
+            if (v == arr[i].uuid) {
                 return true;
             }
         }
         return false;
     }
+
 </script>

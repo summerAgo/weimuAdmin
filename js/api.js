@@ -4,6 +4,8 @@ var loginPageUrl = localhost + "/view/login/login.html"; //filter拦截到登录
 //打印
 var printinstore = localhost+"/view/print/print-in-store.html";
 var printoutstore = localhost+"/view/print/print-out-store.html";
+var printin = localhost+"/view/print/print-in.html";
+var printout = localhost+"/view/print/print-out.html";
 
 var weekInCount = pathUrl + "home/weekInCount";//本周入库统计立方
 var weekOutCount = pathUrl + "home/weekOutCount";//本周出库统计立方
