@@ -70,7 +70,7 @@ h1.title {
 }
 
 .printInfoItem dt {
-    flex: 0 0 20mm;
+    flex: 0 0 25mm;
     text-align: right
 }
 
@@ -155,7 +155,7 @@ table.weimu-table tr td.total {
 
     @page {
         size: 216mm 140mm;
-        margin: 0;
+        margin: 5mm;
     }
 
     .printBox{page-break-before: always;}
