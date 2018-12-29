@@ -151,7 +151,7 @@ table.weimu-table tr td.total {
     font-weight: bold;
 }
 table.weimu-table tr td:last-child{
-    width:30mm
+    width:20mm
 }
 @media print {
 
