@@ -158,7 +158,7 @@ table.weimu-table tr td:last-child{
 
     @page {
         size: 216mm 140mm;
-        margin: 0;
+        margin: 5mm 5mm 0;
     }
 
     .printBox{page-break-before: always;}
