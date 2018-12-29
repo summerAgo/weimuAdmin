@@ -150,7 +150,9 @@ table.weimu-table tr td.total {
     border: 1px solid #221815;
     font-weight: bold;
 }
-
+table.weimu-table tr td:last-child{
+    width:30mm
+}
 @media print {
 
     @page {
