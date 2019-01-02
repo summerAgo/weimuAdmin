@@ -135,14 +135,15 @@
             parmdata['TOKEN'] = getCookie('TOKEN');
             //获取列表数据
             $.ajax({
-                url: preoutHistoryOrderno,
+                url: print_preout,
                 type: "get",
                 data: parmdata,
                 async: false, //同步
                 traditional: true,
                 success: function(res) {
                     if (res.status == 0) {
-                        orderData.list = res.data; // 对象迁移
+                        orderData = res.data;
+                        orderData.list = res.data.list; // 对象迁移
                         if (!orderData.vehnum) {
                             orderData.vehnum = "";
                         }
