@@ -126,7 +126,7 @@
             parmdata['TOKEN'] = getCookie('TOKEN');
             //获取列表数据
             $.ajax({
-                url: preEntrygetByOrderno,
+                url: print_prein,
                 type: "get",
                 data: parmdata,
                 async: false, //同步
@@ -134,7 +134,7 @@
                 success: function(res) {
                     if (res.status == 0) {
                         orderData = res.data;
-                        orderData.list = res.stocklist; // 对象迁移
+                        //orderData.list = orderData.list; // 对象迁移
                         if (!orderData.vehnum) {
                             orderData.vehnum = "";
                         }

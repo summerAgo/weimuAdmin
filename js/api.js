@@ -1,7 +1,7 @@
 var loginUrl = pathUrl + "sys/login"; //登录
 var loginPageUrl = localhost + "/view/login/login.html"; //filter拦截到登录页面
 
-//打印
+//打印使用页面
 var printinstore = localhost+"/view/print/print-in-store.html";
 var printoutstore = localhost+"/view/print/print-out-store.html";
 var printin = localhost+"/view/print/print-in.html";
@@ -37,8 +37,12 @@ var preEntryexamineStock = pathUrl + "order/prewarehousing/examineStock";//预�
 var preEntryexamineStockGoods = pathUrl + "order/prewarehousing/examineStockGoods";//选择预入库单中的货物入库为库存
 var preprintinjk = pathUrl+"/order/warehousing/prinware";
 
+//打印接口
+var print_prein = pathUrl+"/order/prewarehousing/prinware"; //入库申请打印
+var print_in = pathUrl+"/order/warehousing/prinware"; //入库打印
+var print_preout = pathUrl+"/order/preouttreasury/prinOut"; //出库申请打印
+var print_out = pathUrl+"/order/outtreasury/prinOut"; //出库打印
 
-var printoutjk = pathUrl+"/order/outtreasury/prinOut";
 // 入库
 var backinexamine = pathUrl + "order/warehousing/backinexamine";//反入库审核
 var inlbdel = pathUrl + "order/warehousing/inlbdel";//入库单删除
@@ -50,7 +54,6 @@ var inEntrygetByOrderno = pathUrl + "order/warehousing/getByOrderno?ish=1";//预
 var inEntryexamineStock = pathUrl + "order/warehousing/examineStock";//预入库单审核为库存
 var inEntryexamineStockGoods = pathUrl + "order/warehousing/examineStockGoods";//选择预入库单中的货物入库为库存
 var inentryHistory = preEntry + "?ishistory=1";//入库记录
-var inprintinjk = pathUrl+"/order/warehousing/prinware";
 var inbatchExport = pathUrl + "order/warehousing/batchExport";//根据单号批量导出
 
 //预出库
