@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+    <title>打印库存调整单</title>
+    <link type="text/css" rel="stylesheet" href="./reset.css">
+    <link type="text/css" rel="stylesheet" href="./bigPrint.css">
+    <link type="text/css" rel="stylesheet" href="../../style/iconfont/iconfont.css">
+</head>
+
+<body>
+    <div class="app" v-cloak>
+        <div class="printBox">
+            <!-- <div class="printCount">{{index + 1}}/{{listArr.length}}</div> -->
+            <div class="printHeader">
+                <img class="logo" src="../../images/logo.svg">
+                <h1 class="title">货物调整单</h1>
+                <div class="headRight">
+                    <span>{{orderno}}</span>
+                    <img class="rightNumber" src="../../images/NO.svg">
+                </div>
+            </div>
+            <div class="printInfo">
+                <div class="printInfoItem pit1">
+                    <dl>
+                        <dt>时间：</dt>
+                        <dd>{{createdate}}</dd>
+                    </dl>
+                    <dl>
+                        <dt>仓库主：</dt>
+                        <dd>{{ownername}}</dd>
+                    </dl>
+                    <dl>
+                        <dt>仓库名称：</dt>
+                        <dd>{{depname}}</dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="printTable">
+                <h3>调整前货物：</h3>
+                <table class="weimu-table">
+                    <tr class="table-header">
+                        <td>货柜号/批次号</td>
+                        <td>包号</td>
+                        <td>品种</td>
+                        <td>规格/厚度</td>
+                        <td>等级</td>
+                        <td>长度</td>
+                        <td>品牌</td>
+                        <td>产地</td>
+                        <td>数量(m³)</td>
+                        <td>片数</td>
+                        <td>备注</td>
+                    </tr>
+                    <tr v-for="item in beforeList">
+                        <td>{{item.containernum||""}}</td>
+                        <td>{{item.code||""}}</td>
+                        <td>{{item.varieties||""}}</td>
+                        <td>{{item.spec||""}}</td>
+                        <td>{{item.levels||""}}</td>
+                        <td>{{item.chang||""}}</td>
+                        <td>{{item.brand||""}}</td>
+                        <td>{{item.origin||""}}</td>
+                        <td>{{item.num||""}}</td>
+                        <td>{{item.pieces||""}}</td>
+                        <td>{{item.remarks||""}}</td>
+                    </tr>
+                    <tr class="bottom">
+                        <td class="total">合计</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="total-num">{{totalList(beforeList)}}</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="printTable">
+                <h3>调整后货物：</h3>
+                <table class="weimu-table">
+                    <tr class="table-header">
+                        <td>货柜号/批次号</td>
+                        <td>包号</td>
+                        <td>品种</td>
+                        <td>规格/厚度</td>
+                        <td>等级</td>
+                        <td>长度</td>
+                        <td>品牌</td>
+                        <td>产地</td>
+                        <td>数量(m³)</td>
+                        <td>片数</td>
+                        <td>备注</td>
+                    </tr>
+                    <tr v-for="item in afterList">
+                        <td>{{item.containernum||""}}</td>
+                        <td>{{item.code||""}}</td>
+                        <td>{{item.varieties||""}}</td>
+                        <td>{{item.spec||""}}</td>
+                        <td>{{item.levels||""}}</td>
+                        <td>{{item.chang||""}}</td>
+                        <td>{{item.brand||""}}</td>
+                        <td>{{item.origin||""}}</td>
+                        <td>{{item.num||""}}</td>
+                        <td>{{item.pieces||""}}</td>
+                        <td>{{item.remarks||""}}</td>
+                    </tr>
+                    <tr class="bottom">
+                        <td class="total">合计</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td class="total-num">{{totalList(afterList)}}</td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="printFooter">
+                <div class="printInfo">
+                    <div class="printInfoItem pit4">
+                        <dl>
+                            <dt>调整后数量差异：</dt>
+                            <dd>{{totalList(beforeList) - totalList(afterList)}}</dd>
+                        </dl>
+                    </div>
+                    <div class="printInfoItem pit3">
+                        <dl>
+                            <dt>操作人：</dt>
+                            <dd></dd>
+                        </dl>
+                        <dl>
+                            <dt>客户签字：</dt>
+                            <dd></dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style scoped>
+    .printInfoItem.pit1 dl{flex:0 0 33%}
+    .pit4 dl{flex:0 0 40%;}
+    .pit4 dt{flex:0 0 30mm}
+    h3{font-weight: bold; font-size:10pt; margin:5mm 0 2mm 0}
+    </style>
+    <script src="../../js/localhost.js"></script>
+    <script src="../../js/api.js"></script>
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/vue/2.5.21/vue.min.js"></script>
+    <script src="/js/common.js"></script>
+    <script>
+        var adjustParam = JSON.parse(sessionStorage.getItem('adjustParam')); //获取所选择记录详情
+        console.log(adjustParam)
+        if (adjustParam == null) {
+            alert('数据异常');
+        } else {
+            var orderData = adjustParam;
+            var parmdata = {};
+            //回显
+            parmdata["orderno"] = adjustParam.orderno;
+            parmdata['SESSION_NAME'] = getCookie('SESSION_NAME');
+            parmdata['TOKEN'] = getCookie('TOKEN');
+            //获取列表数据
+            $.ajax({
+                url: adjustagetOrderinfo,
+                type: "get",
+                data: parmdata,
+                async: false, //同步
+                traditional: true,
+                success: function(res) {
+                    if (res.status == 0) {
+                        orderData.data = res.data;
+                        orderData.beforeList = res.frontarr;
+                        orderData.afterList = res.afterarr;
+                    } else {
+                        // layer.msg("请求失败");
+                    }
+                }
+            });
+            console.log(orderData);
+            orderData.currentdate = getNowFormatDate();
+            // orderData.listArr = [];
+            // var listCount = Math.ceil(orderData.list.length / 26);
+            // console.log(listCount)
+            // for (var i = 0; i < listCount; i++) {
+            //     orderData.listArr[i] = [];
+            //     for (var x = 0; x < 26; x++) {
+            //         if (orderData.list[(i * 26) + x]) {
+            //             orderData.listArr[i].push(orderData.list[(i * 26) + x])
+            //         } else {
+            //             orderData.listArr[i].push({});
+            //         }
+            //     }
+            // }
+
+            window.print();
+
+            function getNowFormatDate() {
+                var date = new Date();
+                var seperator1 = "-";
+                var year = date.getFullYear();
+                var month = date.getMonth() + 1;
+                var strDate = date.getDate();
+                if (month >= 1 && month <= 9) {
+                    month = "0" + month;
+                }
+                if (strDate >= 0 && strDate <= 9) {
+                    strDate = "0" + strDate;
+                }
+                var currentdate = year + seperator1 + month + seperator1 + strDate;
+                return currentdate;
+            }
+            var print = new Vue({
+                el: '.app',
+                data: orderData,
+                methods: {
+                    // 计算属性的 getter
+                    totalList: function(arr) {
+                        var count = 0;
+                        for (var i = 0; i < arr.length; i++) {
+                            if (arr[i].num) {
+                                count += arr[i].num
+                            }
+                        }
+                        return count.toFixed(4);
+                    }
+                }
+            })
+        }
+    </script>
+</body>
+
+</html>
