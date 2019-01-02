@@ -110,19 +110,24 @@
             style:'font-family: Consolas;font-size:16px'
         }, {
             field: "code",
-            title: "包号"
+            title: "包号",
+            width: 100
         }, {
             field: "varieties",
-            title: "品种"
+            title: "品种",
+            width: 100
         }, {
             field: "spec",
-            title: "规格"
+            title: "规格",
+            width: 100
         }, {
             field: "levels",
-            title: "等级"
+            title: "等级",
+            width: 100
         }, {
             field: "chang",
-            title: "长度"
+            title: "长度",
+            width: 100
         }, {
             field: 'aprice',
             title: '估值单价'+ unitMoney,
@@ -137,27 +142,34 @@
         }, {
             field: "",
             title: "总金额",
+            width: 100,
             templet: function (d) {
                 return formatNum(d.aprice * d.num);
             },
         },{
             field: 'pieces',
             title: '片数',
+            width: 80
         },{
             field: "brand",
-            title: "品牌"
+            title: "品牌",
+            width: 100
         }, {
             field: "origin",
-            title: "产地"
+            title: "产地",
+            width: 100
         }, {
             field: "updauser",
-            title: "操作员"
+            title: "操作员",
+            width: 100
         }, {
             field: "billloading",
-            title: "提运单"
+            title: "提运单",
+            width: 120
         }, {
             field: "containernum",
-            title: "货柜号/批次号"
+            title: "货柜号/批次号",
+            width: 140
         }];
         // 入库详情表格字段
         var entryCols = [{
@@ -169,43 +181,56 @@
             }
         }, {
             field: "code",
-            title: "包号"
+            title: "包号",
+            width: 100
         }, {
             field: "varieties",
-            title: "品种"
+            title: "品种",
+            width: 100
         }, {
             field: "spec",
-            title: "规格"
+            title: "规格",
+            width: 100
         }, {
             field: "levels",
-            title: "等级"
+            title: "等级",
+            width: 100
         }, {
             field: "chang",
-            title: "长度"
+            title: "长度",
+            width: 100
         },{
             field: 'pieces',
             title: '片数',
+            width: 80
         },{
             field: "brand",
-            title: "品牌"
+            title: "品牌",
+            width: 100
         }, {
             field: "origin",
-            title: "产地"
+            title: "产地",
+            width: 100
         }, {
             field: "num",
-            title: "数量（m³）"
+            title: "数量（m³）",
+            width: 100
         }, {
-            field: "positionid",
-            title: "库位"
+            field: "positionname",
+            title: "库位",
+            width: 100
         }, {
             field: "updauser",
-            title: "操作员"
+            title: "操作员",
+            width: 100
         }, {
             field: "billloading",
-            title: "提运单"
+            title: "提运单",
+            width: 100
         }, {
             field: "containernum",
-            title: "货柜号/批次号"
+            title: "货柜号/批次号",
+            width: 140
         }];
 
         var tableClos; //表格字段赋值
