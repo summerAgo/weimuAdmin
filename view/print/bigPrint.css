@@ -4,9 +4,9 @@
 .app {
     font-family: "Microsoft YaHei", Helvetica Neue, Helvetica, Tahoma, Arial, sans-serif;
     font-size: 12pt;
-    padding:0 5mm;
+    padding:0 5mm 0;
 }
-.printBox{height:100%;position: relative;}
+.printBox{height:100%;position: relative;padding:15mm 0 15mm}
 .printCount{position: absolute;right:0;bottom:-2mm; font-size:9pt}
 .printHeader {
     height: 9mm;
@@ -50,7 +50,7 @@ h1.title {
 
 .printInfo {
     font-size: 8pt;
-    margin: 3mm 0;
+    margin: 5mm 0;
 }
 
 .printInfoItem {
@@ -103,11 +103,6 @@ h1.title {
     flex: 0 0 35%;
 }
 
-.printInfoItem.pit3 dl:first-child {
-    flex: 0 0 60%;
-}
-
-
 /*  表格样式  */
 
 table {
@@ -131,7 +126,7 @@ table.weimu-table tr td {
     color: #000;
     border: 1px solid #221815;
     font-size: 8pt;
-    height:6mm;
+    height:7.5mm;
 }
 
 table.weimu-table tr.table-header {
@@ -157,8 +152,8 @@ table.weimu-table tr td:last-child{
 @media print {
 
     @page {
-        size: 216mm 140mm;
-        margin: 5mm 5mm 0;
+        size:A4;
+        margin:0;
     }
 
     .printBox{page-break-before: always;}

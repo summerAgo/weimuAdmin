@@ -130,7 +130,7 @@
                 <h3 class="titleTxt">出库申请单</h3>
                 <div class="leftCon">
                     <a href="javascript:;" class="submissionBtn"><i class="iconfont icon-baocunxinzeng"></i>保存出库单</a>
-                    <!-- <a href="javascript:;" class="dayinBtn"><i class="iconfont icon-dayin"></i>打印</a> -->
+                    <a href="javascript:;" class="dayinBtn"><i class="iconfont icon-dayin"></i>打印</a>
                 </div>
                 <div class="rightCon">总共<span class="goodsCount">0</span>个货物</div>
             </div>
@@ -228,7 +228,9 @@
         color: #ff3c4e
     }
 
-    .leftCon .dayinBtn{display:none;}
+    .leftCon .dayinBtn {
+        display: none;
+    }
 </style>
 
 <script>
@@ -370,19 +372,10 @@
         var dataAipUrl = preoutHistoryOrderno; //历史出货单接口
 
         if (outBill != null) {
-            $(".dayinBtn").show();
+            $(".dayinBtn").css({display:"inline-block"});
             ownerid = outBill.ownerid;
             depotid = outBill.depotid;
 
-            if (outBill.status == 4) {
-                //已出库隐藏按钮
-                $(".butlistbox").hide();
-            }
-
-            if (outBill.status == 3 && outBill.isexamine == 3) {
-                $(".topmenu").hide(); //如果是审核不通过出库单隐藏操作按钮
-                dataAipUrl = outfailoutlist;
-            }
             //回显
             parmdata["orderno"] = outBill.orderno;
             parmdata["ownerid"] = outBill.ownerid;
@@ -992,5 +985,4 @@
         }
         return false;
     }
-
 </script>

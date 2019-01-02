@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-    <title>打印入库单</title>
+    <title>打印预入库单</title>
     <link type="text/css" rel="stylesheet" href="./reset.css">
-    <link type="text/css" rel="stylesheet" href="./smallPrint.css">
+    <link type="text/css" rel="stylesheet" href="./bigPrint.css">
     <link type="text/css" rel="stylesheet" href="../../style/iconfont/iconfont.css">
 </head>
 
@@ -16,7 +16,7 @@
             <div class="printCount">{{index + 1}}/{{listArr.length}}</div>
             <div class="printHeader">
                 <img class="logo" src="../../images/logo.svg">
-                <h1 class="title">入库单</h1>
+                <h1 class="title">预入库单</h1>
                 <div class="headRight">
                     <span>{{orderno}}</span>
                     <img class="rightNumber" src="../../images/NO.svg">
@@ -27,10 +27,6 @@
                     <dl>
                         <dt>客户：</dt>
                         <dd>{{ownername}}</dd>
-                    </dl>
-                    <dl>
-                        <dt>提运单：</dt>
-                        <dd>{{billloading}}</dd>
                     </dl>
                     <dl>
                         <dt>件数：</dt>
@@ -99,22 +95,12 @@
                 <div class="printInfo">
                     <div class="printInfoItem pit3">
                         <dl>
-                            <dt>监管方：</dt>
-                            <dd>{{regulators}}</dd>
-                        </dl>
-                        <dl>
-                            <dt>客户签章：</dt>
+                            <dt>仓管员：</dt>
                             <dd></dd>
                         </dl>
-                    </div>
-                    <div class="printInfoItem pit3">
                         <dl>
-                            <dt>联系人/电话：</dt>
-                            <dd>{{phone}}</dd>
-                        </dl>
-                        <dl>
-                            <dt>日期：</dt>
-                            <dd>{{currentdate}}</dd>
+                            <dt>叉车司机：</dt>
+                            <dd></dd>
                         </dl>
                     </div>
                 </div>
@@ -128,79 +114,92 @@
     <script src="https://cdn.bootcss.com/vue/2.5.21/vue.min.js"></script>
     <script src="/js/common.js"></script>
     <script>
-        var orderno = sessionStorage.getItem('dayin_orderno');
-        var orderData;
-        //获取列表数据
-        $.ajax({
-            url: inprintinjk,
-            type: "get",
-            data: {
-                orderno: orderno,
-                'SESSION_NAME': getCookie('SESSION_NAME'),
-                'TOKEN': getCookie('TOKEN'),
-            },
-            async: false, //同步
-            traditional: true,
-            success: function(res) {
-                if (res.status === 0) {
-                    orderData = res.data; // 对象迁移
-                    // orderDataList = orderData.list;
-                } else {
-                    // layer.msg("请求失败");
-                }
-            }
-        });
-
-        orderData.currentdate = getNowFormatDate();
-        orderData.listArr = [];
-        var listCount = Math.ceil(orderData.list.length / 12);
-        console.log(listCount)
-        for (var i = 0; i < listCount; i++) {
-            orderData.listArr[i] = [];
-            for (var x = 0; x < 12; x++) {
-                if (orderData.list[(i * 12) + x]) {
-                    orderData.listArr[i].push(orderData.list[(i * 12) + x])
-                } else {
-                    orderData.listArr[i].push({});
-                }
-            }
-        }
-
-        window.print()
-
-        function getNowFormatDate() {
-            var date = new Date();
-            var seperator1 = "-";
-            var year = date.getFullYear();
-            var month = date.getMonth() + 1;
-            var strDate = date.getDate();
-            if (month >= 1 && month <= 9) {
-                month = "0" + month;
-            }
-            if (strDate >= 0 && strDate <= 9) {
-                strDate = "0" + strDate;
-            }
-            var currentdate = year + seperator1 + month + seperator1 + strDate;
-            return currentdate;
-        }
-        var print = new Vue({
-            el: '.app',
-            data: orderData,
-            methods: {
-                // 计算属性的 getter
-                totalList: function(arr) {
-                    var count = 0;
-                    for (var i = 0; i < arr.length; i++) {
-                        if (arr[i].num) {
-                            count += arr[i].num
+        var inOrderno = JSON.parse(sessionStorage.getItem('newbill_orderno'));
+        console.log(inOrderno)
+        if (inOrderno == null) {
+            alert('数据异常');
+        } else {
+            var orderData;
+            var parmdata = {};
+            parmdata["orderno"] = inOrderno.orderno;
+            parmdata['SESSION_NAME'] = getCookie('SESSION_NAME');
+            parmdata['TOKEN'] = getCookie('TOKEN');
+            //获取列表数据
+            $.ajax({
+                url: preEntrygetByOrderno,
+                type: "get",
+                data: parmdata,
+                async: false, //同步
+                traditional: true,
+                success: function(res) {
+                    if (res.status == 0) {
+                        orderData = res.data;
+                        orderData.list = res.stocklist; // 对象迁移
+                        if (!orderData.vehnum) {
+                            orderData.vehnum = "";
                         }
+                        if (!orderData.vname) {
+                            orderData.vname = "";
+                        }
+                    } else {
+                        // layer.msg("请求失败");
                     }
-                    return count.toFixed(4);
+                }
+            });
+            console.log(orderData);
+            debugger
+            orderData.currentdate = getNowFormatDate();
+            orderData.listArr = [];
+            var listCount = Math.ceil(orderData.list.length / 26);
+            console.log(listCount)
+            for (var i = 0; i < listCount; i++) {
+                orderData.listArr[i] = [];
+                for (var x = 0; x < 26; x++) {
+                    if (orderData.list[(i * 26) + x]) {
+                        orderData.listArr[i].push(orderData.list[(i * 26) + x])
+                    } else {
+                        orderData.listArr[i].push({});
+                    }
                 }
             }
-        })
-    </script>
 
+            window.print();
+
+            function getNowFormatDate() {
+                var date = new Date();
+                var seperator1 = "-";
+                var year = date.getFullYear();
+                var month = date.getMonth() + 1;
+                var strDate = date.getDate();
+                if (month >= 1 && month <= 9) {
+                    month = "0" + month;
+                }
+                if (strDate >= 0 && strDate <= 9) {
+                    strDate = "0" + strDate;
+                }
+                var currentdate = year + seperator1 + month + seperator1 + strDate;
+                return currentdate;
+            }
+
+            var print = new Vue({
+                el: '.app',
+                data: orderData,
+                methods: {
+                    // 计算属性的 getter
+                    totalList: function(arr) {
+                        var count = 0;
+                        for (var i = 0; i < arr.length; i++) {
+                            if (arr[i].num) {
+                                count += arr[i].num
+                            }
+                        }
+                        return count.toFixed(4);
+                    }
+                }
+            })
+            
+        }
+    </script>
 </body>
 
 </html>

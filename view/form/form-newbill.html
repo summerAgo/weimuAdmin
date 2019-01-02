@@ -2,6 +2,9 @@
     <div class="table-content-title layer-level">
         <div class="table-tools">
             <ul class="layui-nav" lay-filter="talbe-tools">
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="dayinBtn"><i class="iconfont icon-dayin"></i>打印</a>
+                </li>
                 <!-- <li class="layui-nav-item">
                     <a href="javascript:;" class="dowmTemp"><i class="iconfont icon-xiazaimuban"></i>下载模板</a>
                 </li>
@@ -342,8 +345,8 @@
             tableData.push(data.field);
             console.log(tableData)
             // $(".rightBotBtn span").html(tableData.length); //当前选中了多少货物
-            tableData = createNum(tableData);//num1
-            tableData = objValueMake(tableData,'chang');//长度去.0
+            tableData = createNum(tableData); //num1
+            tableData = objValueMake(tableData, 'chang'); //长度去.0
             tableIns.reload({
                 data: tableData,
                 limit: tableData.length,
@@ -359,6 +362,7 @@
         var tableIns = table.render({
             elem: '#tableContainer-from',
             height: tableLayerHeight,
+            title: '预入库',
             data: tableData,
             cols: [
                 [ //标题栏
@@ -427,7 +431,7 @@
                             };
                             return d.num;
                         }
-                    },{
+                    }, {
                         field: 'pieces',
                         title: '片数'
                     }, {
@@ -816,7 +820,7 @@
             // }
 
             tableData = table.cache["tableContainer-from"];
-            
+
             var arr = JSON.stringify(tableData);
             if (tableData.length === 0) {
                 layer.msg("请添加货物信息");
@@ -893,8 +897,8 @@
                             for (var k = 0; k < res.data.length; k++) {
                                 tableData.push(res.data[k]);
                             }
-                            tableData = createNum(tableData);//num
-                            tableData = objValueMake(tableData,'chang');//长度去.0
+                            tableData = createNum(tableData); //num
+                            tableData = objValueMake(tableData, 'chang'); //长度去.0
                             tableIns.reload({
                                 data: tableData,
                                 limit: tableData.length,
@@ -920,15 +924,19 @@
 
         //点击导出
         $("#toExport").on('click', function(e) {
-            window.location.href = ilbstockExportUrl
+            // window.location.href = ilbstockExportUrl
+            table.exportFile(tableIns.config.id, tableIns.config.data);
         });
 
+        $(".dayinBtn").click(function() {
+            window.open(printin, '打印', 'height=800, width=1100, top=100, left=100, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no');
+        });
         /**
          * 生成num（实际数量字段）
          */
         function createNum(arr) {
             for (var i = 0; i < arr.length; i++) {
-                if(arr[i].num == undefined || arr[i].num == null){
+                if (arr[i].num == undefined || arr[i].num == null) {
                     arr[i].num = arr[i].codenum;
                 }
             }

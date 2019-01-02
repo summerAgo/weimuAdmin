@@ -4,9 +4,9 @@
 .app {
     font-family: "Microsoft YaHei", Helvetica Neue, Helvetica, Tahoma, Arial, sans-serif;
     font-size: 12pt;
-    padding:0 5mm;
+    padding:0 5mm 0;
 }
-.printBox{height:100%;position: relative;}
+.printBox{height:100%;position: relative;padding:5mm 0 5mm}
 .printCount{position: absolute;right:0;bottom:-2mm; font-size:9pt}
 .printHeader {
     height: 9mm;
@@ -158,7 +158,7 @@ table.weimu-table tr td:last-child{
 
     @page {
         size: 216mm 140mm;
-        margin: 5mm 5mm 0;
+        margin:0;
     }
 
     .printBox{page-break-before: always;}

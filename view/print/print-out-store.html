@@ -89,7 +89,7 @@
                         <td></td>
                         <td></td>
                         <td></td>
-                        <td class="total-num"></td>
+                        <td class="total-num">{{totalList(items)}}</td>
                         <td></td>
                         <td></td>
                     </tr>
@@ -169,15 +169,6 @@
                 }
             }
         }
-        console.log(orderData.listArr)
-        // 数量合计
-        $(".total-num").html(function() {
-            var count = 0;
-            for (var i = 0; i < orderData.list.length; i++) {
-                count += orderData.list[i].num
-            }
-            return count.toFixed(4);
-        });
 
         window.print()
 
@@ -198,7 +189,19 @@
         }
         var print = new Vue({
             el: '.app',
-            data: orderData
+            data: orderData,
+            methods: {
+                // 计算属性的 getter
+                totalList: function(arr) {
+                    var count = 0;
+                    for (var i = 0; i < arr.length; i++) {
+                        if(arr[i].num){
+                            count += arr[i].num
+                        }
+                    }
+                    return count.toFixed(4);
+                }
+            }
         })
         
     </script>
