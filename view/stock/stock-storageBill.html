@@ -1,0 +1,1306 @@
+<div class="table-page storageBill" id="stock-storageBill">
+    <div class="table-tools">
+        <ul lay-filter="talbe-tools">
+            <li class="layui-nav-item">
+                <a href="javascript:;" class="dayinBtn"><i class="iconfont icon-dayin"></i>打印</a>
+            </li>
+            <!-- <li class="layui-nav-item">
+                    <a href="javascript:;" class="dowmTemp"><i class="iconfont icon-xiazaimuban"></i>下载模板</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="toImport"><i class="iconfont icon-daoru"></i>导入数据</a>
+                </li> -->
+            <!-- <li class="layui-nav-item">
+                    <a href="javascript:;" class="addGoodsBtn"><i class="iconfont icon-tianjiahuowu"></i>添加货物信息</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="submissionLayBtn"><i class="iconfont icon-ruku"></i>入库</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="subConfirmBtn"><i class="iconfont icon-baocun"></i>保存</a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="subCancelBtn"><i class="iconfont icon-quxiao"></i>取消</a>
+                </li>
+                <li class="layui-nav-item"><a href="javascript:;" class="deleteBtnLayer"><i class="iconfont icon-shanchu"></i>删除</a></li> -->
+        </ul>
+    </div>
+    <div class="table-page-header">
+        <div class="table-page-form">
+            <form class="layui-form" action="">
+                <div class="form-box clearfix">
+                    <div class="layui-form-item form-left form-down-line">
+                        <div class="table-form-item layui-input-inline">
+                            <span class="input-span form-required">仓库主</span>
+                            <select name="ownerid" xm-select="ownerSelectLayer" xm-select-radio>
+                                <option value="">仓库主</option>
+                            </select>
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <span class="input-span form-required">仓库</span>
+                            <select name="depotid" xm-select="depotSelectLayer" xm-select-radio>
+                                <option value="">仓库</option>
+                            </select>
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <span class="input-span">库位</span>
+                            <select name="positionid" xm-select="positionSelectLayer" xm-select-radio>
+                                <option value="">库位</option>
+                            </select>
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <span class="input-span">产地</span>
+                            <select name="origin" xm-select="originSelectLayer" xm-select-radio>
+                                <option value="">产地</option>
+                            </select>
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <span class="input-span">供应商</span>
+                            <select name="supplierid" xm-select="supplierSelectLayer" xm-select-radio>
+                                <option value="">供应商</option>
+                            </select>
+                            <input type="hidden" name="suppliername" value="" class="suppliernameLayer">
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="table-content">
+        <div class="serverContainer goodsContainer">
+            <div class="table-page-header">
+                <div class="table-page-form">
+                    <form class="layui-form" action="">
+                        <div class="form-box clearfix">
+                            <div class="layui-form-item form-left">
+                                <div class="table-form-item layui-input-inline">
+                                    <span class="input-span">货物标识码</span>
+                                    <input type="text" name="uuid" placeholder="货物标识码" autocomplete="off" class="layui-input">
+                                </div>
+                                <div class="table-form-item layui-input-inline">
+                                    <span class="input-span">包号</span>
+                                    <input type="text" name="code" placeholder="包号" autocomplete="off" class="layui-input">
+                                </div>
+                                <div class="table-form-item layui-input-inline">
+                                    <span class="input-span">品种</span>
+                                    <select name="varieties" xm-select="selectVarieties" xm-select-radio>
+                                        <option value="">品种</option>
+                                    </select>
+                                </div>
+                                <div class="table-form-item layui-input-inline">
+                                    <span class="input-span">等级</span>
+                                    <select name="levels" xm-select="selectLevels" xm-select-radio>
+                                        <option value="">等级</option>
+                                    </select>
+                                </div>
+                                <div class="table-form-item layui-input-inline">
+                                    <span class="input-span">规格/厚度</span>
+                                    <select name="spec" xm-select="selectSpec" xm-select-radio>
+                                        <option value="">规格</option>
+                                    </select>
+                                </div>
+                                <div class="table-form-item layui-input-inline">
+                                    <span class="input-span">货柜号</span>
+                                    <input type="text" name="containernum" placeholder="货柜号" autocomplete="off" class="layui-input">
+                                </div>
+                            </div>
+                            <div class="layui-form-item form-right">
+                                <button type="reset" class="layui-btn layui-btn-md layui-btn-gray">
+                                    <i class="iconfont icon-zhongzhi"></i><span>重置</span>
+                                </button>
+                                <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="searchGoodsForm">
+                                    <i class="iconfont icon-sousuo"></i> <span>查询</span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="table-content-main" id="goodsList">
+                    <table id="tableContainer-goodsList" lay-filter="tableContainer-goodsList"></table>
+                </div>
+            </div>
+        </div>
+
+        <div class="localContainer goodsContainer">
+            <div class="containerTitle">
+                <h3 class="titleTxt">待入库清单</h3>
+                <div class="leftCon">
+                    <a href="javascript:;" class="addBtn">∨ 添加货物</a>
+                    <a href="javascript:;" class="deleteGoods">∧ 移除货物</a>
+                </div>
+                <div class="rightCon">总共<span class="goodsCount">0</span>个货物</div>
+            </div>
+            <div class="table-content-main">
+                <table id="tableContainer-addOutBill" lay-filter="tableContainer-addOutBill"></table>
+            </div>
+        </div>
+
+    </div>
+</div>
+<style scoped>
+    .layer-title small {
+        font-size: 14px;
+    }
+
+    .layer-title li {
+        flex: 0 0 280px;
+    }
+
+    .goodsContainer {
+        border: 1px solid #a0a0a0
+    }
+
+    .table-page-form {
+        padding: 5px 10px 0 10px
+    }
+
+    .goodsMoveBtn {
+        height: 30px;
+        line-height: 30px;
+        margin: 5px 0;
+    }
+
+    .containerTitle {
+        height: 44px;
+        line-height: 44px;
+        position: relative
+    }
+
+    .containerTitle h3 {
+        font-size: 18px;
+        line-height: 40px;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .leftCon {
+        position: absolute;
+        left: 12px;
+        top: 5px;
+        height: 30px;
+        line-height: 30px;
+    }
+
+    .leftCon a {
+        display: inline-block;
+        margin-right: 10px;
+        background: #f2f9ff;
+        color: #333;
+        font-size: 14px;
+        text-align: center;
+        border-radius: 3px;
+        border: 1px solid #ccc;
+        padding: 0 10px;
+        font-weight: bold
+    }
+
+    .leftCon a:hover {
+        background: #e1ecf6
+    }
+
+    .rightCon {
+        position: absolute;
+        right: 12px;
+        top: 0;
+    }
+
+    .rightCon span {
+        color: #ff3c4e
+    }
+
+    .leftCon .dayinBtn {
+        display: none;
+    }
+
+    .localContainer {
+        margin-top: 15px;
+    }
+
+    .table-tools {
+        margin: 0 30px;
+        height: 50px;
+        line-height: 50px;
+    }
+
+    .table-tools ul {
+        display: flex;
+        padding: 0;
+        align-items: center;
+        height: 50px;
+    }
+
+    .table-tools ul li.layui-nav-item {
+        flex: 0 0 auto;
+        padding: 0 10px;
+        border: 1px solid #cdcdcd;
+        line-height: 28px;
+        height: 28px;
+        margin-right: 19px;
+        border-radius: 3px;
+    }
+</style>
+
+<script>
+    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'upload'], function() {
+        var element = layui.element;
+        var form = layui.form;
+        var $ = layui.jquery;
+        var table = layui.table;
+        var formSelects = layui.formSelects;
+        var laytpl = layui.laytpl;
+        var laydate = layui.laydate;
+        var layer = layui.layer;
+        var upload = layui.upload;
+
+        var menuKey = "b_11"; //当前页面key
+        var domObj = $("#stock-storageBill .table-tools").find("ul"); //当前页面容器
+        btnIsList(domObj, menuKey); //按钮权限
+
+        formSelects.render("depotSelectLayer"); //下拉选项
+        formSelects.render("positionSelectLayer"); //下拉选项
+
+        var goodsData = []; //修改回显货物
+        var tableData = []; //本地的货物列表
+        var ownerid; //仓库主ID
+        var depotid; //仓库ID
+        var depotSelectValue; //仓库id暂存用于对比是否改变仓库
+
+        // 获取预入库table表格项点击行数据
+        var orderno = JSON.parse(sessionStorage.getItem('newbill_orderno'));
+
+        var supplierData;
+        $.ajax({
+            url: dropSupplier,
+            type: "get",
+            async: false, //同步
+            traditional: true,
+            xhrFields: {
+                withCredentials: true
+            },
+            crossDomain: true,
+            success: function(data) {
+                if (data.status === 0) {
+                    supplierData = data.data;
+                }
+            }
+        });
+
+        if (!(supplierData instanceof Array)) {
+            console.log("供应商列表为空");
+        }
+
+        // 供应商列表select下拉初始化
+        formSelects.data('supplierSelectLayer', 'local', {
+            arr: selectDataInstall(dropSupplier, null, false, 0) //供应商列表
+        });
+
+        // 监听供应商列表select选中与取消
+        formSelects.on('supplierSelectLayer', function(id, vals, val, isAdd, isDisabled) {
+            if (isAdd) {
+                for (var i = 0; i < supplierData.length; i++) {
+                    if (supplierData[i].id === val.value) {
+                        $(".suppliernameLayer").val(supplierData[i].name);
+                        break;
+                    }
+                }
+            } else {
+                $(".suppliernameLayer").val("");
+            }
+        });
+
+        // 产地下拉框数据初始化
+        formSelects.data('originSelectLayer', 'local', {
+            arr: selectDataInstall(CHDList, null) //产地列表
+        });
+
+        // 品种多选数据赋值
+        formSelects.data('selectVarieties', 'local', {
+            arr: selectDataInstall(VTSList, null, 0, 1) //品种列表
+        });
+        // 等级多选数据赋值
+        formSelects.data('selectLevels', 'local', {
+            arr: selectDataInstall(levelsList, null, 0, 1) //等级列表
+        });
+        // 规格多选数据赋值
+        formSelects.data('selectSpec', 'local', {
+            arr: selectDataInstall(specList, null, 0, 1) //规格列表
+        });
+        // 产地列表
+        formSelects.data('originSelect', 'local', {
+            arr: selectDataInstall(CHDList, null, 0, 1) //产地列表
+        });
+
+        // 如果有数据，表名是点击预入库table表格进来的
+        if (orderno) {
+            console.log(orderno);
+
+            //仓库主select下拉框赋值
+            formSelects.data('ownerSelectLayer', 'local', {
+                arr: [{
+                    "name": orderno.ownername,
+                    "value": orderno.ownerid,
+                    selected: "selected"
+                }]
+            });
+
+            //仓库select下拉框赋值
+            formSelects.data('depotSelectLayer', 'local', {
+                arr: [{
+                    "name": orderno.depname,
+                    "value": orderno.depotid,
+                    selected: "selected"
+                }]
+            });
+
+            // 库位初始化
+            var bitdepotid = orderno.bitdepotid;
+            var positiondIds = orderno.position;
+            var arr1 = [];
+            positiondIds && (arr1 = positiondIds.split(","));
+            var arr = [];
+            $.ajax({
+                url: positiondropdown,
+                type: "get",
+                data: bitdepotid,
+                async: false, // 同步
+                traditional: true,
+                success: function(data) {
+                    if (data.status === 0) {
+                        //把接口数据转换为[{"name":str,"value":number}]格式
+                        if (!Array.isArray(data.data) || data.data.length === 0) {
+                            // 判断arr是否为数组并保证内部有值
+                            return false;
+                        }
+                        for (var i = 0; i < data.data.length; i++) {
+                            for (var k = 0; k < arr1.length; k++) {
+                                if (data.data[i].id === parseInt(arr1[k])) {
+                                    arr.push({
+                                        "name": data.data[i].name,
+                                        "value": data.data[i].id,
+                                    });
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+            // 库位数据初始化
+            formSelects.data('positionSelectLayer', 'local', {
+                arr
+            });
+            //设置库位select下拉框赋值
+            orderno.positionid && formSelects.value('positionSelectLayer', [orderno.positionid]);
+
+            // 设置产地select的选中值
+            if (orderno.origin) {
+                formSelects.value('originSelectLayer', [orderno.origin]);
+            }
+            // 设置供应商select的选中值
+            if (orderno.supplierid) {
+                formSelects.value('supplierSelectLayer', [orderno.supplierid]);
+            }
+            // 隐藏域存供应商名称
+            $(".suppliernameLayer").val(orderno.suppliername);
+
+            //仓库主和仓库禁用下拉框
+            formSelects.disabled('ownerSelectLayer');
+            formSelects.disabled('depotSelectLayer');
+
+            //如果订单号存在，则下拉该订单货物列表
+            $.get(preEntrygetByOrderno, {
+                orderno: orderno.orderno
+            }, function(data) {
+                if (data.status == 0) {
+                    goodsData = data.list1;
+                    tableData = data.list2;
+
+                    tableInsGood.reload({
+                        data: goodsData,
+                        page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                    });
+
+                    tableOutBill.reload({
+                        data: tableData,
+                        page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                    });
+
+                    arrLength();
+
+                }
+            })
+        }
+
+        // // 仓库主下拉框数据初始化
+        // formSelects.data('ownerSelectLayer', 'local', {
+        //     arr: selectDataInstall(ownerDropdown, null, null, 0) //仓库主列表
+        // });
+
+        // // 打开仓库下拉框回调
+        // layui.formSelects.opened('depotSelectLayer', function(id) {
+        //     var ownerid = formSelects.value('ownerSelectLayer', 'val'); //获取仓库主ID
+        //     if (ownerid.length < 1) {
+        //         layer.msg("请先选择仓库主");
+        //         formSelects.data(id, 'local', {
+        //             arr: []
+        //         }); //如果仓库主为空则清空列表
+        //     }
+        // });
+
+        // // 打开库位下拉框回调
+        // layui.formSelects.opened('positionSelectLayer', function(id) {
+        //     var depotid = formSelects.value('depotSelectLayer', 'val'); //获取仓库ID
+        //     if (depotid.length < 1) {
+        //         layer.msg("请先选择仓库");
+        //         formSelects.data(id, 'local', {
+        //             arr: []
+        //         }); //如果仓库为空则清空列表
+        //     }
+        //     /*else { //如果仓库id不为，根据仓库id查询库位列表，并赋值库位select
+        //                    formSelects.data(id, 'local', {
+        //                        arr: selectDataInstall(positionDropdown, {
+        //                            "depotid": depotid
+        //                        }, false, 0) //仓库列表
+        //                    });
+        //                }*/
+        // });
+
+        // // 监听仓库主select的选中与取消
+        // formSelects.on('ownerSelectLayer', function(id, vals, val, isAdd, isDisabled) {
+        //     if (!isAdd) {
+        //         formSelects.data('depotSelectLayer', 'local', {
+        //             arr: [] //清空仓库列表
+        //         });
+        //         formSelects.data('positionSelectLayer', 'local', {
+        //             arr: [] //清空库位列表
+        //         });
+        //     } else {
+        //         //  获取仓库下拉数据
+        //         var depotList = selectDataInstall(depotDropdown, {
+        //             "ownerid": vals[0].value //仓库列表
+        //         }, false, 0);
+        //         console.log(depotList); //仓库下拉数据
+        //         if (depotList.length < 1) {
+        //             formSelects.data('depotSelectLayer', 'local', {
+        //                 arr: [] //清空仓库列表
+        //             });
+        //             formSelects.data('positionSelectLayer', 'local', {
+        //                 arr: [] //清空库位列表
+        //             });
+        //             layer.msg("该仓库主下无仓库信息");
+        //             return false;
+        //         }
+        //         // 根据仓库主id：ownerid查询的仓库数据depotList，初始化仓库select数据
+        //         formSelects.data('depotSelectLayer', 'local', {
+        //             arr: depotList //仓库列表
+        //         });
+        //         /* formSelects.data('positionSelectLayer', 'local', {
+        //              arr: selectDataInstall(positionDropdown, {
+        //                  "depotid": depotList[0].value
+        //              }, false, 0) //库位列表
+        //          });*/
+        //     }
+        // }, true);
+
+        // //监听仓库的选中与取消
+        // formSelects.on('depotSelectLayer', function(id, vals, val, isAdd, isDisabled) {
+        //     //id:           点击select的id
+        //     //vals:         当前select已选中的值
+        //     //val:          当前select点击的值
+        //     //isAdd:        当前操作选中or取消
+        //     //isDisabled:   当前选项是否是disabled
+        //     //如果return false, 那么将取消本次操作
+        //     if (!isAdd) {
+        //         formSelects.data('positionSelectLayer', 'local', {
+        //             arr: [] //仓库列表
+        //         });
+        //     } else {
+        //         /* formSelects.data('positionSelectLayer', 'local', {
+        //              arr: selectDataInstall(positionDropdown, {
+        //                  "depotid": vals[0].value
+        //              }, false, 0) //仓库列表
+        //          });*/
+        //         var bitdepotid = vals[0].bitdepotid;
+        //         var positiondIds = vals[0].position;
+        //         var arr1 = [];
+        //         positiondIds && (arr1 = positiondIds.split(","));
+        //         var arr = [];
+
+        //         $.ajax({
+        //             url: positiondropdown,
+        //             type: "get",
+        //             data: bitdepotid,
+        //             async: false, // 同步
+        //             traditional: true,
+        //             success: function(data) {
+        //                 if (data.status === 0) {
+        //                     //把接口数据转换为[{"name":str,"value":number}]格式
+        //                     if (!Array.isArray(data.data) || data.data.length === 0) {
+        //                         // 判断arr是否为数组并保证内部有值
+        //                         return false;
+        //                     }
+        //                     for (var i = 0; i < data.data.length; i++) {
+        //                         for (var k = 0; k < arr1.length; k++) {
+        //                             if (data.data[i].id === parseInt(arr1[k])) {
+        //                                 arr.push({
+        //                                     "name": data.data[i].name,
+        //                                     "value": data.data[i].id,
+        //                                 });
+        //                             }
+        //                         }
+        //                     }
+        //                 }
+        //             }
+        //         });
+        //         // 库位数据初始化
+        //         formSelects.data('positionSelectLayer', 'local', {
+        //             arr
+        //         });
+        //     }
+        // }, true);
+
+        // 供应商列表select下拉数据后台获取
+
+
+        function selectDataInstall(url, param, bool, type) {
+            var arr = [];
+            //获取列表数据
+            $.ajax({
+                url: url,
+                type: "get",
+                data: param,
+                async: false, //同步
+                traditional: true,
+                xhrFields: {
+                    withCredentials: true
+                },
+                crossDomain: true,
+                success: function(data) {
+                    // console.log(data);
+                    if (data.status === 0) {
+                        //把接口数据转换为[{"name":str,"value":number}]格式
+                        if (!Array.isArray(data.data) || data.data.length === 0) {
+                            // 判断arr是否为数组并保证内部有值
+                            return false;
+                        }
+                        for (var i = 0; i < data.data.length; i++) {
+                            if (type === 0) {
+                                arr.push({
+                                    "name": data.data[i].name,
+                                    "value": data.data[i].id,
+                                    "bitdepotid": data.data[i].bitdepotid,
+                                    "position": data.data[i].position,
+                                })
+                            } else {
+                                arr.push({
+                                    "name": data.data[i].name,
+                                    "value": data.data[i].name,
+                                    "bitdepotid": data.data[i].bitdepotid,
+                                    "position": data.data[i].position,
+                                })
+                            }
+                        }
+                        if (bool) {
+                            arr[0].selected = "selected";
+                        }
+                    }
+                }
+            });
+            return arr;
+        }
+
+        form.on('submit(searchGoodsForm)', function(data) {
+
+            console.log(data)
+            // tableInsGood.reload({
+            //     where: data.field,
+            //     page: {
+            //         curr: 1 //重新从第 1 页开始
+            //     }
+            // });
+
+            return false;
+        });
+
+        //货物列表
+        var tableInsGood = table.render({
+            elem: '#tableContainer-goodsList',
+            height: '278px',
+            data: goodsData,
+            cols: [
+                [ //标题栏
+                    {
+                        type: 'checkbox'
+                    }, {
+                        field: 'LAY_TABLE_INDEX',
+                        title: '序号',
+                        width: 40,
+                        templet: function(d) {
+                            return d.LAY_TABLE_INDEX + 1;
+                        }
+                    }, {
+                        field: 'uuid',
+                        title: '货物标识码',
+                        width: 206,
+                        style: 'font-family: Consolas;font-size:16px'
+                    }, {
+                        field: 'code',
+                        title: '包号'
+                    }, {
+                        field: 'varietiesName',
+                        title: '品种',
+                        templet: function(d) {
+                            // console.log(d)
+                            if (!d.varietiesName) {
+                                return d.varieties
+                            }
+                            return d.varietiesName;
+                        }
+                    }, {
+                        field: 'levelsName',
+                        title: '等级',
+                        templet: function(d) {
+                            if (!d.levelsName) {
+                                return d.levels
+                            }
+                            return d.levelsName;
+                        }
+                    }, {
+                        field: 'specName',
+                        title: '规格',
+                        templet: function(d) {
+                            if (!d.specName) {
+                                return d.spec
+                            }
+                            return d.specName;
+                        }
+                    }, {
+                        field: 'pprice',
+                        title: '采购价（RMB）'
+                    }, {
+                        field: 'chang',
+                        title: '长度'
+                    }, {
+                        field: 'codenum',
+                        title: '码单数量（m³）'
+                    }, {
+                        field: 'num',
+                        title: '实际数量（m³）',
+                        event: "edit",
+                        style: 'color:red;',
+                        templet: function(d) {
+                            if (!d.num) {
+                                return d.codenum
+                            };
+                            return d.num;
+                        }
+                    }, {
+                        field: 'pieces',
+                        title: '片数'
+                    }, {
+                        field: 'containernum',
+                        title: '货柜号'
+                    }, {
+                        field: 'brand',
+                        title: '品牌'
+                    }, {
+                        field: 'billloading',
+                        title: '提运单'
+                    }
+                ]
+            ],
+            even: true,
+            page: true, //是否显示分页
+            limits: [50, 100, 200, 500],
+            limit: 50, //每页默认显示的数量
+            done: function(res, curr, count) {
+                // console.log(res);
+
+            },
+            text: {
+                none: "无匹配数据"
+            },
+            loading: true
+        });
+
+        // 出货申请单详情表格渲染
+        var tableOutBill = table.render({
+            elem: '#tableContainer-addOutBill',
+            height: '300px',
+            data: tableData,
+            cols: [
+                [ //标题栏
+                    {
+                        type: 'checkbox'
+                    }, {
+                        field: 'LAY_TABLE_INDEX',
+                        title: '序号',
+                        width: 40,
+                        templet: function(d) {
+                            return d.LAY_TABLE_INDEX + 1;
+                        }
+                    }, {
+                        field: 'uuid',
+                        title: '货物标识码',
+                        width: 206,
+                        style: 'font-family: Consolas;font-size:16px'
+                    }, {
+                        field: 'code',
+                        title: '包号'
+                    }, {
+                        field: 'varietiesName',
+                        title: '品种',
+                        templet: function(d) {
+                            // console.log(d)
+                            if (!d.varietiesName) {
+                                return d.varieties
+                            }
+                            return d.varietiesName;
+                        }
+                    }, {
+                        field: 'levelsName',
+                        title: '等级',
+                        templet: function(d) {
+                            if (!d.levelsName) {
+                                return d.levels
+                            }
+                            return d.levelsName;
+                        }
+                    }, {
+                        field: 'specName',
+                        title: '规格',
+                        templet: function(d) {
+                            if (!d.specName) {
+                                return d.spec
+                            }
+                            return d.specName;
+                        }
+                    }, {
+                        field: 'pprice',
+                        title: '采购价（RMB）'
+                    }, {
+                        field: 'chang',
+                        title: '长度'
+                    }, {
+                        field: 'codenum',
+                        title: '码单数量（m³）'
+                    }, {
+                        field: 'num',
+                        title: '实际数量（m³）',
+                        event: "edit",
+                        style: 'color:red;',
+                        templet: function(d) {
+                            if (!d.num) {
+                                return d.codenum
+                            };
+                            return d.num;
+                        }
+                    }, {
+                        field: 'pieces',
+                        title: '片数'
+                    }, {
+                        field: 'containernum',
+                        title: '货柜号'
+                    }, {
+                        field: 'brand',
+                        title: '品牌'
+                    }, {
+                        field: 'billloading',
+                        title: '提运单'
+                    }
+                ]
+            ],
+            even: true,
+            page: true, //是否显示分页
+            limits: [50, 100, 150, 200, 500],
+            limit: 50, //每页默认显示的数量
+            done: function(res, curr, count) {
+
+            },
+            text: {
+                none: "无匹配数据"
+            },
+            loading: true
+        });
+
+        // 添加货物信息弹框
+        $(".addGoodsBtn").click(function() {
+            $.get('view/form/form-goods.html', {}, function(str) {
+                addLayer = layer.open({
+                    title: '添加货物信息',
+                    type: 1,
+                    content: str, //注意，如果str是object，那么需要字符拼接。
+                    resize: false,
+                    area: ['800px', '560px']
+                });
+            });
+            form.render();
+            return false;
+        });
+
+        // 保存添加货物信息
+        form.on('submit(addGoodsForm)', function(data) {
+            console.log(tableData)
+            tableData.push(data.field);
+            console.log(tableData)
+            // $(".rightBotBtn span").html(tableData.length); //当前选中了多少货物
+            tableData = createNum(tableData); //num1
+            tableData = objValueMake(tableData, 'chang'); //长度去.0
+            tableIns.reload({
+                data: tableData,
+                page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+            });
+            layer.close(addLayer); //关闭
+            return false;
+        });
+
+        // 入库按钮点击
+        $(".submissionLayBtn").click(function() {
+            if (!orderno) {
+                return false;
+            }
+
+            var checkStatus = table.checkStatus('tableContainer-addOutBill'); //表格选中状态
+            var checkData = checkStatus.data;
+            console.log(checkData);
+            if (checkData.length < 1) {
+                layer.msg("请选择货物");
+                return;
+            }
+            var parent = $(".storageBill");
+            var ownerid = parent.find("input[name='ownerid']").val();
+            var depotname = parent.find("input[name='depotid']").val();
+            var origin = parent.find("input[name='origin']").val();
+            var supplierid = parent.find("input[name='supplierid']").val();
+            var positionid = parent.find("input[name='positionid']").val();
+
+            var suppliername = parent.find("input[name='suppliername']").val();
+
+            if (null == ownerid || ownerid.length < 1) {
+                layer.msg("请选择仓库主");
+                return;
+            }
+            if (null == depotname || depotname.length < 1) {
+                layer.msg("请选择仓库");
+                return;
+            }
+            if (null == positionid || positionid.length < 1) {
+                layer.msg("请选择库位");
+                return;
+            }
+
+            var uuidlist = []; //货物uuid
+            for (var i = 0; i < checkData.length; i++) {
+                uuidlist.push(checkData[i].uuid);
+            }
+
+            layer.confirm('是否对所勾选的货物进行入库操作?', {
+                skin: 'layui-layer-wei', //layui-layer-wei，维木class
+                title: '提示'
+            }, function(index) {
+                //审核订单为库存
+                $.ajax({
+                    url: preEntryexamineStockGoods,
+                    type: "post",
+                    data: {
+                        'orderno': orderno.orderno,
+                        'uuidlist': uuidlist.toString(),
+                        'ownerid': ownerid,
+                        'depotid': depotname,
+                        'origin': origin,
+                        'supplierid': supplierid,
+                        'positionid': positionid,
+                        'SESSION_NAME': getCookie('SESSION_NAME'),
+                        'TOKEN': getCookie('TOKEN'),
+                    },
+                    traditional: true,
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    success: function(res) {
+                        if (res.status === 0) {
+                            //入库成功移除tableData中的入库相关货物
+                            for (var k = 0; k < uuidlist.length; k++) {
+                                tableData.remove("uuid", uuidlist[k])
+                            }
+                            tableOutBill.reload({
+                                data: tableData,
+                                page: {
+                                    curr: 1 //重新从第 1 页开始
+                                }
+                            });
+                            layer.msg('审核通过为库存', {
+                                time: 1500 //2秒关闭（如果不配置，默认是3秒）
+                            });
+
+                        } else if (res.status === 1) {
+                            goLogin(); // 跳转到登录页
+                        } else {
+                            layer.msg(res.msg);
+                        }
+                    }
+                })
+            })
+        });
+
+
+        $(".deleteGoods").click(function() {
+            //移除
+            var checkStatus = table.checkStatus('tableContainer-addOutBill');
+            var checkData = checkStatus.data;
+            if (checkData.length < 1) {
+                layer.msg("请选择需要移除的信息");
+            } else {
+                //移除已选中货物
+                for (var i = 0; i < checkData.length; i++) {
+                    goodsData.push(checkData[i]);
+                    tableData.remove("uuid", checkData[i].uuid);
+                }
+
+                tableInsGood.reload({
+                    data: goodsData,
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                });
+
+                tableOutBill.reload({
+                    data: tableData,
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                });
+                arrLength();
+            }
+        });
+
+        $(".addBtn").click(function() {
+            //移除
+            var checkStatus = table.checkStatus('tableContainer-goodsList');
+            var checkData = checkStatus.data;
+            if (checkData.length < 1) {
+                layer.msg("请选择需要移除的信息");
+            } else {
+                //移除已选中货物
+                for (var i = 0; i < checkData.length; i++) {
+                    tableData.push(checkData[i]);
+                    goodsData.remove("uuid", checkData[i].uuid);
+                }
+                tableInsGood.reload({
+                    data: goodsData,
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                });
+                tableOutBill.reload({
+                    data: tableData,
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                });
+                arrLength();
+            }
+        });
+
+        // 监听table点击事件，修改数量
+        table.on('tool(tableContainer-from)', function(obj) {
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            var tr = obj.tr; //获得当前行 tr 的DOM对象
+            if (layEvent === 'edit') {
+                layer.prompt({
+                    formType: 2,
+                    title: '修改包号为' + data.code + '的数量',
+                    value: data.codenum
+                }, function(value, index) {
+                    if (!value || isNaN(value)) {
+                        layer.msg("请输入数字");
+                        return false;
+                    }
+                    layer.msg("修改成功");
+                    layer.close(index);
+                    obj.update({
+                        num: value
+                    });
+                });
+            }
+        });
+
+        //监听表格复选框选择
+        var checkBoxTrDom = {};
+        checkBoxTrDom.arr = [];
+        table.on('checkbox(tableContainer-goodsList)', function(obj) {
+            if (obj.checked) {
+                checkBoxTrDom.type = obj.type;
+                checkBoxTrDom.arr.push(obj);
+            }
+        });
+
+        // 删除选中入库货物信息
+        $(".deleteBtnLayer").click(function() {
+            var checkStatus = table.checkStatus('tableContainer-goodsList');
+            var checkData = checkStatus.data;
+            if (checkData.length == 0 || checkBoxTrDom.arr.length == 0) {
+                layer.msg("请选择要删除的信息");
+                checkBoxTrDom.arr = [];
+                return false;
+            }
+
+            layer.confirm('是否确认删除此条信息', {
+                skin: 'layui-layer-wei', //layui-layer-wei，维木class
+                title: '提示'
+            }, function(index) {
+                if (checkBoxTrDom.type == "one") {
+                    for (var i = 0; i < checkBoxTrDom.arr.length; i++) {
+                        //table删除选中行并更新dom
+                        checkBoxTrDom.arr[i].del();
+
+                    }
+
+                    for (i = 0; i < table.cache["tableContainer-goodsList"].length; i++) {
+                        //获取操作后的表格数据并赋值给tableData
+                        if (Array.isArray(table.cache["tableContainer-goodsList"][i]) && table.cache["tableContainer-goodsList"][i].length == 0) {
+                            table.cache["tableContainer-goodsList"].splice(i, 1);
+                            i--;
+                        }
+                    }
+
+                    goodsData = table.cache["tableContainer-goodsList"];
+
+                } else if (checkBoxTrDom.type == "all") {
+                    goodsData = [];
+                    tableInsGood.reload({
+                        data: goodsData,
+                        page: {
+                            curr: 1 //重新从第 1 页开始
+                        }
+                    });
+                }
+                layer.close(index);
+            });
+        });
+
+        $(".subConfirmBtn").unbind("click").bind("click", function() {
+            event.stopPropagation();
+            subConfun();
+        });
+
+        $(".subCancelBtn").click(function() {
+            layer.closeAll();
+        });
+
+        /**
+         * tableData长度变化改变显示数量
+         */
+        function arrLength() {
+            $(".goodsCount").html(tableData.length);
+        }
+
+        //点击入库
+        function subConfun() {
+            //先判断头部4个选项是否已填
+            var parent = $(".storageBill");
+            var cargoowner = parent.find("input[name='ownerid']").val();
+            var depotname = parent.find("input[name='depotid']").val();
+            var origin = parent.find("input[name='origin']").val();
+            var supplierid = parent.find("input[name='supplierid']").val();
+            var positionid = parent.find("input[name='positionid']").val();
+            var suppliername = parent.find("input[name='suppliername']").val();
+
+            if (null == cargoowner || cargoowner.length < 1) {
+                layer.msg("请填写仓库主");
+                return;
+            }
+            if (null == depotname || depotname.length < 1) {
+                layer.msg("请填写仓库名称");
+                return;
+            }
+
+            goodsData = table.cache["tableContainer-goodsList"];
+            tableData = table.cache["tableContainer-addOutBill"];
+
+            var arr = JSON.stringify(goodsData);
+            var arrs = JSON.stringify(tableData);
+            if (tableData.length === 0) {
+                layer.msg("请添加货物信息");
+                return;
+            }
+            //第二步，提交到后台
+            var num;
+            if (!orderno) {
+                num = "";
+            } else {
+                num = orderno.orderno;
+            }
+
+            $.ajax({
+                url: preEntryAdd,
+                type: "post",
+                //dataType: "json",
+                //contentType: "application/json",
+                async: false,
+
+                data: {
+                    lbarr: arr.toString(),
+                    lbarrs: arrs.toString(),
+                    ownerid: cargoowner,
+                    depotid: depotname,
+                    origin: origin,
+                    supplierid: supplierid,
+                    suppliername: suppliername,
+                    positionid: positionid,
+                    orderno: num,
+                    'SESSION_NAME': getCookie('SESSION_NAME'),
+                    'TOKEN': getCookie('TOKEN')
+                },
+                traditional: true,
+                success: function(res) {
+                    if (res.status === 0) {
+                        layer.msg("提交成功");
+                        console.log(orderno);
+                        if (!orderno) {
+                            layer.closeAll();
+                        }
+                        //刷新当前列表
+                    } else if (res.status === 1) {
+                        goLogin(); // 跳转到登录页
+                    }
+                },
+                error: function() {}
+            })
+        }
+
+        $(".dayinBtn").click(function() {
+            window.open(printin, '打印', 'height=800, width=1100, top=100, left=100, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no');
+        });
+
+        //变更下载模板链接
+        $(".dowmTemp").attr("href", ilbstockImportTemp);
+
+        //导入
+        var importLayer; //导入弹窗
+        $(".toImport").on('click', function(e) {
+            var parent = $(".storageBill");
+            // var ownerid = parent.find("input[name='ownerid']").val();
+            var depotname = parent.find("input[name='depotid']").val();
+            var origin = parent.find("input[name='origin']").val();
+            var supplierid = parent.find("input[name='supplierid']").val();
+            var positionid = parent.find("input[name='positionid']").val();
+            var suppliername = parent.find("input[name='suppliername']").val();
+            var num;
+            if (!orderno) {
+                num = "";
+            } else {
+                num = orderno.orderno;
+            }
+
+            $.get("view/form/form-import.html", {}, function(str) {
+                importLayer = layer.open({
+                    title: '文件上传',
+                    type: 1,
+                    content: str, //注意，如果str是object，那么需要字符拼接。
+                    area: ['500px', '340px'],
+                });
+                var uploadInst = upload.render({ //上传实例
+                    elem: '#importAddBtn',
+                    url: ilbstockImportUrl,
+                    data: {
+                        // ownerid: cargoowner,
+                        depotid: depotname,
+                        origin: origin,
+                        supplierid: supplierid,
+                        suppliername: suppliername,
+                        positionid: positionid,
+                        orderno: num,
+                        'SESSION_NAME': getCookie('SESSION_NAME'),
+                        'TOKEN': getCookie('TOKEN')
+                    },
+                    multiple: false,
+                    accept: 'file', //普通文件
+                    exts: 'xls|xlsx|xlsm|xlt|xltx|xltm', //只允许上传后缀
+                    done: function(res) {
+                        if (res.status === 0) {
+                            layer.msg("上传成功");
+                            layer.close(importLayer);
+                            for (var k = 0; k < res.data.length; k++) {
+                                goodsData.push(res.data[k]);
+                            }
+                            goodsData = createNum(goodsData); //num
+                            goodsData = objValueMake(goodsData, 'chang'); //长度去.0
+                            tableInsGood.reload({
+                                data: goodsData,
+                                page: {
+                                    curr: 1 //重新从第 1 页开始
+                                }
+                            });
+                        } else {
+                            var msgstr = "------以下行有问题------</br></br>";
+                            for (var i = 0; i < res.data.length; i++) {
+                                msgstr += res.data[i];
+                            }
+                            layer.msg(msgstr, {
+                                time: 60000, //60s后自动关闭
+                                btn: ['关闭'],
+                                area: ["100%", "100%"]
+                            });
+                        }
+                    }
+                });
+            })
+        });
+    });
+
+    function isArr(v, arr) {
+        for (var i = 0; i < arr.length; i++) {
+            if (v == arr[i].uuid) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 生成num（实际数量字段）
+     */
+    function createNum(arr) {
+        for (var i = 0; i < arr.length; i++) {
+            if (arr[i].num == undefined || arr[i].num == null) {
+                arr[i].num = arr[i].codenum;
+            }
+        }
+        return arr;
+    }
+
+    function getGoodsList(param) {
+
+        $.get(preEntrygetByOrderno, param, function(data) {
+            if (data.status == 0) {
+                goodsData = data.list1;
+                tableData = data.list2;
+
+                tableInsGood.reload({
+                    data: goodsData,
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                });
+
+                tableOutBill.reload({
+                    data: tableData,
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                });
+
+                arrLength();
+
+            }
+        })
+    }
+</script>

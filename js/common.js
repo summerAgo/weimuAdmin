@@ -105,7 +105,7 @@ Array.prototype.remove = function(key, val) {
  */
 function btnIsList(domObj, menuKey) {
     var data = JSON.parse(sessionStorage.getItem("buttonAuthority")); //所有页面按钮权限数据存入buttonAuthority
-    var btnDom;
+    var btnDom = "";
     if (data !== null) {
         var currentBtnData = data ? data[menuKey] : [];// 当前按钮数据 -- 根据当前页面key参数获得当前页面按钮数据
         // currentBtnData.sort(compare("sort"));

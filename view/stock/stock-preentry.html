@@ -103,7 +103,9 @@
         form.render(); //重置表单渲染
         formSelects.render(); //重置下拉选项
         element.render('talbe-tools'); //tab选项卡重置
-        formSelects.btns(['remove'], {show: 'name'});
+        formSelects.btns(['remove'], {
+            show: 'name'
+        });
 
         // 初始化仓库主数据
         formSelects.data('ownerSelect', 'local', {
@@ -210,7 +212,9 @@
                     }
                 });
                 // 库位数据初始化
-                formSelects.data('positionSelect', 'local', { arr });
+                formSelects.data('positionSelect', 'local', {
+                    arr
+                });
             }
         }, true);
 
@@ -293,7 +297,7 @@
             for (var key in data.field) {
                 //参数赋值
                 if (data.field[key] !== "") {
-                    paramSearch[key] = data.field[key].replace(/^\s*|\s*$/g,"");
+                    paramSearch[key] = data.field[key].replace(/^\s*|\s*$/g, "");
                 }
             }
             tableIns.reload({
@@ -322,45 +326,47 @@
                 pageName: 'offset', //页码的参数名称，默认：page
                 limitName: 'limit' //每页数据量的参数名，默认：limit
             },
-            cols: [[ //标题栏
-                {
-                    field: 'LAY_TABLE_INDEX',
-                    title: '序号',
-                    width: 40,
-                    templet: function(d) {
-                        return d.LAY_TABLE_INDEX + 1;
+            cols: [
+                [ //标题栏
+                    {
+                        field: 'LAY_TABLE_INDEX',
+                        title: '序号',
+                        width: 40,
+                        templet: function(d) {
+                            return d.LAY_TABLE_INDEX + 1;
+                        }
+                    }, {
+                        type: 'radio'
+                    }, {
+                        field: 'orderno',
+                        title: '单号',
+                        event: 'click',
+                        style: 'cursor: pointer;color:#0063de;',
+                        width: 200
+                    }, {
+                        field: 'ownername',
+                        title: '仓库主'
+                    }, {
+                        field: 'depname',
+                        title: '仓库名称'
+                    }, {
+                        field: 'num',
+                        title: '件数（包）'
+                    }, {
+                        field: 'origin',
+                        title: '产地'
+                    }, {
+                        field: 'suppliername',
+                        title: '供应商'
+                    }, {
+                        field: 'volume',
+                        title: '数量（m³）'
+                    }, {
+                        field: 'createdate',
+                        title: '创建日期'
                     }
-                }, {
-                    type: 'radio'
-                }, {
-                    field: 'orderno',
-                    title: '单号',
-                    event: 'click',
-                    style: 'cursor: pointer;color:#0063de;',
-                    width: 200
-                }, {
-                    field: 'ownername',
-                    title: '仓库主'
-                }, {
-                    field: 'depname',
-                    title: '仓库名称'
-                }, {
-                    field: 'num',
-                    title: '件数（包）'
-                }, {
-                    field: 'origin',
-                    title: '产地'
-                }, {
-                    field: 'suppliername',
-                    title: '供应商'
-                }, {
-                    field: 'volume',
-                    title: '数量（m³）'
-                }, {
-                    field: 'createdate',
-                    title: '创建日期'
-                }
-            ]],
+                ]
+            ],
             even: true,
             page: true, //是否显示分页
             limits: [100, 200, 500, 1000],
@@ -428,7 +434,7 @@
         //编辑提交
         form.on('submit(editForm)', function(data) {
             layer.confirm('确认提交修改', {
-                skin: 'layui-layer-wei',  //layui-layer-wei，维木class
+                skin: 'layui-layer-wei', //layui-layer-wei，维木class
                 title: '提示'
             }, function(index) {
                 data.field.orderno = window.currData.orderno; //防止单号被篡改
@@ -458,7 +464,7 @@
                 layer.msg("请选择需要删除的信息");
             } else {
                 layer.confirm('是否确认删除此条信息', {
-                    skin: 'layui-layer-wei',  //layui-layer-wei，维木class
+                    skin: 'layui-layer-wei', //layui-layer-wei，维木class
                     title: '提示'
                 }, function(index) {
                     var rowId = [];
@@ -489,8 +495,8 @@
 
         //增删行数据
         function rowDataApi(url, data, funSuc, funErr) {
-            data['SESSION_NAME']= getCookie('SESSION_NAME');
-            data['TOKEN']= getCookie('TOKEN');
+            data['SESSION_NAME'] = getCookie('SESSION_NAME');
+            data['TOKEN'] = getCookie('TOKEN');
             $.ajax({
                 url: url,
                 type: "POST",
@@ -507,11 +513,8 @@
 
         $(".creatBillBtn").click(function() {
             //新建预入库单
-            // var container = $('.content-body'); //页面容器
-            // container.load('/view/stock/stock-newbill.html');
             sessionStorage.removeItem('newbill_orderno');
-            tankuang("新建预入库单");
-            // location.hash = "#!stock-addPrebill/";
+            tankuang("新建预入库单", "new");
         });
 
         table.on('tool(tableContainer-preentry)', function(obj) {
@@ -519,17 +522,23 @@
             var data = obj.data;
             if (obj.event === 'click') {
                 sessionStorage.setItem('newbill_orderno', JSON.stringify(obj.data));
-                tankuang("预入库单详情");
+                tankuang("预入库单详情", "modify");
             }
         });
 
-        function tankuang(title) {
-            $.get('view/form/form-newbill.html', {}, function(str) {
+        function tankuang(title, type) {
+            var url;
+            if (type == "new") {
+                url = "view/form/form-newbill.html"
+            } else {
+                url = "view/stock/stock-storageBill.html"
+            }
+            $.get(url, {}, function(str) {
                 eaitLayer = layer.open({
                     title: title,
                     type: 1,
                     content: str, //注意，如果str是object，那么需要字符拼接。
-                    area: ['80%', '720px'],
+                    area: ['99%', '99%'],
                     end: function() {
                         tableIns.reload({
                             page: {
@@ -545,5 +554,6 @@
         $(".toExport").on('click', function(e) {
             table.exportFile(tableIns.config.id, tableIns.config.data);
         });
+
     });
 </script>
