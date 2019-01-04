@@ -267,7 +267,7 @@
 
         // 获取预入库table表格项点击行数据
         var orderno = JSON.parse(sessionStorage.getItem('newbill_orderno'));
-
+        console.log(orderno);
         var supplierData;
         $.ajax({
             url: dropSupplier,
@@ -614,13 +614,11 @@
 
         form.on('submit(searchGoodsForm)', function(data) {
 
-            console.log(data)
-            // tableInsGood.reload({
-            //     where: data.field,
-            //     page: {
-            //         curr: 1 //重新从第 1 页开始
-            //     }
-            // });
+            data.field.orderno = orderno.orderno;
+            console.log(data.field);
+
+                                            
+            getGoodsList(data.field);
 
             return false;
         });
@@ -981,13 +979,13 @@
         });
 
         $(".addBtn").click(function() {
-            //移除
+            //添加
             var checkStatus = table.checkStatus('tableContainer-goodsList');
             var checkData = checkStatus.data;
             if (checkData.length < 1) {
                 layer.msg("请选择需要移除的信息");
             } else {
-                //移除已选中货物
+                //添加已选中货物
                 for (var i = 0; i < checkData.length; i++) {
                     tableData.push(checkData[i]);
                     goodsData.remove("uuid", checkData[i].uuid);
@@ -1032,56 +1030,32 @@
             }
         });
 
-        //监听表格复选框选择
-        var checkBoxTrDom = {};
-        checkBoxTrDom.arr = [];
-        table.on('checkbox(tableContainer-goodsList)', function(obj) {
-            if (obj.checked) {
-                checkBoxTrDom.type = obj.type;
-                checkBoxTrDom.arr.push(obj);
-            }
-        });
-
         // 删除选中入库货物信息
         $(".deleteBtnLayer").click(function() {
             var checkStatus = table.checkStatus('tableContainer-goodsList');
             var checkData = checkStatus.data;
-            if (checkData.length == 0 || checkBoxTrDom.arr.length == 0) {
+            if (checkData.length == 0) {
                 layer.msg("请选择要删除的信息");
-                checkBoxTrDom.arr = [];
                 return false;
             }
 
-            layer.confirm('是否确认删除此条信息', {
+            layer.confirm('是否确认删除', {
                 skin: 'layui-layer-wei', //layui-layer-wei，维木class
                 title: '提示'
             }, function(index) {
-                if (checkBoxTrDom.type == "one") {
-                    for (var i = 0; i < checkBoxTrDom.arr.length; i++) {
-                        //table删除选中行并更新dom
-                        checkBoxTrDom.arr[i].del();
 
-                    }
-
-                    for (i = 0; i < table.cache["tableContainer-goodsList"].length; i++) {
-                        //获取操作后的表格数据并赋值给tableData
-                        if (Array.isArray(table.cache["tableContainer-goodsList"][i]) && table.cache["tableContainer-goodsList"][i].length == 0) {
-                            table.cache["tableContainer-goodsList"].splice(i, 1);
-                            i--;
-                        }
-                    }
-
-                    goodsData = table.cache["tableContainer-goodsList"];
-
-                } else if (checkBoxTrDom.type == "all") {
-                    goodsData = [];
-                    tableInsGood.reload({
-                        data: goodsData,
-                        page: {
-                            curr: 1 //重新从第 1 页开始
-                        }
-                    });
+                for (var i = 0; i < checkData.length; i++) {
+                    goodsData.remove("uuid", checkData[i].uuid);
                 }
+
+                tableInsGood.reload({
+                    data: goodsData,
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                });
+
+                arrLength();
                 layer.close(index);
             });
         });
@@ -1277,30 +1251,21 @@
         return arr;
     }
 
+
     function getGoodsList(param) {
 
-        $.get(preEntrygetByOrderno, param, function(data) {
+        $.get(ilbstocklistPreLb, param, function(data) {
             if (data.status == 0) {
-                goodsData = data.list1;
-                tableData = data.list2;
-
+                goodsData = data.list;
                 tableInsGood.reload({
                     data: goodsData,
                     page: {
                         curr: 1 //重新从第 1 页开始
                     }
                 });
-
-                tableOutBill.reload({
-                    data: tableData,
-                    page: {
-                        curr: 1 //重新从第 1 页开始
-                    }
-                });
-
-                arrLength();
-
             }
         })
+
+
     }
 </script>
