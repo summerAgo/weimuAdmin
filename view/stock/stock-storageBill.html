@@ -1171,18 +1171,15 @@
      * 剔除重复
      */
     function weedArr(arr1, arr2) {
-
         if (arr1.length > 0 && arr2.length > 0) {
             for (var i = 0; i < arr1.length; i++) {
                 for (var k = 0; k < arr2.length; k++) {
                     if (arr1[i]["uuid"] == arr2[k]["uuid"]) {
                         arr1.remove("uuid", arr2[k]["uuid"]);
-                        break;
                     }
                 }
             }
         }
-
         return arr1;
     }
 </script>
