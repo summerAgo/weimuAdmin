@@ -21,7 +21,9 @@ var ilbstockAdd = pathUrl + "lb/ilbstock/add";//增
 var ilbstockDelete = pathUrl + "lb/ilbstock/delete";//删
 var ilbstockUpdate = pathUrl + "lb/ilbstock/update";//改
 var ilbstockList = pathUrl + "lb/ilbstock/list";//查
-var ilbstockListAll = pathUrl + "lb/ilbstock/listAll";//查
+var ilbstockListAll = pathUrl + "lb/ilbstock/listAll";//出库申请单查询货物
+var ilbstocklistPreLb = pathUrl + "lb/ilbstock/listPreLb";//预入库单查询货物
+
 var ilbstocklblist = pathUrl + "lb/ilbstock/lblist";//查询出货时信息
 var ilbstockImportUrl = pathUrl + "lb/ilbstock/importExcel"; //导入
 var ilbstockExportUrl = pathUrl + "lb/ilbstock/exportExcel"; //导出
@@ -67,7 +69,6 @@ var preoutStock = pathUrl + "order/preouttreasury/outStock";//审核通过出库
 var preoutTreasuryDelete = pathUrl + "order/preouttreasury/delete";//出库删除
 var preoutTreasury = pathUrl + "order/preouttreasury/list";//出库列表
 var preoutgetByOrder = pathUrl + "order/preouttreasury/getByOrder";//根据orderno单号查询信息
-
 
 
 //出库

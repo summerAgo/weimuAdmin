@@ -1102,7 +1102,7 @@
             $(".goodsCount").html(tableData.length);
         }
 
-        //点击入库
+        //点击保存
         function subConfun() {
             //先判断头部4个选项是否已填
             var parent = $(".storageBill");
@@ -1127,10 +1127,10 @@
 
             var arr = JSON.stringify(goodsData);
             var arrs = JSON.stringify(tableData);
-            if (tableData.length === 0) {
-                layer.msg("请添加货物信息");
-                return;
-            }
+            // if (tableData.length === 0) {
+            //     layer.msg("请添加货物信息");
+            //     return;
+            // }
             //第二步，提交到后台
             var num;
             if (!orderno) {
