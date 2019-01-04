@@ -498,7 +498,6 @@
             data.field.preorderno = orderno.orderno;
             data.field['SESSION_NAME'] = getCookie('SESSION_NAME');
             data.field['TOKEN'] = getCookie('TOKEN');
-            console.log(data.field);
 
             $.ajax({
                 url: ilbstocklistPreLb,
@@ -1171,15 +1170,33 @@
      * 剔除重复
      */
     function weedArr(arr1, arr2) {
-        if (arr1.length > 0 && arr2.length > 0) {
+        var newarr = [];
+        if (arr1.length > 0 || arr2.length > 0) {
             for (var i = 0; i < arr1.length; i++) {
-                for (var k = 0; k < arr2.length; k++) {
-                    if (arr1[i]["uuid"] == arr2[k]["uuid"]) {
-                        arr1.remove("uuid", arr2[k]["uuid"]);
-                    }
+                var uuid = arr1[i]["uuid"];
+                if(!iscz(uuid,arr2)){
+                    //arr1.remove("uuid", uuid);
+                    newarr.push(arr1[i]);
                 }
+
+                // for (var k = 0; k < arr2.length; k++) {
+                //     if (arr1[i]["uuid"] == arr2[k]["uuid"]) {
+                        
+                //     }
+                // }
             }
         }
-        return arr1;
+        return newarr;
     }
+
+    function iscz(uuid,arr){
+        var f = false;
+        for (var k = 0; k < arr.length; k++) {
+            if (uuid == arr[k]["uuid"]) {
+                f = true;
+                break;
+            }
+        }
+        return f;
+    }  
 </script>
