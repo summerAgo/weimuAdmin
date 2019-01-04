@@ -61,6 +61,11 @@
                             </select>
                             <input type="hidden" name="suppliername" value="" class="suppliernameLayer">
                         </div>
+                        <div class="table-form-item layui-input-inline">
+                            <span class="input-span">入库时间</span>
+                            <input type="text" name="estimatedatestring" autocomplete="off" placeholder="入库时间" readonly="readonly"
+                                unselectable="on" class="layui-input" id="estime">
+                        </div>
                     </div>
                 </div>
             </form>
@@ -241,7 +246,7 @@
 </style>
 
 <script>
-    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'upload'], function() {
+    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'upload'], function () {
         var element = layui.element;
         var form = layui.form;
         var $ = layui.jquery;
@@ -258,6 +263,12 @@
 
         formSelects.render("depotSelectLayer"); //下拉选项
         formSelects.render("positionSelectLayer"); //下拉选项
+
+        laydate.render({
+            elem: '#estime' //指定元素
+            ,type: 'datetime',
+            value: new Date()
+        });
 
         var goodsData = []; //修改回显货物
         var tableData = []; //本地的货物列表
@@ -278,7 +289,7 @@
                 withCredentials: true
             },
             crossDomain: true,
-            success: function(data) {
+            success: function (data) {
                 if (data.status === 0) {
                     supplierData = data.data;
                 }
@@ -295,7 +306,7 @@
         });
 
         // 监听供应商列表select选中与取消
-        formSelects.on('supplierSelectLayer', function(id, vals, val, isAdd, isDisabled) {
+        formSelects.on('supplierSelectLayer', function (id, vals, val, isAdd, isDisabled) {
             if (isAdd) {
                 for (var i = 0; i < supplierData.length; i++) {
                     if (supplierData[i].id === val.value) {
@@ -364,7 +375,7 @@
                 data: bitdepotid,
                 async: false, // 同步
                 traditional: true,
-                success: function(data) {
+                success: function (data) {
                     if (data.status === 0) {
                         //把接口数据转换为[{"name":str,"value":number}]格式
                         if (!Array.isArray(data.data) || data.data.length === 0) {
@@ -409,7 +420,7 @@
             //如果订单号存在，则下拉该订单货物列表
             $.get(preEntrygetByOrderno, {
                 orderno: orderno.orderno
-            }, function(data) {
+            }, function (data) {
                 if (data.status == 0) {
                     goodsData = data.list1;
                     tableData = data.list2;
@@ -434,136 +445,6 @@
             })
         }
 
-        // // 仓库主下拉框数据初始化
-        // formSelects.data('ownerSelectLayer', 'local', {
-        //     arr: selectDataInstall(ownerDropdown, null, null, 0) //仓库主列表
-        // });
-
-        // // 打开仓库下拉框回调
-        // layui.formSelects.opened('depotSelectLayer', function(id) {
-        //     var ownerid = formSelects.value('ownerSelectLayer', 'val'); //获取仓库主ID
-        //     if (ownerid.length < 1) {
-        //         layer.msg("请先选择仓库主");
-        //         formSelects.data(id, 'local', {
-        //             arr: []
-        //         }); //如果仓库主为空则清空列表
-        //     }
-        // });
-
-        // // 打开库位下拉框回调
-        // layui.formSelects.opened('positionSelectLayer', function(id) {
-        //     var depotid = formSelects.value('depotSelectLayer', 'val'); //获取仓库ID
-        //     if (depotid.length < 1) {
-        //         layer.msg("请先选择仓库");
-        //         formSelects.data(id, 'local', {
-        //             arr: []
-        //         }); //如果仓库为空则清空列表
-        //     }
-        //     /*else { //如果仓库id不为，根据仓库id查询库位列表，并赋值库位select
-        //                    formSelects.data(id, 'local', {
-        //                        arr: selectDataInstall(positionDropdown, {
-        //                            "depotid": depotid
-        //                        }, false, 0) //仓库列表
-        //                    });
-        //                }*/
-        // });
-
-        // // 监听仓库主select的选中与取消
-        // formSelects.on('ownerSelectLayer', function(id, vals, val, isAdd, isDisabled) {
-        //     if (!isAdd) {
-        //         formSelects.data('depotSelectLayer', 'local', {
-        //             arr: [] //清空仓库列表
-        //         });
-        //         formSelects.data('positionSelectLayer', 'local', {
-        //             arr: [] //清空库位列表
-        //         });
-        //     } else {
-        //         //  获取仓库下拉数据
-        //         var depotList = selectDataInstall(depotDropdown, {
-        //             "ownerid": vals[0].value //仓库列表
-        //         }, false, 0);
-        //         console.log(depotList); //仓库下拉数据
-        //         if (depotList.length < 1) {
-        //             formSelects.data('depotSelectLayer', 'local', {
-        //                 arr: [] //清空仓库列表
-        //             });
-        //             formSelects.data('positionSelectLayer', 'local', {
-        //                 arr: [] //清空库位列表
-        //             });
-        //             layer.msg("该仓库主下无仓库信息");
-        //             return false;
-        //         }
-        //         // 根据仓库主id：ownerid查询的仓库数据depotList，初始化仓库select数据
-        //         formSelects.data('depotSelectLayer', 'local', {
-        //             arr: depotList //仓库列表
-        //         });
-        //         /* formSelects.data('positionSelectLayer', 'local', {
-        //              arr: selectDataInstall(positionDropdown, {
-        //                  "depotid": depotList[0].value
-        //              }, false, 0) //库位列表
-        //          });*/
-        //     }
-        // }, true);
-
-        // //监听仓库的选中与取消
-        // formSelects.on('depotSelectLayer', function(id, vals, val, isAdd, isDisabled) {
-        //     //id:           点击select的id
-        //     //vals:         当前select已选中的值
-        //     //val:          当前select点击的值
-        //     //isAdd:        当前操作选中or取消
-        //     //isDisabled:   当前选项是否是disabled
-        //     //如果return false, 那么将取消本次操作
-        //     if (!isAdd) {
-        //         formSelects.data('positionSelectLayer', 'local', {
-        //             arr: [] //仓库列表
-        //         });
-        //     } else {
-        //         /* formSelects.data('positionSelectLayer', 'local', {
-        //              arr: selectDataInstall(positionDropdown, {
-        //                  "depotid": vals[0].value
-        //              }, false, 0) //仓库列表
-        //          });*/
-        //         var bitdepotid = vals[0].bitdepotid;
-        //         var positiondIds = vals[0].position;
-        //         var arr1 = [];
-        //         positiondIds && (arr1 = positiondIds.split(","));
-        //         var arr = [];
-
-        //         $.ajax({
-        //             url: positiondropdown,
-        //             type: "get",
-        //             data: bitdepotid,
-        //             async: false, // 同步
-        //             traditional: true,
-        //             success: function(data) {
-        //                 if (data.status === 0) {
-        //                     //把接口数据转换为[{"name":str,"value":number}]格式
-        //                     if (!Array.isArray(data.data) || data.data.length === 0) {
-        //                         // 判断arr是否为数组并保证内部有值
-        //                         return false;
-        //                     }
-        //                     for (var i = 0; i < data.data.length; i++) {
-        //                         for (var k = 0; k < arr1.length; k++) {
-        //                             if (data.data[i].id === parseInt(arr1[k])) {
-        //                                 arr.push({
-        //                                     "name": data.data[i].name,
-        //                                     "value": data.data[i].id,
-        //                                 });
-        //                             }
-        //                         }
-        //                     }
-        //                 }
-        //             }
-        //         });
-        //         // 库位数据初始化
-        //         formSelects.data('positionSelectLayer', 'local', {
-        //             arr
-        //         });
-        //     }
-        // }, true);
-
-        // 供应商列表select下拉数据后台获取
-
 
         function selectDataInstall(url, param, bool, type) {
             var arr = [];
@@ -578,7 +459,7 @@
                     withCredentials: true
                 },
                 crossDomain: true,
-                success: function(data) {
+                success: function (data) {
                     // console.log(data);
                     if (data.status === 0) {
                         //把接口数据转换为[{"name":str,"value":number}]格式
@@ -612,7 +493,7 @@
             return arr;
         }
 
-        form.on('submit(searchGoodsForm)', function(data) {
+        form.on('submit(searchGoodsForm)', function (data) {
 
             data.field.preorderno = orderno.orderno;
             data.field['SESSION_NAME'] = getCookie('SESSION_NAME');
@@ -629,7 +510,7 @@
                     withCredentials: true
                 },
                 crossDomain: true,
-                success: function(res) {
+                success: function (res) {
                     if (res.status == 1) {
                         goLogin(); // 跳转到登录页
                     } else if (res.status == 0) {
@@ -664,7 +545,7 @@
                         field: 'LAY_TABLE_INDEX',
                         title: '序号',
                         width: 40,
-                        templet: function(d) {
+                        templet: function (d) {
                             return d.LAY_TABLE_INDEX + 1;
                         }
                     }, {
@@ -678,7 +559,7 @@
                     }, {
                         field: 'varietiesName',
                         title: '品种',
-                        templet: function(d) {
+                        templet: function (d) {
                             // console.log(d)
                             if (!d.varietiesName) {
                                 return d.varieties
@@ -688,7 +569,7 @@
                     }, {
                         field: 'levelsName',
                         title: '等级',
-                        templet: function(d) {
+                        templet: function (d) {
                             if (!d.levelsName) {
                                 return d.levels
                             }
@@ -697,7 +578,7 @@
                     }, {
                         field: 'specName',
                         title: '规格',
-                        templet: function(d) {
+                        templet: function (d) {
                             if (!d.specName) {
                                 return d.spec
                             }
@@ -717,7 +598,7 @@
                         title: '实际数量（m³）',
                         event: "edit",
                         style: 'color:red;',
-                        templet: function(d) {
+                        templet: function (d) {
                             if (!d.num) {
                                 return d.codenum
                             };
@@ -742,7 +623,7 @@
             page: true, //是否显示分页
             limits: [50, 100, 200, 500],
             limit: 50, //每页默认显示的数量
-            done: function(res, curr, count) {
+            done: function (res, curr, count) {
                 // console.log(res);
 
             },
@@ -765,7 +646,7 @@
                         field: 'LAY_TABLE_INDEX',
                         title: '序号',
                         width: 40,
-                        templet: function(d) {
+                        templet: function (d) {
                             return d.LAY_TABLE_INDEX + 1;
                         }
                     }, {
@@ -779,7 +660,7 @@
                     }, {
                         field: 'varietiesName',
                         title: '品种',
-                        templet: function(d) {
+                        templet: function (d) {
                             // console.log(d)
                             if (!d.varietiesName) {
                                 return d.varieties
@@ -789,7 +670,7 @@
                     }, {
                         field: 'levelsName',
                         title: '等级',
-                        templet: function(d) {
+                        templet: function (d) {
                             if (!d.levelsName) {
                                 return d.levels
                             }
@@ -798,7 +679,7 @@
                     }, {
                         field: 'specName',
                         title: '规格',
-                        templet: function(d) {
+                        templet: function (d) {
                             if (!d.specName) {
                                 return d.spec
                             }
@@ -818,7 +699,7 @@
                         title: '实际数量（m³）',
                         event: "edit",
                         style: 'color:red;',
-                        templet: function(d) {
+                        templet: function (d) {
                             if (!d.num) {
                                 return d.codenum
                             };
@@ -843,7 +724,7 @@
             page: true, //是否显示分页
             limits: [50, 100, 150, 200, 500],
             limit: 50, //每页默认显示的数量
-            done: function(res, curr, count) {
+            done: function (res, curr, count) {
 
             },
             text: {
@@ -853,8 +734,8 @@
         });
 
         // 添加货物信息弹框
-        $(".addGoodsBtn").click(function() {
-            $.get('view/form/form-goods.html', {}, function(str) {
+        $(".addGoodsBtn").click(function () {
+            $.get('view/form/form-goods.html', {}, function (str) {
                 addLayer = layer.open({
                     title: '添加货物信息',
                     type: 1,
@@ -868,7 +749,7 @@
         });
 
         // 保存添加货物信息
-        form.on('submit(addGoodsForm)', function(data) {
+        form.on('submit(addGoodsForm)', function (data) {
             console.log(tableData)
             tableData.push(data.field);
             console.log(tableData)
@@ -886,7 +767,7 @@
         });
 
         // 入库按钮点击
-        $(".submissionLayBtn").click(function() {
+        $(".submissionLayBtn").click(function () {
             if (!orderno || tableData.length == 0) {
                 return false;
             }
@@ -897,8 +778,8 @@
             var origin = parent.find("input[name='origin']").val();
             var supplierid = parent.find("input[name='supplierid']").val();
             var positionid = parent.find("input[name='positionid']").val();
-
             var suppliername = parent.find("input[name='suppliername']").val();
+            var estimatedatestring = parent.find("input[name='estimatedatestring']").val();
 
             if (null == ownerid || ownerid.length < 1) {
                 layer.msg("请选择仓库主");
@@ -921,7 +802,7 @@
             layer.confirm('是否对所选货物进行入库操作?', {
                 skin: 'layui-layer-wei', //layui-layer-wei，维木class
                 title: '提示'
-            }, function(index) {
+            }, function (index) {
                 //审核订单为库存
                 $.ajax({
                     url: preEntryexamineStockGoods,
@@ -934,6 +815,7 @@
                         'origin': origin,
                         'supplierid': supplierid,
                         'positionid': positionid,
+                        'estimatedatestr':estimatedatestring,
                         'SESSION_NAME': getCookie('SESSION_NAME'),
                         'TOKEN': getCookie('TOKEN'),
                     },
@@ -942,7 +824,7 @@
                         withCredentials: true
                     },
                     crossDomain: true,
-                    success: function(res) {
+                    success: function (res) {
                         if (res.status === 0) {
                             //入库成功移除tableData中的入库相关货物
                             for (var k = 0; k < uuidlist.length; k++) {
@@ -969,7 +851,7 @@
         });
 
 
-        $(".deleteGoods").click(function() {
+        $(".deleteGoods").click(function () {
             //移除
             var checkStatus = table.checkStatus('tableContainer-addOutBill');
             var checkData = checkStatus.data;
@@ -999,7 +881,7 @@
             }
         });
 
-        $(".addBtn").click(function() {
+        $(".addBtn").click(function () {
             //添加
             var checkStatus = table.checkStatus('tableContainer-goodsList');
             var checkData = checkStatus.data;
@@ -1028,7 +910,7 @@
         });
 
         // 删除选中入库货物信息
-        $(".deleteBtnLayer").click(function() {
+        $(".deleteBtnLayer").click(function () {
             var checkStatus = table.checkStatus('tableContainer-goodsList');
             var checkData = checkStatus.data;
             if (checkData.length == 0) {
@@ -1039,7 +921,7 @@
             layer.confirm('是否确认删除', {
                 skin: 'layui-layer-wei', //layui-layer-wei，维木class
                 title: '提示'
-            }, function(index) {
+            }, function (index) {
 
                 for (var i = 0; i < checkData.length; i++) {
                     goodsData.remove("uuid", checkData[i].uuid);
@@ -1057,12 +939,12 @@
             });
         });
 
-        $(".subConfirmBtn").unbind("click").bind("click", function() {
+        $(".subConfirmBtn").unbind("click").bind("click", function () {
             event.stopPropagation();
             subConfun();
         });
 
-        $(".subCancelBtn").click(function() {
+        $(".subCancelBtn").click(function () {
             layer.closeAll();
         });
 
@@ -1131,7 +1013,7 @@
                     'TOKEN': getCookie('TOKEN')
                 },
                 traditional: true,
-                success: function(res) {
+                success: function (res) {
                     if (res.status === 0) {
                         layer.msg("提交成功");
                         console.log(orderno);
@@ -1143,11 +1025,11 @@
                         goLogin(); // 跳转到登录页
                     }
                 },
-                error: function() {}
+                error: function () { }
             })
         }
 
-        $(".dayinBtn").click(function() {
+        $(".dayinBtn").click(function () {
             window.open(printin, '打印', 'height=800, width=1100, top=100, left=100, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no');
         });
 
@@ -1156,7 +1038,7 @@
 
         //导入
         var importLayer; //导入弹窗
-        $(".toImport").on('click', function(e) {
+        $(".toImport").on('click', function (e) {
             var parent = $(".storageBill");
             // var ownerid = parent.find("input[name='ownerid']").val();
             var depotname = parent.find("input[name='depotid']").val();
@@ -1171,7 +1053,7 @@
                 num = orderno.orderno;
             }
 
-            $.get("view/form/form-import.html", {}, function(str) {
+            $.get("view/form/form-import.html", {}, function (str) {
                 importLayer = layer.open({
                     title: '文件上传',
                     type: 1,
@@ -1195,7 +1077,7 @@
                     multiple: false,
                     accept: 'file', //普通文件
                     exts: 'xls|xlsx|xlsm|xlt|xltx|xltm', //只允许上传后缀
-                    done: function(res) {
+                    done: function (res) {
                         if (res.status === 0) {
                             layer.msg("上传成功");
                             layer.close(importLayer);
@@ -1227,11 +1109,11 @@
         });
 
         // 监听table点击事件，修改数量
-        table.on('tool(tableContainer-goodsList)', function(obj) {
+        table.on('tool(tableContainer-goodsList)', function (obj) {
             changeNum(obj);
         });
         // 监听table点击事件，修改数量
-        table.on('tool(tableContainer-addOutBill)', function(obj) {
+        table.on('tool(tableContainer-addOutBill)', function (obj) {
             changeNum(obj);
         });
 
@@ -1270,7 +1152,7 @@
                 formType: 2,
                 title: '修改包号为' + data.code + '的数量',
                 value: data.codenum
-            }, function(value, index) {
+            }, function (value, index) {
                 if (!value || isNaN(value)) {
                     layer.msg("请输入数字");
                     return false;
@@ -1289,12 +1171,12 @@
      * 剔除重复
      */
     function weedArr(arr1, arr2) {
-        
+
         if (arr1.length > 0 && arr2.length > 0) {
             for (var i = 0; i < arr1.length; i++) {
                 for (var k = 0; k < arr2.length; k++) {
                     if (arr1[i]["uuid"] == arr2[k]["uuid"]) {
-                        arr1.remove("uuid",arr2[k]["uuid"]);
+                        arr1.remove("uuid", arr2[k]["uuid"]);
                         break;
                     }
                 }
