@@ -41,7 +41,7 @@ var preEntrygetByOrderno = pathUrl + "order/prewarehousing/getByOrderno?ish=1";/
 var preEntryexamineStock = pathUrl + "order/prewarehousing/examineStock";//预入库单审核为库存
 var preEntryexamineStockGoods = pathUrl + "order/prewarehousing/examineStockGoods";//选择预入库单中的货物入库为库存
 var preprintinjk = pathUrl+"/order/warehousing/prinware";
-
+var preEntrySingleadd = pathUrl + "order/prewarehousing/singleadd";//预入库新增
 //打印接口
 var print_prein = pathUrl+"/order/prewarehousing/prinware"; //入库申请打印
 var print_in = pathUrl+"/order/warehousing/prinware"; //入库打印
