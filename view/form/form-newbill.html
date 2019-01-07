@@ -2,9 +2,6 @@
     <div class="table-content-title layer-level">
         <div class="table-tools">
             <ul class="layui-nav" lay-filter="talbe-tools">
-                <li class="layui-nav-item">
-                    <a href="javascript:;" class="dayinBtn"><i class="iconfont icon-dayin"></i>打印</a>
-                </li>
                 <!-- <li class="layui-nav-item">
                     <a href="javascript:;" class="dowmTemp"><i class="iconfont icon-xiazaimuban"></i>下载模板</a>
                 </li>
@@ -925,9 +922,6 @@
             table.exportFile(tableIns.config.id, tableIns.config.data);
         });
 
-        $(".dayinBtn").click(function() {
-            window.open(printin, '打印', 'height=800, width=1100, top=100, left=100, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no');
-        });
         /**
          * 生成num（实际数量字段）
          */
