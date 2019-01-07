@@ -4,6 +4,8 @@ var loginPageUrl = localhost + "/view/login/login.html"; //filter拦截到登录
 //打印使用页面
 var printinstore = localhost+"/view/print/print-in-store.html";
 var printoutstore = localhost+"/view/print/print-out-store.html";
+var printinstore2 = localhost+"/view/print/print-in-store2.html";
+var printoutstore2 = localhost+"/view/print/print-out-store2.html";
 var printin = localhost+"/view/print/print-in.html";
 var printout = localhost+"/view/print/print-out.html";
 var printadjust = localhost+"/view/print/print-adjust.html";

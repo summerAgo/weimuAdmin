@@ -5,8 +5,12 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;" id="toExport"><i class="iconfont icon-daochu"></i>导出</a>
                 </li>
-                <li class="layui-nav-item">
-                    <a href="javascript:;" id="ondayin"><i class="iconfont icon-dayin"></i>打印</a>
+                <li class="layui-nav-item dayinBox">
+                    <a href="javascript:;"><i class="iconfont icon-dayin"></i>打印 ∨</a>
+                    <div class="dayinlist">
+                        <a href="javascript:;" class="clientBtn">客户模式打印</a>
+                        <a href="javascript:;" class="companyBtn">公司模式打印</a>
+                    </div>
                 </li>
                 <li class="layui-nav-item">
                     <a href="javascript:;" class="refreshBtn"><i class="iconfont icon-shuaxin"></i>刷新</a>
@@ -72,6 +76,39 @@
     .table-page h3 {
         padding-left: 0;
     }
+
+    .dayinBox {
+        position: relative;
+        z-index: 99999;
+    }
+
+    .dayinBox:hover .dayinlist {
+        display: block;
+    }
+
+    .dayinlist {
+        display: none;
+        position: absolute;
+        border: 1px solid #bbb;
+        border-radius: 0;
+        box-shadow: 0 0 5px 2px #e3e3e3;
+    }
+
+    .dayinlist a {
+        display: block;
+        text-align: center;
+        line-height: 41px !important;
+        height: 41px !important;
+        background: #fff;
+        color: #333;
+        font-size: 12px !important;
+        white-space: nowrap;
+    }
+
+    .dayinlist a:hover {
+        color: #0284ff !important;
+        background: #edf5fb
+    }
 </style>
 <script>
     layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'upload'], function() {
@@ -107,7 +144,7 @@
             field: 'uuid',
             title: '货物标识码',
             width: 206,
-            style:'font-family: Consolas;font-size:16px'
+            style: 'font-family: Consolas;font-size:16px'
         }, {
             field: "code",
             title: "包号",
@@ -130,9 +167,9 @@
             width: 100
         }, {
             field: 'aprice',
-            title: '估值单价'+ unitMoney,
+            title: '估值单价' + unitMoney,
             width: 130,
-            templet: function (d) {
+            templet: function(d) {
                 return formatNum(d.aprice) || "";
             },
         }, {
@@ -143,14 +180,14 @@
             field: "",
             title: "总金额",
             width: 100,
-            templet: function (d) {
+            templet: function(d) {
                 return formatNum(d.aprice * d.num);
             },
-        },{
+        }, {
             field: 'pieces',
             title: '片数',
             width: 80
-        },{
+        }, {
             field: "brand",
             title: "品牌",
             width: 100
@@ -174,8 +211,7 @@
             field: "remarks",
             title: "备注",
             width: 180
-        }
-        ];
+        }];
         // 入库详情表格字段
         var entryCols = [{
             field: 'LAY_TABLE_INDEX',
@@ -204,11 +240,11 @@
             field: "chang",
             title: "长度",
             width: 100
-        },{
+        }, {
             field: 'pieces',
             title: '片数',
             width: 80
-        },{
+        }, {
             field: "brand",
             title: "品牌",
             width: 100
@@ -240,17 +276,16 @@
             field: "remarks",
             title: "备注",
             width: 180
-        }
-    ];
+        }];
 
         var tableClos; //表格字段赋值
         var title = '';
         if (billDetails.type === "outHistory") {
             tableClos = outCols;
-            title="出库单详情";
+            title = "出库单详情";
         } else {
             tableClos = entryCols;
-            title="入库单详情";
+            title = "入库单详情";
         }
 
         var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 103); //内容区域所需减去的高度
@@ -269,7 +304,7 @@
             title: title,
             done: function(res, curr, count) {
                 var addtableBtn = '<div class="rightBotBtn" id="rightDetails">合计： 件数<span>' + billDetails.znum + '</span>包 数量：<span>' + billDetails.cube + '</span>m³</div>';
-                if($("#rightDetails").length < 1){
+                if ($("#rightDetails").length < 1) {
                     $(".layui-table-page").append(addtableBtn);
                 }
             },
@@ -286,20 +321,29 @@
         });
 
         //打印
-        $("#ondayin").on('click', function(e) {
-            //var orderno = billDetails.data.orderno;
-            //var preorderno = billDetails.data.preorderno;
-            var url;
-            if (billDetails.type === "outHistory") {
-                url = printoutstore;
-            } else {
-                url = printinstore;
-            }
-            sessionStorage.setItem('dayin_orderno', JSON.stringify(billDetails.data));
-            window.open(url, '打印', 'height=800, width=1100, top=100, left=100, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no');
+        $(".clientBtn").on('click', function(e) {
+            // 客户模式打印
+            dayinFun("client");
         });
 
-        
+        $(".companyBtn").on('click', function(e) {
+            // 公司模式打印
+            dayinFun("company");
+        });
+
+        function dayinFun(type) {
+            
+            var url;
+            if (type == "client") {
+                url = printoutstore2;
+            } else if (type == "company") {
+                url = printoutstore;
+            }
+
+            sessionStorage.setItem('dayin_orderno', JSON.stringify(billDetails.data));
+            window.open(url, '打印', 'height=800, width=1100, top=100, left=100, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no');
+
+        }
 
     });
 </script>

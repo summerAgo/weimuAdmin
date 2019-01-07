@@ -1,0 +1,186 @@
+[v-cloak] {
+    display: none;
+  }
+.app {
+    font-family: "Microsoft YaHei", Helvetica Neue, Helvetica, Tahoma, Arial, sans-serif;
+    font-size: 12pt;
+    padding:0 5mm 0;
+}
+.printBox{height:100%;position: relative;padding:5mm 0 2mm;}
+.printCount{position: absolute;right:0;bottom:0; font-size:9pt}
+.printHeader {
+    height: 9mm;
+    line-height: 9mm;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.titlemain{
+    font-size: 19pt;
+    line-height: 9mm;
+    font-weight: bold;
+}
+h1.title {
+    font-size: 19pt;
+    line-height: 9mm;
+    font-weight: bold;
+    border-left: 1px solid #000;
+    margin-left: 3.5mm;
+    padding-left: 2mm;
+    letter-spacing: 3mm;
+}
+
+.logo {
+    width: 70mm;
+    height: 9mm;
+    line-height: 9mm;
+    vertical-align: middle
+}
+
+.headRight {
+    position: absolute;
+    right: 0;
+    top: 0;
+    text-align: right;
+    display: flex;
+    align-items: center;
+    height: 9mm
+}
+
+.rightNumber {
+    width: 8.86mm;
+    height: 5.44mm
+}
+
+.printInfo {
+    font-size: 8pt;
+    margin: 3mm 0;
+}
+
+.printInfoItem {
+    height: 4mm;
+    width: 100%;
+    line-height: 4mm;
+    display: flex;
+    justify-content: space-between;
+}
+
+.printInfo .printInfoItem{
+    margin-top:1mm;
+}
+
+.printInfo .printInfoItem:first-child {
+    margin-bottom:0;
+}
+
+.printInfoItem dl {
+    display: flex;
+    overflow: hidden;
+}
+
+.printInfoItem dt {
+    flex: 0 0 25mm;
+    text-align: right
+}
+
+.printInfoItem dd {
+    flex: 1 1 auto;
+    border-bottom: 1px solid #000;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.printInfoItem dd span {
+    width: 100%;
+}
+
+.printInfoItem.pit1 dl {
+    flex: 0 0 25%;
+}
+
+.printInfoItem.pit1 dl:first-child {
+    flex: 0 0 50%;
+}
+
+.printInfoItem.pit2 dl {
+    flex: 0 0 25%;
+}
+
+.printInfoItem.pit3 dl {
+    flex: 0 0 75%;
+}
+
+.printInfoItem.pit3 dl:first-child {
+    flex: 0 0 25%;
+}
+.printInfoItem.pit4{justify-content:flex-end;}
+.printInfoItem.pit4 dl {
+    flex: 0 0 35%;
+}
+
+.printInfoItem.pit5 dl {
+    flex: 0 0 35%;
+}
+
+.printInfoItem.pit5 dl:first-child {
+    flex: 0 0 60%;
+}
+
+
+/*  表格样式  */
+
+table {
+    border-collapse: collapse;
+    text-align: center;
+    width: 100%;
+}
+
+table tr td {
+    border: 1px solid #221815;
+    font-size: 8pt;
+}
+
+table.weimu-table {
+    border: 1px solid #221815;
+}
+
+table.weimu-table tr td {
+    text-align: center;
+    vertical-align: middle;
+    color: #000;
+    border: 1px solid #221815;
+    font-size: 8pt;
+    height:6mm;
+}
+
+table.weimu-table tr.table-header {
+    background-color: #eaeaea;
+}
+
+table.weimu-table tr.table-header td {
+    font-size: 8pt;
+    color: #000;
+    border: 1px solid #221815;
+    font-weight: bold;
+}
+
+table.weimu-table tr td.total {
+    font-size: 8pt;
+    color: #000;
+    border: 1px solid #221815;
+    font-weight: bold;
+}
+table.weimu-table tr td:last-child{
+    width:20mm
+}
+@media print {
+
+    @page {
+        size: 216mm 140mm;
+        margin:0;
+    }
+
+    .printBox{page-break-before: always;}
+}

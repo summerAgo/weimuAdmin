@@ -341,9 +341,7 @@
             arr: selectDataInstall(CHDList, null, 0, 1) //产地列表
         });
 
-        // 如果有数据，表名是点击预入库table表格进来的
         if (orderno) {
-            console.log(orderno);
 
             //仓库主select下拉框赋值
             formSelects.data('ownerSelectLayer', 'local', {
@@ -1029,7 +1027,14 @@
         }
 
         $(".dayinBtn").click(function () {
-            window.open(printin, '打印', 'height=800, width=1100, top=100, left=100, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no');
+            if(tableData.length == 0){
+                layer.msg("请将需要打印的货物添加到待入库清单");
+                return false;
+            }else{
+                sessionStorage.setItem('storageBill',JSON.stringify(tableData));
+                window.open(printin, '打印', 'height=800, width=1100, top=100, left=100, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no');
+            }
+            
         });
 
         //变更下载模板链接
@@ -1175,15 +1180,8 @@
             for (var i = 0; i < arr1.length; i++) {
                 var uuid = arr1[i]["uuid"];
                 if(!iscz(uuid,arr2)){
-                    //arr1.remove("uuid", uuid);
                     newarr.push(arr1[i]);
                 }
-
-                // for (var k = 0; k < arr2.length; k++) {
-                //     if (arr1[i]["uuid"] == arr2[k]["uuid"]) {
-                        
-                //     }
-                // }
             }
         }
         return newarr;

@@ -134,7 +134,7 @@
                 success: function(res) {
                     if (res.status == 0) {
                         orderData = res.data;
-                        //orderData.list = orderData.list; // 对象迁移
+                        orderData.list = JSON.parse(sessionStorage.getItem('storageBill'));
                         if (!orderData.vehnum) {
                             orderData.vehnum = "";
                         }
@@ -142,10 +142,11 @@
                             orderData.vname = "";
                         }
                     } else {
-                        // layer.msg("请求失败");
+                        layer.msg("数据请求失败");
                     }
                 }
             });
+
             orderData.currentdate = getNowFormatDate();
             orderData.listArr = [];
             var listCount = Math.ceil(orderData.list.length / 26);
@@ -195,7 +196,7 @@
                     }
                 }
             })
-            
+
         }
     </script>
 </body>

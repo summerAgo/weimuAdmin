@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
-    <title>打印入库单</title>
+    <title>打印出库单</title>
     <link type="text/css" rel="stylesheet" href="./reset.css">
-    <link type="text/css" rel="stylesheet" href="./smallPrint.css">
+    <link type="text/css" rel="stylesheet" href="./smallPrint2.css">
     <link type="text/css" rel="stylesheet" href="../../style/iconfont/iconfont.css">
 </head>
 
@@ -15,8 +15,8 @@
         <div class="printBox" v-for="(items,index) in listArr">
             <div class="printCount">{{index + 1}}/{{listArr.length}}</div>
             <div class="printHeader">
-                <img class="logo" src="../../images/logo.svg">
-                <h1 class="title">入库单</h1>
+                <div class="titlemain">{{printitle}}</div>
+                <h1 class="title">出库单</h1>
                 <div class="headRight">
                     <span>{{orderno}}</span>
                     <img class="rightNumber" src="../../images/NO.svg">
@@ -25,23 +25,37 @@
             <div class="printInfo">
                 <div class="printInfoItem pit1">
                     <dl>
+                        <dt>地址：</dt>
+                        <dd>{{prinaddress}}</dd>
+                    </dl>
+                    <dl>
+                        <dt>电话：</dt>
+                        <dd>{{princontact}}</dd>
+                    </dl>
+                    <dl>
+                        <dt>传真：</dt>
+                        <dd>{{prinfax}}</dd>
+                    </dl>
+                </div>
+                <div class="printInfoItem pit2">
+                    <dl>
                         <dt>客户：</dt>
                         <dd>{{ownername}}</dd>
                     </dl>
                     <dl>
-                        <dt>提运单：</dt>
-                        <dd>{{billloading}}</dd>
+                        <dt>车牌号：</dt>
+                        <dd>{{vehnum}}</dd>
                     </dl>
                     <dl>
                         <dt>件数：</dt>
                         <dd>{{list.length}}</dd>
                     </dl>
                     <dl>
-                        <dt>入库日期：</dt>
+                        <dt>出库日期：</dt>
                         <dd>{{createdate.substring(0,10)}}</dd>
                     </dl>
                 </div>
-                <div class="printInfoItem pit2">
+                <div class="printInfoItem pit3">
                     <dl>
                         <dt>仓库名称：</dt>
                         <dd>{{depname}}</dd>
@@ -97,17 +111,17 @@
             </div>
             <div class="printFooter">
                 <div class="printInfo">
-                    <div class="printInfoItem pit3">
-                        <dl>
+                    <div class="printInfoItem pit4">
+                        <!-- <dl>
                             <dt>监管方：</dt>
                             <dd>{{regulators}}</dd>
-                        </dl>
+                        </dl> -->
                         <dl>
-                            <dt>客户签章：</dt>
+                            <dt>提货人签字：</dt>
                             <dd></dd>
                         </dl>
                     </div>
-                    <div class="printInfoItem pit3">
+                    <div class="printInfoItem pit5">
                         <dl>
                             <dt>联系人/电话：</dt>
                             <dd>{{username}}/{{phone}}</dd>
@@ -132,10 +146,11 @@
         var orderData;
         //获取列表数据
         $.ajax({
-            url: print_in,
+            url: print_out,
             type: "get",
             data: {
                 orderno: orderno.orderno,
+                preorderno: orderno.preorderno,
                 'SESSION_NAME': getCookie('SESSION_NAME'),
                 'TOKEN': getCookie('TOKEN'),
             },
@@ -144,6 +159,9 @@
             success: function(res) {
                 if (res.status === 0) {
                     orderData = res.data; // 对象迁移
+                    if (!orderData.vehnum) {
+                        orderData.vehnum = "";
+                    }
                     // orderDataList = orderData.list;
                 } else {
                     // layer.msg("请求失败");
