@@ -119,7 +119,7 @@
     </div>
 </div>
 <script>
-    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl','laydate'], function() {
+    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate'], function() {
         var element = layui.element;
         var form = layui.form;
         var $ = layui.jquery;
@@ -137,26 +137,26 @@
         var eaitLayer; //编辑-弹层
 
         form.render(); //重置表单渲染
-        formSelects.render();//重新渲染所有的已存在多选框
+        formSelects.render(); //重新渲染所有的已存在多选框
         //自定义多选框btn
         formSelects.btns(['remove'], {
             show: 'name'
         });
         // 品种多选数据赋值
         formSelects.data('selectVarieties', 'local', {
-            arr: selectDataInstall(VTSList, null, 1,1) //品种列表
+            arr: selectDataInstall(VTSList, null, 1, 1) //品种列表
         });
         // 等级多选数据赋值
         formSelects.data('selectLevels', 'local', {
-            arr: selectDataInstall(levelsList, null, 1,1) //等级列表
+            arr: selectDataInstall(levelsList, null, 1, 1) //等级列表
         });
         // 规格多选数据赋值
         formSelects.data('selectSpec', 'local', {
-            arr: selectDataInstall(specList, null, 1,1) //规格列表
+            arr: selectDataInstall(specList, null, 1, 1) //规格列表
         });
         // 仓库主多选数据赋值
         formSelects.data('ownerSelect', 'local', {
-            arr: selectDataInstall(ownerDropdown, null, 0,0) //仓库主列表
+            arr: selectDataInstall(ownerDropdown, null, 0, 0) //仓库主列表
         });
 
         // 选择仓库时判断是否选中了仓库主，opened：打开下拉框的回调事件
@@ -185,7 +185,7 @@
             } else {
                 var depotList = selectDataInstall(depotDropdown, {
                     "ownerid": vals[0].value //仓库列表
-                }, false,0);
+                }, false, 0);
                 // 判断仓库主名下是否有仓库
                 if (depotList.length < 1) {
                     formSelects.data('depotSelect', 'local', {
@@ -202,11 +202,11 @@
         }, true);
 
         formSelects.data('originSelect', 'local', {
-            arr: selectDataInstall(CHDList, null, 1,1) //产地列表
+            arr: selectDataInstall(CHDList, null, 1, 1) //产地列表
         });
 
         // 获取select数据函数
-        function selectDataInstall(url, param, bool,type) {
+        function selectDataInstall(url, param, bool, type) {
             //下拉选框数据组装
             var arr = [];
             //获取列表数据
@@ -233,19 +233,19 @@
                                 name = data.data[i].username;
                             }
 
-                            if(type == 0){//查询value=id
+                            if (type == 0) { //查询value=id
                                 arr.push({
                                     "name": name,
                                     "value": data.data[i].id
                                 })
                             }
-                            if(type == 1){//查询value=name
+                            if (type == 1) { //查询value=name
                                 arr.push({
                                     "name": name,
                                     "value": name
                                 })
                             }
-                            
+
                         }
                     }
                 }
@@ -259,7 +259,7 @@
             for (var key in data.field) {
                 //参数赋值
                 if (data.field[key] !== "") {
-                    paramSearch[key] = data.field[key].replace(/^\s*|\s*$/g,"");
+                    paramSearch[key] = data.field[key].replace(/^\s*|\s*$/g, "");
                 }
             }
             console.log(paramSearch);
@@ -304,64 +304,74 @@
             cols: [
                 [ //标题栏
                     {
-                        field: 'LAY_TABLE_INDEX',
-                        title: '序号',
-                        width: 40,
-                        templet: function(d) {
-                            return d.LAY_TABLE_INDEX + 1;
-                        }
-                    }/*, {
-                        type: 'checkbox',
-                    }*/, {
+                        type: "numbers",
+                        align: "center",
+                        title: "序号",
+                    },
+                    {
                         field: 'uuid',
                         title: '货物标识码',
-                        width: 206,
+                        width: 180,
+                        align: "center",
                         style: 'font-family: Consolas;font-size:16px'
                     }, {
                         field: 'code',
                         title: '包号',
-                        width: 100,
+                        align: "center",
+                        width: 90
                     }, {
                         field: 'ownername',
                         title: '仓库主',
-                        width: 100,
+                        align: "center",
+                        width: 80
                     }, {
                         field: 'depname',
                         title: '仓库',
-                        width: 150,
+                        align: "center",
+                        width: 130
                     }, {
                         field: 'positionname',
                         title: '库位',
-                        width: 150,
+                        align: "center",
+                        width: 130
                     }, {
                         field: 'varieties',
                         title: '品种',
-                        width: 100,
+                        align: "center",
+                        width: 90
                     }, {
                         field: 'levels',
                         title: '等级',
-                        width: 100,
+                        align: "center",
+                        width: 100
                     }, {
                         field: 'spec',
                         title: '规格',
-                        width: 100,
+                        align: "center",
+                        width: 90
                     }, {
                         field: 'chang',
                         title: '长度',
-                        width: 100,
-                    },{
+                        align: "center",
+                        width: 90
+                    }, {
                         field: 'pieces',
-                        title: '片数'
-                    },{
+                        align: "center",
+                        title: '片数',
+                        width: 90
+                    }, {
                         field: 'num',
                         title: '数量(m³)',
-                        width: 100,
+                        align: "center",
+                        width: 100
                     }, {
                         field: 'aprice',
+                        align: "center",
                         title: '估值单价' + unitMoney,
-                        width: 140,
+                        width: 100
                     }, {
                         field: 'aprice',
+                        align: "center",
                         title: '估值状态',
                         templet: function(d) {
                             if (d.isapp === 1) {
@@ -375,31 +385,37 @@
                             }
                             return d.aprice;
                         },
-                        width: 138,
+                        width: 110
                     }, {
                         field: 'totalamount',
+                        align: "center",
                         title: '估值总金额' + unitMoney,
-                        width: 150,
+                        width: 140
                     }, {
                         field: 'containernum',
                         title: '货柜号',
-                        width: 150,
+                        align: "center",
+                        width: 140
                     }, {
                         field: 'origin',
+                        align: "center",
                         title: '产地',
-                        width: 150,
+                        width: 90
                     }, {
                         field: 'brand',
                         title: '品牌',
-                        width: 100,
+                        align: "center",
+                        width: 90
                     }, {
                         field: 'createdate',
                         title: '入库时间',
-                        width: 170,
+                        align: "center",
+                        width: 180
                     }, {
                         field: 'billloading',
                         title: '提运单',
-                        width: 140,
+                        align: "center",
+                        width: 140
                     }, {
                         field: 'remarks',
                         title: '备注',
@@ -428,36 +444,34 @@
             //在地址后面携带参数给后台  实现条件导出：如 window.location.href = ilbstockExportUrl+"?name=&type="
             var str = "?isstatus=1&";
             var arr = [];
-            
+
             //toExportParm  报错。这个是哪里来的。
-            $(".table-page-form input").each(function (i,v){
+            $(".table-page-form input").each(function(i, v) {
                 var val = $(this).val();
-                if(val){
-                    arr.push($(this).attr("name")+"="+val);
-                }        
+                if (val) {
+                    arr.push($(this).attr("name") + "=" + val);
+                }
             });
-            $(".table-page-form select").each(function (i,v){
+            $(".table-page-form select").each(function(i, v) {
                 var val = $(this).val();
-                if(val){
-                    arr.push($(this).attr("name")+"="+val);
+                if (val) {
+                    arr.push($(this).attr("name") + "=" + val);
                 }
             });
             str += arr.join("&");
             window.location.href = ilbstockExportUrl + str;
             return;
 
-
-            if(!$.isEmptyObject(toExportParm)){
-                for(var i in toExportParm){
-                    arr.push(i+"="+toExportParm[i]);
+            if (!$.isEmptyObject(toExportParm)) {
+                for (var i in toExportParm) {
+                    arr.push(i + "=" + toExportParm[i]);
                 }
                 str += arr.join("&");
                 window.location.href = ilbstockExportUrl + str;
-            }else{
+            } else {
                 window.location.href = ilbstockExportUrl
             }
         });
-
 
     });
 </script>
