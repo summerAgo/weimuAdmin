@@ -396,7 +396,7 @@
             } else {
                 layer.confirm('是否确认完成此调整?', function(index) {
                     var datainfo = {};
-                    datainfo['SESSION_NAME'] = getCookie('SESSION_NAME');
+                    datainfo['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
                     datainfo['TOKEN'] = getCookie('TOKEN');
                     datainfo['orderno'] = checkData[0].orderno;
                     //qdeditAprice(data, adjustadcomplete);
@@ -434,7 +434,7 @@
             } else {
                 layer.confirm('是否确认删除此调整?', function(index) {
                     var datainfo = {};
-                    datainfo['SESSION_NAME'] = getCookie('SESSION_NAME');
+                    datainfo['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
                     datainfo['TOKEN'] = getCookie('TOKEN');
                     datainfo['orderno'] = checkData[0].orderno;
                     $.ajax({
@@ -470,7 +470,7 @@
             } else {
                 layer.confirm('是否确认删除此调整?', function(index) {
                     var datainfo = {};
-                    datainfo['SESSION_NAME'] = getCookie('SESSION_NAME');
+                    datainfo['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
                     datainfo['TOKEN'] = getCookie('TOKEN');
                     datainfo['orderno'] = checkData[0].orderno;
                     $.ajax({

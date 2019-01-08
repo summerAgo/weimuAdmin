@@ -121,8 +121,8 @@
             return newarr;
         }
 
-        var SESSION_NAME = getCookie("SESSION_NAME");
-        if (!SESSION_NAME) {
+        var SESSION_USER_CODE = getCookie("SESSION_USER_CODE");
+        if (!SESSION_USER_CODE) {
             clearSeesion();
             //判断是否已登录
             window.location.href = localhost + "/view/login/login.html";
@@ -149,7 +149,7 @@
                     type: "GET",
                     async: false,
                     data: {
-                        'SESSION_NAME': SESSION_NAME,
+                        'SESSION_USER_CODE': SESSION_USER_CODE,
                         'TOKEN': getCookie('TOKEN')
                     },
                     success: function(res) {

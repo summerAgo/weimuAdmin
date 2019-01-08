@@ -221,7 +221,7 @@
                         type: "post",
                         data: {
                             "ids": rowId,
-                             'SESSION_NAME':getCookie('SESSION_NAME'),
+                             'SESSION_USER_CODE':getCookie('SESSION_USER_CODE'),
                              'TOKEN':getCookie('TOKEN'),
                         },
                         traditional: true,
@@ -300,7 +300,7 @@
                     data: {
                         instid: data.field.instid,
                         name: data.field.name,
-                        'SESSION_NAME':getCookie('SESSION_NAME'),
+                        'SESSION_USER_CODE':getCookie('SESSION_USER_CODE'),
                         'TOKEN':getCookie('TOKEN'),
                     },
                     async: false,
@@ -322,7 +322,7 @@
             //     skin: 'layui-layer-wei',  //layui-layer-wei，维木class
             //     title: '提示'
             // }, function(index) {
-                data.field['SESSION_NAME']= getCookie('SESSION_NAME');
+                data.field['SESSION_USER_CODE']= getCookie('SESSION_USER_CODE');
                 data.field['TOKEN']= getCookie('TOKEN');
                 $.ajax({
                     cache: true,
@@ -359,7 +359,7 @@
 
         //增删行数据
         function rowDataApi(url, data, funSuc, funErr) {
-            data['SESSION_NAME']= getCookie('SESSION_NAME');
+            data['SESSION_USER_CODE']= getCookie('SESSION_USER_CODE');
             data['TOKEN']= getCookie('TOKEN');
             $.ajax({
                 url: url,
@@ -494,7 +494,7 @@
                 skin: 'layui-layer-wei',  //layui-layer-wei，维木class
                 title: '提示'
             }, function(index) {
-                data['SESSION_NAME']= getCookie('SESSION_NAME');
+                data['SESSION_USER_CODE']= getCookie('SESSION_USER_CODE');
                 data['TOKEN']= getCookie('TOKEN');
                 $.ajax({
                     cache: true,
@@ -553,7 +553,7 @@
                     data: {
                         utype: 2,
                         name: data.field.name,
-                        'SESSION_NAME':getCookie('SESSION_NAME'),
+                        'SESSION_USER_CODE':getCookie('SESSION_USER_CODE'),
                         'TOKEN':getCookie('TOKEN'),
                     },
                     async: false,
@@ -576,7 +576,7 @@
             //     skin: 'layui-layer-wei',  //layui-layer-wei，维木class
             //     title: '提示'
             // }, function(index) {
-                data.field['SESSION_NAME']= getCookie('SESSION_NAME');
+                data.field['SESSION_USER_CODE']= getCookie('SESSION_USER_CODE');
                 data.field['TOKEN']= getCookie('TOKEN');
                 $.ajax({
                     cache: true,

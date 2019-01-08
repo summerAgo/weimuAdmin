@@ -248,7 +248,7 @@
 
         //增删行数据
         function rowDataApi(url, data, funSuc, funErr) {
-            data['SESSION_NAME']= getCookie('SESSION_NAME');
+            data['SESSION_USER_CODE']= getCookie('SESSION_USER_CODE');
             data['TOKEN']= getCookie('TOKEN');
             $.ajax({
                 url: url,
@@ -297,7 +297,7 @@
                         depotname: basedata.depotname,
                         origin: basedata.origin,
                         supplier: basedata.supplier,
-                        'SESSION_NAME': getCookie('SESSION_NAME'),
+                        'SESSION_USER_CODE': getCookie('SESSION_USER_CODE'),
                         'TOKEN': getCookie('TOKEN')
                     },
                     traditional: true,

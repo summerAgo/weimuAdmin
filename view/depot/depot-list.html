@@ -230,7 +230,7 @@
                     data: {
                         ownerid: data.field.ownerid,
                         code: data.field.code,
-                        'SESSION_NAME':getCookie('SESSION_NAME'),
+                        'SESSION_USER_CODE':getCookie('SESSION_USER_CODE'),
                         'TOKEN':getCookie('TOKEN'),
                     },
                     async: false,
@@ -256,7 +256,7 @@
                     data: {
                         ownerid: data.field.ownerid,
                         name: data.field.name,
-                        'SESSION_NAME':getCookie('SESSION_NAME'),
+                        'SESSION_USER_CODE':getCookie('SESSION_USER_CODE'),
                         'TOKEN':getCookie('TOKEN'),
                     },
                     async: false,
@@ -273,7 +273,7 @@
                 });
                 if (!isName) {return false;}
             }
-            data.field['SESSION_NAME']= getCookie('SESSION_NAME');
+            data.field['SESSION_USER_CODE']= getCookie('SESSION_USER_CODE');
             data.field['TOKEN']= getCookie('TOKEN');
             if (isCodeEdit) {
                 layer.confirm('仓库【编号】修改了之后，该仓库下新产生的订单号(仓库编号部分)也会跟随改变！', {
@@ -379,7 +379,7 @@
                         type: "post",
                         data: {
                             "ids": rowId,
-                            'SESSION_NAME':getCookie('SESSION_NAME'),
+                            'SESSION_USER_CODE':getCookie('SESSION_USER_CODE'),
                             'TOKEN':getCookie('TOKEN'),
                         },
                         traditional: true,

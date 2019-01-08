@@ -85,8 +85,8 @@
         });
         var cahonetime = "24h";
 
-        var SESSION_NAME = getCookie("SESSION_NAME");
-        if (SESSION_NAME) {
+        var SESSION_USER_CODE = getCookie("SESSION_USER_CODE");
+        if (SESSION_USER_CODE) {
             //判断是否已登录
             window.location.href = localhost;//跳转首页
         }else{
@@ -95,7 +95,7 @@
 
         //监听提交
         form.on('submit(formLogin)', function (data) {
-            data.field['SESSION_NAME']= getCookie('SESSION_NAME');
+            data.field['SESSION_USER_CODE']= getCookie('SESSION_USER_CODE');
             data.field['TOKEN']= getCookie('TOKEN');
             $.ajax({
                 url: loginUrl,
@@ -108,7 +108,7 @@
                 success: function (data) {
                     if (data.status == 0) {
                         layer.msg("登录成功");
-                        setCookie("SESSION_NAME", data.SESSION_NAME, cahonetime);
+                        setCookie("SESSION_USER_CODE", data.SESSION_USER_CODE, cahonetime);
                         setCookie("TOKEN", data.TOKEN, cahonetime);
 
                         //该用户菜单权限JSON

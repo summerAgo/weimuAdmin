@@ -169,7 +169,7 @@
             var parmdata = {};
             //回显
             parmdata["orderno"] = adjustParam.orderno;
-            parmdata['SESSION_NAME'] = getCookie('SESSION_NAME');
+            parmdata['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
             parmdata['TOKEN'] = getCookie('TOKEN');
             //获取列表数据
             $.ajax({

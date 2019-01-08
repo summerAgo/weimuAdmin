@@ -230,7 +230,7 @@
             data["orderno"] = outBill.orderno;
             data["ownerid"] = outBill.ownerid;
             data["depotid"] = outBill.depotid;
-            data['SESSION_NAME'] = getCookie('SESSION_NAME');
+            data['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
             data['TOKEN'] = getCookie('TOKEN');
             $("#estimatedate").val(outBill.outdate);
 
@@ -496,7 +496,7 @@
                             }
                         }
                     }
-                    preData['SESSION_NAME'] = getCookie('SESSION_NAME');
+                    preData['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
                     preData['TOKEN'] = getCookie('TOKEN');
                     $.ajax({
                         cache: true,
@@ -598,7 +598,7 @@
                     crossDomain: true,
                     data: {
                         ids: ids.toString(),
-                        'SESSION_NAME': getCookie('SESSION_NAME'),
+                        'SESSION_USER_CODE': getCookie('SESSION_USER_CODE'),
                         'TOKEN': getCookie('TOKEN'),
                     },
                     async: false,

@@ -424,7 +424,7 @@
                         }
                     }
                     //增加出货申请单
-                    preData['SESSION_NAME'] = getCookie('SESSION_NAME');
+                    preData['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
                     preData['TOKEN'] = getCookie('TOKEN');
                     $.ajax({
                         cache: true,
@@ -528,7 +528,7 @@
                     crossDomain: true,
                     data: {
                         ids: ids.toString(),
-                        'SESSION_NAME': getCookie('SESSION_NAME'),
+                        'SESSION_USER_CODE': getCookie('SESSION_USER_CODE'),
                         'TOKEN': getCookie('TOKEN'),
                     },
                     async: false,

@@ -231,7 +231,7 @@
                         type: "get",
                         data: {
                             orderno: curData.orderno, // 单号
-                            'SESSION_NAME': getCookie('SESSION_NAME'),
+                            'SESSION_USER_CODE': getCookie('SESSION_USER_CODE'),
                             'TOKEN': getCookie('TOKEN')
                         },
                         xhrFields: {
@@ -360,7 +360,7 @@
                     crossDomain: true,
                     data: {
                         'orderno': sessionStorage.getItem("examineOrderID"),
-                        'SESSION_NAME': getCookie('SESSION_NAME'),
+                        'SESSION_USER_CODE': getCookie('SESSION_USER_CODE'),
                         'TOKEN': getCookie('TOKEN')
                     },
                     error: function(request) {
@@ -399,7 +399,7 @@
                     crossDomain: true,
                     data: {
                         'orderno': sessionStorage.getItem("examineOrderID"),
-                        'SESSION_NAME': getCookie('SESSION_NAME'),
+                        'SESSION_USER_CODE': getCookie('SESSION_USER_CODE'),
                         'TOKEN': getCookie('TOKEN')
                     },
                     error: function(request) {
