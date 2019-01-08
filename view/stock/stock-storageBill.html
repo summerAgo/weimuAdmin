@@ -270,8 +270,8 @@
             value: new Date()
         });
 
-        var goodsData = []; //修改回显货物
-        var tableData = []; //本地的货物列表
+        var goodsData = []; //申请单货物
+        var tableData = []; //待入库清单
         var ownerid; //仓库主ID
         var depotid; //仓库ID
         var depotSelectValue; //仓库id暂存用于对比是否改变仓库
@@ -539,22 +539,24 @@
                     {
                         type: 'checkbox'
                     }, {
-                        field: 'LAY_TABLE_INDEX',
-                        title: '序号',
-                        width: 40,
-                        templet: function(d) {
-                            return d.LAY_TABLE_INDEX + 1;
-                        }
+                        type: "numbers",
+                        align: "center",
+                        title: "序号",
+                        align: "center"
                     }, {
                         field: 'uuid',
                         title: '货物标识码',
-                        width: 206,
+                        minWidth: 206,
+                        align: "center",
                         style: 'font-family: Consolas;font-size:16px'
                     }, {
                         field: 'code',
+                        align: "center",
+                        minWidth: 100,
                         title: '包号'
                     }, {
                         field: 'varietiesName',
+                        align: "center",
                         title: '品种',
                         templet: function(d) {
                             // console.log(d)
@@ -565,6 +567,7 @@
                         }
                     }, {
                         field: 'levelsName',
+                        align: "center",
                         title: '等级',
                         templet: function(d) {
                             if (!d.levelsName) {
@@ -574,7 +577,9 @@
                         }
                     }, {
                         field: 'specName',
+                        align: "center",
                         title: '规格',
+                        minWidth: 100,
                         templet: function(d) {
                             if (!d.specName) {
                                 return d.spec
@@ -583,16 +588,20 @@
                         }
                     }, {
                         field: 'pprice',
-                        title: '采购价（RMB）'
+                        align: "center",
+                        title: '采购价(RMB)'
                     }, {
                         field: 'chang',
+                        align: "center",
                         title: '长度'
                     }, {
                         field: 'codenum',
-                        title: '码单数量（m³）'
+                        align: "center",
+                        title: '码单数量(m³)'
                     }, {
                         field: 'num',
-                        title: '实际数量（m³）',
+                        title: '实际数量(m³)',
+                        align: "center",
                         event: "edit",
                         style: 'color:red;',
                         templet: function(d) {
@@ -603,15 +612,21 @@
                         }
                     }, {
                         field: 'pieces',
+                        align: "center",
                         title: '片数'
                     }, {
                         field: 'containernum',
+                        align: "center",
+                        minWidth: 160,
                         title: '货柜号'
                     }, {
                         field: 'brand',
+                        align: "center",
                         title: '品牌'
                     }, {
                         field: 'billloading',
+                        align: "center",
+                        minWidth: 180,
                         title: '提运单'
                     }
                 ]
@@ -640,22 +655,24 @@
                     {
                         type: 'checkbox'
                     }, {
-                        field: 'LAY_TABLE_INDEX',
-                        title: '序号',
-                        width: 40,
-                        templet: function(d) {
-                            return d.LAY_TABLE_INDEX + 1;
-                        }
+                        type: "numbers",
+                        align: "center",
+                        title: "序号",
+                        align: "center"
                     }, {
                         field: 'uuid',
                         title: '货物标识码',
-                        width: 206,
+                        minWidth: 206,
+                        align: "center",
                         style: 'font-family: Consolas;font-size:16px'
                     }, {
                         field: 'code',
+                        align: "center",
+                        minWidth: 100,
                         title: '包号'
                     }, {
                         field: 'varietiesName',
+                        align: "center",
                         title: '品种',
                         templet: function(d) {
                             // console.log(d)
@@ -666,6 +683,7 @@
                         }
                     }, {
                         field: 'levelsName',
+                        align: "center",
                         title: '等级',
                         templet: function(d) {
                             if (!d.levelsName) {
@@ -675,7 +693,9 @@
                         }
                     }, {
                         field: 'specName',
+                        align: "center",
                         title: '规格',
+                        minWidth: 100,
                         templet: function(d) {
                             if (!d.specName) {
                                 return d.spec
@@ -684,16 +704,20 @@
                         }
                     }, {
                         field: 'pprice',
-                        title: '采购价（RMB）'
+                        align: "center",
+                        title: '采购价(RMB)'
                     }, {
                         field: 'chang',
+                        align: "center",
                         title: '长度'
                     }, {
                         field: 'codenum',
-                        title: '码单数量（m³）'
+                        align: "center",
+                        title: '码单数量(m³)'
                     }, {
                         field: 'num',
-                        title: '实际数量（m³）',
+                        title: '实际数量(m³)',
+                        align: "center",
                         event: "edit",
                         style: 'color:red;',
                         templet: function(d) {
@@ -704,15 +728,21 @@
                         }
                     }, {
                         field: 'pieces',
+                        align: "center",
                         title: '片数'
                     }, {
                         field: 'containernum',
+                        align: "center",
+                        minWidth: 160,
                         title: '货柜号'
                     }, {
                         field: 'brand',
+                        align: "center",
                         title: '品牌'
                     }, {
                         field: 'billloading',
+                        align: "center",
+                        minWidth: 180,
                         title: '提运单'
                     }
                 ]
@@ -855,7 +885,7 @@
                                 }
                             });
                             layer.msg('审核通过为库存', {
-                                time: 1500 //2秒关闭（如果不配置，默认是3秒）
+                                time: 1500 //2秒关闭(如果不配置，默认是3秒)
                             });
 
                         } else if (res.status === 1) {
@@ -1144,17 +1174,8 @@
 
     });
 
-    function isArr(v, arr) {
-        for (var i = 0; i < arr.length; i++) {
-            if (v == arr[i].uuid) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     /**
-     * 生成num（实际数量字段）
+     * 生成num(实际数量字段)
      */
     function createNum(arr) {
         for (var i = 0; i < arr.length; i++) {
@@ -1170,7 +1191,7 @@
      */
     function changeNum(obj) {
         var data = obj.data; //获得当前行数据
-        var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+        var layEvent = obj.event; //获得 lay-event 对应的值(也可以是表头的 event 参数对应的值)
         var tr = obj.tr; //获得当前行 tr 的DOM对象
         if (layEvent === 'edit') {
             layer.prompt({
@@ -1190,32 +1211,5 @@
             });
 
         }
-    }
-
-    /**
-     * 剔除重复
-     */
-    function weedArr(arr1, arr2) {
-        var newarr = [];
-        if (arr1.length > 0 || arr2.length > 0) {
-            for (var i = 0; i < arr1.length; i++) {
-                var uuid = arr1[i]["uuid"];
-                if (!iscz(uuid, arr2)) {
-                    newarr.push(arr1[i]);
-                }
-            }
-        }
-        return newarr;
-    }
-
-    function iscz(uuid, arr) {
-        var f = false;
-        for (var k = 0; k < arr.length; k++) {
-            if (uuid == arr[k]["uuid"]) {
-                f = true;
-                break;
-            }
-        }
-        return f;
     }
 </script>

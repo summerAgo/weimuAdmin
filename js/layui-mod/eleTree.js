@@ -514,10 +514,10 @@ layui.define(["jquery","laytpl","layer","form"], function (exports) {
                 
             })
         },
-        // 通过子孙选中祖父（递归）
+        // 通过子孙选中祖父(递归)
         selectParents: function(inp,eleNode,siblingNode) {
             // inp: 实际input(dom元素)
-            // eleNode: input父层类（.eleTree-node）
+            // eleNode: input父层类(.eleTree-node)
             // siblingNode: 父层同级兄弟
             while (Number(eleNode.attr("eletree-floor"))!==0) {
                 // 同级input状态存入数组
@@ -732,7 +732,7 @@ layui.define(["jquery","laytpl","layer","form"], function (exports) {
                         }
                         return;
                     }
-                    // 判断是否不是同一个dom节点或者是其子节点（父节点不能放到子节点）
+                    // 判断是否不是同一个dom节点或者是其子节点(父节点不能放到子节点)
                     var t=target;
                     if(!target.hasClass("eleTree-node-content")){
                         t=target.parents(".eleTree-node-content");

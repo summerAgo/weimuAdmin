@@ -329,12 +329,10 @@
             cols: [
                 [ //标题栏
                     {
-                        field: 'LAY_TABLE_INDEX',
-                        title: '序号',
-                        width: 40,
-                        templet: function(d) {
-                            return d.LAY_TABLE_INDEX + 1;
-                        }
+                        type: "numbers",
+                        align: "center",
+                        title: "序号",
+                        align:"center"
                     }, {
                         type: 'radio'
                     }, {
@@ -342,28 +340,36 @@
                         title: '单号',
                         event: 'click',
                         style: 'cursor: pointer;color:#0063de;',
-                        width: 200
+                        width: 200,
+                        align:"center"
                     }, {
                         field: 'ownername',
-                        title: '仓库主'
+                        title: '仓库主',
+                        align:"center"
                     }, {
                         field: 'depname',
-                        title: '仓库名称'
+                        title: '仓库名称',
+                        align:"center"
                     }, {
                         field: 'num',
-                        title: '件数（包）'
+                        title: '件数(包)',
+                        align:"center"
                     }, {
                         field: 'origin',
-                        title: '产地'
+                        title: '产地',
+                        align:"center"
                     }, {
                         field: 'suppliername',
-                        title: '供应商'
+                        title: '供应商',
+                        align:"center"
                     }, {
                         field: 'volume',
-                        title: '数量（m³）'
+                        title: '数量(m³)',
+                        align:"center"
                     }, {
                         field: 'createdate',
-                        title: '创建日期'
+                        title: '创建日期',
+                        align:"center"
                     }
                 ]
             ],

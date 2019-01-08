@@ -163,7 +163,7 @@
         });
 
         formSelects.data('ownerSelect', 'local', {
-            arr: selectDataInstall(ownerDropdown,null,0) //仓库主列表
+            arr: selectDataInstall(ownerDropdown, null, 0) //仓库主列表
         });
 
         layui.formSelects.opened('depotSelect', function(id) {
@@ -258,7 +258,7 @@
         });
 
         // 获取select数据函数
-        function selectDataInstall(url, param,type) {
+        function selectDataInstall(url, param, type) {
             //下拉选框数据组装
             var arr = [];
             //获取列表数据
@@ -285,19 +285,19 @@
                                 name = data.data[i].username;
                             }
 
-                            if(type == 0){//查询value=id
+                            if (type == 0) { //查询value=id
                                 arr.push({
                                     "name": name,
                                     "value": data.data[i].id
                                 })
                             }
-                            if(type == 1){//查询value=name
+                            if (type == 1) { //查询value=name
                                 arr.push({
                                     "name": name,
                                     "value": name
                                 })
                             }
-                            
+
                         }
                     }
                 }
@@ -310,12 +310,12 @@
                 data.field.startdate = data.field.date.substring(0, 10) + " 00:00:00";
                 data.field.enddate = data.field.date.substring(13, data.field.date.length) + " 00:00:00";
             }
-            
+
             var paramSearch = {};
             for (var key in data.field) {
                 //参数赋值
                 if (data.field[key] != "") {
-                    paramSearch[key] = data.field[key].replace(/^\s*|\s*$/g,"");
+                    paramSearch[key] = data.field[key].replace(/^\s*|\s*$/g, "");
                 }
             }
             tableIns.reload({
@@ -353,40 +353,46 @@
             cols: [
                 [ //标题栏
                     {
-                        field: 'LAY_TABLE_INDEX',
-                        title: '序号',
-                        width: 40,
-                        templet: function(d) {
-                            return d.LAY_TABLE_INDEX + 1;
-                        }
+                        type: "numbers",
+                        align: "center",
+                        title: "序号",
+                        align: "center"
                     }, {
                         type: 'checkbox'
                     }, {
                         field: 'orderno',
                         title: '单号',
                         event: 'click',
+                        align: "center",
                         style: 'cursor: pointer;color:#0063de;',
                         width: 200
                     }, {
                         field: 'ownername',
+                        align: "center",
                         title: '仓库主'
                     }, {
                         field: 'depname',
+                        align: "center",
                         title: '仓库名称'
-                    },{
+                    }, {
                         field: 'positionname',
+                        align: "center",
                         title: '库位'
                     }, {
                         field: 'num',
-                        title: '件数（包）'
+                        align: "center",
+                        title: '件数(包)'
                     }, {
                         field: 'suppliername',
+                        align: "center",
                         title: '供应商'
                     }, {
                         field: 'volume',
-                        title: '数量（m³）'
+                        align: "center",
+                        title: '数量(m³)'
                     }, {
                         field: 'estimatedate',
+                        align: "center",
                         title: '入库时间'
                     }
                 ]
@@ -433,7 +439,7 @@
             }
 
             layer.confirm('是否确认把此单转为预入库状态!', {
-                skin: 'layui-layer-wei',  //layui-layer-wei，维木class
+                skin: 'layui-layer-wei', //layui-layer-wei，维木class
                 title: '提示'
             }, function(index) {
                 $.ajax({
@@ -442,7 +448,7 @@
                     data: {
                         'SESSION_USER_CODE': getCookie('SESSION_USER_CODE'),
                         'TOKEN': getCookie('TOKEN'),
-                        'orderno':checkStatus.data[0].orderno
+                        'orderno': checkStatus.data[0].orderno
                     },
                     //async: false, //同步
                     traditional: true,
@@ -459,9 +465,9 @@
                                     curr: 1 // 重新从第 1 页开始
                                 }
                             });
-                        }else{
+                        } else {
                             layer.closeAll();
-                            
+
                             layer.msg(data.msg);
                         }
                     }
@@ -479,7 +485,7 @@
             }
 
             layer.confirm('是否确认删除此条信息', {
-                skin: 'layui-layer-wei',  //layui-layer-wei，维木class
+                skin: 'layui-layer-wei', //layui-layer-wei，维木class
                 title: '提示'
             }, function(index) {
                 $.ajax({
@@ -488,7 +494,7 @@
                     data: {
                         'SESSION_USER_CODE': getCookie('SESSION_USER_CODE'),
                         'TOKEN': getCookie('TOKEN'),
-                        'orderno':checkStatus.data[0].orderno
+                        'orderno': checkStatus.data[0].orderno
                     },
                     //async: false, //同步
                     traditional: true,
@@ -505,10 +511,10 @@
                                     curr: 1 // 重新从第 1 页开始
                                 }
                             });
-                        }else{
+                        } else {
                             layer.msg(data.msg);
                         }
-                        
+
                     }
                 })
 
@@ -519,21 +525,21 @@
         $(".toBatchExport").on('click', function(e) {
             var checkStatus = table.checkStatus('tableContainer');
             var checkData = checkStatus.data;
-            if(checkData.length > 0){
+            if (checkData.length > 0) {
                 const neworder = [];
                 for (let index = 0; index < checkData.length; index++) {
                     const element = checkData[index];
                     neworder.push(element.orderno);
                 }
-                window.location.href = inbatchExport+"?orderarr="+neworder.toString();
-            }else{
+                window.location.href = inbatchExport + "?orderarr=" + neworder.toString();
+            } else {
                 layer.msg("请选择记录");
             }
         });
 
         //点击导出
         $(".toExport").on('click', function(e) {
-            table.exportFile(tableIns.config.id, tableIns.config.data,"xls");
+            table.exportFile(tableIns.config.id, tableIns.config.data, "xls");
         });
 
     });

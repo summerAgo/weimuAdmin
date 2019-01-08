@@ -68,7 +68,7 @@ layui.define(['jquery', 'form'], function(exports){
 
 			// 开启自动宽度优化
 			obj.autoWidth(dst);
-			// 备注：如果使用form.on('checkbox()')，外部就无法使用form.on()监听同样的元素了（LAYUI不支持重复监听了）。
+			// 备注：如果使用form.on('checkbox()')，外部就无法使用form.on()监听同样的元素了(LAYUI不支持重复监听了)。
 			// form.on('checkbox('+layfilter+')', function(data){
 			// 	/*属下所有权限状态跟随，如果选中，往上走全部选中*/
 			// 	var childs = $(data.elem).parent().next().find('input[type="checkbox"]').prop('checked', data.elem.checked);
@@ -207,7 +207,7 @@ layui.define(['jquery', 'form'], function(exports){
 			}
 			var child = [];
 			for (index in list) {
-				// 筛查符合条件的数据（主键 = startPid）
+				// 筛查符合条件的数据(主键 = startPid)
 				var item = list[index];
 				if (typeof item[opt.parentKey] !== 'undefined' && item[opt.parentKey] === startPid) {
 					// 满足条件则递归
@@ -454,11 +454,11 @@ layui.define(['jquery', 'form'], function(exports){
 			// console.log(data);
 			return data;
 		},
-		// 获取最新选中（之前取消-现在选中）
+		// 获取最新选中(之前取消-现在选中)
 		getLastChecked: function(dst) {
 			return this.lastCheckedNode[dst] || [];
 		},
-		// (逻辑)最新选中（之前取消-现在选中）
+		// (逻辑)最新选中(之前取消-现在选中)
 		_getLastChecked: function(dst, currentChecked, currentNotChecked) {
 			var lastCheckedNode = currentChecked;
 
@@ -479,11 +479,11 @@ layui.define(['jquery', 'form'], function(exports){
 			});
 			return data;
 		},
-		// 获取最新取消（之前取消-现在选中）
+		// 获取最新取消(之前取消-现在选中)
 		getLastNotChecked: function(dst) {
 			return this.lastNotCheckedNode[dst] || [];
 		},
-		// (逻辑)最新取消（之前选中-现在取消）
+		// (逻辑)最新取消(之前选中-现在取消)
 		_getLastNotChecked: function(dst, currentChecked, currentNotChecked) {
 			var lastNotCheckedNode = currentNotChecked;
 

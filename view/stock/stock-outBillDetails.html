@@ -134,159 +134,105 @@
         });
         // 出库详情表格字段
         var outCols = [{
-            field: 'LAY_TABLE_INDEX',
-            title: '序号',
-            width: 40,
-            templet: function(d) {
-                return d.LAY_TABLE_INDEX + 1;
-            }
+            type: "numbers",
+            align: "center",
+            title: "序号",
+            align: "center"
         }, {
             field: 'uuid',
             title: '货物标识码',
+            align: "center",
             width: 206,
             style: 'font-family: Consolas;font-size:16px'
         }, {
             field: "code",
             title: "包号",
+            align: "center",
             width: 100
         }, {
             field: "varieties",
             title: "品种",
+            align: "center",
             width: 100
         }, {
             field: "spec",
             title: "规格",
+            align: "center",
             width: 100
         }, {
             field: "levels",
             title: "等级",
+            align: "center",
             width: 100
         }, {
             field: "chang",
             title: "长度",
+            align: "center",
             width: 100
         }, {
             field: 'aprice',
             title: '估值单价' + unitMoney,
+            align: "center",
             width: 130,
             templet: function(d) {
                 return formatNum(d.aprice) || "";
             },
         }, {
             field: 'num',
-            title: '数量（m³）',
+            title: '数量(m³)',
+            align: "center",
             width: 120,
         }, {
             field: "",
             title: "总金额",
             width: 100,
+            align: "center",
             templet: function(d) {
                 return formatNum(d.aprice * d.num);
             },
         }, {
             field: 'pieces',
             title: '片数',
+            align: "center",
             width: 80
         }, {
             field: "brand",
             title: "品牌",
+            align: "center",
             width: 100
         }, {
             field: "origin",
             title: "产地",
+            align: "center",
             width: 100
         }, {
             field: "updauser",
             title: "操作员",
+            align: "center",
             width: 100
         }, {
             field: "billloading",
             title: "提运单",
+            align: "center",
             width: 120
         }, {
             field: "containernum",
             title: "货柜号/批次号",
+            align: "center",
             width: 140
         }, {
             field: "remarks",
             title: "备注",
-            width: 180
-        }];
-        // 入库详情表格字段
-        var entryCols = [{
-            field: 'LAY_TABLE_INDEX',
-            title: '序号',
-            width: 40,
-            templet: function(d) {
-                return d.LAY_TABLE_INDEX + 1;
-            }
-        }, {
-            field: "code",
-            title: "包号",
-            width: 100
-        }, {
-            field: "varieties",
-            title: "品种",
-            width: 100
-        }, {
-            field: "spec",
-            title: "规格",
-            width: 100
-        }, {
-            field: "levels",
-            title: "等级",
-            width: 100
-        }, {
-            field: "chang",
-            title: "长度",
-            width: 100
-        }, {
-            field: 'pieces',
-            title: '片数',
-            width: 80
-        }, {
-            field: "brand",
-            title: "品牌",
-            width: 100
-        }, {
-            field: "origin",
-            title: "产地",
-            width: 100
-        }, {
-            field: "num",
-            title: "数量（m³）",
-            width: 100
-        }, {
-            field: "positionname",
-            title: "库位",
-            width: 100
-        }, {
-            field: "updauser",
-            title: "操作员",
-            width: 100
-        }, {
-            field: "billloading",
-            title: "提运单",
-            width: 100
-        }, {
-            field: "containernum",
-            title: "货柜号/批次号",
-            width: 140
-        }, {
-            field: "remarks",
-            title: "备注",
+            align: "center",
             width: 180
         }];
 
         var tableClos; //表格字段赋值
         var title = '';
-        if (billDetails.type === "outHistory") {
-            tableClos = outCols;
-            title = "出库单详情";
-        } else {
-            tableClos = entryCols;
-            title = "入库单详情";
-        }
+
+        tableClos = outCols;
+        title = "出库单详情";
+
 
         var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 103); //内容区域所需减去的高度
 
@@ -332,7 +278,7 @@
         });
 
         function dayinFun(type) {
-            
+
             var url;
             if (type == "client") {
                 url = printoutstore2;

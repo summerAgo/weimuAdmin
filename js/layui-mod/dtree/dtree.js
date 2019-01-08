@@ -314,7 +314,7 @@ layui.define(['jquery','layer','element','form'], function(exports) {
 	DTree.prototype.setting = function(options) {
 		this.options = options || {};
 		
-		/** 绑定元素参数（必填，2个参数项必填一个）**/
+		/** 绑定元素参数(必填，2个参数项必填一个)**/
 		this.elem = this.options.elem || "";			//树绑定的元素ID：#elem
 		this.obj = this.options.obj || $(this.elem);	//树绑定的jquery元素，用于当元素是延迟加载出来的话，可以用这个找到
 		
@@ -369,7 +369,7 @@ layui.define(['jquery','layer','element','form'], function(exports) {
 		this.data = this.options.data || [];		//初始化指定该参数，则不会访问异步接口
 		this.dataFormat = this.options.dataFormat || "levelRelationship"  //用于用户配置的data数据格式，list：列表，  levelRelationship：层级关系，默认
 		this.dataStyle = this.options.dataStyle || "defaultStyle";  //用于用户配置layui通用的json数据风格,layuiStyle:layui风格，defaultStyle：默认风格
-		this.done = this.options.done || function(data, obj){};		//树加载完毕后的回调（仅限异步加载）
+		this.done = this.options.done || function(data, obj){};		//树加载完毕后的回调(仅限异步加载)
 		
 		/** 工具栏参数**/
 		this.toolbar = this.options.toolbar || false;	//是否开启可编辑模式
@@ -459,7 +459,7 @@ layui.define(['jquery','layer','element','form'], function(exports) {
 		this.data = this.options.data || this.data;		//初始化指定该参数，则不会访问异步接口
 		this.dataFormat = this.options.dataFormat || this.dataFormat  //用于用户配置的data数据格式，list：列表，  levelRelationship：层级关系，默认		
 		this.dataStyle = this.options.dataStyle || this.dataStyle;  //用于用户配置layui通用的json数据风格,layuiStyle:layui风格，defaultStyle：默认风格
-		this.done = this.options.done || this.done;		//树加载完毕后的回调（仅限异步加载）
+		this.done = this.options.done || this.done;		//树加载完毕后的回调(仅限异步加载)
 		
 		/** 可编辑模式参数**/
 		this.toolbar = this.options.toolbar || this.toolbar;	//是否开启可编辑模式

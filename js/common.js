@@ -1,7 +1,7 @@
 window.billBaseInfo; //预入库单基本信息：仓库主-仓库名称等;
 window.currData; //页面中当前选中行数据；
 
-var unitMoney = "（RMB）";
+var unitMoney = "(RMB)";
 //存cookie
 function setCookie(name, value, time) {
     var strsec = getsec(time);
@@ -107,16 +107,18 @@ function btnIsList(domObj, menuKey) {
     var data = JSON.parse(sessionStorage.getItem("buttonAuthority")); //所有页面按钮权限数据存入buttonAuthority
     var btnDom = "";
     if (data !== null) {
-        var currentBtnData = data ? data[menuKey] : [];// 当前按钮数据 -- 根据当前页面key参数获得当前页面按钮数据
+        var currentBtnData = data ? data[menuKey] : []; // 当前按钮数据 -- 根据当前页面key参数获得当前页面按钮数据
         // currentBtnData.sort(compare("sort"));
-        if(!currentBtnData || currentBtnData.length == 0){return false;}
+        if (!currentBtnData || currentBtnData.length == 0) {
+            return false;
+        }
 
-        currentBtnData.sort(function(a1,b1) {
+        currentBtnData.sort(function(a1, b1) {
             return a1.sort - b1.sort;
         });
         for (var i = 0; i < currentBtnData.length; i++) { // 渲染按钮模块
             if (currentBtnData[i] != null) {
-                btnDom += '<li class="layui-nav-item"><a href="javascript:;" class="'+currentBtnData[i].classname+'"><i class="'+currentBtnData[i].icon+'"></i>'+currentBtnData[i].bname+'</a></li>';
+                btnDom += '<li class="layui-nav-item"><a href="javascript:;" class="' + currentBtnData[i].classname + '"><i class="' + currentBtnData[i].icon + '"></i>' + currentBtnData[i].bname + '</a></li>';
             }
         }
         domObj.append(btnDom);
@@ -124,23 +126,25 @@ function btnIsList(domObj, menuKey) {
 }
 
 //冒泡排序比较器
-function compare(propertyName) {
-    return function(object1, object2) {
-        var value1 = object1[propertyName];
-        var value2 = object2[propertyName];
-        if (value2 < value1) {
-            return 1;
-        } else if (value2 > value1) {
-            return -1;
-        } else {
-            return 0;
+function compare(propertyName) {
+    return function(object1, object2) {
+        var value1 = object1[propertyName];
+        var value2 = object2[propertyName];
+        if (value2 < value1) {
+            return 1;
+        } else if (value2 > value1) {
+            return -1;
+        } else {
+            return 0;
         }
     }
 }
 
 // 金额添加逗号
 function formatNum(num) {
-    if(num === 0){return 0;}
+    if (num === 0) {
+        return 0;
+    }
     if (num) {
         num = num.toString().replace(/\$|\,/g, '');
         if ('' === num || isNaN(num)) {
@@ -175,7 +179,7 @@ function goLogin() {
     });
 }
 
-function clearSeesion(){
+function clearSeesion() {
     delCookie("TOKEN");
     delCookie("SESSION_USER_CODE");
     sessionStorage.removeItem("roleName");
@@ -184,17 +188,46 @@ function clearSeesion(){
 }
 
 // 车牌号小写改大写
-function toUpperCase(obj){
+function toUpperCase(obj) {
     obj.value = obj.value.toUpperCase()
 }
 
 /**
  * 数组JSON中的值清楚结尾.0字符
  */
-function objValueMake(arr,key){
-    if(arr.length==0){return false;}
-    for(var i=0;i<arr.length;i++){
-        arr[i][key] = arr[i][key].replace(/\.0$/,"");
+function objValueMake(arr, key) {
+    if (arr.length == 0) {
+        return false;
+    }
+    for (var i = 0; i < arr.length; i++) {
+        arr[i][key] = arr[i][key].replace(/\.0$/, "");
     }
     return arr;
+}
+
+/**
+ * 剔除重复数组中包含其他数组的项
+ */
+function weedArr(arr1, arr2) {
+    var newarr = [];
+    if (arr1.length > 0 || arr2.length > 0) {
+        for (var i = 0; i < arr1.length; i++) {
+            var uuid = arr1[i]["uuid"];
+            if (!iscz(uuid, arr2)) {
+                newarr.push(arr1[i]);
+            }
+        }
+    }
+    return newarr;
+}
+
+function iscz(uuid, arr) {
+    var f = false;
+    for (var k = 0; k < arr.length; k++) {
+        if (uuid == arr[k]["uuid"]) {
+            f = true;
+            break;
+        }
+    }
+    return f;
 }

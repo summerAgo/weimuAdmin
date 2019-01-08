@@ -141,101 +141,62 @@
         laytpl(getTpl).render(billDetails, function(html) {
             view.innerHTML = html;
         });
-        // 出库详情表格字段
-        var outCols = [{
-            field: 'LAY_TABLE_INDEX',
-            title: '序号',
-            width: 40,
-            templet: function(d) {
-                return d.LAY_TABLE_INDEX + 1;
-            }
-        }, {
-            field: 'uuid',
-            title: '货物标识码',
-            width: 206,
-            style: 'font-family: Consolas;font-size:16px'
-        }, {
-            field: "code",
-            title: "包号"
-        }, {
-            field: "varieties",
-            title: "品种"
-        }, {
-            field: "spec",
-            title: "规格"
-        }, {
-            field: "levels",
-            title: "等级"
-        }, {
-            field: "chang",
-            title: "长度"
-        }, {
-            field: 'pieces',
-            title: '片数',
-        }, {
-            field: "brand",
-            title: "品牌"
-        }, {
-            field: "origin",
-            title: "产地"
-        }, {
-            field: "updauser",
-            title: "操作员"
-        }, {
-            field: "billloading",
-            title: "提运单"
-        }, {
-            field: "containernum",
-            title: "货柜号/批次号"
-        }];
+
         // 入库详情表格字段
         var entryCols = [{
-                field: 'LAY_TABLE_INDEX',
                 title: '序号',
-                width: 40,
-                templet: function(d) {
-                    return d.LAY_TABLE_INDEX + 1;
-                }
+                align: "center",
+                type: "numbers"
             }, {
                 field: 'uuid',
                 title: '货物标识码',
+                align: "center",
                 width: 206,
                 style: 'font-family: Consolas;font-size:16px'
             }, {
                 field: "code",
                 title: "包号",
-                width: 95
+                align: "center",
+                minWidth: 150
             }, {
                 field: "varieties",
                 title: "品种",
-                width: 80
+                align: "center",
+                width: 90
             }, {
                 field: "spec",
                 title: "规格",
+                align: "center",
                 width: 100
             }, {
                 field: "levels",
                 title: "等级",
+                align: "center",
                 width: 100
             }, {
                 field: "chang",
                 title: "长度",
+                align: "center",
                 width: 80
             }, {
                 field: 'pieces',
                 title: '片数',
+                align: "center",
                 width: 80
             }, {
                 field: "brand",
                 title: "品牌",
+                align: "center",
                 width: 120
             }, {
                 field: "origin",
                 title: "产地",
+                align: "center",
                 width: 80
             }, {
                 field: "num",
-                title: "数量（m³）",
+                title: "数量(m³)",
+                align: "center",
                 width: 100
             },
             /* {
@@ -245,13 +206,16 @@
             {
                 field: "updauser",
                 title: "操作员",
+                align: "center",
                 width: 80
             }, {
                 field: "billloading",
                 title: "提运单",
-                width: 110
+                align: "center",
+                minWidth: 140
             }, {
                 field: "containernum",
+                align: "center",
                 title: "货柜号/批次号",
                 width: 180
             }, {
@@ -262,13 +226,8 @@
 
         var tableClos; //表格字段赋值
         var title = '';
-        if (billDetails.type === "outHistory") {
-            tableClos = outCols;
-            title = "出库单详情";
-        } else {
-            tableClos = entryCols;
-            title = "入库单详情";
-        }
+        tableClos = entryCols;
+        title = "入库单详情";
 
         var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 103); //内容区域所需减去的高度
 

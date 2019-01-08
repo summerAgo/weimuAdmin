@@ -366,23 +366,24 @@
                     {
                         type: 'checkbox'
                     }, {
-                        field: 'LAY_TABLE_INDEX',
-                        title: '序号',
-                        width: 40,
-                        templet: function(d) {
-                            return d.LAY_TABLE_INDEX + 1;
-                        }
+                        type: "numbers",
+                        align: "center",
+                        title: "序号",
+                        align: "center"
                     }, {
                         field: 'uuid',
                         title: '货物标识码',
+                        align: "center",
                         width: 206,
                         style: 'font-family: Consolas;font-size:16px'
                     }, {
                         field: 'code',
+                        align: "center",
                         title: '包号'
                     }, {
                         field: 'varietiesName',
                         title: '品种',
+                        align: "center",
                         templet: function(d) {
                             // console.log(d)
                             if (!d.varietiesName) {
@@ -393,6 +394,7 @@
                     }, {
                         field: 'levelsName',
                         title: '等级',
+                        align: "center",
                         templet: function(d) {
                             if (!d.levelsName) {
                                 return d.levels
@@ -402,6 +404,7 @@
                     }, {
                         field: 'specName',
                         title: '规格',
+                        align: "center",
                         templet: function(d) {
                             if (!d.specName) {
                                 return d.spec
@@ -410,16 +413,20 @@
                         }
                     }, {
                         field: 'pprice',
-                        title: '采购价（RMB）'
+                        align: "center",
+                        title: '采购价(RMB)'
                     }, {
                         field: 'chang',
+                        align: "center",
                         title: '长度'
                     }, {
                         field: 'codenum',
-                        title: '码单数量（m³）'
+                        align: "center",
+                        title: '码单数量(m³)'
                     }, {
                         field: 'num',
-                        title: '实际数量（m³）',
+                        title: '实际数量(m³)',
+                        align: "center",
                         event: "edit",
                         style: 'color:red;',
                         templet: function(d) {
@@ -430,15 +437,19 @@
                         }
                     }, {
                         field: 'pieces',
+                        align: "center",
                         title: '片数'
                     }, {
                         field: 'containernum',
+                        align: "center",
                         title: '货柜号'
                     }, {
                         field: 'brand',
+                        align: "center",
                         title: '品牌'
                     }, {
                         field: 'billloading',
+                        align: "center",
                         title: '提运单'
                     }
                 ]
@@ -565,7 +576,7 @@
                                 }
                             });
                             layer.msg('审核通过为库存', {
-                                time: 1500 //2秒关闭（如果不配置，默认是3秒）
+                                time: 1500 //2秒关闭(如果不配置，默认是3秒)
                             });
 
                         } else if (res.status === 1) {
@@ -682,7 +693,7 @@
         // 监听table点击事件，修改数量
         table.on('tool(tableContainer-from)', function(obj) {
             var data = obj.data; //获得当前行数据
-            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            var layEvent = obj.event; //获得 lay-event 对应的值(也可以是表头的 event 参数对应的值)
             var tr = obj.tr; //获得当前行 tr 的DOM对象
             if (layEvent === 'edit') {
                 layer.prompt({
@@ -929,7 +940,7 @@
         });
 
         /**
-         * 生成num（实际数量字段）
+         * 生成num(实际数量字段)
          */
         function createNum(arr) {
             for (var i = 0; i < arr.length; i++) {

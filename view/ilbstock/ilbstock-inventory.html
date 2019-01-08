@@ -237,32 +237,33 @@
             cols: [
                 [ // 标题栏
                     {
-                        field: 'LAY_TABLE_INDEX',
                         title: '序号',
-                        width: 40,
-                        templet: function(d) {
-                            return d.LAY_TABLE_INDEX + 1;
-                        }
+                        type: "numbers"
                     }, {
                         type: 'radio'
                     },
                     {
                         field: 'createdate',
                         title: '盘点时间',
+                        align: "center",
                         width: 180,
                     }, {
                         field: 'ownername',
+                        align: "center",
                         title: '仓库主'
                     }, {
                         field: 'depname',
                         title: '仓库名称',
+                        align: "center",
                         event: 'click',
                         style: 'color:#0063de;cursor: pointer;'
                     }, {
                         field: 'createuser',
+                        align: "center",
                         title: '盘点人'
                     }, {
                         field: 'status',
+                        align: "center",
                         title: '状态',
                         templet: function(d) {
                             if (d.status === 0) {
@@ -300,7 +301,7 @@
                         title: '盘点详情',
                         type: 1,
                         content: str, // 注意，如果str是object，那么需要字符拼接。
-                        area: ['80%', '80%'],
+                        area: ['90%', '90%'],
                         end: function() {
                             tableIns.reload({
                                 page: {
@@ -321,7 +322,7 @@
                     title: '新建盘点表',
                     type: 1,
                     content: str, // 注意，如果str是object，那么需要字符拼接。
-                    area: ['80%', '80%'],
+                    area: ['90%', '90%'],
                     end: function() {
                         tableIns.reload({
                             page: {
@@ -342,7 +343,7 @@
                 layer.confirm('你确认结束该盘点吗？目前盘点阶段是可以出入库的，请仔细核对在填写完实际盘点数之后，有没有再次操作出入货，如果有一定要重新核对所填写的实际盘点数，再进行结束盘点的操作，避免生成不正确的库存数！', function(index) {
                     qdeditAprice(checkData, endInventory);
                     layer.close(index);
-                }); 
+                });
             }
         });
 

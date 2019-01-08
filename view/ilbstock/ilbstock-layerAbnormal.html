@@ -84,7 +84,7 @@
         var formSelects = layui.formSelects;
         var laytpl = layui.laytpl;
 
-        var tableLayerHeight = (parseInt($(".layui-layer-page").innerHeight()) - parseInt($(".layui-layer-title").innerHeight()) - parseInt($(".table-page-header").innerHeight()) - 30); //内容区域所需减去的高度
+        var tableLayerHeight = (parseInt($(".layui-layer-page").innerHeight()) - parseInt($(".layui-layer-title").innerHeight()) - parseInt($(".table-page-header").innerHeight()) - 180); //内容区域所需减去的高度
 
         form.render(); //重置表单渲染
         formSelects.render(); //下拉选项
@@ -232,19 +232,15 @@
             cols: [
                 [ //标题栏
                     {
-                        field: 'LAY_TABLE_INDEX',
                         title: '序号',
-                        width: 40,
-                        templet: function(d) {
-                            return d.LAY_TABLE_INDEX + 1;
-                        }
+                        type:"numbers"
                     }, {
                         field: 'num',
-                        title: '盘点前数量（m³）',
+                        title: '盘点前数量(m³)',
                         width: 150
                     }, {
                         field: 'num1',
-                        title: '盘点后数量（m³）',
+                        title: '盘点后数量(m³)',
                         style: "cursor: pointer",
                         edit: "txt",
                         width: 150,
@@ -304,7 +300,7 @@
                         title: '产地'
                     }, {
                         field: 'pprice',
-                        title: '采购单价'
+                        title: '采购单价'+ unitMoney
                     }
                 ]
             ],
