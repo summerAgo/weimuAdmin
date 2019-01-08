@@ -219,7 +219,7 @@
                         type: "post",
                         data: {
                             "ids": rowId,
-                            'SESSION_NAME': getCookie('SESSION_NAME'),
+                            'SESSION_USER_CODE': getCookie('SESSION_USER_CODE'),
                             'TOKEN': getCookie('TOKEN'),
                         },
                         traditional: true,
@@ -298,7 +298,7 @@
                     data: {
                         instid: data.field.instid,
                         name: data.field.name,
-                        'SESSION_NAME': getCookie('SESSION_NAME'),
+                        'SESSION_USER_CODE': getCookie('SESSION_USER_CODE'),
                         'TOKEN': getCookie('TOKEN'),
                     },
                     async: false,
@@ -317,7 +317,7 @@
                     return false;
                 }
             }
-            data.field['SESSION_NAME'] = getCookie('SESSION_NAME');
+            data.field['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
             data.field['TOKEN'] = getCookie('TOKEN');
             $.ajax({
                 cache: true,
@@ -522,7 +522,7 @@
                 skin: 'layui-layer-wei', //layui-layer-wei，维木class
                 title: '提示'
             }, function(index) {
-                data['SESSION_NAME'] = getCookie('SESSION_NAME');
+                data['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
                 data['TOKEN'] = getCookie('TOKEN');
                 $.ajax({
                     cache: true,
@@ -582,7 +582,7 @@
                     data: {
                         utype: 4,
                         name: data.field.name,
-                        'SESSION_NAME': getCookie('SESSION_NAME'),
+                        'SESSION_USER_CODE': getCookie('SESSION_USER_CODE'),
                         'TOKEN': getCookie('TOKEN'),
                     },
                     async: false,
@@ -603,7 +603,7 @@
             }
             // 添加货权人类型去空格
             data.field.name = data.field.name.replace(/^\s*|\s*$/g, "");
-            data.field['SESSION_NAME'] = getCookie('SESSION_NAME');
+            data.field['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
             data.field['TOKEN'] = getCookie('TOKEN');
             $.ajax({
                 cache: true,

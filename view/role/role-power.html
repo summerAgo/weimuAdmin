@@ -482,7 +482,7 @@
 
         //根据角色id查询所有的按钮权限
         function getButAuthorityAll(data, success) {
-            data['SESSION_NAME'] = getCookie('SESSION_NAME');
+            data['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
             data['TOKEN'] = getCookie('TOKEN');
             $.ajax({
                 url: getAuthorityAll,

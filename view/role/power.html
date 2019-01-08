@@ -188,7 +188,7 @@
 
         // 初始化封装请求参数
         var where = [];
-        where['SESSION_NAME'] = getCookie('SESSION_NAME');
+        where['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
         where['TOKEN'] = getCookie('TOKEN');
         where['roleid'] = roleAut.id;  //赋值角色id
 
@@ -212,7 +212,7 @@
             $.ajax({
                 url: getAuthorityAll,
                 data: {
-                    'SESSION_NAME':getCookie('SESSION_NAME'),
+                    'SESSION_USER_CODE':getCookie('SESSION_USER_CODE'),
                     'roleid':roleAut.id
                 },
                 //dataType: 'json',

@@ -380,7 +380,7 @@
             parmdata["orderno"] = outBill.orderno;
             parmdata["ownerid"] = outBill.ownerid;
             parmdata["depotid"] = outBill.depotid;
-            parmdata['SESSION_NAME'] = getCookie('SESSION_NAME');
+            parmdata['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
             parmdata['TOKEN'] = getCookie('TOKEN');
             $("#estimatedate").val(outBill.outdate);
 
@@ -833,7 +833,7 @@
                 }
             }
             //增加出货申请单
-            preData['SESSION_NAME'] = getCookie('SESSION_NAME');
+            preData['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
             preData['TOKEN'] = getCookie('TOKEN');
             $.ajax({
                 cache: true,
@@ -929,7 +929,7 @@
                 //如果不是新建单，则从后台移除该货物
                 // if (outBill != null) {
                 //     var preData = {};
-                //     preData['SESSION_NAME'] = getCookie('SESSION_NAME');
+                //     preData['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
                 //     preData['TOKEN'] = getCookie('TOKEN');
                 //     preData['uuidarr'] = newuuidarr.toString();
                 //     preData['orderno'] = outBill.orderno;

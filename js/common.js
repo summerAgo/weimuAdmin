@@ -177,7 +177,7 @@ function goLogin() {
 
 function clearSeesion(){
     delCookie("TOKEN");
-    delCookie("SESSION_NAME");
+    delCookie("SESSION_USER_CODE");
     sessionStorage.removeItem("roleName");
     sessionStorage.removeItem("menuAuthority");
     sessionStorage.removeItem("buttonAuthority");

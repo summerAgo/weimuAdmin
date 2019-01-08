@@ -273,7 +273,7 @@
             data.field["allauth"] = allAuthority;
             data.field["roleid"] = window.currData.id;
 
-            data.field['SESSION_NAME'] = getCookie("SESSION_NAME");
+            data.field['SESSION_USER_CODE'] = getCookie("SESSION_USER_CODE");
             data.field['TOKEN'] = getCookie("TOKEN");
             $.ajax({
                 cache: true,
@@ -335,7 +335,7 @@
                     url: isname_role,
                     data: {
                         rolename: data.field.rolename,
-                        'SESSION_NAME': getCookie('SESSION_NAME'),
+                        'SESSION_USER_CODE': getCookie('SESSION_USER_CODE'),
                         'TOKEN': getCookie('TOKEN')
                     },
                     async: false,
@@ -354,7 +354,7 @@
                     return false;
                 }
             }
-            data.field["SESSION_NAME"] = getCookie('SESSION_NAME');
+            data.field["SESSION_USER_CODE"] = getCookie('SESSION_USER_CODE');
             data.field["TOKEN"] = getCookie('TOKEN');
             $.ajax({
                 cache: true,
@@ -414,7 +414,7 @@
                     url: isname_role,
                     data: {
                         rolename: data.field.rolename,
-                        'SESSION_NAME': getCookie('SESSION_NAME'),
+                        'SESSION_USER_CODE': getCookie('SESSION_USER_CODE'),
                         'TOKEN': getCookie('TOKEN')
                     },
                     async: false,
@@ -433,7 +433,7 @@
                     return false;
                 }
             }
-            data.field["SESSION_NAME"] = getCookie('SESSION_NAME');
+            data.field["SESSION_USER_CODE"] = getCookie('SESSION_USER_CODE');
             data.field["TOKEN"] = getCookie('TOKEN');
             $.ajax({
                 cache: true,
@@ -468,7 +468,7 @@
 
         //增删行数据
         function rowDataApi(url, data, funSuc, funErr) {
-            data['SESSION_NAME'] = getCookie('SESSION_NAME');
+            data['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
             data['TOKEN'] = getCookie('TOKEN');
             $.ajax({
                 url: url,

@@ -513,7 +513,7 @@
 
             //回显
             parmdata["orderno"] = adjustParam.orderno;
-            parmdata['SESSION_NAME'] = getCookie('SESSION_NAME');
+            parmdata['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
             parmdata['TOKEN'] = getCookie('TOKEN');
 
             $.ajax({
@@ -958,7 +958,7 @@
             }
 
             //增加申请单
-            preData['SESSION_NAME'] = getCookie('SESSION_NAME');
+            preData['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
             preData['TOKEN'] = getCookie('TOKEN');
             $.ajax({
                 cache: true,
@@ -1112,14 +1112,18 @@
                     elem: '#importAddBtn',
                     url: ilbstockImportUrl,
                     data: {
-                        'SESSION_NAME': getCookie('SESSION_NAME'),
+                        'SESSION_USER_CODE': getCookie('SESSION_USER_CODE'),
                         'TOKEN': getCookie('TOKEN')
                     },
                     multiple: false,
                     accept: 'file', //普通文件
                     exts: 'xls|xlsx|xlsm|xlt|xltx|xltm', //只允许上传后缀
                     done: function (res) {
-                        if (res.status === 0) {
+                        if (res.status == 1) {
+                            goLogin(); // 跳转到登录页
+                        }
+
+                        if (res.status == 0) {
                             layer.msg("上传成功");
                             layer.close(importLayer);
                             for (var k = 0; k < res.data.length; k++) {

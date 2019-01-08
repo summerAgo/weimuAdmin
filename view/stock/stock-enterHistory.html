@@ -440,7 +440,7 @@
                     url: backinexamine,
                     type: "POST",
                     data: {
-                        'SESSION_NAME': getCookie('SESSION_NAME'),
+                        'SESSION_USER_CODE': getCookie('SESSION_USER_CODE'),
                         'TOKEN': getCookie('TOKEN'),
                         'orderno':checkStatus.data[0].orderno
                     },
@@ -486,7 +486,7 @@
                     url: inlbdel,
                     type: "POST",
                     data: {
-                        'SESSION_NAME': getCookie('SESSION_NAME'),
+                        'SESSION_USER_CODE': getCookie('SESSION_USER_CODE'),
                         'TOKEN': getCookie('TOKEN'),
                         'orderno':checkStatus.data[0].orderno
                     },

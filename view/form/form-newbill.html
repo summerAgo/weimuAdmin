@@ -544,7 +544,7 @@
                         'origin': origin,
                         'supplierid': supplierid,
                         'positionid': positionid,
-                        'SESSION_NAME': getCookie('SESSION_NAME'),
+                        'SESSION_USER_CODE': getCookie('SESSION_USER_CODE'),
                         'TOKEN': getCookie('TOKEN'),
                     },
                     traditional: true,
@@ -760,7 +760,7 @@
 
         //增删行数据
         function rowDataApi(url, data, funSuc, funErr) {
-            data['SESSION_NAME'] = getCookie('SESSION_NAME');
+            data['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
             data['TOKEN'] = getCookie('TOKEN');
             $.ajax({
                 url: url,
@@ -840,7 +840,7 @@
                     suppliername: suppliername,
                     positionid: positionid,
                     orderno: num,
-                    'SESSION_NAME': getCookie('SESSION_NAME'),
+                    'SESSION_USER_CODE': getCookie('SESSION_USER_CODE'),
                     'TOKEN': getCookie('TOKEN')
                 },
                 traditional: true,
@@ -864,6 +864,8 @@
         //变更下载模板链接
         $(".dowmTemp").attr("href", ilbstockImportTemp);
 
+
+
         //导入
         var importLayer; //导入弹窗
         $(".toImport").on('click', function(e) {
@@ -878,14 +880,18 @@
                     elem: '#importAddBtn',
                     url: ilbstockImportUrl,
                     data: {
-                        'SESSION_NAME': getCookie('SESSION_NAME'),
-                        'TOKEN': getCookie('TOKEN')
+                        'SESSION_USER_CODE': getCookie('SESSION_USER_CODE')
+                        //'TOKEN': getCookie('TOKEN')
                     },
                     multiple: false,
                     accept: 'file', //普通文件
                     exts: 'xls|xlsx|xlsm|xlt|xltx|xltm', //只允许上传后缀
                     done: function(res) {
-                        if (res.status === 0) {
+                        if (res.status == 1) {
+                            goLogin(); // 跳转到登录页
+                        }
+
+                        if (res.status == 0) {
                             layer.msg("上传成功");
                             layer.close(importLayer);
                             for (var k = 0; k < res.data.length; k++) {

@@ -131,7 +131,7 @@
             parmdata["orderno"] = orderData.orderno;
             parmdata["ownerid"] = orderData.ownerid;
             parmdata["depotid"] = orderData.depotid;
-            parmdata['SESSION_NAME'] = getCookie('SESSION_NAME');
+            parmdata['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
             parmdata['TOKEN'] = getCookie('TOKEN');
             //获取列表数据
             $.ajax({
