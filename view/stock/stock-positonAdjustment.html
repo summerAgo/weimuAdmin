@@ -14,20 +14,8 @@
                 <div class="form-box clearfix">
                     <div class="layui-form-item form-left form-down-line">
                         <div class="table-form-item layui-input-inline">
-                            <span class="input-span form-required">仓库主</span>
-                            <select name="ownerid" xm-select="ownerSelect" xm-select-radio>
-                                <option value="">仓库主</option>
-                            </select>
-                        </div>
-                        <div class="table-form-item layui-input-inline">
-                            <span class="input-span form-required">仓库</span>
-                            <select name="depotid" xm-select="depotSelect" xm-select-radio>
-                                <option value="">仓库</option>
-                            </select>
-                        </div>
-                        <div class="table-form-item layui-input-inline">
                             <span class="input-span form-required">移入库位</span>
-                            <select name="positionid" xm-select="positionSelect" xm-select-radio>
+                            <select name="positionid" xm-select="targetPositionSelect" xm-select-radio>
                                 <option value="">库位</option>
                             </select>
                         </div>
@@ -43,6 +31,24 @@
                     <form class="layui-form" action="">
                         <div class="form-box clearfix">
                             <div class="layui-form-item form-left">
+                                <div class="table-form-item layui-input-inline">
+                                    <span class="input-span form-required">仓库主</span>
+                                    <select name="ownerid" xm-select="ownerSelect" xm-select-radio>
+                                        <option value="">仓库主</option>
+                                    </select>
+                                </div>
+                                <div class="table-form-item layui-input-inline">
+                                    <span class="input-span form-required">仓库</span>
+                                    <select name="depotid" xm-select="depotSelect" xm-select-radio>
+                                        <option value="">仓库</option>
+                                    </select>
+                                </div>
+                                <div class="table-form-item layui-input-inline">
+                                    <span class="input-span">库位</span>
+                                    <select name="positionid" xm-select="positionSelect" xm-select-radio>
+                                        <option value="">库位</option>
+                                    </select>
+                                </div>
                                 <div class="table-form-item layui-input-inline">
                                     <span class="input-span">货物标识码</span>
                                     <input type="text" name="uuid" placeholder="货物标识码" autocomplete="off" class="layui-input">
@@ -73,7 +79,7 @@
                                     <span class="input-span">货柜号</span>
                                     <input type="text" name="containernum" placeholder="货柜号" autocomplete="off" class="layui-input">
                                 </div>
-                                <div class="table-form-item layui-input-inline">
+                                <!-- <div class="table-form-item layui-input-inline">
                                     <span class="input-span">产地</span>
                                     <select name="origin" xm-select="originSelect" xm-select-radio="">
                                         <option value="">产地</option>
@@ -82,19 +88,19 @@
                                 <div class="table-form-item layui-input-inline">
                                     <span class="input-span">品牌</span>
                                     <input type="text" name="brand" placeholder="品牌" autocomplete="off" class="layui-input">
-                                </div>
+                                </div> -->
                                 <div class="table-form-item layui-input-inline">
                                     <span class="input-span">提运单</span>
                                     <input type="text" name="billloading" placeholder="提运单" autocomplete="off" class="layui-input">
                                 </div>
-                                <div class="table-form-item layui-input-inline">
+                                <!-- <div class="table-form-item layui-input-inline">
                                     <span class="input-span">长度</span>
                                     <input type="text" name="chang" placeholder="长度" autocomplete="off" class="layui-input">
                                 </div>
                                 <div class="table-form-item layui-input-inline">
                                     <span class="input-span">片数</span>
                                     <input type="text" name="pieces" placeholder="片数" autocomplete="off" class="layui-input">
-                                </div>
+                                </div> -->
                             </div>
                             <div class="layui-form-item form-right">
                                 <button type="reset" class="layui-btn layui-btn-md layui-btn-gray">
@@ -122,7 +128,7 @@
 
         <div class="localContainer goodsContainer">
             <div class="containerTitle">
-                <h3 class="titleTxt">库位调整单</h3>
+                <h3 class="titleTxt">被调整货物</h3>
                 <div class="rightCon">总共<span class="goodsCount">0</span>个货物</div>
             </div>
             <div class="table-content-main">
@@ -260,16 +266,6 @@
         var positionid; //库位ID
         var depotSelectValue; //仓库id暂存用于对比是否改变仓库
 
-        //日期时间选择器
-        laydate.render({
-            elem: '#estimatedate',
-            type: 'datetime',
-            min: 0,
-            change: function(val) {
-                // console.log(val);
-            }
-        });
-
         // 仓库主下拉框数据初始化
         formSelects.data('ownerSelect', 'local', {
             arr: selectDataInstall(ownerDropdown, null, null, 0) //仓库主列表
@@ -306,6 +302,9 @@
                 formSelects.data('positionSelect', 'local', {
                     arr: [] //清空库位列表
                 });
+                formSelects.data('targetPositionSelect', 'local', {
+                    arr: [] //清空库位列表
+                });
             } else {
                 //  获取仓库下拉数据
                 var depotList = selectDataInstall(depotDropdown, {
@@ -319,6 +318,9 @@
                     formSelects.data('positionSelect', 'local', {
                         arr: [] //清空库位列表
                     });
+                    formSelects.data('targetPositionSelect', 'local', {
+                        arr: [] //清空库位列表
+                    });
                     layer.msg("该仓库主下无仓库信息");
                     return false;
                 }
@@ -326,22 +328,11 @@
                 formSelects.data('depotSelect', 'local', {
                     arr: depotList //仓库列表
                 });
-                /* formSelects.data('positionSelect', 'local', {
-                     arr: selectDataInstall(positionDropdown, {
-                         "depotid": depotList[0].value
-                     }, false, 0) //库位列表
-                 });*/
             }
         }, true);
 
         //监听仓库的选中与取消
         formSelects.on('depotSelect', function(id, vals, val, isAdd, isDisabled) {
-            //id:           点击select的id
-            //vals:         当前select已选中的值
-            //val:          当前select点击的值
-            //isAdd:        当前操作选中or取消
-            //isDisabled:   当前选项是否是disabled
-            //如果return false, 那么将取消本次操作
             if (!isAdd) {
                 formSelects.data('positionSelect', 'local', {
                     arr: [] //仓库列表
@@ -397,6 +388,9 @@
                 });
                 // 库位数据初始化
                 formSelects.data('positionSelect', 'local', {
+                    arr
+                });
+                formSelects.data('targetPositionSelect', 'local', {
                     arr
                 });
             }
@@ -704,9 +698,9 @@
                 return false;
             }
 
-            var positionid = layui.formSelects.value('positionSelect', "valStr");
+            var positionid = layui.formSelects.value('targetPositionSelect', "valStr");
             if (positionid == "") {
-                layer.msg('请选择库位');
+                layer.msg('请选择移入库位');
                 return false;
             }
 
@@ -753,20 +747,15 @@
                             goLogin();
                         }
                         if (res.status == 0) {
-                            tableData = [];
+                            var positionname = layui.formSelects.value('targetPositionSelect', "nameStr");
+                            for (var i = 0; i < tableData.length; i++) {
+                                tableData[i].positionname = positionname;
+                            }
                             tableOutBill.reload({
                                 data: tableData,
                                 page: {
                                     curr: 1 //重新从第 1 页开始
                                 }
-                            });
-                            ownerid = formSelects.value('ownerSelect', 'valStr');
-                            depotid = formSelects.value('depotSelect', 'valStr');
-                            positionid = formSelects.value('positionSelect', 'valStr');
-                            getDepotList({
-                                ownerid: ownerid,
-                                depotid: depotid,
-                                positionid: positionid
                             });
                         }
                         layer.msg(res.msg, {
