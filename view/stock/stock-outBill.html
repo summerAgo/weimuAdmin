@@ -225,7 +225,7 @@
             for (var key in data.field) {
                 //参数赋值
                 if (data.field[key] !== "") {
-                    paramSearch[key] = data.field[key].replace(/^\s*|\s*$/g,"");
+                    paramSearch[key] = data.field[key].replace(/^\s*|\s*$/g, "");
                 }
             }
             tableIns.reload({
@@ -257,12 +257,8 @@
             cols: [
                 [ //标题栏
                     {
-                        field: 'LAY_TABLE_INDEX',
-                        title: '序号',
-                        width: 40,
-                        templet: function(d) {
-                            return d.LAY_TABLE_INDEX + 1;
-                        }
+                        type: "numbers",
+                        title: "序号"
                     }, {
                         type: 'radio'
                     }, {
@@ -385,11 +381,7 @@
                                     });
                                 }
                                 if (res.noadopt) {
-                                    //msgstr = msgstr+  "订单:"+res.noadopt+"<br/>请风控审核！";
                                     msgstr = "该订单已出库或需要风控审核<br/>";
-                                    // $.each(res.noadopt, function(i, v) {
-                                    //     msgstr = "   " + msgstr + v + "<br/>";
-                                    // });
                                 }
                                 layer.msg(msgstr, {
                                     time: 60000, //60s后自动关闭
@@ -409,50 +401,6 @@
             var checkStatus = table.checkStatus('tableContainers'); //表格选中状态
             $(".rightBotBtn span").html(checkStatus.data.length); //当前选中了多少货物
         });
-
-        // $(".editBtn").click(function() {
-        //     //编辑
-        //     var checkStatus = table.checkStatus('tableContainers');
-        //     if (checkStatus.data.length < 1) {
-        //         layer.msg("请选择需要编辑的信息");
-        //     } else if (checkStatus.data.length > 1) {
-        //         layer.msg("请选择需要编辑的单条信息");
-        //     } else {
-        //         window.currData = checkStatus.data[0]; //全局对象存储当前选中行数据
-        //         $.get('view/stock/stock-goodsList.html', {}, function(str) {
-        //             eaitLayer = layer.open({
-        //                 title: '编辑',
-        //                 type: 1,
-        //                 content: str, //注意，如果str是object，那么需要字符拼接。
-        //                 resize: false,
-        //                 area: ['800px', 'auto'],
-        //             });
-        //         });
-        //     }
-        // });
-
-        // form.on('submit(editForm)', function(data) {
-        //     //编辑提交
-        //     layer.confirm('确认提交修改', {
-        //         skin: 'layui-layer-wei',  //layui-layer-wei，维木class
-        //         title: '提示'
-        //     }, function(index) {
-        //         data.field.orderno = window.currData.orderno; //防止单号被篡改
-        //         data.field.origin = window.currData.origin; //
-        //         data.field.supplier = window.currData.supplier; //
-        //         rowDataApi(preEntryUpdate, data.field, function(data) {
-        //             layer.close(index);
-        //             layer.close(eaitLayer); //关闭
-        //             // 刷新表格
-        //             tableIns.reload({
-        //                 page: {
-        //                     curr: 1 //重新从第 1 页开始
-        //                 }
-        //             });
-        //         })
-        //     })
-        //     return false;
-        // });
 
         $(".deleteBtn").click(function() {
             //删除
@@ -513,7 +461,9 @@
             var data = obj.data;
             var pageUrl = 'view/stock/stock-addOutBill.html';
             if (obj.event === 'click') {
-                if(data.status == 4 || data.status == 3){pageUrl = 'view/stock/stock-addOutBill_bak.html';}
+                if (data.status == 4 || data.status == 3) {
+                    pageUrl = 'view/stock/stock-addOutBill_bak.html';
+                }
                 sessionStorage.setItem('addOutBill', JSON.stringify(data));
                 $.get(pageUrl, {}, function(str) { // 请求弹框
                     addLayer = layer.open({
@@ -535,7 +485,7 @@
 
         //新建出库单
         $(".creatBillBtn").click(function() {
-            sessionStorage.removeItem('addOutBill');//移除点击table表格带入的数据
+            sessionStorage.removeItem('addOutBill'); //移除点击table表格带入的数据
             $.get('view/stock/stock-addOutBill.html', {}, function(str) { // 请求弹框
                 addLayer = layer.open({
                     title: '新建出库单',
