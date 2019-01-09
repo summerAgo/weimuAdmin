@@ -115,10 +115,11 @@ var userdropdown = pathUrl + "sys/dropdown";//用户下拉
 var userUpdate = pathUrl + "sys/update";//修改用户
 var userDel = pathUrl + "sys/deleteMany";//删除用户
 var userPas = pathUrl + "sys/resetPassword";//重置密码
+var userChangePas = pathUrl + "sys/updaPassword";//修改密码
 var userExit = pathUrl + "sys/exit";//退出登陆
-var usergetSessionAnth = pathUrl +"sys/getSessionAnth";   
+var usergetSessionAnth = pathUrl +"sys/getSessionAnth";
 
-//角色
+//角色  
 var roleList = pathUrl + "sys/role/list";//角色列表
 var roleAdd = pathUrl + "sys/role/add";//添加角色
 var roleUpdate = pathUrl + "sys/role/update";//修改角色

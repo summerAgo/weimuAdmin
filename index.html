@@ -55,6 +55,7 @@
                         <span class="rolename">超级管理员</span>
                     </a>
                     <dl class="layui-nav-child">
+                        <dd><a href="javascript:;" class="changePassword">修改密码</a></dd>
                         <dd><a href="javascript:;" class="signOutBtn">退出登录</a></dd>
                     </dl>
                 </li>
@@ -110,11 +111,11 @@
     <script src="js/api.js"></script>
     <script src="js/common.js"></script>
     <script>
-        function obtainchildList(id,arr){
+        function obtainchildList(id, arr) {
             var newarr = [];
             for (let index = 0; index < arr.length; index++) {
                 const a = arr[index];
-                if(id == a.pid){
+                if (id == a.pid) {
                     newarr.push(a);
                 }
             }
@@ -136,39 +137,40 @@
             formSelects: 'formSelects-v4'
         });
 
-        layui.use(['jquery', 'element', 'layer', 'laytpl'], function() {
+        layui.use(['jquery', 'element', 'layer', 'laytpl','form'], function() {
             var element = layui.element,
                 $ = layui.$,
-                laytpl = layui.laytpl;
+                laytpl = layui.laytpl,
+                form = layui.form;
             var container = $('.content-body'); //页面容器
             // var userInfo = JSON.parse(getCookie('userInfo')); //获取session中用户信息
             //每次刷新拉取用户权限
             var roleName = "";
             $.ajax({
-                    url: usergetSessionAnth,
-                    type: "GET",
-                    async: false,
-                    data: {
-                        'SESSION_USER_CODE': SESSION_USER_CODE,
-                        'TOKEN': getCookie('TOKEN')
-                    },
-                    success: function(res) {
-                        if (res.status === 0) {
-                            //该用户菜单权限JSON
-                            sessionStorage.setItem("menuAuthority", JSON.stringify(res.data.menuAuthority));
+                url: usergetSessionAnth,
+                type: "GET",
+                async: false,
+                data: {
+                    'SESSION_USER_CODE': SESSION_USER_CODE,
+                    'TOKEN': getCookie('TOKEN')
+                },
+                success: function(res) {
+                    if (res.status === 0) {
+                        //该用户菜单权限JSON
+                        sessionStorage.setItem("menuAuthority", JSON.stringify(res.data.menuAuthority));
 
-                            //该用户按钮权限JSON
-                            sessionStorage.setItem("buttonAuthority", JSON.stringify(res.data.buttonAuthority));
+                        //该用户按钮权限JSON
+                        sessionStorage.setItem("buttonAuthority", JSON.stringify(res.data.buttonAuthority));
 
-                            //该用户角色数组
-                            sessionStorage.setItem("roleName", res.data.roleName);
-                            roleName = res.data.roleName;
-                        }else{
-                            //如果该用户没有权限。则回到登陆页面
-                            goLogin(); // 跳转到登录页
-                        }
+                        //该用户角色数组
+                        sessionStorage.setItem("roleName", res.data.roleName);
+                        roleName = res.data.roleName;
+                    } else {
+                        //如果该用户没有权限。则回到登陆页面
+                        goLogin(); // 跳转到登录页
                     }
-                });
+                }
+            });
 
 
             $(".rolename").html(roleName);
@@ -189,15 +191,15 @@
             var newSortList = [];
             for (var i = 0; i < menuArr.length; i++) {
                 const a = menuArr[i];
-                if(a.pid == 0 || a.pid == undefined){
-                    const zilist = obtainchildList(a.id,menuArr);//得到该父节点下面的数据
-                    if(zilist.length  > 0){
-                        zilist.sort(function(a1,b1) {
+                if (a.pid == 0 || a.pid == undefined) {
+                    const zilist = obtainchildList(a.id, menuArr); //得到该父节点下面的数据
+                    if (zilist.length > 0) {
+                        zilist.sort(function(a1, b1) {
                             return a1.sort - b1.sort;
                         });
                         a['ischild'] = true;
                         a['child'] = zilist;
-                    }else{
+                    } else {
                         a['ischild'] = false;
                     }
                     newSortList.push(a);
@@ -382,6 +384,22 @@
             });*/
 
             $(".signOutBtn").click(signOut); //退出登录
+            var passwordLayer;
+            $(".changePassword").click(function() {
+                //修改密码
+                $.get('view/form/form-password.html', {}, function(str) { // 请求弹框
+                    // 弹出弹框
+                    passwordLayer = layer.open({
+                        title: '修改密码',
+                        type: 1,
+                        content: str, // 注意，如果str是object，那么需要字符拼接。
+                        area: ['800px', '400px']
+                    });
+                });
+            });
+            
+            
+
             function signOut() {
                 //退出登录
                 clearSeesion();
