@@ -505,12 +505,8 @@
             data: goodsData,
             cols: [
                 [{
-                    field: 'LAY_TABLE_INDEX',
-                    title: '序号',
-                    width: 40,
-                    templet: function(d) {
-                        return d.LAY_TABLE_INDEX + 1;
-                    }
+                    type: "numbers",
+                    title: "序号"
                 }, {
                     type: 'checkbox',
                 }, {
@@ -883,7 +879,7 @@
             }
             $.get(ilbstockListAll, param, function(res) {
                 if (res.status == 0) {
-                    goodsData = weedArr(res.data, tableData);
+                    goodsData = weedArr(res.data, tableData);//剔除重复
                 } else {
                     goodsData = [];
                 }
