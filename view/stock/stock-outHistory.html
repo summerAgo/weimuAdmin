@@ -360,7 +360,7 @@
                         title: '单号',
                         event: 'click',
                         style: 'cursor: pointer;color:#0063de;',
-                        minWidth: 200,
+                        width: 200,
                         align: "center"
                     }, {
                         field: 'ownername',
@@ -378,7 +378,7 @@
                         field: 'totalamount',
                         title: '订单总金额' + unitMoney,
                         align: "center",
-                        minWidth: 150,
+                        width: 150,
                         templet: function(d) {
                             return formatNum(d.totalamount);
                         }
@@ -390,12 +390,12 @@
                         field: 'volume',
                         align: "center",
                         title: '数量(m³)',
-                        minWidth: 100
+                        width: 100
                     }, {
                         field: 'createdate',
                         align: "center",
                         title: '出库时间',
-                        minWidth: 180
+                        width: 180
                     }
                 ]
             ],
