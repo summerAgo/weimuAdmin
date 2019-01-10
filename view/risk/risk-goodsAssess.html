@@ -335,7 +335,7 @@
                                     field: 'pieces',
                                     title: '片数',
                                     sort: true
-                                },{
+                                }, {
                                     field: 'origin',
                                     title: '产地',
                                     sort: true
@@ -344,9 +344,7 @@
                                     width: 130,
                                     title: '采购单价' + unitMoney,
                                     templet: function(d) {
-                                        if (!d.pprice)
-                                            return "";
-                                        return formatNum(d.pprice);
+                                        return formatNum(d.pprice) || "";
                                     }
                                 }, {
                                     field: 'remarks',
@@ -503,7 +501,7 @@
 
                     //点击导出
                     $(".toExportBtn").on('click', function(e) {
-                        table.exportFile(tableInsAssess.config.id, tableInsAssess.config.data,"xls");
+                        table.exportFile(tableInsAssess.config.id, tableInsAssess.config.data, "xls");
                     });
                 });
             }
@@ -511,7 +509,7 @@
 
         //点击导出
         $(".toExport").on('click', function(e) {
-            table.exportFile(tableIns.config.id, tableIns.config.data,"xls");
+            table.exportFile(tableIns.config.id, tableIns.config.data, "xls");
         });
     });
 </script>
