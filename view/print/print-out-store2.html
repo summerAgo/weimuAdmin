@@ -162,9 +162,8 @@
                     if (!orderData.vehnum) {
                         orderData.vehnum = "";
                     }
-                    // orderDataList = orderData.list;
-                } else {
-                    // layer.msg("请求失败");
+                } else if (res.status == 1) {
+                    alert("请登录");
                 }
             }
         });

@@ -144,9 +144,8 @@
             success: function(res) {
                 if (res.status === 0) {
                     orderData = res.data; // 对象迁移
-                    // orderDataList = orderData.list;
-                } else {
-                    // layer.msg("请求失败");
+                } else if (res.status == 1) {
+                    alert("请登录");
                 }
             }
         });

@@ -149,10 +149,23 @@
         </div>
     </div>
     <style scoped>
-    .printInfoItem.pit1 dl{flex:0 0 33%}
-    .pit4 dl{flex:0 0 40%;}
-    .pit4 dt{flex:0 0 30mm}
-    h3{font-weight: bold; font-size:10pt; margin:5mm 0 2mm 0}
+        .printInfoItem.pit1 dl {
+            flex: 0 0 33%
+        }
+
+        .pit4 dl {
+            flex: 0 0 40%;
+        }
+
+        .pit4 dt {
+            flex: 0 0 30mm
+        }
+
+        h3 {
+            font-weight: bold;
+            font-size: 10pt;
+            margin: 5mm 0 2mm 0
+        }
     </style>
     <script src="../../js/localhost.js"></script>
     <script src="../../js/api.js"></script>
@@ -183,8 +196,8 @@
                         orderData.data = res.data;
                         orderData.beforeList = res.frontarr;
                         orderData.afterList = res.afterarr;
-                    } else {
-                        // layer.msg("请求失败");
+                    } else if (res.status == 1) {
+                        alert("请登录");
                     }
                 }
             });

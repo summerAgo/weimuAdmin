@@ -141,8 +141,8 @@
                         if (!orderData.vname) {
                             orderData.vname = "";
                         }
-                    } else {
-                        layer.msg("数据请求失败");
+                    } else if (res.status == 1) {
+                        alert("请登录");
                     }
                 }
             });

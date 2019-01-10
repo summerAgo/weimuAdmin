@@ -99,10 +99,6 @@
         form.render(); //重置表单渲染
         formSelects.render(); //下拉选项
         element.render('talbe-tools'); //表格工具栏
-        formSelects.btns(['select', 'remove'], {
-            show: 'name'
-        });
-
         formSelects.data('ownerSelectOut', 'local', {
             arr: selectDataInstall(ownerDropdown) //仓库主列表
         });
@@ -178,14 +174,6 @@
                 });
             }
         }, true);
-
-        // formSelects.data('originSelectOut', 'local', {
-        //     arr: selectDataInstall(CHDList) //产地列表
-        // });
-
-        // formSelects.data('supplierSelectOut', 'local', {
-        //     arr: selectDataInstall(dropSupplier) //供应商列表
-        // });
 
         function selectDataInstall(url, param, bool) {
             //下拉选框数据组装

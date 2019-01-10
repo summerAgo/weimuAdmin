@@ -34,7 +34,7 @@
                         <!-- <div class="table-form-item layui-input-inline">
                             <input type="text" name="enddate" placeholder="请选择结束时间" autocomplete="off" class="layui-input enddate">
                         </div> -->
-                        <div class="table-form-item layui-input-inline">
+                        <div class="table-form-item layui-input-inline long-item">
                             <span class="input-span">时间</span>
                             <input type="text" name="date" placeholder="请选择时间范围" autocomplete="off" class="layui-input date">
                         </div>
@@ -120,6 +120,11 @@
         </div>
     </div>
 </div>
+<style scoped>
+    .table-page-form .long-item {
+        width: 526px;
+    }
+</style>
 <script>
     layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'upload'], function() {
         var element = layui.element;
