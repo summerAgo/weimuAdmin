@@ -100,6 +100,7 @@ var depotList = pathUrl + "basics/depot/list";//仓库列表
 var depotAdd = pathUrl + "basics/depot/add";//添加仓库
 var depotUpdate = pathUrl + "basics/depot/update";//修改仓库
 var depotDel = pathUrl + "basics/depot/delete";//删除仓库
+
 //库位
 var positionList = pathUrl + "basics/position/list";//库位列表  bitdepotid=大仓库ID 有分页
 var positiondropdown = pathUrl + "basics/position/dropdown";//库位下拉 bitdepotid=大仓库ID 没有分页
@@ -126,12 +127,24 @@ var roleUpdate = pathUrl + "sys/role/update";//修改角色
 var roleDel = pathUrl + "sys/role/deleteMany";//删除角色
 var roleAuthority = pathUrl + "sys/role/setAuthority";//设置角色对应菜单(roleid 角色id        menuId[]菜单数组)
 var setByAuthority = pathUrl + "sys/role/setByAuthority";// 角色单独发送菜单信息
+
 //菜单
 var menuList = pathUrl + "sys/menu/list";//菜单列表
 var menuAdd = pathUrl + "sys/menu/add";//添加菜单
 var menuUpdate = pathUrl + "sys/menu/update";//修改菜单
 var menuDel = pathUrl + "sys/menu/deleteMany";//删除菜单
 var menuAuthority = pathUrl + "sys/menu/setAuthority";//设置菜单对应按钮(menuid 菜单id        butId[]按钮数组)
+
+//表格权限
+var listtableauth= pathUrl +"user/table/list";//查询
+var addtableauth = pathUrl +"user/table/add";//添加     菜单ID:menuid, 标识那一层菜单:type
+var deltableauth = pathUrl +"user/table/delete";//删除
+var updatableauth = pathUrl +"user/table/update";//
+
+//表格属性权限
+var listtablefield = pathUrl +"user/tablefield/list";//查询
+var addtablefield = pathUrl +"user/tablefield/testadd";//添加   表格ID:tablepermissionid,表格列数组:jsonstr
+var deltablefield = pathUrl +"user/tablefield/delete";//删除
 
 //按钮
 var buttonList = pathUrl + "sys/button/list";//按钮列表
@@ -183,6 +196,7 @@ var addOwner = pathUrl +"user/owner/add";//添加客户
 var updOwner = pathUrl +"user/owner/update";//修改客户
 var delOwner = pathUrl +"user/owner/deleteMany";//删除客户
 var dropOwner = pathUrl +"user/owner/dropdown";//查询客户所有
+
 //供应商
 var listSupplier = pathUrl +"basics/supplier/list";//查询
 var addSupplier = pathUrl +"basics/supplier/add";//添加
@@ -196,7 +210,7 @@ var rolegetAuthority = pathUrl + "sys/role/getAuthority";//查询角色对应菜
 var menugetAuthority = pathUrl + "sys/menu/getAuthority";//查询菜单对应按钮(menuid 菜单id)
 
 var getAuthorityAll = pathUrl + "sys/role/getAuthorityAll";//根据角色id查询所有的按钮权限(roleid=2)
-var setAuthorityAll = pathUrl + "sys/role/setAuthorityAll";//添加角色权限 roleid角色id，allauth 权限[{'菜单id':[按钮id]}]
+//var setAuthorityAll = pathUrl + "sys/role/setAuthorityAll";//添加角色权限 roleid角色id，allauth 权限[{'菜单id':[按钮id]}]
 var getMenuAll = pathUrl + "sys/menu/getMenuAll";//获取菜单类别列表
 //风控
 var riskList = pathUrl + "risk/control/riskList" //货物估值列表 
