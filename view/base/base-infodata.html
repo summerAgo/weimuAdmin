@@ -92,6 +92,7 @@
         var menuKey = "a_18"; //当前页面key
         var domObj = $("#base-infodata .table-tools").find("ul"); //当前页面容器
         btnIsList(domObj, menuKey); //按钮权限
+        var tableOptionArr = getTableOption(menuKey);//表格列
 
         var eaitLayer; //编辑-弹层
         form.render(); //重置表单渲染
@@ -132,30 +133,23 @@
                 limitName: 'limit' //每页数据量的参数名，默认：limit
             },
             cols: [
-                [ //标题栏
-                    // {
-                    //     field: 'LAY_TABLE_INDEX',
-                    //     title: '序号',
-                    //     width: 40,
-                    //     templet: function(d) {
-                    //         return d.LAY_TABLE_INDEX + 1;
-                    //     }
-                    // }, 
-                    {
-                        type: 'checkbox'
-                    }, {
-                        field: 'name',
-                        title: '名称',
-                        sort:true
-                    }, {
-                        field: 'instname',
-                        title: '所属目录',
-                    }, {
-                        field: 'remarks',
-                        title: '备注',
-                        sort:true
-                    }
-                ]
+            tableOptionArr["tableContainer_baseinfo"]
+                // [
+                //     {
+                //         type: 'checkbox'
+                //     }, {
+                //         field: 'name',
+                //         title: '名称',
+                //         sort:true
+                //     }, {
+                //         field: 'instname',
+                //         title: '所属目录',
+                //     }, {
+                //         field: 'remarks',
+                //         title: '备注',
+                //         sort:true
+                //     }
+                // ]
             ],
             even: true,
             page: true, //是否显示分页
@@ -628,55 +622,6 @@
             return false;
         });
 
-
-        //导入
-        // var importLayer; //导入弹窗
-        // $(".toImport").on('click', function(e) {
-        //     $.get("view/form/form-import.html", {}, function(str) {
-        //         importLayer = layer.open({
-        //             title: '文件上传',
-        //             type: 1,
-        //             content: str, //注意，如果str是object，那么需要字符拼接。
-        //             area: ['500px', '340px'],
-        //         });
-        //         var uploadInst = upload.render({ //上传实例
-        //             elem: '#importAddBtn',
-        //             url: pathUrl+"/basics/position/importExcel",
-        //             multiple: false,
-        //             accept: 'file', //普通文件
-        //             exts: 'xls|xlsx|xlsm|xlt|xltx|xltm', //只允许上传后缀
-        //             done: function(res) {
-        //                 if (res.status === 0) {
-        //                     layer.msg("上传成功");
-        //                     layer.close(importLayer);
-        //                     for (var k = 0; k < res.data.length; k++) {
-        //                         tableData.push(res.data[k]);
-        //                     }
-        //                     tableData = createNum(tableData);//num
-        //                     tableData = objValueMake(tableData,'chang');//长度去.0
-        //                     tableIns.reload({
-        //                         data: tableData,
-        //                         limit: tableData.length,
-        //                         page: {
-        //                             curr: 1 //重新从第 1 页开始
-        //                         }
-        //                     });
-        //                 } else {
-        //                     var msgstr = "------以下行有问题------</br></br>";
-        //                     for (var i = 0; i < res.data.length; i++) {
-        //                         msgstr += res.data[i];
-        //                     }
-        //                     layer.msg(msgstr, {
-        //                         time: 60000, //60s后自动关闭
-        //                         btn: ['关闭'],
-        //                         area: ["100%", "100%"]
-        //                     });
-        //                 }
-        //             }
-        //         });
-        //     })
-        // });
-        
         //点击导出
         $(".toExport").on('click', function(e) {
             table.exportFile(tableIns.config.id, tableIns.config.data,"xls");

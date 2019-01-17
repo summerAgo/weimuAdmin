@@ -11,6 +11,9 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;" class="deleteBtn"><i class="iconfont icon-shanchu"></i>删除</a>
                 </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="tableTitleBtn"><i class="iconfont icon-bianji"></i>表格配置</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -113,12 +116,8 @@
             cols: [
                 [ //标题栏
                     {
-                        field: 'LAY_TABLE_INDEX',
-                        title: '序号',
-                        width: 40,
-                        templet: function(d) {
-                            return d.LAY_TABLE_INDEX + 1;
-                        }
+                        type: "numbers",
+                        title: "序号"
                     },
                     {
                         type: 'checkbox'
@@ -156,8 +155,7 @@
             limits: [100, 200, 500, 1000],
             limit: 100, //每页默认显示的数量
             done: function(res, curr, count) {
-                var addtableBtn = '<div class="rightBotBtn">已经选择<span>0</span>个数据</div>';
-                $(".layui-table-page").append(addtableBtn);
+                
             },
             text: {
                 none: "无匹配数据"
@@ -193,7 +191,6 @@
                 });
             }
         });
-
 
         $(".deleteBtn").click(function() {
             //删除
@@ -312,6 +309,18 @@
         //点击导出
         $("#toExport").on('click', function(e) {
             window.location.href = ilbstockExportUrl
+        });
+
+        //页面中表格的配置
+        $(".tableTitleBtn").click(function() {
+            $.get('view/button/button-tableTitle.html', {}, function(str) { // 请求弹框
+                layer.open({
+                    title: '表格配置',
+                    type: 1,
+                    content: str, // 注意，如果str是object，那么需要字符拼接。
+                    area: ['80%', '600px']
+                });
+            });
         });
 
     });

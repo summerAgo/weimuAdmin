@@ -93,7 +93,8 @@
         var menuKey = "a_11"; //当前页面key
         var domObj = $("#stock-outBill .table-tools").find("ul"); //当前页面容器
         btnIsList(domObj, menuKey); //按钮权限
-
+        var tableOptionArr = getTableOption(menuKey);//表格列
+        
         var addLayer; //编辑-弹层
 
         form.render(); //重置表单渲染
@@ -243,69 +244,70 @@
                 limitName: 'limit' //每页数据量的参数名，默认：limit
             },
             cols: [
-                [ //标题栏
-                    {
-                        type: "numbers",
-                        title: "序号"
-                    }, {
-                        type: 'radio'
-                    }, {
-                        field: 'orderno',
-                        title: '单号',
-                        event: 'click',
-                        style: 'cursor: pointer;color:#0063de;',
-                        width: 200
-                    }, {
-                        field: 'ownername',
-                        title: '仓库主'
-                    }, {
-                        field: 'depname',
-                        title: '仓库名称'
-                    }, {
-                        field: 'num',
-                        title: '件数(包)'
-                    }, {
-                        field: 'volume',
-                        title: '数量(m³)'
-                    }, {
-                        field: 'totalamount',
-                        title: '订单总金额' + unitMoney,
-                        width: 150,
-                        templet: function(d) {
-                            return formatNum(d.totalamount);
-                        }
-                    }, {
-                        field: 'createdate',
-                        title: '申请出库日期',
-                        width: 180
-                    }, {
-                        field: 'status',
-                        title: '状态',
-                        width: 117,
-                        templet: function(d) {
-                            if (d.status === 1 && d.isexamine === 1) {
-                                return '<span style="color:#ff3c4e">待审核<span>';
-                            }
-                            if (d.status === 1) {
-                                return '正常待出库';
-                            }
-                            if (d.status === 2) {
-                                return '审核通过';
-                            }
-                            if (d.status === 4) {
-                                return '已出库';
-                            }
-                            if (d.status === -1) {
-                                return '已删除';
-                            }
-                            return '<span style="color:#ff3c4e">审核不通过<span>';
-                        }
-                    }, {
-                        field: 'remarks',
-                        title: '备注',
-                        width: 180
-                    }
-                ]
+                tableOptionArr["tableContainers"]
+                // [ //标题栏
+                //     {
+                //         type: "numbers",
+                //         title: "序号"
+                //     }, {
+                //         type: 'radio'
+                //     }, {
+                //         field: 'orderno',
+                //         title: '单号',
+                //         event: 'click',
+                //         style: 'cursor: pointer;color:#0063de;',
+                //         width: 200
+                //     }, {
+                //         field: 'ownername',
+                //         title: '仓库主'
+                //     }, {
+                //         field: 'depname',
+                //         title: '仓库名称'
+                //     }, {
+                //         field: 'num',
+                //         title: '件数(包)'
+                //     }, {
+                //         field: 'volume',
+                //         title: '数量(m³)'
+                //     }, {
+                //         field: 'totalamount',
+                //         title: '订单总金额(RMB)',
+                //         width: 150,
+                //         templet: function(d) {
+                //             return formatNum(d.totalamount);
+                //         }
+                //     }, {
+                //         field: 'createdate',
+                //         title: '申请出库日期',
+                //         width: 180
+                //     }, {
+                //         field: 'status',
+                //         title: '状态',
+                //         width: 117,
+                //         templet: function(d) {
+                //             if (d.status === 1 && d.isexamine === 1) {
+                //                 return '<span style="color:#ff3c4e">待审核<span>';
+                //             }
+                //             if (d.status === 1) {
+                //                 return '正常待出库';
+                //             }
+                //             if (d.status === 2) {
+                //                 return '审核通过';
+                //             }
+                //             if (d.status === 4) {
+                //                 return '已出库';
+                //             }
+                //             if (d.status === -1) {
+                //                 return '已删除';
+                //             }
+                //             return '<span style="color:#ff3c4e">审核不通过<span>';
+                //         }
+                //     }, {
+                //         field: 'remarks',
+                //         title: '备注',
+                //         width: 180
+                //     }
+                // ]
             ],
             even: true,
             page: true, //是否显示分页

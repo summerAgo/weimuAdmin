@@ -84,6 +84,7 @@
         var menuKey = "a_21"; //当前页面key
         var domObj = $("#supplier-list .table-tools").find("ul"); //当前页面容器
         btnIsList(domObj, menuKey); //按钮权限
+        var tableOptionArr = getTableOption(menuKey);//表格列
         var eaitLayer; //编辑-弹层
 
         form.render(); //重置表单渲染
@@ -135,30 +136,31 @@
                 limitName: 'limit' //每页数据量的参数名，默认：limit
             },
             cols: [
-                [ //标题栏
-                    {
-                        field: 'LAY_TABLE_INDEX',
-                        title: '序号',
-                        width: 40,
-                        templet: function(d) {
-                            return d.LAY_TABLE_INDEX + 1;
-                        }
-                    }, {
-                        type: 'checkbox'
-                    }, {
-                        field: 'name',
-                        title: '名称',
-                    }, {
-                        field: 'instname',
-                        title: '所属目录',
-                    }, {
-                        field: 'phone',
-                        title: '电话',
-                    }, {
-                        field: 'remarks',
-                        title: '备注'
-                    }
-                ]
+            tableOptionArr["tableContainer-supplierlist"]
+                // [ //标题栏
+                //     {
+                //         field: 'LAY_TABLE_INDEX',
+                //         title: '序号',
+                //         width: 40,
+                //         templet: function(d) {
+                //             return d.LAY_TABLE_INDEX + 1;
+                //         }
+                //     }, {
+                //         type: 'checkbox'
+                //     }, {
+                //         field: 'name',
+                //         title: '名称',
+                //     }, {
+                //         field: 'instname',
+                //         title: '所属目录',
+                //     }, {
+                //         field: 'phone',
+                //         title: '电话',
+                //     }, {
+                //         field: 'remarks',
+                //         title: '备注'
+                //     }
+                // ]
             ],
             even: true,
             page: true, //是否显示分页

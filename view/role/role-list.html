@@ -83,6 +83,7 @@
         var menuKey = "a_16"; //当前页面key
         var domObj = $("#role-list .table-tools").find("ul"); //当前页面容器
         btnIsList(domObj, menuKey); //按钮权限
+        var tableOptionArr = getTableOption(menuKey);//表格列
         element.render('talbe-tools'); //按钮导航模块的局部更新
 
         var eaitLayer; //编辑-弹层
@@ -129,21 +130,22 @@
                 limitName: 'limit' //每页数据量的参数名，默认：limit
             },
             cols: [
-                [ //标题栏
-                    {
-                        field: 'LAY_TABLE_INDEX',
-                        title: '序号',
-                        width: 40,
-                        templet: function(d) {
-                            return d.LAY_TABLE_INDEX + 1;
-                        }
-                    }, {
-                        type: 'checkbox'
-                    }, {
-                        field: 'rolename',
-                        title: '角色名称',
-                    }
-                ]
+            tableOptionArr["tableContainerRole"]
+                // [ //标题栏
+                //     {
+                //         field: 'LAY_TABLE_INDEX',
+                //         title: '序号',
+                //         width: 40,
+                //         templet: function(d) {
+                //             return d.LAY_TABLE_INDEX + 1;
+                //         }
+                //     }, {
+                //         type: 'checkbox'
+                //     }, {
+                //         field: 'rolename',
+                //         title: '角色名称',
+                //     }
+                // ]
             ],
             even: true,
             page: true, //是否显示分页
@@ -252,7 +254,7 @@
                         title: '设置角色权限',
                         type: 1,
                         content: str,
-                        area: ['800px', '80%'],
+                        area: ['80%', '80%'],
                     });
                 });
             }

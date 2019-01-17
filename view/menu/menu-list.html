@@ -73,7 +73,7 @@
         var menuKey = "a_17"; //当前页面key
         var domObj = $("#menu-list .table-tools").find("ul"); //当前页面容器
         btnIsList(domObj, menuKey); //按钮权限
-
+        var tableOptionArr = getTableOption(menuKey);//表格列
         var eaitLayer; //编辑-弹层
 
         form.render(); //重置表单渲染
@@ -118,41 +118,44 @@
                 pageName: 'offset', //页码的参数名称，默认：page
                 limitName: 'limit' //每页数据量的参数名，默认：limit
             },
-            cols: [[ //标题栏
-                {
-                    field: 'LAY_TABLE_INDEX',
-                    title: '序号',
-                    width: 40,
-                    templet: function(d) {
-                        return d.LAY_TABLE_INDEX + 1;
-                    }
-                }, {
-                    type: 'checkbox'
-                }, {
-                    field: 'code',
-                    title: '菜单KEY',
-                    event: 'click',
-                }, {
-                    field: 'name',
-                    title: '菜单名称',
-                    event: 'click',
-                }, {
-                    field: 'icon',
-                    title: '菜单图标',
-                }, {
-                    field: 'sort',
-                    title: '排序',
-                }, {
-                    field: 'url',
-                    title: '地址',
-                }, {
-                    field: 'level',
-                    title: '菜单层级',
-                }, {
-                    field: 'createdate',
-                    title: '创建时间',
-                }
-            ]],
+            cols: [
+            tableOptionArr["tableContainerMenu"]
+            //     [ //标题栏
+            //     {
+            //         field: 'LAY_TABLE_INDEX',
+            //         title: '序号',
+            //         width: 40,
+            //         templet: function(d) {
+            //             return d.LAY_TABLE_INDEX + 1;
+            //         }
+            //     }, {
+            //         type: 'checkbox'
+            //     }, {
+            //         field: 'code',
+            //         title: '菜单KEY',
+            //         event: 'click',
+            //     }, {
+            //         field: 'name',
+            //         title: '菜单名称',
+            //         event: 'click',
+            //     }, {
+            //         field: 'icon',
+            //         title: '菜单图标',
+            //     }, {
+            //         field: 'sort',
+            //         title: '排序',
+            //     }, {
+            //         field: 'url',
+            //         title: '地址',
+            //     }, {
+            //         field: 'level',
+            //         title: '菜单层级',
+            //     }, {
+            //         field: 'createdate',
+            //         title: '创建时间',
+            //     }
+            // ]
+        ],
             even: true,
             page: true, //是否显示分页
             limits: [30,60,90],

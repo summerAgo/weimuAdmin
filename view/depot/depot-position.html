@@ -75,6 +75,9 @@
         var upload = layui.upload;
         var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 133); //内容区域所需减去的高度
 
+        var menuKey = "a_3"; //当前页面key
+        var tableOptionArr = getTableOption(menuKey);//表格列
+
         var addPositionLayer; //编辑-弹层
 
         //大仓库ID
@@ -141,36 +144,39 @@
                 pageName: 'offset', //页码的参数名称，默认：page
                 limitName: 'limit' //每页数据量的参数名，默认：limit
             },
-            cols: [[ //标题栏
-                {
-                    field: 'LAY_TABLE_INDEX',
-                    title: '序号',
-                    width: 40,
-                    templet: function(d) {
-                        return d.LAY_TABLE_INDEX + 1;
-                    }
-                }, {
-                    type: 'radio'
-                },/* {
-                    field: 'code',
-                    title: '库位编号',
-                }, */{
-                    field: 'name',
-                    title: '库位名称',
-                },{
-                    field: 'code',
-                    title: '库位编号',
-                }, {
-                    field: 'acreage',
-                    title: '总面积㎡',
-                }, {
-                    field: 'address',
-                    title: '地址',
-                }, {
-                    field: 'remarks',
-                    title: '备注',
-                }
-            ]],
+            cols: [
+            tableOptionArr["tableContainer-positionList"]
+            //     [ //标题栏
+            //     {
+            //         field: 'LAY_TABLE_INDEX',
+            //         title: '序号',
+            //         width: 40,
+            //         templet: function(d) {
+            //             return d.LAY_TABLE_INDEX + 1;
+            //         }
+            //     }, {
+            //         type: 'radio'
+            //     },/* {
+            //         field: 'code',
+            //         title: '库位编号',
+            //     }, */{
+            //         field: 'name',
+            //         title: '库位名称',
+            //     },{
+            //         field: 'code',
+            //         title: '库位编号',
+            //     }, {
+            //         field: 'acreage',
+            //         title: '总面积㎡',
+            //     }, {
+            //         field: 'address',
+            //         title: '地址',
+            //     }, {
+            //         field: 'remarks',
+            //         title: '备注',
+            //     }
+            // ]
+        ],
             even: true,
             page: true, //是否显示分页
             limits: [100, 200, 500, 1000],

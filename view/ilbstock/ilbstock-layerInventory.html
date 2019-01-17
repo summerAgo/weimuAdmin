@@ -62,6 +62,9 @@
         var laytpl = layui.laytpl;
         var tableLayerHeight = (parseInt($(".layui-layer-page").innerHeight()) - parseInt($(".layui-layer-title").innerHeight()) - parseInt($(".table-page-header").innerHeight()) - 80); //内容区域所需减去的高度
 
+        var menuKey = "a_10"; //当前页面key
+        var tableOptionArr = getTableOption(menuKey);//表格列
+
         form.render(); //重置表单渲染
         formSelects.render(); //下拉选项
 
@@ -179,55 +182,56 @@
             //     limitName: 'limit' //每页数据量的参数名，默认：limit
             // },
             cols: [
-                [ //标题栏
-                    {
-                        title: '序号',
-                        type: "numbers"
-                    }, {
-                        field: 'num',
-                        title: '盘点前数量(m³)',
-                        width: 150
-                    }, {
-                        field: 'num1',
-                        title: '盘点后数量(m³)',
-                        edit: "txt",
-                        style: "color:red;cursor: pointer",
-                        width: 150
-                    }, {
-                        field: 'uuid',
-                        title: '货物标识码',
-                        width: 206,
-                        style: 'font-family: Consolas;font-size:16px'
-                    }, {
-                        field: 'code',
-                        title: '包号'
-                    }, {
-                        field: 'varieties',
-                        title: '品种'
-                    }, {
-                        field: 'spec',
-                        title: '规格/厚度'
-                    }, {
-                        field: 'levels',
-                        title: '等级'
-                    }, {
-                        field: 'chang',
-                        title: '长度'
-                    }, {
-                        field: 'pieces',
-                        title: '片数'
-                    }, {
-                        field: 'brand',
-                        title: '品牌'
-                    }, {
-                        field: 'origin',
-                        title: '产地'
-                    }, {
-                        field: 'pprice',
-                        title: '采购单价' + unitMoney,
-                        width: 130
-                    }
-                ]
+            tableOptionArr["tableContainer-layerInventory"]
+                // [ //标题栏
+                //     {
+                //         title: '序号',
+                //         type: "numbers"
+                //     }, {
+                //         field: 'num',
+                //         title: '盘点前数量(m³)',
+                //         width: 150
+                //     }, {
+                //         field: 'num1',
+                //         title: '盘点后数量(m³)',
+                //         edit: "txt",
+                //         style: "color:red;cursor: pointer",
+                //         width: 150
+                //     }, {
+                //         field: 'uuid',
+                //         title: '货物标识码',
+                //         width: 206,
+                //         style: 'font-family: Consolas;font-size:16px'
+                //     }, {
+                //         field: 'code',
+                //         title: '包号'
+                //     }, {
+                //         field: 'varieties',
+                //         title: '品种'
+                //     }, {
+                //         field: 'spec',
+                //         title: '规格/厚度'
+                //     }, {
+                //         field: 'levels',
+                //         title: '等级'
+                //     }, {
+                //         field: 'chang',
+                //         title: '长度'
+                //     }, {
+                //         field: 'pieces',
+                //         title: '片数'
+                //     }, {
+                //         field: 'brand',
+                //         title: '品牌'
+                //     }, {
+                //         field: 'origin',
+                //         title: '产地'
+                //     }, {
+                //         field: 'pprice',
+                //         title: '采购单价(RMB)',
+                //         width: 130
+                //     }
+                // ]
             ],
             even: true,
             page: false, //是否显示分页

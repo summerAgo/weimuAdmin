@@ -73,6 +73,7 @@
         var menuKey = "a_20"; //当前页面key
         var domObj = $("#depot-list .table-tools").find("ul"); //当前页面容器
         btnIsList(domObj, menuKey); //按钮权限
+        var tableOptionArr = getTableOption(menuKey);//表格列
 
         var addDepotLayer; //编辑-弹层
 
@@ -113,50 +114,53 @@
                 pageName: 'offset', //页码的参数名称，默认：page
                 limitName: 'limit' //每页数据量的参数名，默认：limit
             },
-            cols: [[ //标题栏
-                {
-                    field: 'LAY_TABLE_INDEX',
-                    title: '序号',
-                    width: 40,
-                    templet: function(d) {
-                        return d.LAY_TABLE_INDEX + 1;
-                    }
-                }, {
-                    type: 'checkbox'
-                }, {
-                    field: 'code',
-                    title: '仓库编号',
-                }, {
-                    field: 'name',
-                    title: '仓库名称'
-                }, {
-                    field: 'ownername',
-                    title: '仓库主',
-                }, {
-                    field: 'isvip',
-                    title: '估值状态',
-                    templet: function(d) {
-                        if (d.isvip === 0) {
-                            return "要估值"
-                        }else if (d.isvip === 1){
-                            return "不估值"
-                        }
-                    }
-                }, {
-                    field: 'bitname',
-                    title: '所属大仓库',
-                }, {
-                    field: 'positionname',
-                    title: '所属库位',
-                }, {
-                    field: 'address',
-                    title: '地址',
-                    width: 300,
-                }, {
-                    field: 'remarks',
-                    title: '备注',
-                }
-            ]],
+            cols: [
+            tableOptionArr["tableContainer-depotList"]
+            //     [ //标题栏
+            //     {
+            //         field: 'LAY_TABLE_INDEX',
+            //         title: '序号',
+            //         width: 40,
+            //         templet: function(d) {
+            //             return d.LAY_TABLE_INDEX + 1;
+            //         }
+            //     }, {
+            //         type: 'checkbox'
+            //     }, {
+            //         field: 'code',
+            //         title: '仓库编号',
+            //     }, {
+            //         field: 'name',
+            //         title: '仓库名称'
+            //     }, {
+            //         field: 'ownername',
+            //         title: '仓库主',
+            //     }, {
+            //         field: 'isvip',
+            //         title: '估值状态',
+            //         templet: function(d) {
+            //             if (d.isvip === 0) {
+            //                 return "要估值"
+            //             }else if (d.isvip === 1){
+            //                 return "不估值"
+            //             }
+            //         }
+            //     }, {
+            //         field: 'bitname',
+            //         title: '所属大仓库',
+            //     }, {
+            //         field: 'positionname',
+            //         title: '所属库位',
+            //     }, {
+            //         field: 'address',
+            //         title: '地址',
+            //         width: 300,
+            //     }, {
+            //         field: 'remarks',
+            //         title: '备注',
+            //     }
+            // ]
+        ],
             even: true,
             page: true, //是否显示分页
             limits: [100, 200, 500, 1000],

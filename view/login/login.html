@@ -117,6 +117,9 @@
                         //该用户按钮权限JSON
                         sessionStorage.setItem("buttonAuthority", JSON.stringify(data.buttonAuthority));
 
+                        //该用户按钮权限JSON
+                        sessionStorage.setItem("talbeAuthority", JSON.stringify(data.tableAuthority));
+
                         //该用户角色数组
                         sessionStorage.setItem("roleName", data.roleName);
                         history.replaceState({}, 'index', localhost);//修改浏览器地址

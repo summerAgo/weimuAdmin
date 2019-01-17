@@ -106,6 +106,7 @@
         var menuKey = "a_15"; //当前页面key
         var domObj = $("#user-list .table-tools").find("ul"); //当前页面容器
         btnIsList(domObj, menuKey); //按钮权限
+        var tableOptionArr = getTableOption(menuKey);//表格列
 
         var eaitLayer; //编辑-弹层
 
@@ -151,36 +152,37 @@
                 limitName: 'limit' //每页数据量的参数名，默认：limit
             },
             cols: [
-                [ //标题栏
-                    {
-                        field: 'LAY_TABLE_INDEX',
-                        title: '序号',
-                        width: 40,
-                        templet: function(d) {
-                            return d.LAY_TABLE_INDEX + 1;
-                        }
-                    }, {
-                        type: 'checkbox'
-                    }, {
-                        field: 'username',
-                        title: '用户名',
-                    }, {
-                        field: 'instname',
-                        title: '所属目录',
-                    }, {
-                        field: 'phone',
-                        title: '联系电话',
-                    }, {
-                        field: 'rolename',
-                        title: '角色',
-                    }, {
-                        field: 'email',
-                        title: '邮箱',
-                    }, {
-                        field: 'createdate',
-                        title: '创建时间',
-                    }
-                ]
+            tableOptionArr["tableContainer-userlist"]
+                // [ //标题栏
+                //     {
+                //         field: 'LAY_TABLE_INDEX',
+                //         title: '序号',
+                //         width: 40,
+                //         templet: function(d) {
+                //             return d.LAY_TABLE_INDEX + 1;
+                //         }
+                //     }, {
+                //         type: 'checkbox'
+                //     }, {
+                //         field: 'username',
+                //         title: '用户名',
+                //     }, {
+                //         field: 'instname',
+                //         title: '所属目录',
+                //     }, {
+                //         field: 'phone',
+                //         title: '联系电话',
+                //     }, {
+                //         field: 'rolename',
+                //         title: '角色',
+                //     }, {
+                //         field: 'email',
+                //         title: '邮箱',
+                //     }, {
+                //         field: 'createdate',
+                //         title: '创建时间',
+                //     }
+                // ]
             ],
             even: true,
             page: true, //是否显示分页

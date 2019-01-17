@@ -132,7 +132,7 @@
                 <div class="rightCon">总共<span class="goodsCount">0</span>个货物</div>
             </div>
             <div class="table-content-main">
-                <table id="tableContainer-addOutBill" lay-filter="tableContainer-addOutBill"></table>
+                <table id="tableContainer-position" lay-filter="tableContainer-position"></table>
             </div>
         </div>
 
@@ -250,9 +250,8 @@
         var laydate = layui.laydate;
         var layer = layui.layer;
 
-        var menuKey = "b_10"; //当前页面key
-        var domObj = $("#stock-addOutBill .table-tools").find("ul"); //当前页面容器
-        btnIsList(domObj, menuKey); //按钮权限
+        var menuKey = "a_30"; //当前页面key
+        var tableOptionArr = getTableOption(menuKey); //表格列
 
         formSelects.render(); //下拉选项
 
@@ -482,89 +481,90 @@
             height: '294px',
             data: goodsData,
             cols: [
-                [{
-                    type: "numbers",
-                    align: "center",
-                    title: "序号"
-                }, {
-                    type: 'checkbox',
-                }, {
-                    field: 'updadate',
-                    align: "center",
-                    title: '入库时间',
-                    width: 120,
-                    templet: function(d) {
-                        return d.updadate.substring(0, 10)
-                    }
-                }, {
-                    field: 'uuid',
-                    title: '货物标识码',
-                    align: "center",
-                    width: 180,
-                    style: 'font-family: Consolas;font-size:16px'
-                }, {
-                    field: 'positionname',
-                    align: "center",
-                    title: '库位',
-                    width: 150,
-                    style: 'color:#d73948'
-                }, {
-                    field: 'code',
-                    align: "center",
-                    title: '包号',
-                    width: 150
-                }, {
-                    field: 'varieties',
-                    width: 130,
-                    align: "center",
-                    title: '品种'
-                }, {
-                    field: 'levels',
-                    width: 130,
-                    align: "center",
-                    title: '等级'
-                }, {
-                    field: 'spec',
-                    width: 130,
-                    align: "center",
-                    title: '规格'
-                }, {
-                    field: 'chang',
-                    width: 130,
-                    align: "center",
-                    title: '长度'
-                }, {
-                    field: 'num',
-                    title: '数量(m³)',
-                    align: "center",
-                    width: 120,
-                }, {
-                    field: 'pieces',
-                    align: "center",
-                    title: '片数'
-                }, {
-                    field: 'containernum',
-                    align: "center",
-                    title: '货柜号',
-                    width: 150
-                }, {
-                    field: 'origin',
-                    align: "center",
-                    title: '产地'
-                }, {
-                    field: 'brand',
-                    align: "center",
-                    width: 130,
-                    title: '品牌'
-                }, {
-                    field: 'billloading',
-                    align: "center",
-                    title: '提运单',
-                    width: 180
-                }, {
-                    field: 'remarks',
-                    title: '备注'
-                }]
+                tableOptionArr["tableContainer-goodsList"]
+                // [{
+                //     type: "numbers",
+                //     align: "center",
+                //     title: "序号"
+                // }, {
+                //     type: 'checkbox',
+                // }, {
+                //     field: 'updadate',
+                //     align: "center",
+                //     title: '入库时间',
+                //     width: 120,
+                //     templet: function(d) {
+                //         return d.updadate.substring(0, 10)
+                //     }
+                // }, {
+                //     field: 'uuid',
+                //     title: '货物标识码',
+                //     align: "center",
+                //     width: 180,
+                //     style: 'font-family: Consolas;font-size:16px'
+                // }, {
+                //     field: 'positionname',
+                //     align: "center",
+                //     title: '库位',
+                //     width: 150,
+                //     style: 'color:#d73948'
+                // }, {
+                //     field: 'code',
+                //     align: "center",
+                //     title: '包号',
+                //     width: 150
+                // }, {
+                //     field: 'varieties',
+                //     width: 130,
+                //     align: "center",
+                //     title: '品种'
+                // }, {
+                //     field: 'levels',
+                //     width: 130,
+                //     align: "center",
+                //     title: '等级'
+                // }, {
+                //     field: 'spec',
+                //     width: 130,
+                //     align: "center",
+                //     title: '规格'
+                // }, {
+                //     field: 'chang',
+                //     width: 130,
+                //     align: "center",
+                //     title: '长度'
+                // }, {
+                //     field: 'num',
+                //     title: '数量(m³)',
+                //     align: "center",
+                //     width: 120,
+                // }, {
+                //     field: 'pieces',
+                //     align: "center",
+                //     title: '片数'
+                // }, {
+                //     field: 'containernum',
+                //     align: "center",
+                //     title: '货柜号',
+                //     width: 150
+                // }, {
+                //     field: 'origin',
+                //     align: "center",
+                //     title: '产地'
+                // }, {
+                //     field: 'brand',
+                //     align: "center",
+                //     width: 130,
+                //     title: '品牌'
+                // }, {
+                //     field: 'billloading',
+                //     align: "center",
+                //     title: '提运单',
+                //     width: 180
+                // }, {
+                //     field: 'remarks',
+                //     title: '备注'
+                // }]
             ],
             even: true,
             page: true, //是否显示分页
@@ -581,91 +581,92 @@
 
         // 出货申请单详情表格渲染
         var tableOutBill = table.render({
-            elem: '#tableContainer-addOutBill',
+            elem: '#tableContainer-position',
             height: '300px',
             data: tableData,
             cols: [
-                [{
-                    title: "序号",
-                    align: "center",
-                    type: "numbers"
-                }, {
-                    type: 'checkbox',
-                }, {
-                    field: 'updadate',
-                    align: "center",
-                    title: '入库时间',
-                    width: 120,
-                    templet: function(d) {
-                        return d.updadate.substring(0, 10)
-                    }
-                }, {
-                    field: 'uuid',
-                    title: '货物标识码',
-                    align: "center",
-                    width: 180,
-                    style: 'font-family: Consolas;font-size:16px'
-                }, {
-                    field: 'positionname',
-                    title: '库位',
-                    align: "center",
-                    width: 150,
-                    style: 'color:#d73948'
-                }, {
-                    field: 'code',
-                    title: '包号',
-                    align: "center",
-                    width: 130
-                }, {
-                    field: 'varieties',
-                    title: '品种',
-                    align: "center",
-                    width: 130
-                }, {
-                    field: 'spec',
-                    title: '规格',
-                    align: "center",
-                    width: 130
-                }, {
-                    field: 'levels',
-                    title: '等级',
-                    align: "center",
-                    width: 130
-                }, {
-                    field: 'chang',
-                    title: '长度',
-                    align: "center",
-                    width: 80
-                }, {
-                    field: 'pieces',
-                    title: '片数',
-                    align: "center",
-                    width: 85
-                }, {
-                    field: 'billloading',
-                    title: '提运单',
-                    align: "center",
-                    width: 150
-                }, {
-                    field: 'origin',
-                    title: '产地',
-                    align: "center",
-                    width: 100
-                }, {
-                    field: 'supplier',
-                    title: '供应商',
-                    align: "center",
-                    width: 120
-                }, {
-                    field: 'num',
-                    title: '数量(m³)',
-                    align: "center",
-                    width: 100
-                }, {
-                    field: 'remarks',
-                    align: "center",
-                    title: '备注'
-                }]
+                tableOptionArr["tableContainer-position"]
+                // [{
+                //     title: "序号",
+                //     align: "center",
+                //     type: "numbers"
+                // }, {
+                //     type: 'checkbox',
+                // }, {
+                //     field: 'updadate',
+                //     align: "center",
+                //     title: '入库时间',
+                //     width: 120,
+                //     templet: function(d) {
+                //         return d.updadate.substring(0, 10)
+                //     }
+                // }, {
+                //     field: 'uuid',
+                //     title: '货物标识码',
+                //     align: "center",
+                //     width: 180,
+                //     style: 'font-family: Consolas;font-size:16px'
+                // }, {
+                //     field: 'positionname',
+                //     title: '库位',
+                //     align: "center",
+                //     width: 150,
+                //     style: 'color:#d73948'
+                // }, {
+                //     field: 'code',
+                //     title: '包号',
+                //     align: "center",
+                //     width: 130
+                // }, {
+                //     field: 'varieties',
+                //     title: '品种',
+                //     align: "center",
+                //     width: 130
+                // }, {
+                //     field: 'spec',
+                //     title: '规格',
+                //     align: "center",
+                //     width: 130
+                // }, {
+                //     field: 'levels',
+                //     title: '等级',
+                //     align: "center",
+                //     width: 130
+                // }, {
+                //     field: 'chang',
+                //     title: '长度',
+                //     align: "center",
+                //     width: 80
+                // }, {
+                //     field: 'pieces',
+                //     title: '片数',
+                //     align: "center",
+                //     width: 85
+                // }, {
+                //     field: 'billloading',
+                //     title: '提运单',
+                //     align: "center",
+                //     width: 150
+                // }, {
+                //     field: 'origin',
+                //     title: '产地',
+                //     align: "center",
+                //     width: 100
+                // }, {
+                //     field: 'supplier',
+                //     title: '供应商',
+                //     align: "center",
+                //     width: 120
+                // }, {
+                //     field: 'num',
+                //     title: '数量(m³)',
+                //     align: "center",
+                //     width: 100
+                // }, {
+                //     field: 'remarks',
+                //     align: "center",
+                //     title: '备注'
+                // }]
             ],
             even: true,
             page: true, //是否显示分页
@@ -799,7 +800,7 @@
 
         $(".deleteGoods").click(function() {
             //移除
-            var checkStatus = table.checkStatus('tableContainer-addOutBill');
+            var checkStatus = table.checkStatus('tableContainer-position');
             var checkData = checkStatus.data;
             if (checkData.length < 1) {
                 layer.msg("请选择需要移除的信息");

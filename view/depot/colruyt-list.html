@@ -57,7 +57,7 @@
     </div>
 </div>
 <style scode>
-    .form-right{
+    .form-right {
         position: absolute;
         left: 250px;
     }
@@ -76,6 +76,7 @@
         var menuKey = "a_28"; //当前页面key
         var domObj = $("#colruyt-list .table-tools").find("ul"); //当前页面容器
         btnIsList(domObj, menuKey); //按钮权限
+        var tableOptionArr = getTableOption(menuKey);//表格列
 
         var addColruytLayer; //编辑-弹层
 
@@ -88,7 +89,7 @@
             for (var key in data.field) {
                 //参数赋值
                 if (data.field[key] !== "") {
-                    paramSearch[key] = data.field[key].replace(/^\s*|\s*$/g,"");
+                    paramSearch[key] = data.field[key].replace(/^\s*|\s*$/g, "");
                 }
             }
             tableIns.reload({
@@ -117,33 +118,38 @@
                 pageName: 'offset', //页码的参数名称，默认：page
                 limitName: 'limit' //每页数据量的参数名，默认：limit
             },
-            cols: [[ //标题栏
-                {
-                    field: 'LAY_TABLE_INDEX',
-                    title: '序号',
-                    width: 40,
-                    templet: function(d) {
-                        return d.LAY_TABLE_INDEX + 1;
-                    }
-                }, {
-                    type: 'radio'
-                },/* {
-                    field: 'code',
-                    title: '大仓库编号',
-                }, */{
-                    field: 'name',
-                    title: '大仓库名称',
-                }, {
-                    field: 'address',
-                    title: '地址',
-                }, {
-                    field: 'acreage',
-                    title: '总面积㎡'
-                }, {
-                    field: 'remarks',
-                    title: '备注',
-                }
-            ]],
+            cols: [
+            tableOptionArr["table-colruytList"]
+                // [ //标题栏
+                //     {
+                //         field: 'LAY_TABLE_INDEX',
+                //         title: '序号',
+                //         width: 40,
+                //         templet: function(d) {
+                //             return d.LAY_TABLE_INDEX + 1;
+                //         }
+                //     }, {
+                //         type: 'radio'
+                //     },
+                //     /* {
+                //                         field: 'code',
+                //                         title: '大仓库编号',
+                //                     }, */
+                //     {
+                //         field: 'name',
+                //         title: '大仓库名称',
+                //     }, {
+                //         field: 'address',
+                //         title: '地址',
+                //     }, {
+                //         field: 'acreage',
+                //         title: '总面积㎡'
+                //     }, {
+                //         field: 'remarks',
+                //         title: '备注',
+                //     }
+                // ]
+            ],
             even: true,
             page: true, //是否显示分页
             limits: [100, 200, 500, 1000],
@@ -177,8 +183,8 @@
             var dataType = JSON.parse(sessionStorage.getItem('colruytCheck')); //获取本地所选大仓库信息，判断是否为修改
             var url;
             var msg = "新建大仓库成功";
-            var isNameAdd = false;// 判断添加是否同名标识
-            var isNameEdit = false;// 判断修改是否同名标识
+            var isNameAdd = false; // 判断添加是否同名标识
+            var isNameEdit = false; // 判断修改是否同名标识
             var isName = true; // 是否重名标识
             //如果是修改
             if (dataType) {
@@ -198,15 +204,15 @@
                     url: isname_bitdepot,
                     data: {
                         name: data.field.name,
-                        'SESSION_USER_CODE':getCookie('SESSION_USER_CODE'),
-                        'TOKEN':getCookie('TOKEN'),
+                        'SESSION_USER_CODE': getCookie('SESSION_USER_CODE'),
+                        'TOKEN': getCookie('TOKEN'),
                     },
                     async: false,
                     xhrFields: {
                         withCredentials: true
                     },
                     crossDomain: true,
-                    success: function (data) {
+                    success: function(data) {
                         if (data.status === 2) {
                             layer.msg('仓库已存在');
                             isName = false;
@@ -214,10 +220,12 @@
                     }
                 });
             }
-            if (!isName) {return false;}
+            if (!isName) {
+                return false;
+            }
 
-            data.field['SESSION_USER_CODE']= getCookie('SESSION_USER_CODE');
-            data.field['TOKEN']= getCookie('TOKEN');
+            data.field['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
+            data.field['TOKEN'] = getCookie('TOKEN');
             $.ajax({
                 url: url,
                 type: "post",
@@ -237,7 +245,7 @@
                         layer.msg(msg);
                         layer.close(addColruytLayer);
                     } else if (res.status === 1) {
-                        goLogin();// 跳转到登录页
+                        goLogin(); // 跳转到登录页
                     }
                 }
             });
@@ -246,7 +254,7 @@
 
         //库位详情
         $(".depotDetail").click(function() {
-            var checkStatus = table.checkStatus('table-colruytList');//获取选中行状态
+            var checkStatus = table.checkStatus('table-colruytList'); //获取选中行状态
             console.log(checkStatus);
             if (checkStatus.data.length < 1) {
                 layer.msg("请选择需要编辑的信息");
@@ -258,7 +266,7 @@
 
         //修改
         $(".changeBtn").click(function() {
-            var checkStatus = table.checkStatus('table-colruytList');//获取选中行状态
+            var checkStatus = table.checkStatus('table-colruytList'); //获取选中行状态
             if (checkStatus.data.length < 1) {
                 layer.msg("请选择需要编辑的信息");
             } else if (checkStatus.data.length > 1) {
@@ -284,7 +292,7 @@
                 layer.msg("请选择需要删除的信息");
             } else {
                 layer.confirm('是否确认删除此条信息', {
-                    skin: 'layui-layer-wei',  //layui-layer-wei，维木class
+                    skin: 'layui-layer-wei', //layui-layer-wei，维木class
                     title: '提示'
                 }, function(index) {
                     var rowId = [];
@@ -298,8 +306,8 @@
                         type: "post",
                         data: {
                             "id": rowId,
-                            'SESSION_USER_CODE':getCookie('SESSION_USER_CODE'),
-                            'TOKEN':getCookie('TOKEN'),
+                            'SESSION_USER_CODE': getCookie('SESSION_USER_CODE'),
+                            'TOKEN': getCookie('TOKEN'),
                         },
                         traditional: true,
                         xhrFields: {
@@ -328,7 +336,7 @@
                                 });
                                 layer.msg(res.msg);
                             } else if (res.status === 1) {
-                                goLogin();// 跳转到登录页
+                                goLogin(); // 跳转到登录页
                             }
                         }
                     });
@@ -338,7 +346,7 @@
 
         //点击导出
         $(".toExport").on('click', function(e) {
-            table.exportFile(tableIns.config.id, tableIns.config.data,"xls");
+            table.exportFile(tableIns.config.id, tableIns.config.data, "xls");
         });
     });
 </script>

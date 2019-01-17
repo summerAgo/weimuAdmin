@@ -112,7 +112,7 @@
     </div>
     <div class="table-content">
         <div class="table-content-main">
-            <table class="layui-hide" id="tableContainer-addOutBill" lay-filter="tableContainer-addOutBill"></table>
+            <table class="layui-hide" id="tableContainer-check" lay-filter="tableContainer-check"></table>
         </div>
     </div>
 </div>
@@ -151,6 +151,9 @@
         var domObj = $("#stock-addOutBill .table-tools").find("ul"); //当前页面容器
         btnIsList(domObj, menuKey); //按钮权限
 
+        var tableKey = "a_11"; //当前页面表格key
+        var tableOptionArr = getTableOption(tableKey); //表格列
+        
         // formSelects.render(); //下拉选项
         element.render('talbe-tools'); //表格工具栏
         formSelects.btns(['select', 'remove'], {
@@ -253,91 +256,92 @@
 
         // 出货申请单详情表格渲染
         var tableIns = table.render({
-            elem: '#tableContainer-addOutBill',
+            elem: '#tableContainer-check',
             height: ($(window).height() * 0.8),
             data: tableData,
             cols: [
-                [ //标题栏
-                    {
-                        type: "numbers",
-                        title: "序号"
-                    }, {
-                        type: 'checkbox',
-                    }, {
-                        field: 'uuid',
-                        title: '货物标识码',
-                        width: 206,
-                        style: 'font-family: Consolas;font-size:16px'
-                    }, {
-                        field: 'code',
-                        title: '包号',
-                        width: 150,
-                    }, {
-                        field: 'varieties',
-                        title: '品种',
-                        width: 120,
-                    }, {
-                        field: 'spec',
-                        title: '规格',
-                        width: 120,
-                    }, {
-                        field: 'levels',
-                        title: '等级',
-                        width: 120,
-                    }, {
-                        field: 'chang',
-                        title: '长度',
-                        width: 120,
-                    }, {
-                        field: 'num',
-                        title: '数量（m³）',
-                        width: 120,
-                    }, {
-                        field: 'pieces',
-                        title: '片数'
-                    }, {
-                        field: 'aprice',
-                        title: '估值状态',
-                        width: 130,
-                        templet: function(d) {
-                            //默认无
-                            if (d.isapp == 1) {
-                                return '<span>不用估值</span>';
-                            }
-                            //默认无
-                            if (null == d.aprice || d.aprice < 0) {
-                                return '<span style="color:red;">未估值</span>';
-                            }
-                            return d.aprice;
-                        }
-                    }, {
-                        field: 'aprice',
-                        title: '估值单价' + unitMoney,
-                        width: 130,
-                        templet: function(d) {
-                            return formatNum(d.aprice) || "";
-                        },
-                    }, {
-                        field: "",
-                        title: "总金额",
-                        width: 130,
-                        templet: function(d) {
-                            return formatNum(d.totalamount) || "";
-                        },
-                    }, {
-                        field: 'billloading',
-                        title: '提运单',
-                        width: 150
-                    }, {
-                        field: 'origin',
-                        title: '产地',
-                        width: 180,
-                    }, {
-                        field: 'supplier',
-                        title: '供应商',
-                        width: 160,
-                    }
-                ]
+            tableOptionArr["tableContainer-check"]
+                // [ //标题栏
+                //     {
+                //         type: "numbers",
+                //         title: "序号"
+                //     }, {
+                //         type: 'checkbox',
+                //     }, {
+                //         field: 'uuid',
+                //         title: '货物标识码',
+                //         width: 206,
+                //         style: 'font-family: Consolas;font-size:16px'
+                //     }, {
+                //         field: 'code',
+                //         title: '包号',
+                //         width: 150,
+                //     }, {
+                //         field: 'varieties',
+                //         title: '品种',
+                //         width: 120,
+                //     }, {
+                //         field: 'spec',
+                //         title: '规格',
+                //         width: 120,
+                //     }, {
+                //         field: 'levels',
+                //         title: '等级',
+                //         width: 120,
+                //     }, {
+                //         field: 'chang',
+                //         title: '长度',
+                //         width: 120,
+                //     }, {
+                //         field: 'num',
+                //         title: '数量（m³）',
+                //         width: 120,
+                //     }, {
+                //         field: 'pieces',
+                //         title: '片数'
+                //     }, {
+                //         field: 'aprice',
+                //         title: '估值状态',
+                //         width: 130,
+                //         templet: function(d) {
+                //             //默认无
+                //             if (d.isapp == 1) {
+                //                 return '<span>不用估值</span>';
+                //             }
+                //             //默认无
+                //             if (null == d.aprice || d.aprice < 0) {
+                //                 return '<span style="color:red;">未估值</span>';
+                //             }
+                //             return d.aprice;
+                //         }
+                //     }, {
+                //         field: 'aprice',
+                //         title: '估值单价(RMB)',
+                //         width: 130,
+                //         templet: function(d) {
+                //             return formatNum(d.aprice) || "";
+                //         },
+                //     }, {
+                //         field: "",
+                //         title: "总金额",
+                //         width: 130,
+                //         templet: function(d) {
+                //             return formatNum(d.totalamount) || "";
+                //         },
+                //     }, {
+                //         field: 'billloading',
+                //         title: '提运单',
+                //         width: 150
+                //     }, {
+                //         field: 'origin',
+                //         title: '产地',
+                //         width: 180,
+                //     }, {
+                //         field: 'supplier',
+                //         title: '供应商',
+                //         width: 160,
+                //     }
+                // ]
             ],
             even: true,
             page: true, //是否显示分页
@@ -346,7 +350,7 @@
             done: function(res, curr, count) {
                 var addtableBtn = '<div class="rightBotBtn" id="addOutBillRight">共添加<span>' + count + '</span>个货物</div>';
                 if ($("#addOutBillRight").length < 1) {
-                    $("#tableContainer-addOutBill").siblings().find(".layui-table-page").append(addtableBtn);
+                    $("#tableContainer-check").siblings().find(".layui-table-page").append(addtableBtn);
                 }
             },
             text: {

@@ -97,7 +97,8 @@
         var menuKey = "a_12"; //当前页面key
         var domObj = $("#stock-preentry .table-tools").find("ul"); //当前页面容器
         btnIsList(domObj, menuKey); //按钮权限
-
+        var tableOptionArr = getTableOption(menuKey);//表格列
+        
         var eaitLayer; //编辑-弹层
 
         form.render(); //重置表单渲染
@@ -327,51 +328,52 @@
                 limitName: 'limit' //每页数据量的参数名，默认：limit
             },
             cols: [
-                [ //标题栏
-                    {
-                        type: "numbers",
-                        align: "center",
-                        title: "序号",
-                        align:"center"
-                    }, {
-                        type: 'radio'
-                    }, {
-                        field: 'orderno',
-                        title: '单号',
-                        event: 'click',
-                        style: 'cursor: pointer;color:#0063de;',
-                        width: 200,
-                        align:"center"
-                    }, {
-                        field: 'ownername',
-                        title: '仓库主',
-                        align:"center"
-                    }, {
-                        field: 'depname',
-                        title: '仓库名称',
-                        align:"center"
-                    }, {
-                        field: 'num',
-                        title: '件数(包)',
-                        align:"center"
-                    }, {
-                        field: 'origin',
-                        title: '产地',
-                        align:"center"
-                    }, {
-                        field: 'suppliername',
-                        title: '供应商',
-                        align:"center"
-                    }, {
-                        field: 'volume',
-                        title: '数量(m³)',
-                        align:"center"
-                    }, {
-                        field: 'createdate',
-                        title: '创建日期',
-                        align:"center"
-                    }
-                ]
+            tableOptionArr["tableContainer-preentry"]
+                // [ //标题栏
+                //     {
+                //         type: "numbers",
+                //         align: "center",
+                //         title: "序号",
+                //         align:"center"
+                //     }, {
+                //         type: 'radio'
+                //     }, {
+                //         field: 'orderno',
+                //         title: '单号',
+                //         event: 'click',
+                //         style: 'cursor: pointer;color:#0063de;',
+                //         width: 200,
+                //         align:"center"
+                //     }, {
+                //         field: 'ownername',
+                //         title: '仓库主',
+                //         align:"center"
+                //     }, {
+                //         field: 'depname',
+                //         title: '仓库名称',
+                //         align:"center"
+                //     }, {
+                //         field: 'num',
+                //         title: '件数(包)',
+                //         align:"center"
+                //     }, {
+                //         field: 'origin',
+                //         title: '产地',
+                //         align:"center"
+                //     }, {
+                //         field: 'suppliername',
+                //         title: '供应商',
+                //         align:"center"
+                //     }, {
+                //         field: 'volume',
+                //         title: '数量(m³)',
+                //         align:"center"
+                //     }, {
+                //         field: 'createdate',
+                //         title: '创建日期',
+                //         align:"center"
+                //     }
+                // ]
             ],
             even: true,
             page: true, //是否显示分页

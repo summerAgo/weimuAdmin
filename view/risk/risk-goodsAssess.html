@@ -77,6 +77,7 @@
         var menuKey = "a_22"; //当前页面key
         var domObj = $("#risk-goodsAssess .table-tools").find("ul"); //当前页面容器
         btnIsList(domObj, menuKey); //按钮权限
+        var tableOptionArr = getTableOption(menuKey); //表格列
 
         var assessLayer; // 估值-弹层
         form.render(); // 重置表单渲染
@@ -126,39 +127,40 @@
                 limitName: 'limit' // 每页数据量的参数名，默认：limit
             },
             cols: [
-                [ // 标题栏
-                    {
-                        field: 'LAY_TABLE_INDEX',
-                        title: '序号',
-                        width: 40,
-                        templet: function(d) {
-                            return d.LAY_TABLE_INDEX + 1;
-                        }
-                    }, {
-                        field: 'name', // 设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识
-                        title: '仓库主',
-                        event: 'click',
-                        style: 'color:#0063de;cursor: pointer;',
-                        width: 266,
-                    }, {
-                        field: 'untreated',
-                        title: '未估值货物',
-                        width: 266,
-                        templet: function(d) {
-                            //默认无
-                            if (d.untreated > 0) {
-                                return '<span style="color:red;">' + d.untreated + '</span>';
-                            }
-                            return d.untreated;
-                        }
-                    }, {
-                        field: 'already',
-                        title: '已估值货物',
-                    }, {
-                        field: 'noalready',
-                        title: '不估值货物',
-                    }
-                ]
+                tableOptionArr["table-goodsAssess"]
+                // [ // 标题栏
+                //     {
+                //         field: 'LAY_TABLE_INDEX',
+                //         title: '序号',
+                //         width: 40,
+                //         templet: function(d) {
+                //             return d.LAY_TABLE_INDEX + 1;
+                //         }
+                //     }, {
+                //         field: 'name', // 设定字段名。字段名的设定非常重要，且是表格数据列的唯一标识
+                //         title: '仓库主',
+                //         event: 'click',
+                //         style: 'color:#0063de;cursor: pointer;',
+                //         width: 266,
+                //     }, {
+                //         field: 'untreated',
+                //         title: '未估值货物',
+                //         width: 266,
+                //         templet: function(d) {
+                //             //默认无
+                //             if (d.untreated > 0) {
+                //                 return '<span style="color:red;">' + d.untreated + '</span>';
+                //             }
+                //             return d.untreated;
+                //         }
+                //     }, {
+                //         field: 'already',
+                //         title: '已估值货物',
+                //     }, {
+                //         field: 'noalready',
+                //         title: '不估值货物',
+                //     }
+                // ]
             ],
             even: true, // 开启隔行背景
             page: true, // 是否显示分页
@@ -283,74 +285,75 @@
                             limitName: 'limit' // 每页数据量的参数名，默认：limit
                         },
                         cols: [
-                            [ // 标题栏
-                                {
-                                    field: 'LAY_TABLE_INDEX',
-                                    title: '序号',
-                                    width: 40,
-                                    templet: function(d) {
-                                        return d.LAY_TABLE_INDEX + 1;
-                                    }
-                                }, {
-                                    field: 'uuid',
-                                    title: '货物标识码',
-                                    width: 206,
-                                    style: 'font-family: Consolas;font-size:16px'
-                                }, {
-                                    field: 'varieties',
-                                    title: '品种'
-                                }, {
-                                    field: 'spec',
-                                    title: '规格/厚度'
-                                }, {
-                                    field: 'levels',
-                                    title: '等级',
-                                    sort: true
-                                }, {
-                                    field: 'chang',
-                                    title: '长度'
-                                }, {
-                                    field: 'isapp',
-                                    title: '是否估值',
-                                    width: 110,
-                                    templet: '#checkboxTpl',
-                                    unresize: true,
-                                }, {
-                                    field: 'aprice',
-                                    title: '估值单价' + unitMoney,
-                                    width: 130,
-                                    templet: function(d) {
-                                        return formatNum(d.aprice) || "";
-                                    },
-                                    edit: "text"
-                                }, {
-                                    field: 'code',
-                                    title: '包号',
-                                    sort: true
-                                }, {
-                                    field: 'brand',
-                                    title: '品牌',
-                                    sort: true
-                                }, {
-                                    field: 'pieces',
-                                    title: '片数',
-                                    sort: true
-                                }, {
-                                    field: 'origin',
-                                    title: '产地',
-                                    sort: true
-                                }, {
-                                    field: 'pprice',
-                                    width: 130,
-                                    title: '采购单价' + unitMoney,
-                                    templet: function(d) {
-                                        return formatNum(d.pprice) || "";
-                                    }
-                                }, {
-                                    field: 'remarks',
-                                    title: '备注',
-                                }
-                            ]
+                            tableOptionArr["tableContainer-from"]
+                            // [ // 标题栏
+                            //     {
+                            //         field: 'LAY_TABLE_INDEX',
+                            //         title: '序号',
+                            //         width: 40,
+                            //         templet: function(d) {
+                            //             return d.LAY_TABLE_INDEX + 1;
+                            //         }
+                            //     }, {
+                            //         field: 'uuid',
+                            //         title: '货物标识码',
+                            //         width: 206,
+                            //         style: 'font-family: Consolas;font-size:16px'
+                            //     }, {
+                            //         field: 'varieties',
+                            //         title: '品种'
+                            //     }, {
+                            //         field: 'spec',
+                            //         title: '规格/厚度'
+                            //     }, {
+                            //         field: 'levels',
+                            //         title: '等级',
+                            //         sort: true
+                            //     }, {
+                            //         field: 'chang',
+                            //         title: '长度'
+                            //     }, {
+                            //         field: 'isapp',
+                            //         title: '是否估值',
+                            //         width: 110,
+                            //         templet: '#checkboxTpl',
+                            //         unresize: true,
+                            //     }, {
+                            //         field: 'aprice',
+                            //         title: '估值单价(RMB)',
+                            //         width: 130,
+                            //         templet: function(d) {
+                            //             return formatNum(d.aprice) || "";
+                            //         },
+                            //         edit: "text"
+                            //     }, {
+                            //         field: 'code',
+                            //         title: '包号',
+                            //         sort: true
+                            //     }, {
+                            //         field: 'brand',
+                            //         title: '品牌',
+                            //         sort: true
+                            //     }, {
+                            //         field: 'pieces',
+                            //         title: '片数',
+                            //         sort: true
+                            //     }, {
+                            //         field: 'origin',
+                            //         title: '产地',
+                            //         sort: true
+                            //     }, {
+                            //         field: 'pprice',
+                            //         width: 130,
+                            //         title: '采购单价(RMB)',
+                            //         templet: function(d) {
+                            //             return formatNum(d.pprice) || "";
+                            //         }
+                            //     }, {
+                            //         field: 'remarks',
+                            //         title: '备注',
+                            //     }
+                            // ]
                         ],
                         page: false,
                         limit: null,

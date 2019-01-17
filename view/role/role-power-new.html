@@ -9,7 +9,7 @@
 </form>
 <div class="role-power">
     <div class="layui-row">
-        <div class="layui-col-md4 role-lf">
+        <div class="layui-col-xs3 role-lf">
             <div class="role-title">权限设置</div>
             <!-- 此扩展能递归渲染一个权限树，点击深层次节点，父级节点中没有被选中的节点会被自动选中，单独点击父节点，子节点会全部 选中/去选中 -->
             <div class="layui-form-item">
@@ -29,7 +29,7 @@
                 </ul>
                 <div class="layui-tab-content menutab-content">
                     <div class="layui-show">
-                        <div class="content-title">[新入库]所有权限按钮</div>
+                        <div class="content-title">按钮权限</div>
                         <div class="content-cont">
                             <div class="formEditView"></div>
                         </div>
@@ -40,6 +40,16 @@
                     <div class="layui-tab-item">
                         <div class="content-title">[添加货物信息]所有权限按钮</div>
                     </div> -->
+                </div>
+            </div>
+            <div class="layui-tab" lay-filter="tabsBtn">
+                <div class="layui-tab-content menutab-content">
+                    <div class="layui-show">
+                        <div class="content-title">表格权限<a href="javascript:;" class="saveTableBtn"><i class="iconfont icon-baocun"></i>保存</a></div>
+                        <div class="content-cont">
+                            
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -59,6 +69,9 @@
     </form>
 </script>
 <style scoped>
+    .formEditView .layui-form{display:flex;flex-wrap:wrap;}
+    .formEditView .layui-form .layui-form-item{flex:0 0 210px;}
+    .saveTableBtn{float: right;padding-right:10px; font-weight:normal;}
     .role-power .layui-tab-title {
         position: relative;
         left: 0;
@@ -135,7 +148,6 @@
     }
     .role-power .layui-row .role-rt .layui-tab {
         margin: 0;
-        height: calc(100% - 45px);
     }
     .role-power .layui-row .role-rt .layui-tab .layui-tab-content{
         padding: 0;

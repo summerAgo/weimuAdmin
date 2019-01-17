@@ -66,7 +66,7 @@
     </div>-->
     <div class="table-content">
         <div class="table-content-main">
-            <table class="layui-hide" id="tableContainer-layerInventory" lay-filter="tableContainer-layerInventory"></table>
+            <table class="layui-hide" id="tableContainer-layerAbnormal" lay-filter="tableContainer-layerAbnormal"></table>
         </div>
     </div>
 </div>
@@ -86,6 +86,9 @@
 
         var tableLayerHeight = (parseInt($(".layui-layer-page").innerHeight()) - parseInt($(".layui-layer-title").innerHeight()) - parseInt($(".table-page-header").innerHeight()) - 180); //内容区域所需减去的高度
 
+        var menuKey = "a_10"; //当前页面key
+        var tableOptionArr = getTableOption(menuKey);//表格列
+        
         form.render(); //重置表单渲染
         formSelects.render(); //下拉选项
 
@@ -211,7 +214,7 @@
         }
         var tableData;
         var tableIns = table.render({
-            elem: '#tableContainer-layerInventory',
+            elem: '#tableContainer-layerAbnormal',
             height: tableLayerHeight,
             url: apiurl,
             where: depotData, // 接口的其他参数
@@ -230,79 +233,80 @@
                 limitName: 'limit' //每页数据量的参数名，默认：limit
             },
             cols: [
-                [ //标题栏
-                    {
-                        title: '序号',
-                        type:"numbers"
-                    }, {
-                        field: 'num',
-                        title: '盘点前数量(m³)',
-                        width: 150
-                    }, {
-                        field: 'num1',
-                        title: '盘点后数量(m³)',
-                        style: "cursor: pointer",
-                        edit: "txt",
-                        width: 150,
-                        templet: function(d) {
-                            if (d.num != d.num1) {
-                                return "<span style='color:red'>" + d.num1 + "</span>";
-                            } else {
-                                return d.num1;
-                            }
-                        }
-                    },
-                    //  {
-                    //     field: 'null',
-                    //     title: '盘盈盘亏',
-                    //     style: "color:red;cursor: pointer",
-                    //     width:90,
-                    //     templet: function(d) {
-                    //         var num = d.num;
-                    //         var num1= d.num1;
-                    //         var v = num1 - num;
-                    //         if(v > 0){
-                    //             return "<span style='color:#00FF7F'>"+v+"</span>";
-                    //         }else{
-                    //             return "<span style='color:red'>"+v+"</span>";
-                    //         }
+            tableOptionArr["tableContainer-layerAbnormal"]
+                // [ //标题栏
+                //     {
+                //         title: '序号',
+                //         type:"numbers"
+                //     }, {
+                //         field: 'num',
+                //         title: '盘点前数量(m³)',
+                //         width: 150
+                //     }, {
+                //         field: 'num1',
+                //         title: '盘点后数量(m³)',
+                //         style: "cursor: pointer",
+                //         edit: "txt",
+                //         width: 150,
+                //         templet: function(d) {
+                //             if (d.num != d.num1) {
+                //                 return "<span style='color:red'>" + d.num1 + "</span>";
+                //             } else {
+                //                 return d.num1;
+                //             }
+                //         }
+                //     },
+                //     //  {
+                //     //     field: 'null',
+                //     //     title: '盘盈盘亏',
+                //     //     style: "color:red;cursor: pointer",
+                //     //     width:90,
+                //     //     templet: function(d) {
+                //     //         var num = d.num;
+                //     //         var num1= d.num1;
+                //     //         var v = num1 - num;
+                //     //         if(v > 0){
+                //     //             return "<span style='color:#00FF7F'>"+v+"</span>";
+                //     //         }else{
+                //     //             return "<span style='color:red'>"+v+"</span>";
+                //     //         }
 
-                    //     }
-                    // },
-                    {
-                        field: 'uuid',
-                        title: '货物标识码',
-                        width: 206,
-                        style: 'font-family: Consolas;font-size:16px'
-                    }, {
-                        field: 'code',
-                        title: '包号'
-                    }, {
-                        field: 'varieties',
-                        title: '品种'
-                    }, {
-                        field: 'spec',
-                        title: '规格/厚度'
-                    }, {
-                        field: 'levels',
-                        title: '等级'
-                    }, {
-                        field: 'chang',
-                        title: '长度'
-                    },{
-                        field: 'pieces',
-                        title: '片数'
-                    }, {
-                        field: 'brand',
-                        title: '品牌'
-                    }, {
-                        field: 'origin',
-                        title: '产地'
-                    }, {
-                        field: 'pprice',
-                        title: '采购单价'+ unitMoney
-                    }
-                ]
+                //     //     }
+                //     // },
+                //     {
+                //         field: 'uuid',
+                //         title: '货物标识码',
+                //         width: 206,
+                //         style: 'font-family: Consolas;font-size:16px'
+                //     }, {
+                //         field: 'code',
+                //         title: '包号'
+                //     }, {
+                //         field: 'varieties',
+                //         title: '品种'
+                //     }, {
+                //         field: 'spec',
+                //         title: '规格/厚度'
+                //     }, {
+                //         field: 'levels',
+                //         title: '等级'
+                //     }, {
+                //         field: 'chang',
+                //         title: '长度'
+                //     },{
+                //         field: 'pieces',
+                //         title: '片数'
+                //     }, {
+                //         field: 'brand',
+                //         title: '品牌'
+                //     }, {
+                //         field: 'origin',
+                //         title: '产地'
+                //     }, {
+                //         field: 'pprice',
+                //         title: '采购单价'+ unitMoney
+                //     }
+                // ]
             ],
             even: true,
             page: false, //是否显示分页
@@ -317,7 +321,7 @@
 
         var numChangeValue = {}; //单元格编辑更改估值价格数据对象
         //监听编辑
-        table.on('edit(tableContainer-layerInventory)', function(obj) {
+        table.on('edit(tableContainer-layerAbnormal)', function(obj) {
             if (!obj.value || isNaN(obj.value)) {
                 layer.msg("数量只能为数字");
             }
@@ -346,7 +350,7 @@
                     status = false;
                 }
             }
-            var tableDataArr = table.cache["tableContainer-layerInventory"];
+            var tableDataArr = table.cache["tableContainer-layerAbnormal"];
             console.log(tableDataArr);
 
             if (status) {

@@ -140,6 +140,7 @@
         var inventoryLayer; // 审核-弹层
         var menuKey = "a_29"; //当前页面key
         var domObj = $("#stock-addOutBill .table-tools").find("ul"); //当前页面容器
+        var tableOptionArr = getTableOption(menuKey);//表格列
         btnIsList(domObj, menuKey); //按钮权限
 
         form.render(); // 重置表单渲染
@@ -303,58 +304,59 @@
                 limitName: 'limit' // 每页数据量的参数名，默认：limit
             },
             cols: [
-                [ // 标题栏
-                    {
-                        field: 'LAY_TABLE_INDEX',
-                        title: '序号',
-                        width: 40,
-                        templet: function(d) {
-                            return d.LAY_TABLE_INDEX + 1;
-                        }
-                    }, {
-                        type: 'radio'
-                    }, {
-                        field: 'orderno',
-                        title: '单号',
-                        width: 206,
-                        event: 'click',
-                        style: 'font-family: Consolas;font-size:16px;cursor: pointer;color:#0063de;'
-                    }, {
-                        field: 'createdate',
-                        title: '时间',
-                        width: 206
-                    }, {
-                        field: 'ownername',
-                        title: '仓库主',
-                        width: 206
-                    }, {
-                        field: 'depname',
-                        title: '仓库'
-                    }, {
-                        field: 'updauser',
-                        title: '操作人'
-                    }, {
-                        field: 'status',
-                        title: '单据状态',
-                        templet: function(d) {
-                            if (d.status == 0) {
-                                return "<span style='color:red'>正在处理</span>";
-                            }
-                            if (d.status == 1) {
-                                return "已完成";
-                            }
-                            if (d.status == -1) {
-                                return "已删除";
-                            }
-                        }
-                    }, {
-                        field: 'null',
-                        title: '差异(m³)',
-                        templet: function(d) {
-                            return (d.onum - d.num).toFixed(4);
-                        }
-                    }
-                ]
+            tableOptionArr["tableContainer"]
+                // [ // 标题栏
+                //     {
+                //         field: 'LAY_TABLE_INDEX',
+                //         title: '序号',
+                //         width: 40,
+                //         templet: function(d) {
+                //             return d.LAY_TABLE_INDEX + 1;
+                //         }
+                //     }, {
+                //         type: 'radio'
+                //     }, {
+                //         field: 'orderno',
+                //         title: '单号',
+                //         width: 206,
+                //         event: 'click',
+                //         style: 'font-family: Consolas;font-size:16px;cursor: pointer;color:#0063de;'
+                //     }, {
+                //         field: 'createdate',
+                //         title: '时间',
+                //         width: 206
+                //     }, {
+                //         field: 'ownername',
+                //         title: '仓库主',
+                //         width: 206
+                //     }, {
+                //         field: 'depname',
+                //         title: '仓库'
+                //     }, {
+                //         field: 'updauser',
+                //         title: '操作人'
+                //     }, {
+                //         field: 'status',
+                //         title: '单据状态',
+                //         templet: function(d) {
+                //             if (d.status == 0) {
+                //                 return "<span style='color:red'>正在处理</span>";
+                //             }
+                //             if (d.status == 1) {
+                //                 return "已完成";
+                //             }
+                //             if (d.status == -1) {
+                //                 return "已删除";
+                //             }
+                //         }
+                //     }, {
+                //         field: 'null',
+                //         title: '差异(m³)',
+                //         templet: function(d) {
+                //             return (d.onum - d.num).toFixed(4);
+                //         }
+                //     }
+                // ]
             ],
             even: true, // 开启隔行背景
             page: false, // 是否显示分页

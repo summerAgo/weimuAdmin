@@ -146,6 +146,7 @@
         var menuKey = "a_14"; //当前页面key
         var domObj = $("#stock-enterHistory .table-tools").find("ul"); //当前页面容器
         btnIsList(domObj, menuKey); //按钮权限
+        var tableOptionArr = getTableOption(menuKey);//表格列
 
         var eaitLayer; //编辑-弹层
 
@@ -347,51 +348,52 @@
                 limitName: 'limit' //每页数据量的参数名，默认：limit
             },
             cols: [
-                [ //标题栏
-                    {
-                        type: "numbers",
-                        align: "center",
-                        title: "序号",
-                        align: "center"
-                    }, {
-                        type: 'checkbox'
-                    }, {
-                        field: 'orderno',
-                        title: '单号',
-                        event: 'click',
-                        align: "center",
-                        style: 'cursor: pointer;color:#0063de;',
-                        width: 200
-                    }, {
-                        field: 'ownername',
-                        align: "center",
-                        title: '仓库主'
-                    }, {
-                        field: 'depname',
-                        align: "center",
-                        title: '仓库名称'
-                    }, {
-                        field: 'positionname',
-                        align: "center",
-                        title: '库位'
-                    }, {
-                        field: 'num',
-                        align: "center",
-                        title: '件数(包)'
-                    }, {
-                        field: 'suppliername',
-                        align: "center",
-                        title: '供应商'
-                    }, {
-                        field: 'volume',
-                        align: "center",
-                        title: '数量(m³)'
-                    }, {
-                        field: 'estimatedate',
-                        align: "center",
-                        title: '入库时间'
-                    }
-                ]
+            tableOptionArr["tableContainer"]
+                // [ //标题栏
+                //     {
+                //         type: "numbers",
+                //         align: "center",
+                //         title: "序号",
+                //         align: "center"
+                //     }, {
+                //         type: 'checkbox'
+                //     }, {
+                //         field: 'orderno',
+                //         title: '单号',
+                //         event: 'click',
+                //         align: "center",
+                //         style: 'cursor: pointer;color:#0063de;',
+                //         width: 200
+                //     }, {
+                //         field: 'ownername',
+                //         align: "center",
+                //         title: '仓库主'
+                //     }, {
+                //         field: 'depname',
+                //         align: "center",
+                //         title: '仓库名称'
+                //     }, {
+                //         field: 'positionname',
+                //         align: "center",
+                //         title: '库位'
+                //     }, {
+                //         field: 'num',
+                //         align: "center",
+                //         title: '件数(包)'
+                //     }, {
+                //         field: 'suppliername',
+                //         align: "center",
+                //         title: '供应商'
+                //     }, {
+                //         field: 'volume',
+                //         align: "center",
+                //         title: '数量(m³)'
+                //     }, {
+                //         field: 'estimatedate',
+                //         align: "center",
+                //         title: '入库时间'
+                //     }
+                // ]
             ],
             even: true,
             page: true, //是否显示分页

@@ -45,7 +45,7 @@
     </div>
 </div>
 <style scode>
-    .form-right{
+    .form-right {
         position: absolute;
         left: 250px;
     }
@@ -64,6 +64,7 @@
         var menuKey = "a_24"; //当前页面key
         var domObj = $("#risk-shipExamine .table-tools").find("ul"); //当前页面容器
         btnIsList(domObj, menuKey); //按钮权限
+        var tableOptionArr = getTableOption(menuKey);//表格列
 
         var examineLayer; // 审核-弹层
 
@@ -109,7 +110,7 @@
             for (var key in data.field) {
                 // 参数赋值
                 if (data.field[key] != "") {
-                    paramSearch[key] = data.field[key].replace(/^\s*|\s*$/g,"");
+                    paramSearch[key] = data.field[key].replace(/^\s*|\s*$/g, "");
                 }
             }
             // 表格重新加载
@@ -149,61 +150,58 @@
                 limitName: 'limit' // 每页数据量的参数名，默认：limit
             },
             cols: [
-                [ // 标题栏
-                    {
-                        field: 'LAY_TABLE_INDEX',
-                        title: '序号',
-                        width: 40,
-                        templet: function(d) {
-                            return d.LAY_TABLE_INDEX + 1;
-                        }
-                    }, {
-                        field: 'ownername',
-                        title: '仓库主'
-                    },{
-                        field: 'createdate',
-                        title: '创建时间',
-                        width: 185
-                    }, {
-                        field: 'orderno',
-                        title: '出库单',
-                        event: 'click',
-                        style: 'cursor: pointer;color:#0063de;',
-                        width: 200
-                    }, {
-                        field: 'depname',
-                        title: '出库仓库'
-                    }, {
-                        field: 'num',
-                        title: '数量(m³)',
-                        width: 120,
-                    },
-                    {
-                        field: 'totalamount',
-                        title: '订单总金额' + unitMoney,
-                        templet: function (d) {
-                            return formatNum(d.totalamount);
-                        }
-                    }, {
-                        field: 'stockmoney',
-                        title: '库存金额'+ unitMoney,
-                        templet: function (d) {
-                            return formatNum(d.stockmoney);
-                        }
-                    }, {
-                        field: 'financingmoney',
-                        title: '融资金额'+ unitMoney,
-                        templet: function (d) {
-                            return formatNum(d.financingmoney);
-                        }
-                    }, {
-                        field: 'cordonmoney',
-                        title: '警戒线'+ unitMoney,
-                        templet: function (d) {
-                            return formatNum(d.cordonmoney);
-                        }
-                    }
-                ]
+            tableOptionArr["tableContainer"]
+                // [ // 标题栏
+                //     {
+                //         "title": "序号",
+                //         "type": "numbers"
+                //     }, {
+                //         field: 'ownername',
+                //         title: '仓库主'
+                //     }, {
+                //         field: 'createdate',
+                //         title: '创建时间',
+                //         width: 185
+                //     }, {
+                //         field: 'orderno',
+                //         title: '出库单',
+                //         event: 'click',
+                //         style: 'cursor: pointer;color:#0063de;',
+                //         width: 200
+                //     }, {
+                //         field: 'depname',
+                //         title: '出库仓库'
+                //     }, {
+                //         field: 'num',
+                //         title: '数量(m³)',
+                //         width: 120,
+                //     },
+                //     {
+                //         field: 'totalamount',
+                //         title: '订单总金额(RMB)',
+                //         templet: function(d) {
+                //             return formatNum(d.totalamount);
+                //         }
+                //     }, {
+                //         field: 'stockmoney',
+                //         title: '库存金额(RMB)',
+                //         templet: function(d) {
+                //             return formatNum(d.stockmoney);
+                //         }
+                //     }, {
+                //         field: 'financingmoney',
+                //         title: '融资金额(RMB)',
+                //         templet: function(d) {
+                //             return formatNum(d.financingmoney);
+                //         }
+                //     }, {
+                //         field: 'cordonmoney',
+                //         title: '警戒线(RMB)',
+                //         templet: function(d) {
+                //             return formatNum(d.cordonmoney);
+                //         }
+                //     }
+                // ]
             ],
             even: true, // 开启隔行背景
             page: true, // 是否显示分页
@@ -278,64 +276,61 @@
                 data: layerData.datalist,
                 // 用于对分页请求的参数：page、limit重新设定名称
                 cols: [
-                    [ // 标题栏
-                        {
-                            field: 'LAY_TABLE_INDEX',
-                            title: '序号',
-                            width: 40,
-                            templet: function(d) {
-                                return d.LAY_TABLE_INDEX + 1;
-                            }
-                        }, {
-                            field: 'uuid',
-                            title: '货物标识码',
-                            width: 206,
-                            style:'font-family: Consolas;font-size:16px'
-                        }, {
-                            field: 'code',
-                            title: '包号'
-                        }, {
-                            field: 'varieties',
-                            title: '品种'
-                        }, {
-                            field: 'spec',
-                            title: '规格/厚度'
-                        }, {
-                            field: 'levels',
-                            title: '等级'
-                        }, {
-                            field: 'chang',
-                            title: '长度'
-                        }, {
-                            field: 'brand',
-                            title: '品牌'
-                        }, {
-                            field: 'origin',
-                            title: '产地'
-                        }, {
-                            field: 'num',
-                            title: '数量(m³)',
-                            width: 120,
-                        } ,{
-                            field: 'aprice',
-                            title: '估值金额' + unitMoney,
-                            templet: function (d) {
-                                return formatNum(d.aprice);
-                            }
-                        }, {
-                            field: 'pieces',
-                            title: '片数',
-                        }, {
-                            field: 'status',
-                            title: '库位'
-                        }, {
-                            field: 'containernum',
-                            title: '货柜号/批次号'
-                        }, {
-                            field: 'remarks',
-                            title: '备注'
-                        }
-                    ]
+                tableOptionArr["tableContainer-from"]
+                    // [ // 标题栏
+                    //     {
+                    //         "title": "序号",
+                    //         "type": "numbers"
+                    //     }, {
+                    //         field: 'uuid',
+                    //         title: '货物标识码',
+                    //         width: 206,
+                    //         style: 'font-family: Consolas;font-size:16px'
+                    //     }, {
+                    //         field: 'code',
+                    //         title: '包号'
+                    //     }, {
+                    //         field: 'varieties',
+                    //         title: '品种'
+                    //     }, {
+                    //         field: 'spec',
+                    //         title: '规格/厚度'
+                    //     }, {
+                    //         field: 'levels',
+                    //         title: '等级'
+                    //     }, {
+                    //         field: 'chang',
+                    //         title: '长度'
+                    //     }, {
+                    //         field: 'brand',
+                    //         title: '品牌'
+                    //     }, {
+                    //         field: 'origin',
+                    //         title: '产地'
+                    //     }, {
+                    //         field: 'num',
+                    //         title: '数量(m³)',
+                    //         width: 120,
+                    //     }, {
+                    //         field: 'aprice',
+                    //         title: '估值金额(RMB)',
+                    //         templet: function(d) {
+                    //             return formatNum(d.aprice);
+                    //         }
+                    //     }, {
+                    //         field: 'pieces',
+                    //         title: '片数',
+                    //     }, {
+                    //         field: 'status',
+                    //         title: '库位'
+                    //     }, {
+                    //         field: 'containernum',
+                    //         title: '货柜号/批次号'
+                    //     }, {
+                    //         field: 'remarks',
+                    //         title: '备注'
+                    //     }
+                    // ]
                 ],
                 even: true, // 开启隔行背景
                 done: function(res, curr, count) { // 数据渲染完的回调
@@ -369,7 +364,7 @@
                     },
                     success: function(res) {
                         if (res.status === 1) {
-                            goLogin();// 跳转到登录页
+                            goLogin(); // 跳转到登录页
                         }
                         if (res.status == 0) {
                             layer.msg(res.msg);
@@ -408,7 +403,7 @@
                     },
                     success: function(res) {
                         if (res.status === 1) {
-                            goLogin();// 跳转到登录页
+                            goLogin(); // 跳转到登录页
                         }
                         if (res.status == 0) {
                             layer.msg(res.msg);
@@ -428,7 +423,7 @@
 
         //点击导出
         $(".toExport").on('click', function(e) {
-            table.exportFile(tableIns.config.id, tableIns.config.data,"xls");
+            table.exportFile(tableIns.config.id, tableIns.config.data, "xls");
         });
 
     });

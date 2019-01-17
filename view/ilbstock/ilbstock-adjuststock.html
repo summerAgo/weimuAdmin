@@ -308,6 +308,9 @@
         var layer = layui.layer;
         var upload = layui.upload;
 
+        var menuKey = "a_29"; //当前页面key
+        var tableOptionArr = getTableOption(menuKey); //表格列
+
         formSelects.render('depotSelectAdju'); //下拉选项
         formSelects.render("positionSelectAdju"); //下拉选项
         formSelects.btns(['remove'], {
@@ -671,7 +674,6 @@
                     }
                 });
             }
-
             return false;
         });
 
@@ -700,62 +702,63 @@
                 limitName: 'limit' //每页数据量的参数名，默认：limit
             },
             cols: [
-                [ //标题栏
-                    {
-                        type: "numbers",
-                        title: "序号"
-                    }, {
-                        type: 'checkbox',
-                    }, {
-                        field: 'uuid',
-                        title: '货物标识码',
-                        width: 206,
-                        style: 'font-family: Consolas;font-size:16px'
-                    }, {
-                        field: 'code',
-                        title: '包号',
-                        width: 150
-                    }, {
-                        field: 'varieties',
-                        width: 130,
-                        title: '品种'
-                    }, {
-                        field: 'levels',
-                        width: 130,
-                        title: '等级'
-                    }, {
-                        field: 'spec',
-                        width: 130,
-                        title: '规格'
-                    }, {
-                        field: 'chang',
-                        width: 130,
-                        title: '长度'
-                    }, {
-                        field: 'num',
-                        title: '数量(m³)',
-                        width: 120,
-                    }, {
-                        field: 'containernum',
-                        title: '货柜号',
-                        width: 150
-                    }, {
-                        field: 'origin',
-                        title: '产地'
-                    }, {
-                        field: 'brand',
-                        width: 130,
-                        title: '品牌'
-                    }, {
-                        field: 'billloading',
-                        title: '提运单',
-                        width: 180
-                    }, {
-                        field: 'remarks',
-                        title: '备注',
-                        width: 180
-                    }
-                ]
+                tableOptionArr["tableContainer-goodsList"]
+                // [ //标题栏
+                //     {
+                //         type: "numbers",
+                //         title: "序号"
+                //     }, {
+                //         type: 'checkbox',
+                //     }, {
+                //         field: 'uuid',
+                //         title: '货物标识码',
+                //         width: 206,
+                //         style: 'font-family: Consolas;font-size:16px'
+                //     }, {
+                //         field: 'code',
+                //         title: '包号',
+                //         width: 150
+                //     }, {
+                //         field: 'varieties',
+                //         width: 130,
+                //         title: '品种'
+                //     }, {
+                //         field: 'levels',
+                //         width: 130,
+                //         title: '等级'
+                //     }, {
+                //         field: 'spec',
+                //         width: 130,
+                //         title: '规格'
+                //     }, {
+                //         field: 'chang',
+                //         width: 130,
+                //         title: '长度'
+                //     }, {
+                //         field: 'num',
+                //         title: '数量(m³)',
+                //         width: 120,
+                //     }, {
+                //         field: 'containernum',
+                //         title: '货柜号',
+                //         width: 150
+                //     }, {
+                //         field: 'origin',
+                //         title: '产地'
+                //     }, {
+                //         field: 'brand',
+                //         width: 130,
+                //         title: '品牌'
+                //     }, {
+                //         field: 'billloading',
+                //         title: '提运单',
+                //         width: 180
+                //     }, {
+                //         field: 'remarks',
+                //         title: '备注',
+                //         width: 180
+                //     }
+                // ]
             ],
             even: true,
             page: true, //是否显示分页
@@ -775,61 +778,62 @@
             height: '340px',
             data: tableData2,
             cols: [
-                [ //标题栏
-                    {
-                        field: 'LAY_TABLE_INDEX',
-                        title: '序号',
-                        width: 40,
-                        templet: function(d) {
-                            return d.LAY_TABLE_INDEX + 1;
-                        }
-                    }, {
-                        type: 'checkbox',
-                    }, {
-                        field: 'uuid',
-                        title: '货物标识码',
-                        width: 206,
-                        style: 'font-family: Consolas;font-size:16px'
-                    }, {
-                        field: 'code',
-                        title: '包号'
-                    }, {
-                        field: 'varieties',
-                        title: '品种'
-                    }, {
-                        field: 'spec',
-                        title: '规格'
-                    }, {
-                        field: 'levels',
-                        title: '等级'
-                    }, {
-                        field: 'chang',
-                        title: '长度'
-                    }, {
-                        field: 'pieces',
-                        title: '片数',
-                    }, {
-                        field: 'billloading',
-                        title: '提运单',
-                        width: 150
-                    }, {
-                        field: 'origin',
-                        title: '产地'
-                    }, {
-                        field: 'supplier',
-                        title: '供应商'
-                    }, {
-                        field: 'num',
-                        title: '数量(m³)'
-                    }, {
-                        field: 'aprice',
-                        title: '估值金额' + unitMoney,
-                        width: 130,
-                        templet: function(d) {
-                            return formatNum(d.aprice) || "";
-                        }
-                    }
-                ]
+                tableOptionArr["tableContainer-2"]
+                // [ //标题栏
+                //     {
+                //         field: 'LAY_TABLE_INDEX',
+                //         title: '序号',
+                //         width: 40,
+                //         templet: function(d) {
+                //             return d.LAY_TABLE_INDEX + 1;
+                //         }
+                //     }, {
+                //         type: 'checkbox',
+                //     }, {
+                //         field: 'uuid',
+                //         title: '货物标识码',
+                //         width: 206,
+                //         style: 'font-family: Consolas;font-size:16px'
+                //     }, {
+                //         field: 'code',
+                //         title: '包号'
+                //     }, {
+                //         field: 'varieties',
+                //         title: '品种'
+                //     }, {
+                //         field: 'spec',
+                //         title: '规格'
+                //     }, {
+                //         field: 'levels',
+                //         title: '等级'
+                //     }, {
+                //         field: 'chang',
+                //         title: '长度'
+                //     }, {
+                //         field: 'pieces',
+                //         title: '片数',
+                //     }, {
+                //         field: 'billloading',
+                //         title: '提运单',
+                //         width: 150
+                //     }, {
+                //         field: 'origin',
+                //         title: '产地'
+                //     }, {
+                //         field: 'supplier',
+                //         title: '供应商'
+                //     }, {
+                //         field: 'num',
+                //         title: '数量(m³)'
+                //     }, {
+                //         field: 'aprice',
+                //         title: '估值金额(RMB)',
+                //         width: 130,
+                //         templet: function(d) {
+                //             return formatNum(d.aprice) || "";
+                //         }
+                //     }
+                // ]
             ],
             even: true,
             page: true, //是否显示分页
@@ -851,52 +855,53 @@
             height: '340px',
             data: tableData3,
             cols: [
-                [ //标题栏
-                    {
-                        field: 'LAY_TABLE_INDEX',
-                        title: '序号',
-                        width: 40,
-                        templet: function(d) {
-                            return d.LAY_TABLE_INDEX + 1;
-                        }
-                    }, {
-                        type: 'checkbox',
-                    }, {
-                        field: 'uuid',
-                        title: '货物标识码',
-                        width: 206,
-                        style: 'font-family: Consolas;font-size:16px'
-                    }, {
-                        field: 'code',
-                        title: '包号'
-                    }, {
-                        field: 'varieties',
-                        title: '品种'
-                    }, {
-                        field: 'spec',
-                        title: '规格'
-                    }, {
-                        field: 'levels',
-                        title: '等级'
-                    }, {
-                        field: 'chang',
-                        title: '长度'
-                    }, {
-                        field: 'pieces',
-                        title: '片数',
-                    }, {
-                        field: 'billloading',
-                        title: '柜号',
-                        width: 150
-                    }, {
-                        field: 'brand',
-                        width: 130,
-                        title: '品牌'
-                    }, {
-                        field: 'num',
-                        title: '数量(m³)'
-                    }
-                ]
+                tableOptionArr["tableContainer-3"]
+                // [ //标题栏
+                //     {
+                //         field: 'LAY_TABLE_INDEX',
+                //         title: '序号',
+                //         width: 40,
+                //         templet: function(d) {
+                //             return d.LAY_TABLE_INDEX + 1;
+                //         }
+                //     }, {
+                //         type: 'checkbox',
+                //     }, {
+                //         field: 'uuid',
+                //         title: '货物标识码',
+                //         width: 206,
+                //         style: 'font-family: Consolas;font-size:16px'
+                //     }, {
+                //         field: 'code',
+                //         title: '包号'
+                //     }, {
+                //         field: 'varieties',
+                //         title: '品种'
+                //     }, {
+                //         field: 'spec',
+                //         title: '规格'
+                //     }, {
+                //         field: 'levels',
+                //         title: '等级'
+                //     }, {
+                //         field: 'chang',
+                //         title: '长度'
+                //     }, {
+                //         field: 'pieces',
+                //         title: '片数',
+                //     }, {
+                //         field: 'billloading',
+                //         title: '柜号',
+                //         width: 150
+                //     }, {
+                //         field: 'brand',
+                //         width: 130,
+                //         title: '品牌'
+                //     }, {
+                //         field: 'num',
+                //         title: '数量(m³)'
+                //     }
+                // ]
             ],
             even: true,
             page: true, //是否显示分页
