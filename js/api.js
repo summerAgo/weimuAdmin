@@ -128,23 +128,42 @@ var roleDel        = pathUrl + "sys/role/deleteMany";      //删除角色
 var roleAuthority  = pathUrl + "sys/role/setAuthority";    //设置角色对应菜单(roleid 角色id        menuId[]菜单数组)
 var setByAuthority = pathUrl + "sys/role/setByAuthority";  // 角色单独发送菜单信息
 
+/**
+ * 保存表格,字段 权限
+ * roleid  : 角色ID
+ * menuid  : 菜单ID
+ * jsondata: 数组json	 key: 表格ID，value: 表格ID, 以逗号分隔    	例: {"10":"1,2,3,5,10,12,","11":"15,23,24"}
+ */
+var setTableFieldAuth = pathUrl + "sys/role/setTableFieldAuth";
+/**
+ * 回显用户表格 字段 权限
+ * @param request
+ * @param roleid	角色ID
+ * @param menuid	菜单ID
+ * @return	{"10","[true,true,false]","11","[true,true,false]","12","[true,true,false]","20","[false,false,false]"}
+*/
+var queryTableFieldAuth = pathUrl + "sys/role/queryTableFieldAuth";
+
 //菜单
+
 var menuList      = pathUrl + "sys/menu/list";          //菜单列表
 var menuAdd       = pathUrl + "sys/menu/add";           //添加菜单
 var menuUpdate    = pathUrl + "sys/menu/update";        //修改菜单
 var menuDel       = pathUrl + "sys/menu/deleteMany";    //删除菜单
 var menuAuthority = pathUrl + "sys/menu/setAuthority";  //设置菜单对应按钮(menuid 菜单id        butId[]按钮数组)
 
-//表格配置
-var listtableauth = pathUrl +"sys/table/list";    //查询
-var addtableauth  = pathUrl +"sys/table/add";     //添加     菜单ID:menuid, 标识那一层菜单:type
-var deltableauth  = pathUrl +"sys/table/delete";  //删除
-var updatableauth = pathUrl +"sys/table/update";  //
+//表格权限
+var listtableauth       = pathUrl +"user/table/list";           //查询
+var addtableauth        = pathUrl +"user/table/add";            //添加     菜单ID:menuid, 标识那一层菜单:type
+var deltableauth        = pathUrl +"user/table/delete";         //删除
+var updatableauth       = pathUrl +"user/table/update";         //
+var queryByMenuidleauth = pathUrl +"user/table/queryByMenuid";  //根据菜单ID查询该菜单下面所有表格 参数  menuid：菜单ID
+
 
 //表格属性权限
-var listtablefield = pathUrl +"sys/tablefield/list";     //查询
-var addtablefield  = pathUrl +"sys/tablefield/testadd";  //添加   表格ID:tablepermissionid,表格列数组:jsonstr
-var deltablefield  = pathUrl +"sys/tablefield/delete";   //删除
+var listtablefield = pathUrl +"user/tablefield/list";  //查询
+//var addtablefield = pathUrl +"user/tablefield/testadd";//添加   表格ID:tablepermissionid,表格列数组:jsonstr
+//var deltablefield = pathUrl +"user/tablefield/delete";//删除
 
 //按钮
 var buttonList   = pathUrl + "sys/button/list";        //按钮列表
