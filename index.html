@@ -44,7 +44,7 @@
                 </li>
             </ul> -->
             <div class="header-version"></div>
-            <div class="layui-nav-guide"><span class="operation-guide"><i class="iconfont icon-bangzhu"></i>操作指南</span></div>
+            <!-- <div class="layui-nav-guide"><span class="operation-guide"><i class="iconfont icon-bangzhu"></i>操作指南</span></div> -->
             <ul class="layui-nav layui-layout-right">
                 <!--<li class="layui-nav-item">
                     <a href="javascript:;" class="msgtips"><i class="iconfont icon-lingdang"></i><span class="msgcount">9</span></a>
@@ -137,7 +137,7 @@
             formSelects: 'formSelects-v4'
         });
 
-        layui.use(['jquery', 'element', 'layer', 'laytpl','form'], function() {
+        layui.use(['jquery', 'element', 'layer', 'laytpl', 'form'], function() {
             var element = layui.element,
                 $ = layui.$,
                 laytpl = layui.laytpl,
@@ -322,16 +322,17 @@
                     // hash改变执行
                     var thehash = $(".index-side a").attr("href").replace(/#!/, '');
                     var dom;
-                    if (dom = $('.layui-nav dd.layui-this')) {
-                        dom.removeClass("layui-this");
-                        dom.parents("li.layui-nav-item").removeClass("layui-nav-itemed");
-                    }
+                    // if (dom = $('.layui-nav dd.layui-this')) {
+                    //     dom.removeClass("layui-this");
+                    //     dom.parents("li.layui-nav-item").removeClass("layui-nav-itemed");
+                    // }
                     if (dom = $('.layui-nav a[href="#!' + vid + '"]')) {
                         dom.parent("dd").addClass("layui-this");
+                        dom.parents("li.layui-nav-item").siblings().removeClass("layui-nav-itemed");
                         dom.parents("li.layui-nav-item").addClass("layui-nav-itemed");
                         if ($(".layui-tab-title li[lay-id]").length <= 0) {
                             element.tabAdd('nav-tabs', {
-                                title: dom.html() || "单号详情",
+                                title: dom.html(),
                                 id: vid
                             });
                         } else {
@@ -384,12 +385,11 @@
             });*/
 
             $(".signOutBtn").click(signOut); //退出登录
-            var passwordLayer;
             $(".changePassword").click(function() {
                 //修改密码
                 $.get('view/form/form-password.html', {}, function(str) { // 请求弹框
                     // 弹出弹框
-                    passwordLayer = layer.open({
+                    layer.open({
                         title: '修改密码',
                         type: 1,
                         content: str, // 注意，如果str是object，那么需要字符拼接。
@@ -397,7 +397,7 @@
                     });
                 });
             });
-            
+
             function signOut() {
                 //退出登录
                 clearSeesion();
