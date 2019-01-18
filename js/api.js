@@ -153,15 +153,14 @@ var menuDel       = pathUrl + "sys/menu/deleteMany";    //删除菜单
 var menuAuthority = pathUrl + "sys/menu/setAuthority";  //设置菜单对应按钮(menuid 菜单id        butId[]按钮数组)
 
 //表格权限
-var listtableauth       = pathUrl +"user/table/list";           //查询
-var addtableauth        = pathUrl +"user/table/add";            //添加     菜单ID:menuid, 标识那一层菜单:type
-var deltableauth        = pathUrl +"user/table/delete";         //删除
-var updatableauth       = pathUrl +"user/table/update";         //
-var queryByMenuidleauth = pathUrl +"user/table/queryByMenuid";  //根据菜单ID查询该菜单下面所有表格 参数  menuid：菜单ID
-
+var listtableauth       = pathUrl +"sys/table/list";           //查询
+var addtableauth        = pathUrl +"sys/table/add";            //添加     菜单ID:menuid, 标识那一层菜单:type
+var deltableauth        = pathUrl +"sys/table/delete";         //删除
+var updatableauth       = pathUrl +"sys/table/update";         //
+var queryByMenuidleauth = pathUrl +"sys/table/queryByMenuid";  //根据菜单ID查询该菜单下面所有表格 参数  menuid：菜单ID
 
 //表格属性权限
-var listtablefield = pathUrl +"user/tablefield/list";  //查询
+var listtablefield = pathUrl +"sys/tablefield/list";  //查询
 //var addtablefield = pathUrl +"user/tablefield/testadd";//添加   表格ID:tablepermissionid,表格列数组:jsonstr
 //var deltablefield = pathUrl +"user/tablefield/delete";//删除
 

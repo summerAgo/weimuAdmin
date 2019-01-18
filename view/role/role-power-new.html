@@ -42,12 +42,15 @@
                     </div> -->
                 </div>
             </div>
-            <div class="layui-tab" lay-filter="tabsBtn">
+            <div class="layui-tab" lay-filter="tableTabsBtn">
                 <div class="layui-tab-content menutab-content">
                     <div class="layui-show">
                         <div class="content-title">表格权限<a href="javascript:;" class="saveTableBtn"><i class="iconfont icon-baocun"></i>保存</a></div>
                         <div class="content-cont">
-                            
+                            <ul class="layui-tab-title tableTabs">
+
+                            </ul>
+                            <table id="tableColumn" lay-filter="tableColumn"></table>
                         </div>
                     </div>
                 </div>
@@ -177,8 +180,24 @@
         width: 100px;
     }
 </style>
+<script type="text/html" id="seeTpl">
+    {{#if(d.see != "nothing"){ }}
+    <input type="checkbox" name="checkInput" value="{{d.id}}" lay-skin="switch" lay-text="开启|关闭" lay-filter="seeTool" {{ d.see==true?'checked':''}}>
+    {{# }}}
+</script>
+<script type="text/html" id="eventTpl">
+    {{#if(d.event != "nothing"){ }}
+    <input type="checkbox" name="checkInput" value="{{d.id}}" lay-skin="switch" lay-text="开启|关闭" lay-filter="eventTool" {{ d.event==true?'checked':''}}>
+    {{# }}}
+</script>
+<script type="text/html" id="editTpl">
+    {{#if(d.edit != "nothing"){ }}
+    <input type="checkbox" name="checkInput" value="{{d.id}}" lay-skin="switch" lay-text="开启|关闭" lay-filter="editTool" {{ d.edit==true?'checked':''}}>
+    {{# }}}
+</script>
+
 <script type="text/javascript">
-    layui.use(['jquery', 'authtree', 'form', 'layer', 'element', 'laytpl', 'laydate', "eleTree"], function() {
+    layui.use(['jquery', 'authtree', 'form', 'layer', 'element', 'laytpl', 'laydate', "eleTree", 'table'], function() {
         var $ = layui.jquery;
         var authtree = layui.authtree;
         var element = layui.element;
@@ -186,7 +205,9 @@
         var form = layui.form;
         var laytpl = layui.laytpl;
         var layer = layui.layer;
+        var table = layui.table;
         var dataall = window.currData;
+        var tableId = []; //当前权限表格ID
         var getTpl = formUserRole.innerHTML,
             view = $(".formEditView")[0];
         laytpl(getTpl).render(dataall, function(html) {
@@ -195,6 +216,7 @@
         form.render(); //重置表单渲染
 
         var allMenu;
+        var columnArr = [];
         // 初始化(查询所有的菜单)
         $.ajax({
             //url: 'tree.json',
@@ -384,7 +406,6 @@
 
         });
 
-
         function menuAjax(data) {
             data['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
             data['TOKEN'] = getCookie('TOKEN');
@@ -404,9 +425,6 @@
 
         //根据选中以及取消菜单权限赋值menuid(菜单id)，isChoice(选中还是权限)
         function muneAut(menuids, valueid, isChoice) {
-            // console.log("menuids:" + menuids);
-            // console.log("isChoice:" + isChoice);
-            // console.log(allAuthority);
             var number = 0; //是否已经存在权限里面,0:否，1：是
             var dellist = []; //要删除的id
             for (var k = 0; k < allAuthority.length; k++) {
@@ -444,7 +462,6 @@
                         }
                     }
                     map[valueid] = butlist;
-                    // console.log(map[valueid])
                     allAuthority.push(map)
                 }
             }
@@ -468,7 +485,6 @@
         //查询角色权限
         function allMuneAuthority(data, success) {
             $.ajax({
-                //url: 'tree.json',
                 url: rolegetAuthority,
                 data: data,
                 dataType: 'json',
@@ -489,7 +505,6 @@
             valueid = valueids;
             menutype = mtype;
             var butAllData = [];
-            // console.log(allbutData)
             for (var i = 0; i < allbutData.length; i++) {
                 if (allbutData[i].menuid == menuid && allbutData[i].type == mtype) {
                     var map = allbutData[i];
@@ -518,11 +533,11 @@
                 }
             }
             dataall["butAllData"] = butAllData;
-
             laytpl(getTpl).render(dataall, function(html) {
                 view.innerHTML = html;
             });
             form.render(); //重置表单渲染
+            getColumn(menuid, window.currData.id);
         }
 
         //查询所有的按钮
@@ -686,6 +701,120 @@
                 menutype = 0;
             }
             allbutton(menuid, valueid, menutype);
+        });
+
+        var tableIns = table.render({
+            elem: '#tableColumn',
+            height: "500",
+            data: [],
+            cols: [
+                [{
+                    field: 'title',
+                    title: '内容',
+                    align: "center"
+                }, {
+                    field: 'see',
+                    title: '查看',
+                    templet: '#seeTpl',
+                    align: "center"
+                }, {
+                    field: 'event',
+                    title: '选择',
+                    templet: '#eventTpl',
+                    align: "center"
+                }, {
+                    field: 'edit',
+                    title: '编辑',
+                    templet: '#editTpl',
+                    align: "center"
+                }]
+            ],
+            even: true, // 开启隔行背景
+            page: true, // 是否显示分页
+            limits: [20, 30, 40, 50],
+            limit: 20, //每页默认显示的数量
+        });
+
+        var currentTable = {}; //当前操作的表格对象
+        function getColumn(menuid, roleid) {
+            var data = {};
+            data['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
+            data['TOKEN'] = getCookie('TOKEN');
+            data['menuid'] = menuid;
+            data['roleid'] = roleid;
+            $.ajax({
+                type: "get",
+                url: queryByMenuidleauth,
+                data: data,
+                dataType: 'json',
+                success: function(data) {
+                    if (data.status == 0) {
+                        columnArr = [];
+                        for (var key in data.data) {
+                            var arr = key.split(",");
+                            columnArr.push({
+                                id: arr[0],
+                                name: arr[1],
+                                data: data.data[key]
+                            })
+                        }
+                        console.log(columnArr);
+                        currentTable = columnArr[0]; //默认当前操作的表格对象为第一个
+                        tableIns.reload({
+                            data: currentTable.data,
+                            page: {
+                                curr: 1 // 重新从第 1 页开始
+                            }
+                        });
+
+                        $(".tableTabs").html(""); //清空tabs
+                        for (var k = 0; k < columnArr.length; k++) {
+                            $(".tableTabs").append('<li class="' + (k == 0 ? "layui-this" : "") + '" lay-id="' + columnArr[k].id + '">' + columnArr[k].name + '</li>');
+                        }
+                    }
+                }
+            });
+        }
+
+        form.on('switch(seeTool)', function(obj) {
+            setValue(obj, "see");
+        });
+
+        form.on('switch(editTool)', function(obj) {
+            setValue(obj, "edit");
+        });
+
+        form.on('switch(eventTool)', function(obj) {
+            setValue(obj, "event");
+        });
+
+        function setValue(obj, event) {
+            //开启关闭按钮
+            var val;
+            obj.elem.checked == true ? val = true : val = false;
+            for (var i = 0; i < currentTable.data.length; i++) {
+                if (currentTable.data[i].id == obj.value) {
+                    currentTable.data[i][event] = val;
+                    break;
+                }
+            }
+        }
+
+        //tab切换改变当前操作菜单id
+        element.on('tab(tableTabsBtn)', function(elem) {
+            var tableId = $(this).attr('lay-id');
+            for (var i = 0; i < columnArr.length; i++) {
+                if (columnArr[i].id == tableId) {
+                    currentTable = columnArr[i];
+                    break;
+                }
+            }
+            tableIns.reload({
+                data: currentTable.data,
+                page: {
+                    curr: 1 // 重新从第 1 页开始
+                }
+            });
         });
 
     });
