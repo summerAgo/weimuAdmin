@@ -214,6 +214,8 @@
 
 
         function selectDataInstall(url, param, bool, type) {
+            param['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
+            param['TOKEN'] = getCookie('TOKEN');
             //下拉选框数据组装
             var arr = [];
             //获取列表数据
@@ -526,6 +528,8 @@
 
         //保存提交  修改异常调整数据
         function qdeditAprice(datainfo, url) {
+            datainfo['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
+            datainfo['TOKEN'] = getCookie('TOKEN');
             //请求数据源示例
             var status = false;
             console.log(datainfo);
