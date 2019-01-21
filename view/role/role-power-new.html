@@ -45,7 +45,10 @@
             <div class="layui-tab" lay-filter="tableTabsBtn">
                 <div class="layui-tab-content menutab-content">
                     <div class="layui-show">
-                        <div class="content-title">表格权限<a href="javascript:;" class="saveTableBtn"><i class="iconfont icon-baocun"></i>保存</a></div>
+                        <div class="content-title layui-form tabsTitle" lay-filter="allForm">表格权限
+                            <input type="checkbox" name="all" title="全选" lay-filter="allElection">
+                            <a href="javascript:;" class="saveTableBtn"><i class="iconfont icon-baocun"></i>保存</a>
+                        </div>
                         <div class="content-cont">
                             <ul class="layui-tab-title tableTabs">
 
@@ -75,6 +78,8 @@
     .formEditView .layui-form{display:flex;flex-wrap:wrap;}
     .formEditView .layui-form .layui-form-item{flex:0 0 210px;}
     .saveTableBtn{float: right;padding-right:10px; font-weight:normal;}
+    .tabsTitle .layui-form-checkbox{height:20px; line-height: 20px;}
+    .tabsTitle .layui-form-checkbox i{height:18px;}
     .role-power .layui-tab-title {
         position: relative;
         left: 0;
@@ -182,17 +187,17 @@
 </style>
 <script type="text/html" id="seeTpl">
     {{#if(d.see != "nothing"){ }}
-    <input type="checkbox" name="checkInput" value="{{d.id}}" lay-skin="switch" lay-text="开启|关闭" lay-filter="seeTool" {{ d.see==true?'checked':''}}>
+    <input type="checkbox" name="checkInput" value="{{d.id}}" lay-skin="switch" lay-text="开启|关闭" lay-filter="seeTool" {{ d.see=='1'?'checked':''}}>
     {{# }}}
 </script>
 <script type="text/html" id="eventTpl">
     {{#if(d.event != "nothing"){ }}
-    <input type="checkbox" name="checkInput" value="{{d.id}}" lay-skin="switch" lay-text="开启|关闭" lay-filter="eventTool" {{ d.event==true?'checked':''}}>
+    <input type="checkbox" name="checkInput" value="{{d.id}}" lay-skin="switch" lay-text="开启|关闭" lay-filter="eventTool" {{ d.event=='1'?'checked':''}}>
     {{# }}}
 </script>
 <script type="text/html" id="editTpl">
     {{#if(d.edit != "nothing"){ }}
-    <input type="checkbox" name="checkInput" value="{{d.id}}" lay-skin="switch" lay-text="开启|关闭" lay-filter="editTool" {{ d.edit==true?'checked':''}}>
+    <input type="checkbox" name="checkInput" value="{{d.id}}" lay-skin="switch" lay-text="开启|关闭" lay-filter="editTool" {{ d.edit=='1'?'checked':''}}>
     {{# }}}
 </script>
 
@@ -350,6 +355,7 @@
             }
 
             allbutton(cur.value, cur.valueid, menutype);
+            getColumn(menuid, window.currData.id);
 
             function tabli(obj, type) {
                 var li = '<li class="' + (type == 0 ? "layui-this" : "") + '" lay-id="' + obj.id + '" lay-mid="' + obj.mid + '">' + obj.name + '</li>';
@@ -537,7 +543,6 @@
                 view.innerHTML = html;
             });
             form.render(); //重置表单渲染
-            getColumn(menuid, window.currData.id);
         }
 
         //查询所有的按钮
@@ -737,6 +742,7 @@
 
         var currentTable = {}; //当前操作的表格对象
         function getColumn(menuid, roleid) {
+
             var data = {};
             data['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
             data['TOKEN'] = getCookie('TOKEN');
@@ -747,6 +753,7 @@
                 url: queryByMenuidleauth,
                 data: data,
                 dataType: 'json',
+                async: false,
                 success: function(data) {
                     if (data.status == 0) {
                         columnArr = [];
@@ -758,8 +765,8 @@
                                 data: data.data[key]
                             })
                         }
-                        console.log(columnArr);
                         currentTable = columnArr[0]; //默认当前操作的表格对象为第一个
+                        console.log(currentTable)
                         tableIns.reload({
                             data: currentTable.data,
                             page: {
@@ -771,6 +778,7 @@
                         for (var k = 0; k < columnArr.length; k++) {
                             $(".tableTabs").append('<li class="' + (k == 0 ? "layui-this" : "") + '" lay-id="' + columnArr[k].id + '">' + columnArr[k].name + '</li>');
                         }
+                        allElectionStatus(currentTable.data);
                     }
                 }
             });
@@ -790,11 +798,9 @@
 
         function setValue(obj, event) {
             //开启关闭按钮
-            var val;
-            obj.elem.checked == true ? val = true : val = false;
             for (var i = 0; i < currentTable.data.length; i++) {
                 if (currentTable.data[i].id == obj.value) {
-                    currentTable.data[i][event] = val;
+                    currentTable.data[i][event] = obj.elem.checked;
                     break;
                 }
             }
@@ -815,7 +821,108 @@
                     curr: 1 // 重新从第 1 页开始
                 }
             });
+            allElectionStatus(currentTable.data);
         });
 
+        form.on('checkbox(allElection)', function(data) {
+            //表格权限全选按钮
+            if (columnArr.length > 0) {
+                allElection(data.elem.checked);
+            } else {
+                return false;
+            }
+        });
+
+        $(".saveTableBtn").click(function() {
+            console.log(columnArr);
+            var jsondata = {}
+            for (var i = 0; i < columnArr.length; i++) {
+                var itemArr = [];
+                for (var x = 0; x < columnArr[i].data.length; x++) {
+                    var item = {}
+                    var a = columnArr[i].data[x];
+                    item.id = a.id;
+                    var f = false;
+                    if (a.event == 1) {
+                        item['event'] = 1;
+                    }
+                    if (a.edit == 1) {
+                        item['edit'] = 1;
+                    }
+                    if (a.see == 1) {
+                        item['see'] = 1;
+                        itemArr.push(item);
+                    }
+                }
+                jsondata[columnArr[i].id] = itemArr;
+            }
+
+            if (!$.isEmptyObject(jsondata)) {
+                var data = {}
+                data['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
+                data['TOKEN'] = getCookie('TOKEN');
+                data['jsondata'] = JSON.stringify(jsondata);
+                data['menuid'] = menuid;
+                data['roleid'] = window.currData.id;
+                $.ajax({
+                    type: "post",
+                    url: setTableFieldAuth,
+                    data: data,
+                    dataType: 'json',
+                    success: function(res) {
+                        console.log(res);
+                        if (res.status == 1) {
+                            goLogin(); // 跳转到登录页
+                        }else{
+                            layer.msg(res.msg);
+                        }
+                    }
+                });
+            }
+            console.log(jsondata);
+        });
+
+        function allElection(bool) {
+            //全选按钮点击
+            bool ? bool = 1 : bool = 2; //1有权限，2无权限
+
+            if ($.isEmptyObject(currentTable)) {
+                return false;
+            } else {
+                for (var i = 0; i < currentTable.data.length; i++) {
+                    for (var k in currentTable.data[i]) {
+                        if (currentTable.data[i][k] !== "nothing" && (k == "edit" || k == "event" || k == "see")) {
+                            currentTable.data[i][k] = bool;
+                        }
+                    }
+                }
+                tableIns.reload({
+                    data: currentTable.data,
+                    page: {
+                        curr: 1 // 重新从第 1 页开始
+                    }
+                });
+            }
+        }
+
+        function allElectionStatus(arr) {
+            //全选按钮状态
+            var status = true;
+            if (arr.length == 0) {
+                return false;
+            } else {
+                for (var i = 0; i < arr.length; i++) {
+                    for (var k in arr[i]) {
+                        if (arr[i][k] == 2) {
+                            status = false;
+                            break;
+                        }
+                    }
+                }
+
+                $("input[name='all']").attr("checked", status);
+                form.render('checkbox');
+            }
+        }
     });
 </script>
