@@ -378,7 +378,9 @@
         function listIns() {
             var treeData = [];
             var data = {
-                "utype": 3
+                "utype": 3,
+                'SESSION_USER_CODE': getCookie('SESSION_USER_CODE'),
+                'TOKEN': getCookie('TOKEN'),
             }; //1是仓库主类型
             $.ajax({
                 type: "get",

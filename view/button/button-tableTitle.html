@@ -35,7 +35,9 @@
             url: listtableauth,
             type: "get",
             data: {
-                'menuid': menuid
+                'menuid': menuid,
+                'SESSION_USER_CODE': getCookie('SESSION_USER_CODE'),
+                'TOKEN': getCookie('TOKEN'),
             },
             success: function(res) {
                 console.log(res);

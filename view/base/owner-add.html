@@ -180,6 +180,8 @@
         data.customerid && formSelects.value('customerid', [data.customerid]);
 
         function selectDataInstall(url, param, bool) {
+            param['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
+            param['TOKEN'] = getCookie('TOKEN');
             //下拉选框数据组装
             var arr = [];
             //获取列表数据

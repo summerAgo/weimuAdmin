@@ -286,6 +286,10 @@
         $.ajax({
             url: dropSupplier,
             type: "get",
+            data: {
+                'SESSION_USER_CODE': getCookie('SESSION_USER_CODE'),
+                'TOKEN': getCookie('TOKEN'),
+            },
             async: false, //同步
             traditional: true,
             xhrFields: {
@@ -369,6 +373,8 @@
             var arr1 = [];
             positiondIds && (arr1 = positiondIds.split(","));
             var arr = [];
+            bitdepotid['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
+            bitdepotid['TOKEN'] = getCookie('TOKEN');
             $.ajax({
                 url: positiondropdown,
                 type: "get",
@@ -447,6 +453,8 @@
 
 
         function selectDataInstall(url, param, bool, type) {
+            param['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
+            param['TOKEN'] = getCookie('TOKEN');
             var arr = [];
             //获取列表数据
             $.ajax({

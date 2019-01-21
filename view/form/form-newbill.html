@@ -198,6 +198,9 @@
                 positiondIds && (arr1 = positiondIds.split(","));
                 var arr = [];
 
+                bitdepotid['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
+                bitdepotid['TOKEN'] = getCookie('TOKEN');
+
                 $.ajax({
                     url: positiondropdown,
                     type: "get",
@@ -279,6 +282,8 @@
 
         //下拉选框数据组装
         function selectDataInstall(url, param, bool, type) {
+            param['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
+            param['TOKEN'] = getCookie('TOKEN');
             var arr = [];
             //获取列表数据
             $.ajax({
@@ -626,6 +631,8 @@
             var arr1 = [];
             positiondIds && (arr1 = positiondIds.split(","));
             var arr = [];
+            bitdepotid['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
+            bitdepotid['TOKEN'] = getCookie('TOKEN');
             $.ajax({
                 url: positiondropdown,
                 type: "get",
