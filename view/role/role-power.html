@@ -189,6 +189,10 @@
             // url: menuAll,
             url: getMenuAll,
             dataType: 'json',
+            data: {
+                'SESSION_USER_CODE': getCookie('SESSION_USER_CODE'),
+                'TOKEN': getCookie('TOKEN'),
+            },
             success: function(data) {
                 // console.log('window.currData:' + JSON.stringify(window.currData))
                 var roleAut = window.currData;
@@ -412,8 +416,14 @@
 
         //查询角色权限
         function allMuneAuthority(data, success) {
-            data["SESSION_USER_CODE"] = getCookie('SESSION_USER_CODE');
-            data["TOKEN"] = getCookie('TOKEN');
+            if (data) {
+                data['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
+                data['TOKEN'] = getCookie('TOKEN');
+            }else{
+                var data = {};
+                data['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
+                data['TOKEN'] = getCookie('TOKEN');
+            }
             $.ajax({
                 //url: 'tree.json',
                 url: rolegetAuthority,
@@ -475,8 +485,14 @@
 
         //查询所有的按钮
         function allButtonData(success) {
-            data["SESSION_USER_CODE"] = getCookie('SESSION_USER_CODE');
-            data["TOKEN"] = getCookie('TOKEN');
+            if (data) {
+                data['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
+                data['TOKEN'] = getCookie('TOKEN');
+            }else{
+                var data = {};
+                data['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
+                data['TOKEN'] = getCookie('TOKEN');
+            }
             $.ajax({
                 url: buttonAllList,
                 data: data,
@@ -487,8 +503,14 @@
 
         //根据角色id查询所有的按钮权限
         function getButAuthorityAll(data, success) {
-            data['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
-            data['TOKEN'] = getCookie('TOKEN');
+            if (data) {
+                data['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
+                data['TOKEN'] = getCookie('TOKEN');
+            }else{
+                var data = {};
+                data['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
+                data['TOKEN'] = getCookie('TOKEN');
+            }
             $.ajax({
                 url: getAuthorityAll,
                 data: data,

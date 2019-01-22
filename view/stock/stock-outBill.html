@@ -177,8 +177,14 @@
         }, true);
 
         function selectDataInstall(url, param, bool) {
-            param['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
-            param['TOKEN'] = getCookie('TOKEN');
+            if(param){
+                param['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
+                param['TOKEN'] = getCookie('TOKEN');
+            }else{
+                var param = {};
+                param['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
+                param['TOKEN'] = getCookie('TOKEN');
+            }
             //下拉选框数据组装
             var arr = [];
             //获取列表数据
@@ -432,8 +438,14 @@
 
         //增删行数据
         function rowDataApi(url, data, funSuc, funErr) {
-            data['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
-            data['TOKEN'] = getCookie('TOKEN');
+            if (data) {
+                data['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
+                data['TOKEN'] = getCookie('TOKEN');
+            }else{
+                var data = {};
+                data['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
+                data['TOKEN'] = getCookie('TOKEN');
+            }
             $.ajax({
                 url: url,
                 type: "POST",
