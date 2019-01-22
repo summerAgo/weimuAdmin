@@ -244,8 +244,15 @@
 
         //下拉选框数据组装
         function selectDataInstall(url, param, bool) {
-            param["SESSION_USER_CODE"] = getCookie('SESSION_USER_CODE');
-            param["TOKEN"] = getCookie('TOKEN');
+            if (param) {
+                param["SESSION_USER_CODE"] = getCookie('SESSION_USER_CODE');
+                param["TOKEN"] = getCookie('TOKEN');
+            }else{
+                var param = {};
+                param["SESSION_USER_CODE"] = getCookie('SESSION_USER_CODE');
+                param["TOKEN"] = getCookie('TOKEN');
+            }
+
             var arr = [];
             //获取列表数据
             $.ajax({

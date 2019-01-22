@@ -549,8 +549,15 @@
 
         //增删行数据
         function rowDataApi(url, data, funSuc, funErr) {
-            data['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
-            data['TOKEN'] = getCookie('TOKEN');
+            if (data) {
+                data['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
+                data['TOKEN'] = getCookie('TOKEN');
+            }else{
+                var data = {};
+                data['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
+                data['TOKEN'] = getCookie('TOKEN');
+            }
+
             $.ajax({
                 url: url,
                 type: "get",
@@ -746,8 +753,15 @@
                 skin: 'layui-layer-wei', //layui-layer-wei，维木class
                 title: '提示'
             }, function(index) {
-                data['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
-                data['TOKEN'] = getCookie('TOKEN');
+                if (data) {
+                    data['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
+                    data['TOKEN'] = getCookie('TOKEN');
+                }else{
+                    var data = {};
+                    data['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
+                    data['TOKEN'] = getCookie('TOKEN');
+                }
+
                 $.ajax({
                     cache: true,
                     type: "post",

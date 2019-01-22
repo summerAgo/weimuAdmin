@@ -55,6 +55,10 @@
                 cache: true,
                 type: "get",
                 url: roledown,
+                data:{
+                    'SESSION_USER_CODE': getCookie('SESSION_USER_CODE'),
+                    'TOKEN': getCookie('TOKEN'),
+                },
                 async: false,
                 error: function(request) {
                     layer.msg('重置失败');
