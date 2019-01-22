@@ -128,6 +128,13 @@ var roleDel        = pathUrl + "sys/role/deleteMany";      //删除角色
 var roleAuthority  = pathUrl + "sys/role/setAuthority";    //设置角色对应菜单(roleid 角色id        menuId[]菜单数组)
 var setByAuthority = pathUrl + "sys/role/setByAuthority";  // 角色单独发送菜单信息
 
+//仓库主角色  
+var owenrroleList       = pathUrl + "sys/owner/role/list";            //角色列表
+var owenrroleAdd        = pathUrl + "sys/owner/role/add";             //添加角色
+var owenrroleUpdate     = pathUrl + "sys/owner/role/update";          //修改角色
+var owenrroleDel        = pathUrl + "sys/owner/role/deleteMany";      //删除角色
+
+
 /**
  * 保存表格,字段 权限
  * roleid  : 角色ID
