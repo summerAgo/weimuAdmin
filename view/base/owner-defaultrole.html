@@ -223,6 +223,7 @@
         var utype = 1;
         var allMenu;
         var columnArr = [];
+        var tableMenuid;//当前表格队友的菜单ID
         // 初始化(查询所有的菜单)
         $.ajax({
             url: getMenuAll,
@@ -358,7 +359,8 @@
             }
 
             allbutton(cur.value, cur.valueid, menutype);
-            getColumn(menuid);
+            tableMenuid = menuid;
+            getColumn(tableMenuid);
 
             function tabli(obj, type) {
                 var li = '<li class="' + (type == 0 ? "layui-this" : "") + '" lay-id="' + obj.id + '" lay-mid="' + obj.mid + '">' + obj.name + '</li>';
@@ -864,7 +866,7 @@
                 data['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
                 data['TOKEN'] = getCookie('TOKEN');
                 data['jsondata'] = JSON.stringify(jsondata);
-                data['menuid'] = menuid;
+                data['menuid'] = tableMenuid;
                 data['utype'] = utype;
                 $.ajax({
                     type: "post",
