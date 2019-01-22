@@ -2,8 +2,8 @@
     <div class="layui-field-box">
         <div class="layui-form-item layui-control-line">
             <!-- <div class="layui-input-block">
-                <button class="layui-btn" lay-submit="" type="submit" lay-filter="roleSubmit"><i class="iconfont icon-daochu"></i>保存</button>
-            </div> -->
+                    <button class="layui-btn" lay-submit="" type="submit" lay-filter="roleSubmit"><i class="iconfont icon-daochu"></i>保存</button>
+                </div> -->
         </div>
     </div>
 </form>
@@ -24,8 +24,8 @@
             <div class="layui-tab" lay-filter="tabsBtn">
                 <ul class="layui-tab-title zimenutab">
                     <!-- <li class="layui-this">预入库</li>
-                    <li>新建预入库</li>
-                    <li>添加货物信息</li> -->
+                        <li>新建预入库</li>
+                        <li>添加货物信息</li> -->
                 </ul>
                 <div class="layui-tab-content menutab-content">
                     <div class="layui-show">
@@ -35,19 +35,19 @@
                         </div>
                     </div>
                     <!-- <div class="layui-tab-item">
-                        <div class="content-title">[新建预入库]所有权限按钮</div>
-                    </div>
-                    <div class="layui-tab-item">
-                        <div class="content-title">[添加货物信息]所有权限按钮</div>
-                    </div> -->
+                            <div class="content-title">[新建预入库]所有权限按钮</div>
+                        </div>
+                        <div class="layui-tab-item">
+                            <div class="content-title">[添加货物信息]所有权限按钮</div>
+                        </div> -->
                 </div>
             </div>
             <div class="layui-tab" lay-filter="tableTabsBtn">
                 <div class="layui-tab-content menutab-content">
                     <div class="layui-show">
-                        <div class="content-title layui-form tabsTitle" lay-filter="allForm">表格权限<span class="redtips">(表格权限不设定，将无法显示表格内容)</span>
+                        <div class="content-title layui-form tabsTitle" lay-filter="allForm">表格权限
                             <input type="checkbox" name="all" title="全选" lay-filter="allElection">
-                            <a href="javascript:;" class="saveTableBtn"><i class="iconfont icon-baocun"></i>保存修改</a>
+                            <a href="javascript:;" class="saveTableBtn"><i class="iconfont icon-baocun"></i>保存</a>
                         </div>
                         <div class="content-cont">
                             <ul class="layui-tab-title tableTabs">
@@ -63,151 +63,143 @@
 </div>
 <script id="formUserRole" type="text/html">
     <form class="layui-form">
-        <input type="hidden" name="roleid" value="{{d.id}}">
-        {{#  layui.each(d.butAllData, function(index, item){ }}
-        <div class="layui-form-item">
-            <label class="layui-form-label">{{item.bname}}</label>
-            <div class="layui-input-block">
-                <input type="checkbox" name="buttonid" value="{{item.id}}" {{# if(item.checked){}} checked {{#}}}  lay-filter="clickBut"  lay-skin="switch" lay-text="开启|关闭">
+            <input type="hidden" name="roleid" value="{{d.id}}">
+            {{#  layui.each(d.butAllData, function(index, item){ }}
+            <div class="layui-form-item">
+                <label class="layui-form-label">{{item.bname}}</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" name="buttonid" value="{{item.id}}" {{# if(item.checked){}} checked {{#}}}  lay-filter="clickBut"  lay-skin="switch" lay-text="开启|关闭">
+                </div>
             </div>
-        </div>
-        {{#  }); }}
-    </form>
-</script>
+            {{#  }); }}
+        </form>
+    </script>
 <style scoped>
     .formEditView .layui-form{display:flex;flex-wrap:wrap;}
-    .formEditView .layui-form .layui-form-item{flex:0 0 210px;}
-    .saveTableBtn{float: right;padding-right:10px; font-weight:normal;height:24px; line-height: 24px; color:#fff;text-align: center; margin:3px 10px 0 0;border-radius: 3px; padding:0 10px;
-    background: rgb(216,149,19); /* Old browsers */
-    background: -moz-linear-gradient(top,  rgba(216,149,19,1) 0%, rgba(176,129,38,1) 100%); /* FF3.6-15 */
-    background: -webkit-linear-gradient(top,  rgba(216,149,19,1) 0%,rgba(176,129,38,1) 100%); /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(to bottom,  rgba(216,149,19,1) 0%,rgba(176,129,38,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d89513', endColorstr='#b08126',GradientType=0 ); /* IE6-9 */
-}
-.saveTableBtn:hover{color:#fff;}
-.redtips{color:#ff3c4e; font-size:12px;}
-    .tabsTitle .layui-form-checkbox{height:20px; line-height: 20px;}
-    .tabsTitle .layui-form-checkbox i{height:18px;}
-    .role-power .layui-tab-title {
-        position: relative;
-        left: 0;
-        height: 30px;
-        line-height: 30px;
-        white-space: nowrap;
-        font-size: 0;
-        border-bottom: none;
-    }
-    .role-power .layui-tab li {
-        flex: 0 0 auto;
-        line-height: 30px;
-        margin-right: 1px;
-        position: relative;
-        margin-top: -1px;
-        border: 1px solid #ddd;
-        margin-left: -2px;
-    }
-    .role-power .layui-tab-title li::before {
-        position: absolute;
-        content: '';
-        width: 0px;
-        height: 16px;
-        left: -2px;
-        top: 11px;
-        background-color: #ddd;
-    }
-    .role-power .layui-tab li:first-child {
-        font-size: 14px;
-        margin-left: 0px;
-    }
-    .role-power .layui-tab-title li.layui-this {
-        border: 1px solid #0284ff;
-    }
-    .role-power .layui-tab-title .layui-this:after {
-        position: absolute;
-        left: 0;
-        top: 0;
-        content: '';
-        width: 100%;
-        height: 30px;
-        border-width: 0px;
-        border-radius: 2px 2px 0 0;
-        box-sizing: border-box;
-        pointer-events: none;
-    }
-    .role-power .role-title{
-        font-size: 16px;
-        color: #333;
-        line-height: 45px;
-        font-weight: bold;
-    }
-    .layui-form-item {
-        margin-bottom: 0px;
-    }
-    .layui-field-box {
-        padding: 0 20px;
-    }
-    .role-power {
-        height: calc(100% - 71px);
-        padding: 0 20px;
-    }
-    .role-power .layui-row,
-    .role-power .layui-row .role-lf{
-        height: 100%;
-    }
-    .role-power .layui-row .role-lf{
-        padding-right: 20px;
-        border-right: 1px dashed #ccc;
-    }
-    .role-power .layui-row .role-rt{
-        padding-left: 20px;
-        height: 100%;
-    }
-    .role-power .layui-row .role-rt .layui-tab {
-        margin: 0;
-    }
-    .role-power .layui-row .role-rt .layui-tab .layui-tab-content{
-        padding: 0;
-        height: calc(100% - 40px);
-        border: 1px solid #ddd;
-        margin-top: 10px;
-    }
-    .role-power .layui-row .role-rt .layui-tab .layui-tab-content .content-title{
-        height: 30px;
-        line-height: 30px;
-        padding-left: 20px;
-        background-color: #e8e8e8;
-        font-size: 15px;
-        font-weight: bold;
-        border-bottom: 1px solid #ddd;
-    }
-    .role-power .layui-row .role-rt .layui-tab .layui-tab-content .layui-tab-item{
-        height: 100%;
-    }
-    .role-power .layui-row .role-rt .layui-tab .layui-tab-content .content-cont{
-        height: calc(100% - 30px);
-        overflow-y: auto;
-        box-sizing: border-box;
-        padding: 10px;
-    }
-    .role-power .layui-form-label {
-        width: 100px;
-    }
-</style>
+        .formEditView .layui-form .layui-form-item{flex:0 0 210px;}
+        .saveTableBtn{float: right;padding-right:10px; font-weight:normal;}
+        .tabsTitle .layui-form-checkbox{height:20px; line-height: 20px;}
+        .tabsTitle .layui-form-checkbox i{height:18px;}
+        .role-power .layui-tab-title {
+            position: relative;
+            left: 0;
+            height: 30px;
+            line-height: 30px;
+            white-space: nowrap;
+            font-size: 0;
+            border-bottom: none;
+        }
+        .role-power .layui-tab li {
+            flex: 0 0 auto;
+            line-height: 30px;
+            margin-right: 1px;
+            position: relative;
+            margin-top: -1px;
+            border: 1px solid #ddd;
+            margin-left: -2px;
+        }
+        .role-power .layui-tab-title li::before {
+            position: absolute;
+            content: '';
+            width: 0px;
+            height: 16px;
+            left: -2px;
+            top: 11px;
+            background-color: #ddd;
+        }
+        .role-power .layui-tab li:first-child {
+            font-size: 14px;
+            margin-left: 0px;
+        }
+        .role-power .layui-tab-title li.layui-this {
+            border: 1px solid #0284ff;
+        }
+        .role-power .layui-tab-title .layui-this:after {
+            position: absolute;
+            left: 0;
+            top: 0;
+            content: '';
+            width: 100%;
+            height: 30px;
+            border-width: 0px;
+            border-radius: 2px 2px 0 0;
+            box-sizing: border-box;
+            pointer-events: none;
+        }
+        .role-power .role-title{
+            font-size: 16px;
+            color: #333;
+            line-height: 45px;
+            font-weight: bold;
+        }
+        .layui-form-item {
+            margin-bottom: 0px;
+        }
+        .layui-field-box {
+            padding: 0 20px;
+        }
+        .role-power {
+            height: calc(100% - 71px);
+            padding: 0 20px;
+        }
+        .role-power .layui-row,
+        .role-power .layui-row .role-lf{
+            height: 100%;
+        }
+        .role-power .layui-row .role-lf{
+            padding-right: 20px;
+            border-right: 1px dashed #ccc;
+        }
+        .role-power .layui-row .role-rt{
+            padding-left: 20px;
+            height: 100%;
+        }
+        .role-power .layui-row .role-rt .layui-tab {
+            margin: 0;
+        }
+        .role-power .layui-row .role-rt .layui-tab .layui-tab-content{
+            padding: 0;
+            height: calc(100% - 40px);
+            border: 1px solid #ddd;
+            margin-top: 10px;
+        }
+        .role-power .layui-row .role-rt .layui-tab .layui-tab-content .content-title{
+            height: 30px;
+            line-height: 30px;
+            padding-left: 20px;
+            background-color: #e8e8e8;
+            font-size: 15px;
+            font-weight: bold;
+            border-bottom: 1px solid #ddd;
+        }
+        .role-power .layui-row .role-rt .layui-tab .layui-tab-content .layui-tab-item{
+            height: 100%;
+        }
+        .role-power .layui-row .role-rt .layui-tab .layui-tab-content .content-cont{
+            height: calc(100% - 30px);
+            overflow-y: auto;
+            box-sizing: border-box;
+            padding: 10px;
+        }
+        .role-power .layui-form-label {
+            width: 100px;
+        }
+    </style>
 <script type="text/html" id="seeTpl">
     {{#if(d.see != "nothing"){ }}
-    <input type="checkbox" name="checkInput" value="{{d.id}}" lay-skin="switch" lay-text="开启|关闭" lay-filter="seeTool" {{ d.see=='1'?'checked':''}}>
-    {{# }}}
-</script>
+        <input type="checkbox" name="checkInput" value="{{d.id}}" lay-skin="switch" lay-text="开启|关闭" lay-filter="seeTool" {{ d.see=='1'?'checked':''}}>
+        {{# }}}
+    </script>
 <script type="text/html" id="eventTpl">
     {{#if(d.event != "nothing"){ }}
-    <input type="checkbox" name="checkInput" value="{{d.id}}" lay-skin="switch" lay-text="开启|关闭" lay-filter="eventTool" {{ d.event=='1'?'checked':''}}>
-    {{# }}}
-</script>
+        <input type="checkbox" name="checkInput" value="{{d.id}}" lay-skin="switch" lay-text="开启|关闭" lay-filter="eventTool" {{ d.event=='1'?'checked':''}}>
+        {{# }}}
+    </script>
 <script type="text/html" id="editTpl">
     {{#if(d.edit != "nothing"){ }}
-    <input type="checkbox" name="checkInput" value="{{d.id}}" lay-skin="switch" lay-text="开启|关闭" lay-filter="editTool" {{ d.edit=='1'?'checked':''}}>
-    {{# }}}
-</script>
+        <input type="checkbox" name="checkInput" value="{{d.id}}" lay-skin="switch" lay-text="开启|关闭" lay-filter="editTool" {{ d.edit=='1'?'checked':''}}>
+        {{# }}}
+    </script>
 
 <script type="text/javascript">
     layui.use(['jquery', 'authtree', 'form', 'layer', 'element', 'laytpl', 'laydate', "eleTree", 'table'], function() {
@@ -232,17 +224,13 @@
         var columnArr = [];
         // 初始化(查询所有的菜单)
         $.ajax({
-            //url: 'tree.json',
-            // url: menuAll,
             url: getMenuAll,
             dataType: 'json',
             success: function(data) {
-                // console.log('window.currData:' + JSON.stringify(window.currData))
                 var roleAut = window.currData;
                 var roleData = {
                     "roleid": roleAut.id
                 };
-                // console.log(roleData)
                 //查询角色菜单权限
                 getButAuthorityAll(roleData, function(res) {
                     allMenu = data.data;
