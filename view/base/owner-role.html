@@ -211,7 +211,7 @@
         var laytpl = layui.laytpl;
         var layer = layui.layer;
         var table = layui.table;
-        var dataall = window.currData;
+        var dataall = {};
         var tableId = []; //当前权限表格ID
         var getTpl = formUserRole.innerHTML,
             view = $(".formEditView")[0];
@@ -220,6 +220,7 @@
         });
         form.render(); //重置表单渲染
 
+        var utype = 1;
         var allMenu;
         var columnArr = [];
         // 初始化(查询所有的菜单)
@@ -227,13 +228,15 @@
             url: getMenuAll,
             dataType: 'json',
             success: function(data) {
-                var roleAut = window.currData;
+                //var roleAut = window.currData;
                 var roleData = {
-                    "roleid": roleAut.id
+                    "utype":utype
                 };
                 //查询角色菜单权限
                 getButAuthorityAll(roleData, function(res) {
                     allMenu = data.data;
+
+                    console.log(res);
                     var ant = {};
                     if (res.status == 0) {
                         ant = res.data;
@@ -290,7 +293,10 @@
 
                     allButtonData(function(res) { //查询所有的按钮
                         allbutData = res.data;
+                        
                     });
+
+                    
 
                     // allAuthority ;//所有的权限格式：[{'菜单id':[按钮id]}]
                     for (var key in ant) { //循环每个菜单
@@ -299,6 +305,7 @@
                         map[key] = butlist;
                         allAuthority.push(map);
                     }
+                    
                     // console.log(allAuthority);
                     var val = JSON.stringify(allAuthority);
                     sessionStorage.setItem('allAuthority', val);
@@ -351,7 +358,7 @@
             }
 
             allbutton(cur.value, cur.valueid, menutype);
-            getColumn(menuid, window.currData.id);
+            getColumn(menuid);
 
             function tabli(obj, type) {
                 var li = '<li class="' + (type == 0 ? "layui-this" : "") + '" lay-id="' + obj.id + '" lay-mid="' + obj.mid + '">' + obj.name + '</li>';
@@ -389,7 +396,7 @@
                         f = 1;
                     }
                     menuAjax({
-                        roleid: dataall.id,
+                        utype: utype,
                         menuid: cur.children[i].value,
                         //buttonid: 1,
                         typeCode: 0,
@@ -399,7 +406,7 @@
             }
 
             menuAjax({
-                roleid: dataall.id,
+                utype: utype,
                 menuid: cur.value,
                 //buttonid: 1,
                 typeCode: 0,
@@ -413,7 +420,7 @@
             data['TOKEN'] = getCookie('TOKEN');
             $.ajax({
                 type: "post",
-                url: setByAuthority,
+                url: defaultowenrsetByAuthority,
                 data: data,
                 dataType: 'json',
                 success: function(res) {
@@ -555,7 +562,7 @@
             data['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
             data['TOKEN'] = getCookie('TOKEN');
             $.ajax({
-                url: getAuthorityAll,
+                url: defaultowenrAuthorityAll,
                 data: data,
                 dataType: 'json',
                 success: success
@@ -606,7 +613,7 @@
             // 设置按钮权限
             var typeCode = valueid.substring(0, 1);
             menuAjax({
-                roleid: dataall.id,
+                utype: utype,
                 menuid: menuid,
                 buttonid: data.value,
                 typeCode: typeCode,
@@ -737,16 +744,16 @@
         });
 
         var currentTable = {}; //当前操作的表格对象
-        function getColumn(menuid, roleid) {
+        function getColumn(menuid) {
 
             var data = {};
             data['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
             data['TOKEN'] = getCookie('TOKEN');
             data['menuid'] = menuid;
-            data['roleid'] = roleid;
+            data['utype'] = utype;
             $.ajax({
                 type: "get",
-                url: queryByMenuidleauth,
+                url: defaultowenrMenuid,
                 data: data,
                 dataType: 'json',
                 async: false,
@@ -762,7 +769,7 @@
                             })
                         }
                         currentTable = columnArr[0]; //默认当前操作的表格对象为第一个
-                        console.log(currentTable)
+                        //console.log(currentTable)
                         tableIns.reload({
                             data: currentTable.data,
                             page: {
@@ -858,10 +865,10 @@
                 data['TOKEN'] = getCookie('TOKEN');
                 data['jsondata'] = JSON.stringify(jsondata);
                 data['menuid'] = menuid;
-                data['roleid'] = window.currData.id;
+                data['utype'] = utype;
                 $.ajax({
                     type: "post",
-                    url: setTableFieldAuth,
+                    url: defaultowenrsetTableFieldAuth,
                     data: data,
                     dataType: 'json',
                     success: function(res) {

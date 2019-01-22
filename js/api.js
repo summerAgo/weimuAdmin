@@ -230,6 +230,14 @@ var menugetAuthority = pathUrl + "sys/menu/getAuthority";  //查询菜单对应�
 var getAuthorityAll = pathUrl + "sys/role/getAuthorityAll";  //根据角色id查询所有的按钮权限(roleid=2)
 //var setAuthorityAll = pathUrl + "sys/role/setAuthorityAll";//添加角色权限 roleid角色id，allauth 权限[{'菜单id':[按钮id]}]
 var getMenuAll = pathUrl + "sys/menu/getMenuAll";  //获取菜单类别列表
+
+//仓库主默认权限
+var defaultowenrAuthorityAll = pathUrl + "sys/owner/role/getAuthorityAll";  //根据角色id查询所有的按钮权限(roleid=2)
+var defaultowenrMenuid = pathUrl +"sys/owner/role/queryByMenuid";  //根据菜单ID查询该菜单下面所有表格 参数  menuid：菜单ID
+var defaultowenrsetTableFieldAuth = pathUrl + "sys/owner/role/setTableFieldAuth";
+var defaultowenrTableFieldAuth = pathUrl + "sys/owner/role/queryTableFieldAuth";
+var defaultowenrsetByAuthority = pathUrl + "sys/owner/role/setByAuthority";  // 添加菜单,按钮权限
+
 //风控
 var riskList        = pathUrl + "risk/control/riskList"         //货物估值列表 
 var outTreasuryList = pathUrl + "risk/control/outTreasuryList"  //出货审核列表
