@@ -84,7 +84,7 @@ Array.prototype.uniqueJson = function(key) {
     }
     return result;
 };
-// //数组获取索引
+//数组获取索引
 Array.prototype.indexGet = function(key, val) {
     for (var i = 0; i < this.length; i++) {
         if (this[i][key] == val) return i;
