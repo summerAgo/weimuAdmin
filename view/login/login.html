@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
@@ -23,127 +24,134 @@
 </head>
 
 <body class="layui-layout-body">
-<div class="layui-fluid container">
-    <div class="top">
+    <div class="layui-fluid container">
+        <div class="top">
+            <div class="w">
+                <div class="computer"><span class="login-log"></span>维木科技智能仓储系统 T1.0.2</div>
+                <div class="hotline"></div>
+            </div>
+        </div>
         <div class="w">
-            <div class="computer"><span class="login-log"></span>维木科技智能仓储系统 T1.0.2</div>
-            <div class="hotline"></div>
-        </div>
-    </div>
-    <div class="w">
-        <div class="form-container">
-            <div class="form-header">系统登录</div>
-            <form class="layui-form" action="">
-                <div class="layui-form-item login-item">
-                    <label class="layui-form-label"><i class="layui-icon layui-icon-username"></i></label>
-                    <input type="text" name="username" value="" required lay-verify="required" placeholder="用户ID" autocomplete="off" class="layui-input">
-                </div>
-                <div class="layui-form-item login-item">
-                    <label class="layui-form-label"><i class="layui-icon layui-icon-password"></i></label>
-                    <input type="password" name="password" value="" required lay-verify="required" placeholder="登录密码" autocomplete="off" class="layui-input">
-                </div>
-                <div class="layui-form-item login-item">
-                    <label class="layui-form-label"><i class="layui-icon layui-icon-vercode"></i></label>
-                    <div class="layui-input-block-left">
-                        <input type="text" name="verify" required lay-verify="required|gVerify" placeholder="验证码" autocomplete="off" class="layui-input" maxlength="4">
+            <div class="form-container">
+                <div class="form-header">系统登录</div>
+                <form class="layui-form" action="">
+                    <div class="layui-form-item login-item">
+                        <label class="layui-form-label"><i class="layui-icon layui-icon-username"></i></label>
+                        <input type="text" name="username" value="" required lay-verify="required" placeholder="用户ID" autocomplete="off" class="layui-input">
                     </div>
-                    <div class="layui-form-mid layui-word-aux">
-                        <div id="v_container"></div>
+                    <div class="layui-form-item login-item">
+                        <label class="layui-form-label"><i class="layui-icon layui-icon-password"></i></label>
+                        <input type="password" name="password" value="" required lay-verify="required" placeholder="登录密码" autocomplete="off" class="layui-input">
                     </div>
-                </div>
-                <div class="layui-form-item">
-                    <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="formLogin" id="login_button">登录</button>
-                </div>
-            </form>
+                    <div class="layui-form-item login-item">
+                        <label class="layui-form-label"><i class="layui-icon layui-icon-vercode"></i></label>
+                        <div class="layui-input-block-left">
+                            <input type="text" name="verify" required lay-verify="required|gVerify" placeholder="验证码" autocomplete="off" class="layui-input" maxlength="4">
+                        </div>
+                        <div class="layui-form-mid layui-word-aux">
+                            <div id="v_container"></div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="formLogin" id="login_button">登录</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="bottom">
+            <div class="w">
+                <div>广东维木网络科技有限公司</div>
+                <div>Copyright © 2015-2018 GuangDong Venneer Mall Trading Co.，Ltd</div>
+            </div>
         </div>
     </div>
-    <div class="bottom">
-        <div class="w">
-            <div>广东维木网络科技有限公司</div>
-            <div>Copyright © 2015-2018 GuangDong Venneer Mall Trading Co.，Ltd</div>
-        </div>
-    </div>
-</div>
 
-<script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
-<script src="../../layui/layui.js"></script>
-<script src="../../js/localhost.js"></script>
-<script src="../../js/common.js"></script>
-<script src="../../js/api.js"></script>
-<script src="../../js/gVerify.js"></script>
-<script>
-    // if(sessionStorage.getItem('userInfo')){
-    //     history.replaceState({},'index',"http://192.168.10.216:8000/");
-    //     window.location.href = "http://192.168.10.216:8000/";
-    // }
-    layui.use(['form', 'jquery', 'element', 'layer'], function () {
-        var form = layui.form;
-        var $ = layui.jquery;
-        var verifyCode = new GVerify({
-            id:"v_container",
-            type:"number"
-        });
-        var cahonetime = "24h";
+    <script src="https://cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+    <script src="../../layui/layui.js"></script>
+    <script src="../../js/localhost.js"></script>
+    <script src="../../js/common.js"></script>
+    <script src="../../js/api.js"></script>
+    <script src="../../js/gVerify.js"></script>
+    <script>
+        // if(sessionStorage.getItem('userInfo')){
+        //     history.replaceState({},'index',"http://192.168.10.216:8000/");
+        //     window.location.href = "http://192.168.10.216:8000/";
+        // }
+        layui.use(['form', 'jquery', 'element', 'layer'], function() {
+            var form = layui.form;
+            var $ = layui.jquery;
+            var verifyCode = new GVerify({
+                id: "v_container",
+                type: "number"
+            });
+            var cahonetime = "24h";
 
-        var SESSION_USER_CODE = getCookie("SESSION_USER_CODE");
-        if (SESSION_USER_CODE) {
-            //判断是否已登录
-            window.location.href = localhost;//跳转首页
-        }else{
-            clearSeesion();
-        }
+            var SESSION_USER_CODE = getCookie("SESSION_USER_CODE");
+            if (SESSION_USER_CODE) {
+                //判断是否已登录
+                window.location.href = localhost; //跳转首页
+            } else {
+                clearSeesion();
+            }
 
-        //监听提交
-        form.on('submit(formLogin)', function (data) {
-            data.field['SESSION_USER_CODE']= getCookie('SESSION_USER_CODE');
-            data.field['TOKEN']= getCookie('TOKEN');
-            $.ajax({
-                url: loginUrl,
-                type: "POST",
-                data: data.field,
-                xhrFields: {
-                    withCredentials: true
-                },
-                crossDomain: true,
-                success: function (data) {
-                    if (data.status == 0) {
-                        layer.msg("登录成功");
-                        setCookie("SESSION_USER_CODE", data.SESSION_USER_CODE, cahonetime);
-                        setCookie("TOKEN", data.TOKEN, cahonetime);
+            //监听提交
+            form.on('submit(formLogin)', function(data) {
+                data.field['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
+                data.field['TOKEN'] = getCookie('TOKEN');
+                $.ajax({
+                    url: loginUrl,
+                    type: "POST",
+                    data: data.field,
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    crossDomain: true,
+                    success: function(data) {
+                        if (data.status == 0) {
+                            layer.msg("登录成功");
+                            setCookie("SESSION_USER_CODE", data.SESSION_USER_CODE, cahonetime);
+                            setCookie("TOKEN", data.TOKEN, cahonetime);
 
-                        //该用户菜单权限JSON
-                        sessionStorage.setItem("menuAuthority", JSON.stringify(data.menuAuthority));
+                            //该用户菜单权限JSON
+                            sessionStorage.setItem("menuAuthority", JSON.stringify(data.menuAuthority));
 
-                        //该用户按钮权限JSON
-                        sessionStorage.setItem("buttonAuthority", JSON.stringify(data.buttonAuthority));
+                            //该用户按钮权限JSON
+                            sessionStorage.setItem("buttonAuthority", JSON.stringify(data.buttonAuthority));
 
-                        //该用户按钮权限JSON
-                        sessionStorage.setItem("talbeAuthority", JSON.stringify(data.tableAuthority));
+                            //该用户按钮权限JSON
+                            sessionStorage.setItem("talbeAuthority", JSON.stringify(data.tableAuthority));
 
-                        //该用户角色数组
-                        sessionStorage.setItem("roleName", data.roleName);
-                        history.replaceState({}, 'index', localhost);//修改浏览器地址
-                        window.location.href = localhost;//跳转首页
-                    } else {
+                            //该用户角色数组
+                            sessionStorage.setItem("roleName", data.roleName);
+
+                            // 登录账号身份
+                            var roleInfo = {
+                                isOwner: data.isOwner,
+                                ownerid: data.ownerid
+                            }
+                            sessionStorage.setItem("roleInfo", JSON.stringify(roleInfo));
+                            history.replaceState({}, 'index', localhost); //修改浏览器地址
+                            window.location.href = localhost; //跳转首页
+                        } else {
+                            layer.msg(data.msg);
+                        }
+                    },
+                    error: function(data) {
                         layer.msg(data.msg);
                     }
-                },
-                error: function (data) {
-                    layer.msg(data.msg);
-                }
+                });
+                return false;
             });
-            return false;
-        });
-        form.verify({
-            gVerify: function (value, item) {
-                var res = verifyCode.validate(value);
-                if (!res) {
-                    return '验证码错误';
+            form.verify({
+                gVerify: function(value, item) {
+                    var res = verifyCode.validate(value);
+                    if (!res) {
+                        return '验证码错误';
+                    }
                 }
-            }
-        })
-    });
-</script>
+            })
+        });
+    </script>
 </body>
 
 </html>

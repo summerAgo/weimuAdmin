@@ -162,8 +162,19 @@
                         //该用户按钮权限JSON
                         sessionStorage.setItem("buttonAuthority", JSON.stringify(res.data.buttonAuthority));
 
+                        //该用户按钮权限JSON
+                        sessionStorage.setItem("talbeAuthority", JSON.stringify(res.data.tableAuthority));
+
                         //该用户角色数组
                         sessionStorage.setItem("roleName", res.data.roleName);
+
+                        // 登录账号身份
+                        var roleInfo = {
+                            isOwner: res.data.isOwner,
+                            ownerid: res.data.ownerid
+                        }
+                        sessionStorage.setItem("roleInfo", JSON.stringify(roleInfo));
+                        
                         roleName = res.data.roleName;
                     } else {
                         //如果该用户没有权限。则回到登陆页面
@@ -313,11 +324,14 @@
                 }],
                 ['ilbstock-adjust', function() {
                     container.load('/view/ilbstock/ilbstock-adjust.html');
-                }],['owner-defaultrole', function() {
+                }],
+                ['owner-defaultrole', function() {
                     container.load('/view/base/owner-defaultrole.html');
-                }],['owner-role', function() {
+                }],
+                ['owner-role', function() {
                     container.load('/view/base/owner-role.html');
-                }],['external-account', function() {
+                }],
+                ['external-account', function() {
                     container.load('/view/base/external-account.html');
                 }]
             ]);

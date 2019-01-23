@@ -47,6 +47,10 @@
         var laytpl = layui.laytpl;
         var laydate = layui.laydate;
         var data = window.currData;
+        var url = roledown;
+        if (data.userTypeRole == "external") {
+            url = owenrroledropdown;
+        }
 
         if (data != null && data.id) { //不是空就是编辑
             var getTpl = formUser.innerHTML,
@@ -55,7 +59,7 @@
                 cache: true,
                 type: "get",
                 url: roledown,
-                data:{
+                data: {
                     'SESSION_USER_CODE': getCookie('SESSION_USER_CODE'),
                     'TOKEN': getCookie('TOKEN'),
                 },
@@ -66,7 +70,7 @@
                 },
                 success: function(res) {
                     data["rolelist"] = res.data;
-                    data["rolename"] = data["rolename"].replace(/^\s*|\s*$/g,"");
+                    data["rolename"] = data["rolename"].replace(/^\s*|\s*$/g, "");
                     console.log(data);
                     laytpl(getTpl).render(data, function(html) {
                         view.innerHTML = html;

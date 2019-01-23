@@ -230,7 +230,7 @@
 
         var allMenu;
         var columnArr = [];
-        var tableMenuid;//当前表格队友的菜单ID
+        var tableMenuid; //当前表格队友的菜单ID
         // 初始化(查询所有的菜单)
         $.ajax({
             //url: 'tree.json',
@@ -789,6 +789,16 @@
                             $(".tableTabs").append('<li class="' + (k == 0 ? "layui-this" : "") + '" lay-id="' + columnArr[k].id + '">' + columnArr[k].name + '</li>');
                         }
                         allElectionStatus(currentTable.data);
+                    } else {
+                        columnArr = [];
+                        currentTable = {};
+                        $(".tableTabs").html("");
+                        tableIns.reload({
+                            data: [],
+                            page: {
+                                curr: 1 // 重新从第 1 页开始
+                            }
+                        });
                     }
                 }
             });

@@ -45,9 +45,9 @@
             <div class="layui-tab" lay-filter="tableTabsBtn">
                 <div class="layui-tab-content menutab-content">
                     <div class="layui-show">
-                        <div class="content-title layui-form tabsTitle" lay-filter="allForm">表格权限
+                        <div class="content-title layui-form tabsTitle" lay-filter="allForm">表格权限<span class="redtips">(表格权限不设定，将无法显示表格内容)</span>
                             <input type="checkbox" name="all" title="全选" lay-filter="allElection">
-                            <a href="javascript:;" class="saveTableBtn"><i class="iconfont icon-baocun"></i>保存</a>
+                            <a href="javascript:;" class="saveTableBtn"><i class="iconfont icon-baocun"></i>保存修改</a>
                         </div>
                         <div class="content-cont">
                             <ul class="layui-tab-title tableTabs">
@@ -76,10 +76,18 @@
     </script>
 <style scoped>
     .formEditView .layui-form{display:flex;flex-wrap:wrap;}
-        .formEditView .layui-form .layui-form-item{flex:0 0 210px;}
-        .saveTableBtn{float: right;padding-right:10px; font-weight:normal;}
-        .tabsTitle .layui-form-checkbox{height:20px; line-height: 20px;}
-        .tabsTitle .layui-form-checkbox i{height:18px;}
+    .formEditView .layui-form .layui-form-item{flex:0 0 210px;}
+    .saveTableBtn{float: right;padding-right:10px; font-weight:normal;height:24px; line-height: 24px; color:#fff;text-align: center; margin:3px 10px 0 0;border-radius: 3px; padding:0 10px;
+    background: rgb(216,149,19); /* Old browsers */
+    background: -moz-linear-gradient(top,  rgba(216,149,19,1) 0%, rgba(176,129,38,1) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top,  rgba(216,149,19,1) 0%,rgba(176,129,38,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom,  rgba(216,149,19,1) 0%,rgba(176,129,38,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#d89513', endColorstr='#b08126',GradientType=0 ); /* IE6-9 */
+}
+.saveTableBtn:hover{color:#fff;}
+.redtips{color:#ff3c4e; font-size:12px;}
+    .tabsTitle .layui-form-checkbox{height:20px; line-height: 20px;}
+    .tabsTitle .layui-form-checkbox i{height:18px;}
         .role-power .layui-tab-title {
             position: relative;
             left: 0;
@@ -223,7 +231,7 @@
         var utype = 1;
         var allMenu;
         var columnArr = [];
-        var tableMenuid;//当前表格队友的菜单ID
+        var tableMenuid; //当前表格队友的菜单ID
         // 初始化(查询所有的菜单)
         $.ajax({
             url: getMenuAll,
@@ -231,7 +239,7 @@
             success: function(data) {
                 //var roleAut = window.currData;
                 var roleData = {
-                    "utype":utype
+                    "utype": utype
                 };
                 //查询角色菜单权限
                 getButAuthorityAll(roleData, function(res) {
@@ -294,10 +302,10 @@
 
                     allButtonData(function(res) { //查询所有的按钮
                         allbutData = res.data;
-                        
+
                     });
 
-                    
+
 
                     // allAuthority ;//所有的权限格式：[{'菜单id':[按钮id]}]
                     for (var key in ant) { //循环每个菜单
@@ -306,7 +314,7 @@
                         map[key] = butlist;
                         allAuthority.push(map);
                     }
-                    
+
                     // console.log(allAuthority);
                     var val = JSON.stringify(allAuthority);
                     sessionStorage.setItem('allAuthority', val);
@@ -771,7 +779,7 @@
                             })
                         }
                         currentTable = columnArr[0]; //默认当前操作的表格对象为第一个
-                        //console.log(currentTable)
+                        console.log(currentTable)
                         tableIns.reload({
                             data: currentTable.data,
                             page: {
@@ -784,6 +792,16 @@
                             $(".tableTabs").append('<li class="' + (k == 0 ? "layui-this" : "") + '" lay-id="' + columnArr[k].id + '">' + columnArr[k].name + '</li>');
                         }
                         allElectionStatus(currentTable.data);
+                    } else {
+                        columnArr = [];
+                        currentTable = {};
+                        $(".tableTabs").html("");
+                        tableIns.reload({
+                            data: [],
+                            page: {
+                                curr: 1 // 重新从第 1 页开始
+                            }
+                        });
                     }
                 }
             });

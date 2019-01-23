@@ -309,7 +309,7 @@
 
         // 供应商列表select下拉初始化
         formSelects.data('supplierSelectLayer', 'local', {
-            arr: selectDataInstall(dropSupplier, null, false, 0) //供应商列表
+            arr: selectDataInstall(dropSupplier, {}, false, 0) //供应商列表
         });
 
         // 监听供应商列表select选中与取消
@@ -328,24 +328,24 @@
 
         // 产地下拉框数据初始化
         formSelects.data('originSelectLayer', 'local', {
-            arr: selectDataInstall(CHDList, null) //产地列表
+            arr: selectDataInstall(CHDList, {}) //产地列表
         });
 
         // 品种多选数据赋值
         formSelects.data('selectVarieties', 'local', {
-            arr: selectDataInstall(VTSList, null, 0, 1) //品种列表
+            arr: selectDataInstall(VTSList, {}, 0, 1) //品种列表
         });
         // 等级多选数据赋值
         formSelects.data('selectLevels', 'local', {
-            arr: selectDataInstall(levelsList, null, 0, 1) //等级列表
+            arr: selectDataInstall(levelsList, {}, 0, 1) //等级列表
         });
         // 规格多选数据赋值
         formSelects.data('selectSpec', 'local', {
-            arr: selectDataInstall(specList, null, 0, 1) //规格列表
+            arr: selectDataInstall(specList, {}, 0, 1) //规格列表
         });
         // 产地列表
         formSelects.data('originSelect', 'local', {
-            arr: selectDataInstall(CHDList, null, 0, 1) //产地列表
+            arr: selectDataInstall(CHDList, {}, 0, 1) //产地列表
         });
 
         if (orderno) {
@@ -368,17 +368,18 @@
             });
 
             // 库位初始化
-            var bitdepotid = orderno.bitdepotid;
+            var param = {};
+            param.bitdepotid = orderno.bitdepotid;
             var positiondIds = orderno.position;
             var arr1 = [];
             positiondIds && (arr1 = positiondIds.split(","));
             var arr = [];
-            bitdepotid['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
-            bitdepotid['TOKEN'] = getCookie('TOKEN');
+            param['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
+            param['TOKEN'] = getCookie('TOKEN');
             $.ajax({
                 url: positiondropdown,
                 type: "get",
-                data: bitdepotid,
+                data: param,
                 async: false, // 同步
                 traditional: true,
                 success: function(data) {

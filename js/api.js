@@ -115,7 +115,6 @@ var userAdd            = pathUrl + "sys/add";            //添加用户
 var userdropdown       = pathUrl + "sys/dropdown";       //用户下拉
 var userUpdate         = pathUrl + "sys/update";         //修改用户
 var userDel            = pathUrl + "sys/deleteMany";     //删除用户
-var userPas            = pathUrl + "sys/resetPassword";  //重置密码
 var userChangePas      = pathUrl + "sys/updaPassword";   //修改密码
 var userExit           = pathUrl + "sys/exit";           //退出登陆
 var usergetSessionAnth = pathUrl +"sys/getSessionAnth";
@@ -129,20 +128,20 @@ var roleAuthority  = pathUrl + "sys/role/setAuthority";    //设置角色对应�
 var setByAuthority = pathUrl + "sys/role/setByAuthority";  // 角色单独发送菜单信息
 
 //仓库主登陆角色
-var owenrroleList       = pathUrl + "sys/owner/role/list";            //角色列表
-var owenrroleisName       = pathUrl + "sys/owner/role/isName";        //验证重复  参数:rolename
-var owenrroleAdd        = pathUrl + "sys/owner/role/add";             //添加角色
-var owenrroledropdown        = pathUrl + "sys/owner/role/dropdown";   //添加角色
-var owenrroleUpdate     = pathUrl + "sys/owner/role/update";          //修改角色
-var owenrroleDel        = pathUrl + "sys/owner/role/deleteMany";      //删除角色
+var owenrroleList     = pathUrl + "sys/owner/role/list";        //角色列表
+var owenrroleisName   = pathUrl + "sys/owner/role/isName";      //验证重复  参数:rolename
+var owenrroleAdd      = pathUrl + "sys/owner/role/add";         //添加角色
+var owenrroledropdown = pathUrl + "sys/owner/role/dropdown";    //添加角色
+var owenrroleUpdate   = pathUrl + "sys/owner/role/update";      //修改角色
+var owenrroleDel      = pathUrl + "sys/owner/role/deleteMany";  //删除角色
 
 //仓库主登陆用户
-var queryOwnerUserlist  = pathUrl + "user/owner/queryOwnerUserlist";            //公司员工登陆查询(右边仓库主人员列表) 查询参数: name
-var OwnerUserisname       = pathUrl + "sys/owner/user/isName";        //验证重复  参数:username
-var OwnerUserlist  = pathUrl + "sys/owner/user/list";
-var OwnerUseradd  = pathUrl + "sys/owner/user/add";
-var OwnerUserdelete  = pathUrl + "sys/owner/user/delete";
-var OwnerUserupdate  = pathUrl + "sys/owner/user/update";
+var queryOwnerUserlist = pathUrl + "user/owner/queryOwnerUserlist";  //公司员工登陆查询(右边仓库主人员列表) 查询参数: name
+var OwnerUserisname    = pathUrl + "sys/owner/user/isName";          //验证重复  参数:username
+var OwnerUserlist      = pathUrl + "sys/owner/user/list";
+var OwnerUseradd       = pathUrl + "sys/owner/user/add";
+var OwnerUserdelete    = pathUrl + "sys/owner/user/delete";
+var OwnerUserupdate    = pathUrl + "sys/owner/user/update";
 /**
  * 保存表格,字段 权限
  * roleid  : 角色ID
@@ -247,11 +246,11 @@ var getAuthorityAll = pathUrl + "sys/role/getAuthorityAll";  //根据角色id查
 var getMenuAll = pathUrl + "sys/menu/getMenuAll";  //获取菜单类别列表
 
 //仓库主默认权限
-var defaultowenrAuthorityAll = pathUrl + "sys/owner/defaultauth/getAuthorityAll";  //根据角色id查询所有的按钮权限(roleid=2)
-var defaultowenrMenuid = pathUrl +"sys/owner/defaultauth/queryByMenuid";  //根据菜单ID查询该菜单下面所有表格 参数  menuid：菜单ID
+var defaultowenrAuthorityAll      = pathUrl + "sys/owner/defaultauth/getAuthorityAll";      //根据角色id查询所有的按钮权限(roleid=2)
+var defaultowenrMenuid            = pathUrl +"sys/owner/defaultauth/queryByMenuid";         //根据菜单ID查询该菜单下面所有表格 参数  menuid：菜单ID
 var defaultowenrsetTableFieldAuth = pathUrl + "sys/owner/defaultauth/setTableFieldAuth";
-var defaultowenrTableFieldAuth = pathUrl + "sys/owner/defaultauth/queryTableFieldAuth";
-var defaultowenrsetByAuthority = pathUrl + "sys/owner/defaultauth/setByAuthority";  // 添加菜单,按钮权限
+var defaultowenrTableFieldAuth    = pathUrl + "sys/owner/defaultauth/queryTableFieldAuth";
+var defaultowenrsetByAuthority    = pathUrl + "sys/owner/defaultauth/setByAuthority";       // 添加菜单,按钮权限
 
 //风控
 var riskList        = pathUrl + "risk/control/riskList"         //货物估值列表 
