@@ -138,6 +138,7 @@ var owenrroleDel        = pathUrl + "sys/owner/role/deleteMany";      //删除�
 
 //仓库主登陆用户
 var queryOwnerUserlist  = pathUrl + "user/owner/queryOwnerUserlist";            //公司员工登陆查询(右边仓库主人员列表) 查询参数: name
+var OwnerUserisname       = pathUrl + "sys/owner/user/isName";        //验证重复  参数:username
 var OwnerUserlist  = pathUrl + "sys/owner/user/list";
 var OwnerUseradd  = pathUrl + "sys/owner/user/add";
 var OwnerUserdelete  = pathUrl + "sys/owner/user/delete";
