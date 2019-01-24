@@ -48,8 +48,14 @@
         var laydate = layui.laydate;
         var data = window.currData;
         var url = roledown;
+        var param = {
+            'SESSION_USER_CODE': getCookie('SESSION_USER_CODE'),
+            'TOKEN': getCookie('TOKEN')
+        }
+        console.log(data)
         if (data.userTypeRole == "external") {
             url = owenrroledropdown;
+            param.ownerid = data.ownerid;
         }
 
         if (data != null && data.id) { //不是空就是编辑
@@ -58,11 +64,8 @@
             $.ajax({
                 cache: true,
                 type: "get",
-                url: roledown,
-                data: {
-                    'SESSION_USER_CODE': getCookie('SESSION_USER_CODE'),
-                    'TOKEN': getCookie('TOKEN'),
-                },
+                url: url,
+                data: param,
                 async: false,
                 error: function(request) {
                     layer.msg('重置失败');
@@ -79,16 +82,6 @@
             });
         }
         form.render(); //重置表单渲染
-
-        //日期时间选择器
-        laydate.render({
-            elem: '#birthday',
-            type: 'datetime',
-            max: 0,
-            change: function(val) {
-                console.log(val);
-            }
-        });
 
     });
 </script>

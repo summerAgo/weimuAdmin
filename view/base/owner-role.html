@@ -512,13 +512,14 @@
                     }
                 }
             });
-            // });
+            // });                     
             return false;
         });
 
         //添加角色表单提交
         form.on('submit(addSubmit)', function(data) {
             var userData = window.currData;
+            console.log(userData)
             var title = "";
             var userUrl = "";
             var isNameAdd = false; // 判断添加是否同名标识

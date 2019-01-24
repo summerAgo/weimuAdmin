@@ -324,9 +324,9 @@
             //编辑
             var checkStatus = table.checkStatus('tableContainer-userlist');
             if (checkStatus.data.length < 1) {
-                layer.msg("请选择需要重置的信息");
+                layer.msg("请选择需要设置角色的信息");
             } else if (checkStatus.data.length > 1) {
-                layer.msg("请选择需要重置的单条信息");
+                layer.msg("请选择需要设置角色的信息");
             } else {
                 window.currData = checkStatus.data[0]; //全局对象存储当前选中行数据
                 window.currData.userTypeRole = "external";
@@ -353,7 +353,7 @@
             $.ajax({
                 cache: true,
                 type: "POST",
-                url: userAuthority,
+                url: OwnersetAuthority,
                 data: data.field,
                 async: false,
                 xhrFields: {
@@ -367,7 +367,7 @@
                 success: function(data) {
                     if (data.status === 0) {
                         layer.close(eaitLayer);
-                        layer.msg('提交成功');
+                        layer.msg(data.msg);
                         // 刷新表格
                         tableIns.reload({
                             where: {
@@ -378,8 +378,10 @@
                             }
                         });
                     }
-                    if (data.status === 1) {
-                        window.location.href = loginPageUrl;
+                    else if (data.status == 1) {
+                        goLogin();
+                    }else{
+                        layer.msg(data.msg);
                     }
                 }
             });
