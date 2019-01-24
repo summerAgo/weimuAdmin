@@ -45,8 +45,8 @@
             <div class="layui-tab" lay-filter="tableTabsBtn">
                 <div class="layui-tab-content menutab-content">
                     <div class="layui-show">
-                        <div class="content-title layui-form tabsTitle" lay-filter="allForm">表格权限<span class="redtips">(表格权限不设定，将无法显示表格内容)</span>
-                            <input type="checkbox" name="all" title="全选" lay-filter="allElection">
+                        <div class="content-title layui-form tabsTitle" lay-filter="allForm">表格权限
+                            <input type="checkbox" name="all" title="全选" lay-filter="allElection"><span class="redtips">(表格权限不设定，将无法显示表格内容)</span>
                             <a href="javascript:;" class="saveTableBtn"><i class="iconfont icon-baocun"></i>保存修改</a>
                         </div>
                         <div class="content-cont">
@@ -344,20 +344,32 @@
             valueid = cur.valueid;
             menutype = cur.type;
             //判断当前权限的页面是否有多个弹窗
-            // console.log(allMenu)
+            console.log("-----------------------------------------")
+            console.log(valueid)
+            console.log(allMenu)
             // console.log(valueid)
             var tabList = [];
 
             for (var i = 0; i < allMenu.length; i++) {
-                if (allMenu[i].id == valueid) {
+                if (allMenu[i].type == 0 && allMenu[i].id == valueid){
                     tabList.push(tabli(allMenu[i], 0)); //生成第一个默认tab
-                    if (allMenu[i].id == valueid && allMenu[i].sonlist) {
-                        for (var x = 0; x < allMenu[i].sonlist.length; x++) {
-                            tabList.push(tabli(allMenu[i].sonlist[x]));
-                        }
-                    }
+                }
+                var pid = "a_"+allMenu[i].pid;
+                if (allMenu[i].type == 1 && pid == valueid){
+                    tabList.push(tabli(allMenu[i])); //生成第一个默认tab
                 }
             }
+            // for (var i = 0; i < allMenu.length; i++) {
+            //     if (allMenu[i].type == 0 && allMenu[i].id == valueid) {
+            //         tabList.push(tabli(allMenu[i], 0)); //生成第一个默认tab
+            //         if (allMenu[i].type== 1 && allMenu[i].pid = ) {
+            //             for (var x = 0; x < allMenu[i].sonlist.length; x++) {
+            //                 tabList.push(tabli(allMenu[i].sonlist[x]));
+            //             }
+            //         }
+            //     }
+            // }
+            console.log(tabList);
             $(".zimenutab").html(""); //清空tabs
             for (var k = 0; k < tabList.length; k++) {
                 $(".zimenutab").append(tabList[k]);
