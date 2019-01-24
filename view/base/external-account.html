@@ -257,8 +257,6 @@
             limit: 100, //每页默认显示的数量
             title: "公司员工",
             done: function(res, curr, count) {
-                var addtableBtn = '<div class="rightBotBtn">已经选择<span>0</span>个货物</div>';
-                $(".layui-table-page").append(addtableBtn);
             },
             text: {
                 none: "无匹配数据"
@@ -377,10 +375,9 @@
                                 curr: 1 //重新从第 1 页开始
                             }
                         });
-                    }
-                    else if (data.status == 1) {
+                    } else if (data.status == 1) {
                         goLogin();
-                    }else{
+                    } else {
                         layer.msg(data.msg);
                     }
                 }

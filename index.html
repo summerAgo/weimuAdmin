@@ -52,7 +52,7 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;">
                         <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
-                        <span class="rolename">超级管理员</span>
+                        <span class="rolename"></span>
                     </a>
                     <dl class="layui-nav-child">
                         <dd><a href="javascript:;" class="changePassword">修改密码</a></dd>
@@ -184,7 +184,7 @@
             });
 
 
-            $(".rolename").html(roleName);
+            $(".rolename").html(sessionStorage.getItem("username"));
 
             //该用户菜单权限JSON
             var menujson = JSON.parse(sessionStorage.getItem("menuAuthority"));
@@ -287,14 +287,12 @@
                 ['colruyt-list', function() {
                     container.load('/view/depot/colruyt-list.html');
                 }],
-                ///////////////////
                 ['stock-newOutBill', function() {
                     container.load('/view/stock/stock-newOutBill.html');
                 }],
                 ['stock-positonAdjustment', function() {
                     container.load('/view/stock/stock-positonAdjustment.html');
                 }],
-                ///////////////////
                 ['depot-position', function() {
                     container.load('/view/depot/depot-position.html');
                 }],
