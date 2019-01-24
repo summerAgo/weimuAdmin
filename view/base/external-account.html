@@ -167,6 +167,7 @@
         var menuIns = {}; //用户类型被点击的数据
 
         var userOWnerInfo = JSON.parse(sessionStorage.getItem("roleInfo"));
+        var currentOwnerid = userOWnerInfo.ownerid;
         if (userOWnerInfo.isOwner == 1) {
             $(".tree-box").hide();
         } else {
@@ -201,7 +202,7 @@
             elem: '#tableContainer-userlist',
             height: 'full-' + tableTopHeight,
             where: {
-                "ownerid": userOWnerInfo.ownerid
+                "ownerid": currentOwnerid
             },
             url: OwnerUserlist,
             parseData: function(res) { //res 即为原始返回的数据
@@ -370,7 +371,7 @@
                         // 刷新表格
                         tableIns.reload({
                             where: {
-                                "ownerid": userOWnerInfo.ownerid
+                                "ownerid": currentOwnerid
                             },
                             page: {
                                 curr: 1 //重新从第 1 页开始
@@ -437,7 +438,7 @@
                     // 刷新表格
                     tableIns.reload({
                         where: {
-                            "ownerid": userOWnerInfo.ownerid
+                            "ownerid": currentOwnerid
                         },
                         page: {
                             curr: 1 //重新从第 1 页开始
@@ -595,7 +596,7 @@
                         // 刷新表格
                         tableIns.reload({
                             where: {
-                                "ownerid": userOWnerInfo.ownerid
+                                "ownerid": currentOwnerid
                             },
                             page: {
                                 curr: 1 //重新从第 1 页开始
@@ -712,6 +713,7 @@
         // 点击菜单，根据菜单刷新表格
         function resTable(data) {
             // 刷新表格
+            currentOwnerid = data.nodeId;
             menuIns.id = data.nodeId;
             menuIns.name = data.context;
             $("#instid").val(menuIns.id); //隐藏域保存点击的菜单id

@@ -2,13 +2,13 @@ var loginUrl = pathUrl + "sys/login"; //登录
 var loginPageUrl = localhost + "/view/login/login.html";  //filter拦截到登录页面
 
 //打印使用页面
-var printinstore   = localhost+"/view/print/print-in-store.html";
-var printoutstore  = localhost+"/view/print/print-out-store.html";
-var printinstore2  = localhost+"/view/print/print-in-store2.html";
-var printoutstore2 = localhost+"/view/print/print-out-store2.html";
-var printin        = localhost+"/view/print/print-in.html";
-var printout       = localhost+"/view/print/print-out.html";
-var printadjust    = localhost+"/view/print/print-adjust.html";
+var printinstore   = localhost + "/view/print/print-in-store.html";
+var printoutstore  = localhost + "/view/print/print-out-store.html";
+var printinstore2  = localhost + "/view/print/print-in-store2.html";
+var printoutstore2 = localhost + "/view/print/print-out-store2.html";
+var printin        = localhost + "/view/print/print-in.html";
+var printout       = localhost + "/view/print/print-out.html";
+var printadjust    = localhost + "/view/print/print-adjust.html";
 
 var weekInCount    = pathUrl + "home/weekInCount";     //本周入库统计立方
 var weekOutCount   = pathUrl + "home/weekOutCount";    //本周出库统计立方
@@ -43,13 +43,13 @@ var preEntryUpdate            = pathUrl + "order/prewarehousing/update";        
 var preEntrygetByOrderno      = pathUrl + "order/prewarehousing/getByOrderno?ish=1";  //预入库单详情 ish:获取单号所有信息
 var preEntryexamineStock      = pathUrl + "order/prewarehousing/examineStock";        //预入库单审核为库存
 var preEntryexamineStockGoods = pathUrl + "order/prewarehousing/examineStockGoods";   //选择预入库单中的货物入库为库存
-var preprintinjk              = pathUrl+"/order/warehousing/prinware";
+var preprintinjk              = pathUrl + "/order/warehousing/prinware";
 var preEntrySingleadd         = pathUrl + "order/prewarehousing/singleadd";           //预入库新增
 //打印接口
-var print_prein  = pathUrl+"/order/prewarehousing/prinware";  //入库申请打印
-var print_in     = pathUrl+"/order/warehousing/prinware";     //入库打印
-var print_preout = pathUrl+"/order/preouttreasury/prinOut";   //出库申请打印
-var print_out    = pathUrl+"/order/outtreasury/prinOut";      //出库打印
+var print_prein  = pathUrl + "/order/prewarehousing/prinware";  //入库申请打印
+var print_in     = pathUrl + "/order/warehousing/prinware";     //入库打印
+var print_preout = pathUrl + "/order/preouttreasury/prinOut";   //出库申请打印
+var print_out    = pathUrl + "/order/outtreasury/prinOut";      //出库打印
 
 // 入库
 var backinexamine            = pathUrl + "order/warehousing/backinexamine";       //反入库审核
@@ -110,14 +110,14 @@ var positionUpdate         = pathUrl + "basics/position/update";          //修�
 var positionDel            = pathUrl + "basics/position/delete";          //删除库位
 
 // 用户管理
-var userList           = pathUrl + "sys/list";           //用户列表
-var userAdd            = pathUrl + "sys/add";            //添加用户
-var userdropdown       = pathUrl + "sys/dropdown";       //用户下拉
-var userUpdate         = pathUrl + "sys/update";         //修改用户
-var userDel            = pathUrl + "sys/deleteMany";     //删除用户
-var userChangePas      = pathUrl + "sys/updaPassword";   //修改密码
-var userExit           = pathUrl + "sys/exit";           //退出登陆
-var usergetSessionAnth = pathUrl +"sys/getSessionAnth";
+var userList           = pathUrl + "sys/list";            //用户列表
+var userAdd            = pathUrl + "sys/add";             //添加用户
+var userdropdown       = pathUrl + "sys/dropdown";        //用户下拉
+var userUpdate         = pathUrl + "sys/update";          //修改用户
+var userDel            = pathUrl + "sys/deleteMany";      //删除用户
+var userChangePas      = pathUrl + "sys/updaPassword";    //修改密码
+var userExit           = pathUrl + "sys/exit";            //退出登陆
+var usergetSessionAnth = pathUrl + "sys/getSessionAnth";
 
 //角色  
 var roleList       = pathUrl + "sys/role/list";            //角色列表
@@ -134,7 +134,8 @@ var owenrroleAdd      = pathUrl + "sys/owner/role/add";         //添加角色
 var owenrroledropdown = pathUrl + "sys/owner/role/dropdown";    //添加角色
 var owenrroleUpdate   = pathUrl + "sys/owner/role/update";      //修改角色
 var owenrroleDel      = pathUrl + "sys/owner/role/deleteMany";  //删除角色
-
+//仓库主登陆用户设置权限
+var OwnerUsergetMenuAll = pathUrl + "sys/owner/setauth/getMenuAll";  //查询仓库主所拥有的菜单权限及按钮权限
 //仓库主登陆用户
 var queryOwnerUserlist = pathUrl + "user/owner/queryOwnerUserlist";  //公司员工登陆查询(右边仓库主人员列表) 查询参数: name
 var OwnerUserisname    = pathUrl + "sys/owner/user/isName";          //验证重复  参数:username
@@ -155,7 +156,7 @@ var setTableFieldAuth = pathUrl + "sys/role/setTableFieldAuth";
  * @param roleid	角色ID
  * @param menuid	菜单ID
  * @return	{"10","[true,true,false]","11","[true,true,false]","12","[true,true,false]","20","[false,false,false]"}
-*/
+ */
 var queryTableFieldAuth = pathUrl + "sys/role/queryTableFieldAuth";
 
 //菜单
@@ -167,14 +168,14 @@ var menuDel       = pathUrl + "sys/menu/deleteMany";    //删除菜单
 var menuAuthority = pathUrl + "sys/menu/setAuthority";  //设置菜单对应按钮(menuid 菜单id        butId[]按钮数组)
 
 //表格权限
-var listtableauth       = pathUrl +"sys/table/list";           //查询
-var addtableauth        = pathUrl +"sys/table/add";            //添加     菜单ID:menuid, 标识那一层菜单:type
-var deltableauth        = pathUrl +"sys/table/delete";         //删除
-var updatableauth       = pathUrl +"sys/table/update";         //
-var queryByMenuidleauth = pathUrl +"sys/table/queryByMenuid";  //根据菜单ID查询该菜单下面所有表格 参数  menuid：菜单ID
+var listtableauth       = pathUrl + "sys/table/list";           //查询
+var addtableauth        = pathUrl + "sys/table/add";            //添加     菜单ID:menuid, 标识那一层菜单:type
+var deltableauth        = pathUrl + "sys/table/delete";         //删除
+var updatableauth       = pathUrl + "sys/table/update";         //
+var queryByMenuidleauth = pathUrl + "sys/table/queryByMenuid";  //根据菜单ID查询该菜单下面所有表格 参数  menuid：菜单ID
 
 //表格属性权限
-var listtablefield = pathUrl +"sys/tablefield/list";  //查询
+var listtablefield = pathUrl + "sys/tablefield/list";  //查询
 //var addtablefield = pathUrl +"user/tablefield/testadd";//添加   表格ID:tablepermissionid,表格列数组:jsonstr
 //var deltablefield = pathUrl +"user/tablefield/delete";//删除
 
@@ -212,10 +213,10 @@ var specList         = pathUrl + "basics/info/dropdown?instid=44";  //根据code
 var basicsInfocode = pathUrl + "basics/info/isSelectByCode";  //判断code是否存在
 
 //用户分类
-var listInstitution = pathUrl +"basics/institution/list";        //查询分类
-var addInstitution  = pathUrl +"basics/institution/add";         //添加分类
-var updInstitution  = pathUrl +"basics/institution/update";      //修改分类
-var delInstitution  = pathUrl +"basics/institution/deleteMany";  //删除分类
+var listInstitution = pathUrl + "basics/institution/list";        //查询分类
+var addInstitution  = pathUrl + "basics/institution/add";         //添加分类
+var updInstitution  = pathUrl + "basics/institution/update";      //修改分类
+var delInstitution  = pathUrl + "basics/institution/deleteMany";  //删除分类
 
 var userAuthority = pathUrl + "sys/setAuthority";  //设置用户对应角色(userid 角色id roleid[]菜单数组)
 
@@ -223,18 +224,18 @@ var roledown = pathUrl + "sys/role/dropdown";  //角色列表所有
 var menudown = pathUrl + "sys/menu/dropdown";  //菜单列表所有
 
 //客户(仓库主)
-var listOwner = pathUrl +"user/owner/list";        //查询客户
-var addOwner  = pathUrl +"user/owner/add";         //添加客户
-var updOwner  = pathUrl +"user/owner/update";      //修改客户
-var delOwner  = pathUrl +"user/owner/deleteMany";  //删除客户
-var dropOwner = pathUrl +"user/owner/dropdown";    //查询客户所有
+var listOwner = pathUrl + "user/owner/list";        //查询客户
+var addOwner  = pathUrl + "user/owner/add";         //添加客户
+var updOwner  = pathUrl + "user/owner/update";      //修改客户
+var delOwner  = pathUrl + "user/owner/deleteMany";  //删除客户
+var dropOwner = pathUrl + "user/owner/dropdown";    //查询客户所有
 
 //供应商
-var listSupplier = pathUrl +"basics/supplier/list";        //查询
-var addSupplier  = pathUrl +"basics/supplier/add";         //添加
-var updSupplier  = pathUrl +"basics/supplier/update";      //修改
-var delSupplier  = pathUrl +"basics/supplier/deleteMany";  //删除
-var dropSupplier = pathUrl +"basics/supplier/dropdown";    //供应商列表
+var listSupplier = pathUrl + "basics/supplier/list";        //查询
+var addSupplier  = pathUrl + "basics/supplier/add";         //添加
+var updSupplier  = pathUrl + "basics/supplier/update";      //修改
+var delSupplier  = pathUrl + "basics/supplier/deleteMany";  //删除
+var dropSupplier = pathUrl + "basics/supplier/dropdown";    //供应商列表
 
 var menuAll          = pathUrl + "sys/menu/dropdown";      //查询所有
 var buttonAllList    = pathUrl + "sys/button/dropdown";    //查询按钮所有的
@@ -247,7 +248,7 @@ var getMenuAll = pathUrl + "sys/menu/getMenuAll";  //获取菜单类别列表
 
 //仓库主默认权限
 var defaultowenrAuthorityAll      = pathUrl + "sys/owner/defaultauth/getAuthorityAll";      //根据角色id查询所有的按钮权限(roleid=2)
-var defaultowenrMenuid            = pathUrl +"sys/owner/defaultauth/queryByMenuid";         //根据菜单ID查询该菜单下面所有表格 参数  menuid：菜单ID
+var defaultowenrMenuid            = pathUrl + "sys/owner/defaultauth/queryByMenuid";        //根据菜单ID查询该菜单下面所有表格 参数  menuid：菜单ID
 var defaultowenrsetTableFieldAuth = pathUrl + "sys/owner/defaultauth/setTableFieldAuth";
 var defaultowenrTableFieldAuth    = pathUrl + "sys/owner/defaultauth/queryTableFieldAuth";
 var defaultowenrsetByAuthority    = pathUrl + "sys/owner/defaultauth/setByAuthority";       // 添加菜单,按钮权限
@@ -277,22 +278,22 @@ var getByidList      = pathUrl + "check/recordlist/getByidList";    //查询盘�
 
 
 //库存调整单
-var adjustlist            = pathUrl +"order/adjust/list";
-var adjustadd             = pathUrl +"order/adjust/add";
-var adjustadcomplete      = pathUrl +"order/adjust/adcomplete";       //完成调整
-var adjustagetOrderinfo   = pathUrl +"order/adjust/getOrderinfo";     //点击列表，进入调整单详情
-var adjustdeleteByOrderno = pathUrl +"order/adjust/deleteByOrderno";  //删除调整单
-var adjustgive            = pathUrl +"order/adjust/give";             //放弃调整单
+var adjustlist            = pathUrl + "order/adjust/list";
+var adjustadd             = pathUrl + "order/adjust/add";
+var adjustadcomplete      = pathUrl + "order/adjust/adcomplete";       //完成调整
+var adjustagetOrderinfo   = pathUrl + "order/adjust/getOrderinfo";     //点击列表，进入调整单详情
+var adjustdeleteByOrderno = pathUrl + "order/adjust/deleteByOrderno";  //删除调整单
+var adjustgive            = pathUrl + "order/adjust/give";             //放弃调整单
 
 
 //验证
-var isname_supplier    = pathUrl +"basics/supplier/isName";     //供应商验证        instid,name
-var isname_position    = pathUrl +"basics/position/isName";     //库位验证          depotid,name
-var isname_institution = pathUrl +"basics/institution/isName";  //类型信息          utype:0员工1仓库主2供应商3基础数据 ,name
-var isname_info        = pathUrl +"basics/info/isName";         //货物信息          instid,name
-var isname_depot       = pathUrl +"basics/depot/isName";        //仓库验证          ownerid,name
-var iscode_depot       = pathUrl +"basics/depot/isCode";        //仓库code验证      ownerid,code
-var isname_bitdepot    = pathUrl +"basics/bitdepot/isName";     //大仓库验证        name
-var isname_user        = pathUrl +"sys/isName";                 //员工验证          instid,
-var isname_role        = pathUrl +"sys/role/isName";            //角色验证          rolename
-var isname_owner       = pathUrl +"user/owner/isName";          //仓库主验证        instid,name
+var isname_supplier    = pathUrl + "basics/supplier/isName";     //供应商验证        instid,name
+var isname_position    = pathUrl + "basics/position/isName";     //库位验证          depotid,name
+var isname_institution = pathUrl + "basics/institution/isName";  //类型信息          utype:0员工1仓库主2供应商3基础数据 ,name
+var isname_info        = pathUrl + "basics/info/isName";         //货物信息          instid,name
+var isname_depot       = pathUrl + "basics/depot/isName";        //仓库验证          ownerid,name
+var iscode_depot       = pathUrl + "basics/depot/isCode";        //仓库code验证      ownerid,code
+var isname_bitdepot    = pathUrl + "basics/bitdepot/isName";     //大仓库验证        name
+var isname_user        = pathUrl + "sys/isName";                 //员工验证          instid,
+var isname_role        = pathUrl + "sys/role/isName";            //角色验证          rolename
+var isname_owner       = pathUrl + "user/owner/isName";          //仓库主验证        instid,name
