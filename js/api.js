@@ -136,6 +136,8 @@ var owenrroleUpdate   = pathUrl + "sys/owner/role/update";      //修改角色
 var owenrroleDel      = pathUrl + "sys/owner/role/deleteMany";  //删除角色
 //仓库主登陆用户设置权限
 var OwnerUsergetMenuAll = pathUrl + "sys/owner/setauth/getMenuAll";  //查询仓库主所拥有的菜单权限及按钮权限
+var OwnersetAuthority = pathUrl + "sys/owner/setauth/setAuthority";  //查询仓库主所拥有的菜单权限及按钮权限
+
 //仓库主登陆用户
 var queryOwnerUserlist = pathUrl + "user/owner/queryOwnerUserlist";  //公司员工登陆查询(右边仓库主人员列表) 查询参数: name
 var OwnerUserisname    = pathUrl + "sys/owner/user/isName";          //验证重复  参数:username
