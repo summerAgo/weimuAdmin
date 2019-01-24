@@ -168,13 +168,16 @@
                         //该用户角色数组
                         sessionStorage.setItem("roleName", res.data.roleName);
 
+                        // 用户名
+                        sessionStorage.setItem("username", data.username);
+                        
                         // 登录账号身份
                         var roleInfo = {
                             isOwner: res.data.isOwner,
                             ownerid: res.data.ownerid
                         }
                         sessionStorage.setItem("roleInfo", JSON.stringify(roleInfo));
-                        
+
                         roleName = res.data.roleName;
                     } else {
                         //如果该用户没有权限。则回到登陆页面
@@ -182,7 +185,6 @@
                     }
                 }
             });
-
 
             $(".rolename").html(sessionStorage.getItem("username"));
 
@@ -228,11 +230,19 @@
                 view.innerHTML = html;
             });
 
+            var homeRole;
+            var userOWnerInfo = JSON.parse(sessionStorage.getItem("roleInfo"));
+            if (userOWnerInfo.isOwner == 1) {
+                homeRole = "home_owner";
+            } else {
+                homeRole = "home";
+            }
+
             element.render("nav-tabs"); //加载路由
             Q.reg([
                 //注册页面
                 ['home', function() {
-                    container.load('/view/home/home.html');
+                    container.load('/view/home/' + homeRole + '.html');
                 }],
                 ['stock-preentry', function() {
                     container.load('/view/stock/stock-preentry.html');
@@ -243,7 +253,6 @@
                 ['stock-enterHistory', function() {
                     container.load('/view/stock/stock-enterHistory.html');
                 }],
-                //////////////////////////
                 ['stock-enterBillDetails', function() {
                     container.load('/view/stock/stock-enterBillDetails.html');
                 }],
@@ -253,7 +262,6 @@
                 ['stock-outBill', function() {
                     container.load('/view/stock/stock-outBill.html');
                 }],
-                //////////////////////////
                 ['stock-addOutBill', function() {
                     container.load('/view/stock/stock-addOutBill.html');
                 }],
