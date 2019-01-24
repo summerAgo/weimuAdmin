@@ -170,6 +170,7 @@
         var menuIns = {}; //用户类型被点击的数据
 
         var userOWnerInfo = JSON.parse(sessionStorage.getItem("roleInfo"));
+        var currentOwnerid = userOWnerInfo.ownerid;
         if (userOWnerInfo.isOwner == 1) {
             $(".tree-box").hide();
         } else {
@@ -204,7 +205,7 @@
             elem: '#tableContainerRole',
             height: 'full-' + tableTopHeight,
             where: {
-                "ownerid": userOWnerInfo.ownerid
+                "ownerid": currentOwnerid
             },
             url: owenrroleList,
             parseData: function(res) { //res 即为原始返回的数据
@@ -345,12 +346,13 @@
         // 点击菜单，根据菜单刷新表格
         function resTable(data) {
             // 刷新表格
+            currentOwnerid = data.nodeId;
             menuIns.id = data.nodeId;
             menuIns.name = data.context;
-            $("#instid").val(menuIns.id); //隐藏域保存点击的菜单id
+            $("#instid").val(currentOwnerid); //隐藏域保存点击的菜单id
             tableIns.reload({
                 where: {
-                    "ownerid": menuIns.id
+                    "ownerid": currentOwnerid
                 },
                 page: {
                     curr: 1 //重新从第 1 页开始
@@ -383,7 +385,8 @@
                 layer.msg("请选择需要编辑的单条信息");
             } else {
                 window.currData = checkStatus.data[0]; //全局对象存储当前选中行数据
-                $.get('view/role/role-add.html', {}, function(str) {
+                window.currData.inaAllList = inaAllList;
+                $.get('view/base/owner-roleAdd.html', {}, function(str) {
                     eaitLayer = layer.open({
                         title: '编辑',
                         type: 1,
@@ -421,6 +424,9 @@
                         layer.close(index);
                         // 刷新表格
                         tableIns.reload({
+                            where: {
+                                "ownerid": currentOwnerid
+                            },
                             page: {
                                 curr: 1 //重新从第 1 页开始
                             }
@@ -433,8 +439,11 @@
 
         //弹出添加角色
         $(".creatRole").click(function() {
-            window.currData = null;
-            $.get('view/role/role-add.html', {}, function(str) {
+            var data = {};
+            data["instid"] = menuIns.id;
+            data["inaAllList"] = inaAllList;
+            window.currData = data;
+            $.get('view/base/owner-roleAdd.html', {}, function(str) {
                 eaitLayer = layer.open({
                     title: '添加角色',
                     type: 1,
@@ -454,7 +463,6 @@
                 layer.msg("请选择需要1条数据");
             } else {
                 window.currData = checkStatus.data[0];
-                // console.log(window.currData)
                 $.get('view/base/owner-power.html', {}, function(str) {
                     eaitLayer = layer.open({
                         title: '设置角色权限',
@@ -464,56 +472,6 @@
                     });
                 });
             }
-        });
-
-        //权限设置表单提交
-        form.on('submit(roleSubmit)', function(data) {
-            var allAuthority = JSON.parse(sessionStorage.getItem('allAuthority'));
-
-            for (var n = 0; n < allAuthority.length; n++) {
-                for (var key in allAuthority[n]) {
-                    // console.log(allAuthority[n][key])
-                    allAuthority[n][key] = allAuthority[n][key].map(Number);
-                }
-            }
-
-            allAuthority = JSON.stringify(allAuthority);
-            data.field["allauth"] = allAuthority;
-            data.field["roleid"] = window.currData.id;
-
-            data.field['SESSION_USER_CODE'] = getCookie("SESSION_USER_CODE");
-            data.field['TOKEN'] = getCookie("TOKEN");
-            $.ajax({
-                cache: true,
-                type: "POST",
-                url: setAuthorityAll,
-                data: data.field,
-                async: false,
-                xhrFields: {
-                    withCredentials: true
-                },
-                crossDomain: true,
-                error: function(request) {
-                    layer.msg('提交失败');
-                    return false;
-                },
-                success: function(data) {
-                    if (data.status == 0) {
-                        layer.close(eaitLayer);
-                        layer.msg('提交成功');
-                        // 刷新表格
-                        tableIns.reload({
-                            page: {
-                                curr: 1 //重新从第 1 页开始
-                            }
-                        });
-                    } else {
-                        layer.msg(data.msg);
-                    }
-                }
-            });
-            // });                     
-            return false;
         });
 
         //添加角色表单提交
@@ -526,7 +484,7 @@
             var isNameEdit = false; // 判断修改是否同名标识
             var isName = true; // 是否重名标识
 
-            if (userData != null) {
+            if (userData.id) {
                 title = '确认提交修改';
                 userUrl = owenrroleUpdate;
                 isNameEdit = !!(userData.rolename !== data.field.rolename);
@@ -665,6 +623,9 @@
                     } else if (data.status == 0) {
                         $("#rolename").val(""); //清空
                         tableIns.reload({
+                            where: {
+                                "ownerid": currentOwnerid
+                            },
                             page: {
                                 curr: 1 //重新从第 1 页开始
                             }
@@ -699,6 +660,6 @@
                 error: funErr
             })
         }
-        
+
     });
 </script>
