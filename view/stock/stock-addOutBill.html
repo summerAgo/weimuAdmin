@@ -485,6 +485,8 @@
                 //搜索货物
                 data.field.ownerid = ownerid;
                 data.field.depotid = depotid;
+                data.field['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
+                data.field['TOKEN'] = getCookie('TOKEN');
                 getDepotList(data.field);
             }
             return false;

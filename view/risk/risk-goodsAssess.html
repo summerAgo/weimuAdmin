@@ -447,7 +447,7 @@
                                 status = editAprice(ownerid, apriceChangeValue, tableInsAssess); //提交估值单价
                                 if (status) {
                                     apriceChangeValue = {}; //如果提交成功清空估价数组
-                                    layer.close(assessLayer); //关闭估价弹窗
+                                    // layer.close(assessLayer); //关闭估价弹窗
                                     tableIns.reload({
                                         page: {
                                             curr: 1 // 重新从第 1 页开始

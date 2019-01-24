@@ -180,17 +180,18 @@
                     arr: [] //仓库列表清空
                 });
             } else {
-                var bitdepotid = vals[0].bitdepotid;
+                var param = {};
+                param.bitdepotid = vals[0].bitdepotid;
                 var positiondIds = vals[0].position;
                 var arr1 = [];
                 positiondIds && (arr1 = positiondIds.split(","));
                 var arr = [];
-                bitdepotid['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
-                bitdepotid['TOKEN'] = getCookie('TOKEN');
+                param['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
+                param['TOKEN'] = getCookie('TOKEN');
                 $.ajax({
                     url: positiondropdown,
                     type: "get",
-                    data: bitdepotid,
+                    data: param,
                     async: false, // 同步
                     traditional: true,
                     success: function(data) {
