@@ -462,15 +462,21 @@
             } else if (checkStatus.data.length > 1) {
                 layer.msg("请选择需要1条数据");
             } else {
-                window.currData = checkStatus.data[0];
-                $.get('view/base/owner-power.html', {}, function(str) {
-                    eaitLayer = layer.open({
-                        title: '设置角色权限',
-                        type: 1,
-                        content: str,
-                        area: ['80%', '99%'],
+                console.log(checkStatus.data[0])
+                if (checkStatus.data[0].notdel == 1) {
+                    layer.msg("此角色不可修改权限");
+                } else {
+                    window.currData = checkStatus.data[0];
+                    $.get('view/base/owner-power.html', {}, function(str) {
+                        eaitLayer = layer.open({
+                            title: '设置角色权限',
+                            type: 1,
+                            content: str,
+                            area: ['80%', '99%'],
+                        });
                     });
-                });
+                }
+
             }
         });
 
