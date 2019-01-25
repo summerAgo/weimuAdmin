@@ -300,3 +300,6 @@ var isname_bitdepot    = pathUrl + "basics/bitdepot/isName";     //大仓库验�
 var isname_user        = pathUrl + "sys/isName";                 //员工验证          instid,
 var isname_role        = pathUrl + "sys/role/isName";            //角色验证          rolename
 var isname_owner       = pathUrl + "user/owner/isName";          //仓库主验证        instid,name
+
+
+var ownerCount       = pathUrl + "owner/home/count";          //仓库主统计
