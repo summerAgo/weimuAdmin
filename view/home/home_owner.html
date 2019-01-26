@@ -1,152 +1,265 @@
 <div class="home-content">
-    <div class="count">
-        <div class="count-item" data-color="green">
-            <div class="count-item-body" id="weekInCount">0</div>
-            <div class="count-item-top">
-                <span class="top-l">本周入库量统计</span>
-                <span class="top-r">单位：m³</span>
-            </div>
-        </div>
-        <div class="count-item" data-color="blue">
-            <div class="count-item-body" id="weekOutCount">0</div>
-            <div class="count-item-top">
-                <span class="top-l">本周出库量统计</span>
-                <span class="top-r">单位：m³</span>
-            </div>
-        </div>
-        <div class="count-item" data-color="orange">
-            <div class="count-item-body" id="weekStockCount">0</div>
-            <div class="count-item-top">
-                <span class="top-l">库存总数</span>
-                <span class="top-r">单位：m³</span>
-            </div>
-        </div>
-        <div class="count-form-item">
-            <div class="form-item-lf"><i class="iconfont icon-chuhuoshenqing1"></i></div>
-            <div class="form-item-rt">
-                <span class="top" id="shipForm"></span>
-                <span class="bot">出货申请(单)</span>
-            </div>
-        </div>
-        <div class="count-form-item">
-            <div class="form-item-lf"><i class="iconfont icon-shouyeruku"></i></div>
-            <div class="form-item-rt">
-                <span class="top" id="receiptForm"></span>
-                <span class="bot">预入库(单)</span>
-            </div>
-        </div>
+    <div class="home-owner-iconlist">
+        <dl>
+            <dt><i class="iconfont icon-shouyeruku"></i></dt>
+            <dd>入库单</dd>
+        </dl>
+        <dl>
+            <dt><i class="iconfont icon-chuhuoshenqing1"></i></dt>
+            <dd>出货申请</dd>
+        </dl>
+        <dl>
+            <dt><i class="iconfont icon-shouyechuhuo"></i></dt>
+            <dd>出库单</dd>
+        </dl>
+        <dl>
+            <dt><i class="iconfont icon-kucunchaxun"></i></dt>
+            <dd>库存查询</dd>
+        </dl>
     </div>
 
-    <div class="flow-path-out">
-        <div class="flow-path">
-            <div class="w">
-                <div class="title">系统操作流程图</div>
-                <div class="path-arrow">
-                    <dl class="dl-1">
-                        <dt><i class="iconfont icon-shouyeruku"></i></dt>
-                        <dd>新建仓库</dd>
-                    </dl>
-                    <dl class="dl-2">
-                        <dt><i class="iconfont icon-bianji"></i></dt>
-                        <dd>完善基础数据</dd>
-                    </dl>
-                    <dl class="dl-2">
-                        <dt><i class="iconfont icon-bianji"></i></dt>
-                        <dd>完善基础数据</dd>
-                    </dl>
-                    <dl class="dl-3">
-                        <dt><i class="iconfont icon-yuruku"></i></dt>
-                        <dd>预入库</dd>
-                    </dl>
-                    <dl class="dl-4">
-                        <dt><i class="iconfont icon-shouyeruku"></i></dt>
-                        <dd>入库</dd>
-                    </dl>
-                    <dl class="dl-5">
-                        <dt><i class="iconfont icon-cangkuguanli"></i></dt>
-                        <dd>库存</dd>
-                    </dl>
-                    <dl class="dl-6">
-                        <dt><i class="iconfont icon-pinggu"></i></dt>
-                        <dd>货品估值</dd>
-                    </dl>
-                    <dl class="dl-7">
-                        <dt><i class="iconfont icon-chuhuoshenqing"></i></dt>
-                        <dd>出货申请</dd>
-                    </dl>
-                    <dl class="dl-8">
-                        <dt><i class="iconfont icon-shouyechuhuo"></i></dt>
-                        <dd>出货</dd>
-                    </dl>
-                    <dl class="dl-9">
-                        <dt><i class="iconfont icon-fengkongguanli"></i></dt>
-                        <dd>风控审核</dd>
-                    </dl>
-                </div>
-            </div>
-        </div>
-    </div>
+    <ul class="home-owner-depot" id="countList">
+
+    </ul>
 </div>
+<script id="demo" type="text/html">
+    <li>
+    <div class="icontitle">
+        <i class="iconfont icon-suoyoucangku"></i>
+    </div>
+    <h4>所有仓库</h4>
+    <dl>
+        <dt>今日总入库 <span>{{d.intotal}}</span></dt>
+        <dd>今日总出库 <span>{{d.outtotal}}</span></dd>
+    </dl>
+    <div class="allcount"><span>{{d.total}}</span><i>数量(m³)</i></div>
+</li>
+{{#if(d.list.length>0){}}
+    {{#  layui.each(d.list, function(index, item){ }}
+    <li>
+        <div class="icontitle">
+            <i class="iconfont icon-cangku{{index+1}}"></i>
+        </div>
+        <h4>{{item.name}}</h4>
+        <dl>
+            <dt>今日入库 <span>{{item.intotal}}</span></dt>
+            <dd>今日出库 <span>{{item.outtotal}}</span></dd>
+        </dl>
+        <div class="allcount"><span>{{item.total}}</span><i>数量(m³)</i></div>
+    </li>
+    {{#  }); }}
+{{#}}}
+<!-- <li>
+    <div class="icontitle">
+        <i class="iconfont icon-cangku2"></i>
+    </div>
+    <h4>所有仓库</h4>
+    <div class="allcount"><span>136,665,200</span><i>数量(m³)</i></div>
+    <dl>
+        <dt>今日入库 <span>1,221,520</span></dt>
+        <dd>今日出库 <span>963,322</span></dd>
+    </dl>
+</li>
+<li>
+    <div class="icontitle">
+        <i class="iconfont icon-cangku1"></i>
+    </div>
+    <h4>所有仓库</h4>
+    <div class="allcount"><span>136,665,200</span><i>数量(m³)</i></div>
+    <dl>
+        <dt>今日入库 <span>1,221,520</span></dt>
+        <dd>今日出库 <span>963,322</span></dd>
+    </dl>
+</li> -->
+</script>
+<style scoped>
+    .home-owner-iconlist {
+        padding-left: 100px;
+    }
+
+    .home-owner-iconlist dl {
+        width: 70px;
+        float: left;
+        margin-right: 85px;
+    }
+
+    .home-owner-iconlist dl dt {
+        width: 68px;
+        height: 68px;
+        background-color: #f2f9ff;
+        border-radius: 50%;
+        margin: 0 auto;
+        text-align: center;
+        line-height: 66px;
+        border: 1px dashed #b6b6b6;
+        cursor: pointer;
+    }
+
+    .home-owner-iconlist dl dt .iconfont {
+        font-size: 40px;
+        color: #297cca;
+    }
+
+    .home-owner-iconlist dl dd {
+        width: 100%;
+        font-size: 15px;
+        color: #333;
+        margin-top: 10px;
+        text-align: center;
+    }
+
+    .home-owner-iconlist dl:hover dt {
+        background-color: #297cca;
+    }
+
+    .home-owner-iconlist dl:hover dt .iconfont {
+        color: #fff;
+    }
+
+    .home-owner-iconlist dl:hover dd {
+        color: #297cca;
+    }
+
+    .home-owner-iconlist::after {
+        content: "";
+        display: block;
+        clear: both;
+        float: none;
+        height: 0;
+        width: 100%;
+    }
+
+    .home-owner-depot {
+        margin: 65px 0 0 0;
+    }
+
+    .home-owner-depot li {
+        margin-bottom: 30px;
+        height: 51px;
+        width: 795px;
+        border-radius: 3px;
+        background: #297cca;
+        color: #fff;
+        padding: 18px 0 20px 20px;
+    }
+
+    .home-owner-depot li:first-child {
+        background: #20b067
+    }
+
+    .icontitle {
+        float: left;
+        margin-right: 15px;
+        width: 52px;
+        height: 52px;
+    }
+
+    .icontitle .iconfont {
+        font-size: 50px;
+    }
+
+    .home-owner-depot h4 {
+        float: left;
+        font-size: 26px;
+        line-height: 50px;
+        width: 210px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .allcount {
+        float: right;
+        font-size: 14px;
+        text-align: right;
+        line-height: 50px;
+        padding-right: 20px;
+    }
+
+    .allcount span {
+        font-size: 32px;
+        margin-right: 10px;
+    }
+
+    .allcount i {
+        vertical-align: super;
+        font-style: normal;
+    }
+
+    .home-owner-depot dl {
+        float: right;
+        padding-left: 20px;
+        font-size: 14px;
+        line-height: 1;
+        width: 200px;
+        border-left: 1px solid rgba(255, 255, 255, 0.5);
+    }
+
+    .home-owner-depot dt {
+        margin-bottom: 24px;
+    }
+
+    .home-owner-depot dl span {
+        margin-left: 10px;
+    }
+</style>
 <script>
-    layui.use(['jquery'], function () {
+    layui.use(['jquery', 'laytpl'], function() {
         var $ = layui.jquery;
+        var laytpl = layui.laytpl;
         var contentHeight = parseInt($(".layui-body").innerHeight() - $(".content-header").innerHeight() - 42);
         $(".home-content").innerHeight(contentHeight);
 
-        //本周入库统计立方
-        $.get(
-            weekInCount,
-            {},
-            function (src) {
-                if (src.status === 0) {
-                    $("#weekInCount").html(src.data);
-                }
-            }
-        );
+        var userOWnerInfo = JSON.parse(sessionStorage.getItem("roleInfo"));
 
-        //本周出库统计立方
-        $.get(
-            weekOutCount,
-            {},
-            function (src) {
-                if (src.status === 0) {
-                    $("#weekOutCount").html(src.data);
-                }
-            }
-        );
+        var param = {};
+        param['SESSION_USER_CODE'] = getCookie("SESSION_USER_CODE");
+        param['TOKEN'] = getCookie("TOKEN");
 
-        //本周库存统计立方
-        $.get(
-            weekStockCount,
-            {},
-            function (src) {
-                if (src.status === 0) {
-                    $("#weekStockCount").html(src.data);
-                }
-            }
-        );
+        $.ajax({
+            cache: true,
+            type: "get",
+            url: ownerCount,
+            data: param,
+            async: false,
+            xhrFields: {
+                withCredentials: true
+            },
+            crossDomain: true,
+            success: function(res) {
+                if (res.status == 0) {
 
-        //入库单
-        $.get(
-            inOrderCount,
-            {},
-            function (src) {
-                if (src.status === 0) {
-                    $("#receiptForm").html(src.data);
-                }
-            }
-        );
+                    var data = {};
+                    var list = res.data;
+                    data.total = 0;
+                    data.intotal = 0;
+                    data.outtotal = 0;
 
-        //出库单
-        $.get(
-            outOrderCount,
-            {},
-            function (src) {
-                if (src.status === 0) {
-                    $("#shipForm").html(src.data);
+                    for (var i = 0; i < list.length; i++) {
+                        data.total += list[i].total;
+                        data.intotal += list[i].intotal;
+                        data.outtotal += list[i].outtotal;
+                        list[i].total = formatNum(list[i].total);
+                        list[i].intotal = formatNum(list[i].intotal);
+                        list[i].outtotal = formatNum(list[i].outtotal);
+                    }
+
+                    data.total = formatNum(data.total);
+                    data.intotal = formatNum(data.intotal);
+                    data.outtotal = formatNum(data.outtotal);
+                    data.list = list;
+
+                    console.log(data)
+                    console.log(list)
+
+                    var getTpl = demo.innerHTML,
+                        view = document.getElementById('countList');
+                    laytpl(getTpl).render(data, function(html) {
+                        view.innerHTML = html;
+                    });
                 }
             }
-        );
+        })
 
     });
 </script>

@@ -262,3 +262,15 @@ function iscz(uuid, arr) {
     }
     return f;
 }
+
+/**
+ * 验证是否为数字
+ */
+function isNumber(value) {
+    var patrn = /^[0-9]*$/;
+    if (patrn.exec(value) == null || value == "") {
+        return false
+    } else {
+        return true
+    }
+}
