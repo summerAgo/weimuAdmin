@@ -1,6 +1,6 @@
 <div id="formEditView"></div>
 <script id="formUser" type="text/html">
-<form class="layui-form layer-open-form" action="">
+<form class="layui-form layer-open-form">
     <div class="layui-form-item layui-control-line">
         <div class="layui-input-block">
             <button class="layui-btn" lay-submit="" type="submit" lay-filter="addSubmit"><i class="iconfont icon-daochu"></i>保存</button>
@@ -21,7 +21,7 @@
     <div class="layui-form-item layui-normal-line">
         <label class="layui-form-label">菜单key</label>
         <div class="layui-input-inline">
-            <input type="text" id="code" name="code" lay-verify="required" placeholder="菜单key" class="layui-input"  value="{{# if(d.code){}}{{d.code}}{{# }}}">
+            <input type="text" id="code" name="code" placeholder="菜单key" class="layui-input"  value="{{# if(d.code){}}{{d.code}}{{# }}}">
         </div>
     </div>
     <div class="layui-form-item layui-normal-line">
@@ -82,16 +82,6 @@
 		}
 		
         form.render(); //重置表单渲染
-
-        //日期时间选择器
-        laydate.render({
-            elem: '#birthday',
-            type: 'datetime',
-            max: 0,
-            change: function(val) {
-                console.log(val);
-            }
-        });
 
     });
 </script>
