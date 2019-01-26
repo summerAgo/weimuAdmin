@@ -88,16 +88,18 @@
     </div>
 </div>
 <script>
-    layui.use(['jquery'], function () {
+    layui.use(['jquery'], function() {
         var $ = layui.jquery;
         var contentHeight = parseInt($(".layui-body").innerHeight() - $(".content-header").innerHeight() - 42);
         $(".home-content").innerHeight(contentHeight);
 
         //本周入库统计立方
         $.get(
-            weekInCount,
-            {},
-            function (src) {
+            weekInCount, {
+                'SESSION_USER_CODE': getCookie("SESSION_USER_CODE"),
+                'TOKEN': getCookie("TOKEN")
+            },
+            function(src) {
                 if (src.status === 0) {
                     $("#weekInCount").html(src.data);
                 }
@@ -106,9 +108,11 @@
 
         //本周出库统计立方
         $.get(
-            weekOutCount,
-            {},
-            function (src) {
+            weekOutCount, {
+                'SESSION_USER_CODE': getCookie("SESSION_USER_CODE"),
+                'TOKEN': getCookie("TOKEN")
+            },
+            function(src) {
                 if (src.status === 0) {
                     $("#weekOutCount").html(src.data);
                 }
@@ -117,9 +121,11 @@
 
         //本周库存统计立方
         $.get(
-            weekStockCount,
-            {},
-            function (src) {
+            weekStockCount, {
+                'SESSION_USER_CODE': getCookie("SESSION_USER_CODE"),
+                'TOKEN': getCookie("TOKEN")
+            },
+            function(src) {
                 if (src.status === 0) {
                     $("#weekStockCount").html(src.data);
                 }
@@ -128,9 +134,11 @@
 
         //入库单
         $.get(
-            inOrderCount,
-            {},
-            function (src) {
+            inOrderCount, {
+                'SESSION_USER_CODE': getCookie("SESSION_USER_CODE"),
+                'TOKEN': getCookie("TOKEN")
+            },
+            function(src) {
                 if (src.status === 0) {
                     $("#receiptForm").html(src.data);
                 }
@@ -139,9 +147,11 @@
 
         //出库单
         $.get(
-            outOrderCount,
-            {},
-            function (src) {
+            outOrderCount, {
+                'SESSION_USER_CODE': getCookie("SESSION_USER_CODE"),
+                'TOKEN': getCookie("TOKEN")
+            },
+            function(src) {
                 if (src.status === 0) {
                     $("#shipForm").html(src.data);
                 }
