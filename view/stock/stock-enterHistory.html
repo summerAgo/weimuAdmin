@@ -313,7 +313,7 @@
         form.on('submit(searchForm)', function(data) {
             if (data.field.date) {
                 data.field.startdate = data.field.date.substring(0, 10) + " 00:00:00";
-                data.field.enddate = data.field.date.substring(13, data.field.date.length) + " 00:00:00";
+                data.field.enddate = data.field.date.substring(13, data.field.date.length) + " 23:59:59";
             }
 
             var paramSearch = {};

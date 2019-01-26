@@ -42,7 +42,7 @@
                                 <option value="">仓库</option>
                             </select>
                         </div>
-                        <div class="table-form-item layui-input-inline">
+                        <div class="table-form-item layui-input-inline positionbox">
                             <span class="input-span">库位</span>
                             <select name="positionid" xm-select="positionSelectLayer" xm-select-radio>
                                 <option value="">库位</option>
@@ -262,7 +262,9 @@
 
         var tableKey = "a_12"; //当前页面表格key
         var tableOptionArr = getTableOption(tableKey); //表格列
-
+        if(userOWnerInfo.isOwner == 1){
+            $(".positionbox").hide();
+        }
         formSelects.render("depotSelectLayer"); //下拉选项
         formSelects.render("positionSelectLayer"); //下拉选项
 
@@ -1231,7 +1233,6 @@
                     num: value
                 });
             });
-
         }
     }
 </script>
