@@ -27,6 +27,7 @@ var ilbstockListAll      = pathUrl + "lb/ilbstock/listAll";       //出库申请
 var ilbstockListAdjustlb = pathUrl + "lb/ilbstock/listAdjustlb";  //货物调整单 货物查询
 var ilbstocklistPreLb    = pathUrl + "lb/ilbstock/listPreLb";     //预入库单查询货物
 var ilbstockmovelibrary  = pathUrl + "lb/ilbstock/movelibrary";   //同仓库下移动库位（参数，uuidarr:uuid数组，positionid:库位ID）
+var ilupdaStockRemarks          = pathUrl + "lb/ilbstock/updaStockRemarks";           //根据UUID修改remarks货物
 
 
 var ilbstocklblist     = pathUrl + "lb/ilbstock/lblist";       //查询出货时信息
