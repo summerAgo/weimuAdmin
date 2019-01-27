@@ -89,9 +89,17 @@
                             <input type="text" name="pieces" placeholder="片数" autocomplete="off" class="layui-input">
                         </div>
                         <div class="table-form-item layui-input-inline">
+                            <span class="input-span">开始时间</span>
+                            <input type="text" name="startdate" placeholder="请选择时间范围" autocomplete="off" class="layui-input startdate">
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <span class="input-span">结束时间</span>
+                            <input type="text" name="enddate" placeholder="请选择时间范围" autocomplete="off" class="layui-input enddate">
+                        </div>
+                        <!-- <div class="table-form-item layui-input-inline">
                             <span class="input-span">日期</span>
                             <input type="text" name="date" placeholder="请选择时间范围" autocomplete="off" class="layui-input date">
-                        </div>
+                        </div> -->
 
                         <!-- <div class="table-form-item layui-input-inline">
                             <span class="input-span">产地</span>
@@ -144,7 +152,7 @@
         var menuKey = "a_13"; //当前页面key
         var domObj = $("#stock-outHistory .table-tools").find("ul"); //当前页面容器
         btnIsList(domObj, menuKey); //按钮权限
-        var tableOptionArr = getTableOption(menuKey);//表格列
+        var tableOptionArr = getTableOption(menuKey); //表格列
 
 
         var eaitLayer; //编辑-弹层
@@ -153,9 +161,13 @@
         formSelects.render(); //下拉选项
 
         laydate.render({
-            elem: '.date',
-            type: 'date',
-            range: true
+            elem: '.startdate',
+            type: 'datetime'
+        });
+
+        laydate.render({
+            elem: '.enddate',
+            type: 'datetime'
         });
 
         formSelects.data('ownerSelect', 'local', {
@@ -255,10 +267,10 @@
 
         // 获取select数据函数
         function selectDataInstall(url, param, type) {
-            if(param){
+            if (param) {
                 param['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
                 param['TOKEN'] = getCookie('TOKEN');
-            }else{
+            } else {
                 var param = {};
                 param['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
                 param['TOKEN'] = getCookie('TOKEN');
@@ -310,10 +322,10 @@
         }
 
         form.on('submit(searchForm)', function(data) {
-            if (data.field.date) {
-                data.field.startdate = data.field.date.substring(0, 10) + " 00:00:00";
-                data.field.enddate = data.field.date.substring(13, data.field.date.length) + " 23:59:59";
-            }
+            // if (data.field.date) {
+            //     data.field.startdate = data.field.date.substring(0, 10) + " 00:00:00";
+            //     data.field.enddate = data.field.date.substring(13, data.field.date.length) + " 23:59:59";
+            // }
 
             var paramSearch = {};
             for (var key in data.field) {
@@ -355,7 +367,7 @@
                 limitName: 'limit' //每页数据量的参数名，默认：limit
             },
             cols: [
-            tableOptionArr["tableContainer"]
+                tableOptionArr["tableContainer"]
                 // [ //标题栏
                 //     {
                 //         type: "numbers",
