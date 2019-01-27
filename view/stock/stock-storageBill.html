@@ -256,12 +256,13 @@
         var layer = layui.layer;
         var upload = layui.upload;
 
-        var menuKey = "a_35"; //当前页面key
+        var menuKey = "b_35"; //当前页面key
         var domObj = $("#stock-storageBill .table-tools").find("ul"); //当前页面容器
         btnIsList(domObj, menuKey); //按钮权限
 
         var tableKey = "a_12"; //当前页面表格key
         var tableOptionArr = getTableOption(tableKey); //表格列
+        var userOWnerInfo = JSON.parse(sessionStorage.getItem("roleInfo"));
         if(userOWnerInfo.isOwner == 1){
             $(".positionbox").hide();
         }
