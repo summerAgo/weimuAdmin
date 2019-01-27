@@ -140,7 +140,9 @@
     font-size:15px;
     font-weight:bold;
 }
-
+.index-side .layui-nav-tree .layui-nav-item>a .iconfont{
+    font-weight:normal;
+}
 .index-side .layui-nav-tree .layui-nav-item>a:hover {
     background:#202d40;
 }
