@@ -1,6 +1,10 @@
 <div class="home-content">
     <div class="home-owner-iconlist">
         <dl>
+            <dt><i class="iconfont icon-yuruku"></i></dt>
+            <dd>预入库</dd>
+        </dl>
+        <dl>
             <dt><i class="iconfont icon-shouyeruku"></i></dt>
             <dd>入库单</dd>
         </dl>
@@ -18,37 +22,63 @@
         </dl>
     </div>
 
-    <ul class="home-owner-depot" id="countList">
-
-    </ul>
+    <ul class="home-owner-depot" id="countList"></ul>
 </div>
 <script id="demo" type="text/html">
     <li>
-    <div class="icontitle">
-        <i class="iconfont icon-suoyoucangku"></i>
-    </div>
-    <h4>所有仓库</h4>
-    <dl>
-        <dt>今日总入库 <span>{{d.intotal}}</span></dt>
-        <dd>今日总出库 <span>{{d.outtotal}}</span></dd>
-    </dl>
-    <div class="allcount"><span>{{d.total}}</span><i>数量(m³)</i></div>
-</li>
-{{#if(d.list.length>0){}}
-    {{#  layui.each(d.list, function(index, item){ }}
-    <li>
         <div class="icontitle">
-            <i class="iconfont icon-cangku{{index+1}}"></i>
+            <i class="iconfont icon-suoyoucangku"></i>
         </div>
-        <h4>{{item.name}}</h4>
-        <dl>
-            <dt>今日入库 <span>{{item.intotal}}</span></dt>
-            <dd>今日出库 <span>{{item.outtotal}}</span></dd>
+        <h4>所有仓库</h4>
+        <dl class="rightitem">
+            <dt><i class="iconfont icon-yuruku"></i></dt>
+            <dd>
+                <strong>{{d.intcount}}</strong>
+                <span>预入库（单）</span>
+            </dd>
         </dl>
-        <div class="allcount"><span>{{item.total}}</span><i>数量(m³)</i></div>
+        <dl class="rightitem">
+            <dt><i class="iconfont icon-chuhuoshenqing1"></i></dt>
+            <dd>
+                <strong>{{d.outcount}}</strong>
+                <span>出货申请（单）</span>
+            </dd>
+        </dl>
+        <dl class="count">
+            <dt>今日总入库 <span>{{d.intotal}}</span></dt>
+            <dd>今日总出库 <span>{{d.outtotal}}</span></dd>
+        </dl>
+        <div class="allcount"><span>{{d.total}}</span><i>数量(m³)</i></div>
     </li>
-    {{#  }); }}
-{{#}}}
+    {{#if(d.list.length>0){}}
+        {{#  layui.each(d.list, function(index, item){ }}
+        <li>
+            <div class="icontitle">
+                <i class="iconfont icon-ck{{index+1}}"></i>
+            </div>
+            <h4>{{item.name}}</h4>
+            <dl class="rightitem">
+                <dt><i class="iconfont icon-yuruku"></i></dt>
+                <dd>
+                    <strong>{{item.intcount}}</strong>
+                    <span>预入库（单）</span>
+                </dd>
+            </dl>
+            <dl class="rightitem">
+                <dt><i class="iconfont icon-chuhuoshenqing1"></i></dt>
+                <dd>
+                    <strong>{{item.outcount}}</strong>
+                    <span>出货申请（单）</span>
+                </dd>
+            </dl>
+            <dl class="count">
+                <dt>今日入库 <span>{{item.intotal}}</span></dt>
+                <dd>今日出库 <span>{{item.outtotal}}</span></dd>
+            </dl>
+            <div class="allcount"><span>{{item.total}}</span><i>数量(m³)</i></div>
+        </li>
+        {{#  }); }}
+    {{#}}}
 <!-- <li>
     <div class="icontitle">
         <i class="iconfont icon-cangku2"></i>
@@ -74,30 +104,29 @@
 </script>
 <style scoped>
     .home-owner-iconlist {
-        padding-left: 100px;
+        text-align: center;
+        width: 1230px;
     }
 
     .home-owner-iconlist dl {
         width: 70px;
-        float: left;
+        display: inline-block;
         margin-right: 85px;
     }
 
     .home-owner-iconlist dl dt {
         width: 68px;
         height: 68px;
-        background-color: #f2f9ff;
         border-radius: 50%;
         margin: 0 auto;
         text-align: center;
         line-height: 66px;
-        border: 1px dashed #b6b6b6;
         cursor: pointer;
     }
 
     .home-owner-iconlist dl dt .iconfont {
         font-size: 40px;
-        color: #297cca;
+        color: #fff;
     }
 
     .home-owner-iconlist dl dd {
@@ -108,8 +137,24 @@
         text-align: center;
     }
 
-    .home-owner-iconlist dl:hover dt {
-        background-color: #297cca;
+    .home-owner-iconlist dl:first-child dt {
+        background: #20b067
+    }
+
+    .home-owner-iconlist dl:nth-child(2) dt {
+        background: #1fa68b
+    }
+
+    .home-owner-iconlist dl:nth-child(3) dt {
+        background: #228fb3
+    }
+
+    .home-owner-iconlist dl:nth-child(4) dt {
+        background: #297cca
+    }
+
+    .home-owner-iconlist dl:nth-child(5) dt {
+        background: #537197
     }
 
     .home-owner-iconlist dl:hover dt .iconfont {
@@ -135,19 +180,21 @@
 
     .home-owner-depot li {
         margin-bottom: 30px;
-        height: 51px;
-        width: 795px;
+        height: 67px;
+        width: 1200px;
         border-radius: 3px;
-        background: #297cca;
-        color: #fff;
-        padding: 18px 0 20px 20px;
+        background: #e3f2ff;
+        color: #297cca;
+        padding: 10px 10px 10px 20px;
     }
 
     .home-owner-depot li:first-child {
-        background: #20b067
+        background: #297cca;
+        color: #fff;
     }
 
     .icontitle {
+        margin-top: 5px;
         float: left;
         margin-right: 15px;
         width: 52px;
@@ -159,16 +206,19 @@
     }
 
     .home-owner-depot h4 {
+        font-weight: bold;
+        margin-top: 5px;
         float: left;
         font-size: 26px;
         line-height: 50px;
-        width: 210px;
+        width: 200px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
     }
 
     .allcount {
+        margin-top: 5px;
         float: right;
         font-size: 14px;
         text-align: right;
@@ -186,21 +236,76 @@
         font-style: normal;
     }
 
-    .home-owner-depot dl {
+    .home-owner-depot dl.count {
+        margin-top: 5px;
         float: right;
         padding-left: 20px;
         font-size: 14px;
         line-height: 1;
-        width: 200px;
-        border-left: 1px solid rgba(255, 255, 255, 0.5);
+        width: 180px;
+        border-left: 1px solid #bed7ef;
     }
 
-    .home-owner-depot dt {
+    .home-owner-depot dl.count dt {
         margin-bottom: 24px;
     }
 
-    .home-owner-depot dl span {
+    .home-owner-depot dl.count span {
         margin-left: 10px;
+    }
+
+    .home-owner-depot dl.rightitem {
+        float: right;
+        width: 196px;
+        height: 63px;
+        background: #c3dff8;
+        border-radius: 3px;
+        margin-left: 10px;
+        border: 2px solid #c3dff8;
+    }
+
+    .home-owner-depot dl.rightitem dt {
+        float: left;
+        width: 63px;
+        height: 63px;
+        background: #e3f2ff;
+        text-align: center;
+        line-height: 63px;
+    }
+
+    .home-owner-depot li:first-child dl.rightitem {
+        float: right;
+        width: 196px;
+        height: 63px;
+        background: #fff;
+        border-radius: 3px;
+        margin-left: 10px;
+        border: 2px solid #fff;
+    }
+
+    .home-owner-depot li:first-child dl.rightitem dt {
+        float: left;
+        width: 63px;
+        height: 63px;
+        background: #297cca;
+        text-align: center;
+        line-height: 63px;
+    }
+
+    .home-owner-depot dl.rightitem .iconfont {
+        font-size: 45px;
+    }
+
+    .home-owner-depot dl.rightitem dd {
+        float: left;
+        color: #297cca;
+        margin-left: 10px;
+    }
+
+    .home-owner-depot dl.rightitem strong {
+        display: block;
+        font-size: 30px;
+        font-weight: bold;
     }
 </style>
 <script>
@@ -234,11 +339,16 @@
                     data.total = 0;
                     data.intotal = 0;
                     data.outtotal = 0;
+                    data.intcount = 0;
+                    data.outcount = 0;
 
                     for (var i = 0; i < list.length; i++) {
                         data.total += list[i].total;
                         data.intotal += list[i].intotal;
                         data.outtotal += list[i].outtotal;
+                        data.intcount += list[i].intcount;
+                        data.outcount += list[i].outcount;
+
                         list[i].total = formatNum(list[i].total);
                         list[i].intotal = formatNum(list[i].intotal);
                         list[i].outtotal = formatNum(list[i].outtotal);
