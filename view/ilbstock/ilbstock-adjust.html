@@ -2,8 +2,8 @@
     <div class="table-content-title">
         <div class="table-tools">
             <ul class="layui-nav" lay-filter="talbe-tools">
-                <li class="layui-nav-item">
-                    <a id="addBtn" href="javascript:;"><i class="iconfont icon-zengjiakucun"></i>新建调整单</a>
+                <!-- <li class="layui-nav-item">
+                    <a class="addBtn" href="javascript:;"><i class="iconfont icon-zengjiakucun"></i>新建调整单</a>
                 </li>
                 <li class="layui-nav-item">
                     <a class="toExport" href="javascript:;"><i class="iconfont icon-daochu"></i>导出</a>
@@ -11,9 +11,6 @@
                 <li class="layui-nav-item">
                     <a class="printStore" href="javascript:;"><i class="iconfont icon-dayin"></i>打印</a>
                 </li>
-                <!-- <li class="layui-nav-item">
-                    <a class="updateBtn" href="javascript:;"><i class="iconfont icon-bianji"></i>编辑</a>
-                </li> -->
                 <li class="layui-nav-item">
                     <a class="deleBtn" href="javascript:;"><i class="iconfont icon-shanchu"></i>删除</a>
                 </li>
@@ -22,7 +19,7 @@
                 </li>
                 <li class="layui-nav-item">
                     <a class="waiver" href="javascript:;"><i class="iconfont icon-fangqitiaozheng"></i>放弃调整</a>
-                </li>
+                </li> -->
             </ul>
         </div>
     </div>
@@ -524,7 +521,7 @@
             }
         });
 
-        $("#addBtn").click(function() {
+        $(".addBtn").click(function() {
             sessionStorage.removeItem('adjustParam');
             $.get('view/ilbstock/ilbstock-adjuststock.html', {}, function(str) { // 请求弹框
                 // 弹出弹框
