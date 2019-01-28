@@ -475,6 +475,8 @@
                 return false;
             } else {
                 //搜索货物
+                data.field['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
+                data.field['TOKEN'] = getCookie('TOKEN');
                 data.field.ownerid = ownerid;
                 data.field.depotid = depotid;
                 data.field.positionid = positionid;
