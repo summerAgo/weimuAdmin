@@ -132,7 +132,7 @@
         var menuKey = "a_8"; //当前页面key
         var domObj = $("#ilbstock-info .table-tools").find("ul"); //当前页面容器
         btnIsList(domObj, menuKey); //按钮权限
-        var tableOptionArr = getTableOption(menuKey);//表格列
+        var tableOptionArr = getTableOption(menuKey); //表格列
         element.render('talbe-tools'); //表格工具栏
 
         var eaitLayer; //编辑-弹层
@@ -208,10 +208,10 @@
 
         // 获取select数据函数
         function selectDataInstall(url, param, bool, type) {
-            if(param){
+            if (param) {
                 param['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
                 param['TOKEN'] = getCookie('TOKEN');
-            }else{
+            } else {
                 var param = {};
                 param['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
                 param['TOKEN'] = getCookie('TOKEN');
@@ -306,7 +306,7 @@
                     "znum": res.znum //解析数据列表
                 }
             },
-        request: {
+            request: {
                 pageName: 'offset', //页码的参数名称，默认：page
                 limitName: 'limit' //每页数据量的参数名，默认：limit
             },
@@ -434,7 +434,7 @@
             ],
             even: true,
             page: true, //是否显示分页
-            limits: [100, 200, 300, 400,500],
+            limits: [100, 200, 300, 400, 500],
             limit: 100, //每页默认显示的数量
             done: function(res, curr, count) {
                 var addtableBtn = '<div class="rightBotBtn" id="rightBox" style="font-weight: bold;">合计总库存数量：<span>' + res.znum + '</span>㎡ &nbsp;&nbsp;&nbsp;&nbsp; 总库存估价金额：<span>' + formatNum(res.aprice) + '</span>(RMB)</div>';
@@ -496,11 +496,6 @@
                     title: '修改包号为' + data.code + '的备注',
                     value: data.remarks
                 }, function(value, index) {
-                    layer.close(index);
-                    obj.update({
-                        remarks: value
-                    });
-
                     param['uuid'] = data.uuid;
                     param['remarks'] = value;
 
@@ -513,10 +508,14 @@
                             if (data.status === 1) {
                                 goLogin();
                             }
-                            if(data.status !== 0 ){
+                            if (data.status !== 0) {
                                 layer.msg(data.msg);
                             }
                         }
+                    });
+                    layer.close(index);
+                    obj.update({
+                        remarks: value
                     });
 
                 });

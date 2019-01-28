@@ -906,11 +906,7 @@
                     title: '修改包号为' + data.code + '的备注',
                     value: data.remarks
                 }, function(value, index) {
-                    layer.close(index);
-                    obj.update({
-                        remarks: value
-                    });
-
+                    
                     param['uuid'] = data.uuid;
                     param['remarks'] = value;
 
@@ -923,10 +919,14 @@
                             if (data.status === 1) {
                                 goLogin();
                             }
-                            if(data.status !== 0 ){
+                            if (data.status !== 0) {
                                 layer.msg(data.msg);
                             }
                         }
+                    });
+                    layer.close(index);
+                    obj.update({
+                        remarks: value
                     });
 
                 });
