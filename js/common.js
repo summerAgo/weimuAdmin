@@ -147,6 +147,9 @@ function getTableOption(key) {
                 if (tableOption[k][i]["minWidth"]) {
                     tableOption[k][i]["minWidth"] = tableOption[k][i]["minWidth"] - 0;
                 }
+                if (tableOption[k][i]["width"]) {
+                    tableOption[k][i]["width"] = tableOption[k][i]["width"] - 0;
+                }
                 if (!tableOption[k][i]["align"] && tableOption[k][i]["field"] != "remarks") {
                     tableOption[k][i]["align"] = "center";
                 }
