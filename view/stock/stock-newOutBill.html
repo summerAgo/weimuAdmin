@@ -247,7 +247,7 @@
 
         var data = {};
         var pageData;
-        
+
         if (outBill == null) {
             $(".suboutlbBtn").parent().hide();
             formSelects.undisabled('ownerSelect'); //启用
@@ -324,10 +324,10 @@
                     }, {
                         field: 'chang',
                         title: '长度'
-                    },{
+                    }, {
                         field: 'pieces',
                         title: '片数',
-                    },{
+                    }, {
                         field: 'billloading',
                         title: '提运单',
                         width: 150
@@ -352,11 +352,11 @@
             ],
             even: true,
             page: true, //是否显示分页
-            limits: [50,100,150,200,500],
+            limits: [50, 100, 150, 200, 500],
             limit: 50, //每页默认显示的数量
             done: function(res, curr, count) {
                 var addtableBtn = '<div class="rightBotBtn" id="addOutBillRight">共添加<span>' + count + '</span>个货物</div>';
-                if($("#addOutBillRight").length<1){
+                if ($("#addOutBillRight").length < 1) {
                     $("#tableContainer-addOutBill").siblings().find(".layui-table-page").append(addtableBtn);
                 }
                 $(".submissionBtn").unbind("click").bind("click", function() {
@@ -718,10 +718,10 @@
                                 field: 'num',
                                 width: 130,
                                 title: '数量(m³)'
-                            },{
+                            }, {
                                 field: 'pieces',
                                 title: '片数',
-                            },{
+                            }, {
                                 field: 'containernum',
                                 title: '货柜号',
                                 width: 150

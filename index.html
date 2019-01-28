@@ -348,10 +348,7 @@
                     // hash改变执行
                     var thehash = $(".index-side a").attr("href").replace(/#!/, '');
                     var dom;
-                    // if (dom = $('.layui-nav dd.layui-this')) {
-                    //     dom.removeClass("layui-this");
-                    //     dom.parents("li.layui-nav-item").removeClass("layui-nav-itemed");
-                    // }
+
                     if (dom = $('.layui-nav a[href="#!' + vid + '"]')) {
                         dom.parent("dd").addClass("layui-this");
                         dom.parents("li.layui-nav-item").siblings().removeClass("layui-nav-itemed");
@@ -392,23 +389,10 @@
                 }
             });
 
-            //获取hash来切换选项卡，假设当前地址的hash为lay-id对应的值
-            // var layid = location.hash.replace(/#!/, '');
-            // element.tabChange('nav-tabs', layid);
-
             //监听Tab切换，以改变地址hash值
             element.on('tab(nav-tabs)', function() {
                 location.hash = '#!' + this.getAttribute('lay-id');
             });
-
-            /*$(".header-seacherBox input").focus(function() {
-                //头部搜索框获取焦点变亮
-                $(".header-seacherBox").addClass('opacity1');
-            }).blur(function() {
-                if ($(this).val() === "") {
-                    $(".header-seacherBox").removeClass('opacity1');
-                }
-            });*/
 
             $(".signOutBtn").click(signOut); //退出登录
             $(".changePassword").click(function() {

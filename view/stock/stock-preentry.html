@@ -18,6 +18,9 @@
                 <!--<li class="layui-nav-item">
                     <a href="javascript:;" class="toExport"><i class="iconfont icon-daochu"></i>导出</a>
                 </li>-->
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="refreshBtn"><i class="iconfont icon-shuaxin"></i>刷新</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -97,8 +100,8 @@
         var menuKey = "a_12"; //当前页面key
         var domObj = $("#stock-preentry .table-tools").find("ul"); //当前页面容器
         btnIsList(domObj, menuKey); //按钮权限
-        var tableOptionArr = getTableOption(menuKey);//表格列
-        
+        var tableOptionArr = getTableOption(menuKey); //表格列
+
         var eaitLayer; //编辑-弹层
 
         form.render(); //重置表单渲染
@@ -264,10 +267,10 @@
         }
 
         function selectDataInstall(url, param, bool) {
-            if(param){
+            if (param) {
                 param['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
                 param['TOKEN'] = getCookie('TOKEN');
-            }else{
+            } else {
                 var param = {};
                 param['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
                 param['TOKEN'] = getCookie('TOKEN');
@@ -342,7 +345,7 @@
                 limitName: 'limit' //每页数据量的参数名，默认：limit
             },
             cols: [
-            tableOptionArr["tableContainer-preentry"]
+                tableOptionArr["tableContainer-preentry"]
                 // [ //标题栏
                 //     {
                 //         type: "numbers",
@@ -517,10 +520,10 @@
 
         //增删行数据
         function rowDataApi(url, data, funSuc, funErr) {
-            if(data){
+            if (data) {
                 data['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
                 data['TOKEN'] = getCookie('TOKEN');
-            }else{
+            } else {
                 var data = {};
                 data['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
                 data['TOKEN'] = getCookie('TOKEN');
@@ -583,6 +586,13 @@
         $(".toExport").on('click', function(e) {
             table.exportFile(tableIns.config.id, tableIns.config.data);
         });
-
+        // 刷新按钮
+        $(".refreshBtn").click(function() {
+            tableIns.reload({
+                page: {
+                    curr: 1 // 重新从第 1 页开始
+                }
+            });
+        });
     });
 </script>
