@@ -1,4 +1,4 @@
-<div class="table-page">
+<div class="table-page" id="ilbstock-adjust">
     <div class="table-content-title">
         <div class="table-tools">
             <ul class="layui-nav" lay-filter="talbe-tools">
@@ -144,8 +144,9 @@
 
         var inventoryLayer; // 审核-弹层
         var menuKey = "a_29"; //当前页面key
-        var domObj = $("#stock-addOutBill .table-tools").find("ul"); //当前页面容器
+        var domObj = $("#ilbstock-adjust .table-tools").find("ul"); //当前页面容器
         var tableOptionArr = getTableOption(menuKey);//表格列
+
         btnIsList(domObj, menuKey); //按钮权限
 
         form.render(); // 重置表单渲染
