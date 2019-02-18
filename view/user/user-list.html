@@ -58,6 +58,11 @@
                                     <input type="text" name="username" placeholder="用户名" autocomplete="off" class="layui-input">
                                     <input type="hidden" name="instid" id="instid" value="" autocomplete="off" class="layui-input">
                                 </div>
+                                <div class="table-form-item layui-input-inline">
+                                    <span class="input-span" id="titleIns">管理的仓库</span>
+                                    <input type="text" name="username" placeholder="仓库名" autocomplete="off" class="layui-input">
+                                    <input type="hidden" name="instid" id="instid" value="" autocomplete="off" class="layui-input">
+                                </div>
                             </div>
                             <div class="layui-form-item form-right">
                                 <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="searchForm">
@@ -106,7 +111,7 @@
         var menuKey = "a_15"; //当前页面key
         var domObj = $("#user-list .table-tools").find("ul"); //当前页面容器
         btnIsList(domObj, menuKey); //按钮权限
-        var tableOptionArr = getTableOption(menuKey);//表格列
+        var tableOptionArr = getTableOption(menuKey); //表格列
 
         var eaitLayer; //编辑-弹层
 
@@ -152,7 +157,7 @@
                 limitName: 'limit' //每页数据量的参数名，默认：limit
             },
             cols: [
-            tableOptionArr["tableContainer-userlist"]
+                tableOptionArr["tableContainer-userlist"]
                 // [ //标题栏
                 //     {
                 //         field: 'LAY_TABLE_INDEX',
@@ -493,15 +498,15 @@
                     crossDomain: true,
                     success: function(data) {
                         if (data.status === 1) {
-                                goLogin(); // 跳转到登录页
-                            }
+                            goLogin(); // 跳转到登录页
+                        }
                         if (data.status === 2) {
                             layer.msg('用户名已存在');
                             isName = false;
-                        }else{
+                        } else {
                             layer.msg('操作成功，该用户的操作权限或部分信息，需要重新登陆才能刷新！');
                         }
-                        
+
                     }
                 });
                 if (!isName) {
@@ -552,7 +557,7 @@
             if (data) {
                 data['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
                 data['TOKEN'] = getCookie('TOKEN');
-            }else{
+            } else {
                 var data = {};
                 data['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
                 data['TOKEN'] = getCookie('TOKEN');
@@ -668,10 +673,20 @@
                     dtree.render({
                         elem: "#commonTree3",
                         data: treeData,
-                        firstIconArray: {"2":{"open":"iconfont icon-jian","close":"iconfont icon-jia"}}, // 自定扩展的一级非最后一级图标，从2开始
+                        firstIconArray: {
+                            "2": {
+                                "open": "iconfont icon-jian",
+                                "close": "iconfont icon-jia"
+                            }
+                        }, // 自定扩展的一级非最后一级图标，从2开始
                         ficon: "2", // 使用
-                        nodeIconArray:{"1":{"open":"iconfont icon-yijileibie","close":"iconfont icon-yijileibie"}},  // 自定扩展的二级非最后一级图标，从1开始
-                        icon: ["1","-1"], // 使用
+                        nodeIconArray: {
+                            "1": {
+                                "open": "iconfont icon-yijileibie",
+                                "close": "iconfont icon-yijileibie"
+                            }
+                        }, // 自定扩展的二级非最后一级图标，从1开始
+                        icon: ["1", "-1"], // 使用
                         checkbar: true // 不启用复选框
                     });
 
@@ -756,7 +771,7 @@
                 if (data) {
                     data['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
                     data['TOKEN'] = getCookie('TOKEN');
-                }else{
+                } else {
                     var data = {};
                     data['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
                     data['TOKEN'] = getCookie('TOKEN');
@@ -783,7 +798,7 @@
                             listIns();
                         } else if (res.status === 1) {
                             goLogin(); // 跳转到登录页
-                        }else{
+                        } else {
                             layer.msg(res.msg);
                         }
                     }
@@ -876,7 +891,7 @@
 
         //点击导出
         $(".toExport").on('click', function(e) {
-            table.exportFile(tableIns.config.id, tableIns.config.data,"xls");
+            table.exportFile(tableIns.config.id, tableIns.config.data, "xls");
         });
     });
 </script>

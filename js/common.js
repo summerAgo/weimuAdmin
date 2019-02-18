@@ -132,6 +132,7 @@ function getTableOption(key) {
     var data        = JSON.parse(sessionStorage.getItem("talbeAuthority"));  //所有页面按钮权限数据存入talbeAuthority
     var tableOption = data[key];
     if (data == null || !key || !tableOption) {
+        layer.alert("当前页面未开放表格显示权限");
         return false;
     } else {
         for (var k in tableOption) {

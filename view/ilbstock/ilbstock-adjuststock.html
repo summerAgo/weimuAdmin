@@ -472,6 +472,10 @@
             url: dropSupplier,
             type: "get",
             async: false, //同步
+            data: {
+                'SESSION_USER_CODE': getCookie('SESSION_USER_CODE'),
+                'TOKEN': getCookie('TOKEN')
+            },
             traditional: true,
             xhrFields: {
                 withCredentials: true
@@ -610,6 +614,11 @@
         //下拉选框数据组装
         function selectDataInstall(url, param, bool, type) {
             var arr = [];
+            if (param == null) {
+                param = {}
+            }
+            param['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
+            param['TOKEN'] = getCookie('TOKEN');
             //获取列表数据
             $.ajax({
                 url: url,
