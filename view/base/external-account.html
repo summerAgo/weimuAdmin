@@ -54,7 +54,10 @@
                             </li>
                             <li class="layui-nav-item">
                                 <a href="javascript:;" class="toExport"><i class="iconfont icon-daochu"></i>导出</a>
-                            </li> -->
+                            </li>
+                        <li class="layui-nav-item">
+                            <a href="javascript:;" class="depotPower"><i class="iconfont icon-cangkuquanxian"></i>设置仓库权限</a>
+                        </li> -->
                     </ul>
                 </div>
             </div>
@@ -256,8 +259,7 @@
             limits: [100, 200, 500, 1000],
             limit: 100, //每页默认显示的数量
             title: "公司员工",
-            done: function(res, curr, count) {
-            },
+            done: function(res, curr, count) {},
             text: {
                 none: "无匹配数据"
             },
@@ -733,5 +735,26 @@
             listIns(data.field.name);
             return false; //阻止表单跳转。如果需要表单跳转，去掉这段即可。
         });
+
+        $(".depotPower").click(function() {
+            //编辑
+            var checkStatus = table.checkStatus('tableContainer-userlist');
+            if (checkStatus.data.length < 1) {
+                layer.msg("请选择所需设置仓库权限的信息");
+            } else if (checkStatus.data.length > 1) {
+                layer.msg("请选择单条所需设置仓库权限的信息");
+            } else {
+                sessionStorage.setItem('waiDepotPower', JSON.stringify(checkStatus.data[0]));
+                $.get('view/base/external-depotPower.html', {}, function(str) {
+                    eaitLayer = layer.open({
+                        title: '设置' + checkStatus.data[0].username + '的仓库权限',
+                        type: 1,
+                        content: str, //注意，如果str是object，那么需要字符拼接。
+                        area: ['800px', '700px']
+                    });
+                });
+            }
+        });
+
     });
 </script>

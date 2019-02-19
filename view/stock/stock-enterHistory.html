@@ -154,7 +154,7 @@
         var menuKey = "a_14"; //当前页面key
         var domObj = $("#stock-enterHistory .table-tools").find("ul"); //当前页面容器
         btnIsList(domObj, menuKey); //按钮权限
-        var tableOptionArr = getTableOption(menuKey);//表格列
+        var tableOptionArr = getTableOption(menuKey); //表格列
 
         var eaitLayer; //编辑-弹层
 
@@ -268,10 +268,10 @@
 
         // 获取select数据函数
         function selectDataInstall(url, param, type) {
-            if(param){
+            if (param) {
                 param['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
                 param['TOKEN'] = getCookie('TOKEN');
-            }else{
+            } else {
                 var param = {};
                 param['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
                 param['TOKEN'] = getCookie('TOKEN');
@@ -360,7 +360,9 @@
                     "code": res.status, //解析接口状态
                     "msg": res.message, //解析提示文本
                     "count": res.count, //解析数据长度
-                    "data": res.data //解析数据列表
+                    "data": res.data, //解析数据列表
+                    "countJian": res.countJian,
+                    "countNum": res.countNum
                 }
             },
             request: {
@@ -368,7 +370,7 @@
                 limitName: 'limit' //每页数据量的参数名，默认：limit
             },
             cols: [
-            tableOptionArr["tableContainer"]
+                tableOptionArr["tableContainer"]
                 // [ //标题栏
                 //     {
                 //         type: "numbers",
@@ -421,7 +423,10 @@
             limit: 100, //每页默认显示的数量
             title: "入库记录",
             done: function(res, curr, count) {
-
+                var addtableBtn = '<div class="rightBotBtn" id="rightBox" style="font-weight: bold;">合计件数：<span>' + res.countJian + '</span>包 &nbsp;&nbsp;&nbsp;&nbsp; 合计总数量：<span>' + res.countNum + '</span>m³</div>';
+                if ($("#rightBox").length < 1) {
+                    $(".layui-table-page").append(addtableBtn);
+                }
             },
             text: {
                 none: "无匹配数据"
@@ -559,6 +564,6 @@
         $(".toExport").on('click', function(e) {
             table.exportFile(tableIns.config.id, tableIns.config.data, "xls");
         });
-        
+
     });
 </script>
