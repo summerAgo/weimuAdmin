@@ -302,16 +302,9 @@ var isname_user        = pathUrl + "sys/isName";                 //员工验证 
 var isname_role        = pathUrl + "sys/role/isName";            //角色验证          rolename
 var isname_owner       = pathUrl + "user/owner/isName";          //仓库主验证        instid,name
 
-
 var ownerCount       = pathUrl + "owner/home/count";          //仓库主统计
 
-
-
-
-
-
 //仓库权限
-var ownerCount       = pathUrl + "sys/new/power/queryByOwnerlist";      //根据用户ID查询仓库主信息，及回显。    必填:userid   选填：name
-var ownerCount       = pathUrl + "sys/new/power/saveData";              //保存用户与仓库的关键。并返回全部信息。    必填:userid   depid
-var ownerCount       = pathUrl + "sys/new/power/queryById";             //根据仓库主ID查询仓库及回显。    必填:userid , ownerid
-
+var userDepotQuery     = pathUrl + "sys/nei/power/queryByOwnerlist";      //根据用户ID查询仓库主信息，及回显。    必填:userid   选填：name
+var userDepotSave       = pathUrl + "sys/nei/power/saveData";              //保存用户与仓库的关键。并返回全部信息。    必填:userid   depid
+var userDepotStauts       = pathUrl + "sys/nei/power/queryById";             //根据仓库主ID查询仓库及回显。    必填:userid , ownerid
