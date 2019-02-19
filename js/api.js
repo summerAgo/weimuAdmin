@@ -306,5 +306,5 @@ var ownerCount       = pathUrl + "owner/home/count";          //仓库主统计
 
 //仓库权限
 var userDepotQuery     = pathUrl + "sys/nei/power/queryByOwnerlist";      //根据用户ID查询仓库主信息，及回显。    必填:userid   选填：name
-var userDepotSave       = pathUrl + "sys/nei/power/saveData";              //保存用户与仓库的关键。并返回全部信息。    必填:userid   depid
+var userDepotSave       = pathUrl + "sys/nei/power/saveData";              //保存用户与仓库的关键。并返回全部信息。    必填:userid  depid chekbox(0/1)
 var userDepotStauts       = pathUrl + "sys/nei/power/queryById";             //根据仓库主ID查询仓库及回显。    必填:userid , ownerid

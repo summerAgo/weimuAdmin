@@ -1,0 +1,330 @@
+<div id="depotPowerPage">
+    <div class="dp-left-box">
+        <h4>仓库主选择</h4>
+        <form class="layui-form">
+            <dl class="searchOwnerBox">
+                <dt>
+                    <input type="text" name="name" placeholder="搜索仓库主" autocomplete="off">
+                </dt>
+                <dd>
+                    <button lay-submit lay-filter="searchOwner" class="searchOwner"><i class="iconfont icon-sousuo"></i></button>
+                </dd>
+            </dl>
+        </form>
+        <table class="layui-hide lay-table" id="tableContainer-depotList" lay-filter="tableContainer-depotList"></table>
+    </div>
+    <div class="dp-right-box">
+        <div class="txtlist"></div>
+        <table class="layui-hide lay-table" id="tableContainer-depotPower" lay-filter="tableContainer-depotPower"></table>
+    </div>
+</div>
+<style scoped>
+    #depotPowerPage {
+        display: flex;
+    }
+
+    #depotPowerPage h4 {
+        font-size: 16px;
+        font-weight: bold;
+        color: #333;
+        padding: 15px 0 0;
+    }
+
+    .dp-left-box {
+        flex: 0 0 260px;
+        padding: 0 20px;
+        box-sizing: border-box;
+        border-right: 1px solid #999;
+    }
+
+    .dp-right-box {
+        flex: 1 1 auto;
+        padding: 0 20px;
+        box-sizing: border-box;
+        overflow: hidden;
+    }
+
+    .searchOwnerBox {
+        margin: 10px 0 0;
+        border: 1px solid #d4d4d4;
+        border-radius: 3px;
+        background: #fff;
+        height: 28px;
+        line-height: 28px;
+        display: flex;
+        overflow: hidden;
+    }
+
+    .searchOwnerBox dt {
+        overflow: hidden;
+    }
+
+    .searchOwnerBox input {
+        border: 0;
+        height: 28px;
+        line-height: 28px;
+        display: block;
+        padding-left: 10px;
+        width: 180px;
+    }
+
+    .searchOwnerBox dd {
+        flex: 0 0 29px;
+    }
+
+    .searchOwnerBox button {
+        border: 0;
+        border-left: 1px solid #d4d4d4;
+        display: block;
+        height: 28px;
+        background: #fff;
+        text-align: center;
+        width: 100%;
+    }
+
+    .searchOwnerBox button:hover {
+        background: #e1e1e1;
+    }
+
+    .layui-table {
+        color: #333
+    }
+
+    div[lay-id="tableContainer-depotList"] thead {
+        display: none;
+    }
+
+    div[lay-id="tableContainer-depotList"] .layui-table-header {
+        display: none;
+    }
+
+    .txtlist {
+        height: 50px;
+        overflow: auto;
+        margin-top: 10px;
+        line-height: 1.3;
+    }
+</style>
+<script>
+    layui.use(['form', 'jquery', 'element', 'layer', 'laytpl', 'table'], function() {
+        var element = layui.element;
+        var form = layui.form;
+        var $ = layui.jquery;
+        var laytpl = layui.laytpl;
+        var table = layui.table;
+        var userBaseInfo = JSON.parse(sessionStorage.getItem('userDepotPower'));
+        var _userid = userBaseInfo.id;
+        var _depotNameList = [];
+
+        form.on('submit(searchOwner)', function(data) {
+            table_left.reload({
+                where: {
+                    userid: _userid,
+                    name: data.field.name
+                }
+            });
+            return false;
+        })
+
+        var table_left = table.render({
+            elem: '#tableContainer-depotList',
+            height: '560',
+            url: userDepotQuery,
+            parseData: function(res) { //res 即为原始返回的数据
+                if (_depotNameList.length == 0 && res.deplist !== null) {
+                    _depotNameList = res.deplist;
+                    var txt = "";
+                    for (var i = 0; i < _depotNameList.length; i++) {
+                        if (_depotNameList[i]) {
+                            txt += _depotNameList[i] + "，";
+                        }
+                    }
+                    $(".txtlist").html(txt.substring(0, txt.length - 1));
+                }
+                return {
+                    "code": res.status, //解析接口状态
+                    "msg": res.message, //解析提示文本
+                    "count": res.count, //解析数据长度
+                    "data": res.data //解析数据列表
+                }
+            },
+            where: {
+                userid: _userid
+            },
+            request: {
+                pageName: 'offset', //页码的参数名称，默认：page
+                limitName: 'limit' //每页数据量的参数名，默认：limit
+            },
+            cols: [
+                [ //标题栏
+                    {
+                        field: 'name',
+                        unresize: true,
+                    }
+                ]
+            ],
+            even: true,
+            page: false, //是否显示分页
+            limit: null, //每页默认显示的数量
+            done: function(res, curr, count) {
+
+            },
+            text: {
+                none: "无匹配数据"
+            }
+        });
+
+        var table_right = table.render({
+            elem: '#tableContainer-depotPower',
+            height: '570',
+            url: userDepotStauts,
+            where: {
+                userid: _userid,
+                ownerid: 0
+            },
+            parseData: function(res) { //res 即为原始返回的数据
+                if (res.data) {
+                    for (var i = 0; i < res.data.length; i++) {
+                        res.data[i].LAY_CHECKED = res.data[i].status;
+                    }
+                }
+                return {
+                    "code": res.status, //解析接口状态
+                    "msg": res.message, //解析提示文本
+                    "count": res.count, //解析数据长度
+                    "data": res.data //解析数据列表
+                }
+            },
+            request: {
+                pageName: 'offset', //页码的参数名称，默认：page
+                limitName: 'limit' //每页数据量的参数名，默认：limit
+            },
+            cols: [
+                [ //标题栏
+                    {
+                        type: 'checkbox'
+                    }, {
+                        field: 'name',
+                        title: '仓库名称'
+                    }, {
+                        field: 'names',
+                        title: '所属仓库主',
+                        unresize: true
+                    }
+                ]
+            ],
+            even: true,
+            page: false, //是否显示分页
+            done: function(res, curr, count) {
+
+            },
+            text: {
+                none: "无匹配数据"
+            }
+        });
+
+        table.on('row(tableContainer-depotList)', function(obj) {
+            //点击右侧表格数据改变
+            table_right.reload({
+                where: {
+                    userid: _userid,
+                    ownerid: obj.data.id
+                }
+            });
+        });
+
+        table.on('checkbox(tableContainer-depotPower)', function(obj) {
+            //监听勾选
+            var params = {}; //请求参数
+            params.userid = _userid;
+            params.chekbox = obj.checked ? 0 : 1;
+            params.SESSION_USER_CODE = getCookie('SESSION_USER_CODE');
+            params.TOKEN = getCookie('TOKEN');
+
+            if (obj.type == "all") {
+                //全选
+                var tableData = layui.table.cache["tableContainer-depotPower"];
+                var _nameList = [];
+                for (var i = 0; i < tableData.length; i++) {
+                    params.depid = tableData[i].id;
+                    _nameList.push("[" + tableData[i].ownername + "]" + tableData[i].name);
+                    depotSave(params);
+                }
+
+                if (obj.checked == true) {
+                    //增加显示项
+                    for (var k = 0; k < _nameList.length; k++) {
+                        _depotNameList.push(_nameList[k]);
+                    }
+                } else {
+                    //删除显示项
+                    for (var k = 0; k < _nameList.length; k++) {
+                        for (var x = 0; x < _depotNameList.length; x++) {
+                            if (_depotNameList[x] == _nameList[k]) {
+                                delete _depotNameList[x];
+                            }
+                        }
+                    }
+                }
+
+                txtList(_depotNameList);
+
+            } else {
+                //单选
+                var nametxt = "";
+                if (obj.data.id == undefined) {
+                    params.depid = layui.table.cache["tableContainer-depotPower"][0].id;
+                    nametxt = "[" + layui.table.cache["tableContainer-depotPower"][0].ownername + "]" + layui.table.cache["tableContainer-depotPower"][0].name;
+                } else {
+                    params.depid = obj.data.id;
+                    nametxt = "[" + obj.data.ownername + "]" + obj.data.name;
+                }
+                depotSave(params);
+                if (obj.checked == true) {
+                    //增加显示项
+                    _depotNameList.push(nametxt);
+                } else {
+                    //删除显示项
+                    for (var x = 0; x < _depotNameList.length; x++) {
+                        if (_depotNameList[x] == nametxt) {
+                            delete _depotNameList[x];
+                        }
+                    }
+                }
+                txtList(_depotNameList);
+            }
+
+            function depotSave(obj) {
+                //勾选时保存
+                $.ajax({
+                    url: userDepotSave,
+                    type: "POST",
+                    data: obj,
+                    xhrFields: {
+                        withCredentials: true,
+                    },
+                    crossDomain: true,
+                    success: function(res) {
+                        if (res.status === 1) {
+                            goLogin();
+                        } else if (res.status != 0 && res.status != 1) {
+                            layer.msg(res.msg);
+                        }
+                    }
+                });
+            }
+
+            function txtList(arr) {
+                //显示项
+                var txt = "";
+                for (var i = 0; i < arr.length; i++) {
+                    if (arr[i]) {
+                        txt += arr[i] + "，";
+                    }
+                }
+                $(".txtlist").html(txt.substring(0, txt.length - 1));
+            }
+
+        });
+    });
+</script>
