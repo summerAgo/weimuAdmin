@@ -451,7 +451,9 @@
         //点击导出
         $(".toExport").on('click', function(e) {
             //在地址后面携带参数给后台  实现条件导出：如 window.location.href = ilbstockExportUrl+"?name=&type="
-            var str = "?isstatus=1&";
+            var SESSION_USER_CODE = getCookie('SESSION_USER_CODE');
+            var TOKEN = getCookie('TOKEN');
+            var str = "?isstatus=1&SESSION_USER_CODE=" + SESSION_USER_CODE + "&TOKEN" + TOKEN + "&";
             var arr = [];
 
             //toExportParm  报错。这个是哪里来的。
@@ -469,17 +471,6 @@
             });
             str += arr.join("&");
             window.location.href = ilbstockExportUrl + str;
-            return;
-
-            if (!$.isEmptyObject(toExportParm)) {
-                for (var i in toExportParm) {
-                    arr.push(i + "=" + toExportParm[i]);
-                }
-                str += arr.join("&");
-                window.location.href = ilbstockExportUrl + str;
-            } else {
-                window.location.href = ilbstockExportUrl
-            }
         });
 
         // 监听table点击事件，修改数量
