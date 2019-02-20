@@ -114,6 +114,7 @@
         var table = layui.table;
         var userBaseInfo = JSON.parse(sessionStorage.getItem('userDepotPower'));
         var _userid = userBaseInfo.id;
+        var _ownerid;
         var _depotNameList = [];
 
         form.on('submit(searchOwner)', function(data) {
@@ -225,6 +226,7 @@
 
         table.on('row(tableContainer-depotList)', function(obj) {
             //点击右侧表格数据改变
+            _ownerid = obj.data.id;
             table_right.reload({
                 where: {
                     userid: _userid,
@@ -240,7 +242,7 @@
             params.chekbox = obj.checked ? 0 : 1;
             params.SESSION_USER_CODE = getCookie('SESSION_USER_CODE');
             params.TOKEN = getCookie('TOKEN');
-
+            params.ownerid = _ownerid;
             if (obj.type == "all") {
                 //全选
                 var tableData = layui.table.cache["tableContainer-depotPower"];
