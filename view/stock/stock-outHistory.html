@@ -552,7 +552,10 @@
                     const element = checkData[index];
                     neworder.push(element.orderno);
                 }
-                window.location.href = outbatchExport + "?orderarr=" + neworder.toString();
+                var SESSION_USER_CODE = getCookie('SESSION_USER_CODE');
+                var TOKEN = getCookie('TOKEN');
+                var str = outbatchExport + "?orderarr=" + neworder.toString() +"&isstatus=1&SESSION_USER_CODE=" + SESSION_USER_CODE + "&TOKEN" + TOKEN + "&";
+                window.location.href = str;
             } else {
                 layer.msg("请选择记录");
             }
