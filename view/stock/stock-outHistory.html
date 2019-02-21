@@ -452,8 +452,16 @@
                         return false;
                     }
                     data.type = "outHistory"; // 区分是出库记录还是入库记录的区别
-                    location.hash = "#!stock-outBillDetails/";
+                    // location.hash = "#!stock-outBillDetails/";
                     sessionStorage.setItem('outBillDetails', JSON.stringify(data));
+                    $.get('view/stock/stock-outBillDetails.html', {}, function(str) { // 请求弹框
+                        layer.open({
+                            title: '出库单',
+                            type: 1,
+                            content: str, // 注意，如果str是object，那么需要字符拼接。
+                            area: ['99%', '99%']
+                        });
+                    });
                 })
             }
         });

@@ -93,8 +93,8 @@
         var menuKey = "a_11"; //当前页面key
         var domObj = $("#stock-outBill .table-tools").find("ul"); //当前页面容器
         btnIsList(domObj, menuKey); //按钮权限
-        var tableOptionArr = getTableOption(menuKey);//表格列
-        
+        var tableOptionArr = getTableOption(menuKey); //表格列
+
         var addLayer; //编辑-弹层
 
         form.render(); //重置表单渲染
@@ -177,10 +177,10 @@
         }, true);
 
         function selectDataInstall(url, param, bool) {
-            if(param){
+            if (param) {
                 param['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
                 param['TOKEN'] = getCookie('TOKEN');
-            }else{
+            } else {
                 var param = {};
                 param['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
                 param['TOKEN'] = getCookie('TOKEN');
@@ -394,6 +394,7 @@
             }
             return false;
         });
+        
         //监听锁定操作
         table.on('checkbox(tableContainers)', function(obj) {
             var checkStatus = table.checkStatus('tableContainers'); //表格选中状态
@@ -441,7 +442,7 @@
             if (data) {
                 data['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
                 data['TOKEN'] = getCookie('TOKEN');
-            }else{
+            } else {
                 var data = {};
                 data['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
                 data['TOKEN'] = getCookie('TOKEN');
@@ -476,11 +477,16 @@
                         content: str, // 注意，如果str是object，那么需要字符拼接。
                         area: ['99%', '99%'],
                         end: function() {
-                            tableIns.reload({
-                                page: {
-                                    curr: 1 //重新从第 1 页开始
-                                }
-                            });
+                            if (data.status == 4 || data.status == 3) {
+                                
+                            } else {
+                                tableIns.reload({
+                                    page: {
+                                        curr: 1 //重新从第 1 页开始
+                                    }
+                                });
+                            }
+
                         }
                     });
                 })
