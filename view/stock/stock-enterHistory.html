@@ -447,8 +447,16 @@
                         return false;
                     }
                     data.type = "entryHistory";
-                    location.hash = "#!stock-enterBillDetails/";
+                    // location.hash = "#!stock-enterBillDetails/";
                     sessionStorage.setItem('enterBillDetails', JSON.stringify(data));
+                    $.get('view/stock/stock-enterBillDetails.html', {}, function(str) { // 请求弹框
+                        layer.open({
+                            title: '入库单',
+                            type: 1,
+                            content: str, // 注意，如果str是object，那么需要字符拼接。
+                            area: ['99%', '99%']
+                        });
+                    });
                 })
             }
         });

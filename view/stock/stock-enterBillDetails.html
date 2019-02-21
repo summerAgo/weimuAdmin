@@ -15,6 +15,9 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;" class="refreshBtn"><i class="iconfont icon-shuaxin"></i>刷新</a>
                 </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;" class="closeLayerBtn"><i class="iconfont icon-guanbi"></i>关闭</a>
+                </li>
             </ul>
         </div>
     </div>
@@ -126,6 +129,7 @@
         var table = layui.table;
         var formSelects = layui.formSelects;
         var laytpl = layui.laytpl;
+        var layer = layui.layer;
 
         var menuKey = "a_14"; //当前页面key
         var tableOptionArr = getTableOption(menuKey);//表格列
@@ -147,89 +151,13 @@
         
         // 入库详情表格字段
         var entryCols = tableOptionArr["tableContainer_billDetails"];
-        // var entryCols = [{
-        //         title: '序号',
-        //         align: "center",
-        //         type: "numbers"
-        //     }, {
-        //         field: 'uuid',
-        //         title: '货物标识码',
-        //         align: "center",
-        //         width: 206,
-        //         style: 'font-family: Consolas;font-size:16px'
-        //     }, {
-        //         field: "code",
-        //         title: "包号",
-        //         align: "center",
-        //         width: 150
-        //     }, {
-        //         field: "varieties",
-        //         title: "品种",
-        //         align: "center",
-        //         width: 90
-        //     }, {
-        //         field: "spec",
-        //         title: "规格",
-        //         align: "center",
-        //         width: 100
-        //     }, {
-        //         field: "levels",
-        //         title: "等级",
-        //         align: "center",
-        //         width: 100
-        //     }, {
-        //         field: "chang",
-        //         title: "长度",
-        //         align: "center",
-        //         width: 80
-        //     }, {
-        //         field: 'pieces',
-        //         title: '片数',
-        //         align: "center",
-        //         width: 80
-        //     }, {
-        //         field: "brand",
-        //         title: "品牌",
-        //         align: "center",
-        //         width: 120
-        //     }, {
-        //         field: "origin",
-        //         title: "产地",
-        //         align: "center",
-        //         width: 80
-        //     }, {
-        //         field: "num",
-        //         title: "数量(m³)",
-        //         align: "center",
-        //         width: 100
-        //     },
-        //     {
-        //         field: "updauser",
-        //         title: "操作员",
-        //         align: "center",
-        //         width: 80
-        //     }, {
-        //         field: "billloading",
-        //         title: "提运单",
-        //         align: "center",
-        //         width: 140
-        //     }, {
-        //         field: "containernum",
-        //         align: "center",
-        //         title: "货柜号/批次号",
-        //         width: 180
-        //     }, {
-        //         field: "remarks",
-        //         title: "备注"
-        //     }
-        // ];
-        console.log(entryCols)
+
         var tableClos; //表格字段赋值
         var title = '';
         tableClos = entryCols;
         title = "入库单详情";
 
-        var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 103); //内容区域所需减去的高度
+        var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight())); //内容区域所需减去的高度
 
         var tableIns = table.render({
             elem: '#tableContainer_billDetails',
@@ -246,7 +174,7 @@
             done: function(res, curr, count) {
                 var addtableBtn = '<div class="rightBotBtn" id="rightDetails">合计： 件数<span>' + billDetails.znum + '</span>包 数量：<span>' + billDetails.cube + '</span>m³</div>';
                 if ($("#rightDetails").length < 1) {
-                    $(".layui-table-page").append(addtableBtn);
+                    $("div[lay-id='tableContainer_billDetails']").find(".layui-table-page").append(addtableBtn);
                 }
             },
             text: {
@@ -270,6 +198,10 @@
         $(".companyBtn").on('click', function(e) {
             // 公司模式打印
             dayinFun("company");
+        });
+
+        $(".closeLayerBtn").click(function(){
+            layer.closeAll();
         });
 
         function dayinFun(type) {
