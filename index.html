@@ -352,6 +352,7 @@
                     if (dom = $('.layui-nav a[href="#!' + vid + '"]')) {
                         dom.parent("dd").addClass("layui-this");
                         dom.parents("li.layui-nav-item").siblings().removeClass("layui-nav-itemed");
+                        dom.parent("dd").siblings().removeClass("layui-this");
                         dom.parents("li.layui-nav-item").addClass("layui-nav-itemed");
                         if ($(".layui-tab-title li[lay-id]").length <= 0) {
                             element.tabAdd('nav-tabs', {
