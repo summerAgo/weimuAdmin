@@ -117,6 +117,7 @@ var userdropdown       = pathUrl + "sys/dropdown";        //用户下拉
 var userUpdate         = pathUrl + "sys/update";          //修改用户
 var userDel            = pathUrl + "sys/deleteMany";      //删除用户
 var userChangePas      = pathUrl + "sys/updaPassword";    //修改密码
+var userPas            = pathUrl + "sys/userPas";         //重置密码
 var userExit           = pathUrl + "sys/exit";            //退出登陆
 var usergetSessionAnth = pathUrl + "sys/getSessionAnth";
 
