@@ -1025,10 +1025,9 @@
                 tableData2 = tableData2.concat(checkStatus.data);
                 tableData2 = tableData2.uniqueJson("id");
             } else {
-                tableData2 = checkStatus.data;
+                tableData2 = checkData;
             }
 
-            tableData2 = checkData;
             table2.reload({
                 data: tableData2,
                 page: {
