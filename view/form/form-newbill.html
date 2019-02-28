@@ -95,9 +95,9 @@
         btnIsList(domObj, menuKey); //按钮权限
 
         var tableKey = "a_12"; //当前页面表格key
-        var tableOptionArr = getTableOption(tableKey);//表格列
+        var tableOptionArr = getTableOption(tableKey); //表格列
         var userOWnerInfo = JSON.parse(sessionStorage.getItem("roleInfo"));
-        if(userOWnerInfo.isOwner == 1){
+        if (userOWnerInfo.isOwner == 1) {
             $(".positionbox").hide();
         }
 
@@ -292,7 +292,7 @@
             if (param) {
                 param['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
                 param['TOKEN'] = getCookie('TOKEN');
-            }else{
+            } else {
                 var param = {};
                 param['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
                 param['TOKEN'] = getCookie('TOKEN');
@@ -384,7 +384,7 @@
             title: '预入库',
             data: tableData,
             cols: [
-            tableOptionArr["tableContainer-fromNewBill"]
+                tableOptionArr["tableContainer-fromNewBill"]
                 // [ //标题栏
                 //     {
                 //         type: 'checkbox'
@@ -745,56 +745,35 @@
             }
         });
 
-        //监听表格复选框选择
-        var checkBoxTrDom = {};
-        checkBoxTrDom.arr = [];
-        table.on('checkbox(tableContainer-fromNewBill)', function(obj) {
-            if (obj.checked) {
-                checkBoxTrDom.type = obj.type;
-                checkBoxTrDom.arr.push(obj);
-            }
-        });
-
         // 删除选中入库货物信息
         $(".deleteBtnLayer").click(function() {
+            // 删除选中入库货物信息
             var checkStatus = table.checkStatus('tableContainer-fromNewBill');
             var checkData = checkStatus.data;
-            if (checkData.length == 0 || checkBoxTrDom.arr.length == 0) {
+            if (checkData.length == 0) {
                 layer.msg("请选择要删除的信息");
-                checkBoxTrDom.arr = [];
                 return false;
             }
-
             layer.confirm('是否确认删除此条信息', {
                 skin: 'layui-layer-wei', //layui-layer-wei，维木class
                 title: '提示'
             }, function(index) {
-                if (checkBoxTrDom.type == "one") {
-                    for (var i = 0; i < checkBoxTrDom.arr.length; i++) {
-                        //table删除选中行并更新dom
-                        checkBoxTrDom.arr[i].del();
-                    }
 
-                    for (i = 0; i < table.cache["tableContainer-fromNewBill"].length; i++) {
-                        //获取操作后的表格数据并赋值给tableData
-                        if (Array.isArray(table.cache["tableContainer-fromNewBill"][i]) && table.cache["tableContainer-fromNewBill"][i].length == 0) {
-                            table.cache["tableContainer-fromNewBill"].splice(i, 1);
-                            i--;
-                        }
+                for (i = table.cache["tableContainer-fromNewBill"].length - 1; i >= 0; i--) {
+                    //获取操作后的表格数据并赋值给tableData
+                    if (table.cache["tableContainer-fromNewBill"][i].LAY_CHECKED == true) {
+                        table.cache["tableContainer-fromNewBill"].splice(i, 1);
                     }
-                    tableData = table.cache["tableContainer-fromNewBill"];
-
-                } else if (checkBoxTrDom.type == "all") {
-                    tableData = [];
-                    tableIns.reload({
-                        data: tableData,
-                        page: {
-                            curr: 1 //重新从第 1 页开始
-                        }
-                    });
                 }
+                tableData = table.cache["tableContainer-fromNewBill"];
+                tableIns.reload({
+                    data: tableData,
+                    limit: tableData.length,
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                });
                 layer.close(index);
-                // var rowId = [];
             });
 
         });
@@ -802,12 +781,12 @@
         //增删行数据
         function rowDataApi(url, data, funSuc, funErr) {
             if (data) {
-                data['SESSION_USER_CODE']= getCookie('SESSION_USER_CODE');
-                data['TOKEN']= getCookie('TOKEN');
-            }else{
+                data['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
+                data['TOKEN'] = getCookie('TOKEN');
+            } else {
                 var data = {};
-                data['SESSION_USER_CODE']= getCookie('SESSION_USER_CODE');
-                data['TOKEN']= getCookie('TOKEN');
+                data['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
+                data['TOKEN'] = getCookie('TOKEN');
             }
             $.ajax({
                 url: url,
