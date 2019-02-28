@@ -192,6 +192,7 @@ var buttonDel    = pathUrl + "sys/button/deleteMany";  //删除按钮
 
 //下拉列表
 var ownerDropdown    = pathUrl + "user/owner/dropdown";           //仓库主下拉
+var ownerdropdownnoAuth    = pathUrl + "user/owner/dropdownnoAuth";     //仓库主下拉
 var depotDropdown    = pathUrl + "basics/depot/dropdown";         //仓库下拉： 仓库主id(ownerid)
 var positionDropdown = pathUrl + "basics/position/dropdown";      //库位列表 bitdepotid：根据仓库ID返回
 var driverDropdown   = pathUrl + "order/vehiclerecord/dropdown";  //出货单司机记录
