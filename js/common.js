@@ -5,7 +5,7 @@ var unitMoney = "(RMB)";
 //存cookie
 function setCookie(name, value, time) {
     var strsec = getsec(time);
-    var exp    = new Date();
+    var exp = new Date();
     exp.setTime(exp.getTime() + strsec * 1);
     document.cookie = name + "=" + escape(value) + ";expires=" + exp.toGMTString() + ";path=/";
 }
@@ -17,7 +17,7 @@ function setCookie(name, value, time) {
  */
 function getTopInfo(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-    var r   = window.location.search.substr(1).match(reg);
+    var r = window.location.search.substr(1).match(reg);
     if (r != null) return unescape(r[2]);
     return null;
 }
@@ -57,7 +57,7 @@ function delCookie(name) {
 //数组去重
 Array.prototype.unique = function() {
     var result = [];
-    var hash   = {};
+    var hash = {};
     for (var i = 0; i < this.length; i++) {
         if (!hash[this[i]]) {
             result.push(this[i]);
@@ -70,7 +70,7 @@ Array.prototype.unique = function() {
 Array.prototype.uniqueJson = function(key) {
     var result = [this[0]];
     for (var i = 1; i < this.length; i++) {
-        var item   = this[i];
+        var item = this[i];
         var repeat = false;
         for (var j = 0; j < result.length; j++) {
             if (item[key] == result[j][key]) {
@@ -104,10 +104,10 @@ Array.prototype.remove = function(key, val) {
  * @param {*} menuKey 页面队友的key键
  */
 function btnIsList(domObj, menuKey) {
-    var data   = JSON.parse(sessionStorage.getItem("buttonAuthority"));  //所有页面按钮权限数据存入buttonAuthority
+    var data = JSON.parse(sessionStorage.getItem("buttonAuthority")); //所有页面按钮权限数据存入buttonAuthority
     var btnDom = "";
     if (data !== null) {
-        var currentBtnData = data ? data[menuKey] : [];  // 当前按钮数据 -- 根据当前页面key参数获得当前页面按钮数据
+        var currentBtnData = data ? data[menuKey] : []; // 当前按钮数据 -- 根据当前页面key参数获得当前页面按钮数据
         // currentBtnData.sort(compare("sort"));
         if (!currentBtnData || currentBtnData.length == 0) {
             return false;
@@ -129,7 +129,7 @@ function btnIsList(domObj, menuKey) {
  * @param {*} key 页面表格key
  */
 function getTableOption(key) {
-    var data        = JSON.parse(sessionStorage.getItem("talbeAuthority"));  //所有页面按钮权限数据存入talbeAuthority
+    var data = JSON.parse(sessionStorage.getItem("talbeAuthority")); //所有页面按钮权限数据存入talbeAuthority
     var tableOption = data[key];
     if (data == null || !key || !tableOption) {
         layer.alert("当前页面未开放表格显示权限");
@@ -232,7 +232,9 @@ function objValueMake(arr, key) {
         return false;
     }
     for (var i = 0; i < arr.length; i++) {
-        arr[i][key] = arr[i][key].replace(/\.0$/, "");
+        if (arr[i][key]) {
+            arr[i][key] = arr[i][key].replace(/\.0$/, "");
+        }
     }
     return arr;
 }
