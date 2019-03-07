@@ -33,7 +33,7 @@ var ilupdaStockRemarks          = pathUrl + "lb/ilbstock/updaStockRemarks";     
 var ilbstocklblist     = pathUrl + "lb/ilbstock/lblist";       //查询出货时信息
 var ilbstockImportUrl  = pathUrl + "lb/ilbstock/importExcel";  //导入
 var ilbstockExportUrl  = pathUrl + "lb/ilbstock/exportExcel";  //导出
-var ilbstockImportTemp = pathUrl + "template/预入库导入.xlsx";      //导入模板
+var ilbstockImportTemp = pathUrl + "template/MFimport.xlsx";      //导入模板
 
 // 预入库
 var preinlbdel                = pathUrl + "order/prewarehousing/inlbdel";             //入库单删除
