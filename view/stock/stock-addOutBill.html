@@ -866,7 +866,13 @@
         }
 
         $(".dayinBtn").click(function() {
-            window.open(printout, '打印', 'height=800, width=1100, top=100, left=100, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no');
+            layer.open({
+                title: '打印出库申请单',
+                type: 2,
+                content: printout,
+                area: ['99%', '99%']
+            });
+            // window.open(printout, '打印', 'height=800, width=1100, top=100, left=100, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no');
         });
 
         function getDepotList(param) {
@@ -906,7 +912,7 @@
                     title: '修改包号为' + data.code + '的备注',
                     value: data.remarks
                 }, function(value, index) {
-                    
+
                     param['uuid'] = data.uuid;
                     param['remarks'] = value;
 

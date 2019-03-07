@@ -129,7 +129,7 @@
         var layer = layui.layer;
 
         var menuKey = "a_14"; //当前页面key
-        var tableOptionArr = getTableOption(menuKey);//表格列
+        var tableOptionArr = getTableOption(menuKey); //表格列
 
         var billDetails = JSON.parse(sessionStorage.getItem('enterBillDetails')); //获取所选择记录详情
         console.log(billDetails)
@@ -145,7 +145,7 @@
         laytpl(getTpl).render(billDetails, function(html) {
             view.innerHTML = html;
         });
-        
+
         // 入库详情表格字段
         var entryCols = tableOptionArr["tableContainer_billDetails"];
 
@@ -197,7 +197,7 @@
             dayinFun("company");
         });
 
-        $(".closeLayerBtn").click(function(){
+        $(".closeLayerBtn").click(function() {
             layer.closeAll();
         });
 
@@ -210,7 +210,13 @@
             }
 
             sessionStorage.setItem('dayin_orderno', JSON.stringify(billDetails.data));
-            window.open(url, '打印', 'height=800, width=1100, top=100, left=100, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no');
+            layer.open({
+                title: '打印入库单',
+                type: 2,
+                content: url,
+                area: ['99%', '99%']
+            });
+            // window.open(url, '打印', 'height=800, width=1100, top=100, left=100, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no');
         }
 
     });

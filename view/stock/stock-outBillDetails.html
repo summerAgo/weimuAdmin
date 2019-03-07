@@ -296,7 +296,13 @@
             }
 
             sessionStorage.setItem('dayin_orderno', JSON.stringify(billDetails.data));
-            window.open(url, '打印', 'height=800, width=1100, top=100, left=100, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no');
+            layer.open({
+                title: '打印出库单',
+                type: 2,
+                content: url,
+                area: ['99%', '99%']
+            });
+            // window.open(url, '打印', 'height=800, width=1100, top=100, left=100, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=n o, status=no');
 
         }
 

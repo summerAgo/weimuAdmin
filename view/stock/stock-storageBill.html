@@ -263,7 +263,7 @@
         var tableKey = "a_12"; //当前页面表格key
         var tableOptionArr = getTableOption(tableKey); //表格列
         var userOWnerInfo = JSON.parse(sessionStorage.getItem("roleInfo"));
-        if(userOWnerInfo.isOwner == 1){
+        if (userOWnerInfo.isOwner == 1) {
             $(".positionbox").hide();
         }
         formSelects.render("depotSelectLayer"); //下拉选项
@@ -1108,7 +1108,13 @@
                 return false;
             } else {
                 sessionStorage.setItem('storageBill', JSON.stringify(tableData));
-                window.open(printin, '打印', 'height=800, width=1100, top=100, left=100, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no');
+                layer.open({
+                    title: '打印预入库单',
+                    type: 2,
+                    content: printin,
+                    area: ['99%', '99%']
+                });
+                // window.open(printin, '打印', 'height=800, width=1100, top=100, left=100, toolbar=no, menubar=no, scrollbars=no, resizable=no,location=no, status=no');
             }
 
         });

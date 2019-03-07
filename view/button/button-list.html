@@ -202,7 +202,7 @@
             if (checkStatus.data.length < 1) {
                 layer.msg("请选择需要删除的信息");
             } else {
-                layer.open('是否确认删除此条信息', {
+                layer.confirm('是否确认删除此条信息', {
                     skin: 'layui-layer-wei', //layui-layer-wei，维木class
                     title: '提示'
                 }, function(index) {
