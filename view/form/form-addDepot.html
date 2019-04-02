@@ -39,7 +39,7 @@
         <div class="layui-form-item layui-normal-line">
             <label class="layui-form-label form-required">物品是否估值</label>
             <div class="layui-input-inline">
-                <select name="isvip" xm-select="isvipSelect" xm-select-radio lay-verify="required">
+                <select name="isvip" xm-select="isvipSelect" xm-select-radio lay-verify="required" {{d.id?'disabled':''}}>
                     <option value="">估值选择</option>
                 </select>
             </div>
