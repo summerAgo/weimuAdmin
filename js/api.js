@@ -314,3 +314,8 @@ var userDepotStauts       = pathUrl + "sys/nei/power/queryById";             //�
 var waiDepotQuery     = pathUrl + "sys/wai/power/queryByOwnerlist";      //根据用户ID查询仓库主信息，及回显。    必填:userid   选填：name
 var waiDepotSave       = pathUrl + "sys/wai/power/saveData";              //保存用户与仓库的关键。并返回全部信息。    必填:userid  depid chekbox(0/1)
 var waiDepotStauts       = pathUrl + "sys/wai/power/queryById";             //根据仓库主ID查询仓库及回显。    必填:userid , ownerid
+
+//报表管理
+var statisticsStock = pathUrl + 'count/report/stocklist?limit=9999'; //查询库存分析报表
+var statisticsDetail = pathUrl + 'count/report/jxcinfolist';//进销存明细表
+var statisticsTotal = pathUrl + 'count/report/jxclist'; //进销存统计表

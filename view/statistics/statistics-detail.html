@@ -1,0 +1,707 @@
+<div class="table-page" id="statistics-detail">
+    <div class="table-content-title">
+        <div class="table-tools">
+            <ul class="layui-nav" lay-filter="talbe-tools">
+                <!-- <li class="layui-nav-item">
+                                <a href="javascript:;" class="toExport"><i class="iconfont icon-daochu"></i> 导出数据</a>
+                            </li>
+                            <li class="layui-nav-item">
+                                <a href="javascript:;" class="refreshBtn"><i class="iconfont icon-shuaxin"></i>刷新</a>
+                            </li> -->
+                <!-- <li class="layui-nav-item">
+                                <a href="javascript:;"><i class="iconfont icon-dayin"></i> bitdepotid</a>
+                            </li> -->
+            </ul>
+        </div>
+    </div>
+    <div class="table-page-header">
+        <div class="table-page-form">
+            <form class="layui-form" action="">
+                <div class="form-box clearfix">
+                    <div class="layui-form-item form-left">
+                        <!-- <div class="table-form-item layui-input-inline">
+                                <span class="input-span">大仓库</span>
+                                <select name="storeid" xm-select="storeSelect" xm-select-radio>
+                                    <option value="">大仓库</option>
+                                </select>
+                            </div> -->
+                        <div class="table-form-item layui-input-inline">
+                            <span class="input-span">识别码</span>
+                            <input type="text" name="uuid" placeholder="识别码" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <span class="input-span">包号</span>
+                            <input type="text" name="code" placeholder="包号" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <span class="input-span">仓库主</span>
+                            <select name="ownerstr" xm-select="ownerSelect">
+                                <option value="">仓库主</option>
+                            </select>
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <span class="input-span">仓库</span>
+                            <select name="depotstr" xm-select="depotSelect">
+                                <option value="">仓库</option>
+                            </select>
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <span class="input-span">货柜号</span>
+                            <input type="text" name="containernum" placeholder="货柜号" autocomplete="off"
+                                class="layui-input">
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <span class="input-span">品种</span>
+                            <select name="varieties" xm-select="selectVarieties" xm-select-radio>
+                                <option value="">品种</option>
+                            </select>
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <span class="input-span">规格</span>
+                            <select name="spec" xm-select="selectSpec" xm-select-radio>
+                                <option value="">规格</option>
+                            </select>
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <span class="input-span">等级</span>
+                            <select name="levels" xm-select="selectLevels" xm-select-radio>
+                                <option value="">等级</option>
+                            </select>
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <span class="input-span">长度</span>
+                            <input type="text" name="chang" placeholder="长度" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <span class="input-span">产地</span>
+                            <select name="origin" xm-select="originSelect" xm-select-radio>
+                                <option value="">产地</option>
+                            </select>
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <span class="input-span">品牌</span>
+                            <input type="text" name="brand" placeholder="品牌" autocomplete="off" class="layui-input">
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <span class="input-span">提运单</span>
+                            <input type="text" name="billloading" placeholder="提运单" autocomplete="off"
+                                class="layui-input">
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <span class="input-span">起始日期</span>
+                            <input style="height:30px" type="text" class="layui-input" id="startdate" name="startdate"
+                                lay-verify="dateLimit" autocomplete="off" placeholder="起始日期">
+                        </div>
+                        <div class="table-form-item layui-input-inline">
+                            <span class="input-span">截止日期</span>
+                            <input style="height:30px" type="text" class="layui-input" id="enddate" name="enddate"
+                                lay-verify="dateLimit" autocomplete="off" placeholder="截止日期">
+                        </div>
+                    </div>
+                    <div class="layui-form-item form-right">
+                        <button type="reset" class="layui-btn layui-btn-md layui-btn-gray">
+                            <i class="iconfont icon-zhongzhi"></i><span>重置</span>
+                        </button>
+                        <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="searchForm">
+                            <i class="iconfont icon-sousuo"></i> <span>查询</span>
+                        </button>
+                    </div>
+            </form>
+        </div>
+    </div>
+    <div class="table-content">
+        <div class="table-content-header">
+            <h2 class="table-header-title">进销存明细表</h2>
+        </div>
+        <div class="table-content-main">
+            <table class="layui-hide" id="tableContainer" lay-filter="tableContainer"></table>
+        </div>
+    </div>
+</div>
+
+<style scoped>
+    .layui-table b {
+        color: #f00
+    }
+
+    .layui-table-total b {
+        color: #f00
+    }
+
+    .table-header-title {
+        margin: 0 0 10px 0;
+        text-align: center;
+        font-size: 20px;
+        color: #333;
+        font-weight: 900
+    }
+</style>
+
+
+<script>
+    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate'], function () {
+        var element = layui.element;
+        var form = layui.form;
+        var $ = layui.jquery;
+        var table = layui.table;
+        var formSelects = layui.formSelects;
+        var laytpl = layui.laytpl;
+        var laydate = layui.laydate;
+        var tableTopHeight = (parseInt($(".table-page-header").innerHeight()) + parseInt($(".table-content-title").innerHeight()) + parseInt($(".content-header").innerHeight()) + 103); //内容区域所需减去的高度
+
+        var menuKey = "a_8"; //当前页面key
+        var domObj = $("#statistics-detail .table-tools").find("ul"); //当前页面容器
+        btnIsList(domObj, menuKey); //按钮权限
+        var tableOptionArr = getTableOption(menuKey); //表格列
+        element.render('talbe-tools'); //表格工具栏
+
+        var eaitLayer; //编辑-弹层
+
+        form.render(); //重置表单渲染
+        formSelects.render(); //重新渲染所有的已存在多选框
+
+        var date = new Date();
+        var monthCurr = date.getMonth() + 1;
+        var mouthNext = date.getMonth() + 2;
+        var yearCurr = date.getFullYear();
+        var monLength = monthCurr.toString().length;
+        if (monLength == 1) {
+            var monthCurr1 = "0" + monthCurr;
+            var mouthNext1 = "0" + mouthNext;
+        } else {
+            var monthCurr1 = monthCurr;
+            var mouthNext1 = mouthNext;
+        }
+
+        function renderDate() {
+            laydate.render({
+                elem: '#startdate',
+                value: yearCurr + "-" + monthCurr1 + "-01"
+            });
+            laydate.render({
+                elem: '#enddate',
+                value: yearCurr + "-" + mouthNext1 + "-01"
+            });
+        }
+        renderDate()
+
+        //自定义多选框btn
+        // formSelects.btns(['remove'], {
+        //     show: 'name'
+        // });
+        // 品种多选数据赋值
+        formSelects.data('selectVarieties', 'local', {
+            arr: selectDataInstall(VTSList, null, 1, 1) //品种列表
+        });
+        // 等级多选数据赋值
+        formSelects.data('selectLevels', 'local', {
+            arr: selectDataInstall(levelsList, null, 1, 1) //等级列表
+        });
+        // 规格多选数据赋值
+        formSelects.data('selectSpec', 'local', {
+            arr: selectDataInstall(specList, null, 1, 1) //规格列表
+        });
+        //产地多选数据赋值
+        formSelects.data('originSelect', 'local', {
+            arr: selectDataInstall(CHDList, null, 1, 1) //产地列表
+        });
+
+        // 大仓库多选数据赋值
+        // formSelects.data('storeSelect', 'local', {
+        //     arr: selectDataInstall(bitdepotList, null, 0, 0) //大仓库列表
+        // });
+
+        //仓库主多选数据赋值
+        formSelects.data('ownerSelect', 'local', {
+            arr: selectDataInstall(ownerDropdown, null, 0, 0) //仓库主列表
+        });
+
+
+
+        /**
+         * @dom 判定的dom
+         * @depend  依赖的dom
+         * @name  依赖的dom的名称
+         * */
+        function judgeSelected(dom, depend, name) {
+            layui.formSelects.opened(dom, function (id) {   //打开下拉框的回调事件
+                var dependid = formSelects.value(depend, 'val'); //获取依赖dom的id
+                if (dependid.length < 1) {
+                    layer.msg("请先选择" + name);
+                    formSelects.data(id, 'local', {
+                        arr: []
+                    }); //如果依赖为空则清空列表
+                }
+            });
+        }
+
+        // 选择仓库主时判断是否选中了大仓库
+        // judgeSelected('ownerSelect', 'storeSelect', '大仓库')
+
+        // 选择仓库时判断是否选中了仓库主，opened：打开下拉框的回调事件
+        layui.formSelects.opened('depotSelect', function (id) {
+            var ownerid = formSelects.value('ownerSelect', 'val'); //获取仓库主ID
+            if (ownerid.length < 1) {
+                layer.msg("请先选择仓库主");
+                formSelects.data(id, 'local', {
+                    arr: []
+                }); //如果仓库主为空则清空列表
+            }
+        });
+
+
+        // //监听大仓库的选中与取消
+        // formSelects.on('storeSelect', function (id, vals, val, isAdd, isDisabled) {
+        //     //id:           点击select的id
+        //     //vals:         当前select已选中的值
+        //     //val:          当前select点击的值
+        //     //isAdd:        当前操作选中or取消
+        //     //isDisabled:   当前选项是否是disabled
+        //     //如果return false, 那么将取消本次操作
+        //     if (!isAdd) {
+        //         formSelects.data('ownerSelect', 'local', {
+        //             arr: [] //清空仓库主列表
+        //         });
+        //     } else {
+        //         var list = selectDataInstall(ownerDropdown, {
+        //             "ownerid": vals[0].value //仓库主列表
+        //         }, false, 0);
+        //         // 判断大仓库名下是否有仓库主
+        //         if (list.length < 1) {
+        //             formSelects.data('ownerSelect', 'local', {
+        //                 arr: [] //清空仓库主列表
+        //             });
+        //             layer.msg("该仓库主下无仓库信息");
+        //             return false;
+        //         }
+        //         // 如果大仓库名下有仓库主，渲染仓库主select
+        //         formSelects.data('ownerSelect', 'local', {
+        //             arr: list //仓库主列表
+        //         });
+        //     }
+        // }, true);
+
+        // 监听仓库主的选中与取消
+        formSelects.on('ownerSelect', function (id, vals, val, isAdd, isDisabled) {
+            //id:           点击select的id
+            //vals:         当前select已选中的值
+            //val:          当前select点击的值
+            //isAdd:        当前操作选中or取消
+            //isDisabled:   当前选项是否是disabled
+            //如果return false, 那么将取消本次操作
+            if (!isAdd) {
+                formSelects.data('depotSelect', 'local', {
+                    arr: [] //清空仓库列表
+                });
+            } else {
+                var depotList = selectDataInstall(depotDropdown, {
+                    "ownerstr": function () {    //仓库列表
+                        let str = ''
+                        vals.forEach((item, index) => {
+                            index == 0 ?
+                                str += item.value :
+                                str += (',' + item.value)
+                        })
+                        return str
+                    }
+                }, false, 0);
+                // 判断仓库主名下是否有仓库
+                if (depotList.length < 1) {
+                    formSelects.data('depotSelect', 'local', {
+                        arr: [] //清空仓库列表
+                    });
+                    layer.msg("该仓库主下无仓库信息");
+                    return false;
+                }
+                // 如果仓库主名下有仓库，渲染仓库select
+                formSelects.data('depotSelect', 'local', {
+                    arr: depotList //仓库列表
+                });
+            }
+        }, true);
+
+        // 获取select数据函数
+        function selectDataInstall(url, param, bool, type) {
+            if (param) {
+                param['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
+                param['TOKEN'] = getCookie('TOKEN');
+            } else {
+                var param = {};
+                param['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
+                param['TOKEN'] = getCookie('TOKEN');
+            }
+            //下拉选框数据组装
+            var arr = [];
+            //获取列表数据
+            $.ajax({
+                url: url,
+                type: "get",
+                data: param,
+                async: false, //同步
+                traditional: true,
+                success: function (data) {
+                    // console.log(data);
+                    if (data.status === 0) {
+                        //把接口数据转换为[{"name":str,"value":number}]格式
+                        if (!Array.isArray(data.data) || data.data.length === 0) {
+                            // 判断arr是否为数组并保证内部有值
+                            return false;
+                        }
+                        for (var i = 0; i < data.data.length; i++) {
+                            var name = "";
+
+                            if (data.data[i].name) {
+                                name = data.data[i].name;
+                            } else {
+                                name = data.data[i].username;
+                            }
+
+                            if (type == 0) { //查询value=id
+                                arr.push({
+                                    "name": name,
+                                    "value": data.data[i].id
+                                })
+                            }
+                            if (type == 1) { //查询value=name
+                                arr.push({
+                                    "name": name,
+                                    "value": name
+                                })
+                            }
+                        }
+                    }
+                }
+            });
+            return arr;
+        }
+
+        // 表单搜索按钮点击
+        form.on('submit(searchForm)', function (data) {
+            var paramSearch = {};
+            for (var key in data.field) {
+                //参数赋值
+                if (data.field[key] !== "") {
+                    paramSearch[key] = data.field[key].replace(/^\s*|\s*$/g, "");
+                }
+            }
+            if (paramSearch['startdate'] && paramSearch['enddate']) {
+                paramSearch['startdate'] = paramSearch['startdate'] + ' 00:00'
+                paramSearch['enddate'] = paramSearch['enddate'] + ' 23:59'
+                console.log(paramSearch);
+                tableIns.reload({
+                    where: paramSearch, //设定异步数据接口的额外参数
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                });
+            } else {
+                layer.msg('请选择起始日期和截止日期!')
+            }
+            return false;
+        });
+
+        // 刷新按钮
+        $(".refreshBtn").click(function () {
+            tableIns.reload({
+                page: {
+                    curr: 1
+                }
+            })
+        });
+
+
+        /**
+        *
+        *转化时间戳
+        * @param {*} date时间戳
+        * @returns
+        */
+        function dateTranslate(date) {
+            var time = new Date(date);
+            var y = time.getFullYear();
+            var m = time.getMonth() + 1;
+            var d = time.getDate();
+            var h = time.getHours();
+            var mm = time.getMinutes();
+            var s = time.getSeconds();
+            function add0(m) { return m < 10 ? '0' + m : m }
+            var now = y + '-' + add0(m) + '-' + add0(d) + ' ' + add0(h) + ':' + add0(mm) + ':' + add0(s);
+            return now
+        }
+
+
+        var tableIns = table.render({
+            elem: '#tableContainer',
+            height: 'full-' + tableTopHeight,
+            url: statisticsDetail,
+            parseData: function (res) {
+                return {
+                    "code": res.status, //解析接口状态
+                    "msg": res.message, //解析提示文本
+                    "count": res.data.length, //解析数据长度
+                    "data": res.data, //解析数据列表
+                    "aprice": res.aprice, //解析数据列表
+                    "znum": res.znum //解析数据列表
+                }
+            },
+            request: {
+                pageName: 'offset', //页码的参数名称，默认：page
+                limitName: 'limit' //每页数据量的参数名，默认：limit
+            },
+            where: {
+                startdate: yearCurr + "-" + monthCurr1 + "-01 00:00",
+                enddate: yearCurr + "-" + mouthNext1 + "-01 23:59"
+            },
+            cols: [
+                [
+                    {
+                        type: "numbers",
+                        align: "center",
+                        title: "序号",
+                        width: 100,
+                        totalRowText: '合计',
+                        rowspan: "2",
+                    },
+                    {
+                        field: "uuid",
+                        align: "center",
+                        title: "标识码",
+                        width: 186,
+                        rowspan: "2",
+                    },
+                    {
+                        field: "code",
+                        align: "center",
+                        title: "包号",
+                        width: 120,
+                        rowspan: "2",
+                    },
+                    {
+                        field: "varieties",
+                        align: "center",
+                        title: "品种",
+                        width: 120,
+                        rowspan: "2",
+                    },
+                    {
+                        field: "levels",
+                        align: "center",
+                        title: "等级",
+                        width: 120,
+                        rowspan: "2",
+                    },
+                    {
+                        field: "spec",
+                        align: "center",
+                        title: "规格",
+                        width: 120,
+                        rowspan: "2",
+                    },
+                    {
+                        field: "chang",
+                        align: "center",
+                        title: "长度",
+                        width: 140,
+                        rowspan: "2",
+                    },
+                    {
+                        field: "brand",
+                        align: "center",
+                        title: "品牌",
+                        width: 120,
+                        rowspan: "2",
+                    },
+                    {
+                        field: "origin",
+                        align: "center",
+                        title: "产地",
+                        width: 140,
+                        rowspan: "2",
+                    },
+                    {
+                        align: "center",
+                        title: "期初库存",
+                        colspan: 2
+                    },
+                    {
+                        align: "center",
+                        title: "新货入仓",
+                        colspan: 3
+                    },
+                    {
+                        align: "center",
+                        title: "分拣入仓",
+                        colspan: 2
+                    },
+                    {
+                        align: "center",
+                        title: "新货出仓",
+                        colspan: 3
+                    },
+                    {
+                        align: "center",
+                        title: "分拣出仓",
+                        colspan: 2
+                    },
+                    {
+                        align: "center",
+                        title: "本月结余",
+                        colspan: 2
+                    },
+                    {
+                        field: "ownername",
+                        align: "center",
+                        title: "仓库主",
+                        width: 140,
+                        rowspan: "2",
+                    },
+                    {
+                        field: "depotname",
+                        align: "center",
+                        title: "仓库",
+                        width: 140,
+                        rowspan: "2",
+                    },
+                    {
+                        field: 'containernum',
+                        align: 'center',
+                        title: '货柜号',
+                        width: 180,
+                        rowspan: '2'
+                    },
+                    {
+                        field: 'billloading',
+                        align: 'center',
+                        title: '提运单',
+                        width: 180,
+                        rowspan: '2'
+                    },
+                ],
+                [
+                    {                       //期初库存
+                        field: "qc_num",
+                        align: "center",
+                        title: "数量",
+                        width: 140,
+                        totalRow: true
+                    },
+                    {
+                        field: "qc_pieces",
+                        align: "center",
+                        title: "片数",
+                        width: 140,
+                        totalRow: true
+                    },
+                    {                       //新货入库
+                        field: "indate",
+                        align: "center",
+                        title: "日期",
+                        width: 196,
+                        templet: function (d) {
+                            return d.indate ? dateTranslate(d.indate) : ''
+                        }
+                    },
+                    {
+                        field: "xhin_num",
+                        align: "center",
+                        title: "数量",
+                        width: 140,
+                        totalRow: true
+                    },
+                    {
+                        field: "xhin_pieces",
+                        align: "center",
+                        title: "片数",
+                        width: 140,
+                        totalRow: true
+                    },
+                    {                       //分拣入库
+                        field: "fjin_num",
+                        align: "center",
+                        title: "数量",
+                        width: 140,
+                        totalRow: true
+                    },
+                    {
+                        field: "fjin_pieces",
+                        align: "center",
+                        title: "片数",
+                        width: 140,
+                        totalRow: true
+                    },
+                    {                       //新货出库
+                        field: "outdate",
+                        align: "center",
+                        title: "日期",
+                        width: 196,
+                        templet: function (d) {
+                            return d.outdate ? dateTranslate(d.outdate) : ''
+                        }
+                    },
+                    {
+                        field: "xsout_num",
+                        align: "center",
+                        title: "数量",
+                        width: 140,
+                        totalRow: true
+                    },
+                    {
+                        field: "xsout_pieces",
+                        align: "center",
+                        title: "片数",
+                        width: 140,
+                        totalRow: true
+                    },
+                    {                       //分拣出库
+                        field: "fjout_num",
+                        align: "center",
+                        title: "数量",
+                        width: 140,
+                        totalRow: true
+                    },
+                    {
+                        field: "fjout_pieces",
+                        align: "center",
+                        title: "片数",
+                        width: 140,
+                        totalRow: true
+                    },
+                    {                       //本月结余
+                        field: "balance_num",
+                        align: "center",
+                        title: "数量",
+                        width: 140,
+                        totalRow: true,
+                    },
+                    {
+                        field: 'balance_pieces',
+                        align: "center",
+                        title: "片数",
+                        width: 140,
+                        totalRow: true,
+                    },
+                ]
+            ],
+            totalRow: true,
+            even: true,
+            page: true, //是否显示分页
+            limits: [100, 200, 500, 1000],
+            limit: 100, //每页默认显示的数量
+            title: "进销存统计表",
+            done: function (res, curr, count) {
+                table.resize('tableContainer')
+            },
+            text: {
+                none: "无匹配数据"
+            },
+            loading: true
+        })
+
+
+        //点击导出
+        $(".toExport").on('click', function (e) {
+            table.exportFile(tableIns.config.id, tableIns.config.data, "xls");
+        });
+
+    });
+</script>

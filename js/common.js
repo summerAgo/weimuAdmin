@@ -55,7 +55,7 @@ function delCookie(name) {
         document.cookie = name + "=" + cval + ";expires=" + exp.toGMTString();
 }
 //数组去重
-Array.prototype.unique = function() {
+Array.prototype.unique = function () {
     var result = [];
     var hash = {};
     for (var i = 0; i < this.length; i++) {
@@ -67,7 +67,7 @@ Array.prototype.unique = function() {
     return result;
 };
 //数组JSON去重
-Array.prototype.uniqueJson = function(key) {
+Array.prototype.uniqueJson = function (key) {
     var result = [this[0]];
     for (var i = 1; i < this.length; i++) {
         var item = this[i];
@@ -85,14 +85,14 @@ Array.prototype.uniqueJson = function(key) {
     return result;
 };
 //数组获取索引
-Array.prototype.indexGet = function(key, val) {
+Array.prototype.indexGet = function (key, val) {
     for (var i = 0; i < this.length; i++) {
         if (this[i][key] == val) return i;
     }
     return -1;
 };
 //数组删除项
-Array.prototype.remove = function(key, val) {
+Array.prototype.remove = function (key, val) {
     var index = this.indexGet(key, val);
     if (index > -1) {
         this.splice(index, 1);
@@ -113,7 +113,7 @@ function btnIsList(domObj, menuKey) {
             return false;
         }
 
-        currentBtnData.sort(function(a1, b1) {
+        currentBtnData.sort(function (a1, b1) {
             return a1.sort - b1.sort;
         });
         for (var i = 0; i < currentBtnData.length; i++) { // 渲染按钮模块
@@ -159,7 +159,7 @@ function getTableOption(key) {
 
 //冒泡排序比较器
 function compare(propertyName) {
-    return function(object1, object2) {
+    return function (object1, object2) {
         var value1 = object1[propertyName];
         var value2 = object2[propertyName];
         if (value2 < value1) {
@@ -204,7 +204,7 @@ function formatNum(num) {
 
 // 登录超时函数
 function goLogin() {
-    layer.alert('登录超时或该用户在别处登陆，请重新登录。', function(index) {
+    layer.alert('登录超时或该用户在别处登陆，请重新登录。', function (index) {
         clearSeesion();
         window.location.href = loginPageUrl;
         layer.close(index);
@@ -277,3 +277,5 @@ function isNumber(value) {
         return true
     }
 }
+
+
