@@ -1646,4 +1646,27 @@ body .layui-layer-wei .layui-layer-btn .layui-layer-btn0 {
     display:none
 }
 
+.layui-table-body::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+    background-color: #eee;
+}
+
+.layui-table-body::-webkit-scrollbar-track {
+    background-color: #eee;
+}
+
+.layui-table-body::-webkit-scrollbar-thumb {
+    background: #ccc;
+}
+
+.layui-table-total {
+    overflow-y: scroll;
+}
+
+.layui-table-total::-webkit-scrollbar {
+    width: 5px;
+    background: none;
+}
+
 /*body .layui-tree-skin-weimu .layui-tree-branch{color:#EDCA50;}*/
