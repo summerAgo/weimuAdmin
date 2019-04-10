@@ -64,6 +64,7 @@
     <div class="table-content">
         <div class="table-content-header">
             <h2 class="table-header-title">库存分析表</h2>
+            <div class="table-header-text">截止日期：<span class="table-header-date"></span></div>
         </div>
         <div class="table-content-main">
             <table class="layui-hide" id="tableContainer" lay-filter="tableContainer"></table>
@@ -86,6 +87,13 @@
         font-size: 20px;
         color: #333;
         font-weight: 900
+    }
+    .table-header-text {
+        margin: -30px 0 6px 0;
+        font-weight: 700
+    }
+    .table-header-date {
+        border-bottom: 1px solid #333;
     }
 </style>
 
@@ -119,7 +127,8 @@
             var yearCurr = date.getFullYear();
             var dateLength = dateCurr.toString().length;
             var monLength = monthCurr.toString().length;
-            console.log(date)
+            var headerDate = $('.table-header-date')
+
             if (monLength == 1) {
                 var monthCurr1 = "0" + monthCurr;
             } else {
@@ -130,6 +139,8 @@
             } else {
                 var dateCurr1 = dateCurr
             }
+
+            headerDate.text(`${yearCurr}-${monthCurr1}-${dateCurr1}`)
 
             laydate.render({
                 elem: '#startdate',
@@ -142,9 +153,9 @@
         }
         renderDate()
         //自定义多选框btn
-        // formSelects.btns(['remove'], {
-        //     show: 'name'
-        // });
+        formSelects.btns(['remove'], {
+            show: 'name'
+        });
         // // 品种多选数据赋值
         // formSelects.data('selectVarieties', 'local', {
         //     arr: selectDataInstall(VTSList, null, 1, 1) //品种列表
@@ -240,7 +251,7 @@
             //isAdd:        当前操作选中or取消
             //isDisabled:   当前选项是否是disabled
             //如果return false, 那么将取消本次操作
-            if (!isAdd) {
+            if (vals.length == 0) {
                 formSelects.data('depotSelect', 'local', {
                     arr: [] //清空仓库列表
                 });
@@ -341,7 +352,7 @@
                     paramSearch[key] = data.field[key].replace(/^\s*|\s*$/g, "");
                 }
             }
-            paramSearch['enddate'] = paramSearch['enddate'] + ' 23:59'
+            paramSearch['enddate'] && (paramSearch['enddate'] = paramSearch['enddate'] + ' 23:59')
             console.log(paramSearch)
             $.ajax({
                 url: statisticsStock,
@@ -353,11 +364,29 @@
                 success: function (res) {
                     layer.closeAll('loading')
                     if (res.status == 0) {
+                        let headerDate = $('.table-header-date')
+                        let nowDate = $('#enddate').val()
                         requestData = res.data
+                        total = res.total
+                        colsList = []
+                        res.ownerlist.forEach((item, index) => {    //仓库主动态表头
+                            colsList.push({
+                                title: item[Object.keys(item)[0]],
+                                field: Object.keys(item)[0],
+                                width: 120,
+                                align: 'center',
+                                totalRow: true,
+                                sort: true
+                            })
+                        })
                         tableIns.reload({
-                            data: requestData
+                            data: requestData,
+                            cols: [baseCols,colsList]
                         });
                         table.resize('tableContainer')
+                        headerDate.text(nowDate)
+                    } else {
+                        layer.msg(`${res.msg},请检查您的筛选条件是否有误`)
                     }
                 }
             })
@@ -370,13 +399,14 @@
         });
 
         var tableIns
+        var colsList = []
+        var baseCols
+        var total
         function renderTable() {
             let data = {
                 pageName: 'offset', //页码的参数名称，默认：page
                 limitName: 'limit' //每页数据量的参数名，默认：limit
             }
-            let total
-            let colsList = []
             $.ajax({
                 url: statisticsStock,
                 type: 'get',
@@ -388,16 +418,88 @@
                     layer.closeAll('loading')
                     if (res.status == 0) {
                         total = res.total
-                        res.ownerlist.forEach((item, index) => {
+                        res.ownerlist.forEach((item, index) => {    //仓库主动态表头
                             colsList.push({
                                 title: item[Object.keys(item)[0]],
                                 field: Object.keys(item)[0],
                                 width: 120,
                                 align: 'center',
-                                totalRow: true
+                                totalRow: true,
+                                sort: true
                             })
                         })
-                        console.log(colsList)
+
+                        baseCols = [    //基础表头
+                            {
+                                type: "numbers",
+                                align: "center",
+                                title: "序号",
+                                width: 120,
+                                rowspan: "2",
+                                totalRowText: '仓库主数量合计',
+                            },
+                            {
+                                field: "varieties",
+                                align: "center",
+                                title: "品种",
+                                width: 140,
+                                rowspan: "2",
+                            },
+                            // {
+                            //     field: "levels",
+                            //     align: "center",
+                            //     title: "等级",
+                            //     width: 120,
+                            //     rowspan: "2",
+                            // },
+                            // {
+                            //     field: "spec",
+                            //     align: "center",
+                            //     title: "规格",
+                            //     width: 120,
+                            //     rowspan: "2",
+                            // },
+                            // {
+                            //     field: "chang",
+                            //     align: "center",
+                            //     title: "长度",
+                            //     width: 120,
+                            //     rowspan: "2",
+                            // },
+                            // {
+                            //     field: "displayorder",
+                            //     align: "center",
+                            //     title: "产地",
+                            //     width: 120,
+                            //     rowspan: "2",
+                            // },
+                            {
+                                align: "center",
+                                title: "仓库主库存数量",
+                                colspan: colsList.length
+                            },
+                            {
+                                field: "vcount",
+                                align: "center",
+                                title: "品种数量合计",
+                                width: 180,
+                                rowspan: "2",
+                                totalRow: true,
+                                style: 'font-weight: 700'
+                            },
+                            {
+                                field: "scale",
+                                align: "center",
+                                title: "品种数量占比",
+                                width: 120,
+                                templet: function (d) {
+                                    return `<b>${(d.vcount / total * 100).toFixed(2)}%</b>`
+                                },
+                                rowspan: "2",
+                            }
+                        ]
+
+                        //渲染表格
                         tableIns = table.render({
                             elem: '#tableContainer',
                             height: 'full-' + tableTopHeight,
@@ -413,77 +515,7 @@
                             },
                             data: res.data,
                             totalRow: true,
-                            cols: [
-                                [
-                                    //{ field: 'id', title: 'ID', width: 121, fixed: 'left', unresize: true, sort: true, totalRowText: '合计' },
-                                    {
-                                        type: "numbers",
-                                        align: "center",
-                                        title: "序号",
-                                        width: 120,
-                                        rowspan: "2",
-                                        totalRowText: '供应商数量合计',
-                                    },
-                                    {
-                                        field: "varieties",
-                                        align: "center",
-                                        title: "品种",
-                                        width: 140,
-                                        rowspan: "2",
-                                    },
-                                    // {
-                                    //     field: "levels",
-                                    //     align: "center",
-                                    //     title: "等级",
-                                    //     width: 120,
-                                    //     rowspan: "2",
-                                    // },
-                                    // {
-                                    //     field: "spec",
-                                    //     align: "center",
-                                    //     title: "规格",
-                                    //     width: 120,
-                                    //     rowspan: "2",
-                                    // },
-                                    // {
-                                    //     field: "chang",
-                                    //     align: "center",
-                                    //     title: "长度",
-                                    //     width: 120,
-                                    //     rowspan: "2",
-                                    // },
-                                    // {
-                                    //     field: "displayorder",
-                                    //     align: "center",
-                                    //     title: "产地",
-                                    //     width: 120,
-                                    //     rowspan: "2",
-                                    // },
-                                    {
-                                        align: "center",
-                                        title: "货物主库存数量",
-                                        colspan: colsList.length
-                                    },
-                                    {
-                                        field: "vcount",
-                                        align: "center",
-                                        title: "品种数量合计",
-                                        width: 180,
-                                        rowspan: "2",
-                                        totalRow: true
-                                    },
-                                    {
-                                        field: "scale",
-                                        align: "center",
-                                        title: "品种数量占比",
-                                        width: 120,
-                                        templet: function (d) {
-                                            return `<b>${(d.vcount / total * 100).toFixed(2)}%</b>`
-                                        },
-                                        rowspan: "2",
-                                    }
-                                ], colsList
-                            ],
+                            cols: [baseCols, colsList],
                             even: true,
                             page: false, //是否显示分页
                             limits: [100, 200, 300, 400, 500],
@@ -494,12 +526,12 @@
                             title: "库存分析表",
                             done: function (res, curr, count) {
                                 $('.layui-table-total tbody').append($('.layui-table-total tr').clone(true))
-                                let oldTr = $('.layui-table-total tbody tr').eq(0)
-                                oldTr.children().eq(-1).html('<b>100%</b>')
-                                let newTr = $('.layui-table-total tbody tr').eq(1)
-                                let totalNum = parseFloat(newTr.children().eq(-2).text())
-                                // oldTr.children().eq(0).attr('colspan', '2').text('供应商数量合计')
-                                newTr.children().eq(0).text('供应商数量占比')
+                                let oldTr = $('.layui-table-total tbody tr').eq(0)      //总计行
+                                let newTr = $('.layui-table-total tbody tr').eq(1)      //总计百分比行
+                                let totalNum = parseFloat(newTr.children().eq(-2).text())       
+
+                                oldTr.css('fontWeight',700).children().eq(-1).html('<b>100%</b>')   //总计行加粗且最后一格设为100%
+                                newTr.children().eq(0).text('仓库主数量占比').css('fontWeight',700)  //遍历总计行中的数,设为百分比
                                 newTr.children().each((index, el) => {
                                     let num = parseFloat($(el).children().text())
                                     if (num || num === 0) {
@@ -507,6 +539,7 @@
                                         $(el).html(`<b>${scale}%</b>`)
                                     }
                                 })
+
                             }
                         })
                         table.resize('tableContainer')

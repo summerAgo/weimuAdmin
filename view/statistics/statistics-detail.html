@@ -129,7 +129,7 @@
     }
 
     .table-header-title {
-        margin: 0 0 10px 0;
+        margin: 0 0 6px 0;
         text-align: center;
         font-size: 20px;
         color: #333;
@@ -186,9 +186,9 @@
         renderDate()
 
         //自定义多选框btn
-        // formSelects.btns(['remove'], {
-        //     show: 'name'
-        // });
+        formSelects.btns(['remove'], {
+            show: 'name'
+        });
         // 品种多选数据赋值
         formSelects.data('selectVarieties', 'local', {
             arr: selectDataInstall(VTSList, null, 1, 1) //品种列表
@@ -289,7 +289,7 @@
             //isAdd:        当前操作选中or取消
             //isDisabled:   当前选项是否是disabled
             //如果return false, 那么将取消本次操作
-            if (!isAdd) {
+            if (vals.length == 0) {
                 formSelects.data('depotSelect', 'local', {
                     arr: [] //清空仓库列表
                 });
@@ -425,7 +425,7 @@
             var mm = time.getMinutes();
             var s = time.getSeconds();
             function add0(m) { return m < 10 ? '0' + m : m }
-            var now = y + '-' + add0(m) + '-' + add0(d) + ' ' + add0(h) + ':' + add0(mm) + ':' + add0(s);
+            var now = y + '-' + add0(m) + '-' + add0(d) + ' ' + add0(h) + ':' + add0(mm);
             return now
         }
 
@@ -435,13 +435,22 @@
             height: 'full-' + tableTopHeight,
             url: statisticsDetail,
             parseData: function (res) {
-                return {
-                    "code": res.status, //解析接口状态
-                    "msg": res.message, //解析提示文本
-                    "count": res.data.length, //解析数据长度
-                    "data": res.data, //解析数据列表
-                    "aprice": res.aprice, //解析数据列表
-                    "znum": res.znum //解析数据列表
+                if (res.data) {
+                    res.data.forEach((item, index) => {
+                        item.fjin_date ? (item.fjin_date = dateTranslate(item.fjin_date)) : ''
+                        item.fjout_date ? (item.fjout_date = dateTranslate(item.fjout_date)) : ''
+                        item.xhin_date ? (item.xhin_date = dateTranslate(item.xhin_date)) : ''
+                        item.xsout_date ? (item.xsout_date = dateTranslate(item.xsout_date)) : ''
+                    })
+                    console.log(res.data)
+                    return {
+                        "code": res.status, //解析接口状态
+                        "msg": res.message, //解析提示文本
+                        "count": res.count, //解析数据长度
+                        "data": res.data, //解析数据列表
+                        "aprice": res.aprice, //解析数据列表
+                        "znum": res.znum //解析数据列表
+                    }
                 }
             },
             request: {
@@ -484,16 +493,16 @@
                         rowspan: "2",
                     },
                     {
-                        field: "levels",
+                        field: "spec",
                         align: "center",
-                        title: "等级",
+                        title: "规格",
                         width: 120,
                         rowspan: "2",
                     },
                     {
-                        field: "spec",
+                        field: "levels",
                         align: "center",
-                        title: "规格",
+                        title: "等级",
                         width: 120,
                         rowspan: "2",
                     },
@@ -512,6 +521,13 @@
                         rowspan: "2",
                     },
                     {
+                        field: "pieces",
+                        align: 'center',
+                        title: '片数',
+                        width: 120,
+                        rowspan: '2'
+                    },
+                    {
                         field: "origin",
                         align: "center",
                         title: "产地",
@@ -519,34 +535,42 @@
                         rowspan: "2",
                     },
                     {
+                        field: "qc_num",
                         align: "center",
-                        title: "期初库存",
+                        title: "期初库存(数量m³)",
+                        width: 180,
+                        rowspan: '2',
+                        style: 'font-weight: 700',
+                        totalRow: true
+                    },
+                    {
+                        align: "center",
+                        title: "货物入库",
                         colspan: 2
                     },
                     {
                         align: "center",
-                        title: "新货入仓",
-                        colspan: 3
-                    },
-                    {
-                        align: "center",
-                        title: "分拣入仓",
+                        title: "分拣入库",
                         colspan: 2
                     },
                     {
                         align: "center",
-                        title: "新货出仓",
-                        colspan: 3
-                    },
-                    {
-                        align: "center",
-                        title: "分拣出仓",
+                        title: "货物出库",
                         colspan: 2
                     },
                     {
                         align: "center",
-                        title: "本月结余",
+                        title: "分拣出库",
                         colspan: 2
+                    },
+                    {
+                        field: "balance_num",
+                        align: "center",
+                        title: "结余(数量m³)",
+                        width: 180,
+                        rowspan: '2',
+                        style: 'font-weight: 700',
+                        totalRow: true
                     },
                     {
                         field: "ownername",
@@ -578,107 +602,62 @@
                     },
                 ],
                 [
-                    {                       //期初库存
-                        field: "qc_num",
-                        align: "center",
-                        title: "数量",
-                        width: 140,
-                        totalRow: true
-                    },
-                    {
-                        field: "qc_pieces",
-                        align: "center",
-                        title: "片数",
-                        width: 140,
-                        totalRow: true
-                    },
                     {                       //新货入库
-                        field: "indate",
+                        field: "xhin_date",
                         align: "center",
                         title: "日期",
                         width: 196,
-                        templet: function (d) {
-                            return d.indate ? dateTranslate(d.indate) : ''
-                        }
                     },
                     {
                         field: "xhin_num",
                         align: "center",
                         title: "数量",
                         width: 140,
-                        totalRow: true
+                        totalRow: true,
+                        style: 'font-weight: 700',
+                    },
+                    //分拣入库
+                    {
+                        field: "fjin_date",
+                        align: "center",
+                        title: "日期",
+                        width: 196,
                     },
                     {
-                        field: "xhin_pieces",
-                        align: "center",
-                        title: "片数",
-                        width: 140,
-                        totalRow: true
-                    },
-                    {                       //分拣入库
                         field: "fjin_num",
                         align: "center",
                         title: "数量",
                         width: 140,
-                        totalRow: true
-                    },
-                    {
-                        field: "fjin_pieces",
-                        align: "center",
-                        title: "片数",
-                        width: 140,
-                        totalRow: true
+                        totalRow: true,
+                        style: 'font-weight: 700',
                     },
                     {                       //新货出库
-                        field: "outdate",
+                        field: "xsout_date",
                         align: "center",
                         title: "日期",
                         width: 196,
-                        templet: function (d) {
-                            return d.outdate ? dateTranslate(d.outdate) : ''
-                        }
                     },
                     {
                         field: "xsout_num",
                         align: "center",
                         title: "数量",
                         width: 140,
-                        totalRow: true
-                    },
-                    {
-                        field: "xsout_pieces",
-                        align: "center",
-                        title: "片数",
-                        width: 140,
-                        totalRow: true
+                        totalRow: true,
+                        style: 'font-weight: 700',
                     },
                     {                       //分拣出库
+                        field: "fjout_date",
+                        align: "center",
+                        title: "日期",
+                        width: 196,
+                    },
+                    {
                         field: "fjout_num",
                         align: "center",
                         title: "数量",
                         width: 140,
-                        totalRow: true
-                    },
-                    {
-                        field: "fjout_pieces",
-                        align: "center",
-                        title: "片数",
-                        width: 140,
-                        totalRow: true
-                    },
-                    {                       //本月结余
-                        field: "balance_num",
-                        align: "center",
-                        title: "数量",
-                        width: 140,
                         totalRow: true,
-                    },
-                    {
-                        field: 'balance_pieces',
-                        align: "center",
-                        title: "片数",
-                        width: 140,
-                        totalRow: true,
+                        style: 'font-weight: 700',
                     },
                 ]
             ],
@@ -687,8 +666,10 @@
             page: true, //是否显示分页
             limits: [100, 200, 500, 1000],
             limit: 100, //每页默认显示的数量
-            title: "进销存统计表",
+            title: "进销存明细表",
             done: function (res, curr, count) {
+                let tr = $('.layui-table-total tbody tr').eq(0)
+                tr.css('fontWeight', 700)
                 table.resize('tableContainer')
             },
             text: {
@@ -700,6 +681,8 @@
 
         //点击导出
         $(".toExport").on('click', function (e) {
+            // console.log(table.exportFile)
+            // console.log(tableIns.config)
             table.exportFile(tableIns.config.id, tableIns.config.data, "xls");
         });
 

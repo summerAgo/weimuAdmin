@@ -89,7 +89,7 @@
     }
 
     .table-header-title {
-        margin: 0 0 10px 0;
+        margin: 0 0 6px 0;
         text-align: center;
         font-size: 20px;
         color: #333;
@@ -146,9 +146,9 @@
         renderDate()
 
         //自定义多选框btn
-        // formSelects.btns(['remove'], {
-        //     show: 'name'
-        // });
+        formSelects.btns(['remove'], {
+            show: 'name'
+        });
         // 品种多选数据赋值
         formSelects.data('selectVarieties', 'local', {
             arr: selectDataInstall(VTSList, null, 1, 1) //品种列表
@@ -245,7 +245,7 @@
             //isAdd:        当前操作选中or取消
             //isDisabled:   当前选项是否是disabled
             //如果return false, 那么将取消本次操作
-            if (!isAdd) {
+            if (vals.length == 0) {
                 formSelects.data('depotSelect', 'local', {
                     arr: [] //清空仓库列表
                 });
@@ -275,7 +275,6 @@
                 });
             }
         }, true);
-
         // 获取select数据函数
         function selectDataInstall(url, param, bool, type) {
             if (param) {
@@ -409,35 +408,35 @@
                     {
                         field: "instorage",
                         align: "center",
-                        title: "本月新货入库数量(m³)",
+                        title: "货物入库数量(m³)",
                         width: 236,
                         totalRow: true
                     },
                     {
                         field: "insorting",
                         align: "center",
-                        title: "本月分拣入库数量(m³)",
+                        title: "分拣入库数量(m³)",
                         width: 236,
                         totalRow: true
                     },
                     {
                         field: "outstorage",
                         align: "center",
-                        title: "本月销售出库数量(m³)",
+                        title: "货物出库数量(m³)",
                         width: 236,
                         totalRow: true
                     },
                     {
                         field: "outsorting",
                         align: "center",
-                        title: "本月分拣出库数量(m³)",
+                        title: "分拣出库数量(m³)",
                         width: 236,
                         totalRow: true
                     },
                     {
                         field: "balance",
                         align: "center",
-                        title: "本月结存数量(m³)",
+                        title: "结存数量(m³)",
                         width: 236,
                         totalRow: true
                     }
@@ -450,6 +449,8 @@
             limit: 100, //每页默认显示的数量
             title: "进销存统计表",
             done: function (res, curr, count) {
+                let tr = $('.layui-table-total tbody tr').eq(0)
+                tr.css('fontWeight', 700)
             },
             text: {
                 none: "无匹配数据"
