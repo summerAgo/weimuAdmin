@@ -407,8 +407,10 @@
                 $(data.elem).find('li').each(function(i, n) {
                     if ($(n).hasClass('layui-this')) {
                         var attr = $(n).attr('lay-id')
-                        $(data.elem).find('.nav-tabs-home').after("<li lay-id=" + attr + " class='layui-this'>"+ $(n).html() +"</li>");
-                        $(n).remove();
+                        if (attr != 'home') {
+                            $(data.elem).find('.nav-tabs-home').after("<li lay-id=" + attr + " class='layui-this'>"+ $(n).html() +"</li>");
+                            $(n).remove(); 
+                        }
                     }
                 })
             });
