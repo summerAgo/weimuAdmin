@@ -402,6 +402,15 @@
             //监听Tab切换，以改变地址hash值
             element.on('tab(nav-tabs)', function() {
                 location.hash = '#!' + this.getAttribute('lay-id');
+
+                // 当前tab项， 放在第2位
+                $(data.elem).find('li').each(function(i, n) {
+                    if ($(n).hasClass('layui-this')) {
+                        var attr = $(n).attr('lay-id')
+                        $(data.elem).find('.nav-tabs-home').after("<li lay-id=" + attr + " class='layui-this'>"+ $(n).html() +"</li>");
+                        $(n).remove();
+                    }
+                })
             });
 
             $(".signOutBtn").click(signOut); //退出登录
