@@ -400,8 +400,14 @@
             });
 
             //监听Tab切换，以改变地址hash值
-            element.on('tab(nav-tabs)', function() {
+            element.on('tab(nav-tabs)', function(data) {
                 location.hash = '#!' + this.getAttribute('lay-id');
+
+                // 当前tab项， 放在第2位
+                if ($(this).attr('lay-id') != 'home') {
+                    $(data.elem).find('.nav-tabs-home').after($(this).clone(true));
+                    $(this).remove(); 
+                }
             });
 
             $(".signOutBtn").click(signOut); //退出登录
