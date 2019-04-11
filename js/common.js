@@ -151,6 +151,19 @@ function getTableOption(key) {
                 if (tableOption[k][i]["width"]) {
                     tableOption[k][i]["width"] = tableOption[k][i]["width"] - 0;
                 }
+                if (tableOption[k][i]["type"] == "radio") {
+                    tableOption[k][i]["type"] = ''
+                    tableOption[k][i]["width"] = 50
+                    tableOption[k][i]["templet"] = function(d) {
+                        return d.orderno != '' ? '<input type="radio" name="layTableRadio_1" lay-type="layTableRadio"/>' : ''
+                    }
+                }
+                if (tableOption[k][i]["title"] == "序号") {
+                    tableOption[k][i]["type"] = ''
+                    tableOption[k][i]["templet"] = function(d) {
+                        return d.orderno != '' ? ++d.LAY_TABLE_INDEX : ''
+                    }
+                }
             }
         }
         return tableOption;
@@ -278,4 +291,21 @@ function isNumber(value) {
     }
 }
 
-
+/**
+ * 当数据为一条时，拼接成为12条
+ * @param {*} data 
+ */
+function handlerDataRowCount (data) {
+    if (data.length < 12 && data.length > 0) {
+        var obj = {}, arrObj = [];
+        for (var k in data[0]) {
+            obj[k] = ''
+        }
+        for ( var i = data.length; i < 12; i++) {
+            arrObj.push(obj)
+        }
+        return data.concat(arrObj)
+    } else {
+        return data
+    }
+}
