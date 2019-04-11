@@ -425,7 +425,7 @@
             var mm = time.getMinutes();
             var s = time.getSeconds();
             function add0(m) { return m < 10 ? '0' + m : m }
-            var now = y + '-' + add0(m) + '-' + add0(d) + ' ' + add0(h) + ':' + add0(mm);
+            var now = y + '-' + add0(m) + '-' + add0(d);
             return now
         }
 
@@ -550,7 +550,7 @@
                     },
                     {
                         align: "center",
-                        title: "分拣入库",
+                        title: "分拣入库(库内)",
                         colspan: 2
                     },
                     {
@@ -560,7 +560,7 @@
                     },
                     {
                         align: "center",
-                        title: "分拣出库",
+                        title: "分拣出库(库内)",
                         colspan: 2
                     },
                     {
