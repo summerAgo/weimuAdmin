@@ -304,6 +304,7 @@
             },
             parseData: function(res) { //res 即为原始返回的数据
                 if (res.status != 0) res.status = 0;
+                res.data = handlerDataRowCount(res.data)
                 if (!res.data) {
                     //如果后台没有给data，强行声明data为数组
                     res.data = []

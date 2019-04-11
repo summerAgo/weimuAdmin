@@ -142,6 +142,7 @@
                     }
                     $(".txtlist").html(txt.substring(0, txt.length - 1));
                 }
+                res.data = handlerDataRowCount(res.data)
                 return {
                     "code": res.status, //解析接口状态
                     "msg": res.message, //解析提示文本
@@ -189,6 +190,7 @@
                         res.data[i].LAY_CHECKED = res.data[i].status;
                     }
                 }
+                res.data = handlerDataRowCount(res.data)
                 return {
                     "code": res.status, //解析接口状态
                     "msg": res.message, //解析提示文本
