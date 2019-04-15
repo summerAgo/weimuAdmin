@@ -378,8 +378,9 @@
                 // ]
             ],
             even: true, // 开启隔行背景
-            page: false, // 是否显示分页
-            limit: null, // 每页默认显示的数量
+            page: true, // 是否显示分页
+            limit: 100, // 每页默认显示的数量
+            limits: [100, 200, 500, 1000],
             done: function(res, curr, count) { // 数据渲染完的回调
 
             },

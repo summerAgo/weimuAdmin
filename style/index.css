@@ -1648,7 +1648,7 @@ body .layui-layer-wei .layui-layer-btn .layui-layer-btn0 {
 
 .layui-table-body::-webkit-scrollbar {
     width: 8px;
-    height: 8px;
+    height: 12px;
     background-color: #eee;
 }
 
@@ -1665,7 +1665,7 @@ body .layui-layer-wei .layui-layer-btn .layui-layer-btn0 {
 }
 
 .layui-table-total::-webkit-scrollbar {
-    width: 5px;
+    width: 8px;
     background: none;
 }
 

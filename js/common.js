@@ -155,13 +155,20 @@ function getTableOption(key) {
                     tableOption[k][i]["type"] = ''
                     tableOption[k][i]["width"] = 50
                     tableOption[k][i]["templet"] = function(d) {
-                        return d.orderno != '' ? '<input type="radio" name="layTableRadio_1" lay-type="layTableRadio"/>' : ''
+                        return d.isEmpty !== 'empty' ? '<input type="radio" name="layTableRadio_1" lay-type="layTableRadio"/>' : ''
+                    }
+                }
+                if (tableOption[k][i]["type"] == "checkbox") {
+                    tableOption[k][i]["type"] = ''
+                    tableOption[k][i]["width"] = 50
+                    tableOption[k][i]["templet"] = function(d) {
+                        return d.isEmpty !== 'empty' ? '<input type="checkbox" name="layTableCheckbox" lay-skin="primary"/>' : ''
                     }
                 }
                 if (tableOption[k][i]["title"] == "序号") {
                     tableOption[k][i]["type"] = ''
                     tableOption[k][i]["templet"] = function(d) {
-                        return d.orderno != '' ? ++d.LAY_TABLE_INDEX : ''
+                        return d.isEmpty !== 'empty' ? ++d.LAY_TABLE_INDEX : ''
                     }
                 }
             }
@@ -296,10 +303,11 @@ function isNumber(value) {
  * @param {*} data 
  */
 function handlerDataRowCount (data) {
-    if (data.length < 12 && data.length > 0) {
+    if (data && data.length < 12 && data.length > 0) {
         var obj = {}, arrObj = [];
         for (var k in data[0]) {
             obj[k] = ''
+            obj['isEmpty'] = 'empty'
         }
         for ( var i = data.length; i < 12; i++) {
             arrObj.push(obj)

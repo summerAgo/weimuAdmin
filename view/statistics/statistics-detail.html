@@ -129,11 +129,94 @@
     }
 
     .table-header-title {
-        margin: 0 0 6px 0;
+        margin: 0 0 10px 0;
         text-align: center;
         font-size: 20px;
         color: #333;
         font-weight: 900
+    }
+
+    .table-content-main {
+        position: relative
+    }
+
+    .show-detail {
+        position: absolute;
+        display: none;
+        bottom: 44px;
+        right: 0;
+        border: 1px solid #c9c9c9;
+        color: #000;
+        font-size: 15px;
+        font-weight: 700;
+        background-color: #fff;
+    }
+
+    .show-detail .detail-item {
+        width: 300px;
+        height: 46px;
+        text-align: center;
+        line-height: 46px;
+        border-bottom: 1px solid #ededed;
+    }
+
+    .show-detail .detail-item:nth-last-child(1) {
+        border-bottom: none
+    }
+
+    .show-detail .detail-item:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    .show-detail .detail-item span {
+        margin-left: 10px;
+        color: #ff3c4e
+    }
+
+    #rightBox {
+        font-weight: 700;
+    }
+
+    .more {
+        display: inline-block;
+        color: #6a645f !important;
+        cursor: pointer;
+        line-height: 40px;
+        vertical-align: middle;
+    }
+
+    .right-text {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .more:hover {
+        color: #0284ff !important
+    }
+
+    .more-icon {
+        display: inline-block;
+        margin-left: 4px;
+        vertical-align: middle;
+        width: 18px;
+        height: 18px;
+
+    }
+
+    .more .up {
+        background: url('/images/up-grey.png') no-repeat;
+    }
+
+    .more:hover .up {
+        background: url('/images/up-blue.png') no-repeat;
+    }
+
+    .more .down {
+        background: url('/images/down-grey.png') no-repeat;
+    }
+
+    .more:hover .down {
+        background: url('/images/down-blue.png') no-repeat;
     }
 </style>
 
@@ -669,15 +752,61 @@
             limit: 100, //每页默认显示的数量
             title: "进销存明细表",
             done: function (res, curr, count) {
-                let tr = $('.layui-table-total tbody tr').eq(0)
-                tr.css('fontWeight', 700)
-                table.resize('tableContainer')
+                // let tr = $('.layui-table-total tbody tr').eq(0);
+                // let toggle = false;
+                // $('.show-detail').hide()
+                // let addtableBtn = `<div class="rightBotBtn" id="rightBox" style="cursor:default"><div class="right-text">期初库存总数量(m³):<span>${res.znum}</span> &nbsp;&nbsp;&nbsp;&nbsp; 
+                //     货物入库总数量(m³):<span>${formatNum(res.aprice)}</span></div>&nbsp;&nbsp;&nbsp;&nbsp<span class="more">更多<i class="more-icon up"></i></span>
+                //     </div>`
+                // let detail = `
+                //     <div class="show-detail">
+                //         <div class="detail-item">期初库存总数量(m³):<span>${res.znum}</span></div>
+                //         <div class="detail-item">货物入库总数量(m³):<span>${res.znum}</span></div>
+                //         <div class="detail-item">分拣入库总数量(m³):<span>${res.znum}</span></div>
+                //         <div class="detail-item">货物出库总数量(m³):<span>${res.znum}</span></div>
+                //         <div class="detail-item">分拣出库总数量(m³):<span>${res.znum}</span></div>
+                //         <div class="detail-item">结余库存总数量(m³):<span>${res.znum}</span></div>
+                //     </div>
+                // `
+                
+                // if ($("#rightBox").length < 1) {
+                //     $(".layui-table-page").append(addtableBtn);
+                // }
+
+                // if ($('.show-detail').length < 1) {
+                //     $('.table-content-main').append(detail)
+                // }
+
+                // tr.css('fontWeight', 700)
+                // table.resize('tableContainer')
+                // $('.more').on('click', (e) => {  //点击更多
+                //     e.stopPropagation();
+                //     toggle = !toggle;
+                //     if (toggle) {
+                //         $('.more i').removeClass('up').addClass('down')
+                //     } else {
+                //         $('.more i').removeClass('down').addClass('up')
+                //     }
+                //     $('.right-text').animate({ width: 'toggle' }, 200)
+                //     $('.show-detail').slideToggle()
+                // })
+                // $(document).on('click', (e) => {
+                //     if (e.target.className == 'detail-item' || e.target.className == 'more') {
+                //         return
+                //     }
+                //     if (toggle) {
+                //         $('.right-text').animate({width: 'toggle' }, 200)
+                //         toggle = !toggle
+                //     }
+                //     $('.show-detail').slideUp()
+                // })
             },
             text: {
                 none: "无匹配数据"
             },
             loading: true
         })
+
 
 
         //点击导出
