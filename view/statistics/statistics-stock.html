@@ -88,10 +88,12 @@
         color: #333;
         font-weight: 900
     }
+
     .table-header-text {
         margin: -30px 0 10px 0;
         font-weight: 700
     }
+
     .table-header-date {
         border-bottom: 1px solid #333;
     }
@@ -381,7 +383,7 @@
                         })
                         tableIns.reload({
                             data: requestData,
-                            cols: [baseCols,colsList]
+                            cols: [baseCols, colsList]
                         });
                         table.resize('tableContainer')
                         headerDate.text(nowDate)
@@ -393,12 +395,8 @@
             return false;
         });
 
-        // 刷新按钮
-        $(".refreshBtn").click(function () {
-            renderTable()
-        });
 
-        var tableIns
+        var tableIns = []
         var colsList = []
         var baseCols
         var total
@@ -418,6 +416,7 @@
                     layer.closeAll('loading')
                     if (res.status == 0) {
                         total = res.total
+                        colsList = []
                         res.ownerlist.forEach((item, index) => {    //仓库主动态表头
                             colsList.push({
                                 title: item[Object.keys(item)[0]],
@@ -529,10 +528,10 @@
                                 $('.layui-table-total tbody').append($('.layui-table-total tr').clone(true))
                                 let oldTr = $('.layui-table-total tbody tr').eq(0)      //总计行
                                 let newTr = $('.layui-table-total tbody tr').eq(1)      //总计百分比行
-                                let totalNum = parseFloat(newTr.children().eq(-2).text())       
+                                let totalNum = parseFloat(newTr.children().eq(-2).text())
 
-                                oldTr.css('fontWeight',700).children().eq(-1).html('<b>100%</b>')   //总计行加粗且最后一格设为100%
-                                newTr.children().eq(0).text('仓库主数量占比').css('fontWeight',700)  //遍历总计行中的数,设为百分比
+                                oldTr.css('fontWeight', 700).children().eq(-1).html('<b>100%</b>')   //总计行加粗且最后一格设为100%
+                                newTr.children().eq(0).text('仓库主数量占比').css('fontWeight', 700)  //遍历总计行中的数,设为百分比
                                 newTr.children().each((index, el) => {
                                     let num = parseFloat($(el).children().text())
                                     if (num || num === 0) {
@@ -558,6 +557,11 @@
         //点击导出
         $(".toExport").on('click', function (e) {
             table.exportFile(tableIns.config.id, tableIns.config.data, "xls");
+        });
+
+        // 刷新按钮
+        $(".refreshBtn").click(function () {
+            renderTable()
         });
 
         // 监听table点击事件，修改数量

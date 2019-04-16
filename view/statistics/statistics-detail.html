@@ -520,10 +520,10 @@
             parseData: function (res) {
                 if (res.data) {
                     res.data.forEach((item, index) => {
-                        item.fjin_date ? (item.fjin_date = dateTranslate(item.fjin_date)) : ''
-                        item.fjout_date ? (item.fjout_date = dateTranslate(item.fjout_date)) : ''
-                        item.xhin_date ? (item.xhin_date = dateTranslate(item.xhin_date)) : ''
-                        item.xsout_date ? (item.xsout_date = dateTranslate(item.xsout_date)) : ''
+                        item.fjin_date = item.fjin_date ? dateTranslate(item.fjin_date) : ''
+                        item.fjout_date = item.fjout_date ? dateTranslate(item.fjout_date) : ''
+                        item.xhin_date = item.xhin_date ? dateTranslate(item.xhin_date) : ''
+                        item.xsout_date = item.xsout_date ? dateTranslate(item.xsout_date) : ''
                     })
                     console.log(res.data)
                     res.data = handlerDataRowCount(res.data)
