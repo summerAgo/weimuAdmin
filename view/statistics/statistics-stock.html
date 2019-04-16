@@ -417,7 +417,7 @@
                     if (res.status == 0) {
                         total = res.total
                         colsList = []
-                        res.ownerlist.forEach((item, index) => {    //仓库主动态表头
+                        res.ownerlist.forEach((item, index) => {    //仓库主,动态表头
                             colsList.push({
                                 title: item[Object.keys(item)[0]],
                                 field: Object.keys(item)[0],
@@ -427,7 +427,7 @@
                                 sort: true
                             })
                         })
-
+                        let length = res.ownerlist.length > 1 ? colsList.length : (colsList.length + 1)
                         baseCols = [    //基础表头
                             {
                                 type: "numbers",
@@ -475,7 +475,7 @@
                             {
                                 align: "center",
                                 title: "仓库主库存数量",
-                                colspan: colsList.length
+                                colspan: length
                             },
                             {
                                 field: "vcount",
