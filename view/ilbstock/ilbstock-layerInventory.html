@@ -246,7 +246,9 @@
             page: false, //是否显示分页
             // limits: [100, 200, 500, 1000],
             // limit: 100, //每页默认显示的数量
-            done: function(res, curr, count) {}
+            done: function(res, curr, count) {
+                hideCheckBox(res.data)
+            }
         });
 
         var numChangeValue = {}; //单元格编辑更改估值价格数据对象

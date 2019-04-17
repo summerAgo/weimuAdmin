@@ -453,6 +453,7 @@
             done: function (res, curr, count) {
                 let tr = $('.layui-table-total tbody tr').eq(0)
                 tr.css('fontWeight', 700)
+                hideCheckBox(res.data)
             },
             text: {
                 none: "无匹配数据"

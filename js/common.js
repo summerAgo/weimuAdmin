@@ -154,20 +154,21 @@ function getTableOption(key) {
                 if (tableOption[k][i]["type"] == "radio") {
                     tableOption[k][i]["type"] = ''
                     tableOption[k][i]["width"] = 50
-                    tableOption[k][i]["templet"] = function(d) {
+                    tableOption[k][i]["templet"] = function (d) {
                         return d.isEmpty !== 'empty' ? '<input type="radio" name="layTableRadio_1" lay-type="layTableRadio"/>' : ''
                     }
                 }
                 if (tableOption[k][i]["type"] == "checkbox") {
-                    tableOption[k][i]["type"] = ''
+                    //tableOption[k][i]["type"] = ''
                     tableOption[k][i]["width"] = 50
-                    tableOption[k][i]["templet"] = function(d) {
+                    tableOption[k][i]["templet"] = function (d) {
+                        console.log(d)
                         return d.isEmpty !== 'empty' ? '<input type="checkbox" name="layTableCheckbox" lay-skin="primary"/>' : ''
                     }
                 }
                 if (tableOption[k][i]["title"] == "序号") {
                     tableOption[k][i]["type"] = ''
-                    tableOption[k][i]["templet"] = function(d) {
+                    tableOption[k][i]["templet"] = function (d) {
                         return d.isEmpty !== 'empty' ? ++d.LAY_TABLE_INDEX : ''
                     }
                 }
@@ -176,6 +177,15 @@ function getTableOption(key) {
         return tableOption;
     }
 }
+
+//处理checkbox
+// function checkboxHandle () {
+
+//     console.log(dom)
+// }
+
+
+
 
 //冒泡排序比较器
 function compare(propertyName) {
@@ -302,18 +312,35 @@ function isNumber(value) {
  * 当数据为一条时，拼接成为12条
  * @param {*} data 
  */
-function handlerDataRowCount (data) {
-    if (data && data.length < 12 && data.length > 0) {
+function handlerDataRowCount(data) {
+    const LINE = 12
+    if (data && data.length < LINE && data.length > 0) {
         var obj = {}, arrObj = [];
         for (var k in data[0]) {
             obj[k] = ''
             obj['isEmpty'] = 'empty'
         }
-        for ( var i = data.length; i < 12; i++) {
+        for (var i = data.length; i < LINE; i++) {
             arrObj.push(obj)
         }
         return data.concat(arrObj)
     } else {
         return data
+    }
+}
+
+
+/**隐藏空白项复选框
+ * @param {*} data
+ */
+function hideCheckBox(data) {
+    const LINE = 12
+    if (data.length == LINE) {
+        for (var i = 0; i < LINE; i++) {
+            if (data[i]['isEmpty']) {
+                let dom = document.getElementsByClassName('layui-form-checkbox')[i + 1]
+                dom.style.display = `none`
+            }
+        }
     }
 }

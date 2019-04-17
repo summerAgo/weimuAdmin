@@ -428,6 +428,8 @@
                 if ($("#rightBox").length < 1) {
                     $(".layui-table-page").append(addtableBtn);
                 }
+                checkboxHandle()
+                hideCheckBox(res.data)
             },
             text: {
                 none: "无匹配数据"

@@ -260,7 +260,9 @@
             limits: [100, 200, 500, 1000],
             limit: 100, //每页默认显示的数量
             title: "公司员工",
-            done: function(res, curr, count) {},
+            done: function(res, curr, count) {
+                hideCheckBox(res.data)
+            },
             text: {
                 none: "无匹配数据"
             },

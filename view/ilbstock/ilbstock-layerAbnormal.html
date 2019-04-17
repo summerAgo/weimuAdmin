@@ -323,6 +323,7 @@
             // limit: 0, //每页默认显示的数量
             done: function(res, curr, count) {
                 // console.log(sessionStorage.getItem("pageLength"));
+                hideCheckBox(res.data)
             },
             // loading: true
         });

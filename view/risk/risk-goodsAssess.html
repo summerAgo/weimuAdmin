@@ -169,7 +169,7 @@
             limit: 100, //每页默认显示的数量
             title: "货物估值",
             done: function(res, curr, count) { // 数据渲染完的回调
-
+                hideCheckBox(res.data)
             },
             text: { // 自定义文本，如空数据时的异常提示等
                 none: "无匹配数据"
@@ -371,7 +371,7 @@
                         even: true, // 开启隔行背景
                         title: '货物估值列表',
                         done: function(res, curr, count) { // 数据渲染完的回调
-
+                            hideCheckBox(res.data)
                         },
                         text: { // 自定义文本，如空数据时的异常提示等
                             none: "无匹配数据"

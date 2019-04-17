@@ -156,6 +156,7 @@
             done: function(res, curr, count) {
                 var addtableBtn = '<div class="rightBotBtn">已经选择<span>0</span>个数据</div>';
                 $(".layui-table-page").append(addtableBtn);
+                hideCheckBox(res.data)
             },
             text: {
                 none: "无匹配数据"

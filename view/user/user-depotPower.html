@@ -169,7 +169,7 @@
             page: false, //是否显示分页
             limit: null, //每页默认显示的数量
             done: function(res, curr, count) {
-
+                hideCheckBox(res.data)
             },
             text: {
                 none: "无匹配数据"
@@ -219,7 +219,7 @@
             even: true,
             page: false, //是否显示分页
             done: function(res, curr, count) {
-
+                hideCheckBox(res.data)
             },
             text: {
                 none: "无匹配数据"
