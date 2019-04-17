@@ -133,7 +133,7 @@
             },
             parseData: function(res) { //res 即为原始返回的数据
                 if (res.status !== 0) res.status = 0;
-                res.data = handlerDataRowCount(res.data)
+                
                 return {
                     "code": res.status, //解析接口状态
                     "msg": res.message, //解析提示文本
@@ -183,7 +183,7 @@
             limits: [100, 200, 500, 1000],
             limit: 100, //每页默认显示的数量
             done: function(res, curr, count) {
-                hideCheckBox(res.data)
+                
             },
             text: {
                 none: "无匹配数据"

@@ -526,7 +526,7 @@
                         item.xsout_date = item.xsout_date ? dateTranslate(item.xsout_date) : ''
                     })
                     console.log(res.data)
-                    res.data = handlerDataRowCount(res.data)
+                    
                     return {
                         "code": res.status, //解析接口状态
                         "msg": res.message, //解析提示文本
@@ -800,7 +800,7 @@
                 //     }
                 //     $('.show-detail').slideUp()
                 // })
-                hideCheckBox(res.data)
+                
             },
             text: {
                 none: "无匹配数据"

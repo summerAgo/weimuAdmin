@@ -355,7 +355,7 @@
             url: outHistory,
             parseData: function(res) { //res 即为原始返回的数据
                 if (res.status !== 0) res.status = 0;
-                res.data = handlerDataRowCount(res.data)
+                
                 return {
                     "code": res.status, //解析接口状态
                     "msg": res.message, //解析提示文本
@@ -433,7 +433,7 @@
                 if ($("#rightBox").length < 1) {
                     $(".layui-table-page").append(addtableBtn);
                 }
-                hideCheckBox(res.data)
+                
             },
             text: {
                 none: "无匹配数据"

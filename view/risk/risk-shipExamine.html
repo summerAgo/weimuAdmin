@@ -146,7 +146,7 @@
             // 任意数据格式解析成 table 组件规定的数据格式
             parseData: function(res) { //res 即为原始返回的数据
                 if (res.status !== 0) res.status = 0;
-                res.data = handlerDataRowCount(res.data)
+
                 return {
                     "code": res.status, // 解析接口状态
                     "msg": res.message, // 解析提示文本
@@ -219,7 +219,7 @@
             limit: 100, //每页默认显示的数量
             title: "异常审核",
             done: function(res, curr, count) { // 数据渲染完的回调
-                hideCheckBox(res.data)
+                
             },
             text: { // 自定义文本，如空数据时的异常提示等
                 none: "无匹配数据"

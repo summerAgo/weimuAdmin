@@ -366,7 +366,7 @@
             height: 'full-' + tableTopHeight,
             url: statisticsTotal,
             parseData: function (res) {
-                res.data = handlerDataRowCount(res.data)
+                
                 return {
                     "code": res.status, //解析接口状态
                     "msg": res.message, //解析提示文本
@@ -453,7 +453,7 @@
             done: function (res, curr, count) {
                 let tr = $('.layui-table-total tbody tr').eq(0)
                 tr.css('fontWeight', 700)
-                hideCheckBox(res.data)
+                
             },
             text: {
                 none: "无匹配数据"
