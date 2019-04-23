@@ -61,7 +61,7 @@
         <div class="bottom">
             <div class="w">
                 <div>广东维木网络科技有限公司</div>
-                <div>Copyright © 2015-2018 GuangDong Venneer Mall Trading Co.，Ltd</div>
+                <div>Copyright © 2015-2019 GuangDong Venneer Mall Trading Co.，Ltd</div>
             </div>
         </div>
     </div>
@@ -133,7 +133,7 @@
                                 ownerid: data.ownerid
                             }
                             sessionStorage.setItem("roleInfo", JSON.stringify(roleInfo));
-                            history.replaceState({}, 'index', localhost); //修改浏览器地址
+                            ///history.replaceState({}, 'index', localhost); //修改浏览器地址
                             window.location.href = localhost; //跳转首页
                         } else {
                             layer.msg(data.msg);
