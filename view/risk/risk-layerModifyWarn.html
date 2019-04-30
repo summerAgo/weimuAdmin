@@ -22,9 +22,16 @@
         <div class="layui-form-mid layui-word-aux">元</div>
     </div>
     <div class="layui-form-item layui-normal-line">
+        <label class="layui-form-label">在途融资额度</label>
+        <div class="layui-input-inline">
+            <input type="text" name="waymoney" value="{{d.waymoney || ''}}" placeholder="在途融资额度" autocomplete="off" class="layui-input">
+        </div>
+        <div class="layui-form-mid layui-word-aux">元</div>
+    </div>
+    <div class="layui-form-item layui-normal-line">
         <label class="layui-form-label">警戒线金额</label>
         <div class="layui-input-inline">
-            <input type="text" name="cordonmoney" value="{{d.cordonmoney || ''}}" placeholder="请输入警戒线金额" autocomplete="off" class="layui-input">
+            <input type="text" name="cordonmoney" value="{{d.cordonmoney || ''}}" placeholder="警戒线金额" disabled autocomplete="off" class="layui-input">
         </div>
         <div class="layui-form-mid layui-word-aux">元</div>
     </div>
@@ -40,4 +47,5 @@
     .area-disable {
         line-height: 30px;
     }
+    .layerModifyWarnView .layui-normal-line.layui-form-item .layui-form-label{width:100px;}
 </style>
