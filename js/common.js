@@ -286,3 +286,81 @@ function isNumber(value) {
         return true
     }
 }
+
+//筛选框收缩,在layui实例之前创建实例,在table实例之后handle监听
+class SlideForm {
+    constructor(el, tableId, height) {
+        this.el = document.querySelectorAll(el)[0] || ''
+        this.tableId = tableId || ''
+        this.domList = []
+        this.hideList = []
+        this.height = height || 63
+        this.init()
+    }
+    init() {
+        //设置基础样式
+        this.el.classList.add('layui-flex-between')
+        //集合dom子元素
+        this.el.childNodes.forEach((item, index) => {
+            item.tagName && this.domList.push(item)
+        })
+        //添加按钮
+        if (this.domList.length > 5) {
+            let para = document.createElement("a");
+            para.className = 'slide-more'
+            para.setAttribute('href', 'javascript:;')
+            let node = document.createTextNode("更多");
+            para.appendChild(node)
+            this.el.appendChild(para);
+        }
+        
+        //集合需要隐藏的元素
+        this.hideList = this.domList.splice(5, this.domList.length - 1)
+        this.hideList.forEach((item, index) => {
+            item.classList.add('layui-hideDom')
+        })
+    }
+    /**
+     * 
+     * @param {*} table table实例
+     */
+    handle(table) {
+        let isSlide = false;
+        let $ = function (dom) {
+            return document.querySelectorAll(dom)[0]
+        }
+        let tableTopHeight
+        document.getElementsByClassName('slide-more')[0].addEventListener('click', () => {
+            if (isSlide) {  //收缩
+                this.hideList.forEach((item, index) => {
+                    if (item.classList) {
+                        item.classList.add('layui-hideDom')
+                    } else {
+                        item.className += `layui-hideDom`
+                    }
+                })
+                this.el.classList.add('layui-flex-between')
+                document.getElementsByClassName('slide-more')[0].innerText = '更多'
+                tableTopHeight = (parseInt($(".table-page-header").clientHeight) + parseInt($(".table-content-title").clientHeight) + parseInt($(".content-header").clientHeight) + 103); //内容区域所需减去的高度
+                table.resize(this.tableId, tableTopHeight)
+                isSlide = !isSlide
+            } else {    //展开
+                this.hideList.forEach((item, index) => {
+                    if (item.classList) {
+                        item.classList.remove('layui-hideDom')
+                    } else {
+                        let classList = item.className.split(' ')
+                        classList.splice(classList.indexOf('layui-hideDom'), 1)
+                        item.className = classList
+                    }
+                })
+                this.el.classList.remove('layui-flex-between')
+                document.getElementsByClassName('slide-more')[0].innerText = '收起'
+                tableTopHeight = (parseInt($(".table-page-header").clientHeight) + parseInt($(".table-content-title").clientHeight) + parseInt($(".content-header").clientHeight) + this.height); //内容区域所需减去的高度
+                table.resize(this.tableId, tableTopHeight)
+                isSlide = !isSlide
+            }
+        })
+
+    }
+}

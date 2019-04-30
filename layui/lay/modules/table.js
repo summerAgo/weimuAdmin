@@ -138,7 +138,7 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util'], function(exports) {
 
             , '<div class="layui-table-box">', '{{# if(d.data.loading){ }}', '<div class="layui-table-init" style="background-color: #fff;">', '<i class="layui-icon layui-icon-loading layui-icon"></i>', '</div>', '{{# } }}'
 
-            , '{{# var left, right; }}', '<div class="layui-table-header">', TPL_HEADER(), '<div class="layui-table-setbtn"></div></div>', '<div class="layui-table-body layui-table-main">', TPL_BODY, '</div>'
+            , '{{# var left, right; }}', '<div class="layui-table-header">', TPL_HEADER(), '</div>', '<div class="layui-table-body layui-table-main">', TPL_BODY, '</div>'
 
             , '{{# if(left){ }}', '<div class="layui-table-fixed layui-table-fixed-l">', '<div class="layui-table-header">', TPL_HEADER({
                 fixed: true
@@ -574,9 +574,9 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util'], function(exports) {
     };
 
     //重置表格尺寸/结构
-    Class.prototype.resize = function() {
+    Class.prototype.resize = function(setheight) {
         var that = this;
-        that.fullSize(); //让表格铺满
+        that.fullSize(setheight); //让表格铺满
         that.setColsWidth(); //自适应列宽
         that.scrollPatch(); //滚动条补丁
 
@@ -782,9 +782,6 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util'], function(exports) {
                     trs_fixed_r.push('<tr data-index="' + i1 + '">' + tds_fixed_r.join('') + '</tr>');
                 });
 
-                // console.log(data)
-                // console.log(options.limit)
-                // console.log(fillnum)
                 if (fillnum > 0) {
                     var filldata = new Array(fillnum);
                     layui.each(filldata, function(i1, item1) {
@@ -1109,14 +1106,15 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util'], function(exports) {
     };
 
     //让表格铺满
-    Class.prototype.fullSize = function() {
+    Class.prototype.fullSize = function(setheight) {
         var that = this,
             options = that.config,
             height = options.height,
-            bodyHeight;
+            bodyHeight,
+            newfullheightGap = setheight || that.fullHeightGap;
 
-        if (that.fullHeightGap) {
-            height = _WIN.height() - that.fullHeightGap;
+        if (newfullheightGap) {
+            height = _WIN.height() - newfullheightGap;
             if (height < 135) height = 135;
             that.elem.css('height', height);
         }
@@ -1878,17 +1876,17 @@ layui.define(['laytpl', 'laypage', 'layer', 'form', 'util'], function(exports) {
     };
 
     //重置表格尺寸结构
-    table.resize = function(id) {
+    table.resize = function(id,setheight) {
         //如果指定表格唯一 id，则只执行该 id 对应的表格实例
         if (id) {
             var config = getThisTableConfig(id); //获取当前实例配置项
             if (!config) return;
 
-            thisTable.that[id].resize();
+            thisTable.that[id].resize(setheight);
 
         } else { //否则重置所有表格实例尺寸
             layui.each(thisTable.that, function() {
-                this.resize();
+                this.resize(setheight);
             });
         }
     };

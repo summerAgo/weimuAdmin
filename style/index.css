@@ -599,11 +599,17 @@
 }
 
 .table-page-form .table-form-item {
-    width:258px;
-    height:30px;
-    line-height:30px;
-    display:flex;
-    margin-bottom:10px;
+    flex: 1 0 240px;
+    width: 240px;
+    height: 30px;
+    line-height: 30px;
+    display: flex;
+    margin-bottom: 10px;
+    margin-right: 0
+}
+
+.table-page-form .layui-flex-between .table-form-item {
+    flex: 1 0 20% 
 }
 
 .table-page-form .table-form-item .input-span {
@@ -611,9 +617,10 @@
     line-height:30px;
     font-size:14px;
     color:#333;
-    width:84px;
+    /* width:84px; */
     text-align:right;
     padding-right:10px;
+    padding-left:15px;
 }
 
 .table-page-form .table-form-item>input[type='text'] {
@@ -709,13 +716,13 @@
 }
 
 .table-page-form .form-box .form-left {
+    display: flex;
+    flex-wrap: wrap;
     flex:1;
 }
 
 .table-page-form .form-box .form-right {
-    min-width:80px;
-    max-width:200px;
-    padding-left:30px;
+    flex: 0 0 250px;
 }
 
 .table-page-form .form-box .audit-status {
@@ -1667,6 +1674,52 @@ body .layui-layer-wei .layui-layer-btn .layui-layer-btn0 {
 .layui-table-total::-webkit-scrollbar {
     width: 8px;
     background: none;
+}
+
+.layui-flex-between {
+    display: flex;
+    justify-content: space-between
+}
+
+.layui-hideDom {
+    display: none !important
+}
+
+.slide-more {
+    position: absolute;
+    right: 175px;
+    top: 6px;
+    line-height: 30px;
+    cursor: pointer;
+}
+
+.layui-flex-between .slide-more {
+    margin-left: 0
+}
+
+.slide-more:after {
+    display: inline-block;
+    content: '\e6bd';
+    width:  18px;
+    height: 18px;
+    line-height: 18px;
+    vertical-align: middle;
+    font-family: "iconfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #666;
+    transform: scale(0.7)
+}
+
+.layui-flex-between .slide-more:after {
+    content: '\e6c0'
+}
+
+.input-flex-none {
+    flex: none !important;
+    width: 240px !important;
 }
 
 /*body .layui-tree-skin-weimu .layui-tree-branch{color:#EDCA50;}*/

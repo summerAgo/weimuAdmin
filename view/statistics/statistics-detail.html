@@ -106,6 +106,7 @@
                             <i class="iconfont icon-sousuo"></i> <span>查询</span>
                         </button>
                     </div>
+                </div>
             </form>
         </div>
     </div>
@@ -222,6 +223,9 @@
 
 
 <script>
+    //初始化slideForm对象
+    let slideForm = new SlideForm('.form-left', 'tableContainer', 103)
+
     layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate'], function () {
         var element = layui.element;
         var form = layui.form;
@@ -526,7 +530,7 @@
                         item.xsout_date = item.xsout_date ? dateTranslate(item.xsout_date) : ''
                     })
                     console.log(res.data)
-                    
+
                     return {
                         "code": res.status, //解析接口状态
                         "msg": res.message, //解析提示文本
@@ -768,7 +772,7 @@
                 //         <div class="detail-item">结余库存总数量(m³):<span>${res.znum}</span></div>
                 //     </div>
                 // `
-                
+
                 // if ($("#rightBox").length < 1) {
                 //     $(".layui-table-page").append(addtableBtn);
                 // }
@@ -800,7 +804,7 @@
                 //     }
                 //     $('.show-detail').slideUp()
                 // })
-                
+
             },
             text: {
                 none: "无匹配数据"
@@ -808,6 +812,8 @@
             loading: true
         })
 
+        //查询项收展
+        slideForm.handle(table)
 
 
         //点击导出

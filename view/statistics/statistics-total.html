@@ -99,6 +99,9 @@
 
 
 <script>
+    //初始化slideForm对象
+    let slideForm = new SlideForm('.form-left', 'tableContainer', 103)
+
     layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate'], function () {
         var element = layui.element;
         var form = layui.form;
@@ -366,7 +369,7 @@
             height: 'full-' + tableTopHeight,
             url: statisticsTotal,
             parseData: function (res) {
-                
+
                 return {
                     "code": res.status, //解析接口状态
                     "msg": res.message, //解析提示文本
@@ -453,13 +456,17 @@
             done: function (res, curr, count) {
                 let tr = $('.layui-table-total tbody tr').eq(0)
                 tr.css('fontWeight', 700)
-                
+
             },
             text: {
                 none: "无匹配数据"
             },
             loading: true
         })
+
+        //查询项收展
+        slideForm.handle(table)
+
 
 
         //点击导出
