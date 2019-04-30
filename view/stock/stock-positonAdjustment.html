@@ -51,11 +51,13 @@
                                 </div>
                                 <div class="table-form-item layui-input-inline">
                                     <span class="input-span">货物标识码</span>
-                                    <input type="text" name="uuid" placeholder="货物标识码" autocomplete="off" class="layui-input">
+                                    <input type="text" name="uuid" placeholder="货物标识码" autocomplete="off"
+                                        class="layui-input">
                                 </div>
                                 <div class="table-form-item layui-input-inline">
                                     <span class="input-span">包号</span>
-                                    <input type="text" name="code" placeholder="包号" autocomplete="off" class="layui-input">
+                                    <input type="text" name="code" placeholder="包号" autocomplete="off"
+                                        class="layui-input">
                                 </div>
                                 <div class="table-form-item layui-input-inline">
                                     <span class="input-span">品种</span>
@@ -77,7 +79,8 @@
                                 </div>
                                 <div class="table-form-item layui-input-inline">
                                     <span class="input-span">货柜号</span>
-                                    <input type="text" name="containernum" placeholder="货柜号" autocomplete="off" class="layui-input">
+                                    <input type="text" name="containernum" placeholder="货柜号" autocomplete="off"
+                                        class="layui-input">
                                 </div>
                                 <!-- <div class="table-form-item layui-input-inline">
                                     <span class="input-span">产地</span>
@@ -91,7 +94,8 @@
                                 </div> -->
                                 <div class="table-form-item layui-input-inline">
                                     <span class="input-span">提运单</span>
-                                    <input type="text" name="billloading" placeholder="提运单" autocomplete="off" class="layui-input">
+                                    <input type="text" name="billloading" placeholder="提运单" autocomplete="off"
+                                        class="layui-input">
                                 </div>
                                 <!-- <div class="table-form-item layui-input-inline">
                                     <span class="input-span">长度</span>
@@ -106,7 +110,8 @@
                                 <button type="reset" class="layui-btn layui-btn-md layui-btn-gray">
                                     <i class="iconfont icon-zhongzhi"></i><span>重置</span>
                                 </button>
-                                <button class="layui-btn layui-btn-md layui-btn-green" lay-submit lay-filter="searchGoodsForm">
+                                <button class="layui-btn layui-btn-md layui-btn-green" lay-submit
+                                    lay-filter="searchGoodsForm">
                                     <i class="iconfont icon-sousuo"></i> <span>查询</span>
                                 </button>
                             </div>
@@ -240,7 +245,9 @@
 </style>
 
 <script>
-    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate'], function() {
+    //初始化slideForm对象
+    let slideForm = new SlideForm('.serverContainer .form-left', 'tableContainer-position', 103)
+    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate'], function () {
         var element = layui.element;
         var form = layui.form;
         var $ = layui.jquery;
@@ -268,7 +275,7 @@
         });
 
         // 打开仓库下拉框回调
-        layui.formSelects.opened('depotSelectLayer', function(id) {
+        layui.formSelects.opened('depotSelectLayer', function (id) {
             var ownerid = formSelects.value('ownerSelect', 'val'); //获取仓库主ID
             if (ownerid.length < 1) {
                 layer.msg("请先选择仓库主");
@@ -279,7 +286,7 @@
         });
 
         // 打开库位下拉框回调
-        layui.formSelects.opened('positionSelect', function(id) {
+        layui.formSelects.opened('positionSelect', function (id) {
             var depotid = formSelects.value('depotSelect', 'val'); //获取仓库ID
             if (depotid.length < 1) {
                 layer.msg("请先选择仓库");
@@ -290,7 +297,7 @@
         });
 
         // 监听仓库主select的选中与取消
-        formSelects.on('ownerSelect', function(id, vals, val, isAdd, isDisabled) {
+        formSelects.on('ownerSelect', function (id, vals, val, isAdd, isDisabled) {
             if (!isAdd) {
                 formSelects.data('depotSelect', 'local', {
                     arr: [] //清空仓库列表
@@ -328,7 +335,7 @@
         }, true);
 
         //监听仓库的选中与取消
-        formSelects.on('depotSelect', function(id, vals, val, isAdd, isDisabled) {
+        formSelects.on('depotSelect', function (id, vals, val, isAdd, isDisabled) {
             if (!isAdd) {
                 formSelects.data('positionSelect', 'local', {
                     arr: [] //仓库列表
@@ -363,7 +370,7 @@
                     data: bitdepotid,
                     async: false, // 同步
                     traditional: true,
-                    success: function(data) {
+                    success: function (data) {
                         if (data.status === 0) {
                             //把接口数据转换为[{"name":str,"value":number}]格式
                             if (!Array.isArray(data.data) || data.data.length === 0) {
@@ -412,10 +419,10 @@
 
         //下拉选框数据组装
         function selectDataInstall(url, param, bool, type) {
-            if(param){
+            if (param) {
                 param['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
                 param['TOKEN'] = getCookie('TOKEN');
-            }else{
+            } else {
                 var param = {};
                 param['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
                 param['TOKEN'] = getCookie('TOKEN');
@@ -432,7 +439,7 @@
                     withCredentials: true
                 },
                 crossDomain: true,
-                success: function(data) {
+                success: function (data) {
                     // console.log(data);
                     if (data.status === 0) {
                         //把接口数据转换为[{"name":str,"value":number}]格式
@@ -466,7 +473,7 @@
             return arr;
         }
 
-        form.on('submit(searchGoodsForm)', function(data) {
+        form.on('submit(searchGoodsForm)', function (data) {
             ownerid = formSelects.value('ownerSelect', 'valStr');
             depotid = formSelects.value('depotSelect', 'valStr');
             positionid = formSelects.value('positionSelect', 'valStr');
@@ -581,7 +588,7 @@
             page: true, //是否显示分页
             limits: [100, 200, 500, 1000],
             limit: 100, //每页默认显示的数量
-            done: function(res, curr, count) {
+            done: function (res, curr, count) {
 
             },
             text: {
@@ -683,7 +690,7 @@
             page: true, //是否显示分页
             limits: [100, 100, 150, 200, 500],
             limit: 100, //每页默认显示的数量
-            done: function(res, curr, count) {
+            done: function (res, curr, count) {
 
             },
             text: {
@@ -692,7 +699,11 @@
             loading: true
         });
 
-        $(".submissionBtn").unbind("click").bind("click", function() {
+        //查询项收展
+        slideForm.handle(table)
+
+
+        $(".submissionBtn").unbind("click").bind("click", function () {
 
             //保存
             var cargoowner = layui.formSelects.value('ownerSelect', "valStr");
@@ -735,7 +746,7 @@
             layer.confirm('是否确定对所选货物进行库位调整', {
                 icon: 3,
                 title: '提示'
-            }, function(index) {
+            }, function (index) {
                 //do something
                 $.ajax({
                     cache: true,
@@ -743,7 +754,7 @@
                     url: ilbstockmovelibrary,
                     async: false,
                     data: preData,
-                    error: function(request) {
+                    error: function (request) {
                         layer.msg(request.msg);
                         return false;
                     },
@@ -751,7 +762,7 @@
                         withCredentials: true
                     },
                     crossDomain: true,
-                    success: function(res) {
+                    success: function (res) {
                         if (res.status == 1) {
                             goLogin();
                         }
@@ -770,7 +781,7 @@
                         layer.msg(res.msg, {
                             icon: 1,
                             time: 2000
-                        }, function() {
+                        }, function () {
 
                         });
                     }
@@ -781,7 +792,7 @@
 
         });
 
-        $(".addGoodsBtn").click(function() {
+        $(".addGoodsBtn").click(function () {
             //添加
             var checkStatus = table.checkStatus('tableContainer-goodsList');
             var checkData = checkStatus.data;
@@ -809,7 +820,7 @@
             }
         });
 
-        $(".deleteGoods").click(function() {
+        $(".deleteGoods").click(function () {
             //移除
             var checkStatus = table.checkStatus('tableContainer-position');
             var checkData = checkStatus.data;
@@ -854,7 +865,7 @@
                 param.ownerid = ownerid || 0;
                 param.depotid = depotid || 0;
             }
-            $.get(ilbstockListAll, param, function(res) {
+            $.get(ilbstockListAll, param, function (res) {
                 if (res.status == 0) {
                     goodsData = weedArr(res.data, tableData); //剔除重复
                 } else {

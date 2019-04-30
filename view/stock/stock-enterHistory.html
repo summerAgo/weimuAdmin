@@ -41,7 +41,8 @@
                         </div>
                         <div class="table-form-item layui-input-inline">
                             <span class="input-span">货柜号</span>
-                            <input type="text" name="containernum" placeholder="货柜号" autocomplete="off" class="layui-input">
+                            <input type="text" name="containernum" placeholder="货柜号" autocomplete="off"
+                                class="layui-input">
                         </div>
                         <div class="table-form-item layui-input-inline">
                             <span class="input-span">仓库主</span>
@@ -93,11 +94,13 @@
                         </div>
                         <div class="table-form-item layui-input-inline">
                             <span class="input-span">开始时间</span>
-                            <input type="text" name="startdate" placeholder="请选择时间范围" autocomplete="off" class="layui-input startdate">
+                            <input type="text" name="startdate" placeholder="请选择时间范围" autocomplete="off"
+                                class="layui-input startdate">
                         </div>
                         <div class="table-form-item layui-input-inline">
                             <span class="input-span">结束时间</span>
-                            <input type="text" name="enddate" placeholder="请选择时间范围" autocomplete="off" class="layui-input enddate">
+                            <input type="text" name="enddate" placeholder="请选择时间范围" autocomplete="off"
+                                class="layui-input enddate">
                         </div>
                         <!-- <div class="table-form-item layui-input-inline">
                             <span class="input-span">日期</span>
@@ -140,7 +143,9 @@
     </div>
 </div>
 <script>
-    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'upload'], function() {
+    //初始化slideForm对象
+    let slideForm = new SlideForm('.form-left', 'tableContainer', 103)
+    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'upload'], function () {
         var element = layui.element;
         var form = layui.form;
         var $ = layui.jquery;
@@ -175,7 +180,7 @@
             arr: selectDataInstall(ownerDropdown, null, 0) //仓库主列表
         });
 
-        layui.formSelects.opened('depotSelect', function(id) {
+        layui.formSelects.opened('depotSelect', function (id) {
             var ownerid = formSelects.value('ownerSelect', 'val'); //获取仓库主ID
             if (ownerid.length < 1) {
                 layer.msg("请先选择仓库主");
@@ -185,7 +190,7 @@
             }
         });
 
-        layui.formSelects.opened('positionSelect', function(id) {
+        layui.formSelects.opened('positionSelect', function (id) {
             var depotid = formSelects.value('depotSelect', 'val'); //获取仓库ID
             if (depotid.length < 1) {
                 layer.msg("请先选择仓库");
@@ -196,7 +201,7 @@
         });
 
         //监听
-        formSelects.on('ownerSelect', function(id, vals, val, isAdd, isDisabled) {
+        formSelects.on('ownerSelect', function (id, vals, val, isAdd, isDisabled) {
             if (!isAdd) {
                 formSelects.data('depotSelect', 'local', {
                     arr: [] //清空仓库列表
@@ -231,7 +236,7 @@
         }, true);
 
         //监听
-        formSelects.on('depotSelect', function(id, vals, val, isAdd, isDisabled) {
+        formSelects.on('depotSelect', function (id, vals, val, isAdd, isDisabled) {
             if (!isAdd) {
                 formSelects.data('positionSelect', 'local', {
                     arr: [] //仓库列表
@@ -285,7 +290,7 @@
                 data: param,
                 async: false, //同步
                 traditional: true,
-                success: function(data) {
+                success: function (data) {
                     // console.log(data);
                     if (data.status === 0) {
                         //把接口数据转换为[{"name":str,"value":number}]格式
@@ -322,7 +327,7 @@
             return arr;
         }
 
-        form.on('submit(searchForm)', function(data) {
+        form.on('submit(searchForm)', function (data) {
             // if (data.field.date) {
             //     data.field.startdate = data.field.date.substring(0, 10) + " 00:00:00";
             //     data.field.enddate = data.field.date.substring(13, data.field.date.length) + " 23:59:59";
@@ -343,7 +348,7 @@
             });
             return false;
         });
-        $(".refreshBtn").click(function() {
+        $(".refreshBtn").click(function () {
             tableIns.reload({
                 page: {
                     curr: 1 // 重新从第 1 页开始
@@ -354,9 +359,9 @@
             elem: '#tableContainer',
             height: 'full-' + tableTopHeight,
             url: inEntry,
-            parseData: function(res) { //res 即为原始返回的数据
+            parseData: function (res) { //res 即为原始返回的数据
                 if (res.status !== 0) res.status = 0;
-                
+
                 return {
                     "code": res.status, //解析接口状态
                     "msg": res.message, //解析提示文本
@@ -423,13 +428,13 @@
             limits: [100, 200, 500, 1000],
             limit: 100, //每页默认显示的数量
             title: "入库记录",
-            done: function(res, curr, count) {
+            done: function (res, curr, count) {
                 var addtableBtn = '<div class="rightBotBtn" id="rightBox" style="font-weight: bold;">合计件数：<span>' + res.countJian + '</span>包 &nbsp;&nbsp;&nbsp;&nbsp; 合计总数量：<span>' + res.countNum + '</span>m³</div>';
                 if ($("#rightBox").length < 1) {
                     $(".layui-table-page").append(addtableBtn);
                 }
                 checkboxHandle()
-                
+
             },
             text: {
                 none: "无匹配数据"
@@ -437,13 +442,16 @@
             loading: true
         });
 
-        table.on('tool(tableContainer)', function(obj) {
+        //查询项收展
+        slideForm.handle(table)
+
+        table.on('tool(tableContainer)', function (obj) {
             // console.log(obj.tr) //得到当前行元素对象
             // console.log(obj.data) //得到当前行数据
             if (obj.event === 'click') {
                 $.get(inEntrygetByOrderno, {
                     orderno: obj.data.orderno
-                }, function(data) {
+                }, function (data) {
                     // console.log(data);
                     if (!data.stocklist) {
                         layer.msg("数据有异常！");
@@ -452,7 +460,7 @@
                     data.type = "entryHistory";
                     // location.hash = "#!stock-enterBillDetails/";
                     sessionStorage.setItem('enterBillDetails', JSON.stringify(data));
-                    $.get('view/stock/stock-enterBillDetails.html', {}, function(str) { // 请求弹框
+                    $.get('view/stock/stock-enterBillDetails.html', {}, function (str) { // 请求弹框
                         layer.open({
                             title: '入库单',
                             type: 1,
@@ -465,7 +473,7 @@
         });
 
         //弃入库
-        $(".back-in-examine").click(function() {
+        $(".back-in-examine").click(function () {
             var checkStatus = table.checkStatus('tableContainer'); //表格选中状态
             if (checkStatus.data.length != 1) {
                 layer.msg("请选择一条记录");
@@ -475,7 +483,7 @@
             layer.confirm('是否确认把此单转为预入库状态!', {
                 skin: 'layui-layer-wei', //layui-layer-wei，维木class
                 title: '提示'
-            }, function(index) {
+            }, function (index) {
                 $.ajax({
                     url: backinexamine,
                     type: "POST",
@@ -486,7 +494,7 @@
                     },
                     //async: false, //同步
                     traditional: true,
-                    success: function(data) {
+                    success: function (data) {
                         console.log(data);
                         if (data.status === 1) {
                             window.location.href = loginPageUrl;
@@ -511,7 +519,7 @@
         });
 
         //删除
-        $(".deleteBtn").click(function() {
+        $(".deleteBtn").click(function () {
             var checkStatus = table.checkStatus('tableContainer'); //表格选中状态
             if (checkStatus.data.length != 1) {
                 layer.msg("请选择一条记录");
@@ -521,7 +529,7 @@
             layer.confirm('是否确认删除此条信息', {
                 skin: 'layui-layer-wei', //layui-layer-wei，维木class
                 title: '提示'
-            }, function(index) {
+            }, function (index) {
                 $.ajax({
                     url: inlbdel,
                     type: "POST",
@@ -532,7 +540,7 @@
                     },
                     //async: false, //同步
                     traditional: true,
-                    success: function(data) {
+                    success: function (data) {
                         console.log(data);
                         if (data.status === 1) {
                             window.location.href = loginPageUrl;
@@ -552,11 +560,11 @@
                     }
                 })
 
-            }); 
+            });
         });
 
         //导出列表货物
-        $(".toBatchExport").on('click', function(e) {
+        $(".toBatchExport").on('click', function (e) {
             var checkStatus = table.checkStatus('tableContainer');
             var checkData = checkStatus.data;
             if (checkData.length > 0) {
@@ -567,7 +575,7 @@
                 }
                 var SESSION_USER_CODE = getCookie('SESSION_USER_CODE');
                 var TOKEN = getCookie('TOKEN');
-                var str = inbatchExport + "?orderarr=" + neworder.toString() +"&isstatus=1&SESSION_USER_CODE=" + SESSION_USER_CODE + "&TOKEN" + TOKEN + "&";
+                var str = inbatchExport + "?orderarr=" + neworder.toString() + "&isstatus=1&SESSION_USER_CODE=" + SESSION_USER_CODE + "&TOKEN" + TOKEN + "&";
                 window.location.href = str;
             } else {
                 layer.msg("请选择记录");
@@ -575,7 +583,7 @@
         });
 
         //点击导出
-        $(".toExport").on('click', function(e) {
+        $(".toExport").on('click', function (e) {
             table.exportFile(tableIns.config.id, tableIns.config.data, "xls");
         });
 

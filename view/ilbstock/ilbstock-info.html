@@ -66,7 +66,8 @@
                         </div>
                         <div class="table-form-item layui-input-inline">
                             <span class="input-span">货柜号</span>
-                            <input type="text" name="containernum" placeholder="货柜号" autocomplete="off" class="layui-input">
+                            <input type="text" name="containernum" placeholder="货柜号" autocomplete="off"
+                                class="layui-input">
                         </div>
                         <div class="table-form-item layui-input-inline">
                             <span class="input-span">产地</span>
@@ -80,7 +81,8 @@
                         </div>
                         <div class="table-form-item layui-input-inline">
                             <span class="input-span">提运单</span>
-                            <input type="text" name="billloading" placeholder="提运单" autocomplete="off" class="layui-input">
+                            <input type="text" name="billloading" placeholder="提运单" autocomplete="off"
+                                class="layui-input">
                         </div>
                         <div class="table-form-item layui-input-inline">
                             <span class="input-span">估值状态</span>
@@ -119,7 +121,9 @@
     </div>
 </div>
 <script>
-    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate'], function() {
+    //初始化slideForm对象
+    let slideForm = new SlideForm('.form-left', 'tableContainer', 103)
+    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate'], function () {
         var element = layui.element;
         var form = layui.form;
         var $ = layui.jquery;
@@ -161,7 +165,7 @@
         });
 
         // 选择仓库时判断是否选中了仓库主，opened：打开下拉框的回调事件
-        layui.formSelects.opened('depotSelect', function(id) {
+        layui.formSelects.opened('depotSelect', function (id) {
             var ownerid = formSelects.value('ownerSelect', 'val'); //获取仓库主ID
             if (ownerid.length < 1) {
                 layer.msg("请先选择仓库主");
@@ -172,7 +176,7 @@
         });
 
         // 监听select的选中与取消
-        formSelects.on('ownerSelect', function(id, vals, val, isAdd, isDisabled) {
+        formSelects.on('ownerSelect', function (id, vals, val, isAdd, isDisabled) {
             //id:           点击select的id
             //vals:         当前select已选中的值
             //val:          当前select点击的值
@@ -225,7 +229,7 @@
                 data: param,
                 async: false, //同步
                 traditional: true,
-                success: function(data) {
+                success: function (data) {
                     // console.log(data);
                     if (data.status === 0) {
                         //把接口数据转换为[{"name":str,"value":number}]格式
@@ -263,7 +267,7 @@
         }
 
         // 表单搜索按钮点击
-        form.on('submit(searchForm)', function(data) {
+        form.on('submit(searchForm)', function (data) {
             var paramSearch = {};
             for (var key in data.field) {
                 //参数赋值
@@ -282,7 +286,7 @@
         });
 
         // 刷新按钮
-        $(".refreshBtn").click(function() {
+        $(".refreshBtn").click(function () {
             tableIns.reload({
                 page: {
                     curr: 1 // 重新从第 1 页开始
@@ -295,9 +299,9 @@
             elem: '#tableContainer',
             height: 'full-' + tableTopHeight,
             url: ilbstockList,
-            parseData: function(res) { //res 即为原始返回的数据
+            parseData: function (res) { //res 即为原始返回的数据
                 if (res.status !== 0) res.status = 0;
-                
+
                 return {
                     "code": res.status, //解析接口状态
                     "msg": res.message, //解析提示文本
@@ -437,21 +441,23 @@
             page: true, //是否显示分页
             limits: [100, 200, 300, 400, 500],
             limit: 100, //每页默认显示的数量
-            done: function(res, curr, count) {
+            done: function (res, curr, count) {
                 var addtableBtn = '<div class="rightBotBtn" id="rightBox" style="font-weight: bold;">合计总库存数量：<span>' + res.znum + '</span>m³ &nbsp;&nbsp;&nbsp;&nbsp; 总库存估价金额：<span>' + formatNum(res.aprice) + '</span>(RMB)</div>';
                 if ($("#rightBox").length < 1) {
                     $(".layui-table-page").append(addtableBtn);
                 }
-                
+
             },
             text: {
                 none: "无匹配数据"
             },
             loading: true
         });
-
+        
+        //查询项收展
+        slideForm.handle(table)
         //点击导出
-        $(".toExport").on('click', function(e) {
+        $(".toExport").on('click', function (e) {
             //在地址后面携带参数给后台  实现条件导出：如 window.location.href = ilbstockExportUrl+"?name=&type="
             var SESSION_USER_CODE = getCookie('SESSION_USER_CODE');
             var TOKEN = getCookie('TOKEN');
@@ -459,13 +465,13 @@
             var arr = [];
 
             //toExportParm  报错。这个是哪里来的。
-            $(".table-page-form input").each(function(i, v) {
+            $(".table-page-form input").each(function (i, v) {
                 var val = $(this).val();
                 if (val) {
                     arr.push($(this).attr("name") + "=" + val);
                 }
             });
-            $(".table-page-form select").each(function(i, v) {
+            $(".table-page-form select").each(function (i, v) {
                 var val = $(this).val();
                 if (val) {
                     arr.push($(this).attr("name") + "=" + val);
@@ -476,7 +482,7 @@
         });
 
         // 监听table点击事件，修改数量
-        table.on('tool(tableContainer)', function(obj) {
+        table.on('tool(tableContainer)', function (obj) {
             var data = obj.data; //获得当前行数据
             var layEvent = obj.event; //获得 lay-event 对应的值(也可以是表头的 event 参数对应的值)
             var tr = obj.tr; //获得当前行 tr 的DOM对象
@@ -488,7 +494,7 @@
                     formType: 2,
                     title: '修改包号为' + data.code + '的备注',
                     value: data.remarks
-                }, function(value, index) {
+                }, function (value, index) {
                     param['uuid'] = data.uuid;
                     param['remarks'] = value;
 
@@ -497,7 +503,7 @@
                         type: "post",
                         data: param,
                         traditional: true,
-                        success: function(data) {
+                        success: function (data) {
                             if (data.status === 1) {
                                 goLogin();
                             }

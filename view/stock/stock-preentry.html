@@ -87,7 +87,9 @@
     </div>
 </div>
 <script>
-    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'upload'], function() {
+    //初始化slideForm对象
+    let slideForm = new SlideForm('.form-left', 'tableContainer', 103)
+    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'upload'], function () {
         var element = layui.element;
         var form = layui.form;
         var $ = layui.jquery;
@@ -117,7 +119,7 @@
         });
 
         // 点击仓库下拉框
-        layui.formSelects.opened('depotSelect', function(id) {
+        layui.formSelects.opened('depotSelect', function (id) {
             var ownerid = formSelects.value('ownerSelect', 'val'); //获取仓库主ID
             if (ownerid.length < 1) {
                 layer.msg("请先选择仓库主");
@@ -128,7 +130,7 @@
         });
 
         // 点击库位下拉框
-        layui.formSelects.opened('positionSelect', function(id) {
+        layui.formSelects.opened('positionSelect', function (id) {
             var depotid = formSelects.value('depotSelect', 'val'); //获取仓库ID
             if (depotid.length < 1) {
                 layer.msg("请先选择仓库");
@@ -139,7 +141,7 @@
         });
 
         //监听仓库主的选中与取消
-        formSelects.on('ownerSelect', function(id, vals, val, isAdd, isDisabled) {
+        formSelects.on('ownerSelect', function (id, vals, val, isAdd, isDisabled) {
             if (!isAdd) {
                 formSelects.data('depotSelect', 'local', {
                     arr: [] //清空仓库列表
@@ -171,7 +173,7 @@
         }, true);
 
         //监听仓库的选中与取消
-        formSelects.on('depotSelect', function(id, vals, val, isAdd, isDisabled) {
+        formSelects.on('depotSelect', function (id, vals, val, isAdd, isDisabled) {
             //id:           点击select的id
             //vals:         当前select已选中的值
             //val:          当前select点击的值
@@ -197,7 +199,7 @@
                     data: param,
                     async: false, // 同步
                     traditional: true,
-                    success: function(data) {
+                    success: function (data) {
                         if (data.status === 0) {
                             //把接口数据转换为[{"name":str,"value":number}]格式
                             if (!Array.isArray(data.data) || data.data.length === 0) {
@@ -246,7 +248,7 @@
                     'TOKEN': getCookie('TOKEN'),
                 },
                 traditional: true,
-                success: function(data) {
+                success: function (data) {
                     // console.log(data);
                     if (data.status === 0) {
                         //把接口数据转换为[{"name":str,"value":number}]格式
@@ -284,7 +286,7 @@
                 data: param,
                 async: false, // 同步
                 traditional: true,
-                success: function(data) {
+                success: function (data) {
                     // console.log(data);
                     if (data.status === 0) {
                         //把接口数据转换为[{"name":str,"value":number}]格式
@@ -310,7 +312,7 @@
         }
 
         // 查询按钮点击
-        form.on('submit(searchForm)', function(data) {
+        form.on('submit(searchForm)', function (data) {
             var paramSearch = {};
             for (var key in data.field) {
                 //参数赋值
@@ -331,9 +333,9 @@
             elem: '#tableContainer-preentry',
             height: 'full-' + tableTopHeight,
             url: preEntry,
-            parseData: function(res) { //res 即为原始返回的数据
+            parseData: function (res) { //res 即为原始返回的数据
                 if (res.status !== 0) res.status = 0;
-                
+
                 return {
                     "code": res.status, //解析接口状态
                     "msg": res.message, //解析提示文本
@@ -399,12 +401,12 @@
             limit: 100, //每页默认显示的数量
             title: '预入库',
             type: 'normal',
-            done: function(res, curr, count) {
+            done: function (res, curr, count) {
                 var addtableBtn = '<div class="rightBotBtn" id="rightPre">已经选择<span>0</span>个货物';
                 if ($("#rightPre").length < 1) {
                     $(".layui-table-page").append(addtableBtn);
                 }
-                
+
             },
             text: {
                 none: "无匹配数据"
@@ -412,14 +414,17 @@
             loading: true
         });
 
+        //查询项收展
+        slideForm.handle(table)
+
         //监听锁定操作
-        table.on('checkbox(tableContainer-preentry)', function(obj) {
+        table.on('checkbox(tableContainer-preentry)', function (obj) {
             var checkStatus = table.checkStatus('tableContainer-preentry'); //表格选中状态
             $(".rightBotBtn span").html(checkStatus.data.length); //当前选中了多少货物
         });
 
         // 入库按钮点击
-        $(".submissionBtn").click(function() {
+        $(".submissionBtn").click(function () {
             var checkStatus = table.checkStatus('tableContainer-preentry'); // 表格选中状态
             var datalist = checkStatus.data;
 
@@ -441,7 +446,7 @@
                     withCredentials: true
                 },
                 crossDomain: true,
-                success: function(data) {
+                success: function (data) {
                     //请求过期，重新登陆
                     if (data.status === 1) {
                         goLogin(); // 跳转到登录页
@@ -460,15 +465,15 @@
         });
 
         //编辑提交
-        form.on('submit(editForm)', function(data) {
+        form.on('submit(editForm)', function (data) {
             layer.confirm('确认提交修改', {
                 skin: 'layui-layer-wei', //layui-layer-wei，维木class
                 title: '提示'
-            }, function(index) {
+            }, function (index) {
                 data.field.orderno = window.currData.orderno; //防止单号被篡改
                 data.field.origin = window.currData.origin; //
                 data.field.supplier = window.currData.supplier; //
-                rowDataApi(preEntryUpdate, data.field, function(data) {
+                rowDataApi(preEntryUpdate, data.field, function (data) {
                     if (data.status === 1) {
                         window.location.href = loginPageUrl;
                     }
@@ -485,7 +490,7 @@
             return false;
         });
 
-        $(".deleteBtn").click(function() {
+        $(".deleteBtn").click(function () {
             //删除
             var checkStatus = table.checkStatus('tableContainer-preentry');
             if (checkStatus.data.length < 1) {
@@ -494,16 +499,16 @@
                 layer.confirm('是否确认删除此条信息', {
                     skin: 'layui-layer-wei', //layui-layer-wei，维木class
                     title: '提示'
-                }, function(index) {
+                }, function (index) {
                     var rowId = [];
-                    $.each(checkStatus.data, function(i, v) {
+                    $.each(checkStatus.data, function (i, v) {
                         //获取所选行数ID
                         rowId.push(v.orderno);
                     });
                     //调删除接口
                     rowDataApi(preEntryDelete, {
                         "orderno": rowId
-                    }, function(data) {
+                    }, function (data) {
                         if (data.status === 1) {
                             window.location.href = loginPageUrl;
                         }
@@ -546,13 +551,13 @@
             })
         }
 
-        $(".creatBillBtn").click(function() {
+        $(".creatBillBtn").click(function () {
             //新建预入库单
             sessionStorage.removeItem('newbill_orderno');
             tankuang("新建预入库单", "new");
         });
 
-        table.on('tool(tableContainer-preentry)', function(obj) {
+        table.on('tool(tableContainer-preentry)', function (obj) {
             //监听单元格点击事件
             var data = obj.data;
             if (obj.event === 'click') {
@@ -568,13 +573,13 @@
             } else {
                 url = "view/stock/stock-storageBill.html"
             }
-            $.get(url, {}, function(str) {
+            $.get(url, {}, function (str) {
                 eaitLayer = layer.open({
                     title: title,
                     type: 1,
                     content: str, //注意，如果str是object，那么需要字符拼接。
                     area: ['99%', '99%'],
-                    end: function() {
+                    end: function () {
                         tableIns.reload({
                             page: {
                                 curr: 1 //重新从第 1 页开始
@@ -586,11 +591,11 @@
         }
 
         //点击导出
-        $(".toExport").on('click', function(e) {
+        $(".toExport").on('click', function (e) {
             table.exportFile(tableIns.config.id, tableIns.config.data);
         });
         // 刷新按钮
-        $(".refreshBtn").click(function() {
+        $(".refreshBtn").click(function () {
             tableIns.reload({
                 page: {
                     curr: 1 // 重新从第 1 页开始
