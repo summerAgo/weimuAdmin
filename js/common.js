@@ -157,14 +157,6 @@ function getTableOption(key) {
     }
 }
 
-//处理checkbox
-// function checkboxHandle () {
-
-//     console.log(dom)
-// }
-
-
-
 
 //冒泡排序比较器
 function compare(propertyName) {
