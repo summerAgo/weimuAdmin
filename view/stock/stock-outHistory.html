@@ -579,9 +579,10 @@
                 }
                 var SESSION_USER_CODE = getCookie('SESSION_USER_CODE');
                 var TOKEN = getCookie('TOKEN');
+
                 var str = outbatchExport + "?orderarrstr=" + neworder.toString() + "&SESSION_USER_CODE=" + SESSION_USER_CODE;
                 for (var item in toexportParam) {
-                    str += "&" + item + ":" + toexportParam[item];
+                    str += "&" + item + "=" + toexportParam[item];
                 }
                 window.location.href = str;
             } else {
