@@ -331,7 +331,7 @@ class SlideForm {
         let $ = function (dom) {
             return document.querySelectorAll(dom)[0]
         }
-        console.log(this.hideList)
+        // console.log(this.hideList)
         if (this.hideList.length !== 0) {
             document.getElementsByClassName('slide-more')[0].addEventListener('click', () => {
                 if (isSlide) {  //收缩
