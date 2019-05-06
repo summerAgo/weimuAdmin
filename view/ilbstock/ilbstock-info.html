@@ -282,7 +282,7 @@
                     curr: 1 //重新从第 1 页开始
                 }
             });
-            
+
             //查询后重置表格尺寸
             slideForm.resize(table)
 
@@ -312,7 +312,9 @@
                     "count": res.count, //解析数据长度
                     "data": res.data, //解析数据列表
                     "aprice": res.aprice, //解析数据列表
-                    "znum": res.znum //解析数据列表
+                    "znum": res.znum, //解析数据列表
+                    "effectivenum":res.effectivenum
+
                 }
             },
             request: {
@@ -446,10 +448,16 @@
             limits: [100, 200, 300, 400, 500],
             limit: 100, //每页默认显示的数量
             done: function (res, curr, count) {
-                var addtableBtn = '<div class="rightBotBtn" id="rightBox" style="font-weight: bold;">合计总库存数量：<span>' + res.znum + '</span>m³ &nbsp;&nbsp;&nbsp;&nbsp; 总库存估价金额：<span>' + formatNum(res.aprice) + '</span>(RMB)</div>';
-                if ($("#rightBox").length < 1) {
-                    $(".layui-table-page").append(addtableBtn);
+                var dom = $("div[lay-id='tableContainer']").find(".layui-table-page");
+                var addtableBtn = '<div class="rightBotBtn" id="rightBox" style="font-weight: bold;"></div>';
+
+                var conttxt = '合计总库存数量：<span>' + res.znum + '</span>m³ &nbsp;&nbsp;&nbsp;&nbsp; 总库存估价金额：<span>' + formatNum(res.aprice) + '</span>(RMB) &nbsp;&nbsp;&nbsp;&nbsp; 有效货值：<span>' + res.effectivenum + '</span>m³ ';
+                if (dom.find("#rightBox").length < 1) {
+                    dom.append(addtableBtn);
+
                 }
+                dom.find("#rightBox").html(conttxt);
+
 
             },
             text: {
