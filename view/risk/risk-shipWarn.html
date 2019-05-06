@@ -297,10 +297,8 @@
                     function compute(a, b) {
                         //比例 警戒线/融资金额
                         if (isNaN(a) || a == 0 || isNaN(b) || b == 0) {
-                            console.log(1);
                             return '<span style="color:red;">---</span>';
                         } else {
-                            console.log(2);
                             return ((a / b) * 100).toFixed(2) + "%"
                         }
                     }
@@ -312,7 +310,7 @@
                             a = a - 0;
                             b = b - 0;
                             curData.ratio = curData.ratio - 0;
-                            return (a * curData.ratio) + b;
+                            return Math.round(a / curData.ratio) + b;
                         }
                     }
 
