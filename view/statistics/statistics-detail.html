@@ -481,6 +481,8 @@
                         curr: 1 //重新从第 1 页开始
                     }
                 });
+                //查询后重置表格尺寸
+                slideForm.resize(table)
             } else {
                 layer.msg('请选择起始日期和截止日期!')
             }

@@ -239,6 +239,7 @@
 
         table.on('checkbox(tableContainer-depotPower)', function(obj) {
             //监听勾选
+            console.log(obj)
             var params = {}; //请求参数
             params.userid = _userid;
             params.chekbox = obj.checked ? 0 : 1;

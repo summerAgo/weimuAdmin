@@ -282,6 +282,10 @@
                     curr: 1 //重新从第 1 页开始
                 }
             });
+            
+            //查询后重置表格尺寸
+            slideForm.resize(table)
+
             return false;
         });
 
@@ -453,7 +457,7 @@
             },
             loading: true
         });
-        
+
         //查询项收展
         slideForm.handle(table)
         //点击导出
