@@ -80,7 +80,9 @@
     </div>
 </div>
 <script>
-    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'upload'], function() {
+    //初始化slideForm对象
+    let slideForm = new SlideForm('.form-left', 'tableContainers', 103)
+    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'upload'], function () {
         var element = layui.element;
         var form = layui.form;
         var $ = layui.jquery;
@@ -104,7 +106,7 @@
             arr: selectDataInstall(ownerDropdown) //仓库主列表
         });
 
-        layui.formSelects.opened('depotSelectOut', function(id) {
+        layui.formSelects.opened('depotSelectOut', function (id) {
             var ownerid = formSelects.value('ownerSelectOut', 'val'); //获取仓库主ID
             if (ownerid.length < 1) {
                 layer.msg("请先选择仓库主");
@@ -114,7 +116,7 @@
             }
         });
 
-        layui.formSelects.opened('positionSelectOut', function(id) {
+        layui.formSelects.opened('positionSelectOut', function (id) {
             var depotid = formSelects.value('depotSelectOut', 'val'); //获取仓库ID
             if (depotid.length < 1) {
                 layer.msg("请先选择仓库");
@@ -125,7 +127,7 @@
         });
 
         //监听
-        formSelects.on('ownerSelectOut', function(id, vals, val, isAdd, isDisabled) {
+        formSelects.on('ownerSelectOut', function (id, vals, val, isAdd, isDisabled) {
             if (!isAdd) {
                 formSelects.data('depotSelectOut', 'local', {
                     arr: [] //清空仓库列表
@@ -162,7 +164,7 @@
         }, true);
 
         //监听
-        formSelects.on('depotSelectOut', function(id, vals, val, isAdd, isDisabled) {
+        formSelects.on('depotSelectOut', function (id, vals, val, isAdd, isDisabled) {
             if (!isAdd) {
                 formSelects.data('positionSelectOut', 'local', {
                     arr: [] //仓库列表
@@ -194,7 +196,7 @@
                 data: param,
                 async: false, //同步
                 traditional: true,
-                success: function(data) {
+                success: function (data) {
                     // console.log(data);
                     if (data.status === 0) {
                         //把接口数据转换为[{"name":str,"value":number}]格式
@@ -217,7 +219,7 @@
             return arr;
         }
 
-        form.on('submit(searchForm)', function(data) {
+        form.on('submit(searchForm)', function (data) {
             var paramSearch = {};
             for (var key in data.field) {
                 //参数赋值
@@ -238,7 +240,7 @@
             elem: '#tableContainers',
             height: 'full-' + tableTopHeight,
             url: preoutTreasury,
-            parseData: function(res) { //res 即为原始返回的数据
+            parseData: function (res) { //res 即为原始返回的数据
                 if (res.status !== 0) res.status = 0;
                 return {
                     "code": res.status, //解析接口状态
@@ -322,12 +324,12 @@
             limits: [100, 200, 500, 1000],
             limit: 100, //每页默认显示的数量
             title: '出货申请',
-            done: function(res, curr, count) {
+            done: function (res, curr, count) {
                 var addtableBtn = '<div class="rightBotBtn" id="rightBox">已经选择<span>0</span>个</div>';
                 if ($("#rightBox").length < 1) {
                     $(".layui-table-page").append(addtableBtn);
                 }
-                
+
             },
             text: {
                 none: "无匹配数据"
@@ -335,14 +337,17 @@
             loading: true
         });
 
+        //查询项收展
+        slideForm.handle(table)
+
         //出库
-        $(".submOutBtn").click(function() {
+        $(".submOutBtn").click(function () {
             var checkStatus = table.checkStatus('tableContainers'); //表格选中状态
             if (checkStatus.data.length > 0) {
                 layer.confirm('是否确认出库', {
                     skin: 'layui-layer-wei', //layui-layer-wei，维木class
                     title: '提示'
-                }, function(index) {
+                }, function (index) {
                     var data = {};
                     var ids = [];
                     for (var i = 0; i < checkStatus.data.length; i++) {
@@ -361,7 +366,7 @@
                             withCredentials: true
                         },
                         crossDomain: true,
-                        success: function(res) {
+                        success: function (res) {
                             if (res.status === 1) {
                                 goLogin(); // 跳转到登录页
                             }
@@ -375,7 +380,7 @@
                                 var msgstr = "";
                                 if (res.adopt) {
                                     msgstr = res.msg + "<br/>";
-                                    $.each(res.adopt, function(i, v) {
+                                    $.each(res.adopt, function (i, v) {
                                         msgstr = "   " + msgstr + v + "<br/>";
                                     });
                                 }
@@ -395,14 +400,14 @@
             }
             return false;
         });
-        
+
         //监听锁定操作
-        table.on('checkbox(tableContainers)', function(obj) {
+        table.on('checkbox(tableContainers)', function (obj) {
             var checkStatus = table.checkStatus('tableContainers'); //表格选中状态
             $(".rightBotBtn span").html(checkStatus.data.length); //当前选中了多少货物
         });
 
-        $(".deleteBtn").click(function() {
+        $(".deleteBtn").click(function () {
             //删除
             var checkStatus = table.checkStatus('tableContainers');
             if (checkStatus.data.length < 1) {
@@ -411,16 +416,16 @@
                 layer.confirm('是否确认删除此条信息', {
                     skin: 'layui-layer-wei', //layui-layer-wei，维木class
                     title: '提示'
-                }, function(index) {
+                }, function (index) {
                     var rowId = [];
-                    $.each(checkStatus.data, function(i, v) {
+                    $.each(checkStatus.data, function (i, v) {
                         //获取所选行数ID
                         rowId.push(v.orderno);
                     });
                     //调删除接口
                     rowDataApi(preoutTreasuryDelete, {
                         "ids": rowId
-                    }, function(data) {
+                    }, function (data) {
                         if (data.status === 1) {
                             window.location.href = loginPageUrl;
                         }
@@ -462,7 +467,7 @@
             })
         }
 
-        table.on('tool(tableContainers)', function(obj) {
+        table.on('tool(tableContainers)', function (obj) {
             //监听单元格点击事件
             var data = obj.data;
             var pageUrl = 'view/stock/stock-addOutBill.html';
@@ -471,15 +476,15 @@
                     pageUrl = 'view/stock/stock-addOutBill_bak.html';
                 }
                 sessionStorage.setItem('addOutBill', JSON.stringify(data));
-                $.get(pageUrl, {}, function(str) { // 请求弹框
+                $.get(pageUrl, {}, function (str) { // 请求弹框
                     addLayer = layer.open({
                         title: '出货申请单详情',
                         type: 1,
                         content: str, // 注意，如果str是object，那么需要字符拼接。
                         area: ['99%', '99%'],
-                        end: function() {
+                        end: function () {
                             if (data.status == 4 || data.status == 3) {
-                                
+
                             } else {
                                 tableIns.reload({
                                     page: {
@@ -495,15 +500,15 @@
         });
 
         //新建出库单
-        $(".creatBillBtn").click(function() {
+        $(".creatBillBtn").click(function () {
             sessionStorage.removeItem('addOutBill'); //移除点击table表格带入的数据
-            $.get('view/stock/stock-addOutBill.html', {}, function(str) { // 请求弹框
+            $.get('view/stock/stock-addOutBill.html', {}, function (str) { // 请求弹框
                 addLayer = layer.open({
                     title: '新建出库申请单',
                     type: 1,
                     content: str, // 注意，如果str是object，那么需要字符拼接。
                     area: ['99%', '99%'],
-                    end: function() {
+                    end: function () {
                         tableIns.reload({
                             page: {
                                 curr: 1 //重新从第 1 页开始
@@ -516,7 +521,7 @@
         });
 
         //点击导出
-        $(".toExport").on('click', function(e) {
+        $(".toExport").on('click', function (e) {
             table.exportFile(tableIns.config.id, tableIns.config.data);
         });
 

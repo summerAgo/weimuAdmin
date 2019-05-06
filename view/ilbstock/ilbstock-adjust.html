@@ -37,11 +37,13 @@
                         </div> -->
                         <div class="table-form-item layui-input-inline">
                             <span class="input-span">开始时间</span>
-                            <input type="text" name="startdate" placeholder="请选择时间范围" autocomplete="off" class="layui-input startdate">
+                            <input type="text" name="startdate" placeholder="请选择时间范围" autocomplete="off"
+                                class="layui-input startdate">
                         </div>
                         <div class="table-form-item layui-input-inline">
                             <span class="input-span">结束时间</span>
-                            <input type="text" name="enddate" placeholder="请选择时间范围" autocomplete="off" class="layui-input enddate">
+                            <input type="text" name="enddate" placeholder="请选择时间范围" autocomplete="off"
+                                class="layui-input enddate">
                         </div>
                         <div class="table-form-item layui-input-inline">
                             <span class="input-span">仓库主</span>
@@ -131,7 +133,9 @@
     }
 </style>
 <script>
-    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'upload'], function() {
+    //初始化slideForm对象
+    let slideForm = new SlideForm('.form-left', 'tableContainer', 103)
+    layui.use(['form', 'jquery', 'element', 'layer', 'table', 'formSelects', 'laytpl', 'laydate', 'upload'], function () {
         var element = layui.element;
         var form = layui.form;
         var $ = layui.jquery;
@@ -185,7 +189,7 @@
             arr: selectDataInstall(specList, null, 0, 1) //规格列表
         });
 
-        layui.formSelects.opened('depotSelect', function(id) {
+        layui.formSelects.opened('depotSelect', function (id) {
             var ownerid = formSelects.value('ownerSelect', 'val'); //获取仓库主ID
             if (ownerid.length < 1) {
                 layer.msg("请先选择仓库主");
@@ -196,7 +200,7 @@
         });
 
         //监听
-        formSelects.on('ownerSelect', function(id, vals, val, isAdd, isDisabled) {
+        formSelects.on('ownerSelect', function (id, vals, val, isAdd, isDisabled) {
             if (!isAdd) {
                 formSelects.data('depotSelect', 'local', {
                     arr: [] //清空仓库列表
@@ -224,10 +228,10 @@
 
 
         function selectDataInstall(url, param, bool, type) {
-            if(param){
+            if (param) {
                 param['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
                 param['TOKEN'] = getCookie('TOKEN');
-            }else{
+            } else {
                 var param = {};
                 param['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
                 param['TOKEN'] = getCookie('TOKEN');
@@ -241,7 +245,7 @@
                 data: param,
                 async: false, //同步
                 traditional: true,
-                success: function(data) {
+                success: function (data) {
                     // console.log(data);
                     if (data.status == 0) {
                         //把接口数据转换为[{"name":str,"value":number}]格式
@@ -279,7 +283,7 @@
             return arr;
         }
 
-        form.on('submit(searchForm)', function(data) {
+        form.on('submit(searchForm)', function (data) {
             // if (data.field.date) {
             //     data.field.startdate = data.field.date.substring(0, 10) + " 00:00:00";
             //     data.field.enddate = data.field.date.substring(13, data.field.date.length) + " 23:59:59";
@@ -307,9 +311,9 @@
             height: 'full-' + tableTopHeight, // full --
             url: adjustlist, // 数据接口
             // 任意数据格式解析成 table 组件规定的数据格式
-            parseData: function(res) { //res 即为原始返回的数据
+            parseData: function (res) { //res 即为原始返回的数据
                 if (res.status !== 0) res.status = 0;
-                
+
                 return {
                     "code": res.status, // 解析接口状态
                     "msg": res.message, // 解析提示文本
@@ -323,7 +327,7 @@
                 limitName: 'limit' // 每页数据量的参数名，默认：limit
             },
             cols: [
-            tableOptionArr["tableContainer"]
+                tableOptionArr["tableContainer"]
                 // [ // 标题栏
                 //     {
                 //         field: 'LAY_TABLE_INDEX',
@@ -381,28 +385,30 @@
             page: true, // 是否显示分页
             limit: 100, // 每页默认显示的数量
             limits: [100, 200, 500, 1000],
-            done: function(res, curr, count) { // 数据渲染完的回调
-                
+            done: function (res, curr, count) { // 数据渲染完的回调
+
             },
             text: { // 自定义文本，如空数据时的异常提示等
                 none: "无匹配数据"
             },
             loading: true // 是否显示加载条，默认true
         });
+        //查询项收展
+        slideForm.handle(table)
 
         // 监听单点击事件
-        table.on('tool(tableContainer)', function(obj) {
+        table.on('tool(tableContainer)', function (obj) {
             var curData = obj.data;
             if (obj.event == 'click') {
                 sessionStorage.setItem('adjustParam', JSON.stringify(curData));
-                $.get('view/ilbstock/ilbstock-adjuststock.html', {}, function(str) { // 请求弹框
+                $.get('view/ilbstock/ilbstock-adjuststock.html', {}, function (str) { // 请求弹框
                     // 弹出弹框
                     inventoryLayer = layer.open({
                         title: '库存调整单',
                         type: 1,
                         content: str, // 注意，如果str是object，那么需要字符拼接。
                         area: ['99%', '99%'],
-                        end: function() {
+                        end: function () {
                             tableIns.reload({
                                 page: {
                                     curr: 1 // 重新从第 1 页开始
@@ -415,13 +421,13 @@
         });
 
         //调整完成
-        $(".adjustment").click(function() {
+        $(".adjustment").click(function () {
             var checkStatus = table.checkStatus('tableContainer'); //表格选中状态
             var checkData = checkStatus.data;
             if (checkData.length != 1) {
                 layer.msg("请选择一条需要调整的数据");
             } else {
-                layer.confirm('是否确认完成此调整?', function(index) {
+                layer.confirm('是否确认完成此调整?', function (index) {
                     var datainfo = {};
                     datainfo['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
                     datainfo['TOKEN'] = getCookie('TOKEN');
@@ -433,7 +439,7 @@
                         type: "POST",
                         async: false,
                         data: datainfo,
-                        success: function(res) {
+                        success: function (res) {
                             if (res.status == 1) {
                                 goLogin(); // 跳转到登录页
                             }
@@ -453,13 +459,13 @@
         });
 
         //调整完成
-        $(".deleBtn").click(function() {
+        $(".deleBtn").click(function () {
             var checkStatus = table.checkStatus('tableContainer'); //表格选中状态
             var checkData = checkStatus.data;
             if (checkData.length != 1) {
                 layer.msg("请选择一条需要调整的数据");
             } else {
-                layer.confirm('是否确认删除此调整?', function(index) {
+                layer.confirm('是否确认删除此调整?', function (index) {
                     var datainfo = {};
                     datainfo['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
                     datainfo['TOKEN'] = getCookie('TOKEN');
@@ -469,7 +475,7 @@
                         type: "POST",
                         async: false,
                         data: datainfo,
-                        success: function(res) {
+                        success: function (res) {
                             if (res.status == 1) {
                                 goLogin(); // 跳转到登录页
                             }
@@ -489,13 +495,13 @@
         });
 
         //放弃调整
-        $(".waiver").click(function() {
+        $(".waiver").click(function () {
             var checkStatus = table.checkStatus('tableContainer'); //表格选中状态
             var checkData = checkStatus.data;
             if (checkData.length != 1) {
                 layer.msg("请选择一条需要调整的数据");
             } else {
-                layer.confirm('是否确认删除此调整?', function(index) {
+                layer.confirm('是否确认删除此调整?', function (index) {
                     var datainfo = {};
                     datainfo['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
                     datainfo['TOKEN'] = getCookie('TOKEN');
@@ -505,7 +511,7 @@
                         type: "POST",
                         async: false,
                         data: datainfo,
-                        success: function(res) {
+                        success: function (res) {
                             if (res.status === 1) {
                                 goLogin(); // 跳转到登录页
                             }
@@ -524,16 +530,16 @@
             }
         });
 
-        $(".addBtn").click(function() {
+        $(".addBtn").click(function () {
             sessionStorage.removeItem('adjustParam');
-            $.get('view/ilbstock/ilbstock-adjuststock.html', {}, function(str) { // 请求弹框
+            $.get('view/ilbstock/ilbstock-adjuststock.html', {}, function (str) { // 请求弹框
                 // 弹出弹框
                 inventoryLayer = layer.open({
                     title: '新建库存调整单',
                     type: 1,
                     content: str, // 注意，如果str是object，那么需要字符拼接。
                     area: ['99%', '99%'],
-                    end: function() {
+                    end: function () {
                         tableIns.reload({
                             page: {
                                 curr: 1 // 重新从第 1 页开始
@@ -556,7 +562,7 @@
                 type: "POST",
                 async: false,
                 data: datainfo,
-                success: function(res) {
+                success: function (res) {
                     if (res.status == 1) {
                         goLogin(); // 跳转到登录页
                     }
