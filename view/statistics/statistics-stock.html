@@ -355,6 +355,8 @@
                 }
             }
             paramSearch['enddate'] && (paramSearch['enddate'] = paramSearch['enddate'] + ' 23:59')
+            paramSearch['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
+            paramSearch['TOKEN'] = getCookie('TOKEN');
             console.log(paramSearch)
             $.ajax({
                 url: statisticsStock,
@@ -405,6 +407,8 @@
                 pageName: 'offset', //页码的参数名称，默认：page
                 limitName: 'limit' //每页数据量的参数名，默认：limit
             }
+            data['SESSION_USER_CODE'] = getCookie('SESSION_USER_CODE');
+            data['TOKEN'] = getCookie('TOKEN');
             $.ajax({
                 url: statisticsStock,
                 type: 'get',
