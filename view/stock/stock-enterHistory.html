@@ -551,7 +551,6 @@
                         }
                         if (data.status == 0) {
                             layer.msg("删除成功");
-
                             tableIns.reload({
                                 page: {
                                     curr: 1 // 重新从第 1 页开始
@@ -560,10 +559,8 @@
                         } else {
                             layer.msg(data.msg);
                         }
-
                     }
                 })
-
             });
         });
 
@@ -571,22 +568,21 @@
         $(".toBatchExport").on('click', function (e) {
             var checkStatus = table.checkStatus('tableContainer');
             var checkData = checkStatus.data;
+            const neworder = [];
             if (checkData.length > 0) {
-                const neworder = [];
                 for (let index = 0; index < checkData.length; index++) {
                     const element = checkData[index];
                     neworder.push(element.orderno);
                 }
-                var SESSION_USER_CODE = getCookie('SESSION_USER_CODE');
-                var TOKEN = getCookie('TOKEN');
-                var str = inbatchExport + "?orderarrstr=" + neworder.toString() + "&SESSION_USER_CODE=" + SESSION_USER_CODE;
-                for (var item in toexportParam) {
-                    str += "&" + item + ":" + toexportParam[item];
-                }
-                window.location.href = str;
-            } else {
-                layer.msg("请选择记录");
             }
+
+            var SESSION_USER_CODE = getCookie('SESSION_USER_CODE');
+            var TOKEN = getCookie('TOKEN');
+            var str = inbatchExport + "?orderarrstr=" + neworder.toString() + "&SESSION_USER_CODE=" + SESSION_USER_CODE;
+            for (var item in toexportParam) {
+                str += "&" + item + "=" + toexportParam[item];
+            }
+            window.location.href = str;
         });
 
         //点击导出
